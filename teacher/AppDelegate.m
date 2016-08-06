@@ -20,6 +20,7 @@
 
 @implementation AppDelegate
 
+//测试远程库能不能用
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
