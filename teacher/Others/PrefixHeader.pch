@@ -11,6 +11,12 @@
 
 #import "UIView+XXExtension.h"
 #import "MacroDefine.h"
+#import "Masonry.h"
+#import "UIFont+XXExtension.h"
+#import "UITextField+XXExtension.h"
+#import "UIButton+XXExtension.h"
+#import "KTActionSheet.h"
+#import "UILabel+XXExtension.h"
 
 
 #endif /* PrefixHeader_pch */

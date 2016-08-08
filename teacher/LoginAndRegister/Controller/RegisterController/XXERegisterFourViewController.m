@@ -1,36 +1,35 @@
 //
-//  XXEHomePageViewController.m
+//  XXERegisterFourViewController.m
 //  teacher
 //
-//  Created by codeDing on 16/8/2.
+//  Created by codeDing on 16/8/8.
 //  Copyright © 2016年 XingXingEdu. All rights reserved.
 //
 
-#import "XXEHomePageViewController.h"
+#import "XXERegisterFourViewController.h"
 
-@interface XXEHomePageViewController ()
+@interface XXERegisterFourViewController ()
 
 @end
 
-@implementation XXEHomePageViewController
+@implementation XXERegisterFourViewController
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-//    [[UIApplication sharedApplication]setStatusBarStyle:UIStatusBarStyleLightContent animated:YES];
     self.view.backgroundColor = XXEBackgroundColor;
+    self.navigationItem.title = @"4/4注册";
+    self.navigationController.navigationBarHidden = NO;
 }
-/** 这两个方法都可以,改变当前控制器的电池条颜色 */
+/** 这个方法都可以,改变当前控制器的电池条颜色 */
 -(UIStatusBarStyle)preferredStatusBarStyle
 {
     return UIStatusBarStyleLightContent;
 }
 
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    NSLog(@"首页控制器");
 }
 
 - (void)didReceiveMemoryWarning {

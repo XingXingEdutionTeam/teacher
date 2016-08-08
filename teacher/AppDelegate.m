@@ -12,6 +12,7 @@
 
 //测试------
 #import "XXELoginViewController.h"
+#import "XXENavigationViewController.h"
 
 
 @interface AppDelegate ()
@@ -29,7 +30,9 @@
     //测试界面 --------------------------
     XXELoginViewController *loginVC = [[XXELoginViewController alloc]init];
 //    XXEStarImageViewController *startVC = [[XXEStarImageViewController alloc]init];
-    self.window.rootViewController = loginVC;
+    XXENavigationViewController *navi = [[XXENavigationViewController alloc]initWithRootViewController:loginVC];
+    
+    self.window.rootViewController = navi;
     
     
 //    XXETabBarControllerConfig *tabBarControllerConfig = [[XXETabBarControllerConfig alloc]init];

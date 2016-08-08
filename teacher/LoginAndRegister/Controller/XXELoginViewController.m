@@ -7,10 +7,10 @@
 //
 
 #import "XXELoginViewController.h"
-#import "Masonry.h"
-#import "XXETextFieldHelp.h"
 #import "HyLoglnButton.h"
 #import "XXETabBarControllerConfig.h"
+#import "XXERegisterViewController.h"
+#import "XXENavigationViewController.h"
 
 @interface XXELoginViewController ()<UITextFieldDelegate>
 /** 用户名登录 */
@@ -27,12 +27,8 @@
 - (UITextField *)userNameTextField
 {
     if (!_userNameTextField) {
-        _userNameTextField = [[UITextField alloc]init];
-        _userNameTextField.textAlignment = NSTextAlignmentLeft;
+        _userNameTextField = [UITextField createTextFieldWithIsOpen:NO textPlaceholder:@"手机"];
         _userNameTextField.borderStyle = UIKeyboardTypeNamePhonePad;
-        _userNameTextField.font = [UIFont systemFontOfSize:14];
-        _userNameTextField.textColor = [UIColor blackColor];
-        _userNameTextField.placeholder = @"手机";
     }
     return _userNameTextField;
 }
@@ -40,16 +36,23 @@
 - (UITextField *)passWordTextField
 {
     if (!_passWordTextField) {
-        _passWordTextField = [[UITextField alloc]init];
-        _passWordTextField.textAlignment = NSTextAlignmentLeft;
+        _passWordTextField = [UITextField createTextFieldWithIsOpen:YES textPlaceholder:@"密码"];
         _passWordTextField.borderStyle = UIKeyboardTypeDefault;
-        _passWordTextField.font = [UIFont systemFontOfSize:14];
-        _passWordTextField.textColor = [UIColor blackColor];
-        _passWordTextField.secureTextEntry = YES;
-        _passWordTextField.placeholder = @"密码";
     }
     return _passWordTextField;
 }
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    self.navigationController.navigationBarHidden = YES;
+}
+/** 这个方法都可以,改变当前控制器的电池条颜色 */
+-(UIStatusBarStyle)preferredStatusBarStyle
+{
+    return UIStatusBarStyleLightContent;
+}
+
 
 - (void)loadView
 {
@@ -64,7 +67,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.view.backgroundColor = [UIColor colorWithRed:229/255.f green:232/255.f blue:(233/255.f) alpha:1.0f];
+    self.view.backgroundColor = XXEBackgroundColor;
 }
 /** 创建视图View */
 #pragma mark - 创建视图View
@@ -327,11 +330,16 @@
 
 - (void)registerButtonClick:(UIButton *)sender
 {
+    XXERegisterViewController *registerVC = [[XXERegisterViewController alloc]init];
+    [self.navigationController pushViewController:registerVC animated:YES];
      NSLog(@"-----免费注册-----");
 }
 
 - (void)guestButtonClick:(UIButton *)sender
 {
+    XXETabBarControllerConfig *tabBarConfig = [[XXETabBarControllerConfig alloc]init];
+    UIWindow *window = [UIApplication sharedApplication].keyWindow;
+    window.rootViewController = tabBarConfig;
     NSLog(@"-----游客登录-----");
 }
 

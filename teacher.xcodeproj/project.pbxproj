@@ -21,9 +21,20 @@
 		9E4813DD1D50784900C614AC /* XXEChatPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E4813DC1D50784900C614AC /* XXEChatPageViewController.m */; };
 		9E4813E01D50787100C614AC /* XXEFriendCirclePageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E4813DF1D50787100C614AC /* XXEFriendCirclePageViewController.m */; };
 		9E4813E31D50788300C614AC /* XXEMySelfPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E4813E21D50788300C614AC /* XXEMySelfPageViewController.m */; };
-		9E6912EE1D533B030000E566 /* XXETextFieldHelp.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E6912ED1D533B030000E566 /* XXETextFieldHelp.m */; };
 		9E6912F51D54341F0000E566 /* XXEStarImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E6912F41D54341F0000E566 /* XXEStarImageViewController.m */; };
 		9E6912F81D5442AE0000E566 /* UIView+XXExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E6912F71D5442AE0000E566 /* UIView+XXExtension.m */; };
+		9E7D89FD1D5818F60099BE78 /* XXERegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E7D89FC1D5818F60099BE78 /* XXERegisterViewController.m */; };
+		9E7D8A061D581A800099BE78 /* KTActionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E7D89FF1D581A800099BE78 /* KTActionSheet.m */; };
+		9E7D8A071D581A800099BE78 /* KTSheetCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E7D8A011D581A800099BE78 /* KTSheetCell.m */; };
+		9E7D8A081D581A800099BE78 /* KTSheetCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9E7D8A021D581A800099BE78 /* KTSheetCell.xib */; };
+		9E7D8A091D581A800099BE78 /* KTSheetView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E7D8A041D581A800099BE78 /* KTSheetView.m */; };
+		9E7D8A0A1D581A800099BE78 /* KTSheetView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9E7D8A051D581A800099BE78 /* KTSheetView.xib */; };
+		9E7D8A0D1D58576D0099BE78 /* UIButton+XXExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E7D8A0C1D58576D0099BE78 /* UIButton+XXExtension.m */; };
+		9E7D8A111D585ED00099BE78 /* XXERegisterSecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E7D8A101D585ED00099BE78 /* XXERegisterSecondViewController.m */; };
+		9E7D8A141D5872BE0099BE78 /* XXERegisterThreeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E7D8A131D5872BE0099BE78 /* XXERegisterThreeViewController.m */; };
+		9EB2E93F1D5889B9004809D3 /* UILabel+XXExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EB2E93E1D5889B9004809D3 /* UILabel+XXExtension.m */; };
+		9EB2E9421D58934C004809D3 /* UITextField+XXExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EB2E9411D58934C004809D3 /* UITextField+XXExtension.m */; };
+		9EB2E9451D58A319004809D3 /* XXERegisterFourViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EB2E9441D58A319004809D3 /* XXERegisterFourViewController.m */; };
 		9EFDC7F81D546089005556AF /* qqq_1_5.png in Resources */ = {isa = PBXBuildFile; fileRef = 9EFDC7F61D546089005556AF /* qqq_1_5.png */; };
 		9EFDC7F91D546089005556AF /* qqq_2_5.png in Resources */ = {isa = PBXBuildFile; fileRef = 9EFDC7F71D546089005556AF /* qqq_2_5.png */; };
 		9EFDC7FC1D5460E6005556AF /* qqq_3_5.png in Resources */ = {isa = PBXBuildFile; fileRef = 9EFDC7FA1D5460E6005556AF /* qqq_3_5.png */; };
@@ -83,12 +94,32 @@
 		9E4813DF1D50787100C614AC /* XXEFriendCirclePageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXEFriendCirclePageViewController.m; sourceTree = "<group>"; };
 		9E4813E11D50788300C614AC /* XXEMySelfPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXEMySelfPageViewController.h; sourceTree = "<group>"; };
 		9E4813E21D50788300C614AC /* XXEMySelfPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXEMySelfPageViewController.m; sourceTree = "<group>"; };
-		9E6912EC1D533B030000E566 /* XXETextFieldHelp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXETextFieldHelp.h; sourceTree = "<group>"; };
-		9E6912ED1D533B030000E566 /* XXETextFieldHelp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXETextFieldHelp.m; sourceTree = "<group>"; };
 		9E6912F31D54341F0000E566 /* XXEStarImageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXEStarImageViewController.h; sourceTree = "<group>"; };
 		9E6912F41D54341F0000E566 /* XXEStarImageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXEStarImageViewController.m; sourceTree = "<group>"; };
 		9E6912F61D5442AE0000E566 /* UIView+XXExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+XXExtension.h"; sourceTree = "<group>"; };
 		9E6912F71D5442AE0000E566 /* UIView+XXExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+XXExtension.m"; sourceTree = "<group>"; };
+		9E7D89FB1D5818F60099BE78 /* XXERegisterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XXERegisterViewController.h; path = ../XXERegisterViewController.h; sourceTree = "<group>"; };
+		9E7D89FC1D5818F60099BE78 /* XXERegisterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = XXERegisterViewController.m; path = ../XXERegisterViewController.m; sourceTree = "<group>"; };
+		9E7D89FE1D581A800099BE78 /* KTActionSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTActionSheet.h; sourceTree = "<group>"; };
+		9E7D89FF1D581A800099BE78 /* KTActionSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTActionSheet.m; sourceTree = "<group>"; };
+		9E7D8A001D581A800099BE78 /* KTSheetCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTSheetCell.h; sourceTree = "<group>"; };
+		9E7D8A011D581A800099BE78 /* KTSheetCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTSheetCell.m; sourceTree = "<group>"; };
+		9E7D8A021D581A800099BE78 /* KTSheetCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = KTSheetCell.xib; sourceTree = "<group>"; };
+		9E7D8A031D581A800099BE78 /* KTSheetView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTSheetView.h; sourceTree = "<group>"; };
+		9E7D8A041D581A800099BE78 /* KTSheetView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTSheetView.m; sourceTree = "<group>"; };
+		9E7D8A051D581A800099BE78 /* KTSheetView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = KTSheetView.xib; sourceTree = "<group>"; };
+		9E7D8A0B1D58576D0099BE78 /* UIButton+XXExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+XXExtension.h"; sourceTree = "<group>"; };
+		9E7D8A0C1D58576D0099BE78 /* UIButton+XXExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+XXExtension.m"; sourceTree = "<group>"; };
+		9E7D8A0F1D585ED00099BE78 /* XXERegisterSecondViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXERegisterSecondViewController.h; sourceTree = "<group>"; };
+		9E7D8A101D585ED00099BE78 /* XXERegisterSecondViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXERegisterSecondViewController.m; sourceTree = "<group>"; };
+		9E7D8A121D5872BE0099BE78 /* XXERegisterThreeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXERegisterThreeViewController.h; sourceTree = "<group>"; };
+		9E7D8A131D5872BE0099BE78 /* XXERegisterThreeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXERegisterThreeViewController.m; sourceTree = "<group>"; };
+		9EB2E93D1D5889B9004809D3 /* UILabel+XXExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UILabel+XXExtension.h"; sourceTree = "<group>"; };
+		9EB2E93E1D5889B9004809D3 /* UILabel+XXExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UILabel+XXExtension.m"; sourceTree = "<group>"; };
+		9EB2E9401D58934C004809D3 /* UITextField+XXExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITextField+XXExtension.h"; sourceTree = "<group>"; };
+		9EB2E9411D58934C004809D3 /* UITextField+XXExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITextField+XXExtension.m"; sourceTree = "<group>"; };
+		9EB2E9431D58A319004809D3 /* XXERegisterFourViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXERegisterFourViewController.h; sourceTree = "<group>"; };
+		9EB2E9441D58A319004809D3 /* XXERegisterFourViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXERegisterFourViewController.m; sourceTree = "<group>"; };
 		9EFDC7F61D546089005556AF /* qqq_1_5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = qqq_1_5.png; sourceTree = "<group>"; };
 		9EFDC7F71D546089005556AF /* qqq_2_5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = qqq_2_5.png; sourceTree = "<group>"; };
 		9EFDC7FA1D5460E6005556AF /* qqq_3_5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = qqq_3_5.png; sourceTree = "<group>"; };
@@ -345,6 +376,7 @@
 		9E4813C61D50695200C614AC /* ThirdLibrary */ = {
 			isa = PBXGroup;
 			children = (
+				9E7D89F71D5818910099BE78 /* KTActionSheet */,
 				9EFDC8501D549DE1005556AF /* HyLoglnButton.h */,
 				9EFDC8511D549DE1005556AF /* HyLoglnButton.m */,
 				9EFDC8521D549DE1005556AF /* SpinerLayer.h */,
@@ -356,12 +388,16 @@
 		9E4813C71D50695200C614AC /* XXEHelper */ = {
 			isa = PBXGroup;
 			children = (
-				9E6912EC1D533B030000E566 /* XXETextFieldHelp.h */,
-				9E6912ED1D533B030000E566 /* XXETextFieldHelp.m */,
 				9E6912F61D5442AE0000E566 /* UIView+XXExtension.h */,
 				9E6912F71D5442AE0000E566 /* UIView+XXExtension.m */,
 				9EFDC8081D54848A005556AF /* UIFont+XXExtension.h */,
 				9EFDC8091D54848A005556AF /* UIFont+XXExtension.m */,
+				9E7D8A0B1D58576D0099BE78 /* UIButton+XXExtension.h */,
+				9E7D8A0C1D58576D0099BE78 /* UIButton+XXExtension.m */,
+				9EB2E93D1D5889B9004809D3 /* UILabel+XXExtension.h */,
+				9EB2E93E1D5889B9004809D3 /* UILabel+XXExtension.m */,
+				9EB2E9401D58934C004809D3 /* UITextField+XXExtension.h */,
+				9EB2E9411D58934C004809D3 /* UITextField+XXExtension.m */,
 			);
 			path = XXEHelper;
 			sourceTree = "<group>";
@@ -428,6 +464,7 @@
 			children = (
 				9E28FC411D530EAD0003A208 /* XXELoginViewController.h */,
 				9E28FC421D530EAD0003A208 /* XXELoginViewController.m */,
+				9E7D8A0E1D585EA70099BE78 /* RegisterController */,
 				9E6912F31D54341F0000E566 /* XXEStarImageViewController.h */,
 				9E6912F41D54341F0000E566 /* XXEStarImageViewController.m */,
 				9EFDC7F61D546089005556AF /* qqq_1_5.png */,
@@ -450,6 +487,36 @@
 			children = (
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		9E7D89F71D5818910099BE78 /* KTActionSheet */ = {
+			isa = PBXGroup;
+			children = (
+				9E7D89FE1D581A800099BE78 /* KTActionSheet.h */,
+				9E7D89FF1D581A800099BE78 /* KTActionSheet.m */,
+				9E7D8A001D581A800099BE78 /* KTSheetCell.h */,
+				9E7D8A011D581A800099BE78 /* KTSheetCell.m */,
+				9E7D8A021D581A800099BE78 /* KTSheetCell.xib */,
+				9E7D8A031D581A800099BE78 /* KTSheetView.h */,
+				9E7D8A041D581A800099BE78 /* KTSheetView.m */,
+				9E7D8A051D581A800099BE78 /* KTSheetView.xib */,
+			);
+			path = KTActionSheet;
+			sourceTree = "<group>";
+		};
+		9E7D8A0E1D585EA70099BE78 /* RegisterController */ = {
+			isa = PBXGroup;
+			children = (
+				9E7D89FB1D5818F60099BE78 /* XXERegisterViewController.h */,
+				9E7D89FC1D5818F60099BE78 /* XXERegisterViewController.m */,
+				9E7D8A0F1D585ED00099BE78 /* XXERegisterSecondViewController.h */,
+				9E7D8A101D585ED00099BE78 /* XXERegisterSecondViewController.m */,
+				9E7D8A121D5872BE0099BE78 /* XXERegisterThreeViewController.h */,
+				9E7D8A131D5872BE0099BE78 /* XXERegisterThreeViewController.m */,
+				9EB2E9431D58A319004809D3 /* XXERegisterFourViewController.h */,
+				9EB2E9441D58A319004809D3 /* XXERegisterFourViewController.m */,
+			);
+			path = RegisterController;
 			sourceTree = "<group>";
 		};
 		C506F427E2E313529384712C /* Pods */ = {
@@ -576,6 +643,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9E7D8A081D581A800099BE78 /* KTSheetCell.xib in Resources */,
 				9E4813921D504D0900C614AC /* LaunchScreen.storyboard in Resources */,
 				9E48138F1D504D0900C614AC /* Assets.xcassets in Resources */,
 				9EFDC7FC1D5460E6005556AF /* qqq_3_5.png in Resources */,
@@ -583,6 +651,7 @@
 				9EFDC7F91D546089005556AF /* qqq_2_5.png in Resources */,
 				9EFDC7FD1D5460E6005556AF /* qqq_4_5.png in Resources */,
 				9E48138D1D504D0900C614AC /* Main.storyboard in Resources */,
+				9E7D8A0A1D581A800099BE78 /* KTSheetView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -655,22 +724,31 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9E7D8A061D581A800099BE78 /* KTActionSheet.m in Sources */,
 				9E6912F81D5442AE0000E566 /* UIView+XXExtension.m in Sources */,
 				9E4813D01D506BDE00C614AC /* XXEBaseViewController.m in Sources */,
+				9E7D8A091D581A800099BE78 /* KTSheetView.m in Sources */,
 				9E28FC431D530EAD0003A208 /* XXELoginViewController.m in Sources */,
-				9E6912EE1D533B030000E566 /* XXETextFieldHelp.m in Sources */,
 				9E4813E31D50788300C614AC /* XXEMySelfPageViewController.m in Sources */,
 				9E4813DD1D50784900C614AC /* XXEChatPageViewController.m in Sources */,
+				9E7D8A071D581A800099BE78 /* KTSheetCell.m in Sources */,
+				9EB2E9451D58A319004809D3 /* XXERegisterFourViewController.m in Sources */,
 				9EFDC8551D549DE1005556AF /* SpinerLayer.m in Sources */,
 				9EFDC8061D548014005556AF /* XXENavigationViewController.m in Sources */,
 				9E4813D71D50722400C614AC /* XXETabBarControllerConfig.m in Sources */,
+				9EB2E9421D58934C004809D3 /* UITextField+XXExtension.m in Sources */,
 				9E4813871D504D0900C614AC /* AppDelegate.m in Sources */,
 				9E4813DA1D50783000C614AC /* XXEHomePageViewController.m in Sources */,
+				9EB2E93F1D5889B9004809D3 /* UILabel+XXExtension.m in Sources */,
 				9EFDC80A1D54848A005556AF /* UIFont+XXExtension.m in Sources */,
+				9E7D8A0D1D58576D0099BE78 /* UIButton+XXExtension.m in Sources */,
 				9E4813E01D50787100C614AC /* XXEFriendCirclePageViewController.m in Sources */,
+				9E7D8A111D585ED00099BE78 /* XXERegisterSecondViewController.m in Sources */,
 				9E6912F51D54341F0000E566 /* XXEStarImageViewController.m in Sources */,
+				9E7D8A141D5872BE0099BE78 /* XXERegisterThreeViewController.m in Sources */,
 				9E4813841D504D0900C614AC /* main.m in Sources */,
 				9EFDC8541D549DE1005556AF /* HyLoglnButton.m in Sources */,
+				9E7D89FD1D5818F60099BE78 /* XXERegisterViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -814,6 +892,7 @@
 			baseConfigurationReference = 16EC2C4BB8E577B5CE2BABDD /* Pods-teacher.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				GCC_PREFIX_HEADER = /Users/codeding/Teacher/teacher/Others/PrefixHeader.pch;
 				INFOPLIST_FILE = teacher/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -827,6 +906,7 @@
 			baseConfigurationReference = A4720165A20A1D3D5F5EE8D8 /* Pods-teacher.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				GCC_PREFIX_HEADER = /Users/codeding/Teacher/teacher/Others/PrefixHeader.pch;
 				INFOPLIST_FILE = teacher/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
