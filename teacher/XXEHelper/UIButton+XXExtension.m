@@ -44,4 +44,30 @@
     dispatch_resume(timer);
 }
 
+//创建学校图标Logo
++ (UIButton *)creatSchoolIconImage:(NSString *)image target:(id)target action:(SEL)action floats:(CGFloat )floats
+{
+    UIButton *button = [[UIButton alloc]init];
+    button.layer.masksToBounds = YES;
+    button.layer.cornerRadius = floats/2;
+    [button setBackgroundImage:[UIImage imageNamed:image] forState:UIControlStateNormal];
+    [button addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
+    return button;
+}
+
++ (UIButton *)creatHomePageImage:(NSString *)image title:(NSString *)title target:(id)target action:(SEL)action
+{
+    UIButton *button = [[UIButton alloc]init];
+    [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    if (![title isEqual: @""]) {
+        button.imageEdgeInsets = UIEdgeInsetsMake(0, -25, 0, 0);
+        //    self.homeMiddleFirstButton.titleEdgeInsets = UIEdgeInsetsMake(0, 30, 0, 0);
+    }
+    
+    [button setImage:[UIImage imageNamed:image] forState:UIControlStateNormal];
+    [button setTitle:title forState:UIControlStateNormal];
+    [button addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
+    return button;
+}
+
 @end

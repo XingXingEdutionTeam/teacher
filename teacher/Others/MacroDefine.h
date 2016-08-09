@@ -27,6 +27,8 @@
 #define XXEColorFromRGB(r,g,b) [UIColor colorWithRed:r/255.0f green:g/255.0f blue:b/255.0f alpha:1.0f]
 
 #define XXEBackgroundColor XXEColorFromRGB(229, 232, 233)
+//猩猩绿色
+#define XXEGreenColor XXEColorFromRGB(0, 170, 42)
 
 
 #define KScreenWidth [UIScreen mainScreen].bounds.size.width

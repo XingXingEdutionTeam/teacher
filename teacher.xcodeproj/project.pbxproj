@@ -21,6 +21,7 @@
 		9E4813DD1D50784900C614AC /* XXEChatPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E4813DC1D50784900C614AC /* XXEChatPageViewController.m */; };
 		9E4813E01D50787100C614AC /* XXEFriendCirclePageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E4813DF1D50787100C614AC /* XXEFriendCirclePageViewController.m */; };
 		9E4813E31D50788300C614AC /* XXEMySelfPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E4813E21D50788300C614AC /* XXEMySelfPageViewController.m */; };
+		9E542DBC1D59C6A1002D7BC3 /* XXEHomePageBottomView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E542DBB1D59C6A1002D7BC3 /* XXEHomePageBottomView.m */; };
 		9E6912F51D54341F0000E566 /* XXEStarImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E6912F41D54341F0000E566 /* XXEStarImageViewController.m */; };
 		9E6912F81D5442AE0000E566 /* UIView+XXExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E6912F71D5442AE0000E566 /* UIView+XXExtension.m */; };
 		9E7D89FD1D5818F60099BE78 /* XXERegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E7D89FC1D5818F60099BE78 /* XXERegisterViewController.m */; };
@@ -35,6 +36,11 @@
 		9EB2E93F1D5889B9004809D3 /* UILabel+XXExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EB2E93E1D5889B9004809D3 /* UILabel+XXExtension.m */; };
 		9EB2E9421D58934C004809D3 /* UITextField+XXExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EB2E9411D58934C004809D3 /* UITextField+XXExtension.m */; };
 		9EB2E9451D58A319004809D3 /* XXERegisterFourViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EB2E9441D58A319004809D3 /* XXERegisterFourViewController.m */; };
+		9ED146FC1D597D420049D2AA /* WJCommboxView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9ED146FB1D597D420049D2AA /* WJCommboxView.m */; };
+		9ED146FF1D597DB40049D2AA /* XXEHomePageHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9ED146FE1D597DB40049D2AA /* XXEHomePageHeaderView.m */; };
+		9ED147021D59A9BF0049D2AA /* ProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9ED147011D59A9BF0049D2AA /* ProgressView.m */; };
+		9ED147061D59AC9B0049D2AA /* XXEHomePageApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 9ED147051D59AC9B0049D2AA /* XXEHomePageApi.m */; };
+		9ED147091D59B0BF0049D2AA /* XXEHomePageMiddleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9ED147081D59B0BF0049D2AA /* XXEHomePageMiddleView.m */; };
 		9EFDC7F81D546089005556AF /* qqq_1_5.png in Resources */ = {isa = PBXBuildFile; fileRef = 9EFDC7F61D546089005556AF /* qqq_1_5.png */; };
 		9EFDC7F91D546089005556AF /* qqq_2_5.png in Resources */ = {isa = PBXBuildFile; fileRef = 9EFDC7F71D546089005556AF /* qqq_2_5.png */; };
 		9EFDC7FC1D5460E6005556AF /* qqq_3_5.png in Resources */ = {isa = PBXBuildFile; fileRef = 9EFDC7FA1D5460E6005556AF /* qqq_3_5.png */; };
@@ -94,6 +100,8 @@
 		9E4813DF1D50787100C614AC /* XXEFriendCirclePageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXEFriendCirclePageViewController.m; sourceTree = "<group>"; };
 		9E4813E11D50788300C614AC /* XXEMySelfPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXEMySelfPageViewController.h; sourceTree = "<group>"; };
 		9E4813E21D50788300C614AC /* XXEMySelfPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXEMySelfPageViewController.m; sourceTree = "<group>"; };
+		9E542DBA1D59C6A1002D7BC3 /* XXEHomePageBottomView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXEHomePageBottomView.h; sourceTree = "<group>"; };
+		9E542DBB1D59C6A1002D7BC3 /* XXEHomePageBottomView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXEHomePageBottomView.m; sourceTree = "<group>"; };
 		9E6912F31D54341F0000E566 /* XXEStarImageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXEStarImageViewController.h; sourceTree = "<group>"; };
 		9E6912F41D54341F0000E566 /* XXEStarImageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXEStarImageViewController.m; sourceTree = "<group>"; };
 		9E6912F61D5442AE0000E566 /* UIView+XXExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+XXExtension.h"; sourceTree = "<group>"; };
@@ -120,6 +128,16 @@
 		9EB2E9411D58934C004809D3 /* UITextField+XXExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITextField+XXExtension.m"; sourceTree = "<group>"; };
 		9EB2E9431D58A319004809D3 /* XXERegisterFourViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXERegisterFourViewController.h; sourceTree = "<group>"; };
 		9EB2E9441D58A319004809D3 /* XXERegisterFourViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXERegisterFourViewController.m; sourceTree = "<group>"; };
+		9ED146FA1D597D420049D2AA /* WJCommboxView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WJCommboxView.h; sourceTree = "<group>"; };
+		9ED146FB1D597D420049D2AA /* WJCommboxView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WJCommboxView.m; sourceTree = "<group>"; };
+		9ED146FD1D597DB40049D2AA /* XXEHomePageHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXEHomePageHeaderView.h; sourceTree = "<group>"; };
+		9ED146FE1D597DB40049D2AA /* XXEHomePageHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXEHomePageHeaderView.m; sourceTree = "<group>"; };
+		9ED147001D59A9BF0049D2AA /* ProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProgressView.h; sourceTree = "<group>"; };
+		9ED147011D59A9BF0049D2AA /* ProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProgressView.m; sourceTree = "<group>"; };
+		9ED147041D59AC9B0049D2AA /* XXEHomePageApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXEHomePageApi.h; sourceTree = "<group>"; };
+		9ED147051D59AC9B0049D2AA /* XXEHomePageApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXEHomePageApi.m; sourceTree = "<group>"; };
+		9ED147071D59B0BF0049D2AA /* XXEHomePageMiddleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXEHomePageMiddleView.h; sourceTree = "<group>"; };
+		9ED147081D59B0BF0049D2AA /* XXEHomePageMiddleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXEHomePageMiddleView.m; sourceTree = "<group>"; };
 		9EFDC7F61D546089005556AF /* qqq_1_5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = qqq_1_5.png; sourceTree = "<group>"; };
 		9EFDC7F71D546089005556AF /* qqq_2_5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = qqq_2_5.png; sourceTree = "<group>"; };
 		9EFDC7FA1D5460E6005556AF /* qqq_3_5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = qqq_3_5.png; sourceTree = "<group>"; };
@@ -310,6 +328,7 @@
 		9E4813BE1D50695200C614AC /* HomePage */ = {
 			isa = PBXGroup;
 			children = (
+				9ED147031D59ABC00049D2AA /* HomePageApi */,
 				9E4813BF1D50695200C614AC /* Controller */,
 				9E4813C01D50695200C614AC /* Model */,
 				9E4813C11D50695200C614AC /* View */,
@@ -336,6 +355,12 @@
 		9E4813C11D50695200C614AC /* View */ = {
 			isa = PBXGroup;
 			children = (
+				9ED146FD1D597DB40049D2AA /* XXEHomePageHeaderView.h */,
+				9ED146FE1D597DB40049D2AA /* XXEHomePageHeaderView.m */,
+				9ED147071D59B0BF0049D2AA /* XXEHomePageMiddleView.h */,
+				9ED147081D59B0BF0049D2AA /* XXEHomePageMiddleView.m */,
+				9E542DBA1D59C6A1002D7BC3 /* XXEHomePageBottomView.h */,
+				9E542DBB1D59C6A1002D7BC3 /* XXEHomePageBottomView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -376,6 +401,7 @@
 		9E4813C61D50695200C614AC /* ThirdLibrary */ = {
 			isa = PBXGroup;
 			children = (
+				9ED146F91D597D420049D2AA /* WJCommboxView */,
 				9E7D89F71D5818910099BE78 /* KTActionSheet */,
 				9EFDC8501D549DE1005556AF /* HyLoglnButton.h */,
 				9EFDC8511D549DE1005556AF /* HyLoglnButton.m */,
@@ -405,6 +431,8 @@
 		9E4813C81D50695200C614AC /* XXETools */ = {
 			isa = PBXGroup;
 			children = (
+				9ED147001D59A9BF0049D2AA /* ProgressView.h */,
+				9ED147011D59A9BF0049D2AA /* ProgressView.m */,
 			);
 			path = XXETools;
 			sourceTree = "<group>";
@@ -517,6 +545,25 @@
 				9EB2E9441D58A319004809D3 /* XXERegisterFourViewController.m */,
 			);
 			path = RegisterController;
+			sourceTree = "<group>";
+		};
+		9ED146F91D597D420049D2AA /* WJCommboxView */ = {
+			isa = PBXGroup;
+			children = (
+				9ED146FA1D597D420049D2AA /* WJCommboxView.h */,
+				9ED146FB1D597D420049D2AA /* WJCommboxView.m */,
+			);
+			path = WJCommboxView;
+			sourceTree = "<group>";
+		};
+		9ED147031D59ABC00049D2AA /* HomePageApi */ = {
+			isa = PBXGroup;
+			children = (
+				9ED147041D59AC9B0049D2AA /* XXEHomePageApi.h */,
+				9ED147051D59AC9B0049D2AA /* XXEHomePageApi.m */,
+			);
+			name = HomePageApi;
+			path = ../BasePage/HomePageApi;
 			sourceTree = "<group>";
 		};
 		C506F427E2E313529384712C /* Pods */ = {
@@ -725,10 +772,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				9E7D8A061D581A800099BE78 /* KTActionSheet.m in Sources */,
+				9ED147061D59AC9B0049D2AA /* XXEHomePageApi.m in Sources */,
 				9E6912F81D5442AE0000E566 /* UIView+XXExtension.m in Sources */,
+				9ED147091D59B0BF0049D2AA /* XXEHomePageMiddleView.m in Sources */,
 				9E4813D01D506BDE00C614AC /* XXEBaseViewController.m in Sources */,
 				9E7D8A091D581A800099BE78 /* KTSheetView.m in Sources */,
 				9E28FC431D530EAD0003A208 /* XXELoginViewController.m in Sources */,
+				9ED147021D59A9BF0049D2AA /* ProgressView.m in Sources */,
 				9E4813E31D50788300C614AC /* XXEMySelfPageViewController.m in Sources */,
 				9E4813DD1D50784900C614AC /* XXEChatPageViewController.m in Sources */,
 				9E7D8A071D581A800099BE78 /* KTSheetCell.m in Sources */,
@@ -743,12 +793,15 @@
 				9EFDC80A1D54848A005556AF /* UIFont+XXExtension.m in Sources */,
 				9E7D8A0D1D58576D0099BE78 /* UIButton+XXExtension.m in Sources */,
 				9E4813E01D50787100C614AC /* XXEFriendCirclePageViewController.m in Sources */,
+				9E542DBC1D59C6A1002D7BC3 /* XXEHomePageBottomView.m in Sources */,
+				9ED146FF1D597DB40049D2AA /* XXEHomePageHeaderView.m in Sources */,
 				9E7D8A111D585ED00099BE78 /* XXERegisterSecondViewController.m in Sources */,
 				9E6912F51D54341F0000E566 /* XXEStarImageViewController.m in Sources */,
 				9E7D8A141D5872BE0099BE78 /* XXERegisterThreeViewController.m in Sources */,
 				9E4813841D504D0900C614AC /* main.m in Sources */,
 				9EFDC8541D549DE1005556AF /* HyLoglnButton.m in Sources */,
 				9E7D89FD1D5818F60099BE78 /* XXERegisterViewController.m in Sources */,
+				9ED146FC1D597D420049D2AA /* WJCommboxView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

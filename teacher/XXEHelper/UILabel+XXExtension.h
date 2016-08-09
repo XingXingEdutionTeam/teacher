@@ -12,4 +12,6 @@
 
 + (UILabel *)setupMessageLabel:(NSString *)text;
 
++ (UILabel *)setupHomePageMessageLabel:(NSString *)text;
+
 @end

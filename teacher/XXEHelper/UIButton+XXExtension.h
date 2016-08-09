@@ -20,5 +20,8 @@
  *   @param color    倒计时中的文字
  */
 - (void)startWithTime:(NSInteger )timeLine title:(NSString *)title countDownTile:(NSString *)subTitle mColor:(UIColor *)mcolor countColor:(UIColor *)color;
+//创建logo
++ (UIButton *)creatSchoolIconImage:(NSString *)image target:(id)target action:(SEL)action floats:(CGFloat )floats;
 
++ (UIButton *)creatHomePageImage:(NSString *)image title:(NSString *)title target:(id)target action:(SEL)action;
 @end
