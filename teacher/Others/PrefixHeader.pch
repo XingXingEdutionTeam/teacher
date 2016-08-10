@@ -19,6 +19,7 @@
 #import "UILabel+XXExtension.h"
 #import "WJCommboxView.h"
 #import "XXEHeaderApi.h"
+<<<<<<< Updated upstream
 
 
 
@@ -75,6 +76,8 @@
 #define picURL    @"http://www.xingxingedu.cn/Public/"
 //rgb颜色转换
 #define UIColorFromRGB(r,g,b) [UIColor colorWithRed:r/255.0f green:g/255.0f blue:b/255.0f alpha:1.0f]
+=======
+>>>>>>> Stashed changes
 
 
 #endif /* PrefixHeader_pch */

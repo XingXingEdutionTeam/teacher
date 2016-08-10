@@ -12,11 +12,15 @@
 #import "XXEHomePageBottomView.h"
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+=======
+>>>>>>> Stashed changes
 #import "XXEHomePageApi.h"
 #import "XXEUserInfo.h"
 #import "XXEHomePageModel.h"
 #import "XXEHomePageSchoolModel.h"
 #import "XXEHomePageClassModel.h"
+<<<<<<< Updated upstream
 =======
 #import "XXEFlowerbasketViewController.h"
 
@@ -24,6 +28,8 @@
 =======
 #import "XXEFlowerbasketViewController.h"
 
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 
 @interface XXEHomePageViewController ()<XXEHomePageHeaderViewDelegate,XXEHomePageMiddleViewDelegate,XXEHomePageBottomViewDelegate>

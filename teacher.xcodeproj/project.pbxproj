@@ -1193,6 +1193,7 @@
 =======
 				0426D9A41D5AC86B000D7F6D /* SDWebImageDownloader.m in Sources */,
 >>>>>>> Stashed changes
+				9E50F4061D5B13B400FA6594 /* XXEHomePageClassModel.m in Sources */,
 				9EFDC8551D549DE1005556AF /* SpinerLayer.m in Sources */,
 				9EFDC8061D548014005556AF /* XXENavigationViewController.m in Sources */,
 				9E4813D71D50722400C614AC /* XXETabBarControllerConfig.m in Sources */,
@@ -1213,6 +1214,7 @@
 				0426D9681D5AC831000D7F6D /* XXEAccountManagerModel.m in Sources */,
 				0426D9691D5AC831000D7F6D /* XXEFlowerbasketModel.m in Sources */,
 >>>>>>> Stashed changes
+				9E50F3FC1D5ADC0A00FA6594 /* XXELoginApi.m in Sources */,
 				9E7D8A0D1D58576D0099BE78 /* UIButton+XXExtension.m in Sources */,
 				0426D9AE1D5AC86B000D7F6D /* UIView+WebCacheOperation.m in Sources */,
 				0426D9B01D5AC86B000D7F6D /* README.md in Sources */,
@@ -1243,6 +1245,9 @@
 				9ED146FC1D597D420049D2AA /* WJCommboxView.m in Sources */,
 				04FB3C0B1D5B14BC00B55C77 /* XXEFlowerbasketWithdrawCashApi.m in Sources */,
 >>>>>>> Stashed changes
+				9E50F3F91D5AC11300FA6594 /* XXEUserInfo.m in Sources */,
+				9ED146FC1D597D420049D2AA /* WJCommboxView.m in Sources */,
+				9E50F4001D5B0E9700FA6594 /* XXEHomePageModel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
