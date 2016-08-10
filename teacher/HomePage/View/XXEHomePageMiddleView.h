@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
+@class XXEHomePageModel;
 @protocol XXEHomePageMiddleViewDelegate <NSObject>
 
 @optional
@@ -24,6 +25,8 @@
 @interface XXEHomePageMiddleView : UIView
 
 @property (nonatomic, weak)id<XXEHomePageMiddleViewDelegate>delegate;
+
+@property (nonatomic, strong)XXEHomePageModel *homePageModel;
 
 /** 第一个花篮的按钮 */
 @property (nonatomic, strong)UIButton *homeMiddleFirstButton;

@@ -10,4 +10,6 @@
 
 @interface XXEHomePageApi : YTKRequest
 
+- (id)initWithHomePageXid:(NSString *)xid;
+
 @end

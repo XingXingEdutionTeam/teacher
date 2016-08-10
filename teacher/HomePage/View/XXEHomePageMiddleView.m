@@ -7,6 +7,7 @@
 //
 
 #import "XXEHomePageMiddleView.h"
+#import "XXEHomePageModel.h"
 
 @implementation XXEHomePageMiddleView
 

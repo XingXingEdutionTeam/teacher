@@ -22,7 +22,6 @@ PODS:
   - AFNetworking/UIKit (2.6.3):
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
-  - CYLTabBarController (1.2.2)
   - FMDB (2.6.2):
     - FMDB/standard (= 2.6.2)
   - FMDB/standard (2.6.2)
@@ -38,7 +37,6 @@ PODS:
     - AFNetworking (~> 2.0)
 
 DEPENDENCIES:
-  - CYLTabBarController
   - JSONModel
   - Masonry
   - MBProgressHUD (~> 0.9.1)
@@ -50,7 +48,6 @@ DEPENDENCIES:
 SPEC CHECKSUMS:
   AFDownloadRequestOperation: 748a1643423e1ddb23f2178f778087d4f0ae8ac7
   AFNetworking: cb8d14a848e831097108418f5d49217339d4eb60
-  CYLTabBarController: ae338979346b77c69ed0dab7853c9c10f231acef
   FMDB: 854a0341b4726e53276f2a8996f06f1b80f9259a
   JSONModel: 12523685c4b623553ccf844bbbf7007624317b2c
   Masonry: b529bb169217897b6354d4b56b1fada6d475b13d
@@ -60,6 +57,6 @@ SPEC CHECKSUMS:
   YTKKeyValueStore: 4d002941540dd5108fa23009b71e0f2f937f7a0f
   YTKNetwork: 988660d5fab310a55895239751ecfa74c3224a77
 
-PODFILE CHECKSUM: 0e2754292c8f70cafc4e9b5f047382d3d99166b2
+PODFILE CHECKSUM: 2e0ae847ac90cf26c6cb98b7a4cb12919bb47c24
 
 COCOAPODS: 1.0.1

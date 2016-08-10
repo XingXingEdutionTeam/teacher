@@ -9,6 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "ProgressView.h"
 
+@class XXEHomePageModel;
+@class XXEHomePageSchoolModel;
+@class XXEHomePageClassModel;
 @protocol XXEHomePageHeaderViewDelegate <NSObject>
 
 @optional
@@ -24,6 +27,10 @@
 
 @property (nonatomic, weak)id <XXEHomePageHeaderViewDelegate>delegate;
 
+@property (nonatomic, strong)XXEHomePageModel *homePageModel;
+@property (nonatomic, strong)XXEHomePageSchoolModel *homePageSchoolModel;
+@property (nonatomic, strong)XXEHomePageClassModel *homePageClassModel;
+
 /** 首页顶部左边按钮 */
 @property (nonatomic, strong)UIButton *homePageLeftButton;
 /** 首页顶部右边边按钮 */
@@ -34,6 +41,9 @@
 @property (nonatomic, strong)WJCommboxView *homeClassView;
 /** 用户头像 */
 @property (nonatomic, strong)UIImageView *homeUserImageView;
+/** 用户等级 */
+@property (nonatomic, strong)UILabel *homeUserLVLabel;
+
 /** 用户姓名 */
 @property (nonatomic, strong)UILabel *homeUserLabel;
 /** 用户年龄 */
@@ -44,4 +54,10 @@
 @property (nonatomic, strong)ProgressView *homeProgressView;
 /** 性别 */
 @property (nonatomic, strong)UIImageView *homeGenderImageView;
+
+/** 给视图添加数据 */
+- (void)configCellWithInfo:(XXEHomePageModel *)homePageModel;
+
+- (void)configCellWithInfo1:(XXEHomePageSchoolModel *)homePageSchoolModel;
+
 @end

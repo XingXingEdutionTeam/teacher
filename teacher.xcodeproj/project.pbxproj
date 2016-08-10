@@ -21,6 +21,11 @@
 		9E4813DD1D50784900C614AC /* XXEChatPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E4813DC1D50784900C614AC /* XXEChatPageViewController.m */; };
 		9E4813E01D50787100C614AC /* XXEFriendCirclePageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E4813DF1D50787100C614AC /* XXEFriendCirclePageViewController.m */; };
 		9E4813E31D50788300C614AC /* XXEMySelfPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E4813E21D50788300C614AC /* XXEMySelfPageViewController.m */; };
+		9E50F3F91D5AC11300FA6594 /* XXEUserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E50F3F61D5AC11300FA6594 /* XXEUserInfo.m */; };
+		9E50F3FC1D5ADC0A00FA6594 /* XXELoginApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E50F3FB1D5ADC0A00FA6594 /* XXELoginApi.m */; };
+		9E50F4001D5B0E9700FA6594 /* XXEHomePageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E50F3FF1D5B0E9700FA6594 /* XXEHomePageModel.m */; };
+		9E50F4031D5B139400FA6594 /* XXEHomePageSchoolModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E50F4021D5B139400FA6594 /* XXEHomePageSchoolModel.m */; };
+		9E50F4061D5B13B400FA6594 /* XXEHomePageClassModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E50F4051D5B13B400FA6594 /* XXEHomePageClassModel.m */; };
 		9E542DBC1D59C6A1002D7BC3 /* XXEHomePageBottomView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E542DBB1D59C6A1002D7BC3 /* XXEHomePageBottomView.m */; };
 		9E6912F51D54341F0000E566 /* XXEStarImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E6912F41D54341F0000E566 /* XXEStarImageViewController.m */; };
 		9E6912F81D5442AE0000E566 /* UIView+XXExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E6912F71D5442AE0000E566 /* UIView+XXExtension.m */; };
@@ -100,6 +105,17 @@
 		9E4813DF1D50787100C614AC /* XXEFriendCirclePageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXEFriendCirclePageViewController.m; sourceTree = "<group>"; };
 		9E4813E11D50788300C614AC /* XXEMySelfPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXEMySelfPageViewController.h; sourceTree = "<group>"; };
 		9E4813E21D50788300C614AC /* XXEMySelfPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXEMySelfPageViewController.m; sourceTree = "<group>"; };
+		9E50F3F61D5AC11300FA6594 /* XXEUserInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXEUserInfo.m; sourceTree = "<group>"; };
+		9E50F3F71D5AC11300FA6594 /* XXEUserInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXEUserInfo.h; sourceTree = "<group>"; };
+		9E50F3FA1D5ADC0A00FA6594 /* XXELoginApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXELoginApi.h; sourceTree = "<group>"; };
+		9E50F3FB1D5ADC0A00FA6594 /* XXELoginApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXELoginApi.m; sourceTree = "<group>"; };
+		9E50F3FD1D5ADDF700FA6594 /* XXEHeaderApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXEHeaderApi.h; sourceTree = "<group>"; };
+		9E50F3FE1D5B0E9700FA6594 /* XXEHomePageModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXEHomePageModel.h; sourceTree = "<group>"; };
+		9E50F3FF1D5B0E9700FA6594 /* XXEHomePageModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXEHomePageModel.m; sourceTree = "<group>"; };
+		9E50F4011D5B139400FA6594 /* XXEHomePageSchoolModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXEHomePageSchoolModel.h; sourceTree = "<group>"; };
+		9E50F4021D5B139400FA6594 /* XXEHomePageSchoolModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXEHomePageSchoolModel.m; sourceTree = "<group>"; };
+		9E50F4041D5B13B400FA6594 /* XXEHomePageClassModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXEHomePageClassModel.h; sourceTree = "<group>"; };
+		9E50F4051D5B13B400FA6594 /* XXEHomePageClassModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXEHomePageClassModel.m; sourceTree = "<group>"; };
 		9E542DBA1D59C6A1002D7BC3 /* XXEHomePageBottomView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXEHomePageBottomView.h; sourceTree = "<group>"; };
 		9E542DBB1D59C6A1002D7BC3 /* XXEHomePageBottomView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXEHomePageBottomView.m; sourceTree = "<group>"; };
 		9E6912F31D54341F0000E566 /* XXEStarImageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXEStarImageViewController.h; sourceTree = "<group>"; };
@@ -348,6 +364,12 @@
 		9E4813C01D50695200C614AC /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				9E50F3FE1D5B0E9700FA6594 /* XXEHomePageModel.h */,
+				9E50F3FF1D5B0E9700FA6594 /* XXEHomePageModel.m */,
+				9E50F4011D5B139400FA6594 /* XXEHomePageSchoolModel.h */,
+				9E50F4021D5B139400FA6594 /* XXEHomePageSchoolModel.m */,
+				9E50F4041D5B13B400FA6594 /* XXEHomePageClassModel.h */,
+				9E50F4051D5B13B400FA6594 /* XXEHomePageClassModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -444,6 +466,7 @@
 				9E48138E1D504D0900C614AC /* Assets.xcassets */,
 				9E4813901D504D0900C614AC /* LaunchScreen.storyboard */,
 				9E4813931D504D0900C614AC /* Info.plist */,
+				9E50F3FD1D5ADDF700FA6594 /* XXEHeaderApi.h */,
 				9EFDC8071D548418005556AF /* MacroDefine.h */,
 				9E4813CD1D506B1D00C614AC /* PrefixHeader.pch */,
 			);
@@ -492,6 +515,8 @@
 			children = (
 				9E28FC411D530EAD0003A208 /* XXELoginViewController.h */,
 				9E28FC421D530EAD0003A208 /* XXELoginViewController.m */,
+				9E50F3FA1D5ADC0A00FA6594 /* XXELoginApi.h */,
+				9E50F3FB1D5ADC0A00FA6594 /* XXELoginApi.m */,
 				9E7D8A0E1D585EA70099BE78 /* RegisterController */,
 				9E6912F31D54341F0000E566 /* XXEStarImageViewController.h */,
 				9E6912F41D54341F0000E566 /* XXEStarImageViewController.m */,
@@ -506,6 +531,8 @@
 		9E4813D31D506C6100C614AC /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				9E50F3F71D5AC11300FA6594 /* XXEUserInfo.h */,
+				9E50F3F61D5AC11300FA6594 /* XXEUserInfo.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -783,6 +810,7 @@
 				9E4813DD1D50784900C614AC /* XXEChatPageViewController.m in Sources */,
 				9E7D8A071D581A800099BE78 /* KTSheetCell.m in Sources */,
 				9EB2E9451D58A319004809D3 /* XXERegisterFourViewController.m in Sources */,
+				9E50F4061D5B13B400FA6594 /* XXEHomePageClassModel.m in Sources */,
 				9EFDC8551D549DE1005556AF /* SpinerLayer.m in Sources */,
 				9EFDC8061D548014005556AF /* XXENavigationViewController.m in Sources */,
 				9E4813D71D50722400C614AC /* XXETabBarControllerConfig.m in Sources */,
@@ -791,17 +819,21 @@
 				9E4813DA1D50783000C614AC /* XXEHomePageViewController.m in Sources */,
 				9EB2E93F1D5889B9004809D3 /* UILabel+XXExtension.m in Sources */,
 				9EFDC80A1D54848A005556AF /* UIFont+XXExtension.m in Sources */,
+				9E50F3FC1D5ADC0A00FA6594 /* XXELoginApi.m in Sources */,
 				9E7D8A0D1D58576D0099BE78 /* UIButton+XXExtension.m in Sources */,
 				9E4813E01D50787100C614AC /* XXEFriendCirclePageViewController.m in Sources */,
 				9E542DBC1D59C6A1002D7BC3 /* XXEHomePageBottomView.m in Sources */,
 				9ED146FF1D597DB40049D2AA /* XXEHomePageHeaderView.m in Sources */,
+				9E50F4031D5B139400FA6594 /* XXEHomePageSchoolModel.m in Sources */,
 				9E7D8A111D585ED00099BE78 /* XXERegisterSecondViewController.m in Sources */,
 				9E6912F51D54341F0000E566 /* XXEStarImageViewController.m in Sources */,
 				9E7D8A141D5872BE0099BE78 /* XXERegisterThreeViewController.m in Sources */,
 				9E4813841D504D0900C614AC /* main.m in Sources */,
 				9EFDC8541D549DE1005556AF /* HyLoglnButton.m in Sources */,
 				9E7D89FD1D5818F60099BE78 /* XXERegisterViewController.m in Sources */,
+				9E50F3F91D5AC11300FA6594 /* XXEUserInfo.m in Sources */,
 				9ED146FC1D597D420049D2AA /* WJCommboxView.m in Sources */,
+				9E50F4001D5B0E9700FA6594 /* XXEHomePageModel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

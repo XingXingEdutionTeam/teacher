@@ -11,6 +11,8 @@
 #import "XXETabBarControllerConfig.h"
 #import "XXERegisterViewController.h"
 #import "XXENavigationViewController.h"
+#import "XXELoginApi.h"
+#import "XXEUserInfo.h"
 
 @interface XXELoginViewController ()<UITextFieldDelegate>
 /** 用户名登录 */
@@ -28,6 +30,7 @@
 {
     if (!_userNameTextField) {
         _userNameTextField = [UITextField createTextFieldWithIsOpen:NO textPlaceholder:@"手机"];
+        _userNameTextField.delegate = self;
         _userNameTextField.borderStyle = UIKeyboardTypeNamePhonePad;
     }
     return _userNameTextField;
@@ -37,6 +40,7 @@
 {
     if (!_passWordTextField) {
         _passWordTextField = [UITextField createTextFieldWithIsOpen:YES textPlaceholder:@"密码"];
+        _passWordTextField.delegate = self;
         _passWordTextField.borderStyle = UIKeyboardTypeDefault;
     }
     return _passWordTextField;
@@ -123,9 +127,10 @@
     }];
  
     _loginButton = [[HyLoglnButton alloc]initWithFrame:CGRectMake(0, 0, KScreenWidth-40, 40*kScreenRatioHeight)];
+    _loginButton.userInteractionEnabled = NO;
     [_loginButton setTitle:@"登    录" forState:UIControlStateNormal];
     [_loginButton addTarget:self action:@selector(loginButtonClick:) forControlEvents:UIControlEventTouchUpInside];
-    _loginButton.backgroundColor = XXEColorFromRGB(0, 170, 42);
+    _loginButton.backgroundColor = XXEColorFromRGB(153, 153, 153);
     _loginButton.titleLabel.font = [UIFont systemFontOfSize:19];
     [_loginButton setTintColor:[UIColor whiteColor]];
     _loginButton.layer.cornerRadius = 20.0f*kScreenRatioWidth;
@@ -295,20 +300,59 @@
 #pragma mark - action - 按钮的点击方法
 - (void)loginButtonClick:(HyLoglnButton *)sender
 {
-    [self showHudWithString:@"正在登陆..."];
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        
-        [_loginButton ExitAnimationCompletion:^{
-            NSLog(@"---点击登录按钮-------");
+    if ([self isChinaMobile:self.userNameTextField.text] && [self detectionPassword:self.passWordTextField.text]) {
+
+        NSLog(@"可以登录");
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             
-            XXETabBarControllerConfig *tabBarControllerConfig = [[XXETabBarControllerConfig alloc]init];
-            UIWindow *window = [UIApplication sharedApplication].keyWindow;
-            window.rootViewController = tabBarControllerConfig;
-            [self.view removeFromSuperview];
-            
-        }];
-  });
-    
+            XXELoginApi *loginApi = [[XXELoginApi alloc]initLoginWithUserName:self.userNameTextField.text PassWord:self.passWordTextField.text];
+            [loginApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
+                
+                NSLog(@"%@",request.responseJSONObject);
+                NSDictionary *data = [request.responseJSONObject objectForKey:@"data"];
+                NSString *login_times = [data objectForKey:@"login_times"];
+                NSString *nickname = [data objectForKey:@"nickname"];
+                NSString *position = [data objectForKey:@"position"];
+                NSString *token = [data objectForKey:@"token"];
+                NSString *user_head_img = [data objectForKey:@"user_head_img"];
+                NSString *user_id = [data objectForKey:@"user_id"];
+                NSString *user_type = [data objectForKey:@"user_type"];
+                NSString *xid = [data objectForKey:@"xid"];
+                [XXEUserInfo user].login = YES;
+                NSDictionary *userInfo = @{@"account":self.userNameTextField.text,
+                                           @"login_times":login_times,
+                                           @"position":position,
+                                           @"nickname":nickname,
+                                           @"token":token,
+                                           @"user_head_img":user_head_img,
+                                           @"user_id":user_id,
+                                           @"user_type":user_type,
+                                           @"xid":xid,
+                                           @"loginStatus":[NSNumber numberWithBool:YES]
+                                           };
+                [[XXEUserInfo user] setupUserInfoWithUserInfo:userInfo];
+                
+                [_loginButton ExitAnimationCompletion:^{
+                    NSLog(@"---点击登录按钮-------");
+                    
+                    XXETabBarControllerConfig *tabBarControllerConfig = [[XXETabBarControllerConfig alloc]init];
+                    UIWindow *window = [UIApplication sharedApplication].keyWindow;
+                    window.rootViewController = tabBarControllerConfig;
+                    [self.view removeFromSuperview];
+                    
+                }];
+            } failure:^(__kindof YTKBaseRequest *request) {
+                
+                [_loginButton ErrorRevertAnimationCompletion:^{
+                    NSString *stringMsg = [request.responseJSONObject objectForKey:@"msg"];
+                    [self showHudWithString:stringMsg forSecond:2.f];
+                }];
+                
+            }];
+        });
+    } else {
+        [self showString:@"用户名或密码不能为空" forSecond:1.f];
+    }
 }
 
 - (void)showThePassWord:(UIButton *)sender
@@ -330,6 +374,7 @@
 
 - (void)registerButtonClick:(UIButton *)sender
 {
+    
     XXERegisterViewController *registerVC = [[XXERegisterViewController alloc]init];
     [self.navigationController pushViewController:registerVC animated:YES];
      NSLog(@"-----免费注册-----");
@@ -384,6 +429,74 @@
     [button setTitle:title forState:UIControlStateNormal];
     [button addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
     return button;
+}
+
+- (void)textFieldDidEndEditing:(UITextField *)textField
+{
+    if (textField == self.userNameTextField) {
+        if ([self isChinaMobile:textField.text]) {
+            NSLog(@"正确的用户名");
+            self.userNameTextField.text = textField.text;
+        } else {
+            [self showString:@"用户名不正确" forSecond:1.f];
+        }
+        
+    } else {
+        if ([self detectionPassword:textField.text]) {
+            self.passWordTextField.text = textField.text;
+            
+        } else {
+            
+        }
+    }
+    
+    if (![self.userNameTextField.text isEqual: @""] && ![self.passWordTextField.text  isEqual: @""]) {
+        
+        _loginButton.userInteractionEnabled = YES;
+        _loginButton.backgroundColor = XXEColorFromRGB(0, 170, 42);
+    }
+    
+}
+
+/** 判断用户名 */
+- (BOOL)isChinaMobile:(NSString *)phoneNum{
+    BOOL isChinaMobile = NO;
+    
+    NSString *CM = @"(^1(3[4-9]|4[7]|5[0-27-9]|7[8]|8[2-478])\\d{8}$)|(^1705\\d{7}$)";
+    NSPredicate *regextestcm = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", CM];
+    if([regextestcm evaluateWithObject:phoneNum] == YES){
+        isChinaMobile = YES;
+        //        NSLog(@"中国移动");
+    }
+    
+    NSString *CU = @"(^1(3[0-2]|4[5]|5[56]|7[6]|8[56])\\d{8}$)|(^1709\\d{7}$)";
+    NSPredicate *regextestcu = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", CU];
+    if([regextestcu evaluateWithObject:phoneNum] == YES){
+        isChinaMobile = YES;
+        //        NSLog(@"中国联通");
+    }
+    
+    NSString *CT = @"(^1(33|53|77|8[019])\\d{8}$)|(^1700\\d{7}$)";
+    NSPredicate *regextestct = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", CT];
+    if([regextestct evaluateWithObject:phoneNum] == YES){
+        isChinaMobile = YES;
+        //        NSLog(@"中国电信");
+    }
+    
+    return isChinaMobile;
+}
+
+/** 判断密码 */
+- (BOOL)detectionPassword:(NSString *)password{
+    if (!password || [password isEqualToString:@""]) {
+        [self showString:@"请输入密码" forSecond:1.f];
+        return NO;
+    }else if(password.length <= 16 && password.length >= 6){
+        return YES;
+    }else{
+        [self showString:@"密码仅支持6-16位字符，支持字母、数字" forSecond:1.f];
+        return NO;
+    }
 }
 
 

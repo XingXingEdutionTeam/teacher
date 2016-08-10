@@ -7,6 +7,9 @@
 //
 
 #import "XXEHomePageHeaderView.h"
+#import "XXEHomePageModel.h"
+#import "XXEHomePageSchoolModel.h"
+#import "XXEHomePageClassModel.h"
 
 @implementation XXEHomePageHeaderView
 
@@ -19,6 +22,43 @@
     }
     return self;
 }
+
+- (void)configCellWithInfo:(XXEHomePageModel *)homePageModel
+{
+    _homePageModel = homePageModel;
+    [self.homePageLeftButton setImage:[UIImage imageNamed:homePageModel.school_logo] forState:UIControlStateNormal];
+    NSString *stringImage = [NSString stringWithFormat:@"%@%@",kXXEPicURL,homePageModel.head_img];
+    self.homeUserImageView.image = [UIImage imageNamed:stringImage];
+    self.homeUserLabel.text = homePageModel.tname;
+    self.homeUserLVLabel.text = homePageModel.lv;
+    self.homeUserAgeLabel.text = homePageModel.age;
+    self.homeUserSignatureLabel.text = homePageModel.personal_sign;
+    self.homeSchoolView.dataArray = homePageModel.school_info;
+    if ([homePageModel.sex isEqualToString:@"女"]) {
+        self.homeGenderImageView.image = [UIImage imageNamed:@""];
+    }else {
+        self.homeGenderImageView.image = [UIImage imageNamed:@""];
+    }
+    
+    
+    
+}
+
+- (void)configCellWithInfo1:(XXEHomePageSchoolModel *)homePageSchoolModel
+{
+    NSLog(@"班级是什么 %@",homePageSchoolModel.school_name);
+    
+}
+
+
+
+//- (void)setHomePageSchoolModel:(XXEHomePageSchoolModel *)homePageSchoolModel
+//{
+//    _homePageSchoolModel = homePageSchoolModel;
+//    self.homeClassView.dataArray = homePageSchoolModel.class_info;
+//}
+
+
 
 - (void)creatHomeHeaderView
 {
@@ -111,6 +151,8 @@
         make.top.equalTo(weakSelf.homeUserSignatureLabel.mas_bottom).offset(5*kScreenRatioHeight);
         make.size.mas_equalTo(CGSizeMake(159*kScreenRatioWidth, 3));
     }];
+    
+    
     
 }
 

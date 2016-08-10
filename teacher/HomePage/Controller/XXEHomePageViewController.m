@@ -10,12 +10,38 @@
 #import "XXEHomePageHeaderView.h"
 #import "XXEHomePageMiddleView.h"
 #import "XXEHomePageBottomView.h"
+#import "XXEHomePageApi.h"
+#import "XXEUserInfo.h"
+#import "XXEHomePageModel.h"
+#import "XXEHomePageSchoolModel.h"
+#import "XXEHomePageClassModel.h"
 
 @interface XXEHomePageViewController ()<XXEHomePageHeaderViewDelegate,XXEHomePageMiddleViewDelegate,XXEHomePageBottomViewDelegate>
+@property (nonatomic, strong)NSMutableArray *schoolDatasource;//学校信息
+@property (nonatomic, strong)NSMutableArray *classDatasource;//班级信息
+
+@property (nonatomic, strong)XXEHomePageHeaderView *headView;
+@property (nonatomic, strong)XXEHomePageMiddleView *middleView;
 
 @end
 
 @implementation XXEHomePageViewController
+
+- (NSMutableArray *)schoolDatasource
+{
+    if (!_schoolDatasource) {
+        _schoolDatasource = [NSMutableArray array];
+    }
+    return _schoolDatasource;
+}
+
+- (NSMutableArray *)classDatasource
+{
+    if (!_classDatasource) {
+        _classDatasource = [NSMutableArray array];
+    }
+    return _classDatasource;
+}
 
 - (void)viewWillAppear:(BOOL)animated
 {
@@ -29,26 +55,31 @@
     return UIStatusBarStyleLightContent;
 }
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+}
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     NSLog(@"首页控制器");
     
-    XXEHomePageHeaderView *view = [[XXEHomePageHeaderView alloc]init];
-    view.frame = CGRectMake(0, 0, KScreenWidth, 276*kScreenRatioHeight);
-    view.delegate = self;
-    XXEHomePageMiddleView *view1 = [[XXEHomePageMiddleView alloc]initWithFrame:CGRectMake(0, 276*kScreenRatioHeight, KScreenWidth, 43*kScreenRatioHeight)];
-    view1.delegate = self;
+    //获取数据
+    [self setupHomePageRequeue];
     
-    XXEHomePageBottomView *view2 = [[XXEHomePageBottomView alloc]initWithFrame:CGRectMake(0, view1.frame.origin.y+43*kScreenRatioHeight, KScreenWidth, 290*kScreenRatioHeight)];
-    view2.delegate = self;
-    [self.view addSubview:view2];
+    self.headView = [[XXEHomePageHeaderView alloc]init];
+    self.headView.frame = CGRectMake(0, 0, KScreenWidth, 276*kScreenRatioHeight);
+    self.headView.delegate = self;
+    self.middleView = [[XXEHomePageMiddleView alloc]initWithFrame:CGRectMake(0, 276*kScreenRatioHeight, KScreenWidth, 43*kScreenRatioHeight)];
+    self.middleView.delegate = self;
     
-    [self.view addSubview:view1];
-    
-    [self.view addSubview:view];
-    
+    XXEHomePageBottomView *bottomView = [[XXEHomePageBottomView alloc]initWithFrame:CGRectMake(0, self.middleView.frame.origin.y+43*kScreenRatioHeight, KScreenWidth, 290*kScreenRatioHeight)];
+    bottomView.delegate = self;
+    [self.view addSubview:bottomView];
+    [self.view addSubview:self.middleView];
+    [self.view addSubview:self.headView];
 }
 
 #pragma mark - 点击代理方法 Delegate
@@ -127,7 +158,31 @@
 
 
 
-
+#pragma mark - 获取数据
+- (void)setupHomePageRequeue
+{
+    NSString *strngXid;
+    if ([XXEUserInfo user].login) {
+        strngXid = [XXEUserInfo user].xid;
+    }else {
+        strngXid = @"18886389";
+    }
+    XXEHomePageApi *homePageApi = [[XXEHomePageApi alloc]initWithHomePageXid:strngXid];
+    [homePageApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
+        NSLog(@"%@",[request.responseJSONObject objectForKey:@"data"] );
+        NSDictionary *data = [request.responseJSONObject objectForKey:@"data"];
+        XXEHomePageModel *model = [[XXEHomePageModel alloc]initWithDictionary:data error:nil];
+        NSLog(@"%lu",(unsigned long)model);
+//        [self.headView configCellWithInfo:model];
+//        for (int i =0 ; i < model.school_info.count; i++) {
+//            [self.headView configCellWithInfo1:model.school_info[i]];
+//        }
+//        
+        
+    } failure:^(__kindof YTKBaseRequest *request) {
+        
+    }];
+}
 
 
 
