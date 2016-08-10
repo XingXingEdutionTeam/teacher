@@ -44,6 +44,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>SDWebImage.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>YTKKeyValueStore.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -62,12 +67,27 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>11EA78DD5955C185C798B043E34AB919</key>
+		<key>0E3FB94A8E82E5C232C4DC19BCE95358</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
 		<key>28EDA0AC3272A77B0575F728B99261BC</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>34EE980798718AB70D1B52E80B8AEB1A</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>435A22F15DADC4EBF43026F1C739D592</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>458E1B51834D9F97795D199E78AFBF0F</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -92,17 +112,7 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>B4C4F2CD5EE3EE4A853E3582DDB71538</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
 		<key>FE2F1D7B9D9FCEA148517E4657B243F4</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>FFF3D1C1E473ED27675C98779A4E7915</key>
 		<dict>
 			<key>primary</key>
 			<true/>

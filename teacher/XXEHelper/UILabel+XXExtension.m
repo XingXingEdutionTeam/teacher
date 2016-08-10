@@ -34,28 +34,4 @@
 }
 
 
-
-#pragma mark 创建UILable
-+(UILabel *)createLabelWithFrame:(CGRect )frame Font:(int)font Text:(NSString *)text{
-    UILabel *myLabel = [[UILabel alloc]initWithFrame:frame];
-    myLabel.numberOfLines = 0;//限制行数
-    myLabel.textAlignment = NSTextAlignmentLeft;//对齐的方式
-    myLabel.backgroundColor = [UIColor clearColor];//背景色
-    myLabel.font = [UIFont systemFontOfSize:font];//字号
-    myLabel.textColor = [UIColor blackColor];//颜色默认是白色，现在默认是黑色
-    //NSLineBreakByCharWrapping以单词为单位换行，以单词为阶段换行
-    // NSLineBreakByCharWrapping
-    myLabel.lineBreakMode = NSLineBreakByCharWrapping;
-    /*
-     UIBaselineAdjustmentAlignBaselines文本最上端和label的中线对齐
-     UIBaselineAdjustmentAlignCenters 文本中线和label中线对齐
-     UIBaselineAdjustmentNone  文本最下端和label中线对齐
-     */
-    myLabel.baselineAdjustment = UIBaselineAdjustmentAlignCenters;
-    myLabel.text = text;
-    return myLabel;
-    
-}
-
-
 @end

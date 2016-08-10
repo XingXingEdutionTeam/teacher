@@ -14,8 +14,4 @@
 
 + (UILabel *)setupHomePageMessageLabel:(NSString *)text;
 
-#pragma mark 创建UILable
-+(UILabel *)createLabelWithFrame:(CGRect )frame Font:(int)font Text:(NSString *)text;
-
-
 @end
