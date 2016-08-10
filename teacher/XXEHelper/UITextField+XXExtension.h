@@ -12,4 +12,8 @@
 
 + (UITextField *)createTextFieldWithIsOpen:(BOOL)open textPlaceholder:(NSString *)placeholderText;
 
+#pragma mark 创建UITextField
++(UITextField *)createTextFieldWithFrame:(CGRect)frame placeholder:(NSString *)placeholder passWord:(BOOL)yesOrNo leftImageView:(UIImageView *)imageView rightImageView:(UIImageView *)rightImageView Font:(float)font;
+
+
 @end

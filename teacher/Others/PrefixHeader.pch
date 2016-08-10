@@ -21,4 +21,60 @@
 #import "XXEHeaderApi.h"
 
 
+
+#import <YTKNetwork/YTKRequest.h>
+#import "XXEHttpTool.h"
+#import "UIImageView+WebCache.h"
+#import <UIKit/UIKit.h>
+#import<Foundation/Foundation.h>
+#import <MJRefresh/MJRefresh.h>
+#import "SVProgressHUD.h"
+#import "UIButton+XXExtension.h"
+#import "UILabel+XXExtension.h"
+#import "UIFont+XXExtension.h"
+#import "XXETool.h"
+
+#define XID  @"18886389"
+#define APPKEY  @"U3k8Dgj7e934bh5Y"
+#define BACKTYPE @"json"
+#define USER_ID  @"1"
+#define USER_TYPE @"2"
+
+
+#define KWidth [UIScreen mainScreen].bounds.size.width
+#define KHeight [UIScreen mainScreen].bounds.size.height
+
+#define picURL    @"http://www.xingxingedu.cn/Public/"
+//rgb颜色转换
+#define UIColorFromRGB(r,g,b) [UIColor colorWithRed:r/255.0f green:g/255.0f blue:b/255.0f alpha:1.0f]
+
+
+
+#import <YTKNetwork/YTKRequest.h>
+#import "XXEHttpTool.h"
+#import "UIImageView+WebCache.h"
+#import <UIKit/UIKit.h>
+#import<Foundation/Foundation.h>
+#import <MJRefresh/MJRefresh.h>
+#import "SVProgressHUD.h"
+#import "UIButton+XXExtension.h"
+#import "UILabel+XXExtension.h"
+#import "UIFont+XXExtension.h"
+#import "XXETool.h"
+
+#define XID  @"18886389"
+#define APPKEY  @"U3k8Dgj7e934bh5Y"
+#define BACKTYPE @"json"
+#define USER_ID  @"1"
+#define USER_TYPE @"2"
+
+
+#define KWidth [UIScreen mainScreen].bounds.size.width
+#define KHeight [UIScreen mainScreen].bounds.size.height
+
+#define picURL    @"http://www.xingxingedu.cn/Public/"
+//rgb颜色转换
+#define UIColorFromRGB(r,g,b) [UIColor colorWithRed:r/255.0f green:g/255.0f blue:b/255.0f alpha:1.0f]
+
+
 #endif /* PrefixHeader_pch */
