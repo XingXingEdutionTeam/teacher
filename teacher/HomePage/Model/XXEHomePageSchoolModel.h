@@ -20,9 +20,7 @@
 @property (nonatomic, copy)NSString <Optional>*school_id;
 /** 学校类型:其他模块也都需要这个参数 */
 @property (nonatomic, copy)NSString <Optional>*school_type;
-
 /** 一个学校对应的班级 */
 @property (nonatomic, strong)NSArray <XXEHomePageClassModel>*class_info;
-
 
 @end

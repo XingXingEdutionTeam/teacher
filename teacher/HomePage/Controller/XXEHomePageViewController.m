@@ -17,8 +17,8 @@
 #import "XXEHomePageClassModel.h"
 
 @interface XXEHomePageViewController ()<XXEHomePageHeaderViewDelegate,XXEHomePageMiddleViewDelegate,XXEHomePageBottomViewDelegate>
-@property (nonatomic, strong)NSMutableArray *schoolDatasource;//学校信息
-@property (nonatomic, strong)NSMutableArray *classDatasource;//班级信息
+//@property (nonatomic, strong)NSMutableArray *schoolDatasource;//学校信息
+//@property (nonatomic, strong)NSMutableArray *classDatasource;//班级信息
 
 @property (nonatomic, strong)XXEHomePageHeaderView *headView;
 @property (nonatomic, strong)XXEHomePageMiddleView *middleView;
@@ -27,21 +27,21 @@
 
 @implementation XXEHomePageViewController
 
-- (NSMutableArray *)schoolDatasource
-{
-    if (!_schoolDatasource) {
-        _schoolDatasource = [NSMutableArray array];
-    }
-    return _schoolDatasource;
-}
-
-- (NSMutableArray *)classDatasource
-{
-    if (!_classDatasource) {
-        _classDatasource = [NSMutableArray array];
-    }
-    return _classDatasource;
-}
+//- (NSMutableArray *)schoolDatasource
+//{
+//    if (!_schoolDatasource) {
+//        _schoolDatasource = [NSMutableArray array];
+//    }
+//    return _schoolDatasource;
+//}
+//
+//- (NSMutableArray *)classDatasource
+//{
+//    if (!_classDatasource) {
+//        _classDatasource = [NSMutableArray array];
+//    }
+//    return _classDatasource;
+//}
 
 - (void)viewWillAppear:(BOOL)animated
 {
@@ -172,12 +172,8 @@
         NSLog(@"%@",[request.responseJSONObject objectForKey:@"data"] );
         NSDictionary *data = [request.responseJSONObject objectForKey:@"data"];
         XXEHomePageModel *model = [[XXEHomePageModel alloc]initWithDictionary:data error:nil];
-        NSLog(@"%lu",(unsigned long)model);
-//        [self.headView configCellWithInfo:model];
-//        for (int i =0 ; i < model.school_info.count; i++) {
-//            [self.headView configCellWithInfo1:model.school_info[i]];
-//        }
-//        
+        NSLog(@"%@",model);
+        [self.headView configCellWithInfo:model];
         
     } failure:^(__kindof YTKBaseRequest *request) {
         

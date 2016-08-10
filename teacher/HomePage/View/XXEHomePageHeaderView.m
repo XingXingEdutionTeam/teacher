@@ -11,7 +11,30 @@
 #import "XXEHomePageSchoolModel.h"
 #import "XXEHomePageClassModel.h"
 
+@interface XXEHomePageHeaderView ()
+
+@property (nonatomic, strong)NSMutableArray *schoolDatasource;
+@property (nonatomic, strong)NSMutableArray *classDatasource;
+
+@end
+
 @implementation XXEHomePageHeaderView
+
+- (NSMutableArray *)schoolDatasource
+{
+    if (!_schoolDatasource) {
+        _schoolDatasource = [NSMutableArray array];
+    }
+    return _schoolDatasource;
+}
+
+- (NSMutableArray *)classDatasource
+{
+    if (!_classDatasource) {
+        _classDatasource = [NSMutableArray array];
+    }
+    return _classDatasource;
+}
 
 - (instancetype)initWithFrame:(CGRect)frame
 {
@@ -40,17 +63,16 @@
         self.homeGenderImageView.image = [UIImage imageNamed:@""];
     }
     
-    
-    
+    for (int i =0; i < self.homePageModel.school_info.count; i++) {
+        
+        XXEHomePageSchoolModel *schoolInfo = ((XXEHomePageSchoolModel *)(self.homePageModel.school_info[i]));
+        NSLog(@"学校名字%@",schoolInfo.school_name);
+        NSLog(@"班级个数%lu",schoolInfo.class_info.count);
+        for (XXEHomePageClassModel *classInfo in schoolInfo.class_info) {
+            NSLog(@"班级名字:%@",classInfo.class_name);
+        }
+    }
 }
-
-- (void)configCellWithInfo1:(XXEHomePageSchoolModel *)homePageSchoolModel
-{
-    NSLog(@"班级是什么 %@",homePageSchoolModel.school_name);
-    
-}
-
-
 
 //- (void)setHomePageSchoolModel:(XXEHomePageSchoolModel *)homePageSchoolModel
 //{
@@ -151,11 +173,7 @@
         make.top.equalTo(weakSelf.homeUserSignatureLabel.mas_bottom).offset(5*kScreenRatioHeight);
         make.size.mas_equalTo(CGSizeMake(159*kScreenRatioWidth, 3));
     }];
-    
-    
-    
 }
-
 
 
 #pragma mark - 点击按钮相应对应的事件

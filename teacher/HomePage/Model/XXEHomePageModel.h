@@ -39,5 +39,4 @@
 /** 学校数组 */
 @property (nonatomic, strong)NSArray <XXEHomePageSchoolModel>*school_info;
 
-
 @end
