@@ -16,6 +16,7 @@
 #import "XXEHomePageSchoolModel.h"
 #import "XXEHomePageClassModel.h"
 #import "XXEFlowerbasketViewController.h"
+#import "XXEXingCoinViewController.h"
 
 
 @interface XXEHomePageViewController ()<XXEHomePageHeaderViewDelegate,XXEHomePageMiddleViewDelegate,XXEHomePageBottomViewDelegate>
@@ -112,6 +113,11 @@
 - (void)homeMiddleThreeButtonClick
 {
     NSLog(@"----猩币点击事件---");
+    XXEXingCoinViewController *xingCoinVC = [[XXEXingCoinViewController alloc] init];
+    [self.navigationController pushViewController:xingCoinVC animated:YES];
+    
+    
+    
 }
 
 //下部视图点击相应的方法

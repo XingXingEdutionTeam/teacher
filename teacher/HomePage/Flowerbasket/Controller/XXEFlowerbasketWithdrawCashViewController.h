@@ -37,6 +37,8 @@
 @property (nonatomic, copy) NSString *aliPayAccountStr;
 //账号 全部 明文 显示
 @property (nonatomic, copy) NSString *accountStr;
+//account_id
+@property (nonatomic, copy) NSString *account_id;
 
 
 - (IBAction)certenButton:(UIButton *)sender;

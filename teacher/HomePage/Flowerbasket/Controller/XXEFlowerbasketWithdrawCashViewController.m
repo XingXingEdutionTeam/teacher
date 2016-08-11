@@ -44,8 +44,6 @@
     [self createRightBar];
     
     [self fetchNetData];
-//    _str = @"1";
-    
 }
 
 - (void)createRightBar{
@@ -124,57 +122,17 @@
         
         [self showHudWithString:@"请输入支付宝账户" forSecond:1.5];
         
-    }
-    else if ([_numberTextField.text isEqualToString:@""]){
+    }else if ([_numberTextField.text isEqualToString:@""]){
 
         [self showHudWithString:@"请输入花篮数" forSecond:1.5];
         
-    }
-    else if ([_numberTextField.text  integerValue] > [_fbasket_able integerValue]){
+    }else if ([_numberTextField.text  integerValue] > [_fbasket_able integerValue]){
 
         [self showHudWithString:@"目前最多可提现5朵花篮" forSecond:1.5];
-    }
-    else if ([_nameTextField.text isEqualToString:@""]){
+    }else if ([_nameTextField.text isEqualToString:@""]){
 
         [self showHudWithString:@"请输入姓名" forSecond:1.5];
-    }
-    
-    else{
-        
-        
-//        __block XXEFlowerbasketWithdrawCashViewController *blockSelf = self;
-//        self.zctView = [ZCTradeView tradeView];
-//        
-//        [self.zctView showInView:self.view.window];
-//        self.zctView.delegate = self;
-//        self.zctView.finish = ^(NSString *passWord){
-//            
-//            NSLog(@"  passWord %@ ",passWord);
-//            
-//            [blockSelf.zctView hidenKeyboard];
-//            
-//            if ([passWord isEqualToString:blockSelf.str]) {
-//                NSLog(@"密码成功");
-//                UIAlertController *alert=[UIAlertController alertControllerWithTitle:@"确定提现到支付宝？" message:nil preferredStyle:(UIAlertControllerStyleAlert)];
-//                UIAlertAction *cancel=[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
-//                UIAlertAction *ok=[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-//                    [SVProgressHUD showSuccessWithStatus:@"提交成功，平台将在5个工作日之内审核请求"];
-//                    [blockSelf.navigationController popViewControllerAnimated:YES];
-//                }];
-//                [alert addAction:ok];
-//                [alert addAction:cancel];
-//                [blockSelf presentViewController:alert animated:YES completion:nil];
-//                
-//                
-//                
-//                return ;
-//            }else{
-//                
-//                UIAlertView *al = [[UIAlertView alloc]initWithTitle:@"支付密码错误" message:nil delegate:blockSelf cancelButtonTitle:@"重试" otherButtonTitles:@"忘记密码", nil];
-//                [al show];
-//                NSLog(@"密码错误");
-//            }
-//        };
+    }else{
         
         [self submitAccountInfo];
         
@@ -185,33 +143,26 @@
 }
 
 - (void)submitAccountInfo{
-    NSLog(@"账号%@ ---  数量%@", _accountStr, _numberTextField.text);
+//    NSLog(@"账号%@ ---  数量%@", _account_id, _numberTextField.text);
+    //账号13818657742 ---  数量1
     
-    
-        XXEFlowerbasketSubmitAccountInfoApi *flowerbasketSubmitAccountInfoApi = [[XXEFlowerbasketSubmitAccountInfoApi alloc] initWithUrlString:submitUrl appkey:APPKEY backtype:BACKTYPE xid:XID user_id:USER_ID user_type:USER_TYPE account_id:_accountStr num:_numberTextField.text];
+        XXEFlowerbasketSubmitAccountInfoApi *flowerbasketSubmitAccountInfoApi = [[XXEFlowerbasketSubmitAccountInfoApi alloc] initWithUrlString:submitUrl appkey:APPKEY backtype:BACKTYPE xid:XID user_id:USER_ID user_type:USER_TYPE account_id:self.account_id num:_numberTextField.text];
         [flowerbasketSubmitAccountInfoApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
             
-            NSLog(@"hahahah %@", request.responseJSONObject);
+//            NSLog(@"hahahah %@", request.responseJSONObject);
             
-            //        NSString *codeStr = [NSString stringWithFormat:@"%@", request.responseJSONObject[@"code"]];
-            //
-            //        if ([codeStr isEqualToString:@"1"]) {
-            //            NSDictionary *dict = request.responseJSONObject[@"data"];
-            //
-            //            _fbasket_able = dict[@"fbasket_able"];
-            //
-            //            _fbasket_value = dict[@"fbasket_value"];
-            //
-            //            _fbasket_commission_per = dict[@"fbasket_commission_per"];
-            //
-            //        }else{
-            //
-            //        }
-            //        [self createContent];
+                    NSString *codeStr = [NSString stringWithFormat:@"%@", request.responseJSONObject[@"code"]];
+            
+                    if ([codeStr isEqualToString:@"1"]) {
+                        [self showHudWithString:@"提现成功!" forSecond:1.5 ];
+                    }else{
+            
+                    }
+                    [self createContent];
             
         } failure:^(__kindof YTKBaseRequest *request) {
             
-            [self showString:@"请求失败" forSecond:1.f];
+            [self showString:@"请求失败" forSecond:1.5f];
         }];
 
 

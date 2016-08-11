@@ -16,6 +16,8 @@
 #import "XXEAccountManagerModel.h"
 #import "XXEFlowerbasketWithdrawCashViewController.h"
 #import "XXEAccountManagerApi.h"
+#import "XXEFlowerbasketAddAccountViewController.h"
+
 
 #define URL @"http://www.xingxingedu.cn/Teacher/financial_account_list"
 
@@ -30,6 +32,9 @@
 
 //账号 全部 明文显示
 @property (nonatomic, strong) NSMutableArray *accountArray;
+
+//账号  id
+@property (nonatomic, strong) NSMutableArray *account_idArray;
 
 @end
 
@@ -55,19 +60,16 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    
-    
     self.title =@"账号管理";
+    
+    _aliPayAccountArray = [[NSMutableArray alloc] init];
+    _accountArray = [[NSMutableArray alloc] init];
+    _account_idArray = [[NSMutableArray alloc] init];
    
     [self createRightBar];
     
-    
-//    [self fetchNetData];
-    
     [self createTableView];
-    
-    
+
 }
 - (void)createRightBar{
     
@@ -77,9 +79,11 @@
     
 }
 - (void)add{
-    //提现
-//    AddAccountViewController *addAccountVC =[[AddAccountViewController alloc]init];
-//    [self.navigationController pushViewController:addAccountVC animated:NO];
+    //添加账户
+    XXEFlowerbasketAddAccountViewController *flowerbasketAddAccountVC =[[XXEFlowerbasketAddAccountViewController alloc]init];
+    
+//    [self.navigationController pushViewController:flowerbasketAddAccountVC animated:YES];
+    [self.navigationController pushViewController:flowerbasketAddAccountVC animated:YES];
     
 }
 
@@ -103,8 +107,6 @@
         
         if ([codeStr isEqualToString:@"1"]) {
             _dataSourceArray = [[NSMutableArray alloc] init];
-            _aliPayAccountArray = [[NSMutableArray alloc] init];
-            _accountArray = [[NSMutableArray alloc] init];
             
             NSArray *modelArray = [XXEAccountManagerModel parseResondsData:request.responseJSONObject[@"data"]];
             
@@ -204,6 +206,8 @@
     if (cell == nil) {
         cell = [[[NSBundle mainBundle] loadNibNamed:@"XXEAccountManagerTableViewCell" owner:self options:nil]lastObject];
     }
+    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    
     XXEAccountManagerModel *model = _dataSourceArray[indexPath.row];
     cell.iconImageView.image = [UIImage imageNamed:@"home_flowerbasket_zhifubaoZB"];
     cell.iconImageView.layer.cornerRadius = cell.iconImageView.frame.size.width / 2;
@@ -218,7 +222,8 @@
     
     //账号  全部 明文 显示
     [_accountArray addObject:model.account];
-   
+    //账号 id
+    [_account_idArray addObject:model.idStr];
     
     return cell;
     
@@ -240,6 +245,9 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
 
     XXEFlowerbasketWithdrawCashViewController *XXEFlowerbasketWithdrawCashVC = [[XXEFlowerbasketWithdrawCashViewController alloc] init];
+    
+    //[id] => 1		//此id操作提现时作为传参(account_id)
+    XXEFlowerbasketWithdrawCashVC.account_id = _account_idArray[indexPath.row];
     
     XXEFlowerbasketWithdrawCashVC.aliPayAccountStr = _aliPayAccountArray[indexPath.row];
     XXEFlowerbasketWithdrawCashVC.accountStr = _accountArray[indexPath.row];

@@ -33,7 +33,9 @@
 
 
 - (void)viewWillAppear:(BOOL)animated{
-    page = 1;
+    _dataSourceArray = [[NSMutableArray alloc] init];
+    
+    page = 0;
     
     [_myTableView reloadData];
     
@@ -42,7 +44,6 @@
 {
     [super viewDidAppear:animated];
     
-    //    self.tabBarController.navigationItem.rightBarButtonItem = nil;
     [_myTableView.mj_header beginRefreshing];
 }
 
@@ -55,11 +56,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-//    _dataSourceArray = [[NSMutableArray alloc] init];
-    
     self.title = @"花篮提现记录";
-    
-    //    [self fetchNetData];
     
     [self createTableView];
     
@@ -71,18 +68,17 @@
      【花篮->花篮提现记录】
      
      接口类型:1
-     
      接口:
      http://www.xingxingedu.cn/Teacher/fbasket_withdraw_record
      
      传参:
      */
     
-//    NSString *pageStr = [NSString stringWithFormat:@"%ld", page];
+    NSString *pageStr = [NSString stringWithFormat:@"%ld", page];
     
-    XXEFlowerbasketSentHistoryApi *flowerbasketSentHistoryApi = [[XXEFlowerbasketSentHistoryApi alloc] initWithUrlString:URL appkey:APPKEY backtype:BACKTYPE xid:XID user_id:USER_ID user_type:USER_TYPE];
+    XXEFlowerbasketSentHistoryApi *flowerbasketSentHistoryApi = [[XXEFlowerbasketSentHistoryApi alloc] initWithUrlString:URL appkey:APPKEY backtype:BACKTYPE xid:XID user_id:USER_ID user_type:USER_TYPE page:pageStr];
     [flowerbasketSentHistoryApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
-        _dataSourceArray = [[NSMutableArray alloc] init];
+        
         //        NSLog(@"111   %@", request.responseJSONObject);
         
         NSString *codeStr = [NSString stringWithFormat:@"%@", request.responseJSONObject[@"code"]];
@@ -98,8 +94,6 @@
         [self customContent];
         
     } failure:^(__kindof YTKBaseRequest *request) {
-        //
-//        NSLog(@"222  %@", request);
         
         [self showString:@"请求失败" forSecond:1.f];
     }];
@@ -148,6 +142,7 @@
 }
 
 -(void)loadNewData{
+    page ++ ;
     
     [self fetchNetData];
     [ _myTableView.mj_header endRefreshing];

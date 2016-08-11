@@ -17,12 +17,6 @@
 		048754991D5C0BF200F680C5 /* XXEFlowerbasketViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 048754701D5C0BF200F680C5 /* XXEFlowerbasketViewController.m */; };
 		0487549A1D5C0BF200F680C5 /* XXEFlowerbasketWithdrawCashViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 048754721D5C0BF200F680C5 /* XXEFlowerbasketWithdrawCashViewController.m */; };
 		0487549B1D5C0BF200F680C5 /* XXEFlowerbasketWithdrawCashViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 048754731D5C0BF200F680C5 /* XXEFlowerbasketWithdrawCashViewController.xib */; };
-		0487549C1D5C0BF200F680C5 /* NSString+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 048754761D5C0BF200F680C5 /* NSString+Extension.m */; };
-		0487549D1D5C0BF200F680C5 /* trade.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 048754771D5C0BF200F680C5 /* trade.bundle */; };
-		0487549E1D5C0BF200F680C5 /* UIAlertView+Quick.m in Sources */ = {isa = PBXBuildFile; fileRef = 048754791D5C0BF200F680C5 /* UIAlertView+Quick.m */; };
-		0487549F1D5C0BF200F680C5 /* UIView+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 0487547B1D5C0BF200F680C5 /* UIView+Extension.m */; };
-		048754A01D5C0BF200F680C5 /* ZCTradeInputView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0487547D1D5C0BF200F680C5 /* ZCTradeInputView.m */; };
-		048754A11D5C0BF200F680C5 /* ZCTradeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0487547F1D5C0BF200F680C5 /* ZCTradeView.m */; };
 		048754A21D5C0BF200F680C5 /* XXEAccountManagerModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 048754821D5C0BF200F680C5 /* XXEAccountManagerModel.m */; };
 		048754A31D5C0BF200F680C5 /* XXEFlowerbasketModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 048754841D5C0BF200F680C5 /* XXEFlowerbasketModel.m */; };
 		048754A41D5C0BF200F680C5 /* XXEFlowerbasketSentHistoryModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 048754861D5C0BF200F680C5 /* XXEFlowerbasketSentHistoryModel.m */; };
@@ -32,6 +26,20 @@
 		048754A81D5C0BF200F680C5 /* XXEFlowerbasketSentHistoryTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0487548D1D5C0BF200F680C5 /* XXEFlowerbasketSentHistoryTableViewCell.xib */; };
 		048754A91D5C0BF200F680C5 /* XXEFlowerbasketTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0487548F1D5C0BF200F680C5 /* XXEFlowerbasketTableViewCell.m */; };
 		048754AA1D5C0BF200F680C5 /* XXEFlowerbasketTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 048754901D5C0BF200F680C5 /* XXEFlowerbasketTableViewCell.xib */; };
+		048F586E1D5C1E1A002E4855 /* XXEFlowerbasketAddAccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 048F586C1D5C1E1A002E4855 /* XXEFlowerbasketAddAccountViewController.m */; };
+		048F58721D5C271A002E4855 /* XXEFlowerbasketAddAccountApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 048F58711D5C271A002E4855 /* XXEFlowerbasketAddAccountApi.m */; };
+		048F587A1D5C5402002E4855 /* XXEXingCoinViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 048F58791D5C5402002E4855 /* XXEXingCoinViewController.m */; };
+		048F587D1D5C6BDB002E4855 /* XXEXingCoinApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 048F587C1D5C6BDB002E4855 /* XXEXingCoinApi.m */; };
+		048F58801D5C7A3A002E4855 /* XXEXingCoinHistoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 048F587F1D5C7A3A002E4855 /* XXEXingCoinHistoryViewController.m */; };
+		048F58831D5C7A62002E4855 /* XXEXingCoinHistoryModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 048F58821D5C7A62002E4855 /* XXEXingCoinHistoryModel.m */; };
+		048F58871D5C7A76002E4855 /* XXEXingCoinHistoryTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 048F58851D5C7A76002E4855 /* XXEXingCoinHistoryTableViewCell.m */; };
+		048F58881D5C7A76002E4855 /* XXEXingCoinHistoryTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 048F58861D5C7A76002E4855 /* XXEXingCoinHistoryTableViewCell.xib */; };
+		048F588B1D5C7C27002E4855 /* XXEXingCoinHistoryApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 048F588A1D5C7C27002E4855 /* XXEXingCoinHistoryApi.m */; };
+		048F58931D5C967F002E4855 /* XXERedFlowerSentHistoryApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 048F58921D5C967F002E4855 /* XXERedFlowerSentHistoryApi.m */; };
+		048F58961D5C97CA002E4855 /* XXERedFlowerSentHistoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 048F58951D5C97CA002E4855 /* XXERedFlowerSentHistoryViewController.m */; };
+		048F58991D5C9870002E4855 /* XXERedFlowerSentHistoryModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 048F58981D5C9870002E4855 /* XXERedFlowerSentHistoryModel.m */; };
+		048F589D1D5C9883002E4855 /* XXERedFlowerSentHistoryTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 048F589B1D5C9883002E4855 /* XXERedFlowerSentHistoryTableViewCell.m */; };
+		048F589E1D5C9883002E4855 /* XXERedFlowerSentHistoryTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 048F589C1D5C9883002E4855 /* XXERedFlowerSentHistoryTableViewCell.xib */; };
 		9E28FC431D530EAD0003A208 /* XXELoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E28FC421D530EAD0003A208 /* XXELoginViewController.m */; };
 		9E4813841D504D0900C614AC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E4813831D504D0900C614AC /* main.m */; };
 		9E4813871D504D0900C614AC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E4813861D504D0900C614AC /* AppDelegate.m */; };
@@ -120,17 +128,6 @@
 		048754711D5C0BF200F680C5 /* XXEFlowerbasketWithdrawCashViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXEFlowerbasketWithdrawCashViewController.h; sourceTree = "<group>"; };
 		048754721D5C0BF200F680C5 /* XXEFlowerbasketWithdrawCashViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXEFlowerbasketWithdrawCashViewController.m; sourceTree = "<group>"; };
 		048754731D5C0BF200F680C5 /* XXEFlowerbasketWithdrawCashViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XXEFlowerbasketWithdrawCashViewController.xib; sourceTree = "<group>"; };
-		048754751D5C0BF200F680C5 /* NSString+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Extension.h"; sourceTree = "<group>"; };
-		048754761D5C0BF200F680C5 /* NSString+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Extension.m"; sourceTree = "<group>"; };
-		048754771D5C0BF200F680C5 /* trade.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = trade.bundle; sourceTree = "<group>"; };
-		048754781D5C0BF200F680C5 /* UIAlertView+Quick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIAlertView+Quick.h"; sourceTree = "<group>"; };
-		048754791D5C0BF200F680C5 /* UIAlertView+Quick.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIAlertView+Quick.m"; sourceTree = "<group>"; };
-		0487547A1D5C0BF200F680C5 /* UIView+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Extension.h"; sourceTree = "<group>"; };
-		0487547B1D5C0BF200F680C5 /* UIView+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Extension.m"; sourceTree = "<group>"; };
-		0487547C1D5C0BF200F680C5 /* ZCTradeInputView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCTradeInputView.h; sourceTree = "<group>"; };
-		0487547D1D5C0BF200F680C5 /* ZCTradeInputView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCTradeInputView.m; sourceTree = "<group>"; };
-		0487547E1D5C0BF200F680C5 /* ZCTradeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCTradeView.h; sourceTree = "<group>"; };
-		0487547F1D5C0BF200F680C5 /* ZCTradeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCTradeView.m; sourceTree = "<group>"; };
 		048754811D5C0BF200F680C5 /* XXEAccountManagerModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXEAccountManagerModel.h; sourceTree = "<group>"; };
 		048754821D5C0BF200F680C5 /* XXEAccountManagerModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXEAccountManagerModel.m; sourceTree = "<group>"; };
 		048754831D5C0BF200F680C5 /* XXEFlowerbasketModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXEFlowerbasketModel.h; sourceTree = "<group>"; };
@@ -146,6 +143,32 @@
 		0487548E1D5C0BF200F680C5 /* XXEFlowerbasketTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXEFlowerbasketTableViewCell.h; sourceTree = "<group>"; };
 		0487548F1D5C0BF200F680C5 /* XXEFlowerbasketTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXEFlowerbasketTableViewCell.m; sourceTree = "<group>"; };
 		048754901D5C0BF200F680C5 /* XXEFlowerbasketTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XXEFlowerbasketTableViewCell.xib; sourceTree = "<group>"; };
+		048F586B1D5C1E1A002E4855 /* XXEFlowerbasketAddAccountViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXEFlowerbasketAddAccountViewController.h; sourceTree = "<group>"; };
+		048F586C1D5C1E1A002E4855 /* XXEFlowerbasketAddAccountViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXEFlowerbasketAddAccountViewController.m; sourceTree = "<group>"; };
+		048F58701D5C271A002E4855 /* XXEFlowerbasketAddAccountApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXEFlowerbasketAddAccountApi.h; sourceTree = "<group>"; };
+		048F58711D5C271A002E4855 /* XXEFlowerbasketAddAccountApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXEFlowerbasketAddAccountApi.m; sourceTree = "<group>"; };
+		048F58781D5C5402002E4855 /* XXEXingCoinViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXEXingCoinViewController.h; sourceTree = "<group>"; };
+		048F58791D5C5402002E4855 /* XXEXingCoinViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXEXingCoinViewController.m; sourceTree = "<group>"; };
+		048F587B1D5C6BDB002E4855 /* XXEXingCoinApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXEXingCoinApi.h; sourceTree = "<group>"; };
+		048F587C1D5C6BDB002E4855 /* XXEXingCoinApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXEXingCoinApi.m; sourceTree = "<group>"; };
+		048F587E1D5C7A3A002E4855 /* XXEXingCoinHistoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXEXingCoinHistoryViewController.h; sourceTree = "<group>"; };
+		048F587F1D5C7A3A002E4855 /* XXEXingCoinHistoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXEXingCoinHistoryViewController.m; sourceTree = "<group>"; };
+		048F58811D5C7A62002E4855 /* XXEXingCoinHistoryModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXEXingCoinHistoryModel.h; sourceTree = "<group>"; };
+		048F58821D5C7A62002E4855 /* XXEXingCoinHistoryModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXEXingCoinHistoryModel.m; sourceTree = "<group>"; };
+		048F58841D5C7A76002E4855 /* XXEXingCoinHistoryTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXEXingCoinHistoryTableViewCell.h; sourceTree = "<group>"; };
+		048F58851D5C7A76002E4855 /* XXEXingCoinHistoryTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXEXingCoinHistoryTableViewCell.m; sourceTree = "<group>"; };
+		048F58861D5C7A76002E4855 /* XXEXingCoinHistoryTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XXEXingCoinHistoryTableViewCell.xib; sourceTree = "<group>"; };
+		048F58891D5C7C27002E4855 /* XXEXingCoinHistoryApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXEXingCoinHistoryApi.h; sourceTree = "<group>"; };
+		048F588A1D5C7C27002E4855 /* XXEXingCoinHistoryApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXEXingCoinHistoryApi.m; sourceTree = "<group>"; };
+		048F58911D5C967F002E4855 /* XXERedFlowerSentHistoryApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXERedFlowerSentHistoryApi.h; sourceTree = "<group>"; };
+		048F58921D5C967F002E4855 /* XXERedFlowerSentHistoryApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXERedFlowerSentHistoryApi.m; sourceTree = "<group>"; };
+		048F58941D5C97CA002E4855 /* XXERedFlowerSentHistoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXERedFlowerSentHistoryViewController.h; sourceTree = "<group>"; };
+		048F58951D5C97CA002E4855 /* XXERedFlowerSentHistoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXERedFlowerSentHistoryViewController.m; sourceTree = "<group>"; };
+		048F58971D5C9870002E4855 /* XXERedFlowerSentHistoryModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXERedFlowerSentHistoryModel.h; sourceTree = "<group>"; };
+		048F58981D5C9870002E4855 /* XXERedFlowerSentHistoryModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXERedFlowerSentHistoryModel.m; sourceTree = "<group>"; };
+		048F589A1D5C9883002E4855 /* XXERedFlowerSentHistoryTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXERedFlowerSentHistoryTableViewCell.h; sourceTree = "<group>"; };
+		048F589B1D5C9883002E4855 /* XXERedFlowerSentHistoryTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXERedFlowerSentHistoryTableViewCell.m; sourceTree = "<group>"; };
+		048F589C1D5C9883002E4855 /* XXERedFlowerSentHistoryTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XXERedFlowerSentHistoryTableViewCell.xib; sourceTree = "<group>"; };
 		16EC2C4BB8E577B5CE2BABDD /* Pods-teacher.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-teacher.debug.xcconfig"; path = "Pods/Target Support Files/Pods-teacher/Pods-teacher.debug.xcconfig"; sourceTree = "<group>"; };
 		9E28FC411D530EAD0003A208 /* XXELoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXELoginViewController.h; sourceTree = "<group>"; };
 		9E28FC421D530EAD0003A208 /* XXELoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXELoginViewController.m; sourceTree = "<group>"; };
@@ -294,6 +317,8 @@
 				048754651D5C0BF200F680C5 /* XXEFlowerbasketSubmitAccountInfoApi.m */,
 				048754661D5C0BF200F680C5 /* XXEFlowerbasketWithdrawCashApi.h */,
 				048754671D5C0BF200F680C5 /* XXEFlowerbasketWithdrawCashApi.m */,
+				048F58701D5C271A002E4855 /* XXEFlowerbasketAddAccountApi.h */,
+				048F58711D5C271A002E4855 /* XXEFlowerbasketAddAccountApi.m */,
 			);
 			path = Api;
 			sourceTree = "<group>";
@@ -310,27 +335,10 @@
 				048754711D5C0BF200F680C5 /* XXEFlowerbasketWithdrawCashViewController.h */,
 				048754721D5C0BF200F680C5 /* XXEFlowerbasketWithdrawCashViewController.m */,
 				048754731D5C0BF200F680C5 /* XXEFlowerbasketWithdrawCashViewController.xib */,
-				048754741D5C0BF200F680C5 /* ZCTradeView */,
+				048F586B1D5C1E1A002E4855 /* XXEFlowerbasketAddAccountViewController.h */,
+				048F586C1D5C1E1A002E4855 /* XXEFlowerbasketAddAccountViewController.m */,
 			);
 			path = Controller;
-			sourceTree = "<group>";
-		};
-		048754741D5C0BF200F680C5 /* ZCTradeView */ = {
-			isa = PBXGroup;
-			children = (
-				048754751D5C0BF200F680C5 /* NSString+Extension.h */,
-				048754761D5C0BF200F680C5 /* NSString+Extension.m */,
-				048754771D5C0BF200F680C5 /* trade.bundle */,
-				048754781D5C0BF200F680C5 /* UIAlertView+Quick.h */,
-				048754791D5C0BF200F680C5 /* UIAlertView+Quick.m */,
-				0487547A1D5C0BF200F680C5 /* UIView+Extension.h */,
-				0487547B1D5C0BF200F680C5 /* UIView+Extension.m */,
-				0487547C1D5C0BF200F680C5 /* ZCTradeInputView.h */,
-				0487547D1D5C0BF200F680C5 /* ZCTradeInputView.m */,
-				0487547E1D5C0BF200F680C5 /* ZCTradeView.h */,
-				0487547F1D5C0BF200F680C5 /* ZCTradeView.m */,
-			);
-			path = ZCTradeView;
 			sourceTree = "<group>";
 		};
 		048754801D5C0BF200F680C5 /* Model */ = {
@@ -358,6 +366,106 @@
 				0487548E1D5C0BF200F680C5 /* XXEFlowerbasketTableViewCell.h */,
 				0487548F1D5C0BF200F680C5 /* XXEFlowerbasketTableViewCell.m */,
 				048754901D5C0BF200F680C5 /* XXEFlowerbasketTableViewCell.xib */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		048F58731D5C4EB0002E4855 /* XingCoin */ = {
+			isa = PBXGroup;
+			children = (
+				048F58741D5C4EB0002E4855 /* Api */,
+				048F58751D5C4EB0002E4855 /* Controller */,
+				048F58761D5C4EB0002E4855 /* Model */,
+				048F58771D5C4EB0002E4855 /* View */,
+			);
+			path = XingCoin;
+			sourceTree = "<group>";
+		};
+		048F58741D5C4EB0002E4855 /* Api */ = {
+			isa = PBXGroup;
+			children = (
+				048F587B1D5C6BDB002E4855 /* XXEXingCoinApi.h */,
+				048F587C1D5C6BDB002E4855 /* XXEXingCoinApi.m */,
+				048F58891D5C7C27002E4855 /* XXEXingCoinHistoryApi.h */,
+				048F588A1D5C7C27002E4855 /* XXEXingCoinHistoryApi.m */,
+			);
+			path = Api;
+			sourceTree = "<group>";
+		};
+		048F58751D5C4EB0002E4855 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				048F58781D5C5402002E4855 /* XXEXingCoinViewController.h */,
+				048F58791D5C5402002E4855 /* XXEXingCoinViewController.m */,
+				048F587E1D5C7A3A002E4855 /* XXEXingCoinHistoryViewController.h */,
+				048F587F1D5C7A3A002E4855 /* XXEXingCoinHistoryViewController.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		048F58761D5C4EB0002E4855 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				048F58811D5C7A62002E4855 /* XXEXingCoinHistoryModel.h */,
+				048F58821D5C7A62002E4855 /* XXEXingCoinHistoryModel.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		048F58771D5C4EB0002E4855 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				048F58841D5C7A76002E4855 /* XXEXingCoinHistoryTableViewCell.h */,
+				048F58851D5C7A76002E4855 /* XXEXingCoinHistoryTableViewCell.m */,
+				048F58861D5C7A76002E4855 /* XXEXingCoinHistoryTableViewCell.xib */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		048F588C1D5C9555002E4855 /* RedFlower */ = {
+			isa = PBXGroup;
+			children = (
+				048F588D1D5C9555002E4855 /* Api */,
+				048F588E1D5C9555002E4855 /* Controller */,
+				048F588F1D5C9555002E4855 /* Model */,
+				048F58901D5C9555002E4855 /* View */,
+			);
+			path = RedFlower;
+			sourceTree = "<group>";
+		};
+		048F588D1D5C9555002E4855 /* Api */ = {
+			isa = PBXGroup;
+			children = (
+				048F58911D5C967F002E4855 /* XXERedFlowerSentHistoryApi.h */,
+				048F58921D5C967F002E4855 /* XXERedFlowerSentHistoryApi.m */,
+			);
+			path = Api;
+			sourceTree = "<group>";
+		};
+		048F588E1D5C9555002E4855 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				048F58941D5C97CA002E4855 /* XXERedFlowerSentHistoryViewController.h */,
+				048F58951D5C97CA002E4855 /* XXERedFlowerSentHistoryViewController.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		048F588F1D5C9555002E4855 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				048F58971D5C9870002E4855 /* XXERedFlowerSentHistoryModel.h */,
+				048F58981D5C9870002E4855 /* XXERedFlowerSentHistoryModel.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		048F58901D5C9555002E4855 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				048F589A1D5C9883002E4855 /* XXERedFlowerSentHistoryTableViewCell.h */,
+				048F589B1D5C9883002E4855 /* XXERedFlowerSentHistoryTableViewCell.m */,
+				048F589C1D5C9883002E4855 /* XXERedFlowerSentHistoryTableViewCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -509,6 +617,8 @@
 		9E4813BE1D50695200C614AC /* HomePage */ = {
 			isa = PBXGroup;
 			children = (
+				048F588C1D5C9555002E4855 /* RedFlower */,
+				048F58731D5C4EB0002E4855 /* XingCoin */,
 				0487545C1D5C0BD200F680C5 /* Flowerbasket */,
 				9ED147031D59ABC00049D2AA /* HomePageApi */,
 				9E4813BF1D50695200C614AC /* Controller */,
@@ -887,6 +997,7 @@
 			files = (
 				9E7D8A081D581A800099BE78 /* KTSheetCell.xib in Resources */,
 				9E4813921D504D0900C614AC /* LaunchScreen.storyboard in Resources */,
+				048F589E1D5C9883002E4855 /* XXERedFlowerSentHistoryTableViewCell.xib in Resources */,
 				9E48138F1D504D0900C614AC /* Assets.xcassets in Resources */,
 				9EFDC7FC1D5460E6005556AF /* qqq_3_5.png in Resources */,
 				0487549B1D5C0BF200F680C5 /* XXEFlowerbasketWithdrawCashViewController.xib in Resources */,
@@ -894,9 +1005,9 @@
 				9EFDC7F91D546089005556AF /* qqq_2_5.png in Resources */,
 				048754A61D5C0BF200F680C5 /* XXEAccountManagerTableViewCell.xib in Resources */,
 				9EFDC7FD1D5460E6005556AF /* qqq_4_5.png in Resources */,
+				048F58881D5C7A76002E4855 /* XXEXingCoinHistoryTableViewCell.xib in Resources */,
 				048754A81D5C0BF200F680C5 /* XXEFlowerbasketSentHistoryTableViewCell.xib in Resources */,
 				048754AA1D5C0BF200F680C5 /* XXEFlowerbasketTableViewCell.xib in Resources */,
-				0487549D1D5C0BF200F680C5 /* trade.bundle in Resources */,
 				9E48138D1D504D0900C614AC /* Main.storyboard in Resources */,
 				9E7D8A0A1D581A800099BE78 /* KTSheetView.xib in Resources */,
 			);
@@ -978,7 +1089,7 @@
 				048754981D5C0BF200F680C5 /* XXEFlowerbasketSentHistoryViewController.m in Sources */,
 				9E4813D01D506BDE00C614AC /* XXEBaseViewController.m in Sources */,
 				9E7D8A091D581A800099BE78 /* KTSheetView.m in Sources */,
-				048754A01D5C0BF200F680C5 /* ZCTradeInputView.m in Sources */,
+				048F58831D5C7A62002E4855 /* XXEXingCoinHistoryModel.m in Sources */,
 				9E28FC431D530EAD0003A208 /* XXELoginViewController.m in Sources */,
 				9ED147021D59A9BF0049D2AA /* ProgressView.m in Sources */,
 				048754A71D5C0BF200F680C5 /* XXEFlowerbasketSentHistoryTableViewCell.m in Sources */,
@@ -986,6 +1097,7 @@
 				048754A91D5C0BF200F680C5 /* XXEFlowerbasketTableViewCell.m in Sources */,
 				9E4813E31D50788300C614AC /* XXEMySelfPageViewController.m in Sources */,
 				048754991D5C0BF200F680C5 /* XXEFlowerbasketViewController.m in Sources */,
+				048F589D1D5C9883002E4855 /* XXERedFlowerSentHistoryTableViewCell.m in Sources */,
 				9E4813DD1D50784900C614AC /* XXEChatPageViewController.m in Sources */,
 				9E7D8A071D581A800099BE78 /* KTSheetCell.m in Sources */,
 				048754A41D5C0BF200F680C5 /* XXEFlowerbasketSentHistoryModel.m in Sources */,
@@ -993,12 +1105,19 @@
 				0487549A1D5C0BF200F680C5 /* XXEFlowerbasketWithdrawCashViewController.m in Sources */,
 				9E50F4061D5B13B400FA6594 /* XXEHomePageClassModel.m in Sources */,
 				048754921D5C0BF200F680C5 /* XXEFlowerbasketApi.m in Sources */,
+				048F58801D5C7A3A002E4855 /* XXEXingCoinHistoryViewController.m in Sources */,
 				048754931D5C0BF200F680C5 /* XXEFlowerbasketSentHistoryApi.m in Sources */,
 				048754A21D5C0BF200F680C5 /* XXEAccountManagerModel.m in Sources */,
-				0487549F1D5C0BF200F680C5 /* UIView+Extension.m in Sources */,
+				048F586E1D5C1E1A002E4855 /* XXEFlowerbasketAddAccountViewController.m in Sources */,
+				048F58961D5C97CA002E4855 /* XXERedFlowerSentHistoryViewController.m in Sources */,
+				048F588B1D5C7C27002E4855 /* XXEXingCoinHistoryApi.m in Sources */,
+				048F587A1D5C5402002E4855 /* XXEXingCoinViewController.m in Sources */,
+				048F587D1D5C6BDB002E4855 /* XXEXingCoinApi.m in Sources */,
 				9EFDC8551D549DE1005556AF /* SpinerLayer.m in Sources */,
+				048F58871D5C7A76002E4855 /* XXEXingCoinHistoryTableViewCell.m in Sources */,
 				9EFDC8061D548014005556AF /* XXENavigationViewController.m in Sources */,
 				9E4813D71D50722400C614AC /* XXETabBarControllerConfig.m in Sources */,
+				048F58991D5C9870002E4855 /* XXERedFlowerSentHistoryModel.m in Sources */,
 				048754911D5C0BF200F680C5 /* XXEAccountManagerApi.m in Sources */,
 				048754951D5C0BF200F680C5 /* XXEFlowerbasketWithdrawCashApi.m in Sources */,
 				9EB2E9421D58934C004809D3 /* UITextField+XXExtension.m in Sources */,
@@ -1007,11 +1126,11 @@
 				9EB2E93F1D5889B9004809D3 /* UILabel+XXExtension.m in Sources */,
 				9EFDC80A1D54848A005556AF /* UIFont+XXExtension.m in Sources */,
 				9E50F3FC1D5ADC0A00FA6594 /* XXELoginApi.m in Sources */,
-				0487549C1D5C0BF200F680C5 /* NSString+Extension.m in Sources */,
 				9E7D8A0D1D58576D0099BE78 /* UIButton+XXExtension.m in Sources */,
 				9E4813E01D50787100C614AC /* XXEFriendCirclePageViewController.m in Sources */,
 				9E542DBC1D59C6A1002D7BC3 /* XXEHomePageBottomView.m in Sources */,
 				9ED146FF1D597DB40049D2AA /* XXEHomePageHeaderView.m in Sources */,
+				048F58721D5C271A002E4855 /* XXEFlowerbasketAddAccountApi.m in Sources */,
 				9E50F4031D5B139400FA6594 /* XXEHomePageSchoolModel.m in Sources */,
 				9E7D8A111D585ED00099BE78 /* XXERegisterSecondViewController.m in Sources */,
 				9E6912F51D54341F0000E566 /* XXEStarImageViewController.m in Sources */,
@@ -1019,13 +1138,12 @@
 				048754971D5C0BF200F680C5 /* XXEAccountManagerViewController.m in Sources */,
 				9E4813841D504D0900C614AC /* main.m in Sources */,
 				9E50F4571D5B449800FA6594 /* XXETool.m in Sources */,
+				048F58931D5C967F002E4855 /* XXERedFlowerSentHistoryApi.m in Sources */,
 				9EFDC8541D549DE1005556AF /* HyLoglnButton.m in Sources */,
 				9E7D89FD1D5818F60099BE78 /* XXERegisterViewController.m in Sources */,
 				048754A31D5C0BF200F680C5 /* XXEFlowerbasketModel.m in Sources */,
 				9E50F3F91D5AC11300FA6594 /* XXEUserInfo.m in Sources */,
-				048754A11D5C0BF200F680C5 /* ZCTradeView.m in Sources */,
 				9ED146FC1D597D420049D2AA /* WJCommboxView.m in Sources */,
-				0487549E1D5C0BF200F680C5 /* UIAlertView+Quick.m in Sources */,
 				048754A51D5C0BF200F680C5 /* XXEAccountManagerTableViewCell.m in Sources */,
 				9E50F4001D5B0E9700FA6594 /* XXEHomePageModel.m in Sources */,
 			);
