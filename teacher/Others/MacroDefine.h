@@ -42,6 +42,4 @@
 
 
 
-
-
 #endif /* MacroDefine_h */

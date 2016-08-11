@@ -24,4 +24,11 @@
 + (UIButton *)creatSchoolIconImage:(NSString *)image target:(id)target action:(SEL)action floats:(CGFloat )floats;
 
 + (UIButton *)creatHomePageImage:(NSString *)image title:(NSString *)title target:(id)target action:(SEL)action;
+
+
+#pragma mark 创建UIButton
++ (UIButton *)createButtonWithFrame:(CGRect)frame backGruondImageName:(NSString *)name Target:(id)target Action:(SEL)action Title:(NSString *)title;
+
+
+
 @end

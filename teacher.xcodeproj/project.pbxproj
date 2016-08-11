@@ -7,6 +7,31 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		048754911D5C0BF200F680C5 /* XXEAccountManagerApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 0487545F1D5C0BF200F680C5 /* XXEAccountManagerApi.m */; };
+		048754921D5C0BF200F680C5 /* XXEFlowerbasketApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 048754611D5C0BF200F680C5 /* XXEFlowerbasketApi.m */; };
+		048754931D5C0BF200F680C5 /* XXEFlowerbasketSentHistoryApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 048754631D5C0BF200F680C5 /* XXEFlowerbasketSentHistoryApi.m */; };
+		048754941D5C0BF200F680C5 /* XXEFlowerbasketSubmitAccountInfoApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 048754651D5C0BF200F680C5 /* XXEFlowerbasketSubmitAccountInfoApi.m */; };
+		048754951D5C0BF200F680C5 /* XXEFlowerbasketWithdrawCashApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 048754671D5C0BF200F680C5 /* XXEFlowerbasketWithdrawCashApi.m */; };
+		048754971D5C0BF200F680C5 /* XXEAccountManagerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0487546C1D5C0BF200F680C5 /* XXEAccountManagerViewController.m */; };
+		048754981D5C0BF200F680C5 /* XXEFlowerbasketSentHistoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0487546E1D5C0BF200F680C5 /* XXEFlowerbasketSentHistoryViewController.m */; };
+		048754991D5C0BF200F680C5 /* XXEFlowerbasketViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 048754701D5C0BF200F680C5 /* XXEFlowerbasketViewController.m */; };
+		0487549A1D5C0BF200F680C5 /* XXEFlowerbasketWithdrawCashViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 048754721D5C0BF200F680C5 /* XXEFlowerbasketWithdrawCashViewController.m */; };
+		0487549B1D5C0BF200F680C5 /* XXEFlowerbasketWithdrawCashViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 048754731D5C0BF200F680C5 /* XXEFlowerbasketWithdrawCashViewController.xib */; };
+		0487549C1D5C0BF200F680C5 /* NSString+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 048754761D5C0BF200F680C5 /* NSString+Extension.m */; };
+		0487549D1D5C0BF200F680C5 /* trade.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 048754771D5C0BF200F680C5 /* trade.bundle */; };
+		0487549E1D5C0BF200F680C5 /* UIAlertView+Quick.m in Sources */ = {isa = PBXBuildFile; fileRef = 048754791D5C0BF200F680C5 /* UIAlertView+Quick.m */; };
+		0487549F1D5C0BF200F680C5 /* UIView+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 0487547B1D5C0BF200F680C5 /* UIView+Extension.m */; };
+		048754A01D5C0BF200F680C5 /* ZCTradeInputView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0487547D1D5C0BF200F680C5 /* ZCTradeInputView.m */; };
+		048754A11D5C0BF200F680C5 /* ZCTradeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0487547F1D5C0BF200F680C5 /* ZCTradeView.m */; };
+		048754A21D5C0BF200F680C5 /* XXEAccountManagerModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 048754821D5C0BF200F680C5 /* XXEAccountManagerModel.m */; };
+		048754A31D5C0BF200F680C5 /* XXEFlowerbasketModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 048754841D5C0BF200F680C5 /* XXEFlowerbasketModel.m */; };
+		048754A41D5C0BF200F680C5 /* XXEFlowerbasketSentHistoryModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 048754861D5C0BF200F680C5 /* XXEFlowerbasketSentHistoryModel.m */; };
+		048754A51D5C0BF200F680C5 /* XXEAccountManagerTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 048754891D5C0BF200F680C5 /* XXEAccountManagerTableViewCell.m */; };
+		048754A61D5C0BF200F680C5 /* XXEAccountManagerTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0487548A1D5C0BF200F680C5 /* XXEAccountManagerTableViewCell.xib */; };
+		048754A71D5C0BF200F680C5 /* XXEFlowerbasketSentHistoryTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0487548C1D5C0BF200F680C5 /* XXEFlowerbasketSentHistoryTableViewCell.m */; };
+		048754A81D5C0BF200F680C5 /* XXEFlowerbasketSentHistoryTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0487548D1D5C0BF200F680C5 /* XXEFlowerbasketSentHistoryTableViewCell.xib */; };
+		048754A91D5C0BF200F680C5 /* XXEFlowerbasketTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0487548F1D5C0BF200F680C5 /* XXEFlowerbasketTableViewCell.m */; };
+		048754AA1D5C0BF200F680C5 /* XXEFlowerbasketTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 048754901D5C0BF200F680C5 /* XXEFlowerbasketTableViewCell.xib */; };
 		9E28FC431D530EAD0003A208 /* XXELoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E28FC421D530EAD0003A208 /* XXELoginViewController.m */; };
 		9E4813841D504D0900C614AC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E4813831D504D0900C614AC /* main.m */; };
 		9E4813871D504D0900C614AC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E4813861D504D0900C614AC /* AppDelegate.m */; };
@@ -76,6 +101,51 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0487545E1D5C0BF200F680C5 /* XXEAccountManagerApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXEAccountManagerApi.h; sourceTree = "<group>"; };
+		0487545F1D5C0BF200F680C5 /* XXEAccountManagerApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXEAccountManagerApi.m; sourceTree = "<group>"; };
+		048754601D5C0BF200F680C5 /* XXEFlowerbasketApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXEFlowerbasketApi.h; sourceTree = "<group>"; };
+		048754611D5C0BF200F680C5 /* XXEFlowerbasketApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXEFlowerbasketApi.m; sourceTree = "<group>"; };
+		048754621D5C0BF200F680C5 /* XXEFlowerbasketSentHistoryApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXEFlowerbasketSentHistoryApi.h; sourceTree = "<group>"; };
+		048754631D5C0BF200F680C5 /* XXEFlowerbasketSentHistoryApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXEFlowerbasketSentHistoryApi.m; sourceTree = "<group>"; };
+		048754641D5C0BF200F680C5 /* XXEFlowerbasketSubmitAccountInfoApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXEFlowerbasketSubmitAccountInfoApi.h; sourceTree = "<group>"; };
+		048754651D5C0BF200F680C5 /* XXEFlowerbasketSubmitAccountInfoApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXEFlowerbasketSubmitAccountInfoApi.m; sourceTree = "<group>"; };
+		048754661D5C0BF200F680C5 /* XXEFlowerbasketWithdrawCashApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXEFlowerbasketWithdrawCashApi.h; sourceTree = "<group>"; };
+		048754671D5C0BF200F680C5 /* XXEFlowerbasketWithdrawCashApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXEFlowerbasketWithdrawCashApi.m; sourceTree = "<group>"; };
+		0487546B1D5C0BF200F680C5 /* XXEAccountManagerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXEAccountManagerViewController.h; sourceTree = "<group>"; };
+		0487546C1D5C0BF200F680C5 /* XXEAccountManagerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXEAccountManagerViewController.m; sourceTree = "<group>"; };
+		0487546D1D5C0BF200F680C5 /* XXEFlowerbasketSentHistoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXEFlowerbasketSentHistoryViewController.h; sourceTree = "<group>"; };
+		0487546E1D5C0BF200F680C5 /* XXEFlowerbasketSentHistoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXEFlowerbasketSentHistoryViewController.m; sourceTree = "<group>"; };
+		0487546F1D5C0BF200F680C5 /* XXEFlowerbasketViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXEFlowerbasketViewController.h; sourceTree = "<group>"; };
+		048754701D5C0BF200F680C5 /* XXEFlowerbasketViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXEFlowerbasketViewController.m; sourceTree = "<group>"; };
+		048754711D5C0BF200F680C5 /* XXEFlowerbasketWithdrawCashViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXEFlowerbasketWithdrawCashViewController.h; sourceTree = "<group>"; };
+		048754721D5C0BF200F680C5 /* XXEFlowerbasketWithdrawCashViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXEFlowerbasketWithdrawCashViewController.m; sourceTree = "<group>"; };
+		048754731D5C0BF200F680C5 /* XXEFlowerbasketWithdrawCashViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XXEFlowerbasketWithdrawCashViewController.xib; sourceTree = "<group>"; };
+		048754751D5C0BF200F680C5 /* NSString+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Extension.h"; sourceTree = "<group>"; };
+		048754761D5C0BF200F680C5 /* NSString+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Extension.m"; sourceTree = "<group>"; };
+		048754771D5C0BF200F680C5 /* trade.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = trade.bundle; sourceTree = "<group>"; };
+		048754781D5C0BF200F680C5 /* UIAlertView+Quick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIAlertView+Quick.h"; sourceTree = "<group>"; };
+		048754791D5C0BF200F680C5 /* UIAlertView+Quick.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIAlertView+Quick.m"; sourceTree = "<group>"; };
+		0487547A1D5C0BF200F680C5 /* UIView+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Extension.h"; sourceTree = "<group>"; };
+		0487547B1D5C0BF200F680C5 /* UIView+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Extension.m"; sourceTree = "<group>"; };
+		0487547C1D5C0BF200F680C5 /* ZCTradeInputView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCTradeInputView.h; sourceTree = "<group>"; };
+		0487547D1D5C0BF200F680C5 /* ZCTradeInputView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCTradeInputView.m; sourceTree = "<group>"; };
+		0487547E1D5C0BF200F680C5 /* ZCTradeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCTradeView.h; sourceTree = "<group>"; };
+		0487547F1D5C0BF200F680C5 /* ZCTradeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCTradeView.m; sourceTree = "<group>"; };
+		048754811D5C0BF200F680C5 /* XXEAccountManagerModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXEAccountManagerModel.h; sourceTree = "<group>"; };
+		048754821D5C0BF200F680C5 /* XXEAccountManagerModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXEAccountManagerModel.m; sourceTree = "<group>"; };
+		048754831D5C0BF200F680C5 /* XXEFlowerbasketModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXEFlowerbasketModel.h; sourceTree = "<group>"; };
+		048754841D5C0BF200F680C5 /* XXEFlowerbasketModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXEFlowerbasketModel.m; sourceTree = "<group>"; };
+		048754851D5C0BF200F680C5 /* XXEFlowerbasketSentHistoryModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXEFlowerbasketSentHistoryModel.h; sourceTree = "<group>"; };
+		048754861D5C0BF200F680C5 /* XXEFlowerbasketSentHistoryModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXEFlowerbasketSentHistoryModel.m; sourceTree = "<group>"; };
+		048754881D5C0BF200F680C5 /* XXEAccountManagerTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXEAccountManagerTableViewCell.h; sourceTree = "<group>"; };
+		048754891D5C0BF200F680C5 /* XXEAccountManagerTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXEAccountManagerTableViewCell.m; sourceTree = "<group>"; };
+		0487548A1D5C0BF200F680C5 /* XXEAccountManagerTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XXEAccountManagerTableViewCell.xib; sourceTree = "<group>"; };
+		0487548B1D5C0BF200F680C5 /* XXEFlowerbasketSentHistoryTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXEFlowerbasketSentHistoryTableViewCell.h; sourceTree = "<group>"; };
+		0487548C1D5C0BF200F680C5 /* XXEFlowerbasketSentHistoryTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXEFlowerbasketSentHistoryTableViewCell.m; sourceTree = "<group>"; };
+		0487548D1D5C0BF200F680C5 /* XXEFlowerbasketSentHistoryTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XXEFlowerbasketSentHistoryTableViewCell.xib; sourceTree = "<group>"; };
+		0487548E1D5C0BF200F680C5 /* XXEFlowerbasketTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXEFlowerbasketTableViewCell.h; sourceTree = "<group>"; };
+		0487548F1D5C0BF200F680C5 /* XXEFlowerbasketTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXEFlowerbasketTableViewCell.m; sourceTree = "<group>"; };
+		048754901D5C0BF200F680C5 /* XXEFlowerbasketTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XXEFlowerbasketTableViewCell.xib; sourceTree = "<group>"; };
 		16EC2C4BB8E577B5CE2BABDD /* Pods-teacher.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-teacher.debug.xcconfig"; path = "Pods/Target Support Files/Pods-teacher/Pods-teacher.debug.xcconfig"; sourceTree = "<group>"; };
 		9E28FC411D530EAD0003A208 /* XXELoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXELoginViewController.h; sourceTree = "<group>"; };
 		9E28FC421D530EAD0003A208 /* XXELoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXELoginViewController.m; sourceTree = "<group>"; };
@@ -200,6 +270,98 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0487545C1D5C0BD200F680C5 /* Flowerbasket */ = {
+			isa = PBXGroup;
+			children = (
+				0487545D1D5C0BF200F680C5 /* Api */,
+				0487546A1D5C0BF200F680C5 /* Controller */,
+				048754801D5C0BF200F680C5 /* Model */,
+				048754871D5C0BF200F680C5 /* View */,
+			);
+			path = Flowerbasket;
+			sourceTree = "<group>";
+		};
+		0487545D1D5C0BF200F680C5 /* Api */ = {
+			isa = PBXGroup;
+			children = (
+				0487545E1D5C0BF200F680C5 /* XXEAccountManagerApi.h */,
+				0487545F1D5C0BF200F680C5 /* XXEAccountManagerApi.m */,
+				048754601D5C0BF200F680C5 /* XXEFlowerbasketApi.h */,
+				048754611D5C0BF200F680C5 /* XXEFlowerbasketApi.m */,
+				048754621D5C0BF200F680C5 /* XXEFlowerbasketSentHistoryApi.h */,
+				048754631D5C0BF200F680C5 /* XXEFlowerbasketSentHistoryApi.m */,
+				048754641D5C0BF200F680C5 /* XXEFlowerbasketSubmitAccountInfoApi.h */,
+				048754651D5C0BF200F680C5 /* XXEFlowerbasketSubmitAccountInfoApi.m */,
+				048754661D5C0BF200F680C5 /* XXEFlowerbasketWithdrawCashApi.h */,
+				048754671D5C0BF200F680C5 /* XXEFlowerbasketWithdrawCashApi.m */,
+			);
+			path = Api;
+			sourceTree = "<group>";
+		};
+		0487546A1D5C0BF200F680C5 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				0487546B1D5C0BF200F680C5 /* XXEAccountManagerViewController.h */,
+				0487546C1D5C0BF200F680C5 /* XXEAccountManagerViewController.m */,
+				0487546D1D5C0BF200F680C5 /* XXEFlowerbasketSentHistoryViewController.h */,
+				0487546E1D5C0BF200F680C5 /* XXEFlowerbasketSentHistoryViewController.m */,
+				0487546F1D5C0BF200F680C5 /* XXEFlowerbasketViewController.h */,
+				048754701D5C0BF200F680C5 /* XXEFlowerbasketViewController.m */,
+				048754711D5C0BF200F680C5 /* XXEFlowerbasketWithdrawCashViewController.h */,
+				048754721D5C0BF200F680C5 /* XXEFlowerbasketWithdrawCashViewController.m */,
+				048754731D5C0BF200F680C5 /* XXEFlowerbasketWithdrawCashViewController.xib */,
+				048754741D5C0BF200F680C5 /* ZCTradeView */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		048754741D5C0BF200F680C5 /* ZCTradeView */ = {
+			isa = PBXGroup;
+			children = (
+				048754751D5C0BF200F680C5 /* NSString+Extension.h */,
+				048754761D5C0BF200F680C5 /* NSString+Extension.m */,
+				048754771D5C0BF200F680C5 /* trade.bundle */,
+				048754781D5C0BF200F680C5 /* UIAlertView+Quick.h */,
+				048754791D5C0BF200F680C5 /* UIAlertView+Quick.m */,
+				0487547A1D5C0BF200F680C5 /* UIView+Extension.h */,
+				0487547B1D5C0BF200F680C5 /* UIView+Extension.m */,
+				0487547C1D5C0BF200F680C5 /* ZCTradeInputView.h */,
+				0487547D1D5C0BF200F680C5 /* ZCTradeInputView.m */,
+				0487547E1D5C0BF200F680C5 /* ZCTradeView.h */,
+				0487547F1D5C0BF200F680C5 /* ZCTradeView.m */,
+			);
+			path = ZCTradeView;
+			sourceTree = "<group>";
+		};
+		048754801D5C0BF200F680C5 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				048754811D5C0BF200F680C5 /* XXEAccountManagerModel.h */,
+				048754821D5C0BF200F680C5 /* XXEAccountManagerModel.m */,
+				048754831D5C0BF200F680C5 /* XXEFlowerbasketModel.h */,
+				048754841D5C0BF200F680C5 /* XXEFlowerbasketModel.m */,
+				048754851D5C0BF200F680C5 /* XXEFlowerbasketSentHistoryModel.h */,
+				048754861D5C0BF200F680C5 /* XXEFlowerbasketSentHistoryModel.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		048754871D5C0BF200F680C5 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				048754881D5C0BF200F680C5 /* XXEAccountManagerTableViewCell.h */,
+				048754891D5C0BF200F680C5 /* XXEAccountManagerTableViewCell.m */,
+				0487548A1D5C0BF200F680C5 /* XXEAccountManagerTableViewCell.xib */,
+				0487548B1D5C0BF200F680C5 /* XXEFlowerbasketSentHistoryTableViewCell.h */,
+				0487548C1D5C0BF200F680C5 /* XXEFlowerbasketSentHistoryTableViewCell.m */,
+				0487548D1D5C0BF200F680C5 /* XXEFlowerbasketSentHistoryTableViewCell.xib */,
+				0487548E1D5C0BF200F680C5 /* XXEFlowerbasketTableViewCell.h */,
+				0487548F1D5C0BF200F680C5 /* XXEFlowerbasketTableViewCell.m */,
+				048754901D5C0BF200F680C5 /* XXEFlowerbasketTableViewCell.xib */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		9E4813761D504D0900C614AC = {
 			isa = PBXGroup;
 			children = (
@@ -347,6 +509,7 @@
 		9E4813BE1D50695200C614AC /* HomePage */ = {
 			isa = PBXGroup;
 			children = (
+				0487545C1D5C0BD200F680C5 /* Flowerbasket */,
 				9ED147031D59ABC00049D2AA /* HomePageApi */,
 				9E4813BF1D50695200C614AC /* Controller */,
 				9E4813C01D50695200C614AC /* Model */,
@@ -726,9 +889,14 @@
 				9E4813921D504D0900C614AC /* LaunchScreen.storyboard in Resources */,
 				9E48138F1D504D0900C614AC /* Assets.xcassets in Resources */,
 				9EFDC7FC1D5460E6005556AF /* qqq_3_5.png in Resources */,
+				0487549B1D5C0BF200F680C5 /* XXEFlowerbasketWithdrawCashViewController.xib in Resources */,
 				9EFDC7F81D546089005556AF /* qqq_1_5.png in Resources */,
 				9EFDC7F91D546089005556AF /* qqq_2_5.png in Resources */,
+				048754A61D5C0BF200F680C5 /* XXEAccountManagerTableViewCell.xib in Resources */,
 				9EFDC7FD1D5460E6005556AF /* qqq_4_5.png in Resources */,
+				048754A81D5C0BF200F680C5 /* XXEFlowerbasketSentHistoryTableViewCell.xib in Resources */,
+				048754AA1D5C0BF200F680C5 /* XXEFlowerbasketTableViewCell.xib in Resources */,
+				0487549D1D5C0BF200F680C5 /* trade.bundle in Resources */,
 				9E48138D1D504D0900C614AC /* Main.storyboard in Resources */,
 				9E7D8A0A1D581A800099BE78 /* KTSheetView.xib in Resources */,
 			);
@@ -807,24 +975,39 @@
 				9ED147061D59AC9B0049D2AA /* XXEHomePageApi.m in Sources */,
 				9E6912F81D5442AE0000E566 /* UIView+XXExtension.m in Sources */,
 				9ED147091D59B0BF0049D2AA /* XXEHomePageMiddleView.m in Sources */,
+				048754981D5C0BF200F680C5 /* XXEFlowerbasketSentHistoryViewController.m in Sources */,
 				9E4813D01D506BDE00C614AC /* XXEBaseViewController.m in Sources */,
 				9E7D8A091D581A800099BE78 /* KTSheetView.m in Sources */,
+				048754A01D5C0BF200F680C5 /* ZCTradeInputView.m in Sources */,
 				9E28FC431D530EAD0003A208 /* XXELoginViewController.m in Sources */,
 				9ED147021D59A9BF0049D2AA /* ProgressView.m in Sources */,
+				048754A71D5C0BF200F680C5 /* XXEFlowerbasketSentHistoryTableViewCell.m in Sources */,
+				048754941D5C0BF200F680C5 /* XXEFlowerbasketSubmitAccountInfoApi.m in Sources */,
+				048754A91D5C0BF200F680C5 /* XXEFlowerbasketTableViewCell.m in Sources */,
 				9E4813E31D50788300C614AC /* XXEMySelfPageViewController.m in Sources */,
+				048754991D5C0BF200F680C5 /* XXEFlowerbasketViewController.m in Sources */,
 				9E4813DD1D50784900C614AC /* XXEChatPageViewController.m in Sources */,
 				9E7D8A071D581A800099BE78 /* KTSheetCell.m in Sources */,
+				048754A41D5C0BF200F680C5 /* XXEFlowerbasketSentHistoryModel.m in Sources */,
 				9EB2E9451D58A319004809D3 /* XXERegisterFourViewController.m in Sources */,
+				0487549A1D5C0BF200F680C5 /* XXEFlowerbasketWithdrawCashViewController.m in Sources */,
 				9E50F4061D5B13B400FA6594 /* XXEHomePageClassModel.m in Sources */,
+				048754921D5C0BF200F680C5 /* XXEFlowerbasketApi.m in Sources */,
+				048754931D5C0BF200F680C5 /* XXEFlowerbasketSentHistoryApi.m in Sources */,
+				048754A21D5C0BF200F680C5 /* XXEAccountManagerModel.m in Sources */,
+				0487549F1D5C0BF200F680C5 /* UIView+Extension.m in Sources */,
 				9EFDC8551D549DE1005556AF /* SpinerLayer.m in Sources */,
 				9EFDC8061D548014005556AF /* XXENavigationViewController.m in Sources */,
 				9E4813D71D50722400C614AC /* XXETabBarControllerConfig.m in Sources */,
+				048754911D5C0BF200F680C5 /* XXEAccountManagerApi.m in Sources */,
+				048754951D5C0BF200F680C5 /* XXEFlowerbasketWithdrawCashApi.m in Sources */,
 				9EB2E9421D58934C004809D3 /* UITextField+XXExtension.m in Sources */,
 				9E4813871D504D0900C614AC /* AppDelegate.m in Sources */,
 				9E4813DA1D50783000C614AC /* XXEHomePageViewController.m in Sources */,
 				9EB2E93F1D5889B9004809D3 /* UILabel+XXExtension.m in Sources */,
 				9EFDC80A1D54848A005556AF /* UIFont+XXExtension.m in Sources */,
 				9E50F3FC1D5ADC0A00FA6594 /* XXELoginApi.m in Sources */,
+				0487549C1D5C0BF200F680C5 /* NSString+Extension.m in Sources */,
 				9E7D8A0D1D58576D0099BE78 /* UIButton+XXExtension.m in Sources */,
 				9E4813E01D50787100C614AC /* XXEFriendCirclePageViewController.m in Sources */,
 				9E542DBC1D59C6A1002D7BC3 /* XXEHomePageBottomView.m in Sources */,
@@ -833,12 +1016,17 @@
 				9E7D8A111D585ED00099BE78 /* XXERegisterSecondViewController.m in Sources */,
 				9E6912F51D54341F0000E566 /* XXEStarImageViewController.m in Sources */,
 				9E7D8A141D5872BE0099BE78 /* XXERegisterThreeViewController.m in Sources */,
+				048754971D5C0BF200F680C5 /* XXEAccountManagerViewController.m in Sources */,
 				9E4813841D504D0900C614AC /* main.m in Sources */,
 				9E50F4571D5B449800FA6594 /* XXETool.m in Sources */,
 				9EFDC8541D549DE1005556AF /* HyLoglnButton.m in Sources */,
 				9E7D89FD1D5818F60099BE78 /* XXERegisterViewController.m in Sources */,
+				048754A31D5C0BF200F680C5 /* XXEFlowerbasketModel.m in Sources */,
 				9E50F3F91D5AC11300FA6594 /* XXEUserInfo.m in Sources */,
+				048754A11D5C0BF200F680C5 /* ZCTradeView.m in Sources */,
 				9ED146FC1D597D420049D2AA /* WJCommboxView.m in Sources */,
+				0487549E1D5C0BF200F680C5 /* UIAlertView+Quick.m in Sources */,
+				048754A51D5C0BF200F680C5 /* XXEAccountManagerTableViewCell.m in Sources */,
 				9E50F4001D5B0E9700FA6594 /* XXEHomePageModel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -983,7 +1171,7 @@
 			baseConfigurationReference = 16EC2C4BB8E577B5CE2BABDD /* Pods-teacher.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				GCC_PREFIX_HEADER = /Users/codeding/Teacher/teacher/Others/PrefixHeader.pch;
+				GCC_PREFIX_HEADER = /Users/mac/Desktop/Teacher_ios/teacher/Others/PrefixHeader.pch;
 				INFOPLIST_FILE = teacher/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -997,7 +1185,7 @@
 			baseConfigurationReference = A4720165A20A1D3D5F5EE8D8 /* Pods-teacher.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				GCC_PREFIX_HEADER = /Users/codeding/Teacher/teacher/Others/PrefixHeader.pch;
+				GCC_PREFIX_HEADER = /Users/mac/Desktop/Teacher_ios/teacher/Others/PrefixHeader.pch;
 				INFOPLIST_FILE = teacher/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

@@ -15,6 +15,8 @@
 #import "XXEHomePageModel.h"
 #import "XXEHomePageSchoolModel.h"
 #import "XXEHomePageClassModel.h"
+#import "XXEFlowerbasketViewController.h"
+
 
 @interface XXEHomePageViewController ()<XXEHomePageHeaderViewDelegate,XXEHomePageMiddleViewDelegate,XXEHomePageBottomViewDelegate>
 //@property (nonatomic, strong)NSMutableArray *schoolDatasource;//学校信息
@@ -96,7 +98,10 @@
 //中部视图
 - (void)homeMiddleFirstButtonClick
 {
-    NSLog(@"----花篮点击事件----");
+//    NSLog(@"----花篮点击事件----");
+    XXEFlowerbasketViewController *XXEFlowerbasketVC = [[XXEFlowerbasketViewController alloc] init];
+    
+    [self.navigationController pushViewController:XXEFlowerbasketVC animated:YES];
 }
 
 - (void)homeMiddleTwoButtonClick

@@ -70,4 +70,20 @@
     return button;
 }
 
+#pragma mark 创建UIButton
++ (UIButton *)createButtonWithFrame:(CGRect)frame backGruondImageName:(NSString *)name Target:(id)target Action:(SEL)action Title:(NSString *)title{
+    UIButton *myButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    myButton.frame = frame;
+    [myButton setTitle:title forState:UIControlStateNormal];
+    [myButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    if (name) {
+        [myButton setBackgroundImage:[UIImage imageNamed:name] forState:UIControlStateNormal];
+        
+    }
+    [myButton addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
+    return myButton;
+}
+
+
+
 @end
