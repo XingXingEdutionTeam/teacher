@@ -62,7 +62,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [self setupHomePageRequeue];
+//    [self setupHomePageRequeue];
     self.view.backgroundColor = XXEBackgroundColor;
     self.navigationController.navigationBarHidden = YES;
     
@@ -130,7 +130,7 @@
     [self.view addSubview:self.headView];
 
     //获取数据
-    //    [self setupHomePageRequeue];
+        [self setupHomePageRequeue];
     
 }
 
@@ -278,6 +278,12 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+- (void)dealloc
+{
+    NSLog(@"dealloc方法");
+}
+
 
 /*
  #pragma mark - Navigation
