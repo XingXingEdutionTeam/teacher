@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" accessoryType="disclosureIndicator" indentationWidth="10" rowHeight="152" id="KGk-i7-Jjw" customClass="XXEMyClassAlbumTableViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="399" height="152"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="366" height="151"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="iv8-Of-tG2">
+                        <rect key="frame" x="10" y="4" width="120" height="109"/>
+                        <color key="backgroundColor" red="0.75686274509999996" green="0.75686274509999996" blue="0.75686274509999996" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="120" id="g5f-QI-d99"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="默认相册" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PLx-wT-jpU">
+                        <rect key="frame" x="150" y="20" width="176" height="26"/>
+                        <fontDescription key="fontDescription" name="PingFangSC-Regular" family="PingFang SC" pointSize="18"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="共3张" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dkr-2G-hau">
+                        <rect key="frame" x="150" y="66" width="176" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" red="0.75686274509999996" green="0.75686274509999996" blue="0.75686274509999996" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BGU-Ei-BBo">
+                        <rect key="frame" x="10" y="150" width="356" height="1"/>
+                        <color key="backgroundColor" red="0.75686274509999996" green="0.75686274509999996" blue="0.75686274509999996" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="1" id="SJV-O9-v6u"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" red="0.57647058819999997" green="0.57647058819999997" blue="0.57647058819999997" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="bottom" secondItem="BGU-Ei-BBo" secondAttribute="bottom" id="HTx-Jl-4MH"/>
+                    <constraint firstItem="PLx-wT-jpU" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="20" id="NzB-eU-oqW"/>
+                    <constraint firstAttribute="trailing" secondItem="PLx-wT-jpU" secondAttribute="trailing" constant="20" id="UPG-GQ-S4b"/>
+                    <constraint firstItem="Dkr-2G-hau" firstAttribute="trailing" secondItem="PLx-wT-jpU" secondAttribute="trailing" id="YtJ-3N-hK6"/>
+                    <constraint firstItem="Dkr-2G-hau" firstAttribute="leading" secondItem="PLx-wT-jpU" secondAttribute="leading" id="bNI-tS-Drq"/>
+                    <constraint firstItem="Dkr-2G-hau" firstAttribute="top" secondItem="PLx-wT-jpU" secondAttribute="bottom" constant="20" id="cls-a2-GLX"/>
+                    <constraint firstItem="BGU-Ei-BBo" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="dWR-ia-E0x"/>
+                    <constraint firstAttribute="bottom" secondItem="iv8-Of-tG2" secondAttribute="bottom" constant="4" id="lv2-gC-CGA"/>
+                    <constraint firstItem="PLx-wT-jpU" firstAttribute="leading" secondItem="iv8-Of-tG2" secondAttribute="trailing" constant="20" id="qh1-PI-nVm"/>
+                    <constraint firstAttribute="trailing" secondItem="BGU-Ei-BBo" secondAttribute="trailing" id="u1I-fn-fd6"/>
+                    <constraint firstItem="iv8-Of-tG2" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="u5w-Bs-sb4"/>
+                    <constraint firstItem="iv8-Of-tG2" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="4" id="wzJ-ZP-Lkr"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="classAlubmImgeView" destination="iv8-Of-tG2" id="4wB-XV-wzN"/>
+                <outlet property="classAlubmNameLabel" destination="PLx-wT-jpU" id="1c1-u6-1DI"/>
+                <outlet property="classAlubmPageLabel" destination="Dkr-2G-hau" id="zZ2-Hp-S2q"/>
+            </connections>
+            <point key="canvasLocation" x="101.5" y="24"/>
+        </tableViewCell>
+    </objects>
+</document>
