@@ -157,6 +157,7 @@ static NSString *const IdentifierCell = @"classAlbunCell";
     myClassVC.myAlbumClassId=self.classID;
     myClassVC.myAlbumSchoolId=self.schoolID;
     myClassVC.myAlbumTeacherId = self.teacherDatasource[indexPath.section];
+        NSLog(@"%@ %@ %@",myClassVC.myAlbumSchoolId,myClassVC.myAlbumClassId,myClassVC.myAlbumTeacherId);
     [self.navigationController pushViewController:myClassVC animated:YES];
         
     }

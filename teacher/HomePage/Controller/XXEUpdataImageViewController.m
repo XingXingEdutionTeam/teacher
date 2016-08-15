@@ -10,6 +10,8 @@
 #import "WJCommboxView.h"
 #import "XXEMySelfAlbumModel.h"
 #import "ZYQAssetPickerController.h"
+#import "XXEMyselfAblumUpDataApi.h"
+#import "YTKBatchRequest.h"
 @interface XXEUpdataImageViewController ()<UIScrollViewDelegate,ZYQAssetPickerControllerDelegate,UINavigationControllerDelegate>
     {
         UIButton *updataButton;
@@ -19,40 +21,61 @@
     }
 
 @property (nonatomic, strong) WJCommboxView *albumCommbox;
-@property (nonatomic) NSMutableArray *userAlbumArray;
 @property (nonatomic, strong) UIView *albumCommboxBackView;
+/** 相册名称 */
+@property (nonatomic, strong)NSMutableArray *albumNameDatasource;
+/** 上传图片时的相册ID */
+@property (nonatomic, strong)NSString *albumID;
+/** 上传多张相片数组源 */
+@property (nonatomic, strong)NSMutableArray *photoDatasource;
 
 @end
 
 @implementation XXEUpdataImageViewController
+
+-(NSMutableArray *)albumNameDatasource
+{
+    if (!_albumNameDatasource) {
+        _albumNameDatasource = [NSMutableArray array];
+    }
+    return _albumNameDatasource;
+}
+
+- (NSMutableArray *)photoDatasource
+{
+    if (!_photoDatasource) {
+        _photoDatasource = [NSMutableArray array];
+    }
+    return _photoDatasource;
+}
+
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
     self.view.backgroundColor = XXEBackgroundColor;
     self.navigationController.navigationBarHidden = NO;
+    [[UINavigationBar appearance]setTintColor:[UIColor whiteColor]];
 }
 -(UIStatusBarStyle)preferredStatusBarStyle
 {
     return UIStatusBarStyleLightContent;
 }
 
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.navigationItem.title = @"上传照片";
     NSLog(@"数据都有什么:%@",self.datasource);
-    for (XXEMySelfAlbumModel *mdoel in self.datasource) {
-        NSLog(@"属性都有什么%@",mdoel);
+    for (XXEMySelfAlbumModel *model in self.datasource) {
+        NSLog(@"属性都有什么%@",model.album_name);
+        [self.albumNameDatasource addObject:model.album_name];
     }
     
     [self createRightBar];
     [self createTextView];
     [self createPictureCommBox];
-    
     [self createUpBtn];
-
 }
 
 - (void)createUpBtn{
@@ -70,11 +93,29 @@
     
     [updataButton addTarget:self action:@selector(updataButtonClick:) forControlEvents:UIControlEventTouchUpInside];
 }
+
+#pragma mark - 上传按钮
 - (void)updataButtonClick:(UIButton*)btn{
 
-    [self showHudWithString:@"正在上传" forSecond:2.f];
-//        [self.navigationController popViewControllerAnimated:YES];
+    [self showHudWithString:@"正在上传"];
+    NSMutableArray *arr = [NSMutableArray array];
+    for (int i =0; i < self.photoDatasource.count; i++) {
+        XXEMyselfAblumUpDataApi *updataApi = [[XXEMyselfAblumUpDataApi alloc]initWithAblumSchoolId:self.myAlbumUpSchoolId ClassId:self.myAlbumUpClassId AblumId:self.albumID ImageArray:self.photoDatasource[i]];
+        [arr addObject:updataApi];
+    }
+
+    YTKBatchRequest *bathRequest = [[YTKBatchRequest alloc]initWithRequestArray:arr];
+    [bathRequest startWithCompletionBlockWithSuccess:^(YTKBatchRequest *batchRequest) {
+        NSLog(@"%@",bathRequest);
+        [self hideHud];
+        [self.navigationController popViewControllerAnimated:YES];
+        
+    } failure:^(YTKBatchRequest *batchRequest) {
+        [self showHudWithString:@"上传失败" forSecond:1.f];
+    }];
 }
+
+
 - (void)createRightBar{
     UIBarButtonItem *rightBar =[[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"class_album_add_icon"] style:UIBarButtonItemStylePlain target:self action:@selector(rightBar)];
     self.navigationItem.rightBarButtonItem =rightBar;
@@ -93,15 +134,13 @@
 //班级选择
 - (void)createPictureCommBox{
     
-    self.userAlbumArray = [[NSMutableArray alloc]initWithObjects:@"我的相册01",@"我的相册02",@"我的相册03",@"我的相册04",@"我的相册05", nil];
     self.albumCommbox = [[WJCommboxView alloc]initWithFrame:CGRectMake(50 , 10, kWidth-70, 30)];
     self.albumCommbox.textField.placeholder = @"请选择相册";
     self.albumCommbox.textField.textAlignment = NSTextAlignmentLeft;
     self.albumCommbox.textField.tag = 101;
-    //    self.albumCommbox.textField.backgroundColor = [UIColor lightGrayColor];
-    self.albumCommbox.dataArray = self.userAlbumArray;
+
+    self.albumCommbox.dataArray = self.albumNameDatasource;
     [self.view addSubview:self.albumCommbox];
-    //    [self.albumCommbox.textField addObserver:self forKeyPath:@"text" options:NSKeyValueObservingOptionNew context:nil];
     
     self.albumCommboxBackView= [[UIView alloc]initWithFrame:CGRectMake(0, 0, KScreenWidth, KScreenHeight+300)];
     self.albumCommboxBackView.backgroundColor = [UIColor clearColor];
@@ -134,7 +173,6 @@
     [self.view addSubview:self.albumCommbox];
 }
 
-//班级
 - (void)classAction:(NSNotification *)notif{
     switch ([notif.object integerValue]) {
         case 101:
@@ -147,8 +185,18 @@
     }
 }
 
-//班级
 - (void)classAction2:(NSNotification *)notif{
+    NSLog(@"%@",self.albumCommbox.textField.text);
+    NSString *string = self.albumCommbox.textField.text;
+    
+    for (XXEMySelfAlbumModel *model in self.datasource) {
+        NSLog(@"属性都有什么%@",model.album_name);
+        if ([string isEqualToString:model.album_name]) {
+            _albumID = [NSString stringWithFormat:@"%@",model.album_id];
+            NSLog(@"%@",_albumID);
+        }
+        
+    }
     
     [self.albumCommboxBackView removeFromSuperview];
 }
@@ -207,6 +255,8 @@
             imgview.contentMode=UIViewContentModeScaleAspectFill;
             imgview.clipsToBounds=YES;
             UIImage *tempImg=[UIImage imageWithCGImage:asset.defaultRepresentation.fullScreenImage];
+            NSLog(@"======选择的图片:%@",tempImg);
+            [self.photoDatasource addObject:tempImg];
             dispatch_async(dispatch_get_main_queue(), ^{
                 [imgview setImage:tempImg];
                 [src addSubview:imgview];

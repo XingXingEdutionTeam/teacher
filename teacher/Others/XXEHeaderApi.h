@@ -28,5 +28,13 @@
 #define  XXEMySelfAlubmUrl @"http://www.xingxingedu.cn/Teacher/class_teacher_album"
 //添加相册
 #define XXEMySelfAlubmAddUrl @"http://www.xingxingedu.cn/Teacher/class_album_add"
+//删除相册
+#define XXEAlbumDelegateUrl @"http://www.xingxingedu.cn/Teacher/class_album_delete"
+//上传图片
+#define XXEAblumUpdataUrl @"http://www.xingxingedu.cn/Teacher/class_pic_upload"
+
+//相册的内容
+#define XXEAblumPhotoUrl @"http://www.xingxingedu.cn/Teacher/class_album_pic"
+
 
 #endif /* XXEHeaderApi_h */

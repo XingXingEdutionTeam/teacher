@@ -12,6 +12,8 @@
 #import "XXEMyselfAblumApi.h"
 #import "XXEMySelfAlbumModel.h"
 #import "XXEMyselfAblumAddApi.h"
+#import "XXEMyselfAblumDeleApi.h"
+#import "XXEAlbumContentViewController.h"
 
 static NSString * IdentifierCELL = @"IdentifierCELL";
 
@@ -49,6 +51,7 @@ static NSString * IdentifierCELL = @"IdentifierCELL";
     [super viewWillAppear:animated];
     self.view.backgroundColor = XXEBackgroundColor;
     self.navigationController.navigationBarHidden = NO;
+    [self setupMyselfAlbumMessage];
 }
 -(UIStatusBarStyle)preferredStatusBarStyle
 {
@@ -67,7 +70,7 @@ static NSString * IdentifierCELL = @"IdentifierCELL";
     //创建导航栏右边的按钮设置
     [self rightNavigationButton];
     //请求数据
-    [self setupMyselfAlbumMessage];
+//    [self setupMyselfAlbumMessage];
 
 }
 
@@ -83,6 +86,8 @@ static NSString * IdentifierCELL = @"IdentifierCELL";
     [myselfAblum startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         
         NSArray *data = [request.responseJSONObject objectForKey:@"data"];
+        //取出之前的数据
+        [self.datasource removeAllObjects];
         for (int i =0; i < data.count; i++) {
             XXEMySelfAlbumModel *model = [[XXEMySelfAlbumModel alloc]initWithDictionary:data[i] error:nil];
             [self.datasource addObject:model];
@@ -118,11 +123,50 @@ static NSString * IdentifierCELL = @"IdentifierCELL";
     return cell;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSLog(@"===相册的详情=====");
+    XXEAlbumContentViewController *contentVC = [[XXEAlbumContentViewController alloc]init];
+    contentVC.contentModel = self.datasource[indexPath.row];
+    NSLog(@"%@",contentVC.contentModel);
+    [self.navigationController pushViewController:contentVC animated:YES];
+}
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return YES;
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(nonnull NSIndexPath *)indexPath
+{
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        XXEMySelfAlbumModel *model = self.datasource[indexPath.row];
+        
+        XXEMyselfAblumDeleApi *ablumApi = [[XXEMyselfAblumDeleApi alloc]initWithDeleMyselfAblumId:model.album_id];
+        [ablumApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
+            
+            NSString *code = [request.responseJSONObject objectForKey:@"code"];
+            if ([code intValue] == 1) {
+                [self showHudWithString:@"删除成功" forSecond:1.f];
+                [self.datasource removeObjectAtIndex:indexPath.row];
+                NSLog(@"删除的时候数据源个数%lu",(unsigned long)self.datasource.count);
+                [self.myClassAlumTableView reloadData];
+            }
+            [self showHudWithString:@"删除失败" forSecond:1.f];
+            
+        } failure:^(__kindof YTKBaseRequest *request) {
+            [self showHudWithString:@"删除失败" forSecond:1.f];
+        }];
+        
+    }
+}
+
 - (void)updataButtonClick
 {
     XXEUpdataImageViewController *updataVC = [[XXEUpdataImageViewController alloc]init];
     updataVC.datasource = self.datasource ;
-    
+    updataVC.myAlbumUpSchoolId = self.myAlbumSchoolId;
+    updataVC.myAlbumUpClassId = self.myAlbumClassId;
     [self.navigationController pushViewController:updataVC animated:YES];
 }
 
@@ -153,9 +197,8 @@ static NSString * IdentifierCELL = @"IdentifierCELL";
         model.pic_num = @"0";
         model.album_pic = @"";
         [self.datasource addObject:model];
+        NSLog(@"数组个数%lu",(unsigned long)self.datasource.count);
         [self myClassAlbumAdd:certeTextFieldn.text];
-
-        [_myClassAlumTableView reloadData];
         
     }];
     [alertView addAction:okAction];
@@ -174,7 +217,9 @@ static NSString * IdentifierCELL = @"IdentifierCELL";
         NSString *code = [request.responseJSONObject objectForKey:@"code"];
         if ([code intValue] == 1) {
             [self showString:@"创建成功" forSecond:1.f];
-            [self.myClassAlumTableView reloadData];
+            [self.datasource removeAllObjects];
+            //获取数据
+            [self setupMyselfAlbumMessage];
         } else {
             [self showHudWithString:@"创建失败" forSecond:1.f];
         }
@@ -201,6 +246,11 @@ static NSString * IdentifierCELL = @"IdentifierCELL";
     [createButton addTarget:self action:@selector(createButtonClick) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *rightItem2 = [[UIBarButtonItem alloc] initWithCustomView:createButton];
     self.navigationItem.rightBarButtonItems = @[rightItem2, rightItem1];
+}
+
+- (void)dealloc
+{
+    NSLog(@"9049023423940-2394");
 }
 
 - (void)didReceiveMemoryWarning {

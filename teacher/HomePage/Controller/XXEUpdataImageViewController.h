@@ -11,5 +11,9 @@
 
 @interface XXEUpdataImageViewController : XXEBaseViewController
 @property (nonatomic,strong)NSMutableArray *datasource;
+/** 学校Id */
+@property (nonatomic, copy)NSString *myAlbumUpSchoolId;
+/** 班级id */
+@property (nonatomic, copy)NSString *myAlbumUpClassId;
 
 @end

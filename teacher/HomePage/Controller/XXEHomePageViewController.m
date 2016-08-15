@@ -19,6 +19,7 @@
 #import "XXEClassAlbumViewController.h"
 #import "XXEXingCoinViewController.h"
 #import "XXEFlowerbasketViewController.h"
+#import "XXETeacherUserInfo.h"
 
 //监控
 #import "VideoMonitorViewController.h"
@@ -39,9 +40,29 @@
 @property (nonatomic, copy)NSString *schoolHomeId;
 /** 班级ID */
 @property (nonatomic, copy)NSString *classHomeId;
+
+@property (nonatomic, strong)NSMutableArray *arraySchool;
+@property (nonatomic, strong)NSMutableArray *arrayClass;
+
 @end
 
 @implementation XXEHomePageViewController
+
+- (NSMutableArray *)arraySchool
+{
+    if (!_arraySchool) {
+        _arraySchool = [NSMutableArray array];
+    }
+    return _arraySchool;
+}
+
+- (NSMutableArray *)arrayClass
+{
+    if (!_arrayClass) {
+        _arrayClass = [NSMutableArray array];
+    }
+    return _arrayClass;
+}
 
 - (NSMutableArray *)schoolDatasource
 {
@@ -62,11 +83,8 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-//    [self setupHomePageRequeue];
     self.view.backgroundColor = XXEBackgroundColor;
     self.navigationController.navigationBarHidden = YES;
-    
-    
 }
 /** 这两个方法都可以,改变当前控制器的电池条颜色 */
 -(UIStatusBarStyle)preferredStatusBarStyle
@@ -79,11 +97,10 @@
 {
     self.homeSchoolView = [[WJCommboxView alloc] initWithFrame:CGRectMake(60 * kScreenRatioWidth, 45 * kScreenRatioWidth, 120 * kScreenRatioWidth, 30 * kScreenRatioHeight)];
     self.homeSchoolView.dataArray = self.schoolDatasource;
-    //    NSLog(@"学校数组:%@",self.homeSchoolView.dataArray);
     [self.view addSubview:self.homeSchoolView];
     
     self.homeSchoolView.textField.placeholder = @"学校";
-    self.homeSchoolView.textField.text = self.schoolDatasource[0];
+    self.homeSchoolView.textField.text = @"请选择学校";
     self.homeSchoolView.textField.textAlignment = NSTextAlignmentCenter;
     self.homeSchoolView.textField.tag = 102;
     self.homeSchoolView.textField.layer.cornerRadius =10 * KScreenWidth / 375;
@@ -92,23 +109,54 @@
     //班级
     self.homeClassView = [[WJCommboxView alloc] initWithFrame:CGRectMake(60 * kScreenRatioWidth+120 * kScreenRatioWidth+5, 45*kScreenRatioWidth, 120 * kScreenRatioWidth, 30 * kScreenRatioHeight)];
     
-    //    for (int i =0; i < self.schoolDatasource.count; i++) {
-    //        NSString *name = self.schoolDatasource[i];
-    //        if ([self.homeSchoolView.textField.text isEqualToString:name]) {
-    //            self.homeClassView.dataArray = self.classDatasource;
-    //        }
-    //    }
-    
     self.homeClassView.dataArray = self.classDatasource;
     //    NSLog(@"学校数组:%@",self.homeClassView.dataArray);
     [self.view addSubview:self.homeClassView];
     
     self.homeClassView.textField.placeholder = @"班级";
-    self.homeClassView.textField.text = self.classDatasource[0];
+    self.homeClassView.textField.text = @"请选择你的班级";
     self.homeClassView.textField.textAlignment = NSTextAlignmentCenter;
     self.homeClassView.textField.tag = 103;
     self.homeClassView.textField.layer.cornerRadius =10 * KScreenWidth / 375;
     self.homeClassView.textField.layer.masksToBounds =YES;
+
+//    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(calssAction:) name:@"commboxNotice" object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(calssAction2:) name:@"commboxNotice2" object:nil];
+    
+}
+
+//- (void)calssAction:(NSNotification *)notif
+//{
+//    switch ([notif.object integerValue]) {
+//        case 102:
+//            [self.self.homeClassView removeFromSuperview];
+//            [self.view addSubview:self.homeClassView];
+//            break;
+//        case 103:
+//            [self.self.homeSchoolView removeFromSuperview];
+//            [self.view addSubview:self.homeSchoolView];
+//            
+//        default:
+//            break;
+//    }
+//}
+
+#pragma mark - 通知选择的学校
+
+- (void)calssAction2:(NSNotification *)notif
+{
+    NSLog(@"%@",notif.object);
+    NSLog(@"%@",self.homeSchoolView.textField.text);
+    NSString *string = self.homeSchoolView.textField.text;
+    for (XXETeacherUserInfo *model in self.arraySchool) {
+        if ([model.school_name isEqualToString:string]) {
+            self.homeClassView.textField.text = model.class_name;
+            self.schoolHomeId = model.school_id;
+            self.classHomeId = model.class_id;
+            
+            NSLog(@"%@ %@",model.school_id,model.class_id);
+        }
+    }
 }
 
 
@@ -131,7 +179,6 @@
 
     //获取数据
         [self setupHomePageRequeue];
-    
 }
 
 #pragma mark - 点击代理方法 Delegate
@@ -177,8 +224,6 @@
         { NSLog(@"----实时监控----");
             VideoMonitorViewController *videoVC = [[VideoMonitorViewController alloc]init];
             [self.navigationController pushViewController:videoVC animated:YES];
-            
-            
             break;
         }
         case 1:
@@ -187,6 +232,8 @@
             XXEClassAlbumViewController *classAlbumVC = [[XXEClassAlbumViewController alloc]init];
             classAlbumVC.schoolID = self.schoolHomeId;
             classAlbumVC.classID = self.classHomeId;
+            NSLog(@"%@%@",self.schoolHomeId,self.classHomeId);
+            
             [self.navigationController pushViewController:classAlbumVC animated:YES];
             break;
         }
@@ -250,18 +297,27 @@
             [self.headView configCellWithInfo:homePageModel];
             [self.middleView configCellMiddleWithInfo:homePageModel];
             
+            
             for (int i =0; i < homePageModel.school_info.count; i++) {
                 
                 XXEHomePageSchoolModel *schoolInfo = ((XXEHomePageSchoolModel *)(homePageModel.school_info[i]));
-                self.schoolHomeId = schoolInfo.school_id;
+                XXETeacherUserInfo *modelInfo = [[XXETeacherUserInfo alloc]init];
+                modelInfo.school_name = schoolInfo.school_name;
+                modelInfo.school_id = schoolInfo.school_id;
+                [self.arraySchool addObject:modelInfo];
                 
                 [self.schoolDatasource addObject:schoolInfo.school_name];
-                //            NSLog(@"班级个数%lu",schoolInfo.class_info.count);
+                
                 for (XXEHomePageClassModel *classInfo in schoolInfo.class_info) {
-                    self.classHomeId = classInfo.class_id;
+                    modelInfo.class_id = classInfo.class_id;
+                    modelInfo.class_name = classInfo.class_name;
+                    [self.arrayClass addObject:modelInfo];
                     [self.classDatasource addObject:classInfo.class_name];
                 }
             }
+            
+            NSLog(@"学校%@ 班级%@",self.arraySchool[0],self.arrayClass[1]);
+            
         } else {
             [self showHudWithString:@"数据请求失败" forSecond:1.f];
         }
@@ -272,7 +328,6 @@
         [self showHudWithString:@"数据请求失败" forSecond:1.f];
     }];
 }
-
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

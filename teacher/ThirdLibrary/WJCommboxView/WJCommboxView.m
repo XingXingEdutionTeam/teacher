@@ -45,7 +45,7 @@
         
         self.textField = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, 30)];
         self.textField.delegate = self;
-        self.textField.textAlignment = UITextAlignmentCenter;  //对齐
+        self.textField.textAlignment = NSTextAlignmentCenter;  //对齐
         //右边图片
         UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 15,10)];
         imageView.image = [UIImage imageNamed:@"narrow.png"];
@@ -123,7 +123,7 @@
     cell.textLabel.font = [UIFont systemFontOfSize:14.0f];
     cell.accessoryType = UITableViewCellAccessoryNone;
     cell.selectionStyle = UITableViewCellSelectionStyleBlue;
-    cell.textLabel.textAlignment = UITextAlignmentCenter;
+    cell.textLabel.textAlignment = NSTextAlignmentCenter;
     
     return cell;
 }
