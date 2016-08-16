@@ -8,12 +8,24 @@
 
 #import "XXERegisterViewController.h"
 #import "XXERegisterSecondViewController.h"
+#import "XXERegisterCheckApi.h"
+#import "XXEVerificationApi.h"
+#import "XXELoginViewController.h"
+#import "XXENavigationViewController.h"
+#import <SMS_SDK/SMSSDK.h>
 
 @interface XXERegisterViewController ()
 
 @property (nonatomic, strong)UITextField *registerUerTextField;
 @property (nonatomic, strong)UITextField *registerVerificationTextField;
 @property (nonatomic, strong)UIButton *button;
+/** 用户名 */
+@property (nonatomic, copy)NSString *registerUserName;
+/** 验证码 */
+@property (nonatomic, copy)NSString *registerVerifi;
+
+/** 验证码按钮 */
+@property (nonatomic, strong)UIButton *verificationButton;
 
 @end
 
@@ -148,9 +160,11 @@
     
     UIButton *verificationButton = [[UIButton alloc]init];
     [verificationButton setTitle:@"获取验证码" forState:UIControlStateNormal];
+    _verificationButton = verificationButton;
     verificationButton.titleLabel.font = [UIFont systemWithIphone6P:18 Iphone6:16 Iphone5:14 Iphone4:12];
     [verificationButton setTitleColor:XXEColorFromRGB(189, 210, 38) forState:UIControlStateNormal];
     [verificationButton addTarget:self action:@selector(setupVerificationNumber:) forControlEvents:UIControlEventTouchUpInside];
+    verificationButton.userInteractionEnabled = NO;
     [verificationImageView addSubview:verificationButton];
     [verificationButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(verificationImageView.mas_centerY);
@@ -167,12 +181,11 @@
         make.size.mas_equalTo(CGSizeMake(2, 41*kScreenRatioHeight));
     }];
     
-    
     //下一步
     UIButton *nextButton = [[UIButton alloc]init];
     [nextButton setBackgroundImage:[UIImage imageNamed:@"login_green"] forState:UIControlStateNormal];
     [nextButton setTitle:@"下一步" forState:UIControlStateNormal];
-    [nextButton addTarget:self action:@selector(nextButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+    [nextButton addTarget:self action:@selector(nextButtonsClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:nextButton];
     [nextButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(weakSelf.view.mas_centerX);
@@ -184,39 +197,147 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    [button setTitle:@"返回" forState:UIControlStateNormal];
+    [button setImage:[UIImage imageNamed:@"navigationButtonReturn"] forState:UIControlStateNormal];
+    [button setImage:[UIImage imageNamed:@"navigationButtonReturn"] forState:UIControlStateHighlighted];
+    button.size = CGSizeMake(70, 30);
+    // 让按钮内部的所有内容左对齐
+    button.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+    //        [button sizeToFit];
+    // 让按钮的内容往左边偏移10
+    button.contentEdgeInsets = UIEdgeInsetsMake(0, -10, 0, 0);
+    button.titleEdgeInsets = UIEdgeInsetsMake(0, 5, 0, 0);
     
+    [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [button setTitleColor:[UIColor redColor] forState:UIControlStateHighlighted];
+    [button addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
     
+    // 修改导航栏左边的item
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:button];
+    
+    [[self.registerUerTextField.rac_textSignal filter:^BOOL(id value) {
+        NSString *text = value;
+        return [self isChinaMobile:text];
+    }] subscribeNext:^(id x) {
+        NSLog(@"%@",x);
+        self.registerUserName = x;
+    } ];
+    
+    [[self.registerVerificationTextField.rac_textSignal filter:^BOOL(id value) {
+        return value;
+    }] subscribeNext:^(id x) {
+        self.registerVerifi = x;
+    }];
 }
 
 
 #pragma mark - 点击相应方法actionClick
 
+- (void)back
+{
+    XXELoginViewController *registerVC = [[XXELoginViewController alloc]init];
+    UIWindow *window = [UIApplication sharedApplication].keyWindow;
+    XXENavigationViewController *navi = [[XXENavigationViewController alloc]initWithRootViewController:registerVC];
+    window.rootViewController = navi;
+    NSLog(@"-----免费注册-----");
+    
+}
+
 - (void)setupVerificationNumber:(UIButton *)sender
 {
     NSLog(@"----获取验证码----");
     [sender startWithTime:59 title:@"获取验证码" countDownTile:@"s后重新获取" mColor:XXEColorFromRGB(189, 210, 38) countColor:XXEColorFromRGB(204, 204, 204)];
+    [self showString:@"验证码已发送" forSecond:1.f];
+    [self getVerificationNumber];
 }
 
-- (void)nextButtonClick:(UIButton *)sender
+- (void)nextButtonsClick:(UIButton *)sender
 {
-    NSLog(@"-----下一步-----");
-    XXERegisterSecondViewController *registerSecondVC = [[XXERegisterSecondViewController alloc]init];
-    [self.navigationController pushViewController:registerSecondVC animated:YES];
+    NSLog(@"%@%@",self.registerUserName,self.registerVerifi);
+    
+    if (self.registerUserName == nil || self.registerVerifi == nil) {
+        [self showString:@"请输入电话号码" forSecond:1.f];
+    }else {
+        NSLog(@"-----下一步-----");
+        XXERegisterSecondViewController *registerSecondVC = [[XXERegisterSecondViewController alloc]init];
+        [self.navigationController pushViewController:registerSecondVC animated:YES];
+    }
 }
 
 
 - (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
     [self.registerUerTextField resignFirstResponder];
-    [self.registerVerificationTextField resignFirstResponder];
+//    [self.registerVerificationTextField resignFirstResponder];
+    if (self.registerUserName == nil) {
+        [self showString:@"输入电话号码有误" forSecond:1.f];
+    } else {
+        //验证手机号有没有注册过
+        [self checkPhoneNumber];
+    }
 }
 
+#pragma mark - 网络请求
 
+- (void)checkPhoneNumber
+{
+    XXERegisterCheckApi *registerCheckApi = [[XXERegisterCheckApi alloc]initWithChechPhoneNumber:self.registerUserName];
+    [registerCheckApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
+        NSLog(@"电话可好可不好用%@",request.responseJSONObject);
+        NSDictionary *dic = request.responseJSONObject;
+        NSString *string = [dic objectForKey:@"code"];
+        if ([string intValue] == 1) {
+            [self showString:@"此号码可以注册" forSecond:1.f];
+            self.verificationButton.userInteractionEnabled = YES;
+        } else if ([string intValue] == 3) {
+            [self showString:@"手机号码已存在" forSecond:1.f];
+            self.verificationButton.userInteractionEnabled = YES;
+        } else{
+            [self showString:@"请重新注册" forSecond:1.f];
+        }
+    } failure:^(__kindof YTKBaseRequest *request) {
+        [self showString:@"网络不好请重新注册" forSecond:1.f];
+    }];
+}
 
+- (void)getVerificationNumber
+{
+   //短信验证码
+    [SMSSDK getVerificationCodeByMethod:SMSGetCodeMethodSMS phoneNumber:self.registerUserName zone:@"86" customIdentifier:nil result:^(NSError *error) {
+        if (!error) {
+            [self showString:@"获取验证码成功" forSecond:1.f];
+        }
+    }];
+}
 
-
-
-
+/** 判断用户名 */
+- (BOOL)isChinaMobile:(NSString *)phoneNum{
+    BOOL isChinaMobile = NO;
+    
+    NSString *CM = @"(^1(3[4-9]|4[7]|5[0-27-9]|7[8]|8[2-478])\\d{8}$)|(^1705\\d{7}$)";
+    NSPredicate *regextestcm = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", CM];
+    if([regextestcm evaluateWithObject:phoneNum] == YES){
+        isChinaMobile = YES;
+        //        NSLog(@"中国移动");
+    }
+    
+    NSString *CU = @"(^1(3[0-2]|4[5]|5[56]|7[6]|8[56])\\d{8}$)|(^1709\\d{7}$)";
+    NSPredicate *regextestcu = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", CU];
+    if([regextestcu evaluateWithObject:phoneNum] == YES){
+        isChinaMobile = YES;
+        //        NSLog(@"中国联通");
+    }
+    
+    NSString *CT = @"(^1(33|53|77|8[019])\\d{8}$)|(^1700\\d{7}$)";
+    NSPredicate *regextestct = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", CT];
+    if([regextestct evaluateWithObject:phoneNum] == YES){
+        isChinaMobile = YES;
+        //        NSLog(@"中国电信");
+    }
+    
+    return isChinaMobile;
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import "XXETabBarControllerConfig.h"
 #import "XXEStarImageViewController.h"
+#import <SMS_SDK/SMSSDK.h>
 
 //测试------
 #import "XXELoginViewController.h"
@@ -24,6 +25,9 @@
 //测试远程库能不能用
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    
+    //初始化应用,appKey appSecret 从后天获取
+    [SMSSDK registerApp:FreeSMSAPPKey withSecret:FreeSMSAPPSecret];
     
     self.window = [[UIWindow alloc]init];
     self.window.frame = [UIScreen mainScreen].bounds;

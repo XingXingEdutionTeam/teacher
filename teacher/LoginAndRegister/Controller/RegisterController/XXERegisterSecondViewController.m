@@ -9,6 +9,9 @@
 #import "XXERegisterSecondViewController.h"
 #import "XXERegisterThreeViewController.h"
 
+//===========测试
+#import "SettingPersonInfoViewController.h"
+
 @interface XXERegisterSecondViewController ()
 @property (nonatomic, strong)UITextField *passWordTextField;
 @property (nonatomic, strong)UITextField *confirmPassWordTextField;
@@ -178,9 +181,6 @@
         make.top.equalTo(confirmPassWordImageView.mas_bottom).offset(14*kScreenRatioHeight);
         make.size.mas_equalTo(CGSizeMake(335*kScreenRatioWidth, 41*kScreenRatioHeight));
     }];
-
-    
-
 }
 
 
@@ -188,6 +188,25 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
+    [[self.passWordTextField.rac_textSignal filter:^BOOL(id value) {
+        NSString *text = value;
+        return text.length > 6;
+    }] subscribeNext:^(id x) {
+        NSLog(@"%@",x);
+        self.passWordTextField.text = x;
+    } ];
+    
+    [[self.confirmPassWordTextField.rac_textSignal filter:^BOOL(id value) {
+        NSString *text = value;
+        
+        return [text isEqualToString:self.passWordTextField.text];
+    }] subscribeNext:^(id x) {
+        NSLog(@"%@",x);
+            self.confirmPassWordTextField.text = x;
+    }];
+    
+    
 }
 
 
@@ -217,15 +236,29 @@
 - (void)nextButtonClick:(UIButton *)sender
 {
     NSLog(@"----点击进入下一个个注册----");
-    XXERegisterThreeViewController *threeVC = [[XXERegisterThreeViewController alloc]init];
-    [self.navigationController pushViewController:threeVC animated:YES];
+    [self.passWordTextField resignFirstResponder];
+    [self.confirmPassWordTextField resignFirstResponder];
+    
+//    XXERegisterThreeViewController *threeVC = [[XXERegisterThreeViewController alloc]init];
+//    [self.navigationController pushViewController:threeVC animated:YES];
+    SettingPersonInfoViewController *VC = [[SettingPersonInfoViewController alloc]init];
+    [self.navigationController pushViewController:VC animated:YES];
 }
 
 - (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
     [self.passWordTextField resignFirstResponder];
     [self.confirmPassWordTextField resignFirstResponder];
+    NSLog(@"%@ %@",self.passWordTextField.text,self.confirmPassWordTextField.text);
 }
+
+
+
+
+
+
+
+
 
 
 - (void)didReceiveMemoryWarning {

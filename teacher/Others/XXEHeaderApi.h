@@ -35,6 +35,8 @@
 
 //相册的内容
 #define XXEAblumPhotoUrl @"http://www.xingxingedu.cn/Teacher/class_album_pic"
+//我的朋友圈
+#define XXEFriendCircleUrl @"http://www.xingxingedu.cn/Global/my_friend_circle"
 
 
 #endif /* XXEHeaderApi_h */

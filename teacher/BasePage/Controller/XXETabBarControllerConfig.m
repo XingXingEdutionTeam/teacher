@@ -45,9 +45,9 @@
     // 添加子控制器
     [self setupChildVc:[[XXEHomePageViewController alloc] init] title:@"首页" image:@"tabbar_homeicon" selectedImage:@"tabbar_homeicon_click"];
     
-    [self setupChildVc:[[XXEChatPageViewController alloc] init] title:@"聊天" image:@"tabbar_xclassroom" selectedImage:@"tabbar_xclassroom_click"];
+    [self setupChildVc:[[XXEFriendCirclePageViewController alloc] init] title:@"圈子" image:@"tabbar_circle" selectedImage:@"tabbar_circle_click"];
     
-    [self setupChildVc:[[XXEFriendCirclePageViewController alloc] init] title:@"猩课堂" image:@"tabbar_circle" selectedImage:@"tabbar_circle_click"];
+    [self setupChildVc:[[XXEChatPageViewController alloc] init] title:@"猩课堂" image:@"tabbar_xclassroom" selectedImage:@"tabbar_xclassroom_click"];
     
     [self setupChildVc:[[XXEMySelfPageViewController alloc] init] title:@"我" image:@"tabbar_personal" selectedImage:@"tabbar_personal_click"];
     

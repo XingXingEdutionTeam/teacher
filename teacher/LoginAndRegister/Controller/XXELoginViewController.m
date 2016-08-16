@@ -8,6 +8,7 @@
 
 #import "XXELoginViewController.h"
 #import "HyLoglnButton.h"
+#import "XXENavigationViewController.h"
 #import "XXETabBarControllerConfig.h"
 #import "XXERegisterViewController.h"
 #import "XXENavigationViewController.h"
@@ -374,9 +375,10 @@
 
 - (void)registerButtonClick:(UIButton *)sender
 {
-    
     XXERegisterViewController *registerVC = [[XXERegisterViewController alloc]init];
-    [self.navigationController pushViewController:registerVC animated:YES];
+    UIWindow *window = [UIApplication sharedApplication].keyWindow;
+    XXENavigationViewController *navi = [[XXENavigationViewController alloc]initWithRootViewController:registerVC];
+    window.rootViewController = navi;
      NSLog(@"-----免费注册-----");
 }
 

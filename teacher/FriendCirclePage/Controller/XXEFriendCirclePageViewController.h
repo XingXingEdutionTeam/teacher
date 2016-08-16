@@ -6,8 +6,8 @@
 //  Copyright © 2016年 XingXingEdu. All rights reserved.
 //
 
-#import "XXEBaseViewController.h"
+#import "DFTimeLineViewController.h"
 
-@interface XXEFriendCirclePageViewController : XXEBaseViewController
+@interface XXEFriendCirclePageViewController : DFTimeLineViewController
 
 @end

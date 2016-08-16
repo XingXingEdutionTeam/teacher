@@ -84,7 +84,6 @@ static NSString *const IdentifierCell = @"classAlbunCell";
 
 }
 
-
 #pragma mark - 获取数据
 - (void)loadClassAlbumMessage
 {

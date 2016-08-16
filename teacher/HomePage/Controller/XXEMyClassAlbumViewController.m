@@ -151,9 +151,9 @@ static NSString * IdentifierCELL = @"IdentifierCELL";
                 [self.datasource removeObjectAtIndex:indexPath.row];
                 NSLog(@"删除的时候数据源个数%lu",(unsigned long)self.datasource.count);
                 [self.myClassAlumTableView reloadData];
+            } else{
+                [self showHudWithString:@"删除失败" forSecond:1.f];
             }
-            [self showHudWithString:@"删除失败" forSecond:1.f];
-            
         } failure:^(__kindof YTKBaseRequest *request) {
             [self showHudWithString:@"删除失败" forSecond:1.f];
         }];

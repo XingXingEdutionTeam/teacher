@@ -9,9 +9,9 @@
 #import "XXEBaseViewController.h"
 
 @interface XXEClassAlbumViewController : XXEBaseViewController
-/** 学校的ID是一样的 */
+/** 学校的ID是不一样的 */
 @property (nonatomic, strong)NSString *schoolID;
-/** 班级的ID是一样的 */
+/** 班级的ID是不一样的 */
 @property (nonatomic, strong)NSString *classID;
 
 @end
