@@ -20,6 +20,7 @@
 #import "XXEXingCoinViewController.h"
 #import "XXEFlowerbasketViewController.h"
 #import "XXETeacherUserInfo.h"
+#import "XXERedFlowerSentHistoryViewController.h"
 
 //监控
 #import "VideoMonitorViewController.h"
@@ -160,6 +161,8 @@
 }
 
 
+
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
@@ -206,7 +209,14 @@
 
 - (void)homeMiddleTwoButtonClick
 {
-    NSLog(@"---小红花点击事件----");
+    //    NSLog(@"---小红花点击事件----");
+    XXERedFlowerSentHistoryViewController *redFlowerSentHistoryVC = [[XXERedFlowerSentHistoryViewController alloc] init];
+//    
+    redFlowerSentHistoryVC.schoolId = self.schoolHomeId;
+    redFlowerSentHistoryVC.classId = self.classHomeId;
+//    NSLog(@"%@%@",self.schoolHomeId,self.classHomeId);
+    
+    [self.navigationController pushViewController:redFlowerSentHistoryVC animated:YES];
 }
 
 - (void)homeMiddleThreeButtonClick

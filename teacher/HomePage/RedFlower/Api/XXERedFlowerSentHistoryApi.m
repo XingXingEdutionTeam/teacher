@@ -52,9 +52,23 @@
 }
 
 
+/*
+ return @{@"url":_url,
+ @"appkey":_appkey,
+ @"backtype":_backtype,
+ @"xid":_xid,
+ @"user_id":_user_id,
+ @"user_type":_user_type,
+ @"page":_page
+ };
+ */
+
 - (id)requestArgument{
     
-    return @{@"xid":_xid,
+    return @{@"url":URL,
+             @"appkey":APPKEY,
+             @"backtype":BACKTYPE,
+             @"xid":_xid,
              @"user_id":_user_id,
              @"user_type":_user_type,
              @"page":_page

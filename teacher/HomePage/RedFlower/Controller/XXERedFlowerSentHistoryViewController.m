@@ -11,6 +11,11 @@
 //
 
 #import "XXERedFlowerSentHistoryViewController.h"
+#import "XXERedFlowerSentHistoryTableViewCell.h"
+#import "XXERedFlowerSentHistoryModel.h"
+#import "XXERedFlowerSentHistoryApi.h"
+#import "XXERedFlowerDetialViewController.h"
+#import "XXESentToPeopleViewController.h"
 
 @interface XXERedFlowerSentHistoryViewController ()<UITableViewDelegate, UITableViewDataSource>
 {
@@ -19,6 +24,11 @@
     NSMutableArray *_dataSourceArray;
     
     NSInteger page;
+    
+    //已赠花篮数量
+    NSString *give_num;
+    //剩余花篮数量
+    NSString *flower_able;
     
 }
 
@@ -32,7 +42,7 @@
 - (void)viewWillAppear:(BOOL)animated{
     _dataSourceArray = [[NSMutableArray alloc] init];
     
-    page = 1;
+    page = 0;
     
     [_myTableView reloadData];
     
@@ -56,9 +66,9 @@
     self.navigationController.navigationBar.backgroundColor = XXEColorFromRGB(0, 170, 42);
     self.navigationController.navigationBarHidden = NO;
     
-    self.title = @"花篮";
+    self.title = @"小红花";
     
-    UIButton *sentBtn =[UIButton createButtonWithFrame:CGRectMake(0, 0, 42, 25) backGruondImageName:@"home_flowerbasket_withdrawIcon72x44" Target:self Action:@selector(sent:) Title:@""];
+    UIButton *sentBtn =[UIButton createButtonWithFrame:CGRectMake(0, 0, 22, 22) backGruondImageName:@"home_redflower_sent" Target:self Action:@selector(sent:) Title:@""];
     UIBarButtonItem *sentItem =[[UIBarButtonItem alloc]initWithCustomView:sentBtn];
     self.navigationItem.rightBarButtonItem =sentItem;
     
@@ -71,51 +81,60 @@
 
 
 - (void)sent:(UIButton *)button{
-#warning 访客登录 不允许 提现---------------------------------------
+
+    XXESentToPeopleViewController *sentToPeopleVC = [[XXESentToPeopleViewController alloc] init];
     
+    sentToPeopleVC.schoolId = _schoolId;
+    sentToPeopleVC.classId = _classId;
     
-//    XXEAccountManagerViewController *XXEAccountManagerVC = [[XXEAccountManagerViewController alloc] init];
-//    
-//    [self.navigationController pushViewController:XXEAccountManagerVC animated:YES];
+    [self.navigationController pushViewController:sentToPeopleVC animated:YES];
     
 }
 
 - (void)fetchNetData{
-//    /*
-//     【花篮->赠送记录列表】
-//     
-//     接口类型:1
-//     
-//     接口:
-//     http://www.xingxingedu.cn/Teacher/give_fbasket_record
-//     
-//     传参:
-//     page	//页码(加载更多,默认1)
-//     */
-//    
-//    NSString *pageStr = [NSString stringWithFormat:@"%ld", page];
-//    
-//    XXEFlowerbasketApi *flowerbasketApi = [[XXEFlowerbasketApi alloc] initWithUrlString:URL appkey:APPKEY backtype:BACKTYPE xid:XID user_id:USER_ID user_type:USER_TYPE page:pageStr];
-//    [flowerbasketApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
-//        
-//        //        NSLog(@"111   %@", request.responseJSONObject);
-//        
-//        NSString *codeStr = [NSString stringWithFormat:@"%@", request.responseJSONObject[@"code"]];
-//        
-//        if ([codeStr isEqualToString:@"1"]) {
-//            NSArray *modelArray = [XXEFlowerbasketModel parseResondsData:request.responseJSONObject[@"data"]];
-//            
-//            [_dataSourceArray addObjectsFromArray:modelArray];
-//        }else{
-//            
-//        }
-//        
-//        [self customContent];
-//        
-//    } failure:^(__kindof YTKBaseRequest *request) {
-//        
-//        [self showString:@"请求失败" forSecond:1.f];
-//    }];
+    /*
+     【小红花->赠送记录列表】
+     
+     接口类型:1
+     
+     接口:
+     http://www.xingxingedu.cn/Teacher/give_flower_msg
+     
+     传参:
+     
+     page	//页码(加载更多,默认1)     */
+    
+    NSString *pageStr = [NSString stringWithFormat:@"%ld", page];
+    
+    XXERedFlowerSentHistoryApi *redFlowerSentHistoryApi = [[XXERedFlowerSentHistoryApi alloc] initWithXid:XID user_id:USER_ID user_type:USER_TYPE page:pageStr];
+    [redFlowerSentHistoryApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
+        
+//                NSLog(@"111   %@", request.responseJSONObject);
+        
+        NSString *codeStr = [NSString stringWithFormat:@"%@", request.responseJSONObject[@"code"]];
+        
+        if ([codeStr isEqualToString:@"1"]) {
+
+        NSDictionary *dict = request.responseJSONObject[@"data"];
+            //已赠花篮数量
+            give_num = dict[@"give_num"];
+            
+            //剩余花篮 数量
+            flower_able = dict[@"flower_able"];
+            
+            NSArray *modelArray = [XXERedFlowerSentHistoryModel parseResondsData:dict[@"list"]];
+
+            [_dataSourceArray addObjectsFromArray:modelArray];
+        }else{
+            
+        }
+        
+        [self customContent];
+        
+    } failure:^(__kindof YTKBaseRequest *request) {
+        
+        [self showString:@"数据请求失败" forSecond:1.f];
+    }];
     
 }
 
@@ -161,6 +180,7 @@
 }
 
 -(void)loadNewData{
+    page ++;
     
     [self fetchNetData];
     [ _myTableView.mj_header endRefreshing];
@@ -197,49 +217,78 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
-//    static NSString *identifier = @"cell";
-//    XXEFlowerbasketTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
-//    
-//    if (cell == nil) {
-//        cell = [[[NSBundle mainBundle] loadNibNamed:@"XXEFlowerbasketTableViewCell" owner:self options:nil]lastObject];
-//    }
-//    XXEFlowerbasketModel *model = _dataSourceArray[indexPath.row];
-//    /*
-//     0 :表示 自己 头像 ，需要添加 前缀
-//     1 :表示 第三方 头像 ，不需要 添加 前缀
-//     //判断是否是第三方头像
-//     */
-//    NSString * head_img;
-//    if([[NSString stringWithFormat:@"%@",model.head_img_type]isEqualToString:@"0"]){
-//        head_img = [kXXEPicURL stringByAppendingString:model.head_img];
-//    }else{
-//        head_img = model.head_img;
-//    }
-//    
-//    cell.iconImageView.layer.cornerRadius = cell.iconImageView.frame.size.width / 2;
-//    cell.iconImageView.layer.masksToBounds = YES;
-//    
-//    [cell.iconImageView sd_setImageWithURL:[NSURL URLWithString:head_img] placeholderImage:[UIImage imageNamed:@"home_flowerbasket_placehoderIcon120x120"]];
-//    cell.nameLabel.text = model.tname;
-//    cell.numberLabel.text = [NSString stringWithFormat:@"数量:%@", model.num];
-//    cell.contentLabel.text = [NSString stringWithFormat:@"赠言:%@", model.con];
-//    
-//    return cell;
-    return nil;
+    static NSString *identifier = @"cell";
+    XXERedFlowerSentHistoryTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+    
+    if (cell == nil) {
+        cell = [[[NSBundle mainBundle] loadNibNamed:@"XXERedFlowerSentHistoryTableViewCell" owner:self options:nil]lastObject];
+    }
+    XXERedFlowerSentHistoryModel *model = _dataSourceArray[indexPath.row];
+    /*
+     0 :表示 自己 头像 ，需要添加 前缀
+     1 :表示 第三方 头像 ，不需要 添加 前缀
+     //判断是否是第三方头像
+     */
+    NSString *head_img = [kXXEPicURL stringByAppendingString:model.head_img];
+    cell.iconImageView.layer.cornerRadius = cell.iconImageView.frame.size.width / 2;
+    cell.iconImageView.layer.masksToBounds = YES;
+    
+    [cell.iconImageView sd_setImageWithURL:[NSURL URLWithString:head_img] placeholderImage:[UIImage imageNamed:@"home_flowerbasket_placehoderIcon120x120"]];
+    cell.titleLabel.text = [NSString stringWithFormat:@"%@ / %@ / %@", model.tname, model.teach_course, model.class_name];
+    cell.contentLabel.text = [NSString stringWithFormat:@"赠言:%@", model.con];
+    cell.timeLabel.text = [XXETool dateStringFromNumberTimer:model.date_tm];
+    
+    return cell;
 }
 
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    return 80;
+    return 95;
     
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
+    
+    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, KScreenWidth, 20)];
+    headerView.backgroundColor = [UIColor whiteColor];
+    
+    CGFloat labelWidth = KScreenWidth / 3;
+    UILabel *titleLabel1 = [UILabel createLabelWithFrame:CGRectMake(0, 5, labelWidth, 20) Font:14 Text:@"历史记录"];
+    titleLabel1.textAlignment = NSTextAlignmentCenter;
+    [headerView addSubview:titleLabel1];
+    
+    UILabel *titleLabel2 = [UILabel createLabelWithFrame:CGRectMake(labelWidth, 5, labelWidth, 20) Font:14 Text:[NSString stringWithFormat:@"已颁发:%@朵", give_num]];
+    titleLabel2.textAlignment = NSTextAlignmentCenter;
+    [headerView addSubview:titleLabel2];
+    
+    UILabel *titleLabel3 = [UILabel createLabelWithFrame:CGRectMake(labelWidth * 2, 5, labelWidth, 20) Font:14 Text:[NSString stringWithFormat:@"剩余:%@朵", flower_able]];
+    titleLabel3.textAlignment = NSTextAlignmentCenter;
+    [headerView addSubview:titleLabel3];
+    
+    return headerView;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    
-    return 0.00001;
+    return 30;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+
+    XXERedFlowerDetialViewController *redFlowerDetialVC = [[XXERedFlowerDetialViewController alloc] init];
+    
+    XXERedFlowerSentHistoryModel *model = _dataSourceArray[indexPath.row];
+    redFlowerDetialVC.name = model.tname;
+    redFlowerDetialVC.time = model.date_tm;
+    redFlowerDetialVC.schoolName = model.school_name;
+    redFlowerDetialVC.className = model.class_name;
+    redFlowerDetialVC.course = model.teach_course;
+    redFlowerDetialVC.content = model.con;
+    redFlowerDetialVC.picWallArray = model.pic_arr;
+    redFlowerDetialVC.iconUrl = model.head_img;
+    [self.navigationController pushViewController:redFlowerDetialVC animated:YES];
+
+}
 
 
 @end
