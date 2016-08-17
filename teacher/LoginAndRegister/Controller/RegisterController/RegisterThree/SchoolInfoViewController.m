@@ -177,7 +177,7 @@
 //  加载Pist
 - (void)reloadD{
     
-    NSString *plistPath = [[NSBundle mainBundle] pathForResource:@"area" ofType:@"plist"];
+    NSString *plistPath = [[NSBundle mainBundle] pathForResource:@"CityPlace" ofType:@"plist"];
     areaDict = [NSDictionary dictionaryWithContentsOfFile:plistPath];
     NSArray *components = [areaDict allKeys];
     NSArray *sortedArray = [components sortedArrayUsingComparator: ^(id obj1, id obj2) {

@@ -13,6 +13,7 @@
 #import "XXELoginViewController.h"
 #import "XXENavigationViewController.h"
 #import <SMS_SDK/SMSSDK.h>
+#import "XXEVertifyTimesApi.h"
 
 @interface XXERegisterViewController ()
 
@@ -247,29 +248,45 @@
 - (void)setupVerificationNumber:(UIButton *)sender
 {
     NSLog(@"----获取验证码----");
-    [sender startWithTime:59 title:@"获取验证码" countDownTile:@"s后重新获取" mColor:XXEColorFromRGB(189, 210, 38) countColor:XXEColorFromRGB(204, 204, 204)];
+    [sender startWithTime:5 title:@"获取验证码" countDownTile:@"s后重新获取" mColor:XXEColorFromRGB(189, 210, 38) countColor:XXEColorFromRGB(204, 204, 204)];
     [self showString:@"验证码已发送" forSecond:1.f];
     [self getVerificationNumber];
 }
 
 - (void)nextButtonsClick:(UIButton *)sender
 {
-    NSLog(@"%@%@",self.registerUserName,self.registerVerifi);
+    //验证验证码对不对
+//    [self verifyNumberISRight];
     
-    if (self.registerUserName == nil || self.registerVerifi == nil) {
-        [self showString:@"请输入电话号码" forSecond:1.f];
-    }else {
-        NSLog(@"-----下一步-----");
-        XXERegisterSecondViewController *registerSecondVC = [[XXERegisterSecondViewController alloc]init];
-        [self.navigationController pushViewController:registerSecondVC animated:YES];
-    }
+    //测试环境
+    [self showString:@"测试" forSecond:1.f];
+    XXERegisterSecondViewController *registerSecondVC = [[XXERegisterSecondViewController alloc]init];
+    [self.navigationController pushViewController:registerSecondVC animated:YES];
 }
 
+#pragma mark - 验证验证码对不对
+-(void)verifyNumberISRight
+{
+    NSLog(@"电话号码%@ 验证码%@",self.registerUserName,self.registerVerifi);
+    
+    [SMSSDK commitVerificationCode:self.registerVerifi phoneNumber:self.registerUserName zone:@"86" result:^(NSError *error) {
+        if (error) {
+            [self showString:@"验证码错误" forSecond:1.f];
+        }else {
+            XXERegisterSecondViewController *registerSecondVC = [[XXERegisterSecondViewController alloc]init];
+            [self.navigationController pushViewController:registerSecondVC animated:YES];
+        }
+    }];
+}
+
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+{
+    [self.registerUerTextField resignFirstResponder];
+    [self.registerVerificationTextField resignFirstResponder];
+}
 
 - (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
-    [self.registerUerTextField resignFirstResponder];
-//    [self.registerVerificationTextField resignFirstResponder];
     if (self.registerUserName == nil) {
         [self showString:@"输入电话号码有误" forSecond:1.f];
     } else {
@@ -284,7 +301,7 @@
 {
     XXERegisterCheckApi *registerCheckApi = [[XXERegisterCheckApi alloc]initWithChechPhoneNumber:self.registerUserName];
     [registerCheckApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
-        NSLog(@"电话可好可不好用%@",request.responseJSONObject);
+        NSLog(@"电话可不可以用%@",request.responseJSONObject);
         NSDictionary *dic = request.responseJSONObject;
         NSString *string = [dic objectForKey:@"code"];
         if ([string intValue] == 1) {
@@ -307,7 +324,26 @@
     [SMSSDK getVerificationCodeByMethod:SMSGetCodeMethodSMS phoneNumber:self.registerUserName zone:@"86" customIdentifier:nil result:^(NSError *error) {
         if (!error) {
             [self showString:@"获取验证码成功" forSecond:1.f];
+            //记录次数
+            [self recordTheVerifyCodeNum];
         }
+    }];
+}
+
+#pragma mark - 获取验证码次数
+- (void)recordTheVerifyCodeNum
+{
+    XXEVertifyTimesApi *timesApi = [[XXEVertifyTimesApi alloc]initWithVertifyTimesActionPage:@"1" PhoneNum:self.registerUserName];
+    [timesApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
+        NSLog(@"%@",request.responseJSONObject);
+        NSString *code = [request.responseJSONObject objectForKey:@"code"];
+        if ([code isEqualToString:@"4"]) {
+            [self showString:@"已达今日5条上线" forSecond:1.f];
+           self.verificationButton.userInteractionEnabled = NO;
+        }
+        
+    } failure:^(__kindof YTKBaseRequest *request) {
+        
     }];
 }
 
@@ -335,7 +371,6 @@
         isChinaMobile = YES;
         //        NSLog(@"中国电信");
     }
-    
     return isChinaMobile;
 }
 

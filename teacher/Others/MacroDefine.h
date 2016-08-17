@@ -40,9 +40,6 @@
 //图片地址
 #define kXXEPicURL    @"http://www.xingxingedu.cn/Public/"
 
-//免费短息
-#define FreeSMSAPPKey @"ec9c9a472b8c"
-#define FreeSMSAPPSecret @"7930e91cbd30596d903c06e5613635db"
 
 // 加入的测试
 //==========

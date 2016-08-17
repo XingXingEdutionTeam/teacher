@@ -22,8 +22,6 @@
 #import "XXETeacherUserInfo.h"
 #import "XXERedFlowerSentHistoryViewController.h"
 #import "XXECommentRootViewController.h"
-
-
 //监控
 #import "VideoMonitorViewController.h"
 
@@ -122,27 +120,16 @@
     self.homeClassView.textField.tag = 103;
     self.homeClassView.textField.layer.cornerRadius =10 * KScreenWidth / 375;
     self.homeClassView.textField.layer.masksToBounds =YES;
-
-//    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(calssAction:) name:@"commboxNotice" object:nil];
+    
+    XXETeacherUserInfo *model=self.arraySchool[0];
+    self.homeClassView.textField.text = model.class_name;
+    self.homeSchoolView.textField.text = model.school_name;
+    self.schoolHomeId = model.school_id;
+    self.classHomeId = model.class_id;
+    
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(calssAction2:) name:@"commboxNotice2" object:nil];
     
 }
-
-//- (void)calssAction:(NSNotification *)notif
-//{
-//    switch ([notif.object integerValue]) {
-//        case 102:
-//            [self.self.homeClassView removeFromSuperview];
-//            [self.view addSubview:self.homeClassView];
-//            break;
-//        case 103:
-//            [self.self.homeSchoolView removeFromSuperview];
-//            [self.view addSubview:self.homeSchoolView];
-//            
-//        default:
-//            break;
-//    }
-//}
 
 #pragma mark - 通知选择的学校
 
@@ -157,7 +144,7 @@
             self.schoolHomeId = model.school_id;
             self.classHomeId = model.class_id;
             
-            NSLog(@"%@ %@",model.school_id,model.class_id);
+            NSLog(@"===!!!%@ %@",model.school_id,model.class_id);
         }
     }
 }
@@ -261,11 +248,6 @@
         case 5:
         {
             NSLog(@"---点评----");
-            //XXECommentRootViewController
-//            XXECommentRequestViewController *commentRequestVC = [[XXECommentRequestViewController alloc] init];
-//            commentRequestVC.classId = self.classHomeId;
-//            [self.navigationController pushViewController:commentRequestVC animated:YES];
-            
             XXECommentRootViewController *commentRootVC = [[XXECommentRootViewController alloc] init];
             commentRootVC.classId = self.classHomeId;
             [self.navigationController pushViewController:commentRootVC animated:NO];

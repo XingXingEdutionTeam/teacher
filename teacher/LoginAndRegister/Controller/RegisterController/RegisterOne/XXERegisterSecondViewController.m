@@ -7,9 +7,6 @@
 //
 
 #import "XXERegisterSecondViewController.h"
-#import "XXERegisterThreeViewController.h"
-
-//===========测试
 #import "SettingPersonInfoViewController.h"
 
 @interface XXERegisterSecondViewController ()

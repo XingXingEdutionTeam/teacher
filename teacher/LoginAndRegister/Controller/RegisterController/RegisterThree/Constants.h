@@ -23,11 +23,11 @@
 #define W(x) WinWidth*(x)/375.0
 #define H(y) WinHeight*(y)/667.0
 
-#define XID  @"18884982"
+
 #define APPKEY  @"U3k8Dgj7e934bh5Y"
 #define BACKTYPE @"json"
 #define USER_ID  @"1"
-#define USER_TYPE @"1"
+
 #import "WZYHttpTool.h"
 //图片地址
 #import "WMUtil.h"

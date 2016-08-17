@@ -38,7 +38,7 @@
              @"phone":_phoneNumber,
              @"appkey":APPKEY,
              @"backtype":BACKTYPE,
-             //             @"login_type":@"1",//1为手机号 2 .3.4.5 分别为第三放登录
+             
              };
 }
 
