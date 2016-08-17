@@ -36,14 +36,18 @@
 //账号  id
 @property (nonatomic, strong) NSMutableArray *account_idArray;
 
+//账号 名称
+@property (nonatomic, strong) NSMutableArray *nameArray;
+
+
 @end
 
 @implementation XXEAccountManagerViewController
 
 //- (void)viewWillAppear:(BOOL)animated{
-//    
+//
 //    [_myTableView reloadData];
-//    
+//
 //}
 
 -(void)viewDidAppear:(BOOL)animated
@@ -65,11 +69,12 @@
     _aliPayAccountArray = [[NSMutableArray alloc] init];
     _accountArray = [[NSMutableArray alloc] init];
     _account_idArray = [[NSMutableArray alloc] init];
-   
+    _nameArray = [[NSMutableArray alloc] init];
+    
     [self createRightBar];
     
     [self createTableView];
-
+    
 }
 - (void)createRightBar{
     
@@ -82,7 +87,7 @@
     //添加账户
     XXEFlowerbasketAddAccountViewController *flowerbasketAddAccountVC =[[XXEFlowerbasketAddAccountViewController alloc]init];
     
-//    [self.navigationController pushViewController:flowerbasketAddAccountVC animated:YES];
+    //    [self.navigationController pushViewController:flowerbasketAddAccountVC animated:YES];
     [self.navigationController pushViewController:flowerbasketAddAccountVC animated:YES];
     
 }
@@ -215,7 +220,7 @@
     cell.nameLabel.text = model.tname;
     //账号 中间 隐藏 一部分
     _aliPayAccountStr = [model.account stringByReplacingCharactersInRange:NSMakeRange(3, 4) withString:@"****"];
-     //138 1865 7742 ->  //138 **** 7742
+    //138 1865 7742 ->  //138 **** 7742
     cell.accountNumberLabel.text = _aliPayAccountStr;
     
     [_aliPayAccountArray addObject: _aliPayAccountStr];
@@ -224,6 +229,8 @@
     [_accountArray addObject:model.account];
     //账号 id
     [_account_idArray addObject:model.idStr];
+    //名称
+    [_nameArray addObject:model.tname];
     
     return cell;
     
@@ -243,7 +250,7 @@
 
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-
+    
     XXEFlowerbasketWithdrawCashViewController *XXEFlowerbasketWithdrawCashVC = [[XXEFlowerbasketWithdrawCashViewController alloc] init];
     
     //[id] => 1		//此id操作提现时作为传参(account_id)
@@ -251,7 +258,9 @@
     
     XXEFlowerbasketWithdrawCashVC.aliPayAccountStr = _aliPayAccountArray[indexPath.row];
     XXEFlowerbasketWithdrawCashVC.accountStr = _accountArray[indexPath.row];
-
+    
+    XXEFlowerbasketWithdrawCashVC.name = _nameArray[indexPath.row];
+    
     [self.navigationController pushViewController:XXEFlowerbasketWithdrawCashVC animated:YES];
     
 }

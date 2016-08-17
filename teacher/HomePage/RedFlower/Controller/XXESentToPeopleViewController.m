@@ -130,47 +130,51 @@
     [managerAndHeadmasterVC returnArray:^(NSMutableArray *selectedBabyInfoArray) {
         _selectedBabyInfoArray = [NSMutableArray arrayWithArray:selectedBabyInfoArray];
         
-        //宝贝 头像
-        [dynamicScrollView addImageView:[NSString stringWithFormat:@"%@%@",kXXEPicURL, selectedBabyInfoArray[0] ]];
-        
-        //宝贝 名字
-        [didSelectBabyNameArray addObject:selectedBabyInfoArray[1]];
-        NSMutableString *labelStr=[NSMutableString string];
-        for (NSString * str in didSelectBabyNameArray ) {
-            [labelStr appendString:str];
-            [labelStr appendString:@"  "];
-        }
-        self.nameLabel.text=labelStr;
-        
-        //宝贝 id
-        [didSelectBabyIdArray addObject:selectedBabyInfoArray[2]];
-        NSMutableString *tidStr = [NSMutableString string];
-        
-        for (int j = 0; j < didSelectBabyIdArray.count; j ++) {
-            NSString *str = didSelectBabyIdArray[j];
+        if (dynamicScrollView.imageViews.count < [_basketNumStr integerValue]) {
+            //宝贝 头像
+            [dynamicScrollView addImageView:[NSString stringWithFormat:@"%@%@",kXXEPicURL, selectedBabyInfoArray[0] ]];
             
-            if (j != didSelectBabyIdArray.count - 1) {
-                [tidStr appendFormat:@"%@,", str];
-            }else{
-                [tidStr appendFormat:@"%@", str];
+            //宝贝 名字
+            [didSelectBabyNameArray addObject:selectedBabyInfoArray[1]];
+            NSMutableString *labelStr=[NSMutableString string];
+            for (NSString * str in didSelectBabyNameArray ) {
+                [labelStr appendString:str];
+                [labelStr appendString:@"  "];
             }
+            self.nameLabel.text=labelStr;
+            
+            //宝贝 id
+            [didSelectBabyIdArray addObject:selectedBabyInfoArray[2]];
+            NSMutableString *tidStr = [NSMutableString string];
+            
+            for (int j = 0; j < didSelectBabyIdArray.count; j ++) {
+                NSString *str = didSelectBabyIdArray[j];
+                
+                if (j != didSelectBabyIdArray.count - 1) {
+                    [tidStr appendFormat:@"%@,", str];
+                }else{
+                    [tidStr appendFormat:@"%@", str];
+                }
+            }
+            
+            babyIdStr = tidStr;
+            
+            //每一维数组含baby_id,school_id,class_id (请使用孩子列表获得的数据)
+            NSDictionary *dic = [[NSDictionary alloc]init];
+            dic = @{@"baby_id": selectedBabyInfoArray[2], @"school_id":selectedBabyInfoArray[3] , @"class_id":selectedBabyInfoArray[4] };
+            [submitBabyInfoArray addObject:dic];
+        
+        }else{
+        
+            [self showHudWithString:@"小红花数量不足!" forSecond:1.5];
+        
         }
-        
-        babyIdStr = tidStr;
-        
-        //孩子 id ,school id , class id
-        
-        //每一维数组含baby_id,school_id,class_id (请使用孩子列表获得的数据)
-//        NSMutableArray *mArr = [[NSMutableArray alloc]initWithObjects:@"":, selectedBabyInfoArray[3], selectedBabyInfoArray[4], nil];
-//        [submitBabyInfoArray addObject:mArr];
-        NSDictionary *dic = [[NSDictionary alloc]init];
-        dic = @{@"baby_id": selectedBabyInfoArray[2], @"school_id":selectedBabyInfoArray[3] , @"class_id":selectedBabyInfoArray[4] };
-        [submitBabyInfoArray addObject:dic];
     
     }];
-
     
     [self.navigationController pushViewController:managerAndHeadmasterVC animated:YES];
+        
+    
 }
 
 - (IBAction)certenButtonClick:(UIButton *)sender {
@@ -191,16 +195,12 @@
      */
     //position	//身份,传数字(1教师/2班主任/3管理/4校长)
 
-    NSLog(@"%@", submitBabyInfoArray);
-    
     if (![submitBabyInfoArray isEqual:@"..."]) {
         NSError *error;
         NSData *jsonData =[NSJSONSerialization dataWithJSONObject:submitBabyInfoArray  options:kNilOptions error:&error];
         jsonString =[[NSString alloc]initWithData:jsonData encoding:NSUTF8StringEncoding];
     }
-    
-    NSLog(@"json --%@  ; con --- %@", submitBabyInfoArray, conStr);
-    
+
     if (conStr == nil) {
         conStr = @"";
     }
@@ -208,17 +208,21 @@
     XXESubmitSeletedBabyInfoApi *submitSeletedBabyInfoApi = [[XXESubmitSeletedBabyInfoApi alloc] initWithXid:XID user_id:USER_ID user_type:USER_TYPE position:@"4" baby_info:jsonString con:conStr];
     [submitSeletedBabyInfoApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         
-    NSLog(@"111   %@", request.responseJSONObject);
+//    NSLog(@"111777   %@", request.responseJSONObject);
         
         NSString *codeStr = [NSString stringWithFormat:@"%@", request.responseJSONObject[@"code"]];
         
+        [self showHudWithString:@"发送中......"];
+        
         if ([codeStr isEqualToString:@"1"]) {
 
+//        [self hideHud];
+        [self.navigationController popViewControllerAnimated:YES];
+
         }else{
-            
+          [self showHudWithString:@"发送失败!" forSecond:1.5 ];
         }
         
-//        [self customContent];
         
     } failure:^(__kindof YTKBaseRequest *request) {
         
@@ -226,8 +230,6 @@
     }];
     
 }
-
-
 
 
 - (void)textViewDidChange:(UITextView *)textView{

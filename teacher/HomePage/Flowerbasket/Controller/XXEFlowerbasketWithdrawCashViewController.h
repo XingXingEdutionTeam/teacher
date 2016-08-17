@@ -39,6 +39,8 @@
 @property (nonatomic, copy) NSString *accountStr;
 //account_id
 @property (nonatomic, copy) NSString *account_id;
+//账户 名称
+@property (nonatomic, copy) NSString *name;
 
 
 - (IBAction)certenButton:(UIButton *)sender;

@@ -21,6 +21,8 @@
 
 @property (nonatomic, copy) NSString *classId;
 
+@property (nonatomic, copy) NSString *basketNumStr;
+
 @property (weak, nonatomic) IBOutlet UIView *upPicImageView;
 
 

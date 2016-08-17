@@ -61,9 +61,9 @@
 #define W(x) WinWidth*(x)/375.0
 #define H(y) WinHeight*(y)/667.0
 
-#import "WZYHttpTool.h"
+//#import "WZYHttpTool.h"
 //图片地址
-#import "WMUtil.h"
+//#import "WMUtil.h"
 
 
 

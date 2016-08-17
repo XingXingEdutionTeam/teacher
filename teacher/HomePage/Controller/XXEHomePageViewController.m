@@ -21,6 +21,8 @@
 #import "XXEFlowerbasketViewController.h"
 #import "XXETeacherUserInfo.h"
 #import "XXERedFlowerSentHistoryViewController.h"
+#import "XXECommentRootViewController.h"
+
 
 //监控
 #import "VideoMonitorViewController.h"
@@ -257,8 +259,18 @@
             NSLog(@"----聊天----");
             break;
         case 5:
+        {
             NSLog(@"---点评----");
+            //XXECommentRootViewController
+//            XXECommentRequestViewController *commentRequestVC = [[XXECommentRequestViewController alloc] init];
+//            commentRequestVC.classId = self.classHomeId;
+//            [self.navigationController pushViewController:commentRequestVC animated:YES];
+            
+            XXECommentRootViewController *commentRootVC = [[XXECommentRootViewController alloc] init];
+            commentRootVC.classId = self.classHomeId;
+            [self.navigationController pushViewController:commentRootVC animated:NO];
             break;
+        }
         case 6:
             NSLog(@"----作业----");
             break;

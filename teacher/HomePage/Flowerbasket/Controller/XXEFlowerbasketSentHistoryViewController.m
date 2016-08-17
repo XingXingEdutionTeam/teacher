@@ -79,7 +79,7 @@
     XXEFlowerbasketSentHistoryApi *flowerbasketSentHistoryApi = [[XXEFlowerbasketSentHistoryApi alloc] initWithUrlString:URL appkey:APPKEY backtype:BACKTYPE xid:XID user_id:USER_ID user_type:USER_TYPE page:pageStr];
     [flowerbasketSentHistoryApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         
-        //        NSLog(@"111   %@", request.responseJSONObject);
+        //                NSLog(@"111   %@", request.responseJSONObject);
         
         NSString *codeStr = [NSString stringWithFormat:@"%@", request.responseJSONObject[@"code"]];
         
@@ -142,7 +142,7 @@
 }
 
 -(void)loadNewData{
-    page ++ ;
+    page ++;
     
     [self fetchNetData];
     [ _myTableView.mj_header endRefreshing];
@@ -190,9 +190,9 @@
     cell.nameLabel.text = [XXETool dateStringFromNumberTimer:model.date_tm];
     //[condit] => 0			//0:处理中  1:处理完成
     if ([model.condit isEqualToString:@"0"]) {
-      cell.numberLabel.text = @"处理中......";
+        cell.numberLabel.text = @"处理中......";
     }else if ([model.condit isEqualToString:@"1"]){
-       cell.numberLabel.text = @"提现成功!";
+        cell.numberLabel.text = @"提现成功!";
     }
     cell.contentLabel.text = [NSString stringWithFormat:@"提现%@个花篮   +%@元", model.num, model.money];
     

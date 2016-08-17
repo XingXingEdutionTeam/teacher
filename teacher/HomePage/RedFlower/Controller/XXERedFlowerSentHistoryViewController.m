@@ -33,8 +33,6 @@
 }
 
 
-
-
 @end
 
 @implementation XXERedFlowerSentHistoryViewController
@@ -86,6 +84,7 @@
     
     sentToPeopleVC.schoolId = _schoolId;
     sentToPeopleVC.classId = _classId;
+    sentToPeopleVC.basketNumStr = flower_able;
     
     [self.navigationController pushViewController:sentToPeopleVC animated:YES];
     
@@ -109,7 +108,7 @@
     XXERedFlowerSentHistoryApi *redFlowerSentHistoryApi = [[XXERedFlowerSentHistoryApi alloc] initWithXid:XID user_id:USER_ID user_type:USER_TYPE page:pageStr];
     [redFlowerSentHistoryApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         
-//                NSLog(@"111   %@", request.responseJSONObject);
+//                NSLog(@"2222---   %@", request.responseJSONObject);
         
         NSString *codeStr = [NSString stringWithFormat:@"%@", request.responseJSONObject[@"code"]];
         
@@ -175,7 +174,7 @@
     _myTableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadNewData)];
     
     _myTableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadFooterNewData)];
-    
+
     
 }
 
@@ -234,6 +233,10 @@
     cell.iconImageView.layer.masksToBounds = YES;
     
     [cell.iconImageView sd_setImageWithURL:[NSURL URLWithString:head_img] placeholderImage:[UIImage imageNamed:@"home_flowerbasket_placehoderIcon120x120"]];
+    
+//    NSLog(@"课程  %@", model.teach_course);
+    
+    
     cell.titleLabel.text = [NSString stringWithFormat:@"%@ / %@ / %@", model.tname, model.teach_course, model.class_name];
     cell.contentLabel.text = [NSString stringWithFormat:@"赠言:%@", model.con];
     cell.timeLabel.text = [XXETool dateStringFromNumberTimer:model.date_tm];
