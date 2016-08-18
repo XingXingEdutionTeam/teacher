@@ -29,8 +29,8 @@
     
     if(self){
         self.showList = NO; //默认不显示下拉框
-        
-        self.listTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 30, frame.size.width, 0)];
+
+        self.listTableView =[[UITableView alloc] initWithFrame:CGRectMake(0, 30, frame.size.width, 0) style:UITableViewStyleGrouped];
         self.listTableView.delegate = self;
         self.listTableView.dataSource = self;
         self.listTableView.backgroundColor = [UIColor clearColor];
@@ -105,10 +105,17 @@
     return 1;
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return 0.00001;
+}
+
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return [self.dataArray count];
 }
+
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {

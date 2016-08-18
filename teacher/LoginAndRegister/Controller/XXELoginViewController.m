@@ -219,19 +219,18 @@
     //创建UIlabel
     UILabel *messageLabel = [[UILabel alloc]init];
     messageLabel.text = @"适用其他账号登录";
-    messageLabel.tintColor = [UIColor darkGrayColor];
+    messageLabel.textColor = XXEColorFromRGB(204, 204, 204);
     messageLabel.font = [UIFont systemFontOfSize:14];
     [self.view addSubview:messageLabel];
     [messageLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(weakSelf.view.mas_centerX);
-        make.bottom.equalTo(weakSelf.view.mas_bottom).offset(-160*kScreenRatioHeight);
+        make.bottom.equalTo(weakSelf.view.mas_bottom).offset(-121*kScreenRatioHeight);
         make.size.mas_equalTo(CGSizeMake(120, 20));
     }];
     
     //建立分界线
     UIView * lineLeft = [[UIView alloc]init];
-    lineLeft.backgroundColor = [UIColor redColor];
-    lineLeft.backgroundColor = [UIColor lightGrayColor];
+    lineLeft.backgroundColor = XXEColorFromRGB(204, 204, 204);
     [self.view addSubview:lineLeft];
     [lineLeft mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(weakSelf.view.mas_left).offset(20*kScreenRatioWidth);
@@ -241,7 +240,7 @@
     
     //建立分界线
     UIView * lineRight = [[UIView alloc]init];
-    lineRight.backgroundColor = [UIColor lightGrayColor];
+    lineRight.backgroundColor = XXEColorFromRGB(204, 204, 204);
     [self.view addSubview:lineRight];
     [lineRight mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.equalTo(weakSelf.view.mas_right).offset(-20*kScreenRatioWidth);
@@ -258,8 +257,8 @@
     [self.view addSubview:QQButton];
     [QQButton mas_makeConstraints:^(MASConstraintMaker *make) {
         
-        make.left.equalTo(weakSelf.view.mas_left).offset(52*kScreenRatioWidth);
-        make.bottom.equalTo(weakSelf.view.mas_bottom).offset(-90*kScreenRatioHeight);
+        make.left.equalTo(weakSelf.view.mas_left).offset(46*kScreenRatioWidth);
+        make.bottom.equalTo(weakSelf.view.mas_bottom).offset(-45*kScreenRatioHeight);
         make.size.mas_equalTo(CGSizeMake(52*kScreenRatioWidth, 50*kScreenRatioHeight));
     }];
     
@@ -271,7 +270,7 @@
     [WechatButton mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(QQButton.mas_right).offset(25*kScreenRatioWidth);
-        make.bottom.equalTo(weakSelf.view.mas_bottom).offset(-90*kScreenRatioHeight);
+        make.bottom.equalTo(weakSelf.view.mas_bottom).offset(-45*kScreenRatioHeight);
         make.size.mas_equalTo(CGSizeMake(52*kScreenRatioWidth, 50*kScreenRatioHeight));
     }];
     //新浪
@@ -282,7 +281,7 @@
     [SinaButton mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(WechatButton.mas_right).offset(25*kScreenRatioWidth);
-        make.bottom.equalTo(weakSelf.view.mas_bottom).offset(-90*kScreenRatioHeight);
+        make.bottom.equalTo(weakSelf.view.mas_bottom).offset(-45*kScreenRatioHeight);
         make.size.mas_equalTo(CGSizeMake(52*kScreenRatioWidth, 50*kScreenRatioHeight));
     }];
     //支付宝
@@ -293,7 +292,7 @@
     [ZhiFuBaoButton mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(SinaButton.mas_right).offset(25*kScreenRatioWidth);
-        make.bottom.equalTo(weakSelf.view.mas_bottom).offset(-90*kScreenRatioHeight);
+        make.bottom.equalTo(weakSelf.view.mas_bottom).offset(-45*kScreenRatioHeight);
         make.size.mas_equalTo(CGSizeMake(52*kScreenRatioWidth, 50*kScreenRatioHeight));
     }];
 }

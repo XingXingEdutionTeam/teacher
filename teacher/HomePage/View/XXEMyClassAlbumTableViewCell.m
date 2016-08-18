@@ -15,6 +15,8 @@
     NSString *picUrl = [NSString stringWithFormat:@"%@%@",kXXEPicURL,model.album_pic];
     
     [self.classAlubmImgeView sd_setImageWithURL:[NSURL URLWithString:picUrl] placeholderImage:[UIImage imageNamed:@""]];
+    NSString *times = [XXETool dateStringFromNumberTimer:model.date_tm];
+    self.classAlubmTimeLabel.text = times;
     self.classAlubmNameLabel.text = model.album_name;
     self.classAlubmPageLabel.text = [NSString stringWithFormat:@"共%@张",model.pic_num];
     

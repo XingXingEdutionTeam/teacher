@@ -14,6 +14,9 @@
 
 + (UILabel *)setupHomePageMessageLabel:(NSString *)text;
 
+/** 注册页面4/4 */
++ (UILabel *)setupRegisterMessageLines:(NSUInteger)lines MessageLabel:(NSString *)text;
+
 #pragma mark 创建UILable
 +(UILabel *)createLabelWithFrame:(CGRect )frame Font:(int)font Text:(NSString *)text;
 

@@ -31,7 +31,7 @@ static NSString * OTherCELL = @"OTHERCELL";
 - (UITableView *)otherTeacherTableView
 {
     if (!_otherTeacherTableView) {
-        _otherTeacherTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, KScreenWidth, KScreenHeight) style:UITableViewStyleGrouped];
+        _otherTeacherTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, -30*kScreenRatioHeight, KScreenWidth, KScreenHeight) style:UITableViewStyleGrouped];
         _otherTeacherTableView.delegate = self;
         _otherTeacherTableView.dataSource = self;
     }
@@ -81,8 +81,6 @@ static NSString * OTherCELL = @"OTHERCELL";
     } failure:^(__kindof YTKBaseRequest *request) {
         
     }];
-
-    
 }
 
 

@@ -14,8 +14,11 @@
 @property (weak, nonatomic) IBOutlet UIImageView *classAlubmImgeView;
 /** 相册名称 */
 @property (weak, nonatomic) IBOutlet UILabel *classAlubmNameLabel;
+/** 相册时间 */
+@property (weak, nonatomic) IBOutlet UILabel *classAlubmTimeLabel;
 /** 相册个数 */
 @property (weak, nonatomic) IBOutlet UILabel *classAlubmPageLabel;
+
 /** 给单元格赋值 */
 - (void)configerGetClassAlubmMessage:(XXEMySelfAlbumModel *)model;
 

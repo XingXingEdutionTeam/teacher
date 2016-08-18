@@ -191,6 +191,9 @@
     XXERegisterHeadMasterViewController *headerVC = [[XXERegisterHeadMasterViewController alloc]init];
     [self.navigationController pushViewController:headerVC animated:YES];
     
+//    XXERegisterTeacherViewController *teaVC = [[XXERegisterTeacherViewController alloc]init];
+//    [self.navigationController pushViewController:teaVC animated:YES];
+    
         if ([parentsName.text isEqualToString:@""])
         {
             [self showString:@"请输入姓名" forSecond:1.f];

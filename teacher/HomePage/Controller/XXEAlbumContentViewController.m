@@ -16,8 +16,6 @@
 @interface XXEAlbumContentViewController ()<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>
 
 @property (nonatomic, strong)UICollectionView *contentCollectionView;
-
-
 @end
 
 static NSString *identifierCell = @"CELL";

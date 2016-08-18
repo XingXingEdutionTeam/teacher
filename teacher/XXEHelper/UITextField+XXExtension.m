@@ -14,7 +14,7 @@
 {
     UITextField *textField = [[UITextField alloc]init];
     textField.textAlignment = NSTextAlignmentLeft;
-    textField.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
+    textField.font = [UIFont systemWithIphone6P:17 Iphone6:15 Iphone5:13 Iphone4:11];
     textField.textColor = [UIColor blackColor];
     textField.secureTextEntry = open;
     textField.placeholder = placeholderText;

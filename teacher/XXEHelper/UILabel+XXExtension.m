@@ -15,7 +15,7 @@
     UILabel *nameLabel = [[UILabel alloc]init];
     nameLabel.text = text;
 //    nameLabel.backgroundColor = [UIColor redColor];
-    nameLabel.font = [UIFont systemWithIphone6P:19 Iphone6:17 Iphone5:14 Iphone4:3];
+    nameLabel.font = [UIFont systemWithIphone6P:16 Iphone6:15 Iphone5:13 Iphone4:12];
     nameLabel.textColor = XXEColorFromRGB(51, 51, 51);
     nameLabel.textAlignment = NSTextAlignmentCenter;
     return nameLabel;
@@ -26,12 +26,25 @@
     UILabel *nameLabel = [[UILabel alloc]init];
     nameLabel.text = text;
     nameLabel.numberOfLines = 0;
-//    nameLabel.backgroundColor = [UIColor redColor];
-    nameLabel.font = [UIFont systemWithIphone6P:17 Iphone6:15 Iphone5:12 Iphone4:3];
-    nameLabel.textColor = XXEColorFromRGB(255, 255, 255);
+    nameLabel.font = [UIFont systemWithIphone6P:17 Iphone6:15 Iphone5:12 Iphone4:10];
+    nameLabel.textColor = XXEColorFromRGB(51, 51, 51);
     nameLabel.textAlignment = NSTextAlignmentLeft;
     return nameLabel;
 }
+
++ (UILabel *)setupRegisterMessageLines:(NSUInteger)lines MessageLabel:(NSString *)text
+{
+    UILabel *messageLabel = [[UILabel alloc]init];
+    messageLabel.text = text;
+    messageLabel.numberOfLines = 2;
+    messageLabel.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
+    messageLabel.textColor = XXEColorFromRGB(51, 51, 51);
+    messageLabel.textAlignment = NSTextAlignmentLeft;
+    return messageLabel;
+}
+
+
+
 
 
 #pragma mark 创建UILable
