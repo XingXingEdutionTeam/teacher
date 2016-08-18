@@ -14,39 +14,77 @@
 #import "XXECommentHistoryViewController.h"
 #import "XXERedFlowerSentHistoryViewController.h"
 
-@interface XXECommentRootViewController ()<UIScrollViewDelegate, UITableViewDelegate, UITableViewDataSource>
+#import "XXESentToPeopleViewController.h"
+#import "XXECommentStudentViewController.h"
+
+
+@interface XXECommentRootViewController ()<UIScrollViewDelegate>
+{
+    UIButton *commentRequestButton;
+    
+    UIButton *commentHistoryButton;
+
+    UIButton *commentFlowerButton;
+}
 
 
 @property (nonatomic, strong) XXECommentRequestViewController *commentRequestVC;
 @property (nonatomic, strong) XXECommentHistoryViewController *commentHistoryVC;
 @property (nonatomic, strong) XXERedFlowerSentHistoryViewController *RedFlowerSentHistoryVC;
 
-
-
 @end
 
 @implementation XXECommentRootViewController
 
+- (void)viewWillAppear:(BOOL)animated{
+
+    [super viewWillAppear:animated];
+    
+    self.navigationController.navigationBarHidden = NO;
+    commentFlowerButton.selected = NO;
+    commentHistoryButton.selected = NO;
+    commentRequestButton.selected = YES;
+    _myScrollView.contentOffset = CGPointMake(0, 0);
+    
+    self.navigationItem.title = @"点评请求";
+    UIButton *sentBtn =[UIButton createButtonWithFrame:CGRectMake(0, 0, 22, 22) backGruondImageName:@"comment_request_icon" Target:self Action:@selector(request:) Title:@""];
+    UIBarButtonItem *requestItem =[[UIBarButtonItem alloc]initWithCustomView:sentBtn];
+    self.navigationItem.rightBarButtonItem =requestItem;
+    
+    [self addChildViewController:self.commentRequestVC];
+    [self.myScrollView addSubview:self.commentRequestVC.view];
+    self.commentRequestVC.view.frame = CGRectMake(0, 0, KScreenWidth, KScreenHeight - 49 - 64);
+    
+}
+
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    _commentRequestVC = [[XXECommentRequestViewController alloc] init];
+    _commentHistoryVC = [[XXECommentHistoryViewController alloc] init];
+    _RedFlowerSentHistoryVC = [[XXERedFlowerSentHistoryViewController alloc] init];
+    
+    self.commentRequestVC.classId = _classId;
+    self.commentHistoryVC.classId = _classId;
+    self.RedFlowerSentHistoryVC.classId = _classId;
+    
     _childViews = [[NSMutableArray alloc] init];
     
-    self.navigationController.navigationBar.backgroundColor = XXEColorFromRGB(0, 170, 42);
-    self.navigationController.navigationBarHidden = NO;
+//    self.navigationController.navigationBar.backgroundColor = XXEColorFromRGB(0, 170, 42);
+    self.navigationController.navigationBarHidden = YES;
+//    self.navigationController.navigationBar.hidden = YES;
     
     [self createBigScrollView];
     
     [self createBottomViewButton];
-    
-    [self addChildViewControllers];
 
 }
 
 
 - (void)createBottomViewButton{
 
-    UIImageView *bottomView= [[UIImageView alloc]initWithFrame:CGRectMake(0, KScreenHeight - 64 - 49, KScreenWidth, 49)];
+    UIImageView *bottomView= [[UIImageView alloc]initWithFrame:CGRectMake(0, KScreenHeight - 49 - 64, KScreenWidth, 49)];
     bottomView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:bottomView];
     bottomView.userInteractionEnabled =YES;
@@ -58,7 +96,7 @@
     CGFloat buttonHeight = itemHeight;
     
     //----------------------------请求 点评
-    UIButton *commentRequestButton = [self createButtonFrame:CGRectMake(buttonWidth / 2 * 0, 2 * kScreenRatioHeight, buttonWidth, buttonHeight) unseletedImageName:@"comment_tabbar_request_unseleted_icon" seletedImageName:@"comment_tabbar_request_seleted_icon" title:@"请求点评" unseletedTitleColor:[UIColor lightGrayColor] seletedTitleColor:XXEColorFromRGB(0, 170, 42) font:[UIFont systemFontOfSize:10] target:self action:@selector(commentButtonClick:)];
+    commentRequestButton = [self createButtonFrame:CGRectMake(buttonWidth / 2 * 0, 2 * kScreenRatioHeight, buttonWidth, buttonHeight) unseletedImageName:@"comment_tabbar_request_unseleted_icon" seletedImageName:@"comment_tabbar_request_seleted_icon" title:@"请求点评" unseletedTitleColor:[UIColor lightGrayColor] seletedTitleColor:XXEColorFromRGB(0, 170, 42) font:[UIFont systemFontOfSize:10] target:self action:@selector(commentButtonClick:)];
     commentRequestButton.tag = 10;
 //    [commentRequestButton setBackgroundColor:[UIColor redColor]];
     //设置 图片 位置
@@ -68,7 +106,7 @@
     [bottomView addSubview:commentRequestButton];
     
     //---------------------------点评 历史
-    UIButton *commentHistoryButton = [self createButtonFrame:CGRectMake(buttonWidth, 2 * kScreenRatioHeight, buttonWidth, buttonHeight) unseletedImageName:@"comment_tabbar_history_unseleted_icon" seletedImageName:@"comment_tabbar_history_seleted_icon" title:@"点评历史" unseletedTitleColor:[UIColor lightGrayColor] seletedTitleColor:XXEColorFromRGB(0, 170, 42) font:[UIFont systemFontOfSize:10] target:self action:@selector(commentButtonClick:)];
+    commentHistoryButton = [self createButtonFrame:CGRectMake(buttonWidth, 2 * kScreenRatioHeight, buttonWidth, buttonHeight) unseletedImageName:@"comment_tabbar_history_unseleted_icon" seletedImageName:@"comment_tabbar_history_seleted_icon" title:@"点评历史" unseletedTitleColor:[UIColor lightGrayColor] seletedTitleColor:XXEColorFromRGB(0, 170, 42) font:[UIFont systemFontOfSize:10] target:self action:@selector(commentButtonClick:)];
     commentHistoryButton.tag = 11;
 //    [commentHistoryButton setBackgroundColor:[UIColor yellowColor]];
     //设置 图片 位置
@@ -78,7 +116,7 @@
     [bottomView addSubview:commentHistoryButton];
     
     //--------------------------------小红花
-    UIButton *commentFlowerButton = [self createButtonFrame:CGRectMake(buttonWidth * 2, 2 * kScreenRatioHeight, buttonWidth, buttonHeight) unseletedImageName:@"comment_tabbar_flower_unseleted_icon" seletedImageName:@"comment_tabbar_flower_seleted_icon" title:@"小红花" unseletedTitleColor:[UIColor lightGrayColor] seletedTitleColor:XXEColorFromRGB(0, 170, 42) font:[UIFont systemFontOfSize:10] target:self action:@selector(commentButtonClick:)];
+   commentFlowerButton  = [self createButtonFrame:CGRectMake(buttonWidth * 2, 2 * kScreenRatioHeight, buttonWidth, buttonHeight) unseletedImageName:@"comment_tabbar_flower_unseleted_icon" seletedImageName:@"comment_tabbar_flower_seleted_icon" title:@"小红花" unseletedTitleColor:[UIColor lightGrayColor] seletedTitleColor:XXEColorFromRGB(0, 170, 42) font:[UIFont systemFontOfSize:10] target:self action:@selector(commentButtonClick:)];
     commentFlowerButton.tag = 12;
 //    [commentFlowerButton setBackgroundColor:[UIColor blueColor]];
     //设置 图片 位置
@@ -89,13 +127,11 @@
     [bottomView addSubview:commentFlowerButton];
 
     _buttonArray = [[NSMutableArray alloc] initWithObjects:commentRequestButton, commentHistoryButton, commentFlowerButton, nil];
-
-    
 }
 
 
 - (void)commentButtonClick:(UIButton *)button{
-    NSLog(@"button.tag  ---  %ld", button.tag);
+//    NSLog(@"button.tag  ---  %ld", button.tag);
     
     for (UIButton *btn in _buttonArray) {
         btn.selected = NO;
@@ -104,8 +140,69 @@
     button.selected = YES;
     
     _myScrollView.contentOffset = CGPointMake(KScreenWidth * (button.tag - 10), 0);
+    
+    if (button == commentRequestButton) {
+       self.navigationItem.title = @"点评请求";
+        
+        UIButton *sentBtn =[UIButton createButtonWithFrame:CGRectMake(0, 0, 22, 22) backGruondImageName:@"comment_request_icon" Target:self Action:@selector(request:) Title:@""];
+        UIBarButtonItem *requestItem =[[UIBarButtonItem alloc]initWithCustomView:sentBtn];
+        self.navigationItem.rightBarButtonItem =requestItem;
+        
+    [self addChildViewController:self.commentRequestVC];
+    [self.myScrollView addSubview:self.commentRequestVC.view];
+    self.commentRequestVC.view.frame = CGRectMake(0, 0, KScreenWidth, KScreenHeight - 49 - 64);
+        
+    }else if (button == commentHistoryButton){
+        self.navigationItem.title = @"点评历史";
+        self.navigationItem.rightBarButtonItem = nil;
+        
+        
+    [self addChildViewController:self.commentHistoryVC];
+    [self.myScrollView addSubview:self.commentHistoryVC.view];
+    self.commentHistoryVC.view.frame = CGRectMake(KScreenWidth, 0, KScreenWidth, KScreenHeight - 49 - 64);
+        
+    }else if (button == commentFlowerButton){
+        self.navigationItem.title = @"小红花";
+        
+        UIButton *sentBtn =[UIButton createButtonWithFrame:CGRectMake(0, 0, 22, 22) backGruondImageName:@"home_redflower_sent" Target:self Action:@selector(sent:) Title:@""];
+        UIBarButtonItem *sentItem =[[UIBarButtonItem alloc]initWithCustomView:sentBtn];
+        self.navigationItem.rightBarButtonItem =sentItem;
+        
+        
+    [self addChildViewController:self.RedFlowerSentHistoryVC];
+    [self.myScrollView addSubview:self.RedFlowerSentHistoryVC.view];
+    self.RedFlowerSentHistoryVC.view.frame = CGRectMake(KScreenWidth * 2, 0, KScreenWidth, KScreenHeight - 49 - 64);
+    }
+    
 
 }
+
+- (void)request:(UINavigationItem *)item{
+
+//    NSLog(@"点评 请求");
+    
+    XXECommentStudentViewController *commentStudentVC = [[XXECommentStudentViewController alloc] init];
+    
+    commentStudentVC.schoolId = _schoolId;
+    commentStudentVC.classId = _classId;
+    
+    [self.navigationController pushViewController:commentStudentVC animated:YES];
+}
+
+- (void)sent:(UIButton *)button{
+    
+//    NSLog(@"小红花");
+    
+    XXESentToPeopleViewController *sentToPeopleVC = [[XXESentToPeopleViewController alloc] init];
+    
+    sentToPeopleVC.schoolId = _schoolId;
+    sentToPeopleVC.classId = _classId;
+//    sentToPeopleVC.basketNumStr = _RedFlowerSentHistoryVC.flower_able;
+    
+    [self.navigationController pushViewController:sentToPeopleVC animated:YES];
+    
+}
+
 
 
 - (void)createBigScrollView{
@@ -117,66 +214,20 @@
     //    _myScrollView.contentSize = CGSizeMake(kScreenWidth * 3, 3000);
     _myScrollView.pagingEnabled = YES;
     _myScrollView.bounces = NO;
-    //    [_myScrollView  scrollRectToVisible:CGRectMake(0, 0, kScreenWidth, kScreenHeight) animated:NO];
-//    _myScrollView.scrollEnabled = NO;
+    _myScrollView.scrollEnabled = NO;
+    _myScrollView.showsHorizontalScrollIndicator = NO;
+
     [self.view addSubview: _myScrollView];
 
 }
 
-- (void)addChildViewControllers{
 
-    _commentRequestVC = [[XXECommentRequestViewController alloc] init];
-    _commentHistoryVC = [[XXECommentHistoryViewController alloc] init];
-    _RedFlowerSentHistoryVC = [[XXERedFlowerSentHistoryViewController alloc] init];
-    self.commentRequestVC.classId = _classId;
-    self.commentHistoryVC.classId = _classId;
-    self.RedFlowerSentHistoryVC.classId = _classId;
-    
-    [self addChildViewController:self.commentRequestVC];
-    [self addChildViewController:self.commentHistoryVC];
-    [self addChildViewController:self.RedFlowerSentHistoryVC];
-    
-    //    [self addListVCWithIndex:(int)(scrollView.contentOffset.x/screenWidth)];
-
-    
-    [self.myScrollView addSubview:self.commentRequestVC.view];
-    self.commentRequestVC.view.frame = CGRectMake(0, 0, KScreenWidth, KScreenHeight - 64 - 49);
-    
-    [self.myScrollView addSubview:self.commentHistoryVC.view];
-    self.commentHistoryVC.view.frame = CGRectMake(KScreenWidth, 0, KScreenWidth, KScreenHeight - 64 - 49);
-    
-    [self.myScrollView addSubview:self.RedFlowerSentHistoryVC.view];
-    self.RedFlowerSentHistoryVC.view.frame = CGRectMake(KScreenWidth * 2, 0, KScreenWidth, KScreenHeight - 64 - 49);
-   
-}
 
 -(void)scrollViewWillBeginDragging:(UIScrollView *)scrollView{
     NSLog(@"**********");
     NSLog(@"----%ld",scrollView.tag);
     
 }
-
-//- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
-//
-//  [self addListVCWithIndex:(int)(scrollView.contentOffset.x/KScreenWidth)];
-//}
-
-//- (void)addListVCWithIndex:(NSInteger)index{
-//    self.commentRequestVC = [[XXECommentRequestViewController alloc] init];
-//    self.commentHistoryVC = [[XXECommentHistoryViewController alloc] init];
-//    self.RedFlowerSentHistoryVC = [[XXERedFlowerSentHistoryViewController alloc] init];
-//    self.commentRequestVC.classId = _classId;
-//    self.commentHistoryVC.classId = _classId;
-//    self.RedFlowerSentHistoryVC.classId = _classId;
-//    
-//    [self addChildViewController:self.commentRequestVC];
-//    [self addChildViewController:self.commentHistoryVC];
-//    [self addChildViewController:self.RedFlowerSentHistoryVC];
-//    
-//    [self.myScrollView addSubview:self.commentRequestVC.view.subviews[0]];
-//    [self.myScrollView addSubview:self.commentHistoryVC.view.subviews[0]];
-//    [self.myScrollView addSubview:self.RedFlowerSentHistoryVC.view.subviews[0]];
-//}
 
 
 

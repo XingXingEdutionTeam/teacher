@@ -63,8 +63,7 @@
     //监听通知
     [[NSNotificationCenter defaultCenter] addObserver:self  selector:@selector(removeSuccess:) name:@"TeacherNameRemoveSuccess" object:nil];
     
-    
-    //    //选择图片
+    //选择图片
     UICollectionViewFlowLayout *layout1 = [[UICollectionViewFlowLayout alloc] init];
     layout1.scrollDirection = UICollectionViewScrollDirectionHorizontal;
     FSImagePickerView *picker1 = [[FSImagePickerView alloc] initWithFrame:CGRectMake(10, 30, kWidth - 10 * 2, 80) collectionViewLayout:layout1];
@@ -129,6 +128,8 @@
     //返回 数组 头像、名称、id、课程
     [managerAndHeadmasterVC returnArray:^(NSMutableArray *selectedBabyInfoArray) {
         _selectedBabyInfoArray = [NSMutableArray arrayWithArray:selectedBabyInfoArray];
+        
+//        NSLog(@"剩余  花朵  %@", _basketNumStr);
         
         if (dynamicScrollView.imageViews.count < [_basketNumStr integerValue]) {
             //宝贝 头像

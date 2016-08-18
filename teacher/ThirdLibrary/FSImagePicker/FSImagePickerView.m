@@ -199,6 +199,7 @@
     [picker dismissViewControllerAnimated:YES completion:^{
         NSString *type = [info objectForKey:UIImagePickerControllerMediaType];
         
+        
         //当选择的类型是图片
         if ([type isEqualToString:@"public.image"])
         {

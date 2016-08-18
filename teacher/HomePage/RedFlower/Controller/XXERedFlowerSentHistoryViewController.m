@@ -25,11 +25,6 @@
     
     NSInteger page;
     
-    //已赠花篮数量
-    NSString *give_num;
-    //剩余花篮数量
-    NSString *flower_able;
-    
 }
 
 
@@ -38,6 +33,9 @@
 @implementation XXERedFlowerSentHistoryViewController
 
 - (void)viewWillAppear:(BOOL)animated{
+    
+    [super viewWillAppear:animated];
+//    self.navigationController.navigationBar.topItem.title = @"小红花";
     _dataSourceArray = [[NSMutableArray alloc] init];
     
     page = 0;
@@ -84,7 +82,7 @@
     
     sentToPeopleVC.schoolId = _schoolId;
     sentToPeopleVC.classId = _classId;
-    sentToPeopleVC.basketNumStr = flower_able;
+    sentToPeopleVC.basketNumStr = _flower_able;
     
     [self.navigationController pushViewController:sentToPeopleVC animated:YES];
     
@@ -116,10 +114,10 @@
 
         NSDictionary *dict = request.responseJSONObject[@"data"];
             //已赠花篮数量
-            give_num = dict[@"give_num"];
+            _give_num = dict[@"give_num"];
             
             //剩余花篮 数量
-            flower_able = dict[@"flower_able"];
+            _flower_able = dict[@"flower_able"];
             
             NSArray *modelArray = [XXERedFlowerSentHistoryModel parseResondsData:dict[@"list"]];
 
@@ -261,11 +259,11 @@
     titleLabel1.textAlignment = NSTextAlignmentCenter;
     [headerView addSubview:titleLabel1];
     
-    UILabel *titleLabel2 = [UILabel createLabelWithFrame:CGRectMake(labelWidth, 5, labelWidth, 20) Font:14 Text:[NSString stringWithFormat:@"已颁发:%@朵", give_num]];
+    UILabel *titleLabel2 = [UILabel createLabelWithFrame:CGRectMake(labelWidth, 5, labelWidth, 20) Font:14 Text:[NSString stringWithFormat:@"已颁发:%@朵", _give_num]];
     titleLabel2.textAlignment = NSTextAlignmentCenter;
     [headerView addSubview:titleLabel2];
     
-    UILabel *titleLabel3 = [UILabel createLabelWithFrame:CGRectMake(labelWidth * 2, 5, labelWidth, 20) Font:14 Text:[NSString stringWithFormat:@"剩余:%@朵", flower_able]];
+    UILabel *titleLabel3 = [UILabel createLabelWithFrame:CGRectMake(labelWidth * 2, 5, labelWidth, 20) Font:14 Text:[NSString stringWithFormat:@"剩余:%@朵", _flower_able]];
     titleLabel3.textAlignment = NSTextAlignmentCenter;
     [headerView addSubview:titleLabel3];
     

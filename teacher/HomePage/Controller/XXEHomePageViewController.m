@@ -22,6 +22,7 @@
 #import "XXETeacherUserInfo.h"
 #import "XXERedFlowerSentHistoryViewController.h"
 #import "XXECommentRootViewController.h"
+#import "XXEHomeworkViewController.h"
 //监控
 #import "VideoMonitorViewController.h"
 
@@ -250,12 +251,24 @@
             NSLog(@"---点评----");
             XXECommentRootViewController *commentRootVC = [[XXECommentRootViewController alloc] init];
             commentRootVC.classId = self.classHomeId;
+            
+            commentRootVC.schoolId = self.schoolHomeId;
+            
             [self.navigationController pushViewController:commentRootVC animated:NO];
             break;
         }
         case 6:
+        {
             NSLog(@"----作业----");
+            XXEHomeworkViewController *homeworkVC = [[XXEHomeworkViewController alloc] init];
+            
+            homeworkVC.schoolId = self.schoolHomeId;
+            homeworkVC.classId = self.classHomeId;
+            
+            [self.navigationController pushViewController:homeworkVC animated:YES];
+            
             break;
+        }
         case 7:
             NSLog(@"---食谱----");
             break;

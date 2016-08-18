@@ -17,6 +17,9 @@
 
 #import "XXECommentHistoryViewController.h"
 #import "XXERedFlowerSentHistoryViewController.h"
+#import "XXECommentReplyViewController.h"
+
+
 
 
 @interface XXECommentRequestViewController ()<UITableViewDelegate, UITableViewDataSource>
@@ -36,6 +39,11 @@
 
 
 - (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+
+//   self.navigationController.navigationBar.topItem.title = @"点评请求";
+//    self.navigationItem.title = @"点评请求";
+
     _dataSourceArray = [[NSMutableArray alloc] init];
     
     page = 0;
@@ -60,13 +68,8 @@
     
 //    self.navigationController.navigationBar.backgroundColor = XXEColorFromRGB(0, 170, 42);
 //    self.navigationController.navigationBarHidden = NO;
-    //标题
-    self.title = @"点评请求";
-    //右上角 按钮
-    UIButton *sentBtn =[UIButton createButtonWithFrame:CGRectMake(0, 0, 22, 22) backGruondImageName:@"comment_request_icon" Target:self Action:@selector(sent:) Title:@""];
-    UIBarButtonItem *sentItem =[[UIBarButtonItem alloc]initWithCustomView:sentBtn];
-    self.navigationItem.rightBarButtonItem =sentItem;
-    
+//    self.navigationController.navigationBar.hidden = YES;
+
     //    [self fetchNetData];
     
     [self createTopView];
@@ -80,40 +83,40 @@
 
     UIView *topView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, KScreenWidth, 64)];
     topView.backgroundColor = XXEColorFromRGB(0, 170, 42);
+    [self.view addSubview:topView];
+    
     
     //左上角 返回 按钮  comment_back_icon
-    UIButton *backButton = [UIButton createButtonWithFrame:CGRectMake(5, 10, 45, 19) backGruondImageName:@"comment_back_icon" Target:self Action:@selector(backButtonClick) Title:nil];
+    UIButton *backButton = [UIButton createButtonWithFrame:CGRectMake(5, 30, 45, 19) backGruondImageName:@"comment_back_icon" Target:self Action:@selector(backButtonClick) Title:nil];
     [topView addSubview:backButton];
     
     //中间 标题
     
+    CGFloat titleLabelWidth = 200 * kScreenRatioWidth;
+    CGFloat titleLabelHeight = 20 * kScreenRatioHeight;
+    
+    UILabel *titleLabel = [UILabel createLabelWithFrame:CGRectMake((KScreenWidth - titleLabelWidth) / 2, 30, titleLabelWidth, titleLabelHeight) Font:16.0 Text:@"点评请求"];
+    titleLabel.textAlignment = NSTextAlignmentCenter;
+    titleLabel.textColor = [UIColor whiteColor];
+    [topView addSubview:titleLabel];
     
     //右上角 主动 点评 按钮
-    
+    UIButton *commentButton = [UIButton createButtonWithFrame:CGRectMake(KScreenWidth - 40 , 30, 22  * kScreenRatioWidth, 22 * kScreenRatioHeight) backGruondImageName:@"comment_request_icon" Target:self Action:@selector(commentButtonClick) Title:nil];
+    [topView addSubview:commentButton];
     
 
 }
 
 - (void)backButtonClick{
-
+    [self.navigationController popViewControllerAnimated:YES];
 
 }
 
+- (void)commentButtonClick{
 
-- (void)sent:(UIButton *)button{
-    
-    NSLog(@"qqq");
-    
-//    XXESentToPeopleViewController *sentToPeopleVC = [[XXESentToPeopleViewController alloc] init];
-//    
-//    sentToPeopleVC.schoolId = _schoolId;
-//    sentToPeopleVC.classId = _classId;
-//    sentToPeopleVC.basketNumStr = flower_able;
-//    
-//    [self.navigationController pushViewController:sentToPeopleVC animated:YES];
-    
+    NSLog(@"发起点评!");
+
 }
-
 
 - (void)fetchNetData{
     /*
@@ -258,10 +261,7 @@
     cell.iconImageView.layer.masksToBounds = YES;
     
     [cell.iconImageView sd_setImageWithURL:[NSURL URLWithString:head_img] placeholderImage:[UIImage imageNamed:@"home_flowerbasket_placehoderIcon120x120"]];
-    
-    //    NSLog(@"课程  %@", model.teach_course);
-    
-    
+
     cell.nameLabel.text = [NSString stringWithFormat:@"%@  %@", model.baby_tname, model.relation_name];
     cell.contentLabel.text = [NSString stringWithFormat:@"请求内容: %@", model.ask_con];
 //    [condit] => 1		//点评状态  0:家长发送的请求 (待老师点评), 1:老师已点评
@@ -291,18 +291,13 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
-//    XXERedFlowerDetialViewController *redFlowerDetialVC = [[XXERedFlowerDetialViewController alloc] init];
-//    
-//    XXERedFlowerSentHistoryModel *model = _dataSourceArray[indexPath.row];
-//    redFlowerDetialVC.name = model.tname;
-//    redFlowerDetialVC.time = model.date_tm;
-//    redFlowerDetialVC.schoolName = model.school_name;
-//    redFlowerDetialVC.className = model.class_name;
-//    redFlowerDetialVC.course = model.teach_course;
-//    redFlowerDetialVC.content = model.con;
-//    redFlowerDetialVC.picWallArray = model.pic_arr;
-//    redFlowerDetialVC.iconUrl = model.head_img;
-//    [self.navigationController pushViewController:redFlowerDetialVC animated:YES];
+    XXECommentReplyViewController *commentReplyVC = [[XXECommentReplyViewController alloc] init];
+    
+    XXECommentRequestModel *model = _dataSourceArray[indexPath.row];
+    commentReplyVC.name = model.baby_tname;
+    commentReplyVC.content = model.ask_con;
+    commentReplyVC.requestTime = model.ask_tm;
+    [self.navigationController pushViewController:commentReplyVC animated:YES];
     
 }
 

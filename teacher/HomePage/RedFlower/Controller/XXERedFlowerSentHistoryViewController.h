@@ -15,5 +15,10 @@
 
 @property (nonatomic, strong) NSString *classId;
 
+ //已赠花篮数量
+@property (nonatomic, copy) NSString *give_num;
+ //剩余花篮数量
+@property (nonatomic, copy) NSString *flower_able;
+
 
 @end

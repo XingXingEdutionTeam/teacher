@@ -35,12 +35,13 @@
         self.listTableView.dataSource = self;
         self.listTableView.backgroundColor = [UIColor clearColor];
         self.listTableView.separatorColor = [UIColor lightGrayColor];
+
         self.listTableView.hidden = YES;
         self.listTableView.showsHorizontalScrollIndicator = NO;
         self.listTableView.showsVerticalScrollIndicator = NO;
         self.listTableView.contentSize = CGSizeMake(0, CGRectGetMaxY(self.listTableView.frame)+20);
-        self.listTableView.layer.borderWidth = 0.3;    //边框
-        self.listTableView.layer.borderColor = [[UIColor lightGrayColor] CGColor];
+//        self.listTableView.layer.borderWidth = 0.3;    //边框
+//        self.listTableView.layer.borderColor = [[UIColor lightGrayColor] CGColor];
         [self addSubview:self.listTableView];
         
         self.textField = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, 30)];

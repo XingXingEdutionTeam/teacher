@@ -33,8 +33,10 @@
 @implementation XXECommentHistoryViewController
 
 - (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+//    self.navigationController.navigationBar.topItem.title = @"点评历史";
     _dataSourceArray = [[NSMutableArray alloc] init];
-    
+//    self.navigationItem.title = @"点评历史";
     page = 0;
     
     [_myTableView reloadData];
@@ -59,58 +61,12 @@
     self.navigationController.navigationBarHidden = NO;
     //标题
     self.title = @"点评请求";
-    //自定义  tabbar视图
-//    [self createBottomView];
-    
-    //    [self fetchNetData];
+
     
     [self createTableView];
     
 }
 
-
-- (void)createBottomView{
-    
-    UIImageView *bottomView= [[UIImageView alloc]initWithFrame:CGRectMake(0, KScreenHeight - 64 - 49, KScreenWidth, 49)];
-    bottomView.backgroundColor = [UIColor whiteColor];
-    [self.view addSubview:bottomView];
-    bottomView.userInteractionEnabled =YES;
-    
-    CGFloat itemWidth = KScreenWidth / 3;
-    CGFloat itemHeight = 49;
-    
-    CGFloat buttonWidth = itemWidth;
-    CGFloat buttonHeight = itemHeight;
-    
-    //----------------------------请求 点评
-    UIButton *commentRequestButton = [self createButtonFrame:CGRectMake(buttonWidth / 2 * 0, 2 * kScreenRatioHeight, buttonWidth, buttonHeight) unseletedImageName:@"comment_tabbar_request_unseleted_icon" seletedImageName:@"comment_tabbar_request_seleted_icon" title:@"请求点评" unseletedTitleColor:[UIColor lightGrayColor] seletedTitleColor:XXEColorFromRGB(0, 170, 42) font:[UIFont systemFontOfSize:10] target:self action:@selector(commentRequestButtonClick:)];
-    [commentRequestButton setBackgroundColor:[UIColor redColor]];
-    //设置 图片 位置
-    commentRequestButton.imageEdgeInsets = UIEdgeInsetsMake(-10 * kScreenRatioHeight, buttonWidth / 2 - 30 * kScreenRatioWidth, 0, 0);
-    //设置title在button上的位置（上top，左left，下bottom，右right）
-    commentRequestButton.titleEdgeInsets = UIEdgeInsetsMake(30 * kScreenRatioHeight, -commentRequestButton.titleLabel.bounds.size.width-30, 0, 0);
-    [bottomView addSubview:commentRequestButton];
-    
-    //---------------------------点评 历史
-    UIButton *commentHistoryButton = [self createButtonFrame:CGRectMake(buttonWidth, 2 * kScreenRatioHeight, buttonWidth, buttonHeight) unseletedImageName:@"comment_tabbar_history_unseleted_icon" seletedImageName:@"comment_tabbar_history_seleted_icon" title:@"点评历史" unseletedTitleColor:[UIColor lightGrayColor] seletedTitleColor:XXEColorFromRGB(0, 170, 42) font:[UIFont systemFontOfSize:10] target:self action:@selector(commentHistoryButtonClick:)];
-    [commentHistoryButton setBackgroundColor:[UIColor yellowColor]];
-    //设置 图片 位置
-    commentHistoryButton.imageEdgeInsets = UIEdgeInsetsMake(-10 * kScreenRatioHeight, buttonWidth / 2 - 30 * kScreenRatioWidth, 0, 0);
-    //设置title在button上的位置（上top，左left，下bottom，右right）
-    commentHistoryButton.titleEdgeInsets = UIEdgeInsetsMake(30 * kScreenRatioHeight, -commentHistoryButton.titleLabel.bounds.size.width-30, 0, 0);
-    [bottomView addSubview:commentHistoryButton];
-    
-    //--------------------------------小红花
-    UIButton *commentFlowerButton = [self createButtonFrame:CGRectMake(buttonWidth * 2, 2 * kScreenRatioHeight, buttonWidth, buttonHeight) unseletedImageName:@"comment_tabbar_flower_unseleted_icon" seletedImageName:@"comment_tabbar_flower_seleted_icon" title:@"小红花" unseletedTitleColor:[UIColor lightGrayColor] seletedTitleColor:XXEColorFromRGB(0, 170, 42) font:[UIFont systemFontOfSize:10] target:self action:@selector(commentFlowerButtonClick:)];
-    [commentFlowerButton setBackgroundColor:[UIColor blueColor]];
-    //设置 图片 位置
-    commentFlowerButton.imageEdgeInsets = UIEdgeInsetsMake(-10 * kScreenRatioHeight, buttonWidth / 2 - 30 * kScreenRatioWidth, 0, 0);
-    //设置title在button上的位置（上top，左left，下bottom，右right）
-    commentFlowerButton.titleEdgeInsets = UIEdgeInsetsMake(30 * kScreenRatioHeight, -commentFlowerButton.titleLabel.bounds.size.width-20, 0, 0);
-    
-    [bottomView addSubview:commentFlowerButton];
-    
-}
 
 //点评 请求
 - (void)commentRequestButtonClick:(UIButton *)button{
