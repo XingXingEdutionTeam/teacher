@@ -265,14 +265,14 @@
     cell.nameLabel.text = [NSString stringWithFormat:@"%@  %@", model.baby_tname, model.relation_name];
     cell.contentLabel.text = [NSString stringWithFormat:@"请求内容: %@", model.ask_con];
 //    [condit] => 1		//点评状态  0:家长发送的请求 (待老师点评), 1:老师已点评
-    if ([model.condit isEqualToString:@"0"]) {
+//    if ([model.condit isEqualToString:@"0"]) {
         cell.timeLabel.text = [XXETool dateStringFromNumberTimer:model.ask_tm];
 
         cell.stateImageView.image = [UIImage imageNamed:@"comment_state_uncommented_icon"];
-    }else if ([model.condit isEqualToString:@"1"]){
-        cell.timeLabel.text = [XXETool dateStringFromNumberTimer:model.com_tm];
-        cell.stateImageView.image = [UIImage imageNamed:@"comment_state_commented_icon"];
-    }
+//    }else if ([model.condit isEqualToString:@"1"]){
+//        cell.timeLabel.text = [XXETool dateStringFromNumberTimer:model.com_tm];
+//        cell.stateImageView.image = [UIImage imageNamed:@"comment_state_commented_icon"];
+//    }
 
     return cell;
 }
@@ -294,9 +294,11 @@
     XXECommentReplyViewController *commentReplyVC = [[XXECommentReplyViewController alloc] init];
     
     XXECommentRequestModel *model = _dataSourceArray[indexPath.row];
-    commentReplyVC.name = model.baby_tname;
-    commentReplyVC.content = model.ask_con;
-    commentReplyVC.requestTime = model.ask_tm;
+    commentReplyVC.babyName = model.baby_tname;
+    commentReplyVC.askContent = model.ask_con;
+    commentReplyVC.askTime = model.ask_tm;
+    commentReplyVC.comment_id = model.commentId;
+    commentReplyVC.classId = _classId;
     [self.navigationController pushViewController:commentReplyVC animated:YES];
     
 }

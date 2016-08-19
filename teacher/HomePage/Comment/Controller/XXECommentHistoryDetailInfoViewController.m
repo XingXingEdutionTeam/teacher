@@ -1,20 +1,19 @@
 
 
 //
-//  XXEHomeworkDetailInfoViewController.m
+//  XXECommentHistoryDetailInfoViewController.m
 //  teacher
 //
-//  Created by Mac on 16/8/18.
+//  Created by Mac on 16/8/19.
 //  Copyright © 2016年 XingXingEdu. All rights reserved.
 //
 
-#import "XXEHomeworkDetailInfoViewController.h"
+#import "XXECommentHistoryDetailInfoViewController.h"
 #import "XXERedFlowerDetialTableViewCell.h"
 
-#import "XXEHomeworkDetailInfoModel.h"
-#import "XXEHomeworkDetailInfoApi.h"
 
-@interface XXEHomeworkDetailInfoViewController ()<UITableViewDelegate, UITableViewDataSource>
+
+@interface XXECommentHistoryDetailInfoViewController ()<UITableViewDelegate, UITableViewDataSource>
 {
     UITableView *_myTableView;
     
@@ -32,68 +31,45 @@
     CGFloat picWidth;
     //照片墙 照片 高
     CGFloat picHeight;
-    
 }
-
 
 @end
 
-@implementation XXEHomeworkDetailInfoViewController
+@implementation XXECommentHistoryDetailInfoViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
-    picArray =[[NSMutableArray alloc]initWithObjects:@"homework_teacher_icon", @"homework_subject_icon", @"homework_content_icon", @"homework_publishtime_icon", @"homework_submittime_icon",nil];
-    titleArray =[[NSMutableArray alloc]initWithObjects:@"发布人:",@"作业主题:",@"作业内容:", @"发布时间:", @"交作业时间:", nil];
     
-    [self fetchNetData];
+    
+    NSString *timeStr = [XXETool dateStringFromNumberTimer:_ask_time];
+//[com_pic] => app_upload/class_album/2016/07/29/20160729105538_3449.jpg	//点评图片,多个逗号隔开
+
+    //[type] => 1			//点评类型  1:老师主动点评,2:家长请求点评
+    if ([_type isEqualToString:@"1"]) {
+        picArray =[[NSMutableArray alloc]initWithObjects:@"comment_people_icon", @"comment_content_icon", @"home_redflower_picIcon",nil];
+        titleArray =[[NSMutableArray alloc]initWithObjects:@"学生:", @"评价内容:", @"图片:", nil];
+        contentArray = [[NSMutableArray alloc] initWithObjects:_name,  _com_con, @"", nil];
+    }else if ([_type isEqualToString:@"2"]){
+    picArray =[[NSMutableArray alloc]initWithObjects:@"comment_people_icon", @"comment_ask_content_icon", @"comment_time_icon", @"comment_content_icon", @"home_redflower_picIcon",nil];
+    titleArray =[[NSMutableArray alloc]initWithObjects:@"学生:",@"请求:",@"时间:", @"评价内容:", @"图片:", nil];
+        contentArray = [[NSMutableArray alloc] initWithObjects:_name, _ask_con, timeStr, _com_con, @"", nil];
+    }
+    if (![_picString isEqualToString:@""]) {
+        _picWallArray = [[NSMutableArray alloc] initWithObjects:_picString, nil];
+    }
+    
+//    if ([_picString containsString:@","]) {
+//        _picWallArray = [_picString componentsSeparatedByString:@","];
+//    }
+    
+//    NSLog(@"%@", _picString);
+    
+    //app_upload/class_album/2016/08/19/20160819150331_9903.jpg
+    
+//    NSLog(@"图片 数组  ---  %@", _picWallArray);
+    
     [self createTableView];
 }
-
-- (void)fetchNetData{
-    /*
-     【班级作业详情】
-     
-     接口类型:1
-     
-     接口:
-     http://www.xingxingedu.cn/Parent/class_homework_detail
-     
-     传参:
-     homework_id	//作业id */
-    
-    XXEHomeworkDetailInfoApi *homeworkApi = [[XXEHomeworkDetailInfoApi alloc] initWithXid:XID user_id:USER_ID user_type:USER_TYPE homework_id:_homeworkId];
-    [homeworkApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
-        
-//             NSLog(@"2222---   %@", request.responseJSONObject);
-        
-        NSString *codeStr = [NSString stringWithFormat:@"%@", request.responseJSONObject[@"code"]];
-        
-        if ([codeStr isEqualToString:@"1"]) {
-            NSDictionary *dic = request.responseJSONObject[@"data"];
-            
-            _picWallArray = [[NSMutableArray alloc] init];
-
-            _name = dic[@"tname"];
-            _subject = dic[@"title"];
-            _content = dic[@"con"];
-            _publishTime = dic[@"date_tm"];
-            _submitTime = dic[@"date_end_tm"];
-            _picWallArray = dic[@"pic_group"];
-            
-            contentArray = [[NSMutableArray alloc] initWithObjects:_name, _subject, _content, _publishTime, _submitTime, nil];
-        }else{
-            
-        }
-        [_myTableView reloadData];
-        
-    } failure:^(__kindof YTKBaseRequest *request) {
-        
-        [self showString:@"数据请求失败" forSecond:1.f];
-    }];
-    
-}
-
 
 - (void)createTableView{
     _myTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, KScreenWidth, KScreenHeight) style:UITableViewStyleGrouped];
@@ -135,10 +111,21 @@
     if (contentArray.count != 0) {
         cell.contentLabel.text = contentArray[indexPath.row];
     }
-
-    if (indexPath.row == 3) {
+    
+    NSInteger t;
+    //[type] => 1			//点评类型  1:老师主动点评,2:家长请求点评
+    if ([_type isEqualToString:@"1"]) {
+        t = 2;
+    }else if ([_type isEqualToString:@"2"]){
+        t = 4;
+    }
+    
+    
+    if (indexPath.row == t) {
         
         //result= num1>num2?num1:num2;
+        
+//        NSLog(@"%@", _picWallArray);
         
         if (_picWallArray.count % 3 == 0) {
             picRow = _picWallArray.count / 3;
@@ -148,7 +135,7 @@
         }
         //创建 十二宫格  三行、四列
         int margin = 10;
-        picWidth = (KScreenWidth - 4 * margin) / 3;
+        picWidth = (KScreenWidth - 4 * margin - 5 * 2) / 3;
         picHeight = picWidth;
         
         for (int i = 0; i < _picWallArray.count; i++) {
@@ -162,9 +149,10 @@
             CGFloat buttonX = (picWidth + margin) * buttonLine;
             CGFloat buttonY = 40 + (picHeight + margin) * buttonRow;
             
-            UIImageView *pictureImageView = [[UIImageView alloc] initWithFrame:CGRectMake(buttonX, buttonY, picWidth, picHeight)];
+            UIImageView *pictureImageView = [[UIImageView alloc] initWithFrame:CGRectMake(buttonX + 5, buttonY, picWidth, picHeight)];
             
-            [pictureImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", kXXEPicURL, _picWallArray[i]]]];
+            NSString *str = [NSString stringWithFormat:@"%@%@", kXXEPicURL, _picWallArray[i]];
+            [pictureImageView sd_setImageWithURL:[NSURL URLWithString:str]];
             pictureImageView.tag = 20 + i;
             pictureImageView.userInteractionEnabled = YES;
             
@@ -197,8 +185,15 @@
 
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    
-    if (indexPath.row==3) {
+    NSInteger t;
+    //[type] => 1			//点评类型  1:老师主动点评,2:家长请求点评
+    if ([_type isEqualToString:@"1"]) {
+        t = 2;
+    }else if ([_type isEqualToString:@"2"]){
+        t = 4;
+    }
+    if (indexPath.row==t) {
+
         return 44 + picRow * picHeight;
     }
     else{
@@ -211,7 +206,5 @@
     
     return 0.00000001;
 }
-
-
 
 @end

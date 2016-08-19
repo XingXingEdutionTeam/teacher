@@ -15,10 +15,13 @@
 #import "XXEManagerAndHeadmasterViewController.h"
 #import "DynamicScrollView.h"
 #import "FSImagePickerView.h"
-#import "XXEInitiativeCommentCertainApi.h"
+//#import "XXEInitiativeCommentCertainApi.h"
 #import "YTKBatchRequest.h"
 #import "FSImageModel.h"
-
+//评论回复 只有 文字的时候 调用的接口
+#import "XXECommentTextInfoApi.h"
+//评论回复 既有 文字 又有 图片 的时候 调用的接口
+#import "XXECommentTextAndPicInfoApi.h"
 
 @interface XXECommentStudentViewController ()<UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIActionSheetDelegate, UITextViewDelegate>
 {
@@ -110,6 +113,8 @@
     
     babyIdStr = tidStr;
     
+//    NSLog(@"宝贝 id  ---  %@", babyIdStr);
+    
 }
 
 
@@ -169,30 +174,55 @@
 
 - (IBAction)certenButtonClick:(UIButton *)sender {
     
-    /*
-     【点评->主动点评】
-     
-     接口类型:2
-     
-     接口:
-     http://www.xingxingedu.cn/Teacher/teacher_comment_action
-     
-     
-     传参:
-     school_id	//学校id
-     class_id	//班级id
-     baby_id		//评论id
-     com_con		//评论内容
-     file		//批量上传图片 ★现在的版本没有上传图片的,应该是之前遗漏了,请加上     */
-    NSMutableArray *arr1 = [NSMutableArray array];
-    
-    NSLog(@"%@",pickerView.data);
-    
-    if (pickerView.data.count == 0) {
+    // pickerView.data  里面 有一张加号占位图,所有 个数最少有 1 张
+    //如果 count == 1  -> 没有 上传 图片
+    if (pickerView.data.count == 1){
+        [self submitReplyTextInfo];
         
-    }else if (pickerView.data.count == 1){
-    
+        //如果 count > 1 -> 有 上传 图片
     }else if (pickerView.data.count > 1){
+        
+        [self submitReplyTextAndPicInfo];
+        
+    }
+
+    
+}
+
+
+//回复 只有  文字 的时候
+- (void)submitReplyTextInfo{
+    
+    XXECommentTextInfoApi *commentTextInfoApi = [[XXECommentTextInfoApi alloc] initWithXid:XID user_id:USER_ID user_type:USER_TYPE school_id:_schoolId class_id:_classId baby_id:babyIdStr com_con:conStr];
+    [commentTextInfoApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
+        
+//               NSLog(@"2222---   %@", request.responseJSONObject);
+        
+        NSString *codeStr = [NSString stringWithFormat:@"%@", request.responseJSONObject[@"code"]];
+        
+        if ([codeStr isEqualToString:@"1"]) {
+            
+            [self showHudWithString:@"点评成功!" forSecond:1.5];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1*NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [self.navigationController popViewControllerAnimated:YES];
+            });
+            
+        }else{
+            
+        }
+        
+    } failure:^(__kindof YTKBaseRequest *request) {
+        
+        [self showHudWithString:@"点评失败!" forSecond:1.5];
+    }];
+    
+}
+
+
+//点评  既有文字 又有 图片 时候
+- (void)submitReplyTextAndPicInfo{
+    
+    NSMutableArray *arr1 = [NSMutableArray array];
     
     for (int i = 0; i < pickerView.data.count - 1; i++) {
         
@@ -200,31 +230,31 @@
         
         UIImage *image1 = [UIImage imageWithData:mdoel.data];
         [arr1 addObject:image1];
-
+        
     }
-    }
-    
-    NSLog(@"上传 图片 %@", arr1);
+    //    NSLog(@"上传 图片 %@", arr1);
     
     [self showHudWithString:@"正在上传......"];
     NSMutableArray *arr = [NSMutableArray array];
     for (int i =0; i < arr1.count; i++) {
-        XXEInitiativeCommentCertainApi *initiativeCommentCertainApi = [[XXEInitiativeCommentCertainApi alloc]initWithXid:XID user_id:USER_ID user_type:USER_TYPE school_id:_schoolId class_id:_classId baby_id:babyIdStr com_con:conStr upImage:arr1[i]];
-        [arr addObject:initiativeCommentCertainApi];
+        XXECommentTextAndPicInfoApi *commentTextAndPicInfoApi = [[XXECommentTextAndPicInfoApi alloc]initWithXid:XID user_id:USER_ID user_type:USER_TYPE school_id:_schoolId class_id:_classId baby_id:babyIdStr com_con:conStr upImage:arr1[i]];
+        [arr addObject:commentTextAndPicInfoApi];
     }
+    
     
     YTKBatchRequest *bathRequest = [[YTKBatchRequest alloc]initWithRequestArray:arr];
     [bathRequest startWithCompletionBlockWithSuccess:^(YTKBatchRequest *batchRequest) {
-        
-        
-        NSLog(@"%@",bathRequest);
+        //        NSLog(@"%@",bathRequest);
         
         [self hideHud];
-        [self.navigationController popViewControllerAnimated:YES];
-        
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1*NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [self.navigationController popViewControllerAnimated:YES];
+        });
     } failure:^(YTKBatchRequest *batchRequest) {
         [self showHudWithString:@"上传失败" forSecond:1.f];
     }];
+    
+    
     
 }
 

@@ -99,6 +99,8 @@
 
     [self showHudWithString:@"正在上传"];
     NSLog(@"%@",self.photoDatasource);
+    
+    
     NSMutableArray *arr = [NSMutableArray array];
     for (int i =0; i < self.photoDatasource.count; i++) {
         XXEMyselfAblumUpDataApi *updataApi = [[XXEMyselfAblumUpDataApi alloc]initWithAblumSchoolId:self.myAlbumUpSchoolId ClassId:self.myAlbumUpClassId AblumId:self.albumID ImageArray:self.photoDatasource[i]];

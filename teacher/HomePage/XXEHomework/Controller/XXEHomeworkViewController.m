@@ -14,6 +14,8 @@
 #import "XXEHomeworkModel.h"
 #import "XXEHomeworkApi.h"
 #import "XXEHomeworkDetailInfoViewController.h"
+#import "XXEHomeworkIssueViewController.h"
+
 
 
 @interface XXEHomeworkViewController ()<UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate>
@@ -117,13 +119,12 @@
 
 - (void)issueBtnClick:(UIButton *)button{
     
-//    XXESentToPeopleViewController *sentToPeopleVC = [[XXESentToPeopleViewController alloc] init];
-//    
-//    sentToPeopleVC.schoolId = _schoolId;
-//    sentToPeopleVC.classId = _classId;
-//    sentToPeopleVC.basketNumStr = _flower_able;
-//    
-//    [self.navigationController pushViewController:sentToPeopleVC animated:YES];
+    XXEHomeworkIssueViewController *homeworkIssueVC = [[XXEHomeworkIssueViewController alloc] init];
+    
+    homeworkIssueVC.schoolId = _schoolId;
+    homeworkIssueVC.classId = _classId;
+    
+    [self.navigationController pushViewController:homeworkIssueVC animated:YES];
     
 }
 

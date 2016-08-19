@@ -16,6 +16,9 @@
 #import "XXECommentRequestModel.h"
 #import "XXECommentRequestApi.h"
 #import "XXERedFlowerSentHistoryViewController.h"
+#import "XXECommentHistoryDetailInfoViewController.h"
+
+
 
 @interface XXECommentHistoryViewController ()<UITableViewDelegate, UITableViewDataSource>
 {
@@ -34,9 +37,7 @@
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-//    self.navigationController.navigationBar.topItem.title = @"点评历史";
     _dataSourceArray = [[NSMutableArray alloc] init];
-//    self.navigationItem.title = @"点评历史";
     page = 0;
     
     [_myTableView reloadData];
@@ -68,31 +69,6 @@
 }
 
 
-//点评 请求
-- (void)commentRequestButtonClick:(UIButton *)button{
-    
-//    NSLog(@"点评 请求");
-//    [self.navigationController popViewControllerAnimated:NO];
-    
-}
-
-//点评 历史
-- (void)commentHistoryButtonClick:(UIButton *)button{
-    
-//    NSLog(@"点评 历史");
-    
-}
-
-//小红花
-- (void)commentFlowerButtonClick:(UIButton *)button{
-    
-//    NSLog(@"小红花");
-//    XXERedFlowerSentHistoryViewController *redFlowerSentHistoryVC = [[XXERedFlowerSentHistoryViewController alloc] init];
-//    
-//    [self.navigationController pushViewController:redFlowerSentHistoryVC animated:NO];
-}
-
-
 
 
 - (void)fetchNetData{
@@ -119,7 +95,7 @@
     XXECommentRequestApi *commentRequestApi = [[XXECommentRequestApi alloc] initWithXid:XID user_id:USER_ID user_type:USER_TYPE class_id:_classId require_con:@"1" page:pageStr];
     [commentRequestApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         
-        //        NSLog(@"2222---   %@", request.responseJSONObject);
+//        NSLog(@"2222---   %@", request.responseJSONObject);
         
         NSString *codeStr = [NSString stringWithFormat:@"%@", request.responseJSONObject[@"code"]];
         
@@ -240,19 +216,13 @@
     
     //    NSLog(@"课程  %@", model.teach_course);
     
-    
     cell.nameLabel.text = [NSString stringWithFormat:@"%@  %@", model.baby_tname, model.relation_name];
-    cell.contentLabel.text = [NSString stringWithFormat:@"请求内容: %@", model.ask_con];
-    //    [condit] => 1		//点评状态  0:家长发送的请求 (待老师点评), 1:老师已点评
-    if ([model.condit isEqualToString:@"0"]) {
-        cell.timeLabel.text = [XXETool dateStringFromNumberTimer:model.ask_tm];
-        
-        cell.stateImageView.image = [UIImage imageNamed:@"comment_state_uncommented_icon"];
-    }else if ([model.condit isEqualToString:@"1"]){
-        cell.timeLabel.text = [XXETool dateStringFromNumberTimer:model.com_tm];
-        cell.stateImageView.image = [UIImage imageNamed:@"comment_state_commented_icon"];
-    }
     
+    cell.contentLabel.text = [NSString stringWithFormat:@"点评内容: %@", model.com_con];
+
+    cell.timeLabel.text = [XXETool dateStringFromNumberTimer:model.com_tm];
+    cell.stateImageView.image = [UIImage imageNamed:@"comment_state_commented_icon"];
+
     return cell;
 }
 
@@ -270,18 +240,17 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    //    XXERedFlowerDetialViewController *redFlowerDetialVC = [[XXERedFlowerDetialViewController alloc] init];
-    //
-    //    XXERedFlowerSentHistoryModel *model = _dataSourceArray[indexPath.row];
-    //    redFlowerDetialVC.name = model.tname;
-    //    redFlowerDetialVC.time = model.date_tm;
-    //    redFlowerDetialVC.schoolName = model.school_name;
-    //    redFlowerDetialVC.className = model.class_name;
-    //    redFlowerDetialVC.course = model.teach_course;
-    //    redFlowerDetialVC.content = model.con;
-    //    redFlowerDetialVC.picWallArray = model.pic_arr;
-    //    redFlowerDetialVC.iconUrl = model.head_img;
-    //    [self.navigationController pushViewController:redFlowerDetialVC animated:YES];
+        XXECommentHistoryDetailInfoViewController *commentHistoryDetailInfoVC = [[XXECommentHistoryDetailInfoViewController alloc] init];
+    
+        XXECommentRequestModel *model = _dataSourceArray[indexPath.row];
+        commentHistoryDetailInfoVC.name = model.baby_tname;
+        commentHistoryDetailInfoVC.ask_con = model.ask_con;
+        commentHistoryDetailInfoVC.ask_time = model.ask_tm;
+        commentHistoryDetailInfoVC.com_con = model.com_con;
+        commentHistoryDetailInfoVC.picString = model.com_pic;
+        commentHistoryDetailInfoVC.type = model.type;
+    
+        [self.navigationController pushViewController:commentHistoryDetailInfoVC animated:YES];
     
 }
 

@@ -1,17 +1,19 @@
 
+
 //
-//  XXEInitiativeCommentCertainApi.m
+//  XXEHomeworkIssueTextAndPicInfoApi.m
 //  teacher
 //
-//  Created by Mac on 16/8/18.
+//  Created by Mac on 16/8/19.
 //  Copyright © 2016年 XingXingEdu. All rights reserved.
 //
 
-#import "XXEInitiativeCommentCertainApi.h"
+#import "XXEHomeworkIssueTextAndPicInfoApi.h"
+
 
 #define URL @"http://www.xingxingedu.cn/Teacher/teacher_comment_action"
 
-@interface XXEInitiativeCommentCertainApi ()
+@interface XXEHomeworkIssueTextAndPicInfoApi()
 
 @property (nonatomic, copy) NSString *xid;
 @property (nonatomic, copy) NSString *user_id;
@@ -19,36 +21,18 @@
 
 @property (nonatomic, copy) NSString *school_id;
 @property (nonatomic, copy) NSString *class_id;
-@property (nonatomic, copy) NSString *baby_id;
-@property (nonatomic, copy) NSString *com_con;
+@property (nonatomic, copy) NSString *title;
+@property (nonatomic, copy) NSString *con;
+@property (nonatomic, copy) NSString *teach_course;
+@property (nonatomic, copy) NSString *date_end_tm;
 @property (nonatomic, strong) UIImage *upImage;
-
 
 @end
 
 
+@implementation XXEHomeworkIssueTextAndPicInfoApi
 
-@implementation XXEInitiativeCommentCertainApi
-
-/*
- 
- 【点评->主动点评】
- 
- 接口类型:2
- 
- 接口:
- http://www.xingxingedu.cn/Teacher/teacher_comment_action
- 
- 
- 传参:
-	school_id	//学校id
-	class_id	//班级id
-	baby_id		//评论id
-	com_con		//评论内容
-	file		//批量上传图片 ★现在的版本没有上传图片的,应该是之前遗漏了,请加上
- */
-
-- (instancetype)initWithXid:(NSString *)xid user_id:(NSString *)user_id user_type:(NSString *)user_type school_id:(NSString *)school_id class_id:(NSString *)class_id baby_id:(NSString *)baby_id com_con:(NSString *)com_con upImage:(UIImage *)upImage{
+- (instancetype)initWithXid:(NSString *)xid user_id:(NSString *)user_id user_type:(NSString *)user_type school_id:(NSString *)school_id class_id:(NSString *)class_id title:(NSString *)title con:(NSString *)con teach_course:(NSString *)teach_course date_end_tm:(NSString *)date_end_tm upImage:(UIImage *)upImage{
     
     if (self = [super init]) {
         _xid = xid;
@@ -57,9 +41,12 @@
         
         _school_id = school_id;
         _class_id = class_id;
-        _baby_id = baby_id;
-        _com_con = com_con;
+        _title = title;
+        _con = con;
+        _teach_course = teach_course;
+        _date_end_tm = date_end_tm;
         _upImage = upImage;
+        
     }
     return self;
 }
@@ -81,9 +68,10 @@
     return ^(id<AFMultipartFormData> formData){
         int i = 1;
         NSData *data = UIImageJPEGRepresentation(_upImage, 0.5);
-        NSString *name = [NSString stringWithFormat:@"%d.jpeg",i];
+        //        NSString *name = [NSString stringWithFormat:@"%d.jpeg",i];
+        NSString *name = [NSString stringWithFormat:@"%d.jpg",i];
         NSString *formKey = [NSString stringWithFormat:@"file%d",i];
-        NSString *type = @"image/jpeg";
+        NSString *type = @"image/jpg";
         [formData appendPartWithFileData:data name:formKey fileName:name mimeType:type];
     };
 }
@@ -97,16 +85,15 @@
              @"xid":_xid,
              @"user_id":_user_id,
              @"user_type":_user_type,
-             @"school_id":_class_id,
+             @"school_id":_school_id,
              @"class_id":_class_id,
-             @"baby_id":_baby_id,
-             @"com_con":_com_con,
+             @"title":_title,
+             @"con":_con,
+             @"teach_course":_teach_course,
+             @"date_end_tm":_date_end_tm,
              @"file":_upImage
              };
     
 }
-
-
-
 
 @end
