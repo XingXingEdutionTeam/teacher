@@ -15,7 +15,7 @@
 #import <SMS_SDK/SMSSDK.h>
 #import "XXEVertifyTimesApi.h"
 
-@interface XXERegisterViewController ()
+@interface XXERegisterViewController ()<UITextFieldDelegate>
 
 @property (nonatomic, strong)UITextField *registerUerTextField;
 @property (nonatomic, strong)UITextField *registerVerificationTextField;
@@ -36,6 +36,7 @@
 {
     if (!_registerUerTextField) {
         _registerUerTextField = [UITextField createTextFieldWithIsOpen:NO textPlaceholder:@"请输入11位手机号"];
+        _registerUerTextField.delegate = self;
         _registerUerTextField.borderStyle = UIKeyboardTypeNamePhonePad;
     }
     return _registerUerTextField;
@@ -45,11 +46,11 @@
 {
     if (!_registerVerificationTextField) {
         _registerVerificationTextField = [UITextField createTextFieldWithIsOpen:NO textPlaceholder:@"输入4位验证码"];
+        _registerVerificationTextField.delegate = self;
         _registerVerificationTextField.borderStyle = UIKeyboardTypeDefault;
     }
     return _registerVerificationTextField;
 }
-
 
 - (void)viewWillAppear:(BOOL)animated
 {
@@ -232,6 +233,20 @@
     }];
 }
 
+#pragma mark - UItextFieldDelegate
+- (void)textFieldDidEndEditing:(UITextField *)textField
+{
+    if (self.registerUerTextField == textField) {
+        [self.registerUerTextField resignFirstResponder];
+        if (self.registerUserName == nil) {
+            [self showString:@"输入电话号码有误" forSecond:1.f];
+        } else {
+            //验证手机号有没有注册过
+            [self checkPhoneNumber];
+        }
+    }
+}
+
 
 #pragma mark - 点击相应方法actionClick
 
@@ -261,6 +276,8 @@
     //测试环境
     [self showString:@"测试" forSecond:1.f];
     XXERegisterSecondViewController *registerSecondVC = [[XXERegisterSecondViewController alloc]init];
+    registerSecondVC.userPhoneNum = @"15026418284";
+    registerSecondVC.login_type = @"1";
     [self.navigationController pushViewController:registerSecondVC animated:YES];
 }
 
@@ -274,6 +291,8 @@
             [self showString:@"验证码错误" forSecond:1.f];
         }else {
             XXERegisterSecondViewController *registerSecondVC = [[XXERegisterSecondViewController alloc]init];
+            registerSecondVC.userPhoneNum = self.registerUserName;
+            registerSecondVC.login_type = @"1";
             [self.navigationController pushViewController:registerSecondVC animated:YES];
         }
     }];
@@ -285,15 +304,6 @@
     [self.registerVerificationTextField resignFirstResponder];
 }
 
-- (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
-{
-    if (self.registerUserName == nil) {
-        [self showString:@"输入电话号码有误" forSecond:1.f];
-    } else {
-        //验证手机号有没有注册过
-        [self checkPhoneNumber];
-    }
-}
 
 #pragma mark - 网络请求
 
@@ -337,7 +347,9 @@
     [timesApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         NSLog(@"%@",request.responseJSONObject);
         NSString *code = [request.responseJSONObject objectForKey:@"code"];
-        if ([code isEqualToString:@"4"]) {
+        NSInteger code1 = [code integerValue];
+        
+        if (code1 == 4) {
             [self showString:@"已达今日5条上线" forSecond:1.f];
            self.verificationButton.userInteractionEnabled = NO;
         }

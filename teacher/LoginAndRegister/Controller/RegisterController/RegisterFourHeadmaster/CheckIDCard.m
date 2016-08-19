@@ -11,7 +11,6 @@
 @implementation CheckIDCard
 +(BOOL)checkIDCard:(NSString * )idCard{
 
-    
 NSString *urlStr = [NSString stringWithFormat:@"http://apicloud.mob.com/idcard/query?key=ec9c9a472b8c&cardno=%@",idCard];
  NSURL *url = [NSURL URLWithString:urlStr];
 NSData *data = [NSData dataWithContentsOfURL:url];

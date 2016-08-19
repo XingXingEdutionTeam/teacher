@@ -10,7 +10,8 @@
 
 @interface XXETeacherTableViewCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UILabel *teacherRegisLabel;
-@property (weak, nonatomic) IBOutlet UILabel *teacherRegisMessLabel;
+@property (weak, nonatomic) IBOutlet UITextField *teacherRegisTextField;
+
 
 
 @end

@@ -300,6 +300,13 @@
     commentReplyVC.comment_id = model.commentId;
     commentReplyVC.classId = _classId;
     [self.navigationController pushViewController:commentReplyVC animated:YES];
+//    XXECommentReplyViewController *commentReplyVC = [[XXECommentReplyViewController alloc] init];
+//    
+//    XXECommentRequestModel *model = _dataSourceArray[indexPath.row];
+//    commentReplyVC.name = model.baby_tname;
+//    commentReplyVC.content = model.ask_con;
+//    commentReplyVC.requestTime = model.ask_tm;
+//    [self.navigationController pushViewController:commentReplyVC animated:YES];
     
 }
 

@@ -13,7 +13,7 @@
 
 #define ORIGINAL_MAX_WIDTH 640.0f
 
-@interface SettingPersonInfoViewController ()<UIImagePickerControllerDelegate,UINavigationControllerDelegate,KTActionSheetDelegate>
+@interface SettingPersonInfoViewController ()<UIImagePickerControllerDelegate,UINavigationControllerDelegate,KTActionSheetDelegate,UITextFieldDelegate>
 
 {
     UITextField *parentsName;   //姓名
@@ -27,7 +27,15 @@
 @property(nonatomic,strong)NSArray *teacherTypeArr;
 @property(nonatomic,strong)WJCommboxView *teacherTypeCombox;
 @property(nonatomic,strong)UILabel *teacherTypeLabel;
+/** 用户头像 */
+@property (nonatomic, strong)UIImage *avatarImage;
+/** 用户类型 */
+@property (nonatomic, copy)NSString *userType;
 
+/** 用户年龄 */
+@property (nonatomic, copy)NSString *userAge;
+/** 用户性别 */
+@property (nonatomic, copy)NSString *userSex;
 @end
 
 @implementation SettingPersonInfoViewController
@@ -139,6 +147,7 @@
     }];
 
     parentsIDCard = [UITextField createTextFieldWithIsOpen:NO textPlaceholder:@"请输入您的身份号"];
+    parentsIDCard.delegate = self;
     parentsIDCard.borderStyle = UITextBorderStyleNone;
     [bgImageView addSubview:parentsIDCard];
     [parentsIDCard mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -187,13 +196,6 @@
 
 -(void)landClick:(UIButton *)sender
 {
-    
-    XXERegisterHeadMasterViewController *headerVC = [[XXERegisterHeadMasterViewController alloc]init];
-    [self.navigationController pushViewController:headerVC animated:YES];
-    
-//    XXERegisterTeacherViewController *teaVC = [[XXERegisterTeacherViewController alloc]init];
-//    [self.navigationController pushViewController:teaVC animated:YES];
-    
         if ([parentsName.text isEqualToString:@""])
         {
             [self showString:@"请输入姓名" forSecond:1.f];
@@ -219,23 +221,84 @@
             return;
         }
      else if ([self.teacherTypeCombox.textField.text isEqualToString:@"校长"] || [self.teacherTypeCombox.textField.text isEqualToString:@"管理员"]){
+         if ([self.teacherTypeCombox.textField.text isEqualToString:@"校长"]) {
+             self.userType = @"4";
+         }else {
+             self.userType = @"3";
+         }
+         XXERegisterHeadMasterViewController *headVC = [[XXERegisterHeadMasterViewController alloc]init];
+         headVC.userPhoneNum = self.userSettingPhoneNum;
+         headVC.userName = parentsName.text;
+         headVC.userIDCarNum = parentsIDCard.text;
+         headVC.userPassword = self.userSettingPassWord;
+         headVC.userIdentifier = self.userType;
+         headVC.userAvatarImage = self.avatarImage;
+         headVC.login_type = self.login_type;
+         headVC.userSex = self.userSex;
+         headVC.userAge = self.userAge;
          
-         XXERegisterHeadMasterViewController *headerVC = [[XXERegisterHeadMasterViewController alloc]init];
-         [self.navigationController pushViewController:headerVC animated:YES];
-            return;
+         [self.navigationController pushViewController:headVC animated:YES];
+         
         }
       else{
-    
+          if ([self.teacherTypeCombox.textField.text isEqualToString:@"授课老师"]) {
+              self.userType = @"1";
+          }else {
+              self.userType = @"2";
+          }
         XXERegisterTeacherViewController *teacherVC = [[XXERegisterTeacherViewController alloc]init];
+          teacherVC.userPhoneNum = self.userSettingPhoneNum;
+          teacherVC.userName = parentsName.text;
+          teacherVC.userIDCarNum = parentsIDCard.text;
+          teacherVC.userPassword = self.userSettingPassWord;
+          teacherVC.userIdentifier = self.userType;
+          teacherVC.userAvatarImage = self.avatarImage;
+          teacherVC.login_type = self.login_type;
+          teacherVC.userSex = self.userSex;
+          teacherVC.userAge = self.userAge;
         [self.navigationController pushViewController:teacherVC animated:YES];
     }
 }
 
 
--(NSString * )rangeString:(NSString *)str begin:(NSInteger )begin  length:(NSInteger)length{
-    NSRange r1 = {begin,length};
-    return  [str substringWithRange:r1];
+#pragma mark - UItextFieldDelegate
+- (void)textFieldDidEndEditing:(UITextField *)textField
+{
+    if (parentsIDCard == textField) {
+        [self getupUserIDCard:parentsIDCard.text];
+    }
 }
+
+
+#pragma mark - 根据身份证号判断性别与年龄
+
+- (void)getupUserIDCard:(NSString *)IDCard
+{
+    NSDate *now = [NSDate date];
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSUInteger unitFlags = NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay | NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond;
+       NSDateComponents *dateComponent = [calendar components:unitFlags fromDate:now];
+    
+    int year = (int)[dateComponent year];
+    int card = (year-[[IDCard substringWithRange:NSMakeRange(6, 4)]intValue]);
+    int sex = [[IDCard substringWithRange:NSMakeRange(16, 1)] intValue];
+    if (sex%2 != 0) {
+        NSLog(@"男");
+        self.userSex = @"男";
+    }else {
+        self.userSex = @"女";
+        NSLog(@"nv");
+    }
+    self.userAge = [NSString stringWithFormat:@"%d",card];
+    NSLog(@"%d",card);
+}
+
+
+
+//-(NSString * )rangeString:(NSString *)str begin:(NSInteger )begin  length:(NSInteger)length{
+//    NSRange r1 = {begin,length};
+//    return  [str substringWithRange:r1];
+//}
 
 
 - (void)didReceiveMemoryWarning {
@@ -274,6 +337,7 @@
 {
     UIImage *imageAvatar = [info objectForKey:UIImagePickerControllerEditedImage];
     NSLog(@"%@",imageAvatar);
+    self.avatarImage = imageAvatar;
 //    UIImage *imageBack = [info objectForKey:UIImagePickerControllerOriginalImage];
     
     [self.portraitImageView setImage:imageAvatar];

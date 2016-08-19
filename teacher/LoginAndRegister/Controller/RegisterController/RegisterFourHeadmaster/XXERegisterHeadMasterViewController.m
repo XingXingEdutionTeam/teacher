@@ -82,6 +82,8 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
     // Do any additional setup after loading the view from its nib.
     [self commBoxInfo];
     
+    NSLog(@"打印传过来的数据:电话号码%@ 姓名%@ 身份证%@ 密码%@ 类型%@ 头像%@ 登录类型%@ 性别%@ 年龄%@",self.userPhoneNum,self.userName,self.userIDCarNum,self.userPassword,self.userIdentifier,self.userAvatarImage,self.login_type,self.userSex,self.userAge);
+    
     _titleArr = @[@"学校名称:",@"学校类型:",@"教学类型:",@"学校地址",@"联系方式",@"",@"审核人员:",@"邀请码"];
     
     _titleTextArr = @[@"请选择学校名称",@"请选择你学校类型",@"请选择职位",@"学校地址",@"联系方式",@"",@"请选择审核人",@"可不填"];
@@ -120,7 +122,7 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
     } else {
         XXETeacherTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:IdentifierCELL forIndexPath:indexPath];
         cell.teacherRegisLabel.text = [_titleArr objectAtIndex:indexPath.row];
-        cell.teacherRegisMessLabel.text = [_titleTextArr objectAtIndex:indexPath.row];
+        cell.teacherRegisTextField.placeholder = [_titleTextArr objectAtIndex:indexPath.row];
         return cell;
     }
 }
@@ -131,12 +133,10 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
     [self.view endEditing:YES];
     switch (indexPath.row) {
         case 0:{
-            XXESelectMessageView *schoolName = [[XXESelectMessageView alloc]initWithTWFrame:self.view.bounds TWselectCityTitle:@"选择学校" MessageArray:[_titleArr copy]];
-            [schoolName showCityView:^(NSString *proviceStr) {
+//            XXESelectMessageView *schoolName = [[XXESelectMessageView alloc]initWithTWFrame:self.view.bounds TWselectCityTitle:@"选择学校" MessageArray:[_titleArr copy]];
+//            [schoolName showCityView:^(NSString *proviceStr) {
                 XXETeacherTableViewCell *cell = [self cellAtIndexRow:0 andAtSection:0];
-                cell.teacherRegisMessLabel.text = [NSString  stringWithFormat:@"%@",proviceStr];
-                NSLog(@"%@",proviceStr);
-            }];
+            cell.teacherRegisTextField.enabled = YES;
             
             break;
         }

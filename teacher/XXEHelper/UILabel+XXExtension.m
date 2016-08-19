@@ -27,7 +27,7 @@
     nameLabel.text = text;
     nameLabel.numberOfLines = 0;
     nameLabel.font = [UIFont systemWithIphone6P:17 Iphone6:15 Iphone5:12 Iphone4:10];
-    nameLabel.textColor = XXEColorFromRGB(51, 51, 51);
+    nameLabel.textColor = XXEColorFromRGB(255, 255, 255);
     nameLabel.textAlignment = NSTextAlignmentLeft;
     return nameLabel;
 }

@@ -181,7 +181,6 @@
 }
 
 
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
@@ -202,11 +201,7 @@
         NSLog(@"%@",x);
             self.confirmPassWordTextField.text = x;
     }];
-    
-    
 }
-
-
 
 
 #pragma mark - action点击相应方法
@@ -236,10 +231,20 @@
     [self.passWordTextField resignFirstResponder];
     [self.confirmPassWordTextField resignFirstResponder];
     
-//    XXERegisterThreeViewController *threeVC = [[XXERegisterThreeViewController alloc]init];
-//    [self.navigationController pushViewController:threeVC animated:YES];
-    SettingPersonInfoViewController *VC = [[SettingPersonInfoViewController alloc]init];
-    [self.navigationController pushViewController:VC animated:YES];
+    if ([self.confirmPassWordTextField.text isEqualToString:@""] || [self.passWordTextField.text isEqualToString:@""]) {
+        [self showString:@"不能为空" forSecond:1.f];
+    }else {
+    if (self.confirmPassWordTextField.text== self.passWordTextField.text) {
+        SettingPersonInfoViewController *settingVC = [[SettingPersonInfoViewController alloc]init];
+        settingVC.userSettingPhoneNum = self.userPhoneNum;
+        settingVC.userSettingPassWord = self.confirmPassWordTextField.text;
+        settingVC.login_type = self.login_type;
+        [self.navigationController pushViewController:settingVC animated:YES];
+    } else {
+        [self showString:@"两次输的密码不一样" forSecond:1.f];
+    }
+        
+  }
 }
 
 - (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
@@ -248,13 +253,6 @@
     [self.confirmPassWordTextField resignFirstResponder];
     NSLog(@"%@ %@",self.passWordTextField.text,self.confirmPassWordTextField.text);
 }
-
-
-
-
-
-
-
 
 
 

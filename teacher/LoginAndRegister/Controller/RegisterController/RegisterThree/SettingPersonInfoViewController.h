@@ -21,5 +21,12 @@
 @property(nonatomic ,copy)NSString * phone;
 @property(nonatomic ,copy)NSString * pwd;
 
+/** 用户的电话号码 */
+@property (nonatomic, copy)NSString *userSettingPhoneNum;
+/** 用户的密码 */
+@property (nonatomic, copy)NSString *userSettingPassWord;
+/** 登录类型 */
+@property (nonatomic, copy)NSString *login_type;
+
 
 @end

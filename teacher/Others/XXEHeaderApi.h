@@ -38,5 +38,18 @@
 //我的朋友圈
 #define XXEFriendCircleUrl @"http://www.xingxingedu.cn/Global/my_friend_circle"
 
+//搜索学校
+#define XXESearchSchoolUrl @"http://www.xingxingedu.cn/Global/get_school_info"
+
+//【通过学校获取年级】
+
+#define XXESearchClassUrl @"http://www.xingxingedu.cn/Global/give_school_get_grade" 
+
+/** 注册页的教学类型 */
+#define XXERegisTeachTypeUrl @"http://www.xingxingedu.cn/Teacher/get_teach_name"
+
+/** 获取审核人 */
+#define XXEReviewerUrl @"http://www.xingxingedu.cn/Parent/get_examine_teacher"
+
 
 #endif /* XXEHeaderApi_h */
