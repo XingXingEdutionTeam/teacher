@@ -196,6 +196,19 @@
 
 -(void)landClick:(UIButton *)sender
 {
+    //测试
+//    XXERegisterTeacherViewController *teacherVC = [[XXERegisterTeacherViewController alloc]init];
+//    teacherVC.userPhoneNum = self.userSettingPhoneNum;
+//    teacherVC.userName = parentsName.text;
+//    teacherVC.userIDCarNum = parentsIDCard.text;
+//    teacherVC.userPassword = self.userSettingPassWord;
+//    teacherVC.userIdentifier = self.userType;
+//    teacherVC.userAvatarImage = self.avatarImage;
+//    teacherVC.login_type = self.login_type;
+//    teacherVC.userSex = self.userSex;
+//    teacherVC.userAge = self.userAge;
+//    [self.navigationController pushViewController:teacherVC animated:YES];
+    
         if ([parentsName.text isEqualToString:@""])
         {
             [self showString:@"请输入姓名" forSecond:1.f];
@@ -265,7 +278,11 @@
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
     if (parentsIDCard == textField) {
+        if (parentsIDCard.text.length <17) {
+            [self showString:@"身份证有误" forSecond:1.f];
+        }else {
         [self getupUserIDCard:parentsIDCard.text];
+        }
     }
 }
 

@@ -41,7 +41,7 @@
 //搜索学校
 #define XXESearchSchoolUrl @"http://www.xingxingedu.cn/Global/get_school_info"
 
-//【通过学校获取年级】
+//【通过学校获取年级与班级】
 
 #define XXESearchClassUrl @"http://www.xingxingedu.cn/Global/give_school_get_grade" 
 

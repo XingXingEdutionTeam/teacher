@@ -142,14 +142,14 @@
     
     [self.passWordTextField mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(passWordImageView.mas_centerY);
-        make.left.equalTo(label3.mas_right).offset(0);
+        make.left.equalTo(label3.mas_right).offset(5);
         make.right.equalTo(passWordImageView.mas_right).offset(0);
         make.height.mas_equalTo(41*kScreenRatioHeight);
     }];
     
     [self.confirmPassWordTextField mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(confirmPassWordImageView.mas_centerY);
-        make.left.equalTo(label4.mas_right).offset(0);
+        make.left.equalTo(label4.mas_right).offset(5);
         make.right.equalTo(confirmPassWordImageView.mas_right).offset(0);
         make.height.mas_equalTo(41*kScreenRatioHeight);
     }];
@@ -189,7 +189,7 @@
         NSString *text = value;
         return text.length > 6;
     }] subscribeNext:^(id x) {
-        NSLog(@"%@",x);
+        NSLog(@"电话号码:%@",x);
         self.passWordTextField.text = x;
     } ];
     
@@ -230,11 +230,11 @@
     NSLog(@"----点击进入下一个个注册----");
     [self.passWordTextField resignFirstResponder];
     [self.confirmPassWordTextField resignFirstResponder];
-    
+    NSLog(@"000:%@ 999:%@",self.confirmPassWordTextField.text,self.passWordTextField.text);
     if ([self.confirmPassWordTextField.text isEqualToString:@""] || [self.passWordTextField.text isEqualToString:@""]) {
         [self showString:@"不能为空" forSecond:1.f];
     }else {
-    if (self.confirmPassWordTextField.text== self.passWordTextField.text) {
+    if (self.confirmPassWordTextField.text == self.passWordTextField.text) {
         SettingPersonInfoViewController *settingVC = [[SettingPersonInfoViewController alloc]init];
         settingVC.userSettingPhoneNum = self.userPhoneNum;
         settingVC.userSettingPassWord = self.confirmPassWordTextField.text;

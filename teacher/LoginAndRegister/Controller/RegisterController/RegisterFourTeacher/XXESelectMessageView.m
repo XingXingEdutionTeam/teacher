@@ -148,6 +148,7 @@
     if (self.sele) {
         self.sele(_messageArray[_districtIndex]);
     }
+    NSLog(@"%@",self.sele);
     
     [UIView animateWithDuration:0.3 animations:^{
         CGRect bjf = blockview.frame;
