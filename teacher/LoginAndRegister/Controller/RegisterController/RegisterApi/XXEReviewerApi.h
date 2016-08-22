@@ -10,6 +10,6 @@
 
 @interface XXEReviewerApi : YTKRequest
 
-- (id)initReviwerNameSchoolId:(NSString *)schoolId  classID:(NSString *)classID;
+- (id)initReviwerNameSchoolId:(NSString *)schoolId  PositionID:(NSString *)positionId;
 
 @end

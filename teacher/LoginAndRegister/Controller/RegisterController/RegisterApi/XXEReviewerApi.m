@@ -11,15 +11,15 @@
 @implementation XXEReviewerApi{
     
     NSString *_school_id;
-    NSString *_class_id;
+    NSString *_position;
 }
 
-- (id)initReviwerNameSchoolId:(NSString *)schoolId  classID:(NSString *)classID
+- (id)initReviwerNameSchoolId:(NSString *)schoolId  PositionID:(NSString *)positionId
 {
     self = [super init];
     if (self) {
         _school_id = schoolId;
-        _class_id = classID;
+        _position = positionId;
     }
     return self;
 }
@@ -37,7 +37,7 @@
 - (id)requestArgument
 {
     return @{@"school_id":_school_id,
-             @"class_id":_class_id,
+             @"position":_position,
              @"appkey":APPKEY,
              @"backtype":BACKTYPE
              };

@@ -17,21 +17,28 @@
 #import "XXERegisterTeachOfTypeApi.h"
 #import "XXEReviewerApi.h"
 #import "XXEReviewerModel.h"
+#import "XXERegisterTeacherApi.h"
+#import "XXERegisterTeacherHeadApi.h"
+#import "XXERegisterTeacherFileApi.h"
+#import "YTKBatchRequest.h"
 //选择城市相关
 #import "TWSelectCityView.h"
 #import "XXESelectMessageView.h"
 #import "FSImagePickerView.h"
 #import "UtilityFunc.h"
 #import "XXELoginViewController.h"
+#import "FSImageModel.h"
 #define awayX 20
-@interface XXERegisterTeacherViewController ()<UISearchBarDelegate,UITableViewDelegate,UITableViewDataSource>{
+@interface XXERegisterTeacherViewController ()<UISearchBarDelegate,UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate>{
     UIButton *landBtn;
+    
     //ding
     NSArray *_titleArr;
     NSArray *_titleTextArr;
 }
 @property(nonatomic,strong)UISearchBar *searchBar;
 @property(nonatomic,strong)UISearchController *searchDC;
+@property (nonatomic, strong)FSImagePickerView *picker;
 
 /** 没有转换的学校类型 */
 @property (nonatomic, copy)NSString *schoolType;
@@ -60,12 +67,36 @@
 /** 索引学校在数组中的位置 */
 @property (nonatomic, assign)NSInteger indexDatsource;
 
+/** 最红教师注册所选的学校id */
+@property (nonatomic, copy)NSString *theEndSchoolId;
+/** 班级Id */
+@property (nonatomic, copy)NSString *theEndClassId;
+/** 学校类型 */
+@property (nonatomic, copy)NSString *theEndSchoolType;
+/** 教学类型 */
+@property (nonatomic, copy)NSString *theEndTeachType;
+/** 审核人Id */
+@property (nonatomic, copy)NSString *theEndReviewerId;
+/** 邀请码 */
+@property (nonatomic, copy)NSString *theEndInviteCode;
+
+/** 选择相片的数据源 */
+@property (nonatomic, strong)NSMutableArray *fileImageArray;
+
 @end
 
 static NSString *IdentifierCELL = @"TeacherCell";
 static NSString *IdentifierMessCELL = @"TeacherMessCell";
 
 @implementation XXERegisterTeacherViewController
+
+- (NSMutableArray *)fileImageArray
+{
+    if (!_fileImageArray) {
+        _fileImageArray = [NSMutableArray array];
+    }
+    return _fileImageArray;
+}
 
 - (NSMutableArray *)reviewerDatasource
 {
@@ -198,11 +229,6 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
         XXETeacherMessTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:IdentifierMessCELL forIndexPath:indexPath];
         return cell;
     }
-//        else if (indexPath.row == 1 || indexPath.row == 6) {
-//        XXETeacherTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:IdentifierCELL forIndexPath:indexPath];
-//        cell.accessoryType = UITableViewCellAccessoryNone;
-//        return cell;
-//    }
     else {
     XXETeacherTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:IdentifierCELL forIndexPath:indexPath];
         cell.teacherRegisLabel.text = [_titleArr objectAtIndex:indexPath.row];
@@ -240,7 +266,10 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
                 NSLog(@"学校Id%@ 学校类型%@",model.schoolId,model.type);
                 //获取班级类型
                 [self getoutSchoolGradeSchoolId:model.schoolId SchoolType:model.type];
+                //获取教学类型
                 [self getoutTeachTypeSchoolType:model.type];
+                //获取审核人
+                [self getoutTeacherReviewerSchoolID:model.schoolId];
                 
             }];
                 
@@ -260,10 +289,14 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
             NSLog(@"%@",self.schoolNameArray);
             [schoolName showCityView:^(NSString *proviceStr) {
                 WeakSelf.teacherCell = [WeakSelf cellAtIndexRow:2 andAtSection:0 Message:[NSString  stringWithFormat:@"%@",proviceStr]];
+                for (int i =0; i <self.gradeNameArray.count; i++) {
+                    if ([proviceStr isEqualToString:self.gradeNameArray[i]]) {
+                        _indexDatsource = i;
+                    }
+                }
+                XXETeacherGradeModel *model = self.gradeNameDatasource[_indexDatsource];
+                self.theEndClassId = model.course_id;
                 NSLog(@"%@",proviceStr);
-                
-                //获取教学类型数据信息
-//                [self getoutTeachTypeSchoolType];
                 
             }];
             }
@@ -277,13 +310,39 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
             NSLog(@"%@",self.teachOfTypeArray);
             [schoolName showCityView:^(NSString *proviceStr) {
                 WeakSelf.teacherCell = [WeakSelf cellAtIndexRow:3 andAtSection:0 Message:[NSString  stringWithFormat:@"%@",proviceStr]];
-                NSLog(@"%@",proviceStr);
+                for (int i =0; i<self.teachOfTypeArray.count; i++) {
+                    if ([proviceStr isEqualToString:self.teachOfTypeArray[i]]) {
+                        _indexDatsource = i;
+                    }
+                }
+                XXETeachOfTypeModel *model = self.teachOfTypeDatasource[_indexDatsource];
+                self.theEndTeachType = model.teachTypeId;
             }];
             }
             break;
         }
         case 4:{
             
+            break;
+        }
+        case 5:{
+            XXESelectMessageView *reviewerName = [[XXESelectMessageView alloc]initWithTWFrame:self.view.bounds TWselectCityTitle:@"请选择审核人" MessageArray:self.reviewerNameArray];
+            [reviewerName showCityView:^(NSString *proviceStr) {
+                WeakSelf.teacherCell = [WeakSelf cellAtIndexRow:5 andAtSection:0 Message:[NSString stringWithFormat:@"%@",proviceStr]];
+                for (int i =0; i <self.reviewerNameArray.count; i++) {
+                    if ([proviceStr isEqualToString:self.reviewerNameArray[i]]) {
+                        _indexDatsource = i;
+                    }
+                }
+                XXEReviewerModel *model = self.reviewerDatasource[_indexDatsource];
+                self.theEndReviewerId = model.reviewerId;
+            }];
+            break;
+        }
+        case 6:{
+            WeakSelf.teacherCell = [WeakSelf cellAtIndexRow:6 andAtSection:0 Message:@""];
+            WeakSelf.teacherCell.teacherRegisTextField.enabled = YES;
+            WeakSelf.teacherCell.teacherRegisTextField.delegate = self;
             break;
         }
         default:
@@ -322,10 +381,13 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
     layout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
     FSImagePickerView *picker = [[FSImagePickerView alloc] initWithFrame:CGRectMake(20, 295*kScreenRatioHeight, KScreenWidth -  40, 75*kScreenRatioHeight) collectionViewLayout:layout];
+    self.picker = picker;
+    picker = picker;
     picker.backgroundColor = UIColorFromRGB(255, 255, 255);
     picker.showsHorizontalScrollIndicator = NO;
     picker.controller = self;
     [self.teacherTableView addSubview:picker];
+    //选择的相片加入数组
     
     __weak typeof(self)weakSelf = self;
     //确认按钮
@@ -341,10 +403,6 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
     }];
 }
 
-- (void)sureButtonClick:(UIButton *)sender
-{
-    NSLog(@"确认按钮");
-}
 
 #pragma mark - search选择学校类型与学校名称
 - (void)searchBarTextDidEndEditing:(UISearchBar *)searchBar
@@ -358,6 +416,7 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
         if ([[request.responseJSONObject objectForKey:@"code"] intValue] == 1)
         {
             NSArray *dic = [request.responseJSONObject objectForKey:@"data"];
+            NSLog(@"搜索的学校的信息:%@",dic);
             for (int i = 0; i < dic.count; i++) {
                 XXETeacherModel *model = [[XXETeacherModel alloc]initWithDictionary:dic[i] error:nil];
                 self.schoolType = model.type;
@@ -387,8 +446,12 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
                 
                 //获取班级信息的网络请求
                 [self getoutSchoolGradeSchoolId:model.schoolId SchoolType:model.type];
+                
                 //获取教学类型网络请求
                 [self getoutTeachTypeSchoolType:model.type];
+                
+                //获取教师的审核人信息
+                [self getoutTeacherReviewerSchoolID:model.schoolId];
             }
         } else {
         
@@ -405,23 +468,6 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
 {
     /** 获取班级信息局部学校ID */
     NSString *schoolTYPE;
-//    if (_indexDatsource != 0) {
-//        XXETeacherModel *model = self.datasource[_indexDatsource];
-//        NSLog(@"学校类型:%@",model.type);
-//        NSLog(@"xuexiao%@",self.schoolType);
-//        if ([model.type isEqualToString:@"幼儿园"]) {
-//            self.schoolType = @"1";
-//        }else if ([model.type isEqualToString:@"小学"]){
-//            self.schoolType = @"2";
-//        } else if ([model.type isEqualToString:@"中学"]){
-//            self.schoolType = @"3";
-//        }  else{
-//            self.schoolType = @"4";
-//        }
-//        schoolID = model.schoolId;
-//        NSLog(@"学校ID:%@, 学校类型Id%@",model.schoolId,self.schoolType);
-//        
-//    }else {
         if ([schoolType isEqualToString:@"幼儿园"]) {
             schoolTYPE = @"1";
         }else if ([schoolType isEqualToString:@"小学"]){
@@ -431,10 +477,11 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
         }  else{
             schoolTYPE = @"4";
         }
-//        schoolID = schoolId;
-//    }
     
     NSLog(@"学校ID%@ 学校类型%@",schoolId,schoolTYPE);
+    //获取默认的信息
+    self.theEndSchoolId = schoolId;
+    self.theEndSchoolType = schoolTYPE;
     
     
     XXERegisterGradeSchoolApi *schoolApi = [[XXERegisterGradeSchoolApi alloc]initWithGetOutSchoolGradeSchoolId:schoolId SchoolType:schoolTYPE];
@@ -444,7 +491,7 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
         if ([[request.responseJSONObject objectForKey:@"code"] intValue] == 1) {
             NSLog(@"%@",request.responseJSONObject);
             NSArray *data = [request.responseJSONObject objectForKey:@"data"];
-            NSLog(@"%@",data);
+            NSLog(@"获取班级信息:%@",data);
             
             NSString *name = [data[0] objectForKey:@"name"];
             NSLog(@"%@",name);
@@ -459,6 +506,9 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
             }
             NSLog(@"班级信息的数组%@",self.gradeNameArray);
             self.teacherCell = [self cellAtIndexRow:2 andAtSection:0 Message:self.gradeNameArray[0]];
+            XXETeacherGradeModel *model = self.gradeNameDatasource[0];
+            //默认为没有选择的时候
+            self.theEndClassId = model.course_id;
         }else {
             [self showString:@"请求班级数据失败" forSecond:1.f];
         }
@@ -472,20 +522,6 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
 - (void)getoutTeachTypeSchoolType:(NSString *)schoolType
 {
     NSString *teachSchoolType;
-//    if (_indexDatsource != 0) {
-//        XXETeacherModel *model = self.datasource[_indexDatsource];
-//        NSLog(@"xuexiao%@",model.type);
-//        if ([model.type isEqualToString:@"幼儿园"]) {
-//            teachSchoolType = @"1";
-//        }else if ([model.type isEqualToString:@"小学"]){
-//            teachSchoolType = @"2";
-//        } else if ([model.type isEqualToString:@"中学"]){
-//            teachSchoolType = @"3";
-//        }  else{
-//            teachSchoolType = @"4";
-//        }
-//        
-//    }else {
     
         if ([schoolType isEqualToString:@"幼儿园"]) {
             teachSchoolType = @"1";
@@ -496,8 +532,8 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
         }  else{
             teachSchoolType = @"4";
         }
-//    }
     NSLog(@"=======教学类型:%@",teachSchoolType);
+    
     
     XXERegisterTeachOfTypeApi *teachTypeApi = [[XXERegisterTeachOfTypeApi alloc]initWithRegisTeachTypeSchoolType:teachSchoolType];
     
@@ -506,6 +542,7 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
         NSLog(@"%@",request.responseJSONObject);
         if ([[request.responseJSONObject objectForKey:@"code"]intValue]== 1) {
             NSArray *data = [request.responseJSONObject objectForKey:@"data"];
+            NSLog(@"获取教学类型:%@",data); 
             //获取教学类型前 先清空数组
             [self.teachOfTypeDatasource removeAllObjects];
             [self.teachOfTypeArray removeAllObjects];
@@ -516,6 +553,8 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
                 [self.teachOfTypeArray addObject:model.teachTypeName];
             }
             self.teacherCell = [self cellAtIndexRow:3 andAtSection:0 Message:self.teachOfTypeArray[0]];
+            XXETeachOfTypeModel *model = self.teachOfTypeDatasource[0];
+            self.theEndTeachType = model.teachTypeId;
         }else {
         
             [self showString:@"教学类型数据请求失败" forSecond:1.f];
@@ -526,7 +565,119 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
 }
 
 #pragma mark - 审核人的数据获取
+- (void)getoutTeacherReviewerSchoolID:(NSString *)reviewerSchoolId
+{
+    NSLog(@"%@%@",self.userIdentifier,reviewerSchoolId);
+    XXEReviewerApi *reviewerApi = [[XXEReviewerApi alloc]initReviwerNameSchoolId:reviewerSchoolId PositionID:self.userIdentifier];
+    [reviewerApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
+        NSLog(@"审核人信息:======%@",request.responseJSONObject);
+        NSLog(@"%@",[request.responseJSONObject objectForKey:@"msg"]);
+        NSArray *data = [request.responseJSONObject objectForKey:@"data"];
+        [self.reviewerDatasource removeAllObjects];
+        [self.reviewerNameArray removeAllObjects];
+        for (int i =0; i < data.count; i++) {
+            XXEReviewerModel *model = [[XXEReviewerModel alloc]initWithDictionary:data[i] error:nil];
+            [self.reviewerDatasource addObject:model];
+            [self.reviewerNameArray addObject:model.reviewerName];
+        }
+        self.teacherCell = [self cellAtIndexRow:5 andAtSection:0 Message:self.reviewerNameArray[0]];
+        XXEReviewerModel *model = self.reviewerDatasource[0];
+        self.theEndReviewerId = model.reviewerId;
+    } failure:^(__kindof YTKBaseRequest *request) {
+        
+    }];
+    
+}
 
+#pragma mark - 点击确定提交注册
+- (void)sureButtonClick:(UIButton *)sender
+{
+    NSLog(@"确认按钮");
+    NSLog(@"学校ID%@ 学校类型%@ 班级Id%@ 教学类型%@ 审核人ID%@",self.theEndSchoolId,self.theEndSchoolType,self.theEndClassId,self.theEndTeachType,self.theEndReviewerId);
+    NSLog(@"登录类型%@ 电话号码%@ 密码%@ 用户姓名%@ 用户身份证%@ 年龄%@ 性别%@ 用户身份%@",self.login_type,self.userPhoneNum,self.userPassword,self.userName,self.userIDCarNum,self.userAge,self.userSex,self.userIdentifier);
+    
+    
+//    self.login_type 登录类型
+//    self.userPhoneNum 电话号码
+//    self.userPassword 密码
+//    self.userName 用户姓名
+//    self.userIDCarNum 用户的身份证号
+//    self.userAge 用户的年龄
+//    self.userSex 用户的性别
+//    self.userIdentifier 用户的身份
+    
+    NSMutableArray *arrApi = [NSMutableArray array];
+//
+    XXERegisterTeacherApi *teacherApi = [[XXERegisterTeacherApi alloc]initWithRegisterTeacherLoginType:self.login_type PhoneNum:self.userPhoneNum Password:self.userPassword UserName:self.userName IDCard:self.userIDCarNum PassPort:@"" Age:self.userAge Sex:self.userSex Position:self.userIdentifier TeachId:self.theEndTeachType SchoolId:self.theEndSchoolId ClassId:self.theEndClassId SchoolType:self.theEndSchoolType ExamineId:self.theEndReviewerId Code:self.theEndInviteCode];
+    [arrApi addObject:teacherApi];
+
+
+    XXERegisterTeacherHeadApi *teacherHeadApi = [[XXERegisterTeacherHeadApi alloc]initWithRegisterTeacherLoginType:self.login_type PhoneNum:self.userPhoneNum Password:self.userPassword UserName:self.userName IDCard:self.userIDCarNum PassPort:@"" Age:self.userAge Sex:self.userSex Position:self.userIdentifier TeachId:self.theEndTeachType SchoolId:self.theEndSchoolId ClassId:self.theEndClassId SchoolType:self.theEndSchoolType ExamineId:self.theEndReviewerId Code:self.theEndInviteCode HeadImage:self.userAvatarImage];
+    
+    [arrApi addObject:teacherHeadApi];
+    [self setupFileImage];
+    if (self.fileImageArray.count > 0) {
+        for (int i = 0; i < self.fileImageArray.count; i++) {
+            XXERegisterTeacherFileApi *teacherFileApi = [[XXERegisterTeacherFileApi alloc]initWithRegisterTeacherLoginType:self.login_type PhoneNum:self.userPhoneNum Password:self.userPassword UserName:self.userName IDCard:self.userIDCarNum PassPort:@"" Age:self.userAge Sex:self.userSex Position:self.userIdentifier TeachId:self.theEndTeachType SchoolId:self.theEndSchoolId ClassId:self.theEndClassId SchoolType:self.theEndSchoolType ExamineId:self.theEndReviewerId Code:self.theEndInviteCode FileImage:self.fileImageArray[i]];
+            [arrApi addObject:teacherFileApi];
+        }
+        
+        YTKBatchRequest *bathRequest = [[YTKBatchRequest alloc]initWithRequestArray:arrApi];
+        [bathRequest startWithCompletionBlockWithSuccess:^(YTKBatchRequest *batchRequest) {
+            NSArray *array = bathRequest.requestArray;
+            
+            XXERegisterTeacherApi *api1 = (XXERegisterTeacherApi *)array[0];
+            NSLog(@"信息%@",api1.responseJSONObject);
+            
+            XXERegisterTeacherHeadApi *head = (XXERegisterTeacherHeadApi *)array[1];
+            NSLog(@"图像%@",head.responseJSONObject);
+            XXERegisterTeacherFileApi *file = (XXERegisterTeacherFileApi *)array[2];
+             NSLog(@"证件1%@",file.responseJSONObject);
+            XXERegisterTeacherFileApi *file1 = (XXERegisterTeacherFileApi *)array[3];
+             NSLog(@"证件2%@",file1.responseJSONObject);
+            XXERegisterTeacherFileApi *file2 = (XXERegisterTeacherFileApi *)array[4];
+             NSLog(@"证件3%@",file2.responseJSONObject);
+            
+            
+            [self showString:@"注册成功" forSecond:1.f];
+            
+        } failure:^(YTKBatchRequest *batchRequest) {
+            [self showHudWithString:@"上传失败" forSecond:1.f];
+        }];
+        
+    }else {
+        [teacherApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
+            NSLog(@"%@",request.responseJSONObject);
+            NSLog(@"%@",[request.responseJSONObject objectForKey:@"msg"]);
+            
+        } failure:^(__kindof YTKBaseRequest *request) {
+            
+        }];
+    }
+
+        NSLog(@"照片的数组%@",self.fileImageArray);
+    
+}
+
+#pragma mark - 获取身份图片
+- (void)setupFileImage
+{
+    NSMutableArray *arr = [NSMutableArray array];
+    [self.picker.data removeLastObject];
+    arr = self.picker.data;
+    
+    for (int i =0; i <arr.count; i++) {
+        FSImageModel *model = self.picker.data[i];
+        UIImage *fileImage = [UIImage imageWithData:model.data];
+        [self.fileImageArray addObject:fileImage];
+    }
+}
+
+#pragma mark  - UITextField
+- (void)textFieldDidEndEditing:(UITextField *)textField
+{
+    self.theEndInviteCode = textField.text;
+}
 
 //点击键盘搜索取消搜索的第一响应
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar

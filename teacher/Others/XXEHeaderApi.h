@@ -48,8 +48,11 @@
 /** 注册页的教学类型 */
 #define XXERegisTeachTypeUrl @"http://www.xingxingedu.cn/Teacher/get_teach_name"
 
-/** 获取审核人 */
-#define XXEReviewerUrl @"http://www.xingxingedu.cn/Parent/get_examine_teacher"
+/** 教师端获取审核人 */
+#define XXEReviewerUrl @"http://www.xingxingedu.cn/Teacher/get_examine_teacher"
+
+/** 注册网服务器发送信息 */
+#define XXERegisterTeacherUrl @"http://www.xingxingedu.cn/Teacher/register"
 
 
 #endif /* XXEHeaderApi_h */

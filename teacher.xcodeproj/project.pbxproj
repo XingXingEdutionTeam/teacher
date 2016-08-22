@@ -116,6 +116,9 @@
 		9E50F4061D5B13B400FA6594 /* XXEHomePageClassModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E50F4051D5B13B400FA6594 /* XXEHomePageClassModel.m */; };
 		9E50F4571D5B449800FA6594 /* XXETool.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E50F4561D5B449800FA6594 /* XXETool.m */; };
 		9E542DBC1D59C6A1002D7BC3 /* XXEHomePageBottomView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E542DBB1D59C6A1002D7BC3 /* XXEHomePageBottomView.m */; };
+		9E573F851D6AE38A00457341 /* XXERegisterTeacherApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E573F841D6AE38A00457341 /* XXERegisterTeacherApi.m */; };
+		9E573F881D6AE9CE00457341 /* XXERegisterTeacherHeadApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E573F871D6AE9CE00457341 /* XXERegisterTeacherHeadApi.m */; };
+		9E573F8B1D6AEB1D00457341 /* XXERegisterTeacherFileApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E573F8A1D6AEB1D00457341 /* XXERegisterTeacherFileApi.m */; };
 		9E60DDA41D649192001DA4AA /* XXECommentRequestApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E60DD951D649192001DA4AA /* XXECommentRequestApi.m */; };
 		9E60DDA51D649192001DA4AA /* XXECommentHistoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E60DD981D649192001DA4AA /* XXECommentHistoryViewController.m */; };
 		9E60DDA61D649192001DA4AA /* XXECommentRequestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E60DD9A1D649192001DA4AA /* XXECommentRequestViewController.m */; };
@@ -478,6 +481,12 @@
 		9E50F4561D5B449800FA6594 /* XXETool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXETool.m; sourceTree = "<group>"; };
 		9E542DBA1D59C6A1002D7BC3 /* XXEHomePageBottomView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXEHomePageBottomView.h; sourceTree = "<group>"; };
 		9E542DBB1D59C6A1002D7BC3 /* XXEHomePageBottomView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXEHomePageBottomView.m; sourceTree = "<group>"; };
+		9E573F831D6AE38A00457341 /* XXERegisterTeacherApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXERegisterTeacherApi.h; sourceTree = "<group>"; };
+		9E573F841D6AE38A00457341 /* XXERegisterTeacherApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXERegisterTeacherApi.m; sourceTree = "<group>"; };
+		9E573F861D6AE9CE00457341 /* XXERegisterTeacherHeadApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXERegisterTeacherHeadApi.h; sourceTree = "<group>"; };
+		9E573F871D6AE9CE00457341 /* XXERegisterTeacherHeadApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXERegisterTeacherHeadApi.m; sourceTree = "<group>"; };
+		9E573F891D6AEB1D00457341 /* XXERegisterTeacherFileApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXERegisterTeacherFileApi.h; sourceTree = "<group>"; };
+		9E573F8A1D6AEB1D00457341 /* XXERegisterTeacherFileApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXERegisterTeacherFileApi.m; sourceTree = "<group>"; };
 		9E60DD941D649192001DA4AA /* XXECommentRequestApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXECommentRequestApi.h; sourceTree = "<group>"; };
 		9E60DD951D649192001DA4AA /* XXECommentRequestApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXECommentRequestApi.m; sourceTree = "<group>"; };
 		9E60DD971D649192001DA4AA /* XXECommentHistoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXECommentHistoryViewController.h; sourceTree = "<group>"; };
@@ -1915,6 +1924,12 @@
 				9EF21DC41D67087A00D3F891 /* XXERegisterTeachOfTypeApi.m */,
 				9EF21DC61D67165D00D3F891 /* XXEReviewerApi.h */,
 				9EF21DC71D67165D00D3F891 /* XXEReviewerApi.m */,
+				9E573F831D6AE38A00457341 /* XXERegisterTeacherApi.h */,
+				9E573F841D6AE38A00457341 /* XXERegisterTeacherApi.m */,
+				9E573F861D6AE9CE00457341 /* XXERegisterTeacherHeadApi.h */,
+				9E573F871D6AE9CE00457341 /* XXERegisterTeacherHeadApi.m */,
+				9E573F891D6AEB1D00457341 /* XXERegisterTeacherFileApi.h */,
+				9E573F8A1D6AEB1D00457341 /* XXERegisterTeacherFileApi.m */,
 			);
 			path = RegisterApi;
 			sourceTree = "<group>";
@@ -2175,11 +2190,13 @@
 			files = (
 				9EE498F41D6590EB00FC5472 /* XXETeacherMessTableViewCell.m in Sources */,
 				049CBE851D66939700A651E7 /* XXECommentReplyViewController.m in Sources */,
+				9E573F851D6AE38A00457341 /* XXERegisterTeacherApi.m in Sources */,
 				9ED147061D59AC9B0049D2AA /* XXEHomePageApi.m in Sources */,
 				9EBDB5441D61CA2300A2F252 /* XXEAlbumContentViewController.m in Sources */,
 				9E9B4C741D633B8700983F5E /* MLClickColorLinkLabel.m in Sources */,
 				9E6912F81D5442AE0000E566 /* UIView+XXExtension.m in Sources */,
 				0445A3E61D65E8CA00C3A4CA /* FSPhotoGroupController.m in Sources */,
+				9E573F8B1D6AEB1D00457341 /* XXERegisterTeacherFileApi.m in Sources */,
 				9EF21DCB1D67191B00D3F891 /* XXEReviewerModel.m in Sources */,
 				9E6693BD1D64140700FFA0A7 /* SettingPersonInfoViewController.m in Sources */,
 				9EBDB54D1D61D4D900A2F252 /* XXEContentAlbumCollectionViewCell.m in Sources */,
@@ -2239,6 +2256,7 @@
 				04FAD06A1D65C39500C43342 /* XXEHomeworkDetailInfoViewController.m in Sources */,
 				0433013B1D62F0C600722DE2 /* XXEManagerAndHeadmasterApi.m in Sources */,
 				9EBA6F7A1D5D7781001B45C3 /* XXEMyClassAlbumTableViewCell.m in Sources */,
+				9E573F881D6AE9CE00457341 /* XXERegisterTeacherHeadApi.m in Sources */,
 				049CBE951D66AC7500A651E7 /* XXECommentTextInfoApi.m in Sources */,
 				9E66939F1D6404DD00FFA0A7 /* XXEVertifyTimesApi.m in Sources */,
 				9E9B4C701D633B8700983F5E /* DFImageUnitView.m in Sources */,

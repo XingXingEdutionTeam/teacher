@@ -271,14 +271,14 @@
 - (void)nextButtonsClick:(UIButton *)sender
 {
     //验证验证码对不对
-    [self verifyNumberISRight];
+//    [self verifyNumberISRight];
     
 //    //测试环境
-//    [self showString:@"测试" forSecond:1.f];
-//    XXERegisterSecondViewController *registerSecondVC = [[XXERegisterSecondViewController alloc]init];
-//    registerSecondVC.userPhoneNum = @"15026418284";
-//    registerSecondVC.login_type = @"1";
-//    [self.navigationController pushViewController:registerSecondVC animated:YES];
+    [self showString:@"测试" forSecond:1.f];
+    XXERegisterSecondViewController *registerSecondVC = [[XXERegisterSecondViewController alloc]init];
+    registerSecondVC.userPhoneNum = @"13938493975";
+    registerSecondVC.login_type = @"1";
+    [self.navigationController pushViewController:registerSecondVC animated:YES];
 }
 
 #pragma mark - 验证验证码对不对
