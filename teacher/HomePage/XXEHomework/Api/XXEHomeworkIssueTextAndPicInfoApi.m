@@ -11,7 +11,7 @@
 #import "XXEHomeworkIssueTextAndPicInfoApi.h"
 
 
-#define URL @"http://www.xingxingedu.cn/Teacher/teacher_comment_action"
+#define URL @"http://www.xingxingedu.cn/Teacher/class_homework_publish"
 
 @interface XXEHomeworkIssueTextAndPicInfoApi()
 

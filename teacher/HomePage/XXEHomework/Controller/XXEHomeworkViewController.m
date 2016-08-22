@@ -37,9 +37,9 @@
 @property(nonatomic,strong)UIView *monthBgView;
 
 //科目
-@property(nonatomic,strong)NSArray *teach_course_groupArray;
+@property(nonatomic,strong)NSMutableArray *teach_course_groupArray;
 //月份
-@property(nonatomic,strong)NSArray *month_groupArray;
+@property(nonatomic,strong)NSMutableArray *month_groupArray;
 //作业
 @property(nonatomic,strong)NSArray *homework_listArray;
 //作业 状态 图标
@@ -78,20 +78,19 @@
     
 }
 
+
 - (void)dealloc{
     [[NSNotificationCenter defaultCenter]removeObserver:self];
-    
-//    [self.courseCombox.textField removeObserver:self forKeyPath:@"text"];
-//    [self.dateNameCombox.textField removeObserver:self forKeyPath:@"text"];
-    
+    [self.courseCombox.textField removeObserver:self forKeyPath:@"text" context:@"1"];
+    [self.dateNameCombox.textField removeObserver:self forKeyPath:@"text" context:@"2"];
 }
 
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    _teach_course_groupArray = [[NSArray alloc] init];
-    _month_groupArray = [[NSArray alloc] init];
+    //[self addHeadView];
+    _teach_course_groupArray = [[NSMutableArray alloc] init];
+    _month_groupArray = [[NSMutableArray alloc] init];
     _homework_listArray = [[NSArray alloc] init];
     //[condit] => 3		//状态 1:急  2:写  3:新  4:结
     _stateImageViewArray = [[NSMutableArray alloc] initWithObjects:@"homework_urgent_icon", @"homework_write_icon", @"homework_new_icon", @"homework_end_icon", nil];
@@ -99,8 +98,8 @@
     self.cityArray = [[NSMutableArray alloc]initWithObjects:@"全部",@"英语",@"数学",@"语文",nil];
     self.areaArray = [[NSMutableArray alloc]initWithObjects:@"全部",@"6",@"7",@"8",@"9",@"10",@"11",nil];
     
-    courseNameStr = @"0";
-    dateNameStr = @"0";
+    courseNameStr = @"";
+    dateNameStr = @"";
     
     self.navigationController.navigationBar.backgroundColor = XXEColorFromRGB(0, 170, 42);
     self.navigationController.navigationBarHidden = NO;
@@ -112,7 +111,7 @@
     self.navigationItem.rightBarButtonItem =sentItem;
     
     [self createTableView];
-    
+    [self createHeaderView];
 }
 
 
@@ -148,10 +147,10 @@
     
     NSString *pageStr = [NSString stringWithFormat:@"%ld", page];
     
-    XXEHomeworkApi *homeworkApi = [[XXEHomeworkApi alloc] initWithXid:XID user_id:USER_ID user_type:USER_TYPE school_id:_schoolId class_id:_classId page:pageStr teach_course:@"" month:@""];
+    XXEHomeworkApi *homeworkApi = [[XXEHomeworkApi alloc] initWithXid:XID user_id:USER_ID user_type:USER_TYPE school_id:_schoolId class_id:_classId page:pageStr teach_course:courseNameStr month:dateNameStr];
     [homeworkApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         
-//     NSLog(@"2222---   %@", request.responseJSONObject);
+//             NSLog(@"2222---   %@", request.responseJSONObject);
         
         NSString *codeStr = [NSString stringWithFormat:@"%@", request.responseJSONObject[@"code"]];
         
@@ -159,10 +158,16 @@
             
             NSDictionary *dict = request.responseJSONObject[@"data"];
             //科目
-            _teach_course_groupArray = dict[@"teach_course_group"];
+            [_teach_course_groupArray addObject:@"全部"];
+            [_teach_course_groupArray addObjectsFromArray:dict[@"teach_course_group"]];
+//            _teach_course_groupArray = dict[@"teach_course_group"];
+//            [_teach_course_groupArray insertObject:[NSString stringWithFormat:@"%@", @"全部"] atIndex:0];
             
             //月份
-            _month_groupArray = dict[@"month_group"];
+            [_month_groupArray addObject:@"全部"];
+            [_month_groupArray addObjectsFromArray:dict[@"month_group"]];
+            
+//            [_month_groupArray insertObject:[NSString stringWithFormat:@"%@", @"全部"] atIndex:0];
             
             //作业 列表
             _homework_listArray = [XXEHomeworkModel parseResondsData:dict[@"homework_list"]];
@@ -171,9 +176,7 @@
         }else{
             
         }
-        
-        
-//        NSLog(@"科目 %@ ------- 月份 %@", _teach_course_groupArray, _month_groupArray);
+        //        NSLog(@"科目 %@ ------- 月份 %@", _teach_course_groupArray, _month_groupArray);
         
         [self customContent];
         
@@ -203,6 +206,15 @@
         
     }else{
         //2、有数据的时候
+        if (_teach_course_groupArray.count != 0) {
+            self.courseCombox.dataArray = _teach_course_groupArray;
+            [self.courseCombox.listTableView reloadData];
+            
+        }
+        if (_month_groupArray.count != 0) {
+            self.dateNameCombox.dataArray = _month_groupArray;
+            [self.dateNameCombox.listTableView reloadData];
+        }
         [_myTableView reloadData];
         
     }
@@ -211,7 +223,7 @@
 
 
 - (void)createTableView{
-    _myTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, KScreenWidth, KScreenHeight) style:UITableViewStyleGrouped];
+    _myTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, KScreenWidth, KScreenHeight) style:UITableViewStylePlain];
     
     _myTableView.dataSource = self;
     _myTableView.delegate = self;
@@ -222,8 +234,9 @@
     
     _myTableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadFooterNewData)];
     
-    
 }
+
+
 
 -(void)loadNewData{
     page ++;
@@ -282,7 +295,6 @@
     [cell.iconImageView sd_setImageWithURL:[NSURL URLWithString:head_img] placeholderImage:[UIImage imageNamed:@"home_flowerbasket_placehoderIcon120x120"]];
     
     //    NSLog(@"课程  %@", model.teach_course);
-    
     cell.nameLabel.text = model.tname;
     cell.courseLabel.text = model.teach_course;
     cell.subjectLabel.text = model.title;
@@ -301,11 +313,11 @@
     
 }
 
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
-    
+- (void)createHeaderView{
     headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, KScreenWidth, 34)];
-    headerView.userInteractionEnabled = YES;
     headerView.backgroundColor = [UIColor whiteColor];
+    _myTableView.tableHeaderView = headerView;
+    headerView.userInteractionEnabled = YES;
     
     //----------------------科目 下拉框
     self.courseCombox = [[WJCommboxView alloc] initWithFrame:CGRectMake(0, 2, kWidth/2, 30)];
@@ -314,19 +326,11 @@
     self.courseCombox.textField.textAlignment = NSTextAlignmentLeft;
     self.courseCombox.textField.tag = 1001;
     
-    if (_teach_course_groupArray.count != 0) {
-        self.courseCombox.dataArray = _teach_course_groupArray;
-    }
-    /**
-     * 待接 真数据
-     */
-//    self.courseCombox.dataArray = self.cityArray;
-    
     [headerView addSubview:self.courseCombox];
     //监听
-//    [self.courseCombox.textField addObserver:self forKeyPath:@"text" options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld context:@"1"];
+    [self.courseCombox.textField addObserver:self forKeyPath:@"text" options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld context:@"1"];
     
-    self.courseBgView = [[UIView alloc]initWithFrame:CGRectMake(120, 0,kWidth,kHeight+300)];
+    self.courseBgView = [[UIView alloc]initWithFrame:CGRectMake(0, 0,kWidth,kHeight+300)];
     self.courseBgView.backgroundColor = [UIColor clearColor];
     self.courseBgView.alpha = 0.5;
     
@@ -334,24 +338,19 @@
     [self.courseBgView addGestureRecognizer:singleTouch];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(commboxAction:) name:@"commboxNotice"object:nil];
-
+    
     //-------------------月份 下拉框
     self.dateNameCombox = [[WJCommboxView alloc] initWithFrame:CGRectMake(kWidth/2, 2, kWidth/2, 30)];
     self.dateNameCombox.textField.backgroundColor =UIColorFromRGB(246, 246, 246);
     self.dateNameCombox.textField.placeholder =@"月份";
     self.dateNameCombox.textField.textAlignment =NSTextAlignmentLeft;
     self.dateNameCombox.textField.tag =1002;
-    
-    if (_month_groupArray.count != 0) {
-        self.dateNameCombox.dataArray = _month_groupArray;
-    }
-    
-//    self.dateNameCombox.dataArray = _areaArray;
-    
+
     [headerView addSubview:self.dateNameCombox];
     //监听
-//    [self.dateNameCombox.textField addObserver:self forKeyPath:@"text" options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld context:@"2"];
-    self.monthBgView = [[UIView alloc]initWithFrame:CGRectMake(120, 0, kWidth,kHeight+300)];
+    [self.dateNameCombox.textField addObserver:self forKeyPath:@"text" options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld context:@"2"];
+
+    self.monthBgView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, kWidth,kHeight+300)];
     self.monthBgView.backgroundColor = [UIColor clearColor];
     self.monthBgView.alpha = 0.5;
     
@@ -359,8 +358,6 @@
     [self.monthBgView addGestureRecognizer:singleTap];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(commboxAction:) name:@"commboxNotice"object:nil];
-
-    return headerView;
 }
 
 - (void)commboxAction:(NSNotification *)notif{
@@ -372,6 +369,7 @@
             
             [_myTableView addSubview:self.courseBgView];
             [_myTableView addSubview:self.courseCombox];
+            
         }
             break;
         case 1002:
@@ -394,35 +392,42 @@
     [self.courseBgView removeFromSuperview];
     [self.courseCombox setShowList:NO];
     self.courseCombox.listTableView.hidden = YES;
-
+    
 }
 - (void)commboxHi{
     
     [self.monthBgView removeFromSuperview];
     [self.dateNameCombox setShowList:NO];
     self.dateNameCombox.listTableView.hidden = YES;
-
+    
 }
 
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    return 34;
+//    return 34;
+    return 0.0001;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    XXEHomeworkModel *model = _dataSourceArray[indexPath.row];
+    if (_dataSourceArray.count != 0) {
+        XXEHomeworkModel *model = _dataSourceArray[indexPath.row];
+        
+        XXEHomeworkDetailInfoViewController *homeworkDetailInfoVC = [[XXEHomeworkDetailInfoViewController alloc] init];
+        homeworkDetailInfoVC.homeworkId = model.homeworkId;
+        [self.navigationController pushViewController:homeworkDetailInfoVC animated:YES];
+    }
+    
 
-    XXEHomeworkDetailInfoViewController *homeworkDetailInfoVC = [[XXEHomeworkDetailInfoViewController alloc] init];
-    homeworkDetailInfoVC.homeworkId = model.homeworkId;
-    [self.navigationController pushViewController:homeworkDetailInfoVC animated:YES];
-    
-    
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context{
     
-//    筛选的时候 让 page =  1
+    [_teach_course_groupArray removeAllObjects];
+    [_month_groupArray removeAllObjects];
+    [_dataSourceArray removeAllObjects];
+    
+    //    筛选的时候 让 page =  1
     page = 1;
     switch ([[NSString stringWithFormat:@"%@",context] integerValue]) {
         case 1:
@@ -431,7 +436,7 @@
                 NSString * newName=[change objectForKey:@"new"];
                 
                 if ([newName isEqualToString:@"全部"]) {
-                    courseNameStr = @"0";
+                    courseNameStr = @"";
                 }
                 else{
                     courseNameStr = newName;
@@ -449,7 +454,7 @@
                 
                 
                 if ([newName isEqualToString:@"全部"]) {
-                    dateNameStr = @"0";
+                    dateNameStr = @"";
                 }
                 else{
                     dateNameStr = newName;
@@ -463,8 +468,9 @@
         default:
             break;
     }
-    
 }
+
+
 
 
 @end

@@ -14,7 +14,6 @@
 @property (weak, nonatomic) IBOutlet UIView *subjectBgView;
 
 
-
 @property (weak, nonatomic) IBOutlet UITextField *subjectTextField;
 @property (weak, nonatomic) IBOutlet UITextView *contentTextView;
 

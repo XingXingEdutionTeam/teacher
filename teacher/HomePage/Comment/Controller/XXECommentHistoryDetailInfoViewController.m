@@ -68,7 +68,22 @@
     
 //    NSLog(@"图片 数组  ---  %@", _picWallArray);
     
+    [self createDeleteButton];
+    
     [self createTableView];
+}
+
+
+- (void)createDeleteButton{
+
+    UIButton *deleteButton = [UIButton createButtonWithFrame:CGRectMake((KScreenWidth - 325 * kScreenRatioWidth) / 2, KScreenHeight - 150, 325 * kScreenRatioWidth, 42 * kScreenRatioHeight) backGruondImageName:@"login_green" Target:self Action:@selector(deleteBurronClick) Title:@"删除评论"];
+    [self.view addSubview:deleteButton];
+}
+
+- (void)deleteBurronClick{
+
+
+
 }
 
 - (void)createTableView{

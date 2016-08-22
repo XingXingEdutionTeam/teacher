@@ -23,6 +23,7 @@
 #import "XXERedFlowerSentHistoryViewController.h"
 #import "XXECommentRootViewController.h"
 #import "XXEHomeworkViewController.h"
+#import "XXERecipeViewController.h"
 //监控
 #import "VideoMonitorViewController.h"
 
@@ -270,8 +271,15 @@
             break;
         }
         case 7:
+        {
+        
             NSLog(@"---食谱----");
+            XXERecipeViewController *recipeViewController = [[XXERecipeViewController alloc] init];
+            recipeViewController.schoolId = self.schoolHomeId;
+            [self.navigationController pushViewController:recipeViewController animated:YES];
+            
             break;
+        }
         case 8:
             NSLog(@"----签到----");
             break;
