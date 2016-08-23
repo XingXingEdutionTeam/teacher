@@ -196,8 +196,8 @@
 
 -(void)landClick:(UIButton *)sender
 {
-    //测试
-//    XXERegisterTeacherViewController *teacherVC = [[XXERegisterTeacherViewController alloc]init];
+//    //测试
+//    XXERegisterHeadMasterViewController *teacherVC = [[XXERegisterHeadMasterViewController alloc]init];
 //    teacherVC.userPhoneNum = self.userSettingPhoneNum;
 //    teacherVC.userName = parentsName.text;
 //    teacherVC.userIDCarNum = parentsIDCard.text;

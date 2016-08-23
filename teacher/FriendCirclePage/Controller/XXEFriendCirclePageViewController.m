@@ -52,7 +52,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     NSLog(@"朋友圈控制器");
-    [self setupFriendCircleMessagePage:@"1"];
+//    [self setupFriendCircleMessagePage:@"1"];
     
     //设置朋友圈单元格信息
 //    [self]

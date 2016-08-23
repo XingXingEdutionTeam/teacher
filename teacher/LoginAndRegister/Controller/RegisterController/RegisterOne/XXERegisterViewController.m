@@ -37,7 +37,7 @@
     if (!_registerUerTextField) {
         _registerUerTextField = [UITextField createTextFieldWithIsOpen:NO textPlaceholder:@"请输入11位手机号"];
         _registerUerTextField.delegate = self;
-        _registerUerTextField.borderStyle = UIKeyboardTypeNamePhonePad;
+        _registerUerTextField.borderStyle = UIKeyboardTypeNumberPad;
     }
     return _registerUerTextField;
 }
@@ -276,7 +276,7 @@
 //    //测试环境
 //    [self showString:@"测试" forSecond:1.f];
 //    XXERegisterSecondViewController *registerSecondVC = [[XXERegisterSecondViewController alloc]init];
-//    registerSecondVC.userPhoneNum = @"13938493975";
+//    registerSecondVC.userPhoneNum = @"11112312331";
 //    registerSecondVC.login_type = @"1";
 //    [self.navigationController pushViewController:registerSecondVC animated:YES];
 }

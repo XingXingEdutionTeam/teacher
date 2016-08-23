@@ -70,6 +70,28 @@
     return button;
 }
 
+/** 注册页面校长注册页面4/4 */
++ (UIButton *)creatRegisterHeadMasterImage:(NSString *)image title:(NSString *)title target:(id)target action:(SEL)action
+{
+    UIButton *button = [[UIButton alloc]init];
+    [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    if (![title isEqual: @""]) {
+        button.imageEdgeInsets = UIEdgeInsetsMake(0, -25, 0, 0);
+        //    self.homeMiddleFirstButton.titleEdgeInsets = UIEdgeInsetsMake(0, 30, 0, 0);
+    }
+    button.frame = CGRectMake(0, 0, KScreenWidth, 40*kScreenRatioHeight);
+    button.backgroundColor = [UIColor darkGrayColor];
+    [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    //    searchButton.titleLabel.textColor = [UIColor whiteColor];
+    button.layer.masksToBounds = YES;
+    button.layer.cornerRadius = 20*kScreenRatioWidth;
+    button.titleLabel.font = [UIFont systemWithIphone6P:17 Iphone6:15 Iphone5:13 Iphone4:12];
+    [button setImage:[UIImage imageNamed:image] forState:UIControlStateNormal];
+    [button setTitle:title forState:UIControlStateNormal];
+    [button addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
+    return button;
+}
+
 #pragma mark 创建UIButton
 + (UIButton *)createButtonWithFrame:(CGRect)frame backGruondImageName:(NSString *)name Target:(id)target Action:(SEL)action Title:(NSString *)title{
     UIButton *myButton = [UIButton buttonWithType:UIButtonTypeCustom];

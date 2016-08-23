@@ -67,7 +67,7 @@
 /** 索引学校在数组中的位置 */
 @property (nonatomic, assign)NSInteger indexDatsource;
 
-/** 最红教师注册所选的学校id */
+/** 最后教师注册所选的学校id */
 @property (nonatomic, copy)NSString *theEndSchoolId;
 /** 班级Id */
 @property (nonatomic, copy)NSString *theEndClassId;
@@ -596,66 +596,105 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
     NSLog(@"学校ID%@ 学校类型%@ 班级Id%@ 教学类型%@ 审核人ID%@",self.theEndSchoolId,self.theEndSchoolType,self.theEndClassId,self.theEndTeachType,self.theEndReviewerId);
     NSLog(@"登录类型%@ 电话号码%@ 密码%@ 用户姓名%@ 用户身份证%@ 年龄%@ 性别%@ 用户身份%@",self.login_type,self.userPhoneNum,self.userPassword,self.userName,self.userIDCarNum,self.userAge,self.userSex,self.userIdentifier);
     
+    NSDictionary *parameter = @{
+                                @"login_type":_login_type,
+                                @"phone":_userPhoneNum,
+                                @"pass":_userPassword,
+                                @"tname":_userName,
+                                @"id_card":_userIDCarNum,
+                                @"passport":@"",
+                                @"age":_userAge,
+                                @"sex":_userSex,
+                                @"position":_userIdentifier,
+                                @"teach_course_id":_theEndTeachType,
+                                @"school_id":_theEndSchoolId,
+                                @"class_id":_theEndClassId,
+                                @"school_type":_theEndSchoolType,
+                                @"examine_id":_theEndReviewerId,
+                                @"code":_theEndInviteCode,
+                                @"appkey":APPKEY,
+                                @"backtype":BACKTYPE
+                                };
     
-//    self.login_type 登录类型
-//    self.userPhoneNum 电话号码
-//    self.userPassword 密码
-//    self.userName 用户姓名
-//    self.userIDCarNum 用户的身份证号
-//    self.userAge 用户的年龄
-//    self.userSex 用户的性别
-//    self.userIdentifier 用户的身份
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     
-    NSMutableArray *arrApi = [NSMutableArray array];
-//
-    XXERegisterTeacherApi *teacherApi = [[XXERegisterTeacherApi alloc]initWithRegisterTeacherLoginType:self.login_type PhoneNum:self.userPhoneNum Password:self.userPassword UserName:self.userName IDCard:self.userIDCarNum PassPort:@"" Age:self.userAge Sex:self.userSex Position:self.userIdentifier TeachId:self.theEndTeachType SchoolId:self.theEndSchoolId ClassId:self.theEndClassId SchoolType:self.theEndSchoolType ExamineId:self.theEndReviewerId Code:self.theEndInviteCode];
-    [arrApi addObject:teacherApi];
-
-
-    XXERegisterTeacherHeadApi *teacherHeadApi = [[XXERegisterTeacherHeadApi alloc]initWithRegisterTeacherLoginType:self.login_type PhoneNum:self.userPhoneNum Password:self.userPassword UserName:self.userName IDCard:self.userIDCarNum PassPort:@"" Age:self.userAge Sex:self.userSex Position:self.userIdentifier TeachId:self.theEndTeachType SchoolId:self.theEndSchoolId ClassId:self.theEndClassId SchoolType:self.theEndSchoolType ExamineId:self.theEndReviewerId Code:self.theEndInviteCode HeadImage:self.userAvatarImage];
-    
-    [arrApi addObject:teacherHeadApi];
-    [self setupFileImage];
-    if (self.fileImageArray.count > 0) {
-        for (int i = 0; i < self.fileImageArray.count; i++) {
-            XXERegisterTeacherFileApi *teacherFileApi = [[XXERegisterTeacherFileApi alloc]initWithRegisterTeacherLoginType:self.login_type PhoneNum:self.userPhoneNum Password:self.userPassword UserName:self.userName IDCard:self.userIDCarNum PassPort:@"" Age:self.userAge Sex:self.userSex Position:self.userIdentifier TeachId:self.theEndTeachType SchoolId:self.theEndSchoolId ClassId:self.theEndClassId SchoolType:self.theEndSchoolType ExamineId:self.theEndReviewerId Code:self.theEndInviteCode FileImage:self.fileImageArray[i]];
-            [arrApi addObject:teacherFileApi];
+    [manager POST:XXERegisterTeacherUrl parameters:parameter constructingBodyWithBlock:^(id<AFMultipartFormData> formData){
+        if (_fileImageArray.count > 0) {
+            for (int i =0; i < _fileImageArray.count; i++) {
+                UIImage *image = _fileImageArray[i];
+                NSData *data = UIImageJPEGRepresentation(image, 0.5);
+                NSString *fileName = [NSString stringWithFormat:@"%d.jpeg",i];
+                //            NSString *name = [NSString stringWithFormat:@"file%d",i];
+                NSString *type = @"image/jpeg";
+                [formData appendPartWithFileData:data name:@"file" fileName:fileName mimeType:type];
+            }
         }
         
-        YTKBatchRequest *bathRequest = [[YTKBatchRequest alloc]initWithRequestArray:arrApi];
-        [bathRequest startWithCompletionBlockWithSuccess:^(YTKBatchRequest *batchRequest) {
-            NSArray *array = bathRequest.requestArray;
-            
-            XXERegisterTeacherApi *api1 = (XXERegisterTeacherApi *)array[0];
-            NSLog(@"信息%@",api1.responseJSONObject);
-            
-            XXERegisterTeacherHeadApi *head = (XXERegisterTeacherHeadApi *)array[1];
-            NSLog(@"图像%@",head.responseJSONObject);
-            XXERegisterTeacherFileApi *file = (XXERegisterTeacherFileApi *)array[2];
-             NSLog(@"证件1%@",file.responseJSONObject);
-            XXERegisterTeacherFileApi *file1 = (XXERegisterTeacherFileApi *)array[3];
-             NSLog(@"证件2%@",file1.responseJSONObject);
-            XXERegisterTeacherFileApi *file2 = (XXERegisterTeacherFileApi *)array[4];
-             NSLog(@"证件3%@",file2.responseJSONObject);
-            
-            
-            [self showString:@"注册成功" forSecond:1.f];
-            
-        } failure:^(YTKBatchRequest *batchRequest) {
-            [self showHudWithString:@"上传失败" forSecond:1.f];
-        }];
+    }success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
-    }else {
-        [teacherApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
-            NSLog(@"%@",request.responseJSONObject);
-            NSLog(@"%@",[request.responseJSONObject objectForKey:@"msg"]);
-            
-        } failure:^(__kindof YTKBaseRequest *request) {
-            
-        }];
-    }
+        [self showString:@"注册成功" forSecond:1.f];
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        
+    }];
 
-        NSLog(@"照片的数组%@",self.fileImageArray);
+    
+    
+    
+//    NSMutableArray *arrApi = [NSMutableArray array];
+//
+//    XXERegisterTeacherApi *teacherApi = [[XXERegisterTeacherApi alloc]initWithRegisterTeacherLoginType:self.login_type PhoneNum:self.userPhoneNum Password:self.userPassword UserName:self.userName IDCard:self.userIDCarNum PassPort:@"" Age:self.userAge Sex:self.userSex Position:self.userIdentifier TeachId:self.theEndTeachType SchoolId:self.theEndSchoolId ClassId:self.theEndClassId SchoolType:self.theEndSchoolType ExamineId:self.theEndReviewerId Code:self.theEndInviteCode];
+//    [arrApi addObject:teacherApi];
+
+
+//    XXERegisterTeacherHeadApi *teacherHeadApi = [[XXERegisterTeacherHeadApi alloc]initWithRegisterTeacherLoginType:self.login_type PhoneNum:self.userPhoneNum Password:self.userPassword UserName:self.userName IDCard:self.userIDCarNum PassPort:@"" Age:self.userAge Sex:self.userSex Position:self.userIdentifier TeachId:self.theEndTeachType SchoolId:self.theEndSchoolId ClassId:self.theEndClassId SchoolType:self.theEndSchoolType ExamineId:self.theEndReviewerId Code:self.theEndInviteCode HeadImage:self.userAvatarImage];
+//    
+//    [arrApi addObject:teacherHeadApi];
+    [self setupFileImage];
+//    if (self.fileImageArray.count > 0) {
+//        for (int i = 0; i < self.fileImageArray.count; i++) {
+//            XXERegisterTeacherFileApi *teacherFileApi = [[XXERegisterTeacherFileApi alloc]initWithRegisterTeacherLoginType:self.login_type PhoneNum:self.userPhoneNum Password:self.userPassword UserName:self.userName IDCard:self.userIDCarNum PassPort:@"" Age:self.userAge Sex:self.userSex Position:self.userIdentifier TeachId:self.theEndTeachType SchoolId:self.theEndSchoolId ClassId:self.theEndClassId SchoolType:self.theEndSchoolType ExamineId:self.theEndReviewerId Code:self.theEndInviteCode FileImage:self.fileImageArray[i]];
+//            [arrApi addObject:teacherFileApi];
+//        }
+//        
+//        
+    
+        
+//        YTKBatchRequest *bathRequest = [[YTKBatchRequest alloc]initWithRequestArray:arrApi];
+//        [bathRequest startWithCompletionBlockWithSuccess:^(YTKBatchRequest *batchRequest) {
+//            NSArray *array = bathRequest.requestArray;
+//            
+//            XXERegisterTeacherApi *api1 = (XXERegisterTeacherApi *)array[0];
+//            NSLog(@"信息%@",api1.responseJSONObject);
+//            
+//            XXERegisterTeacherHeadApi *head = (XXERegisterTeacherHeadApi *)array[1];
+//            NSLog(@"图像%@",head.responseJSONObject);
+//            XXERegisterTeacherFileApi *file = (XXERegisterTeacherFileApi *)array[2];
+//             NSLog(@"证件1%@",file.responseJSONObject);
+//            XXERegisterTeacherFileApi *file1 = (XXERegisterTeacherFileApi *)array[3];
+//             NSLog(@"证件2%@",file1.responseJSONObject);
+//            XXERegisterTeacherFileApi *file2 = (XXERegisterTeacherFileApi *)array[4];
+//             NSLog(@"证件3%@",file2.responseJSONObject);
+//            
+//            
+//            [self showString:@"注册成功" forSecond:1.f];
+//            
+//        } failure:^(YTKBatchRequest *batchRequest) {
+//            [self showHudWithString:@"上传失败" forSecond:1.f];
+//        }];
+//        
+//    }else {
+//        [teacherApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
+//            NSLog(@"%@",request.responseJSONObject);
+//            NSLog(@"%@",[request.responseJSONObject objectForKey:@"msg"]);
+//            
+//        } failure:^(__kindof YTKBaseRequest *request) {
+//            
+//        }];
+//    }
+//
+//        NSLog(@"照片的数组%@",self.fileImageArray);
     
 }
 
@@ -684,9 +723,7 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
 {
     NSLog(@"点击搜索%@",searchBar.text);
     [_searchBar resignFirstResponder];
-    
 }
-
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

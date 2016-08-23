@@ -47,9 +47,20 @@
 @property (nonatomic, strong)NSMutableArray *arraySchool;
 @property (nonatomic, strong)NSMutableArray *arrayClass;
 
+@property (nonatomic, strong) NSMutableArray *classAllArray;
+
 @end
 
 @implementation XXEHomePageViewController
+
+- (NSMutableArray *)classAllArray{
+    if (!_classAllArray) {
+        _classAllArray = [NSMutableArray array];
+    }
+    return _classAllArray;
+}
+
+
 
 - (NSMutableArray *)arraySchool
 {
@@ -108,6 +119,9 @@
     self.homeSchoolView.textField.tag = 102;
     self.homeSchoolView.textField.layer.cornerRadius =10 * KScreenWidth / 375;
     self.homeSchoolView.textField.layer.masksToBounds =YES;
+    //监听 学校 名称 改变
+    [self.homeSchoolView.textField addObserver:self forKeyPath:@"text" options:NSKeyValueObservingOptionNew context:@"1"];
+    
     
     //班级
     self.homeClassView = [[WJCommboxView alloc] initWithFrame:CGRectMake(60 * kScreenRatioWidth+120 * kScreenRatioWidth+5, 45*kScreenRatioWidth, 120 * kScreenRatioWidth, 30 * kScreenRatioHeight)];
@@ -122,6 +136,8 @@
     self.homeClassView.textField.tag = 103;
     self.homeClassView.textField.layer.cornerRadius =10 * KScreenWidth / 375;
     self.homeClassView.textField.layer.masksToBounds =YES;
+    //监听 班级 改变
+    [self.homeClassView.textField addObserver:self forKeyPath:@"text" options:NSKeyValueObservingOptionNew context:@"2"];
     
     XXETeacherUserInfo *model=self.arraySchool[0];
     self.homeClassView.textField.text = model.class_name;
@@ -133,19 +149,78 @@
     
 }
 
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context{
+
+    NSString *str = [NSString stringWithFormat:@"%@",context];
+    NSInteger didSelectedSchoolRow ;
+    
+    if ([str integerValue] == 1) {
+        if ([object isKindOfClass:[UITextField class]]){
+            //如果 改变 左边 学校 ——》自动关联到 右边的年级班级信息
+            //取出name的旧值和新值
+            NSString * newNameOne=[change objectForKey:@"new"];
+//                NSLog(@"object:%@,new:%@",object,newNameOne);
+            
+            if (_schoolDatasource.count != 0 && _classDatasource.count != 0) {
+                didSelectedSchoolRow =[_schoolDatasource indexOfObject:newNameOne];
+//                NSLog(@"%ld", didSelectedSchoolRow);
+//                NSLog(@"_classDatasource -- %@", _classDatasource);
+//                self.homeClassView.textField.text = _classAllArray[didSelectedSchoolRow][0];
+                
+                _homeClassView.dataArray = _classAllArray[didSelectedSchoolRow];
+                [_homeClassView.listTableView reloadData];
+            
+            }
+
+        }
+        return;
+    }else if ([str integerValue] == 2){
+        if ([object isKindOfClass:[UITextField class]]){
+            //如果 改变 右边的年级班级信息  ——》自动关联到 左边 学校
+            //取出name的旧值和新值
+            NSString * newNameTwo=[change objectForKey:@"new"];
+            
+//            if([newNameTwo isEqualToString:@"编辑班级"]){
+//                // 添加班级 // 添加班级 // 添加班级 // 添加班级 // 添加班级 // 添加班级 // 添加班级 // 添加班级  // 添加班级
+//                ClassEditInfoViewController *classEditVC =[[ClassEditInfoViewController alloc]init];
+//                
+//                if (baby_id1 == nil) {
+//                    baby_id1 = baby_idArray[0];
+//                    
+//                }
+//                classEditVC.babyId = baby_id1;
+//                classEditVC.hidesBottomBarWhenPushed =YES;
+//                [self.navigationController pushViewController:classEditVC animated:YES];
+//                
+//                
+//            }
+//            
+        }
+        
+    }
+
+
+}
+
+
 #pragma mark - 通知选择的学校
 
 - (void)calssAction2:(NSNotification *)notif
 {
     NSLog(@"%@",notif.object);
     NSLog(@"%@",self.homeSchoolView.textField.text);
+    NSString *string1 = @"没有班级";
+    [self.classDatasource removeAllObjects];
     NSString *string = self.homeSchoolView.textField.text;
     for (XXETeacherUserInfo *model in self.arraySchool) {
         if ([model.school_name isEqualToString:string]) {
             self.homeClassView.textField.text = model.class_name;
             self.schoolHomeId = model.school_id;
             self.classHomeId = model.class_id;
-            
+            [self.classDatasource addObject:model.class_name];
+            [self.classDatasource addObject:string1];
+            self.homeClassView.dataArray = self.classDatasource;
+            NSLog(@"%@",self.classDatasource);
             NSLog(@"===!!!%@ %@",model.school_id,model.class_id);
         }
     }
@@ -306,7 +381,7 @@
     if ([XXEUserInfo user].login) {
         strngXid = [XXEUserInfo user].xid;
     }else {
-        strngXid = @"18886389";
+        strngXid = XID;
     }
     XXEHomePageApi *homePageApi = [[XXEHomePageApi alloc]initWithHomePageXid:strngXid];
     [homePageApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
@@ -322,8 +397,13 @@
             [self.headView configCellWithInfo:homePageModel];
             [self.middleView configCellMiddleWithInfo:homePageModel];
             
+            [self.arraySchool removeAllObjects];
+            [self.schoolDatasource removeAllObjects];
+            [self.classDatasource removeAllObjects];
+            [self.arrayClass removeAllObjects];
             
             for (int i =0; i < homePageModel.school_info.count; i++) {
+                
                 
                 XXEHomePageSchoolModel *schoolInfo = ((XXEHomePageSchoolModel *)(homePageModel.school_info[i]));
                 XXETeacherUserInfo *modelInfo = [[XXETeacherUserInfo alloc]init];
@@ -338,7 +418,13 @@
                     modelInfo.class_name = classInfo.class_name;
                     [self.arrayClass addObject:modelInfo];
                     [self.classDatasource addObject:classInfo.class_name];
+                    
                 }
+                [self.classDatasource addObject:@"没有班级"];
+//                _classAllArray = [[NSMutableArray alloc] init];
+                [_classAllArray addObject:self.classDatasource];
+                
+                
             }
             
             NSLog(@"学校%@ 班级%@",self.arraySchool[0],self.arrayClass[1]);
@@ -362,6 +448,10 @@
 - (void)dealloc
 {
     NSLog(@"dealloc方法");
+    [[NSNotificationCenter defaultCenter]removeObserver:self];
+    [self.homeSchoolView.textField removeObserver:self forKeyPath:@"text"];
+    [self.homeClassView.textField removeObserver:self forKeyPath:@"text"];
+    
 }
 
 

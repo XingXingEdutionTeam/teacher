@@ -200,7 +200,7 @@
 
 -(void) removeObserver
 {
-    [self removeObserver:self forKeyPath:InputViewObserveKeyPath];
+//    [self removeObserver:self forKeyPath:InputViewObserveKeyPath];
 }
 
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
