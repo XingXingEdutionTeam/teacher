@@ -48,7 +48,6 @@
 
     _submitTextField.tag = 1000;
     _submitTextField.delegate = self;
-    
     _contentTextView.delegate = self;
     
 //    _teacherCourseStr = @"";

@@ -43,6 +43,18 @@
 		0445A3EA1D65E8CA00C3A4CA /* photoBrowser_delete.png in Resources */ = {isa = PBXBuildFile; fileRef = 0445A3DA1D65E8CA00C3A4CA /* photoBrowser_delete.png */; };
 		0445A3EB1D65E8CA00C3A4CA /* photoBrowser_roate.png in Resources */ = {isa = PBXBuildFile; fileRef = 0445A3DB1D65E8CA00C3A4CA /* photoBrowser_roate.png */; };
 		0445A3EC1D65E8CA00C3A4CA /* public_back_white.png in Resources */ = {isa = PBXBuildFile; fileRef = 0445A3DC1D65E8CA00C3A4CA /* public_back_white.png */; };
+		045D938E1D6BEC55007D57C7 /* XXERecipeDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 045D938D1D6BEC55007D57C7 /* XXERecipeDetailViewController.m */; };
+		045D93911D6BF759007D57C7 /* XXERecipeDeleteApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 045D93901D6BF759007D57C7 /* XXERecipeDeleteApi.m */; };
+		045D93951D6C26CD007D57C7 /* XXERecipeDetailTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 045D93931D6C26CD007D57C7 /* XXERecipeDetailTableViewCell.m */; };
+		045D93961D6C26CD007D57C7 /* XXERecipeDetailTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 045D93941D6C26CD007D57C7 /* XXERecipeDetailTableViewCell.xib */; };
+		045D93991D6C34B2007D57C7 /* XXERecipePicDeleteApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 045D93981D6C34B2007D57C7 /* XXERecipePicDeleteApi.m */; };
+		045D939C1D6C3A9F007D57C7 /* XXERecipePicModify.m in Sources */ = {isa = PBXBuildFile; fileRef = 045D939B1D6C3A9F007D57C7 /* XXERecipePicModify.m */; };
+		045D93A01D6C3DAB007D57C7 /* XXERecipeModifyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 045D939E1D6C3DAB007D57C7 /* XXERecipeModifyViewController.m */; };
+		045D93A11D6C3DAB007D57C7 /* XXERecipeModifyViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 045D939F1D6C3DAB007D57C7 /* XXERecipeModifyViewController.xib */; };
+		045D93A51D6C49ED007D57C7 /* XXERecipeAddViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 045D93A31D6C49ED007D57C7 /* XXERecipeAddViewController.m */; };
+		045D93A61D6C49ED007D57C7 /* XXERecipeAddViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 045D93A41D6C49ED007D57C7 /* XXERecipeAddViewController.xib */; };
+		045D93A91D6C56C9007D57C7 /* XXERecipeAddTextApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 045D93A81D6C56C9007D57C7 /* XXERecipeAddTextApi.m */; };
+		045D93AC1D6C56E4007D57C7 /* XXERecipeAddTextAndPicApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 045D93AB1D6C56E4007D57C7 /* XXERecipeAddTextAndPicApi.m */; };
 		048754911D5C0BF200F680C5 /* XXEAccountManagerApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 0487545F1D5C0BF200F680C5 /* XXEAccountManagerApi.m */; };
 		048754921D5C0BF200F680C5 /* XXEFlowerbasketApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 048754611D5C0BF200F680C5 /* XXEFlowerbasketApi.m */; };
 		048754931D5C0BF200F680C5 /* XXEFlowerbasketSentHistoryApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 048754631D5C0BF200F680C5 /* XXEFlowerbasketSentHistoryApi.m */; };
@@ -349,6 +361,27 @@
 		0445A3DA1D65E8CA00C3A4CA /* photoBrowser_delete.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = photoBrowser_delete.png; sourceTree = "<group>"; };
 		0445A3DB1D65E8CA00C3A4CA /* photoBrowser_roate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = photoBrowser_roate.png; sourceTree = "<group>"; };
 		0445A3DC1D65E8CA00C3A4CA /* public_back_white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = public_back_white.png; sourceTree = "<group>"; };
+		045D938C1D6BEC55007D57C7 /* XXERecipeDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXERecipeDetailViewController.h; sourceTree = "<group>"; };
+		045D938D1D6BEC55007D57C7 /* XXERecipeDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXERecipeDetailViewController.m; sourceTree = "<group>"; };
+		045D938F1D6BF759007D57C7 /* XXERecipeDeleteApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXERecipeDeleteApi.h; sourceTree = "<group>"; };
+		045D93901D6BF759007D57C7 /* XXERecipeDeleteApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXERecipeDeleteApi.m; sourceTree = "<group>"; };
+		045D93921D6C26CD007D57C7 /* XXERecipeDetailTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXERecipeDetailTableViewCell.h; sourceTree = "<group>"; };
+		045D93931D6C26CD007D57C7 /* XXERecipeDetailTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXERecipeDetailTableViewCell.m; sourceTree = "<group>"; };
+		045D93941D6C26CD007D57C7 /* XXERecipeDetailTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XXERecipeDetailTableViewCell.xib; sourceTree = "<group>"; };
+		045D93971D6C34B2007D57C7 /* XXERecipePicDeleteApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXERecipePicDeleteApi.h; sourceTree = "<group>"; };
+		045D93981D6C34B2007D57C7 /* XXERecipePicDeleteApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXERecipePicDeleteApi.m; sourceTree = "<group>"; };
+		045D939A1D6C3A9F007D57C7 /* XXERecipePicModify.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXERecipePicModify.h; sourceTree = "<group>"; };
+		045D939B1D6C3A9F007D57C7 /* XXERecipePicModify.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXERecipePicModify.m; sourceTree = "<group>"; };
+		045D939D1D6C3DAB007D57C7 /* XXERecipeModifyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXERecipeModifyViewController.h; sourceTree = "<group>"; };
+		045D939E1D6C3DAB007D57C7 /* XXERecipeModifyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXERecipeModifyViewController.m; sourceTree = "<group>"; };
+		045D939F1D6C3DAB007D57C7 /* XXERecipeModifyViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XXERecipeModifyViewController.xib; sourceTree = "<group>"; };
+		045D93A21D6C49ED007D57C7 /* XXERecipeAddViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXERecipeAddViewController.h; sourceTree = "<group>"; };
+		045D93A31D6C49ED007D57C7 /* XXERecipeAddViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXERecipeAddViewController.m; sourceTree = "<group>"; };
+		045D93A41D6C49ED007D57C7 /* XXERecipeAddViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XXERecipeAddViewController.xib; sourceTree = "<group>"; };
+		045D93A71D6C56C9007D57C7 /* XXERecipeAddTextApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXERecipeAddTextApi.h; sourceTree = "<group>"; };
+		045D93A81D6C56C9007D57C7 /* XXERecipeAddTextApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXERecipeAddTextApi.m; sourceTree = "<group>"; };
+		045D93AA1D6C56E4007D57C7 /* XXERecipeAddTextAndPicApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXERecipeAddTextAndPicApi.h; sourceTree = "<group>"; };
+		045D93AB1D6C56E4007D57C7 /* XXERecipeAddTextAndPicApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXERecipeAddTextAndPicApi.m; sourceTree = "<group>"; };
 		0487545E1D5C0BF200F680C5 /* XXEAccountManagerApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXEAccountManagerApi.h; sourceTree = "<group>"; };
 		0487545F1D5C0BF200F680C5 /* XXEAccountManagerApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXEAccountManagerApi.m; sourceTree = "<group>"; };
 		048754601D5C0BF200F680C5 /* XXEFlowerbasketApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXEFlowerbasketApi.h; sourceTree = "<group>"; };
@@ -1042,6 +1075,16 @@
 			children = (
 				04D5B0691D6AE16D00ABA89A /* XXERecipeApi.h */,
 				04D5B06A1D6AE16D00ABA89A /* XXERecipeApi.m */,
+				045D938F1D6BF759007D57C7 /* XXERecipeDeleteApi.h */,
+				045D93901D6BF759007D57C7 /* XXERecipeDeleteApi.m */,
+				045D93971D6C34B2007D57C7 /* XXERecipePicDeleteApi.h */,
+				045D93981D6C34B2007D57C7 /* XXERecipePicDeleteApi.m */,
+				045D939A1D6C3A9F007D57C7 /* XXERecipePicModify.h */,
+				045D939B1D6C3A9F007D57C7 /* XXERecipePicModify.m */,
+				045D93A71D6C56C9007D57C7 /* XXERecipeAddTextApi.h */,
+				045D93A81D6C56C9007D57C7 /* XXERecipeAddTextApi.m */,
+				045D93AA1D6C56E4007D57C7 /* XXERecipeAddTextAndPicApi.h */,
+				045D93AB1D6C56E4007D57C7 /* XXERecipeAddTextAndPicApi.m */,
 			);
 			path = Api;
 			sourceTree = "<group>";
@@ -1051,6 +1094,14 @@
 			children = (
 				04D5B06C1D6AE19F00ABA89A /* XXERecipeViewController.h */,
 				04D5B06D1D6AE19F00ABA89A /* XXERecipeViewController.m */,
+				045D938C1D6BEC55007D57C7 /* XXERecipeDetailViewController.h */,
+				045D938D1D6BEC55007D57C7 /* XXERecipeDetailViewController.m */,
+				045D939D1D6C3DAB007D57C7 /* XXERecipeModifyViewController.h */,
+				045D939E1D6C3DAB007D57C7 /* XXERecipeModifyViewController.m */,
+				045D939F1D6C3DAB007D57C7 /* XXERecipeModifyViewController.xib */,
+				045D93A21D6C49ED007D57C7 /* XXERecipeAddViewController.h */,
+				045D93A31D6C49ED007D57C7 /* XXERecipeAddViewController.m */,
+				045D93A41D6C49ED007D57C7 /* XXERecipeAddViewController.xib */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -1076,6 +1127,9 @@
 				04D5B06F1D6AE1C200ABA89A /* XXERecipeTableViewCell.h */,
 				04D5B0701D6AE1C200ABA89A /* XXERecipeTableViewCell.m */,
 				04D5B0711D6AE1C200ABA89A /* XXERecipeTableViewCell.xib */,
+				045D93921D6C26CD007D57C7 /* XXERecipeDetailTableViewCell.h */,
+				045D93931D6C26CD007D57C7 /* XXERecipeDetailTableViewCell.m */,
+				045D93941D6C26CD007D57C7 /* XXERecipeDetailTableViewCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -2161,6 +2215,7 @@
 				9E9B4C6B1D633B8700983F5E /* LikeCmtBg@2x.png in Resources */,
 				0487549B1D5C0BF200F680C5 /* XXEFlowerbasketWithdrawCashViewController.xib in Resources */,
 				9E6693C91D6434C700FFA0A7 /* down_dark0.png in Resources */,
+				045D93961D6C26CD007D57C7 /* XXERecipeDetailTableViewCell.xib in Resources */,
 				049CBEAC1D67013500A651E7 /* XXEHomeworkIssueViewController.xib in Resources */,
 				049CBE861D66939700A651E7 /* XXECommentReplyViewController.xib in Resources */,
 				9E6693ED1D646C0900FFA0A7 /* HZQDatePickerView.xib in Resources */,
@@ -2174,6 +2229,7 @@
 				9EFDC7F81D546089005556AF /* qqq_1_5.png in Resources */,
 				9EFDC7F91D546089005556AF /* qqq_2_5.png in Resources */,
 				9E6693DF1D6460BE00FFA0A7 /* KTSheetView.xib in Resources */,
+				045D93A11D6C3DAB007D57C7 /* XXERecipeModifyViewController.xib in Resources */,
 				9E9B4C651D633B8700983F5E /* AlbumOperateMore@3x.png in Resources */,
 				9EBA6F691D5D6073001B45C3 /* dzs.mp4 in Resources */,
 				048754A61D5C0BF200F680C5 /* XXEAccountManagerTableViewCell.xib in Resources */,
@@ -2185,6 +2241,7 @@
 				9E9B4C631D633B8700983F5E /* AlbumLike@3x.png in Resources */,
 				9EE498F51D6590EB00FC5472 /* XXETeacherMessTableViewCell.xib in Resources */,
 				9EBA6F531D5CADBA001B45C3 /* SSVideoPlayer.bundle in Resources */,
+				045D93A61D6C49ED007D57C7 /* XXERecipeAddViewController.xib in Resources */,
 				048F58881D5C7A76002E4855 /* XXEXingCoinHistoryTableViewCell.xib in Resources */,
 				0445A3DE1D65E8CA00C3A4CA /* demoShow.gif in Resources */,
 				0445A3E71D65E8CA00C3A4CA /* information_delete_icon.png in Resources */,
@@ -2278,6 +2335,7 @@
 				04D5B1E31D6B25EC00ABA89A /* XXERegisterTeacherFileApi.m in Sources */,
 				9EBDB54D1D61D4D900A2F252 /* XXEContentAlbumCollectionViewCell.m in Sources */,
 				9ED147091D59B0BF0049D2AA /* XXEHomePageMiddleView.m in Sources */,
+				045D93A91D6C56C9007D57C7 /* XXERecipeAddTextApi.m in Sources */,
 				048754981D5C0BF200F680C5 /* XXEFlowerbasketSentHistoryViewController.m in Sources */,
 				9EBA6F4F1D5CADBA001B45C3 /* LMComBoxView.m in Sources */,
 				9E4813D01D506BDE00C614AC /* XXEBaseViewController.m in Sources */,
@@ -2295,6 +2353,7 @@
 				0445A3E01D65E8CA00C3A4CA /* FSImageModel.m in Sources */,
 				9E28FC431D530EAD0003A208 /* XXELoginViewController.m in Sources */,
 				9E60DDA41D649192001DA4AA /* XXECommentRequestApi.m in Sources */,
+				045D93991D6C34B2007D57C7 /* XXERecipePicDeleteApi.m in Sources */,
 				9EBA6F321D5CACF5001B45C3 /* XXEClassAlbumTableViewCell.m in Sources */,
 				043301341D62BDD000722DE2 /* XXERedFlowerSentHistoryTableViewCell.m in Sources */,
 				04D5B1F11D6B262500ABA89A /* XXETeacherModel.m in Sources */,
@@ -2315,6 +2374,7 @@
 				9E6693A91D6413B100FFA0A7 /* XXERegisterViewController.m in Sources */,
 				0445A3E11D65E8CA00C3A4CA /* FSImagePickerView.m in Sources */,
 				9EBDB5411D61BB6B00A2F252 /* XXETeacherUserInfo.m in Sources */,
+				045D93951D6C26CD007D57C7 /* XXERecipeDetailTableViewCell.m in Sources */,
 				9EBA6F2F1D5CACDD001B45C3 /* XXEClassAlbumModel.m in Sources */,
 				0445A3E21D65E8CA00C3A4CA /* FSPhotoAssetsCell.m in Sources */,
 				9E4813DD1D50784900C614AC /* XXEChatPageViewController.m in Sources */,
@@ -2323,6 +2383,7 @@
 				043301381D62C48300722DE2 /* XXEChiefAndTeacherApi.m in Sources */,
 				9E9B4C591D633B8700983F5E /* DFBaseLineItem.m in Sources */,
 				9EBA6F551D5CADBA001B45C3 /* SSVideoPlaySlider.m in Sources */,
+				045D939C1D6C3A9F007D57C7 /* XXERecipePicModify.m in Sources */,
 				9E9B4C531D633B8700983F5E /* DFBaseUserLineCellAdapter.m in Sources */,
 				9E9B4C501D633B8700983F5E /* DFBaseLineCellAdapter.m in Sources */,
 				0445A3E51D65E8CA00C3A4CA /* FSPhotoBrowserViewController.m in Sources */,
@@ -2345,6 +2406,7 @@
 				9EBA6F671D5CAECA001B45C3 /* LMContainsLMComboxScrollView.m in Sources */,
 				0445A3E31D65E8CA00C3A4CA /* FSPhotoAssetsController.m in Sources */,
 				9E9B4C581D633B8700983F5E /* DFUserTimeLineViewController.m in Sources */,
+				045D93911D6BF759007D57C7 /* XXERecipeDeleteApi.m in Sources */,
 				9E9B4C521D633B8700983F5E /* DFTextImageLineCellAdapter.m in Sources */,
 				0433012A1D62BDD000722DE2 /* XXERedFlowerDetialViewController.m in Sources */,
 				04FAD05F1D65944800C43342 /* XXEHomeworkViewController.m in Sources */,
@@ -2391,6 +2453,7 @@
 				048754911D5C0BF200F680C5 /* XXEAccountManagerApi.m in Sources */,
 				048754951D5C0BF200F680C5 /* XXEFlowerbasketWithdrawCashApi.m in Sources */,
 				9EB2E9421D58934C004809D3 /* UITextField+XXExtension.m in Sources */,
+				045D93A01D6C3DAB007D57C7 /* XXERecipeModifyViewController.m in Sources */,
 				9E4813871D504D0900C614AC /* AppDelegate.m in Sources */,
 				9E4813DA1D50783000C614AC /* XXEHomePageViewController.m in Sources */,
 				9EB2E93F1D5889B9004809D3 /* UILabel+XXExtension.m in Sources */,
@@ -2415,6 +2478,7 @@
 				04D5B1EF1D6B262500ABA89A /* XXEReviewerModel.m in Sources */,
 				9E6693DE1D6460BE00FFA0A7 /* KTSheetView.m in Sources */,
 				048F58721D5C271A002E4855 /* XXEFlowerbasketAddAccountApi.m in Sources */,
+				045D93AC1D6C56E4007D57C7 /* XXERecipeAddTextAndPicApi.m in Sources */,
 				9EBA6F5B1D5CADBA001B45C3 /* WMUtil.m in Sources */,
 				9EBA6F601D5CAE2D001B45C3 /* VedioCell.m in Sources */,
 				043301281D62BDD000722DE2 /* XXEChiefAndTeacherViewController.m in Sources */,
@@ -2446,9 +2510,11 @@
 				9E9B4C851D633C9B00983F5E /* XXECommentModel.m in Sources */,
 				9E9B4C551D633B8700983F5E /* DFUserLineCellAdapterManager.m in Sources */,
 				04D5B1F01D6B262500ABA89A /* XXETeacherGradeModel.m in Sources */,
+				045D938E1D6BEC55007D57C7 /* XXERecipeDetailViewController.m in Sources */,
 				9EBA6F841D5D9F9D001B45C3 /* XXEMyselfAblumApi.m in Sources */,
 				9EBA6F521D5CADBA001B45C3 /* SSVideoPlayController.m in Sources */,
 				9EBA6F2C1D5CACBC001B45C3 /* XXEClassAlbumViewController.m in Sources */,
+				045D93A51D6C49ED007D57C7 /* XXERecipeAddViewController.m in Sources */,
 				9E9B4C541D633B8700983F5E /* DFTextImageUserLineCellAdapter.m in Sources */,
 				0445A3C31D65E82E00C3A4CA /* UIColor+HexString.m in Sources */,
 				9E9B4BFD1D633B6000983F5E /* XXEVerificationApi.m in Sources */,

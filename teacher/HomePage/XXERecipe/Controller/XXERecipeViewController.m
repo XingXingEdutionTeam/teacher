@@ -12,10 +12,12 @@
 #import "XXERecipeViewController.h"
 #import "XXERecipeTableViewCell.h"
 #import "XXERecipeBreAndLunAndDinModel.h"
+#import "XXERecipeDetailViewController.h"
 #import "XXERecipeApi.h"
+#import "XXERecipeDeleteApi.h"
+#import "XXERecipeAddViewController.h"
 
-
-@interface XXERecipeViewController ()<UITableViewDelegate, UITableViewDataSource>
+@interface XXERecipeViewController ()<UITableViewDelegate, UITableViewDataSource, UIAlertViewDelegate>
 {
     UITableView *_myTableView;
     
@@ -30,6 +32,8 @@
 
     //日期 年-月-日 星期几
     NSMutableArray *dateArray;
+    //某一天 食谱 id  cookbook_id
+    NSMutableArray *cookbook_idArray;
     //早餐
     NSMutableArray *breakfastDataSource;
     //午餐
@@ -50,6 +54,10 @@
     NSMutableArray *contentArray;
     NSMutableArray *contentDataSource;
     
+    //删除 食谱 的 section
+    NSInteger deleteSection;
+    //记录 最初 历史 食谱 个数
+    NSInteger historyCount;
     
 //    XXERecipeBreAndLunAndDinModel *breAndLunAndDinModel;
 }
@@ -61,25 +69,10 @@
 - (void)viewWillAppear:(BOOL)animated{
     
     [super viewWillAppear:animated];
-    //    self.navigationController.navigationBar.topItem.title = @"小红花";
-    historyRecipeArray = [[NSMutableArray alloc] init];
-    nowAndFutureArray = [[NSMutableArray alloc] init];
-    totalArray = [[NSMutableArray alloc] init];
-    breakfastDataSource = [[NSMutableArray alloc] init];
-    lunchDataSource =  [[NSMutableArray alloc] init];
-    dinnerDataSource = [[NSMutableArray alloc] init];
-    
-    mealPicDataSource = [[NSMutableArray alloc] init];
-    iconImageViewDataSource = [[NSMutableArray alloc] init];
-    contentDataSource = [[NSMutableArray alloc] init];
-    
     titleArray = [[NSArray alloc] initWithObjects:@"早餐", @"午餐", @"晚餐", nil];
-//    page = 0;
-//    
-//    [_myTableView reloadData];
-    
-}
+//    [self fetchNetData];
 
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -97,19 +90,21 @@
     
     [self createTableView];
     
+
+    
 }
 
 
 
 - (void)addBtnClick:(UIButton *)button{
     
-//    XXESentToPeopleViewController *sentToPeopleVC = [[XXESentToPeopleViewController alloc] init];
-//    
-//    sentToPeopleVC.schoolId = _schoolId;
+    XXERecipeAddViewController *recipeAddVC = [[XXERecipeAddViewController alloc] init];
+    
+    recipeAddVC.schoolId = _schoolId;
 //    sentToPeopleVC.classId = _classId;
 //    sentToPeopleVC.basketNumStr = _flower_able;
-//    
-//    [self.navigationController pushViewController:sentToPeopleVC animated:YES];
+    
+    [self.navigationController pushViewController:recipeAddVC animated:YES];
     
 }
 
@@ -127,7 +122,18 @@
     
     XXERecipeApi *recipeApi = [[XXERecipeApi alloc] initWithXid:XID user_id:USER_ID user_type:USER_TYPE school_id:_schoolId];
     [recipeApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
+        dateArray = [[NSMutableArray alloc] init];
+        cookbook_idArray = [[NSMutableArray alloc] init];
+        historyRecipeArray = [[NSMutableArray alloc] init];
+        nowAndFutureArray = [[NSMutableArray alloc] init];
+        totalArray = [[NSMutableArray alloc] init];
+        breakfastDataSource = [[NSMutableArray alloc] init];
+        lunchDataSource =  [[NSMutableArray alloc] init];
+        dinnerDataSource = [[NSMutableArray alloc] init];
         
+        mealPicDataSource = [[NSMutableArray alloc] init];
+        iconImageViewDataSource = [[NSMutableArray alloc] init];
+        contentDataSource = [[NSMutableArray alloc] init];
 //        NSLog(@"2222---   %@", request.responseJSONObject);
         
         NSString *codeStr = [NSString stringWithFormat:@"%@", request.responseJSONObject[@"code"]];
@@ -150,19 +156,30 @@
                 NSString *dateString = [XXETool dateStringFromNumberTimer:dic[@"date_tm"]];
                 [dateArray addObject:dateString];
                 
+                //食谱 id
+                [cookbook_idArray addObject:dic[@"cookbook_id"]];
+                
                 mealPicArray = [[NSMutableArray alloc] init];
                 iconImageViewArray = [[NSMutableArray alloc] init];
                 contentArray = [[NSMutableArray alloc] init];
                 
-                [mealPicArray addObject:dic[@"breakfast"][@"pic_arr"]];
-                [mealPicArray addObject:dic[@"lunch"][@"pic_arr"]];
-                [mealPicArray addObject:dic[@"dinner"][@"pic_arr"]];
+                if ([dic[@"breakfast"][@"pic_arr"] count] != 0) {
+                    [mealPicArray addObject:dic[@"breakfast"][@"pic_arr"]];
+                    [iconImageViewArray addObject:dic[@"breakfast"][@"pic_arr"][0][@"pic"]];
+                }
+                
+                if ([dic[@"lunch"][@"pic_arr"] count] != 0) {
+                  [mealPicArray addObject:dic[@"lunch"][@"pic_arr"]];
+                  [iconImageViewArray addObject:dic[@"lunch"][@"pic_arr"][0][@"pic"]];
+                }
+                
+                
+                if ([dic[@"dinner"][@"pic_arr"] count] != 0) {
+                    [mealPicArray addObject:dic[@"dinner"][@"pic_arr"]];
+                    [iconImageViewArray addObject:dic[@"dinner"][@"pic_arr"][0][@"pic"]];
+                }
+                
                 [mealPicDataSource addObject:mealPicArray];
-                
-                
-                [iconImageViewArray addObject:dic[@"breakfast"][@"pic_arr"][0][@"pic"]];
-                [iconImageViewArray addObject:dic[@"lunch"][@"pic_arr"][0][@"pic"]];
-                [iconImageViewArray addObject:dic[@"dinner"][@"pic_arr"][0][@"pic"]];
                 [iconImageViewDataSource addObject:iconImageViewArray];
                 
                 [contentArray addObject:dic[@"breakfast"][@"title"]];
@@ -206,14 +223,16 @@
     }else{
         //2、有数据的时候
         [_myTableView reloadData];
-        
+//        NSLog(@"%ld", historyRecipeArray.count);
+        //滚动到 时间 为今天 的食谱 cell
+        [_myTableView setContentOffset:CGPointMake(0.0, historyRecipeArray.count  *(80 * 3 + 30) ) animated:NO];
     }
     
 }
 
 
 - (void)createTableView{
-    _myTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, KScreenWidth, KScreenHeight) style:UITableViewStyleGrouped];
+    _myTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, KScreenWidth, KScreenHeight - 64) style:UITableViewStyleGrouped];
     
     _myTableView.dataSource = self;
     _myTableView.delegate = self;
@@ -236,7 +255,6 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     
     return 3;
-    
 }
 
 
@@ -249,8 +267,15 @@
         cell = [[[NSBundle mainBundle] loadNibNamed:@"XXERecipeTableViewCell" owner:self options:nil]lastObject];
     }
 
-    NSString *iconStr = [NSString stringWithFormat:@"%@%@", kXXEPicURL, iconImageViewDataSource[indexPath.section][indexPath.row]];
-    [cell.iconImageView sd_setImageWithURL:[NSURL URLWithString:iconStr] placeholderImage:[UIImage imageNamed:@"home_recipe_placehoder_icon184x154"]];
+    if ([iconImageViewDataSource[indexPath.section] count] != 0) {
+        NSString *iconStr = [NSString stringWithFormat:@"%@%@", kXXEPicURL, iconImageViewDataSource[indexPath.section][indexPath.row]];
+        
+        [cell.iconImageView sd_setImageWithURL:[NSURL URLWithString:iconStr] placeholderImage:[UIImage imageNamed:@"home_recipe_placehoder_icon184x154"]];
+    }else{
+    
+        cell.iconImageView.image = [UIImage imageNamed:@"home_recipe_placehoder_icon184x154"];
+    }
+    
     
     cell.titleLabel.text = titleArray[indexPath.row];
     cell.contentLabel.text = contentDataSource[indexPath.section][indexPath.row];
@@ -268,39 +293,112 @@
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     
-    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, KScreenWidth, 20)];
-    headerView.backgroundColor = [UIColor whiteColor];
-//    if ([totalArray[section] count] != 0) {
-//        NSLog(@"日期  -- %@", totalArray[section]);
-//        NSString *dateStr = [XXETool dateStringFromNumberTimer:totalArray[section]];
-//        
-//        UILabel *titleLabel1 = [UILabel createLabelWithFrame:CGRectMake(0, 5, KScreenWidth, 20) Font:14 Text:dateStr];
-//        titleLabel1.textAlignment = NSTextAlignmentCenter;
-//        [headerView addSubview:titleLabel1];
-//    }
+    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, KScreenWidth , 30)];
+    if ([totalArray[section] count] != 0) {
+        UILabel *titleLabel1 = [UILabel createLabelWithFrame:CGRectMake(20, 5, KScreenWidth / 2, 20) Font:14 Text:dateArray[section]];
+        titleLabel1.textAlignment = NSTextAlignmentLeft;
+        [headerView addSubview:titleLabel1];
+        
+        //home_recipe_delete_icon
+        UIButton *deleteButton = [UIButton createButtonWithFrame:CGRectMake(KScreenWidth - 30, 5, 17, 21) backGruondImageName:@"home_recipe_delete_icon" Target:self Action:@selector(deleteButtonClick:) Title:@""];
+        
+        deleteButton.tag = 100 + section;
+        
+        [headerView addSubview:deleteButton];
+        
+    }
     
 
     return headerView;
 }
 
+
+- (void)deleteButtonClick:(UIButton *)button{
+
+    deleteSection = button.tag - 100;
+//        NSLog(@"%ld", deleteSection);
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"删除这天的食谱信息" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"删除", nil];
+    [alert show];
+}
+
+
+#pragma mark - 
+#pragma mark - delegate
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    switch (buttonIndex) {
+        case 0:
+            //取消
+            break;
+         
+        case 1:
+        {
+        [self deleteRecipeInfo];
+        
+        }
+            break;
+    }
+
+}
+
+- (void)deleteRecipeInfo{
+    /*
+     传参:
+     position	//身份,传数字(1教师/2班主任/3管理/4校长)
+     cookbook_id	//食谱id
+     school_id	//学校id
+     */
+    NSString *cookbook_idStr = cookbook_idArray[deleteSection];
+    
+    XXERecipeDeleteApi *recipeDeleteApi = [[XXERecipeDeleteApi alloc] initWithXid:XID user_id:USER_ID user_type:USER_TYPE school_id:_schoolId position:@"4" cookbook_id:cookbook_idStr];
+    [recipeDeleteApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
+        
+//        NSLog(@"2222---   %@", request.responseJSONObject);
+        
+        NSString *codeStr = [NSString stringWithFormat:@"%@", request.responseJSONObject[@"code"]];
+        
+        if ([codeStr isEqualToString:@"1"]) {
+            
+        }else{
+            
+        }
+        [self fetchNetData];
+        
+    } failure:^(__kindof YTKBaseRequest *request) {
+        
+        [self showString:@"删除失败" forSecond:1.f];
+    }];
+
+
+}
+
+
+
+
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    return 20;
+    return 30;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
+    
+    return 0.0000001;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
-//    XXERedFlowerDetialViewController *redFlowerDetialVC = [[XXERedFlowerDetialViewController alloc] init];
-//    
-//    XXERedFlowerSentHistoryModel *model = _dataSourceArray[indexPath.row];
-//    redFlowerDetialVC.name = model.tname;
-//    redFlowerDetialVC.time = model.date_tm;
-//    redFlowerDetialVC.schoolName = model.school_name;
-//    redFlowerDetialVC.className = model.class_name;
-//    redFlowerDetialVC.course = model.teach_course;
-//    redFlowerDetialVC.content = model.con;
-//    redFlowerDetialVC.picWallArray = model.pic_arr;
-//    redFlowerDetialVC.iconUrl = model.head_img;
-//    [self.navigationController pushViewController:redFlowerDetialVC animated:YES];
+    XXERecipeDetailViewController *recipeDetailVC = [[XXERecipeDetailViewController alloc] init];
+
+    if ([mealPicDataSource[indexPath.section] count] != 0) {
+        recipeDetailVC.mealPicDataSource = mealPicDataSource[indexPath.section][indexPath.row];
+    }
+
+    recipeDetailVC.titleStr = titleArray[indexPath.row];
+    recipeDetailVC.dateStr = dateArray[indexPath.section];
+    recipeDetailVC.contentStr = contentDataSource[indexPath.section][indexPath.row];
+    recipeDetailVC.cookbook_idStr = cookbook_idArray[indexPath.section];
+    
+    recipeDetailVC.schoolId = _schoolId;
+    
+    [self.navigationController pushViewController:recipeDetailVC animated:YES];
     
 }
 
