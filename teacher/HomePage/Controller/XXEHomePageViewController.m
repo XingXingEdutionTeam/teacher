@@ -24,6 +24,7 @@
 #import "XXECommentRootViewController.h"
 #import "XXEHomeworkViewController.h"
 #import "XXERecipeViewController.h"
+#import "XXEHomeLogoRootViewController.h"
 //监控
 #import "VideoMonitorViewController.h"
 
@@ -253,6 +254,14 @@
 - (void)homePageLeftButtonClick
 {
     NSLog(@"---跳转到学校的详情页----");
+    //logo
+    XXEHomeLogoRootViewController *homeLogoRootVC = [[XXEHomeLogoRootViewController alloc] init];
+    
+    homeLogoRootVC.schoolId = _schoolHomeId;
+    homeLogoRootVC.classId = _classHomeId;
+    
+    [self.navigationController pushViewController:homeLogoRootVC animated:NO];
+    
 }
 
 - (void)homePageRightButtonClick

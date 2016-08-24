@@ -70,7 +70,7 @@
     
     [super viewWillAppear:animated];
     titleArray = [[NSArray alloc] initWithObjects:@"早餐", @"午餐", @"晚餐", nil];
-//    [self fetchNetData];
+    [self fetchNetData];
 
 }
 
@@ -86,7 +86,7 @@
     UIBarButtonItem *sentItem =[[UIBarButtonItem alloc]initWithCustomView:addBtn];
     self.navigationItem.rightBarButtonItem =sentItem;
     
-    [self fetchNetData];
+//    [self fetchNetData];
     
     [self createTableView];
     
