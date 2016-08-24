@@ -37,7 +37,7 @@
     if (!_registerUerTextField) {
         _registerUerTextField = [UITextField createTextFieldWithIsOpen:NO textPlaceholder:@"请输入11位手机号"];
         _registerUerTextField.delegate = self;
-        _registerUerTextField.borderStyle = UIKeyboardTypeNumberPad;
+        _registerUerTextField.keyboardType = UIKeyboardTypeNumberPad;
     }
     return _registerUerTextField;
 }
@@ -273,10 +273,10 @@
     //验证验证码对不对
     [self verifyNumberISRight];
     
-//    //测试环境
+    //测试环境
 //    [self showString:@"测试" forSecond:1.f];
 //    XXERegisterSecondViewController *registerSecondVC = [[XXERegisterSecondViewController alloc]init];
-//    registerSecondVC.userPhoneNum = @"11112312331";
+//    registerSecondVC.userPhoneNum = @"87878787878";
 //    registerSecondVC.login_type = @"1";
 //    [self.navigationController pushViewController:registerSecondVC animated:YES];
 }
@@ -317,8 +317,8 @@
             [self showString:@"此号码可以注册" forSecond:1.f];
             self.verificationButton.userInteractionEnabled = YES;
         } else if ([string intValue] == 3) {
-            [self showString:@"手机号码已存在" forSecond:1.f];
-            self.verificationButton.userInteractionEnabled = YES;
+            [self showString:@"手机号码已存在" forSecond:2.f];
+            self.verificationButton.userInteractionEnabled = NO;
         } else{
             [self showString:@"请重新注册" forSecond:1.f];
         }

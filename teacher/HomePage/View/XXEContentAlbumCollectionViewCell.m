@@ -10,20 +10,25 @@
 
 @implementation XXEContentAlbumCollectionViewCell
 
-- (UIImageView *)contentImageView
-{
-    if (!_contentImageView) {
-        _contentImageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
-        _contentImageView.contentMode = UIViewContentModeScaleToFill;
-        _contentImageView.backgroundColor = XXEBackgroundColor;
+//重写初始化方法
+-(instancetype)initWithFrame:(CGRect)frame{
+    if (self = [super initWithFrame:frame]) {
+        [self createSubViews];
     }
-    return _contentImageView;
+    return self;
+}
+-(void)createSubViews{
+    
+    UIImageView *myImageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
+    myImageView.tag = 11;
+    [self.contentView addSubview:myImageView];
 }
 
-- (void)layoutSubviews
-{
-    [super layoutSubviews];
-    [self.contentView addSubview:self.contentImageView];
+-(void)setImageName:(NSString *)imageName{
+    _imageName = imageName;
+    UIImageView *iconImageView = [self viewWithTag:11];
+    [iconImageView sd_setImageWithURL:[NSURL URLWithString:imageName] placeholderImage:nil];
+    
 }
 
 

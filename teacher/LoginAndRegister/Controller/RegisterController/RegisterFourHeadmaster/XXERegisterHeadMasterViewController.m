@@ -236,12 +236,12 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
     [self.view endEditing:YES];
     switch (indexPath.row) {
         case 0:{
-            self.teacherCell = [self cellAtIndexRow:2 andAtSection:0 Message:@""];
-            if (self.isHave) {
-                [self tureOrFalseCellClick:NO Tag:100];
-            }else{
+            self.teacherCell = [self cellAtIndexRow:0 andAtSection:0 Message:@""];
+//            if (self.isHave) {
+//                [self tureOrFalseCellClick:NO Tag:100];
+//            }else{
                 [self tureOrFalseCellClick:YES Tag:100];
-            }
+//            }
             break;
         }
         case 1:{
@@ -387,6 +387,13 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
 //注册成功的按钮
 - (void)sureButtonClick:(UIButton *)sender
 {
+    
+    XXELoginViewController *loginVC = [[XXELoginViewController alloc]init];
+    UIWindow *window = [UIApplication sharedApplication].keyWindow;
+    window.rootViewController = loginVC;
+    [self.view removeFromSuperview];
+    
+    
     [self getIdCardPhotoImage];
     NSLog(@"确认按钮");
     NSLog(@"登录类型%@ 电话号码%@ 密码%@ 用户姓名%@ 用户身份证%@ 年龄%@ 性别%@ 用户身份%@ 用户头像%@",self.login_type,self.userPhoneNum,self.userPassword,self.userName,self.userIDCarNum,self.userAge,self.userSex,self.userIdentifier,self.userAvatarImage);
@@ -439,20 +446,23 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
         
         if ([[responseObject objectForKey:@"code"] intValue]==1) {
             [self showString:@"注册成功" forSecond:1.f];
+            
+            //跳转到登录页
+            NSLog(@"-----进入主页------");
+            XXELoginViewController *loginVC = [[XXELoginViewController alloc]init];
+            UIWindow *window = [UIApplication sharedApplication].keyWindow;
+            window.rootViewController = loginVC;
+            [self.view removeFromSuperview];
+            
         } else {
             NSString *string = [responseObject objectForKey:@"msg"];
             [self showString:string forSecond:2.f];
         }
         
-        
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
         
     }];
-
-    
-    
-    
 }
 
 #pragma mark - 获取证件图片

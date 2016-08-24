@@ -31,7 +31,7 @@
 
 - (NSString *)requestUrl
 {
-    return [NSString stringWithFormat:@"%@",XXESearchClassUrl];
+    return [NSString stringWithFormat:@"%@",XXESearchGradeUrl];
 }
 
 - (id)requestArgument

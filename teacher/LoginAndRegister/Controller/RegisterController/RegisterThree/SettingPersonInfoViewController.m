@@ -197,12 +197,12 @@
 -(void)landClick:(UIButton *)sender
 {
 //    //测试
-//    XXERegisterHeadMasterViewController *teacherVC = [[XXERegisterHeadMasterViewController alloc]init];
+//    XXERegisterTeacherViewController *teacherVC = [[XXERegisterTeacherViewController alloc]init];
 //    teacherVC.userPhoneNum = self.userSettingPhoneNum;
 //    teacherVC.userName = parentsName.text;
 //    teacherVC.userIDCarNum = parentsIDCard.text;
 //    teacherVC.userPassword = self.userSettingPassWord;
-//    teacherVC.userIdentifier = self.userType;
+//    teacherVC.userIdentifier = @"2";
 //    teacherVC.userAvatarImage = self.avatarImage;
 //    teacherVC.login_type = self.login_type;
 //    teacherVC.userSex = self.userSex;

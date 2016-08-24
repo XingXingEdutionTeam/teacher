@@ -9,7 +9,8 @@
 #import <UIKit/UIKit.h>
 
 @interface XXEContentAlbumCollectionViewCell : UICollectionViewCell
-/** 图片的展示 */
-@property (nonatomic, strong)UIImageView *contentImageView;
+
+//图片名字
+@property (nonatomic,copy) NSString *imageName;
 
 @end

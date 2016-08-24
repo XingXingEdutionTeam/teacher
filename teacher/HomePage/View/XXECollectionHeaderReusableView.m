@@ -20,10 +20,10 @@
 }
 -(void)createSubViews{
     UILabel *label = [[UILabel alloc]initWithFrame:self.bounds];
-    label.textColor = [UIColor lightGrayColor];
+    label.textColor = [UIColor whiteColor];
     label.textAlignment = NSTextAlignmentLeft;
     label.numberOfLines = 0;
-    label.font = [UIFont systemWithIphone6P:14 Iphone6:12 Iphone5:10 Iphone4:8];
+    label.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:8];
     label.tag = 10;
     [self addSubview:label];
 }

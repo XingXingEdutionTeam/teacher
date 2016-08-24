@@ -14,6 +14,7 @@
 #import "XXENavigationViewController.h"
 #import "XXELoginApi.h"
 #import "XXEUserInfo.h"
+#import "XXEChangeRoleViewController.h"
 
 @interface XXELoginViewController ()<UITextFieldDelegate>
 /** 用户名登录 */
@@ -32,7 +33,7 @@
     if (!_userNameTextField) {
         _userNameTextField = [UITextField createTextFieldWithIsOpen:NO textPlaceholder:@"手机"];
         _userNameTextField.delegate = self;
-        _userNameTextField.borderStyle = UIKeyboardTypeNamePhonePad;
+        _userNameTextField.keyboardType = UIKeyboardTypeNumberPad;
     }
     return _userNameTextField;
 }
@@ -42,7 +43,7 @@
     if (!_passWordTextField) {
         _passWordTextField = [UITextField createTextFieldWithIsOpen:YES textPlaceholder:@"密码"];
         _passWordTextField.delegate = self;
-        _passWordTextField.borderStyle = UIKeyboardTypeDefault;
+        _passWordTextField.keyboardType = UIKeyboardTypeDefault;
     }
     return _passWordTextField;
 }
@@ -383,6 +384,11 @@
 
 - (void)guestButtonClick:(UIButton *)sender
 {
+//    XXEChangeRoleViewController *changeVC = [[XXEChangeRoleViewController alloc]init];
+//    UIWindow *window = [UIApplication sharedApplication].keyWindow;
+//    XXENavigationViewController *navi = [[XXENavigationViewController alloc]initWithRootViewController:changeVC];
+//    window.rootViewController = navi;
+    
     XXETabBarControllerConfig *tabBarConfig = [[XXETabBarControllerConfig alloc]init];
     UIWindow *window = [UIApplication sharedApplication].keyWindow;
     window.rootViewController = tabBarConfig;

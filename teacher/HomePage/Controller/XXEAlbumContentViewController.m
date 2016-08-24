@@ -10,18 +10,58 @@
 #import "XXEAlbumContentApi.h"
 #import "XXEContentAlbumCollectionViewCell.h"
 #import "XXECollectionHeaderReusableView.h"
+#import "XXEAlbumDetailsModel.h"
 
 
 @class XXEMySelfAlbumModel;
 @interface XXEAlbumContentViewController ()<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>
 
 @property (nonatomic, strong)UICollectionView *contentCollectionView;
+/** 时间戳数组 */
+@property (nonatomic, strong)NSMutableArray *timeDatasource;
+/** 原始的时间数组 */
+@property (nonatomic, strong)NSMutableArray *originalDatasource;
+/** 数据源 */
+@property (nonatomic, strong)NSMutableArray *datasource;
+/** 每一区的数组元 */
+@property (nonatomic, strong)NSMutableArray *itemDatasource;
 @end
 
 static NSString *identifierCell = @"CELL";
 static NSString *headerCell = @"HEADERCELL";
 
 @implementation XXEAlbumContentViewController
+
+- (NSMutableArray *)itemDatasource
+{
+    if (!_itemDatasource) {
+        _itemDatasource = [NSMutableArray array];
+    }
+    return _itemDatasource;
+}
+
+- (NSMutableArray *)originalDatasource
+{
+    if (!_originalDatasource) {
+        _originalDatasource = [NSMutableArray array];
+    }
+    return _originalDatasource;
+}
+
+- (NSMutableArray *)datasource{
+    if (!_datasource) {
+        _datasource = [NSMutableArray array];
+    }
+    return _datasource;
+}
+
+- (NSMutableArray *)timeDatasource
+{
+    if (!_timeDatasource) {
+        _timeDatasource = [NSMutableArray array];
+    }
+    return _timeDatasource;
+}
 
 - (XXEMySelfAlbumModel *)contentModel
 {
@@ -31,20 +71,6 @@ static NSString *headerCell = @"HEADERCELL";
     return _contentModel;
 }
 
-- (UICollectionView *)contentCollectionView
-{
-    if (!_contentCollectionView) {
-        UICollectionViewFlowLayout *flowlayout = [[UICollectionViewFlowLayout alloc]init];
-        _contentCollectionView = [[UICollectionView alloc]initWithFrame:self.view.bounds collectionViewLayout:flowlayout];
-        flowlayout.minimumLineSpacing = 10;
-        flowlayout.minimumInteritemSpacing = 10;
-        flowlayout.itemSize = CGSizeMake((KScreenWidth - 4*10), (KScreenHeight - 4*10)/3);
-        flowlayout.scrollDirection = UICollectionViewScrollDirectionVertical;
-        _contentCollectionView = [[UICollectionView alloc]initWithFrame:self.view.bounds collectionViewLayout:flowlayout];
-        _contentCollectionView.backgroundColor = [UIColor whiteColor];
-    }
-    return _contentCollectionView;
-}
 
 - (void)viewWillAppear:(BOOL)animated
 {
@@ -61,29 +87,47 @@ static NSString *headerCell = @"HEADERCELL";
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationItem.title = _contentModel.album_name;
-    [self.view addSubview:self.contentCollectionView];
+    //创建试图
+    [self creatCollectionView];
     self.contentCollectionView.delegate =self;
     self.contentCollectionView.dataSource = self;
     [self.contentCollectionView registerClass:[XXEContentAlbumCollectionViewCell class] forCellWithReuseIdentifier:identifierCell];
     [self.contentCollectionView registerClass:[XXECollectionHeaderReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:headerCell];
+    
     //获取数据
-//    [self setupAlbumContentRequeue];
+    [self setupAlbumContentRequeue];
+}
+
+- (void)creatCollectionView
+{
+    UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc]init];
+    layout.scrollDirection = UICollectionViewScrollDirectionVertical;
+    layout.minimumLineSpacing = 10;
+    layout.minimumInteritemSpacing = 10;
+    layout.itemSize = CGSizeMake((KScreenWidth- 4*10)/3, (KScreenWidth-4*10)/3);
+    self.contentCollectionView = [[UICollectionView alloc]initWithFrame:CGRectMake(0, 0,KScreenWidth , KScreenHeight-64) collectionViewLayout:layout];
+    self.contentCollectionView.backgroundColor = [UIColor whiteColor];
+    [self.view addSubview:self.contentCollectionView];
 }
 
 #pragma mark - UICollectionViewDelegate/ Datasource
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
 {
-    return 10;
+    return self.itemDatasource.count;
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return 2;
+    return [self.itemDatasource[section] count];
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     XXEContentAlbumCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:identifierCell forIndexPath:indexPath];
+    XXEAlbumDetailsModel *model = self.itemDatasource[indexPath.section][indexPath.item];
+    NSLog(@"相片的地址:%@",model.pic);
+    NSString *string = [NSString stringWithFormat:@"%@%@",kXXEPicURL,model.pic];
+    cell.imageName = string;
     return cell;
 }
 
@@ -102,8 +146,8 @@ static NSString *headerCell = @"HEADERCELL";
 {
     if ([kind isEqualToString:UICollectionElementKindSectionHeader]) {
         XXECollectionHeaderReusableView *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:headerCell forIndexPath:indexPath];
-        headerView.backgroundColor = [UIColor redColor];
-        headerView.title =  @"时间";
+        headerView.title =  self.timeDatasource[indexPath.section];
+        headerView.backgroundColor = [UIColor lightGrayColor];
         return headerView;
     } else {
         return nil;
@@ -120,15 +164,27 @@ static NSString *headerCell = @"HEADERCELL";
 {
     XXEAlbumContentApi *contentApi = [[XXEAlbumContentApi alloc]initWithAlbumContentAlbumId:self.contentModel.album_id];
     [contentApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
-//        NSLog(@"%@",request.responseJSONObject);
+        NSLog(@"总的%@",request.responseJSONObject);
         NSDictionary *data = [request.responseJSONObject objectForKey:@"data"];
-        NSLog(@"======%lu",(unsigned long)data.count);
-        NSLog(@"=------%@",[data objectForKey:@"1458894982"]);
-        for (NSMutableArray *arr in data) {
-            NSLog(@"数组里面都有什么%@",arr);
+        NSLog(@"data:%@",data);
+
+        for (NSString *timeStr in data) {
+            NSString *newTime = [XXETool dateStringFromNumberTimer:timeStr];
+            [self.timeDatasource addObject:newTime];
+            [self.originalDatasource addObject:timeStr];
         }
         
-        
+        for (int i=0; i<self.originalDatasource.count; i++) {
+            NSMutableArray *arr = [data objectForKey:self.originalDatasource[i]];
+            
+            for (int j =0; j<arr.count; j++) {
+                XXEAlbumDetailsModel *model = [[XXEAlbumDetailsModel alloc]initWithDictionary:arr[j] error:nil];
+                [self.datasource addObject:model];
+            }
+            [self.itemDatasource addObject:self.datasource];
+        }
+
+        [self.contentCollectionView reloadData];
     } failure:^(__kindof YTKBaseRequest *request) {
         
     }];

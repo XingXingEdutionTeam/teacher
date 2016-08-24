@@ -41,9 +41,13 @@
 //搜索学校
 #define XXESearchSchoolUrl @"http://www.xingxingedu.cn/Global/get_school_info"
 
-//【通过学校获取年级与班级】
+//【通过学校获取年级】
 
-#define XXESearchClassUrl @"http://www.xingxingedu.cn/Global/give_school_get_grade" 
+#define XXESearchGradeUrl @"http://www.xingxingedu.cn/Global/give_school_get_grade" 
+
+//【通过年级获取班级】
+#define XXESearchClassUrl @"http://www.xingxingedu.cn/Global/give_grade_get_class"
+
 
 /** 注册页的教学类型 */
 #define XXERegisTeachTypeUrl @"http://www.xingxingedu.cn/Teacher/get_teach_name"
