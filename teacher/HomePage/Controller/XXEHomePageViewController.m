@@ -244,6 +244,8 @@
     [self.view addSubview:bottomView];
     [self.view addSubview:self.middleView];
     [self.view addSubview:self.headView];
+    
+//    self.tabBarItem.badgeValue = @"10";
 
     //获取数据
         [self setupHomePageRequeue];

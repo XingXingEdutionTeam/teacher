@@ -399,6 +399,11 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
     NSLog(@"登录类型%@ 电话号码%@ 密码%@ 用户姓名%@ 用户身份证%@ 年龄%@ 性别%@ 用户身份%@ 用户头像%@",self.login_type,self.userPhoneNum,self.userPassword,self.userName,self.userIDCarNum,self.userAge,self.userSex,self.userIdentifier,self.userAvatarImage);
     NSLog(@"邀请码%@ 学校详细地址%@ 学校电话%@ 学校ID%@ 学校类型%@ 学校名字%@ 学校省%@ 学校市%@ 学校区%@ 审核人%@",self.theEndInviteCode,self.schoolAddrss,self.schoolTel,self.theEndSchoolId,self.theEndSchoolType,self.schoolName,self.schoolProvince,self.schoolCity,self.schoolDistrict,self.theEndReviewerId);
     
+    NSData *data = UIImageJPEGRepresentation(_userAvatarImage, 0.7);
+    NSArray *arr = @[data];
+    
+    NSLog(@"%@",arr);
+    
     NSDictionary *parameter = @{
                                 @"login_type":_login_type,
                                 @"phone":_userPhoneNum,
@@ -421,6 +426,7 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
                                 @"province":_schoolProvince,
                                 @"city":_schoolCity,
                                 @"district":_schoolDistrict,
+                                
                                 @"appkey":APPKEY,
                                 @"backtype":BACKTYPE
                                 };
@@ -433,7 +439,7 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
                 UIImage *image = _fileHeadImageArray[i];
                 NSData *data = UIImageJPEGRepresentation(image, 0.7);
                 NSString *fileName = [NSString stringWithFormat:@"%d.jpeg",i];
-                //            NSString *name = [NSString stringWithFormat:@"file%d",i];
+                //         NSString *name = [NSString stringWithFormat:@"file%d",i];
                 NSString *type = @"image/jpeg";
                 [formData appendPartWithFileData:data name:@"file" fileName:fileName mimeType:type];
             }

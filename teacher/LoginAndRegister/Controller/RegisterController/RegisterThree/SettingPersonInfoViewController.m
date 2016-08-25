@@ -171,7 +171,6 @@
     
     
     self.teacherTypeCombox = [[WJCommboxView alloc]initWithFrame:CGRectMake(95*kScreenRatioWidth, 318*kScreenRatioHeight, 260*kScreenRatioWidth, 100*kScreenRatioHeight)];
-//    self.teacherTypeCombox.backgroundColor = [UIColor redColor];
     self.teacherTypeCombox.textField.placeholder = @"请选择职位";
     self.teacherTypeCombox.textField.textAlignment = NSTextAlignmentLeft;
     self.teacherTypeCombox.textField.borderStyle = UITextBorderStyleNone;
@@ -179,7 +178,6 @@
     self.teacherTypeCombox.dataArray = self.teacherTypeArr;
     self.teacherTypeCombox.listTableView.showsVerticalScrollIndicator = NO;
     [self.view addSubview:self.teacherTypeCombox];
-    
     
     UIButton *nextButton = [[UIButton alloc]init];
     [nextButton setBackgroundImage:[UIImage imageNamed:@"login_green"] forState:UIControlStateNormal];
@@ -191,8 +189,8 @@
         make.bottom.equalTo(weakSelf.view.mas_bottom).offset(-30*kScreenRatioHeight);
         make.size.mas_equalTo(CGSizeMake(335*kScreenRatioWidth, 41*kScreenRatioHeight));
     }];
-
 }
+
 
 -(void)landClick:(UIButton *)sender
 {
@@ -239,6 +237,7 @@
          }else {
              self.userType = @"3";
          }
+         
          XXERegisterHeadMasterViewController *headVC = [[XXERegisterHeadMasterViewController alloc]init];
          headVC.userPhoneNum = self.userSettingPhoneNum;
          headVC.userName = parentsName.text;
@@ -286,7 +285,6 @@
     }
 }
 
-
 #pragma mark - 根据身份证号判断性别与年龄
 
 - (void)getupUserIDCard:(NSString *)IDCard
@@ -309,13 +307,6 @@
     self.userAge = [NSString stringWithFormat:@"%d",card];
     NSLog(@"%d",card);
 }
-
-
-
-//-(NSString * )rangeString:(NSString *)str begin:(NSInteger )begin  length:(NSInteger)length{
-//    NSRange r1 = {begin,length};
-//    return  [str substringWithRange:r1];
-//}
 
 
 - (void)didReceiveMemoryWarning {

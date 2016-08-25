@@ -11,6 +11,7 @@
 #import "XXEContentAlbumCollectionViewCell.h"
 #import "XXECollectionHeaderReusableView.h"
 #import "XXEAlbumDetailsModel.h"
+#import "XXEAlbumShowViewController.h"
 
 
 @class XXEMySelfAlbumModel;
@@ -89,12 +90,8 @@ static NSString *headerCell = @"HEADERCELL";
     self.navigationItem.title = _contentModel.album_name;
     //创建试图
     [self creatCollectionView];
-    self.contentCollectionView.delegate =self;
-    self.contentCollectionView.dataSource = self;
-    [self.contentCollectionView registerClass:[XXEContentAlbumCollectionViewCell class] forCellWithReuseIdentifier:identifierCell];
-    [self.contentCollectionView registerClass:[XXECollectionHeaderReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:headerCell];
     
-    //获取数据
+    ///获取数据
     [self setupAlbumContentRequeue];
 }
 
@@ -107,13 +104,17 @@ static NSString *headerCell = @"HEADERCELL";
     layout.itemSize = CGSizeMake((KScreenWidth- 4*10)/3, (KScreenWidth-4*10)/3);
     self.contentCollectionView = [[UICollectionView alloc]initWithFrame:CGRectMake(0, 0,KScreenWidth , KScreenHeight-64) collectionViewLayout:layout];
     self.contentCollectionView.backgroundColor = [UIColor whiteColor];
+    self.contentCollectionView.delegate =self;
+    self.contentCollectionView.dataSource = self;
+    [self.contentCollectionView registerClass:[XXEContentAlbumCollectionViewCell class] forCellWithReuseIdentifier:identifierCell];
+    [self.contentCollectionView registerClass:[XXECollectionHeaderReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:headerCell];
     [self.view addSubview:self.contentCollectionView];
 }
 
 #pragma mark - UICollectionViewDelegate/ Datasource
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
 {
-    return self.itemDatasource.count;
+    return  self.itemDatasource.count;
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
@@ -139,6 +140,9 @@ static NSString *headerCell = @"HEADERCELL";
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     NSLog(@"===选中某一个View====");
+    XXEAlbumShowViewController *showVC = [[XXEAlbumShowViewController alloc]init];
+    showVC.showDatasource = self.itemDatasource[indexPath.section];
+    [self.navigationController pushViewController:showVC animated:YES];
 }
 
 //头视图
@@ -167,26 +171,29 @@ static NSString *headerCell = @"HEADERCELL";
         NSLog(@"总的%@",request.responseJSONObject);
         NSDictionary *data = [request.responseJSONObject objectForKey:@"data"];
         NSLog(@"data:%@",data);
-
+        
+//        [self.itemDatasource removeAllObjects];
+//        [self.timeDatasource removeAllObjects];
+//        [self.originalDatasource removeAllObjects];
         for (NSString *timeStr in data) {
             NSString *newTime = [XXETool dateStringFromNumberTimer:timeStr];
             [self.timeDatasource addObject:newTime];
             [self.originalDatasource addObject:timeStr];
         }
-        
         for (int i=0; i<self.originalDatasource.count; i++) {
-            NSMutableArray *arr = [data objectForKey:self.originalDatasource[i]];
+            NSMutableArray *arr = [[NSMutableArray alloc]initWithArray:[data objectForKey:self.originalDatasource[i]]];
             
+            self.datasource = NULL;
             for (int j =0; j<arr.count; j++) {
                 XXEAlbumDetailsModel *model = [[XXEAlbumDetailsModel alloc]initWithDictionary:arr[j] error:nil];
                 [self.datasource addObject:model];
             }
             [self.itemDatasource addObject:self.datasource];
         }
-
+        NSLog(@"%@",self.itemDatasource);
         [self.contentCollectionView reloadData];
     } failure:^(__kindof YTKBaseRequest *request) {
-        
+        [self showString:@"照片数据请求失败" forSecond:1.f];
     }];
 }
 

@@ -54,6 +54,7 @@
                 <outlet property="divLineHeight" destination="5Yc-cD-t3Y" id="94v-wN-kcz"/>
                 <outlet property="tableView" destination="Vq6-ms-Dns" id="g0C-8b-SsK"/>
             </connections>
+            <point key="canvasLocation" x="258" y="165"/>
         </view>
     </objects>
 </document>
