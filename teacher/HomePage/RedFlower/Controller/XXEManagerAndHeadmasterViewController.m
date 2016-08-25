@@ -267,7 +267,7 @@
 
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 60)];
-    
+    view.backgroundColor = [UIColor whiteColor];
     view.userInteractionEnabled = YES;
     
     view.tag = 100 + section;

@@ -1,28 +1,30 @@
 //
-//  XXESchoolQQModifyViewController.h
+//  XXESchoolNameModifyViewController.h
 //  teacher
 //
-//  Created by Mac on 16/8/24.
+//  Created by Mac on 16/8/25.
 //  Copyright © 2016年 XingXingEdu. All rights reserved.
 //
 
 #import "XXEBaseViewController.h"
 
-
 typedef void(^ReturnStrBlock) (NSString *str);
 
-@interface XXESchoolQQModifyViewController : XXEBaseViewController
+@interface XXESchoolNameModifyViewController : XXEBaseViewController
+
 
 @property (nonatomic, copy) ReturnStrBlock returnStrBlock;
 
-@property (nonatomic, copy) NSString *qqStr;
+//学校名称
+@property (nonatomic, copy) NSString *schoolNameStr;
 @property (nonatomic, strong) NSString *schoolId;
 @property (nonatomic, strong) NSString *classId;
 
 
-@property (weak, nonatomic) IBOutlet UITextField *QQTextField;
+@property (weak, nonatomic) IBOutlet UITextView *schoolNameTextView;
 
-@property (weak, nonatomic) IBOutlet UIButton *submitButton;
+
+- (IBAction)submitButton:(UIButton *)sender;
 
 - (void)returnStr:(ReturnStrBlock)block;
 

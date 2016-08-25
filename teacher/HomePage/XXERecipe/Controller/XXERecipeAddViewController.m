@@ -213,6 +213,8 @@
 - (void)submitRecipeAddTextAndPicInfo{
     //    NSLog(@"学校 %@ ---  班级%@ --- 标题%@ -- 内容 %@ -- 老师 %@ -- 截止时间 %@", _schoolId, _classId, _subjectStr, _contentStr, _teacherCourseStr, _timeStr);
     
+    
+    
     NSMutableArray *arr1 = [NSMutableArray array];
     
     for (int i = 0; i < pickerView1.data.count - 1; i++) {
@@ -223,6 +225,9 @@
         [arr1 addObject:image1];
         
     }
+    
+    NSLog(@"%@", arr1);
+    
     for (int i = 0; i < pickerView2.data.count - 1; i++) {
         
         FSImageModel *mdoel = pickerView2.data[i];

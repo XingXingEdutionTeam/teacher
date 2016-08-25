@@ -107,6 +107,8 @@
         [arr addObject:updataApi];
     }
 
+    
+    NSLog(@"相册  -- %@", arr);
     YTKBatchRequest *bathRequest = [[YTKBatchRequest alloc]initWithRequestArray:arr];
     [bathRequest startWithCompletionBlockWithSuccess:^(YTKBatchRequest *batchRequest) {
         NSLog(@"----%@",bathRequest);

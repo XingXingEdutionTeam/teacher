@@ -9,8 +9,15 @@
 //
 
 #import "XXESchoolCertificateModifyViewController.h"
+#import "FSImagePickerView.h"
+
 
 @interface XXESchoolCertificateModifyViewController ()
+{
+    //添加 照片
+    FSImagePickerView *pickerView;
+}
+
 
 @end
 
@@ -18,23 +25,32 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
+
+    self.title = @"资  质";
+    
+    [self createContent];
+    
 }
+
+- (void)createContent{
+
+    //选择图片
+    UICollectionViewFlowLayout *layout1 = [[UICollectionViewFlowLayout alloc] init];
+    layout1.scrollDirection = UICollectionViewScrollDirectionHorizontal;
+    pickerView = [[FSImagePickerView alloc] initWithFrame:CGRectMake(10, 10, kWidth - 10 * 2, 80) collectionViewLayout:layout1];
+    pickerView.backgroundColor = UIColorFromRGB(255, 255, 255);
+    pickerView.showsHorizontalScrollIndicator = NO;
+    pickerView.controller = self;
+    
+    [self.upPicBgView addSubview:pickerView];
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 - (IBAction)submitButton:(UIButton *)sender {
 }

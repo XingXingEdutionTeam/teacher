@@ -11,8 +11,6 @@
 @interface XXESchoolCertificateModifyViewController : XXEBaseViewController
 
 
-@property (weak, nonatomic) IBOutlet UITextView *certificateTextView;
-
 @property (weak, nonatomic) IBOutlet UIView *upPicBgView;
 
 

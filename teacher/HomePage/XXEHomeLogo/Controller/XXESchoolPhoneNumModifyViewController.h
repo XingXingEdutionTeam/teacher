@@ -15,12 +15,16 @@
 @property (weak, nonatomic) IBOutlet UITextField *checkCodeTextField;
 
 
+@property (weak, nonatomic) IBOutlet UIButton *submitButton;
 
 
-- (IBAction)checkCodeButton:(UIButton *)sender;
+@property (weak, nonatomic) IBOutlet UIButton *checkCodeButton;
 
 
-- (IBAction)submitButton:(UIButton *)sender;
+@property (nonatomic, strong) NSString *schoolId;
+
+
+
 
 
 

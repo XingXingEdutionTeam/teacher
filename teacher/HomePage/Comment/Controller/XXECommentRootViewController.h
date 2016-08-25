@@ -15,8 +15,6 @@
 @property (nonatomic, strong) NSMutableArray *childViews;
 
 
-
-
 @property (nonatomic, strong) NSString *schoolId;
 @property (nonatomic, strong) NSString *classId;
 

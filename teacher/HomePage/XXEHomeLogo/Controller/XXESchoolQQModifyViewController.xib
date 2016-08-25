@@ -8,6 +8,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="XXESchoolQQModifyViewController">
             <connections>
                 <outlet property="QQTextField" destination="23e-rt-lTX" id="J5W-iv-uIw"/>
+                <outlet property="submitButton" destination="wZ5-FM-0sO" id="wvb-cy-tfr"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -17,7 +18,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Wfq-bH-j5x">
-                    <rect key="frame" x="10" y="100" width="355" height="50"/>
+                    <rect key="frame" x="10" y="40" width="355" height="50"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="QQ号" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OBQ-gZ-bvA">
                             <rect key="frame" x="10" y="14" width="50" height="21"/>
@@ -34,21 +35,18 @@
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </view>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="请输入您的新QQ号" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WYU-mk-9ZE">
-                    <rect key="frame" x="10" y="71" width="239" height="21"/>
+                    <rect key="frame" x="10" y="11" width="239" height="21"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wZ5-FM-0sO">
-                    <rect key="frame" x="25" y="210" width="325" height="42"/>
+                    <rect key="frame" x="10" y="120" width="355" height="30"/>
                     <color key="backgroundColor" red="0.97281044407894501" green="0.56535259046052388" blue="0.13384046052631579" alpha="1" colorSpace="calibratedRGB"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                    <state key="normal" title="提     交">
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <state key="normal" title="提         交">
                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
-                    <connections>
-                        <action selector="submitButton:" destination="-1" eventType="touchUpInside" id="EVs-zP-qAj"/>
-                    </connections>
                 </button>
             </subviews>
             <color key="backgroundColor" red="0.89640727796052633" green="0.91128700657894535" blue="0.91213507401315785" alpha="1" colorSpace="calibratedRGB"/>

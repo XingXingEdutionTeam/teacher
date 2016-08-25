@@ -15,5 +15,8 @@
 @property (nonatomic, strong) NSString *classId;
 
 @property (nonatomic, strong) NSMutableArray *contentArray;
+//相册
+@property (nonatomic) NSMutableArray *school_pic_groupArray;
+
 
 @end

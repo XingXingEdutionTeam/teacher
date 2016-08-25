@@ -7,8 +7,10 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="XXESchoolPhoneNumModifyViewController">
             <connections>
+                <outlet property="checkCodeButton" destination="1iG-Hr-BdJ" id="Bn4-GF-eDg"/>
                 <outlet property="checkCodeTextField" destination="rdX-vu-yxN" id="Cnj-FW-h6q"/>
                 <outlet property="phoneNumTextField" destination="13k-qi-jTp" id="Qcc-Is-zqJ"/>
+                <outlet property="submitButton" destination="cQj-qR-KAf" id="eJo-OM-cab"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -18,7 +20,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hhH-5Y-Kjk">
-                    <rect key="frame" x="10" y="100" width="355" height="100"/>
+                    <rect key="frame" x="10" y="40" width="355" height="100"/>
                     <subviews>
                         <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nxl-oi-dC8">
                             <rect key="frame" x="10" y="50" width="345" height="1"/>
@@ -36,12 +38,12 @@
                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="请输入手机号" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="13k-qi-jTp">
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="请输入11位手机号" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="13k-qi-jTp">
                             <rect key="frame" x="70" y="11" width="260" height="30"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <textInputTraits key="textInputTraits"/>
                         </textField>
-                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="请输入验证码" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="rdX-vu-yxN">
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="输入4位验证码" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="rdX-vu-yxN">
                             <rect key="frame" x="70" y="61" width="180" height="30"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <textInputTraits key="textInputTraits"/>
@@ -52,29 +54,23 @@
                             <state key="normal" title="获取验证码">
                                 <color key="titleColor" red="0.9742324561403507" green="0.56561814692982182" blue="0.13187020285087706" alpha="1" colorSpace="calibratedRGB"/>
                             </state>
-                            <connections>
-                                <action selector="checkCodeButton:" destination="-1" eventType="touchUpInside" id="20N-UU-QZB"/>
-                            </connections>
                         </button>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </view>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="请输入您的新手机号码" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bkX-zg-E5W">
-                    <rect key="frame" x="8" y="71" width="327" height="21"/>
+                    <rect key="frame" x="8" y="11" width="327" height="21"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cQj-qR-KAf">
-                    <rect key="frame" x="25" y="260" width="325" height="42"/>
+                    <rect key="frame" x="10" y="170" width="355" height="30"/>
                     <color key="backgroundColor" red="0.9742324561403507" green="0.56561814692982182" blue="0.13187020285087706" alpha="1" colorSpace="calibratedRGB"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                    <state key="normal" title="提 交 验 证">
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <state key="normal" title="提         交">
                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
-                    <connections>
-                        <action selector="submitButton:" destination="-1" eventType="touchUpInside" id="yC8-Lc-HUa"/>
-                    </connections>
                 </button>
             </subviews>
             <color key="backgroundColor" red="0.89985094572368418" green="0.91131270559210531" blue="0.91416529605263153" alpha="1" colorSpace="calibratedRGB"/>

@@ -14,15 +14,27 @@
 #define URL @"http://www.xingxingedu.cn/Teacher/teacher_comment_action"
 
 @interface XXECommentTextAndPicInfoApi ()
-@property (nonatomic, copy) NSString *xid;
-@property (nonatomic, copy) NSString *user_id;
-@property (nonatomic, copy) NSString *user_type;
+{
+    NSString *_xid;
+    NSString *_user_id;
+    NSString *_user_type;
+    
+    NSString *_school_id;
+    NSString *_class_id;
+    NSString *_baby_id;
+    NSString *_com_con;
+    UIImage *_upImage;
+}
 
-@property (nonatomic, copy) NSString *school_id;
-@property (nonatomic, copy) NSString *class_id;
-@property (nonatomic, copy) NSString *baby_id;
-@property (nonatomic, copy) NSString *com_con;
-@property (nonatomic, strong) UIImage *upImage;
+//@property (nonatomic, copy) NSString *xid;
+//@property (nonatomic, copy) NSString *user_id;
+//@property (nonatomic, copy) NSString *user_type;
+//
+//@property (nonatomic, copy) NSString *school_id;
+//@property (nonatomic, copy) NSString *class_id;
+//@property (nonatomic, copy) NSString *baby_id;
+//@property (nonatomic, copy) NSString *com_con;
+//@property (nonatomic, strong) UIImage *upImage;
 
 
 @end
@@ -65,27 +77,41 @@
     return self;
 }
 
-
-- (NSString *)requestUrl{
-    
-    return URL;
-    
-}
-
 - (YTKRequestMethod)requestMethod{
     return YTKRequestMethodPost;
     
 }
+
+- (NSString *)requestUrl{
+    
+    return [NSString stringWithFormat:@"%@",URL];
+    
+}
+
+
+
+/*
+ -(AFConstructingBlock)constructingBodyBlock
+ {
+ return ^(id<AFMultipartFormData> formData){
+ int i = 1;
+ NSData *data = UIImageJPEGRepresentation(_imageArray, 0.5);
+ NSString *name = [NSString stringWithFormat:@"%d.jpeg",i];
+ NSString *formKey = [NSString stringWithFormat:@"file%d",i];
+ NSString *type = @"image/jpeg";
+ [formData appendPartWithFileData:data name:formKey fileName:name mimeType:type];
+ };
+ }
+ */
 
 -(AFConstructingBlock)constructingBodyBlock
 {
     return ^(id<AFMultipartFormData> formData){
         int i = 1;
         NSData *data = UIImageJPEGRepresentation(_upImage, 0.5);
-//        NSString *name = [NSString stringWithFormat:@"%d.jpeg",i];
-        NSString *name = [NSString stringWithFormat:@"%d.jpg",i];
+        NSString *name = [NSString stringWithFormat:@"%d.jpeg",i];
         NSString *formKey = [NSString stringWithFormat:@"file%d",i];
-        NSString *type = @"image/jpg";
+        NSString *type = @"image/jpeg/jpg/png";
         [formData appendPartWithFileData:data name:formKey fileName:name mimeType:type];
     };
 }
@@ -102,10 +128,14 @@
              @"school_id":_school_id,
              @"class_id":_class_id,
              @"baby_id":_baby_id,
-             @"com_con":_com_con,
-             @"file":_upImage
+             @"com_con":_com_con
              };
     
+}
+
+- (NSString *)responseImageId {
+    NSDictionary *dict = self.responseJSONObject;
+    return dict[@"imageId"];
 }
 
 @end

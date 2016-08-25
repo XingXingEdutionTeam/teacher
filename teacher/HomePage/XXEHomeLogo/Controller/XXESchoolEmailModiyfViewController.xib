@@ -9,6 +9,7 @@
             <connections>
                 <outlet property="checkCodeTextField" destination="Wud-kh-itb" id="iZZ-5o-cBB"/>
                 <outlet property="emailTextField" destination="q3B-88-pXa" id="oIl-O5-qxf"/>
+                <outlet property="submitButton" destination="fJZ-Qr-FjG" id="Vto-O8-6qc"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -18,7 +19,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tRi-lK-cUN">
-                    <rect key="frame" x="10" y="100" width="355" height="100"/>
+                    <rect key="frame" x="10" y="40" width="355" height="100"/>
                     <subviews>
                         <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GxJ-Uh-FoY">
                             <rect key="frame" x="10" y="50" width="335" height="1"/>
@@ -61,21 +62,18 @@
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </view>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="请输入您新邮箱号码" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O01-G2-0sM">
-                    <rect key="frame" x="10" y="71" width="200" height="21"/>
+                    <rect key="frame" x="10" y="11" width="200" height="21"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fJZ-Qr-FjG">
-                    <rect key="frame" x="25" y="260" width="325" height="42"/>
+                    <rect key="frame" x="10" y="170" width="355" height="30"/>
                     <color key="backgroundColor" red="0.97366707785087703" green="0.56507846765350866" blue="0.13387472587719285" alpha="1" colorSpace="calibratedRGB"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <state key="normal" title="提 交 验 证">
                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
-                    <connections>
-                        <action selector="submitButton:" destination="-1" eventType="touchUpInside" id="l3G-Nk-qNh"/>
-                    </connections>
                 </button>
             </subviews>
             <color key="backgroundColor" red="0.89869449013157898" green="0.91128700657894601" blue="0.91357421875" alpha="1" colorSpace="calibratedRGB"/>

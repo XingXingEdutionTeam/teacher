@@ -25,6 +25,9 @@
     UIButton *commentHistoryButton;
 
     UIButton *commentFlowerButton;
+    
+    NSString *flagStr;
+    
 }
 
 
@@ -41,19 +44,42 @@
     [super viewWillAppear:animated];
     
     self.navigationController.navigationBarHidden = NO;
-    commentFlowerButton.selected = NO;
-    commentHistoryButton.selected = NO;
-    commentRequestButton.selected = YES;
-    _myScrollView.contentOffset = CGPointMake(0, 0);
+
+    NSString *flagString = [[NSUserDefaults standardUserDefaults] objectForKey:@"isFirstAppear"];
     
-    self.navigationItem.title = @"点评请求";
-    UIButton *sentBtn =[UIButton createButtonWithFrame:CGRectMake(0, 0, 22, 22) backGruondImageName:@"comment_request_icon" Target:self Action:@selector(request:) Title:@""];
-    UIBarButtonItem *requestItem =[[UIBarButtonItem alloc]initWithCustomView:sentBtn];
-    self.navigationItem.rightBarButtonItem =requestItem;
+    NSString *string = @"0";
+    if (flagString == nil) {
+        flagStr = string;
+    }else{
+        flagStr = flagString;
+    }
     
-    [self addChildViewController:self.commentRequestVC];
-    [self.myScrollView addSubview:self.commentRequestVC.view];
-    self.commentRequestVC.view.frame = CGRectMake(0, 0, KScreenWidth, KScreenHeight - 49 - 64);
+    if ([[NSString stringWithFormat:@"%@", flagStr] isEqualToString:@"0"]) {
+    
+    [[NSUserDefaults standardUserDefaults] setObject:flagStr forKey:@"isFirstAppear"];
+         flagStr = @"1";
+
+        commentFlowerButton.selected = NO;
+        commentHistoryButton.selected = NO;
+        commentRequestButton.selected = YES;
+        _myScrollView.contentOffset = CGPointMake(0, 0);
+        
+        self.navigationItem.title = @"点评请求";
+        UIButton *sentBtn =[UIButton createButtonWithFrame:CGRectMake(0, 0, 22, 22) backGruondImageName:@"comment_request_icon" Target:self Action:@selector(request:) Title:@""];
+        UIBarButtonItem *requestItem =[[UIBarButtonItem alloc]initWithCustomView:sentBtn];
+        self.navigationItem.rightBarButtonItem =requestItem;
+        
+        [self addChildViewController:self.commentRequestVC];
+        [self.myScrollView addSubview:self.commentRequestVC.view];
+        self.commentRequestVC.view.frame = CGRectMake(0, 0, KScreenWidth, KScreenHeight - 49 - 64);
+    }
+    
+    //        isNotFirstLauch = !isNotFirstLauch;
+    //        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"isNotFirstL"];
+    //
+    //        [self.navigationController pushViewController:passWordResetVC animated:YES];
+    //    }
+    
     
 }
 

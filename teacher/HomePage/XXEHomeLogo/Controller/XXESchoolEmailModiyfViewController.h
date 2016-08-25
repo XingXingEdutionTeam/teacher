@@ -22,7 +22,6 @@
 
 
 
-- (IBAction)submitButton:(UIButton *)sender;
-
+@property (weak, nonatomic) IBOutlet UIButton *submitButton;
 
 @end

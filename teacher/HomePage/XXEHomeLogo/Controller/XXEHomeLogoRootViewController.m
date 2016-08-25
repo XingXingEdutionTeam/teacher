@@ -48,6 +48,8 @@
 @property (nonatomic ,copy) NSString *logoIconStr;
 //学校名称
 @property (nonatomic, copy) NSString *schoolNameStr;
+//学校地址
+@property (nonatomic, copy) NSString *schoolAddressStr;
 //评分
 @property (nonatomic, copy) NSString *score_num;
 //浏览
@@ -165,10 +167,17 @@
      传参:
      school_id		//学校id*/
     
+//    NSLog(@"%@", _schoolId);
+    
     XXEHomeLogoApi *homeLogoApi = [[XXEHomeLogoApi alloc] initWithXid:XID user_id:USER_ID user_type:USER_TYPE school_id:_schoolId];
     [homeLogoApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
-        
 //        NSLog(@"2222---   %@", request.responseJSONObject);
+        /*
+         [province] => 上海市		//省
+         [city] => 上海市			//城市
+         [district] => 浦东新区		//区
+         [address] => 巨峰路1058弄3号楼	//地址详细
+         */
         
         NSString *codeStr = [NSString stringWithFormat:@"%@", request.responseJSONObject[@"code"]];
         
@@ -192,6 +201,7 @@
             _logoIconStr = dic[@"logo"];
             //学校 名称
             _schoolNameStr = dic[@"name"];
+            _schoolAddressStr = [NSString stringWithFormat:@"%@%@%@%@", dic[@"province"], dic[@"city"], dic[@"district"], dic[@"address"]];
             //评分
             _score_num = dic[@"score_num"];
             //浏览
@@ -257,8 +267,8 @@
                 }
             }
         
-            //注册学生/注册老师/电话/QQ/邮箱/资质/特点/简介/相册/视频
-            self.contentArray = [[NSMutableArray alloc] initWithObjects:  baby_num, teacher_num, tel, qq, email, examine, charact, @"", @"", @"", nil];
+            //学校名称/学校地址/注册学生/注册老师/电话/QQ/邮箱/资质/特点/简介/相册/视频
+            self.contentArray = [[NSMutableArray alloc] initWithObjects:  _schoolNameStr, _schoolAddressStr,baby_num, teacher_num, tel, qq, email, examine, charact, @"", @"", @"", nil];
            
         }else{
             
@@ -292,9 +302,9 @@
     NSString *str3 = _collect_num;
     collectionLabel.text = [NSString stringWithFormat:@"收藏:%@", str3];
     
-    
     introductionButton.selected = YES;
     self.schoolIntroductionVC.contentArray = _contentArray;
+    self.schoolIntroductionVC.schoolId = _schoolId;
     [self addChildViewController:self.schoolIntroductionVC];
     [self.myScrollView addSubview:self.schoolIntroductionVC.view];
     self.schoolIntroductionVC.view.frame = CGRectMake(0, 0, KScreenWidth, KScreenHeight - 49 - 64);
@@ -422,6 +432,7 @@
         
         
         self.schoolIntroductionVC.contentArray = _contentArray;
+        self.schoolIntroductionVC.schoolId = _schoolId;
         [self addChildViewController:self.schoolIntroductionVC];
         [self.myScrollView addSubview:self.schoolIntroductionVC.view];
         self.schoolIntroductionVC.view.frame = CGRectMake(0, 0, KScreenWidth, KScreenHeight - 49 - 64);
@@ -429,6 +440,7 @@
     }else if (button == courseButton){
         self.navigationItem.title = @"学校课程";
         self.navigationItem.rightBarButtonItem = nil;
+        self.schoolCourseVC.schoolId = _schoolId;
 //        NSLog(@"%@", _course_groupArray);
         self.schoolCourseVC.course_groupArray = _course_groupArray;
         [self addChildViewController:self.schoolCourseVC];
@@ -441,7 +453,7 @@
 //        UIButton *sentBtn =[UIButton createButtonWithFrame:CGRectMake(0, 0, 22, 22) backGruondImageName:@"home_redflower_sent" Target:self Action:@selector(sent:) Title:@""];
 //        UIBarButtonItem *sentItem =[[UIBarButtonItem alloc]initWithCustomView:sentBtn];
 //        self.navigationItem.rightBarButtonItem =sentItem;
-        
+        self.headmasterSpeechVC.schoolId = _schoolId;
         self.headmasterSpeechVC.pdt_speech = _pdt_speech;
         self.headmasterSpeechVC.head_img = _head_img;
         [self addChildViewController:self.headmasterSpeechVC];

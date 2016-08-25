@@ -54,11 +54,11 @@
     self.navigationController.navigationBar.translucent = NO;
     self.view.backgroundColor = UIColorFromRGB(229, 232, 233);
     
-    self.title = @"相册";
+    self.title = @"相   册";
     
-    
+    NSLog(@"%@", _school_pic_groupArray);
     //初始化数据源
-    [self createData];
+//    [self createData];
     
     //设置内容
     [self customContent];
@@ -79,19 +79,12 @@
 }
 
 
-//初始化数据源
--(void)createData{
-    _dataArray = [[NSMutableArray alloc]init];
-    
-    for (int i = 0; i < 6; i++) {
-        for (int j = 1 ; j < 6 ; j ++) {
-            //images-1.jpeg
-            NSString *imageName = [NSString stringWithFormat:@"images-%d.jpeg",j];
-            [_dataArray addObject:imageName];
-        }
-    }
-    
-}
+////初始化数据源
+//-(void)createData{
+//    _dataArray = [[NSMutableArray alloc]init];
+//
+//    
+//}
 
 
 
@@ -158,7 +151,7 @@
     //    到复用池中找标识为AlbumCollectionViewCell 的空闲cell,如果有就使用，没有就创建
     XXESchoolAlbumCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:identifier forIndexPath:indexPath];
     
-    cell.imageName = _dataArray[indexPath.item];
+    cell.imageName = _school_pic_groupArray[indexPath.item];
     
     return cell;
 }
