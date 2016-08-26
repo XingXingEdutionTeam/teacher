@@ -10,6 +10,7 @@
 #import "XXERegisterTeacherViewController.h"
 #import "XXERegisterHeadMasterViewController.h"
 #import "KTActionSheet.h"
+#import "AFNetworking.h"
 
 #define ORIGINAL_MAX_WIDTH 640.0f
 
@@ -32,6 +33,11 @@
 /** 用户类型 */
 @property (nonatomic, copy)NSString *userType;
 
+/** 用户身份证 */
+@property (nonatomic, copy)NSString *userIDCard;
+/** 用户护照 */
+@property (nonatomic, copy)NSString *userPassPort;
+
 /** 用户年龄 */
 @property (nonatomic, copy)NSString *userAge;
 /** 用户性别 */
@@ -48,7 +54,7 @@
         _portraitImageView.layer.cornerRadius = 120*kScreenRatioWidth/2;
         [_portraitImageView setContentMode:UIViewContentModeScaleAspectFill];
         _portraitImageView.userInteractionEnabled = YES;
-        _portraitImageView.backgroundColor = [UIColor blackColor];
+        _portraitImageView.backgroundColor = [UIColor clearColor];
         _portraitImageView.image = [UIImage imageNamed:@"home_logo"];
         UITapGestureRecognizer *portraitTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(editPortrait)];
         [_portraitImageView addGestureRecognizer:portraitTap];
@@ -73,6 +79,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.edgesForExtendedLayout = UIRectEdgeNone;
+    self.userIDCard = @"";
+    self.avatarImage = nil;
+    self.userPassPort = @"";
+    self.userAge = @"";
+    self.userSex = @"";
+    self.userType = @"";
+    
     [self createUI];
     if (!_ipc) {
         _ipc = [[UIImagePickerController alloc]init];
@@ -118,7 +131,6 @@
     //姓名
     
     UILabel *parentsNameLabel = [UILabel setupMessageLabel:@"注册姓名:"];
-//    parentsNameLabel.backgroundColor = [UIColor redColor];
     [bgImageView addSubview:parentsNameLabel];
     [parentsNameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(bgImageView.mas_left).offset(5);
@@ -137,8 +149,7 @@
     }];
     
     //身份证号
-    UILabel *parentsIDCardLabel = [UILabel setupMessageLabel:@"身份证号:"];
-//    parentsIDCardLabel.backgroundColor = [UIColor redColor];
+    UILabel *parentsIDCardLabel = [UILabel setupMessageLabel:@"证件号:"];
     [bgImageView addSubview:parentsIDCardLabel];
     [parentsIDCardLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(bgImageView.mas_left).offset(5);
@@ -146,7 +157,7 @@
         make.size.mas_equalTo(CGSizeMake(80*kScreenRatioWidth, 52*kScreenRatioHeight));
     }];
 
-    parentsIDCard = [UITextField createTextFieldWithIsOpen:NO textPlaceholder:@"请输入您的身份号"];
+    parentsIDCard = [UITextField createTextFieldWithIsOpen:NO textPlaceholder:@"请输入您的身份证号或者护照"];
     parentsIDCard.delegate = self;
     parentsIDCard.borderStyle = UITextBorderStyleNone;
     [bgImageView addSubview:parentsIDCard];
@@ -159,7 +170,6 @@
     
     //教职身份
     UILabel *teacherTypeLabel = [UILabel setupMessageLabel:@"教职身份:"];
-//    teacherTypeLabel.backgroundColor = [UIColor redColor];
     [bgImageView addSubview:teacherTypeLabel];
     [teacherTypeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(bgImageView.mas_left).offset(5);
@@ -219,19 +229,9 @@
         }
         else if ([parentsIDCard.text isEqualToString:@""])
         {
-            [self showString:@"请输入正确的身份证" forSecond:1.f];
+            [self showString:@"请输入正确的证件号" forSecond:1.f];
             return;
-        }
-        else if (parentsIDCard.text.length !=18)
-                {
-                    [self showString:@"您输入的身份证号码格式不正确" forSecond:1.f];
-                    return;
-                }
-        else if (![CheckIDCard checkIDCard:parentsIDCard.text]){
-            [self showString:@"您输入的家长身份证号码不存在" forSecond:1.f];
-            return;
-        }
-     else if ([self.teacherTypeCombox.textField.text isEqualToString:@"校长"] || [self.teacherTypeCombox.textField.text isEqualToString:@"管理员"]){
+        }else if ([self.teacherTypeCombox.textField.text isEqualToString:@"校长"] || [self.teacherTypeCombox.textField.text isEqualToString:@"管理员"]){
          if ([self.teacherTypeCombox.textField.text isEqualToString:@"校长"]) {
              self.userType = @"4";
          }else {
@@ -239,18 +239,17 @@
          }
          
          XXERegisterHeadMasterViewController *headVC = [[XXERegisterHeadMasterViewController alloc]init];
-         headVC.userPhoneNum = self.userSettingPhoneNum;
-         headVC.userName = parentsName.text;
-         headVC.userIDCarNum = parentsIDCard.text;
-         headVC.userPassword = self.userSettingPassWord;
-         headVC.userIdentifier = self.userType;
-         headVC.userAvatarImage = self.avatarImage;
-         headVC.login_type = self.login_type;
-         headVC.userSex = self.userSex;
-         headVC.userAge = self.userAge;
-         
-         [self.navigationController pushViewController:headVC animated:YES];
-         
+            headVC.userPhoneNum = self.userSettingPhoneNum;
+            headVC.userName = parentsName.text;
+            headVC.userIDCarNum = self.userIDCard;
+            headVC.headPassport = self.userPassPort;
+            headVC.userPassword = self.userSettingPassWord;
+            headVC.userIdentifier = self.userType;
+            headVC.userAvatarImage = self.avatarImage;
+            headVC.login_type = self.login_type;
+            headVC.userSex = self.userSex;
+            headVC.userAge = self.userAge;
+            [self.navigationController pushViewController:headVC animated:YES];
         }
       else{
           if ([self.teacherTypeCombox.textField.text isEqualToString:@"授课老师"]) {
@@ -261,7 +260,8 @@
         XXERegisterTeacherViewController *teacherVC = [[XXERegisterTeacherViewController alloc]init];
           teacherVC.userPhoneNum = self.userSettingPhoneNum;
           teacherVC.userName = parentsName.text;
-          teacherVC.userIDCarNum = parentsIDCard.text;
+          teacherVC.userIDCarNum = self.userIDCard;
+          teacherVC.teacherPassport = self.userPassPort;
           teacherVC.userPassword = self.userSettingPassWord;
           teacherVC.userIdentifier = self.userType;
           teacherVC.userAvatarImage = self.avatarImage;
@@ -277,12 +277,57 @@
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
     if (parentsIDCard == textField) {
+        if (parentsIDCard.text.length==8||parentsIDCard.text.length == 7) {
+            self.userPassPort = parentsIDCard.text;
+            [self testIdCardIsRegister];
+            return;
+        }else {
         if (parentsIDCard.text.length <17) {
             [self showString:@"身份证有误" forSecond:1.f];
-        }else {
-        [self getupUserIDCard:parentsIDCard.text];
+            return;
+        }else if (![CheckIDCard checkIDCard:parentsIDCard.text]) {
+            [self showString:@"您输入的家长身份证号码不存在" forSecond:1.f];
+            return;
+        } else{
+            [self getupUserIDCard:parentsIDCard.text];
+            self.userIDCard = parentsIDCard.text;
         }
     }
+        //调用测试身份证有没有注册过
+        [self testIdCardIsRegister];
+    }
+}
+
+- (void)testIdCardIsRegister
+{
+    NSLog(@"身份证%@ 护照%@",self.userIDCard,self.userPassPort );
+
+    NSString *globalUrl = @"http://www.xingxingedu.cn/Global/id_card_verify";
+    NSDictionary *dic = @{@"id_card":parentsIDCard.text,
+                          @"passport":self.userPassPort,
+                          @"appkey":APPKEY,
+                          @"backtype":BACKTYPE,
+                          @"user_type":USER_TYPE
+                          };
+    
+    NSLog(@"身份证%@ 护照%@",parentsIDCard.text,parentsIDCard.text);
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    [manager POST:globalUrl parameters:dic success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
+        NSLog(@"%@",responseObject);
+        NSLog(@"%@",[responseObject objectForKey:@"msg"]);
+        NSString *code = [responseObject objectForKey:@"code"];
+        if ([code intValue]== 1) {
+            [self showString:@"可以注册" forSecond:2.f];
+        }else if ([code intValue]== 3){
+            [self showString:@"证件号已存在" forSecond:2.f];
+        }
+        
+    } failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error) {
+        
+    }];
+    
+    
 }
 
 #pragma mark - 根据身份证号判断性别与年龄

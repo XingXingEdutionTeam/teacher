@@ -12,5 +12,7 @@
 
 /** 需要展示的图片的信息 */
 @property (nonatomic, strong)NSMutableArray *showDatasource;
+/** 展示的老师ID */
+@property (nonatomic, copy)NSString *showAlbumXid;
 
 @end

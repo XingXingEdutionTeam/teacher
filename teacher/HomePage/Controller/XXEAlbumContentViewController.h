@@ -11,5 +11,6 @@
 
 @interface XXEAlbumContentViewController : XXEBaseViewController
 @property (nonatomic, strong)XXEMySelfAlbumModel *contentModel;
+@property (nonatomic, copy)NSString *albumTeacherXID;
 
 @end

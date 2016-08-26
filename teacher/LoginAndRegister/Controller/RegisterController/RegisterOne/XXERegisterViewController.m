@@ -147,14 +147,14 @@
     
     [self.registerUerTextField mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(userImageView.mas_centerY);
-        make.left.equalTo(userIconImageView.mas_right).offset(0);
+        make.left.equalTo(userIconImageView.mas_right).offset(10*kScreenRatioWidth);
         make.right.equalTo(userImageView.mas_right).offset(0);
         make.height.mas_equalTo(41*kScreenRatioHeight);
     }];
     
     [self.registerVerificationTextField mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(verificationImageView.mas_centerY);
-        make.left.equalTo(passIconImageView.mas_right).offset(0);
+        make.left.equalTo(passIconImageView.mas_right).offset(10*kScreenRatioWidth);
         make.right.equalTo(verificationImageView.mas_right).offset(0);
         make.height.mas_equalTo(41*kScreenRatioHeight);
     }];
@@ -194,7 +194,6 @@
         make.top.equalTo(verificationImageView.mas_bottom).offset(14*kScreenRatioHeight);
         make.size.mas_equalTo(CGSizeMake(335*kScreenRatioWidth, 41*kScreenRatioHeight));
     }];
-    
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -247,6 +246,15 @@
     }
 }
 
+- (void)textFieldDidBeginEditing:(UITextField *)textField
+{
+    if (self.registerVerificationTextField == textField) {
+        [self.registerVerificationTextField becomeFirstResponder];
+    }else {
+        
+    }
+}
+
 
 #pragma mark - 点击相应方法actionClick
 
@@ -271,14 +279,14 @@
 - (void)nextButtonsClick:(UIButton *)sender
 {
     //验证验证码对不对
-//    [self verifyNumberISRight];
+    [self verifyNumberISRight];
 //
     //测试环境
-    [self showString:@"测试" forSecond:1.f];
-    XXERegisterSecondViewController *registerSecondVC = [[XXERegisterSecondViewController alloc]init];
-    registerSecondVC.userPhoneNum = @"00000999999";
-    registerSecondVC.login_type = @"1";
-    [self.navigationController pushViewController:registerSecondVC animated:YES];
+//    [self showString:@"测试" forSecond:1.f];
+//    XXERegisterSecondViewController *registerSecondVC = [[XXERegisterSecondViewController alloc]init];
+//    registerSecondVC.userPhoneNum = @"44444444444";
+//    registerSecondVC.login_type = @"1";
+//    [self.navigationController pushViewController:registerSecondVC animated:YES];
 }
 
 #pragma mark - 验证验证码对不对
@@ -316,8 +324,11 @@
         if ([string intValue] == 1) {
             [self showString:@"此号码可以注册" forSecond:1.f];
             self.verificationButton.userInteractionEnabled = YES;
+            self.registerVerificationTextField.enabled = YES;
         } else if ([string intValue] == 3) {
-            [self showString:@"手机号码已存在" forSecond:2.f];
+            [self showString:@"手机已存在,创建多个身份,请到首页编辑" forSecond:3.f];
+            [self.registerVerificationTextField resignFirstResponder];
+            self.registerVerificationTextField.enabled = NO;
             self.verificationButton.userInteractionEnabled = NO;
         } else{
             [self showString:@"请重新注册" forSecond:1.f];

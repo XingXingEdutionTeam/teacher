@@ -237,17 +237,13 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
     switch (indexPath.row) {
         case 0:{
             self.teacherCell = [self cellAtIndexRow:0 andAtSection:0 Message:@""];
-//            if (self.isHave) {
-//                [self tureOrFalseCellClick:NO Tag:100];
-//            }else{
                 [self tureOrFalseCellClick:YES Tag:100];
-//            }
             break;
         }
         case 1:{
-            if (self.isHave) {
-                
-            }else{
+//            if (self.isHave) {
+//                
+//            }else{
             XXESelectMessageView *schoolType = [[XXESelectMessageView alloc]initWithTWFrame:self.view.bounds TWselectCityTitle:@"学校类型" MessageArray:_schoolTypeArr];
             
             [schoolType showCityView:^(NSString *proviceStr) {
@@ -255,13 +251,13 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
                 self.teacherCell = [self cellAtIndexRow:1 andAtSection:0 Message:[NSString  stringWithFormat:@"%@",proviceStr]];
                 self.theEndSchoolType = proviceStr;
             }];
-            }
+//            }
             break;
         }
         case 2:{
-            if (self.isHave) {
-                
-            }else{
+//            if (self.isHave) {
+//                
+//            }else{
             TWSelectCityView *city = [[TWSelectCityView alloc] initWithTWFrame:CGRectMake(0, -61, KScreenWidth, KScreenHeight) TWselectCityTitle:@"选择地区"];
             [city showCityView:^(NSString *proviceStr, NSString *cityStr, NSString *distr) {
                 NSString *string = [NSString stringWithFormat:@"%@-%@-%@",proviceStr,cityStr,distr];
@@ -271,7 +267,7 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
                 self.schoolDistrict = distr;
                 NSLog(@"地点%@",self.teacherCell.teacherRegisTextField.text);
             }];
-            }
+//            }
             break;
         }
         case 3:{
@@ -387,30 +383,33 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
 //注册成功的按钮
 - (void)sureButtonClick:(UIButton *)sender
 {
-    
-    XXELoginViewController *loginVC = [[XXELoginViewController alloc]init];
-    UIWindow *window = [UIApplication sharedApplication].keyWindow;
-    window.rootViewController = loginVC;
-    [self.view removeFromSuperview];
-    
-    
     [self getIdCardPhotoImage];
-    NSLog(@"确认按钮");
+    
     NSLog(@"登录类型%@ 电话号码%@ 密码%@ 用户姓名%@ 用户身份证%@ 年龄%@ 性别%@ 用户身份%@ 用户头像%@",self.login_type,self.userPhoneNum,self.userPassword,self.userName,self.userIDCarNum,self.userAge,self.userSex,self.userIdentifier,self.userAvatarImage);
     NSLog(@"邀请码%@ 学校详细地址%@ 学校电话%@ 学校ID%@ 学校类型%@ 学校名字%@ 学校省%@ 学校市%@ 学校区%@ 审核人%@",self.theEndInviteCode,self.schoolAddrss,self.schoolTel,self.theEndSchoolId,self.theEndSchoolType,self.schoolName,self.schoolProvince,self.schoolCity,self.schoolDistrict,self.theEndReviewerId);
     
-    NSData *data = UIImageJPEGRepresentation(_userAvatarImage, 0.7);
-    NSArray *arr = @[data];
+//    NSData *data = UIImageJPEGRepresentation(_userAvatarImage, 0.7);
+//    NSArray *arr = @[data];
     
-    NSLog(@"%@",arr);
+//    NSLog(@"%@",arr);
+    NSMutableArray *array = [NSMutableArray array];
+    NSLog(@"%@",self.fileHeadImageArray);
     
+    if (_fileHeadImageArray.count > 0) {
+        for (int i =0; i < self.fileHeadImageArray.count; i++) {
+            NSData *data = UIImageJPEGRepresentation(self.fileHeadImageArray[i], 0.5f);
+            //base64
+            NSString *encodeImage = [data base64EncodedStringWithOptions:NSDataBase64EncodingEndLineWithLineFeed];
+            [array addObject:encodeImage];
+        }
+    }
     NSDictionary *parameter = @{
                                 @"login_type":_login_type,
                                 @"phone":_userPhoneNum,
                                 @"pass":_userPassword,
                                 @"tname":_userName,
                                 @"id_card":_userIDCarNum,
-                                @"passport":@"",
+                                @"passport":_headPassport,
                                 @"age":_userAge,
                                 @"sex":_userSex,
                                 @"position":_userIdentifier,
@@ -426,7 +425,7 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
                                 @"province":_schoolProvince,
                                 @"city":_schoolCity,
                                 @"district":_schoolDistrict,
-                                
+                                @"file":array,
                                 @"appkey":APPKEY,
                                 @"backtype":BACKTYPE
                                 };
@@ -434,16 +433,16 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     
     [manager POST:XXERegisterTeacherUrl parameters:parameter constructingBodyWithBlock:^(id<AFMultipartFormData> formData){
-        if (_fileHeadImageArray.count > 0) {
-            for (int i =0; i < _fileHeadImageArray.count; i++) {
-                UIImage *image = _fileHeadImageArray[i];
-                NSData *data = UIImageJPEGRepresentation(image, 0.7);
-                NSString *fileName = [NSString stringWithFormat:@"%d.jpeg",i];
-                //         NSString *name = [NSString stringWithFormat:@"file%d",i];
-                NSString *type = @"image/jpeg";
-                [formData appendPartWithFileData:data name:@"file" fileName:fileName mimeType:type];
-            }
-        }
+//        if (_fileHeadImageArray.count > 0) {
+//            for (int i =0; i < _fileHeadImageArray.count; i++) {
+//                UIImage *image = _fileHeadImageArray[i];
+//                NSData *data = UIImageJPEGRepresentation(image, 0.7);
+//                NSString *fileName = [NSString stringWithFormat:@"%d.jpeg",i];
+//                //         NSString *name = [NSString stringWithFormat:@"file%d",i];
+//                NSString *type = @"image/jpeg";
+//                [formData appendPartWithFileData:data name:@"file" fileName:fileName mimeType:type];
+//            }
+//        }
         
     }success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
@@ -451,14 +450,16 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
         NSLog(@"%@",[responseObject objectForKey:@"msg"]);
         
         if ([[responseObject objectForKey:@"code"] intValue]==1) {
-            [self showString:@"注册成功" forSecond:1.f];
-            
+
+            [self showString:@"你已注册成功,请到首页登录" forSecond:3.f];
             //跳转到登录页
             NSLog(@"-----进入主页------");
-            XXELoginViewController *loginVC = [[XXELoginViewController alloc]init];
-            UIWindow *window = [UIApplication sharedApplication].keyWindow;
-            window.rootViewController = loginVC;
-            [self.view removeFromSuperview];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                XXELoginViewController *loginVC = [[XXELoginViewController alloc]init];
+                UIWindow *window = [UIApplication sharedApplication].keyWindow;
+                window.rootViewController = loginVC;
+                [self.view removeFromSuperview];
+            });
             
         } else {
             NSString *string = [responseObject objectForKey:@"msg"];

@@ -142,6 +142,7 @@ static NSString *headerCell = @"HEADERCELL";
     NSLog(@"===选中某一个View====");
     XXEAlbumShowViewController *showVC = [[XXEAlbumShowViewController alloc]init];
     showVC.showDatasource = self.itemDatasource[indexPath.section];
+    showVC.showAlbumXid = self.albumTeacherXID;
     [self.navigationController pushViewController:showVC animated:YES];
 }
 

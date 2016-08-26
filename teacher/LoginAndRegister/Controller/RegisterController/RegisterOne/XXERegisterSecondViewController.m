@@ -111,7 +111,7 @@
     }];
     
     UILabel *label3 = [[UILabel alloc]init];
-    label3.text = @"密码";
+    label3.text = @"输入密码";
     label3.font = [UIFont systemWithIphone6P:17 Iphone6:15 Iphone5:12 Iphone4:11];
     label3.tintColor = XXEColorFromRGB(51, 51, 51);
     label3.textAlignment = NSTextAlignmentLeft;

@@ -128,6 +128,7 @@ static NSString * IdentifierCELL = @"IdentifierCELL";
     NSLog(@"===相册的详情=====");
     XXEAlbumContentViewController *contentVC = [[XXEAlbumContentViewController alloc]init];
     contentVC.contentModel = self.datasource[indexPath.row];
+    contentVC.albumTeacherXID  = self.myAlbumTeacherId;
     NSLog(@"%@",contentVC.contentModel);
     [self.navigationController pushViewController:contentVC animated:YES];
 }

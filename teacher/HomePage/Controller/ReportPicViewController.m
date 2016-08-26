@@ -13,10 +13,12 @@
 #import "ReportCell.h"
 #import "ReportPicViewController.h"
 #import "MBProgressHUD.h"
+#import "XXEHomeReportListApi.h"
+#import "XXEReportModel.h"
+#import "XXEReportSubmitMessageApi.h"
 @interface ReportPicViewController ()<UITableViewDataSource,UITableViewDelegate>
 {
     UITableView *_tableView;
-    NSMutableArray *dataArray;
     NSMutableArray *idArray;
     NSMutableArray *seletedIdArray;
     UIAlertView *_alert;
@@ -24,10 +26,43 @@
     NSMutableString * report_name_idStr;
 }
 
+@property (nonatomic, strong)UITableView *reportTableView;
+
+/**举报表的数据 */
+@property (nonatomic, strong)NSMutableArray *reportLiatDatasource;
+
+/** 保存举报类型的id */
+@property (nonatomic, strong)NSMutableArray *datasourceReportId;
 
 @end
 
 @implementation ReportPicViewController
+
+- (NSMutableArray *)datasourceReportId
+{
+    if (!_datasourceReportId) {
+        _datasourceReportId = [NSMutableArray array];
+    }
+    return _datasourceReportId;
+}
+
+- (UITableView *)reportTableView
+{
+    if (!_reportTableView) {
+        _reportTableView = [[UITableView alloc]initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
+        _reportTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+
+    }
+    return _reportTableView;
+}
+
+- (NSMutableArray *)reportLiatDatasource
+{
+    if (!_reportLiatDatasource) {
+        _reportLiatDatasource = [NSMutableArray array];
+    }
+    return _reportLiatDatasource;
+}
 
 - (void)viewWillAppear:(BOOL)animated
 {
@@ -35,6 +70,13 @@
     self.view.backgroundColor = XXEBackgroundColor;
     self.navigationController.navigationBarHidden = NO;
     [[UINavigationBar appearance]setTintColor:[UIColor whiteColor]];
+    UIButton *rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    rightBtn.frame = CGRectMake(- 10, 0, 44, 20);
+    
+    [rightBtn setTitle:@"提交"  forState:UIControlStateNormal];
+    [rightBtn addTarget:self action:@selector(reportListSetup:) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithCustomView:rightBtn];
+    self.navigationItem.rightBarButtonItem = backItem;
 }
 -(UIStatusBarStyle)preferredStatusBarStyle
 {
@@ -43,153 +85,118 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    seletedIdArray = [[NSMutableArray alloc] init];
-   
     self.title =@"举报";
-    
-    self.view.backgroundColor = UIColorFromRGB(116,205, 169);
-   
-//    [self fetchNetData];
-    
-    [self createTableView];
-    [self createRightBar];
-    
+    [self fetchNetData];
+    seletedIdArray = [[NSMutableArray alloc] init];
+    self.reportTableView.delegate = self;
+    self.reportTableView.dataSource = self;
+    [self.reportTableView registerNib:[UINib nibWithNibName:@"ReportCell" bundle:nil] forCellReuseIdentifier:@"ReportCELL"];
+    [self.view addSubview:self.reportTableView];
 }
 
 - (void)fetchNetData{
-/*
- 【举报列表(两端通用)】
- 
- 接口:
- http://www.xingxingedu.cn/Global/report_list
- */
     
-    //路径
-    NSString *urlStr = @"http://www.xingxingedu.cn/Global/report_list";
-    
-    //请求参数 无
-    NSString *parameterXid;
-    NSString *parameterUser_Id;
-
-    
-    NSDictionary *params = @{@"appkey":APPKEY, @"backtype":BACKTYPE, @"xid":parameterXid, @"user_id":parameterUser_Id, @"user_type":USER_TYPE};
-    
-//    [WZYHttpTool post:urlStr params:params success:^(id responseObj) {
-        //
-        idArray = [[NSMutableArray alloc] init];
-        dataArray = [[NSMutableArray alloc] init];
+    XXEHomeReportListApi *reportListApi = [[XXEHomeReportListApi alloc]initWithToReportListUserId:USER_ID XXID:XID];
+    [reportListApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
+        NSLog(@"%@",request.responseJSONObject);
+        NSLog(@"%@",[request.responseJSONObject objectForKey:@"msg"]);
+        NSMutableArray *data = [request.responseJSONObject objectForKey:@"data"];
+        for (int i =0; i<data.count; i++) {
+            XXEReportModel *model = [[XXEReportModel alloc]initWithDictionary:data[i] error:nil];
+            [self.reportLiatDatasource addObject:model];
+        }
+        NSLog(@"%ld",self.reportLiatDatasource.count);
+        NSLog(@"%@",self.reportLiatDatasource);
+        [self.reportTableView reloadData];
         
-//        NSLog(@"%@", responseObj);
-        /*
-         {
-         msg = Success!,
-         data = [
-         {
-         id = 1,
-         name = 色情低俗
-         }
-         */
+    } failure:^(__kindof YTKBaseRequest *request) {
         
-//        NSString *codeStr = [NSString stringWithFormat:@"%@", responseObj[@"code"]];
-//        
-//        if ([codeStr isEqualToString:@"1"]) {
-//        
-//          for (NSDictionary *dic in responseObj[@"data"]) {
-//            [idArray addObject:dic[@"id"]];
-//            [dataArray addObject:dic[@"name"]];
-//          }
-//            
-//        }else{
-//        
-//        
-//        }
-//        
-//        [_tableView reloadData];
-//        
-//    } failure:^(NSError *error) {
-//        //
-//        NSLog(@"%@", error);
-//    }];
-
+    }];
 }
 
 
-- (void)createTableView{
-    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, kWidth, kHeight) style:UITableViewStylePlain];
-    [self.view addSubview:_tableView];
-    _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    _tableView.dataSource =self;
-    _tableView.delegate =self;
-
+#pragma mark - UITableViewDelegate
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return 2.f;
 }
-- (void)createRightBar{
-    
-    UIButton *rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    rightBtn.frame = CGRectMake(- 10, 0, 44, 20);
-    
-    [rightBtn setTitle:@"提交"  forState:UIControlStateNormal];
-    [rightBtn addTarget:self action:@selector(ktUp:) forControlEvents:UIControlEventTouchUpInside];
-    
-    UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithCustomView:rightBtn];
-    self.navigationItem.rightBarButtonItem = backItem;
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    return 40;
 }
+
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
 
-    return dataArray.count;
+    return self.reportLiatDatasource.count;
 }
+
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    ReportCell *cell =(ReportCell *)[tableView dequeueReusableCellWithIdentifier:KPATA];
-    
-    if (!cell) {
-        NSArray *nib =[[NSBundle mainBundle]loadNibNamed:KPATA owner:[ReportCell class] options:nil];
-        cell =(ReportCell *)[nib objectAtIndex:0];
-    }
-    cell.titleLbl.text = dataArray[indexPath.row];
+    ReportCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ReportCELL" forIndexPath:indexPath];
+    XXEReportModel *model = self.reportLiatDatasource[indexPath.row];
+    cell.titleLbl.text = model.reportName;
+    NSLog(@"%@",model.reportName);
     cell.selectBtn.tag =indexPath.row +100;
-    
-    [cell.selectBtn addTarget:self action:@selector(selectBt:) forControlEvents:UIControlEventTouchUpInside];
-    cell.accessoryType = UITableViewCellAccessoryNone;
-    
+    [cell.selectBtn addTarget:self action:@selector(reportChangeButtonClick:) forControlEvents:UIControlEventTouchUpInside];
     return cell;
 }
-- (void)selectBt:(UIButton *)btn  {
+- (void)reportChangeButtonClick:(UIButton *)btn  {
     
-    NSString *idString = idArray[btn.tag - 100];
+    XXEReportModel *model  = self.reportLiatDatasource[btn.tag - 100];
     
             if (btn.selected) {
-                
                 //由已勾选 变为 未勾选
                 [btn setBackgroundImage:[UIImage imageNamed:@"未勾选34x34"] forState:UIControlStateNormal];
                 btn.selected =NO;
-
-                [seletedIdArray removeObject:idString];
-
+                [self.datasourceReportId removeObject:model.reportId];
             }
             else{
                 //由未勾选 变为 已勾选
                 [btn setBackgroundImage:[UIImage imageNamed:@"已勾选34x34"] forState:UIControlStateNormal];
                btn.selected =YES;
-                
-                [seletedIdArray addObject:idString];
-                
+                [self.datasourceReportId addObject:model.reportId];
             }
-    
+    NSLog(@"举报内容的ID%@",self.datasourceReportId);
 }
 
+#pragma mark - 提交action
+- (void)reportListSetup:(UIButton*)barItem{
+    NSString *stringReportId = [NSString string];
+    if (self.datasourceReportId.count >0) {
+        for (int i =0; i<self.datasourceReportId.count; i++) {
+            NSString *stringId = [NSString stringWithFormat:@"%@,",self.datasourceReportId[i]];
+            stringReportId = [stringReportId stringByAppendingString:stringId];
 
-
-
-- (void)ktUp:(UIButton*)barItem{
-    
-    if (seletedIdArray.count == 0) {
-        
-        
-    }else{
-       
-//        [self submit];
+        }
+        NSLog(@"%@",stringReportId);
+        [self reportSubmitMessage:stringReportId];
+    }else {
+        [self showString:@"请选择举报内容" forSecond:1.f];
     }
+}
+
+#pragma mark - 提交举报的网络信息
+- (void)reportSubmitMessage:(NSString *)string
+{
+    XXEReportSubmitMessageApi *submitApi = [[XXEReportSubmitMessageApi alloc]initWithReportSubmitUserID:USER_ID UserXID:XID OtherXid:self.other_xidStr ReportNameId:string ReportType:self.report_type PhotoUrl:self.picUrlStr OriginPage:self.origin_pageStr];
+    [submitApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
+        NSLog(@"%@",request.responseJSONObject);
+        NSString *code = [request.responseJSONObject objectForKey:@"code"];
+        if ([code intValue]==1) {
+            [self showString:@"举报成功,谢谢你的举报" forSecond:2.f];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2*NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [self.navigationController popViewControllerAnimated:YES];
+            });
+            
+        }else{
+            NSString *msg = [request.responseJSONObject objectForKey:@"msg"];
+            [self showString:msg forSecond:1.f];
+        }
+        
+    } failure:^(__kindof YTKBaseRequest *request) {
+        
+    }];
 }
 
 
@@ -216,46 +223,46 @@
      */
     
     //路径
-    NSString *urlStr = @"http://www.xingxingedu.cn/Global/report_sub";
+//    NSString *urlStr = @"http://www.xingxingedu.cn/Global/report_sub";
     
     //请求参数
     //获取学校id数组
     //    NSLog(@"已选 id  %@", seletedIdArray);
     
+//    
+//    NSMutableString *tidStr = [NSMutableString string];
+//    
+//    for (int j = 0; j < seletedIdArray.count; j ++) {
+////        NSString *str = seletedIdArray[j];
+//
+//        if (j != seletedIdArray.count - 1) {
+//            [tidStr appendFormat:@"%@,", str];
+//        }else{
+//            [tidStr appendFormat:@"%@", str];
+//        }
+//    }
+//    
+//    report_name_idStr = tidStr;
+//    NSString *parameterXid;
+//    NSString *parameterUser_Id;
+//   
     
-    NSMutableString *tidStr = [NSMutableString string];
     
-    for (int j = 0; j < seletedIdArray.count; j ++) {
-        NSString *str = seletedIdArray[j];
-        
-        if (j != seletedIdArray.count - 1) {
-            [tidStr appendFormat:@"%@,", str];
-        }else{
-            [tidStr appendFormat:@"%@", str];
-        }
-    }
-    
-    report_name_idStr = tidStr;
-    NSString *parameterXid;
-    NSString *parameterUser_Id;
-   
-    
-    
-    NSDictionary *params;
-    
-    if (_other_xidStr == nil) {
-        //被举报的是图片
-    params = @{@"appkey":APPKEY, @"backtype":BACKTYPE, @"xid":parameterXid, @"user_id":parameterUser_Id, @"user_type":USER_TYPE, @"report_name_id":report_name_idStr, @"report_type":@"2", @"url":_picUrlStr, @"origin_page":_origin_pageStr};
-    }else{
-    //被举报的是人
-    params = @{@"appkey":APPKEY, @"backtype":BACKTYPE, @"xid":parameterXid, @"user_id":parameterUser_Id, @"user_type":USER_TYPE, @"report_name_id":report_name_idStr, @"report_type":@"1", @"other_xid":_other_xidStr};
-    }
+//    NSDictionary *params;
+//    
+//    if (_other_xidStr == nil) {
+//        //被举报的是图片
+//    params = @{@"appkey":APPKEY, @"backtype":BACKTYPE, @"xid":parameterXid, @"user_id":parameterUser_Id, @"user_type":USER_TYPE, @"report_name_id":report_name_idStr, @"report_type":@"2", @"url":_picUrlStr, @"origin_page":_origin_pageStr};
+////    }else{
+////    //被举报的是人
+//    params = @{@"appkey":APPKEY, @"backtype":BACKTYPE, @"xid":parameterXid, @"user_id":parameterUser_Id, @"user_type":USER_TYPE, @"report_name_id":report_name_idStr, @"report_type":@"1", @"other_xid":_other_xidStr};
+//    }
 //        NSLog(@"传参  --  %@", params);
     
-    HUD =[[MBProgressHUD alloc]initWithView:self.view];
-    [self.view addSubview:HUD];
-    HUD.mode =MBProgressHUDModeText;
-    HUD.dimBackground =YES;
+//    HUD =[[MBProgressHUD alloc]initWithView:self.view];
+//    [self.view addSubview:HUD];
+//    HUD.mode =MBProgressHUDModeText;
+//    HUD.dimBackground =YES;
     
 //    [WZYHttpTool post:urlStr params:params success:^(id responseObj) {
 //        //
@@ -302,18 +309,5 @@
 
 }
 
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    [self performSelector:@selector(select) withObject:nil afterDelay:0.5f];
-//    NSLog(@"%ld",indexPath.row);
-}
-- (void)select{
-    [_tableView deselectRowAtIndexPath:[_tableView indexPathForSelectedRow] animated:YES];
-
-}
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-
-    return 40;
-}
 
 @end

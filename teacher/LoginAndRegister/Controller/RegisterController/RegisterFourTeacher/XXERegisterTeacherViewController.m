@@ -250,6 +250,7 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     [self commBoxInfo];
+    [self InitializeTheMessage];
     
     _titleArr = @[@"学校名称:",@"学校类型:",@"班级信息:",@"年级信息:",@"教学类型:",@"",@"审核人员:",@"邀请码"];
     
@@ -260,6 +261,16 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
     [self.teacherTableView registerNib:[UINib nibWithNibName:@"XXETeacherTableViewCell" bundle:nil] forCellReuseIdentifier:IdentifierCELL];
     [self.teacherTableView registerNib:[UINib nibWithNibName:@"XXETeacherMessTableViewCell" bundle:nil] forCellReuseIdentifier:IdentifierMessCELL];
     [self.view addSubview:self.teacherTableView];
+}
+
+- (void)InitializeTheMessage
+{
+    self.theEndSchoolId = @"";
+    self.theEndClassId = @"";
+    self.theEndSchoolType = @"";
+    self.theEndTeachType = @"";
+    self.theEndReviewerId = @"";
+    self.theEndInviteCode = @"";
 }
 
 #pragma mark - tableView代理
@@ -515,7 +526,7 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
                 [self.teachOfTypeDatasource addObject:model];
                 [self.teachOfTypeArray addObject:model.teachTypeName];
             }
-            self.teacherCell = [self cellAtIndexRow:4 andAtSection:0 Message:self.teachOfTypeArray[0]];
+//            self.teacherCell = [self cellAtIndexRow:4 andAtSection:0 Message:self.teachOfTypeArray[0]];
             XXETeachOfTypeModel *model = self.teachOfTypeDatasource[0];
             self.theEndTeachType = model.teachTypeId;
         }else {
@@ -549,7 +560,7 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
                     [self.classNameArray addObject:classModel.className];
                 }
                 NSString *calssName = self.classNameArray[0];
-                self.teacherCell = [self cellAtIndexRow:3 andAtSection:0 Message:calssName];
+//                self.teacherCell = [self cellAtIndexRow:3 andAtSection:0 Message:calssName];
                 XXETeacherClassModel *model = self.classNameDatasource[0];
                 self.theEndClassId = model.class_id;
                 
@@ -580,7 +591,7 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
             [self.reviewerDatasource addObject:model];
             [self.reviewerNameArray addObject:model.reviewerName];
         }
-        self.teacherCell = [self cellAtIndexRow:6 andAtSection:0 Message:self.reviewerNameArray[0]];
+//        self.teacherCell = [self cellAtIndexRow:6 andAtSection:0 Message:self.reviewerNameArray[0]];
         XXEReviewerModel *model = self.reviewerDatasource[0];
         self.theEndReviewerId = model.reviewerId;
     } failure:^(__kindof YTKBaseRequest *request) {
@@ -601,7 +612,7 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
                                 @"pass":_userPassword,
                                 @"tname":_userName,
                                 @"id_card":_userIDCarNum,
-                                @"passport":@"",
+                                @"passport":_teacherPassport,
                                 @"age":_userAge,
                                 @"sex":_userSex,
                                 @"position":_userIdentifier,
@@ -623,7 +634,7 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
                 UIImage *image = _fileImageArray[i];
                 NSData *data = UIImageJPEGRepresentation(image, 0.5);
                 NSString *fileName = [NSString stringWithFormat:@"%d.jpeg",i];
-                //            NSString *name = [NSString stringWithFormat:@"file%d",i];
+                // NSString *name = [NSString stringWithFormat:@"file%d",i];
                 NSString *type = @"image/jpeg";
                 [formData appendPartWithFileData:data name:@"file" fileName:fileName mimeType:type];
             }
@@ -635,13 +646,16 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
         NSString *msg = [responseObject objectForKey:@"msg"];
         NSString *code = [responseObject objectForKey:@"code"];
         if ([code intValue]==1) {
-            [self showString:@"注册成功" forSecond:1.f];
+            [self showString:@"你已注册成功,请到首页登录" forSecond:3.f];
             //跳转到登录页
             NSLog(@"-----进入主页------");
-            XXELoginViewController *loginVC = [[XXELoginViewController alloc]init];
-            UIWindow *window = [UIApplication sharedApplication].keyWindow;
-            window.rootViewController = loginVC;
-            [self.view removeFromSuperview];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                XXELoginViewController *loginVC = [[XXELoginViewController alloc]init];
+                UIWindow *window = [UIApplication sharedApplication].keyWindow;
+                window.rootViewController = loginVC;
+                [self.view removeFromSuperview];
+            });
+            
         }else {
             [self showString:msg forSecond:2.f];
         } 

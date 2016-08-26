@@ -16,6 +16,10 @@
 #define USER_ID  @"1"
 #define USER_TYPE @"2"
 
+//友盟分享 猩猩教室校园端
+
+#define XXEYouMengAppKey @"57c01a13f43e48118e000e55"
+
 
 //登录
 #define XXELoginUrl @"http://www.xingxingedu.cn/Teacher/login"
@@ -30,11 +34,18 @@
 #define XXEMySelfAlubmAddUrl @"http://www.xingxingedu.cn/Teacher/class_album_add"
 //删除相册
 #define XXEAlbumDelegateUrl @"http://www.xingxingedu.cn/Teacher/class_album_delete"
+//收藏图片
+#define XXEHomeCollectionPhotoUrl @"http://www.xingxingedu.cn/Global/col_pic_all"
 //上传图片
 #define XXEAblumUpdataUrl @"http://www.xingxingedu.cn/Teacher/class_pic_upload"
 
 //相册的内容
 #define XXEAblumPhotoUrl @"http://www.xingxingedu.cn/Teacher/class_album_pic"
+//举报列表
+#define XXEHomeReportListUrl @"http://www.xingxingedu.cn/Global/report_list"
+//举报提交
+#define XXEHomeReportSubmitUrl @"http://www.xingxingedu.cn/Global/report_sub"
+
 //我的朋友圈
 #define XXEFriendCircleUrl @"http://www.xingxingedu.cn/Global/my_friend_circle"
 

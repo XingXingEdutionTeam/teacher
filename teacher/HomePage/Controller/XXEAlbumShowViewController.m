@@ -12,10 +12,13 @@
 #import "XXEVerticalButton.h"
 #import "KTActionSheet.h"
 #import "ReportPicViewController.h"
+#import "XXEHomePageCollectionPhotoApi.h"
 
 @interface XXEAlbumShowViewController ()<SDCycleScrollViewDelegate,KTActionSheetDelegate>
 
 @property (nonatomic, strong)NSMutableArray *albumNameDatasource;
+/** 索引 图片的位置 */
+@property (nonatomic, assign)NSInteger albumIndexPaths;
 
 @end
 
@@ -119,6 +122,7 @@
 - (void)cycleScrollView:(SDCycleScrollView *)cycleScrollView didScrollToIndex:(NSInteger)index
 {
     NSLog(@"%ld",(long)index);
+    self.albumIndexPaths = index;
     
     
 }
@@ -136,7 +140,33 @@
 - (void)downloadButton:(XXEVerticalButton *)sender
 {
     NSLog(@"下载照片");
+//    int index = [self.albumIndexPaths intValue];
+    XXEAlbumDetailsModel *model = self.showDatasource[self.albumIndexPaths];
+    NSLog(@"%@",model.pic);
+    NSString *stringUtl = [NSString stringWithFormat:@"%@%@",kXXEPicURL,model.pic];
+    NSURL *url = [NSURL URLWithString:stringUtl];
+    NSData *data = [NSData dataWithContentsOfURL:url];
+    UIImage *image = [UIImage imageWithData:data];
+    NSLog(@"%@",image);
+    [self saveImageToPgoto:image];
 }
+
+#pragma mark - 保存图片
+- (void)saveImageToPgoto:(UIImage *)image
+{
+    UIImageWriteToSavedPhotosAlbum(image, self, @selector(image:didFinishSavingWithError:contextInfo:), NULL);
+}
+
+- (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo
+{
+    if (error != NULL) {
+        [self showString:@"保存失败" forSecond:1.f];
+    }else {
+        [self showString:@"保存成功" forSecond:1.f];
+    }
+}
+
+
 
 - (void)shareButtonClick:(XXEVerticalButton *)sender
 {
@@ -163,18 +193,44 @@
         if (action.tag == 1000) {
             if (index == 0) {
                 NSLog(@"收藏");
+                [self collectionPhotoImage];
             }
         }else if (action.tag == 1001) {
             if (index  == 0) {
                 NSLog(@"分享");
             }else {
                 NSLog(@"举报");
+                XXEAlbumDetailsModel *model = self.showDatasource[self.albumIndexPaths];
+                
                 ReportPicViewController *reportVC = [[ReportPicViewController alloc]init];
+                reportVC.other_xidStr = self.showAlbumXid;
+                reportVC.picUrlStr = model.pic;
+                reportVC.origin_pageStr = @"5";
+                reportVC.report_type = @"2";
                 [self.navigationController pushViewController:reportVC animated:YES];
             }
         }
 }
 
+#pragma mark  - 收藏
+- (void)collectionPhotoImage
+{
+    XXEAlbumDetailsModel *model = self.showDatasource[self.albumIndexPaths];
+    NSLog(@"%@",model.pic);
+    XXEHomePageCollectionPhotoApi *photoApi = [[XXEHomePageCollectionPhotoApi alloc]initHomePageCollectionPhontImageAddress:model.pic];
+    [photoApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
+        NSString *code = [request.responseJSONObject objectForKey:@"code"];
+        if ([code intValue]==1) {
+            [self showString:@"收藏图片成功" forSecond:1.f];
+        }else{
+            [self showString:@"收藏图片失败" forSecond:1.f];
+        }
+        
+    } failure:^(__kindof YTKBaseRequest *request) {
+        [self showString:@"收藏图片失败" forSecond:1.f];
+    }];
+    
+}
 
 
 #pragma mark - 按钮的设置

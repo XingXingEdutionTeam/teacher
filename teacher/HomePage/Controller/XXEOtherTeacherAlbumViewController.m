@@ -9,6 +9,7 @@
 #import "XXEOtherTeacherAlbumViewController.h"
 #import "XXEMyClassAlbumTableViewCell.h"
 #import "XXEMyselfAblumApi.h"
+#import "XXEAlbumContentViewController.h"
 
 static NSString * OTherCELL = @"OTHERCELL";
 @interface XXEOtherTeacherAlbumViewController ()<UITableViewDelegate,UITableViewDataSource>
@@ -107,7 +108,12 @@ static NSString * OTherCELL = @"OTHERCELL";
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
+    NSLog(@"===相册的详情=====");
+    XXEAlbumContentViewController *contentVC = [[XXEAlbumContentViewController alloc]init];
+    contentVC.contentModel = self.datasource[indexPath.row];
+    contentVC.albumTeacherXID  = self.otherTeacherId;
+    NSLog(@"%@",contentVC.contentModel);
+    [self.navigationController pushViewController:contentVC animated:YES];
 }
 
 

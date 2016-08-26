@@ -151,14 +151,14 @@
     
     [self.userNameTextField mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(userImageView.mas_centerY);
-        make.left.equalTo(userIconImageView.mas_right).offset(0);
+        make.left.equalTo(userIconImageView.mas_right).offset(10*kScreenRatioWidth);
         make.right.equalTo(userImageView.mas_right).offset(0);
         make.height.mas_equalTo(41*kScreenRatioHeight);
     }];
     
     [self.passWordTextField mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(passImageView.mas_centerY);
-        make.left.equalTo(passIconImageView.mas_right).offset(0);
+        make.left.equalTo(passIconImageView.mas_right).offset(10*kScreenRatioWidth);
         make.right.equalTo(passImageView.mas_right).offset(0);
         make.height.mas_equalTo(41*kScreenRatioHeight);
     }];
@@ -188,7 +188,6 @@
         make.left.equalTo(weakSelf.view.mas_left).offset(52*kScreenRatioWidth);
         make.top.equalTo(self.passWordTextField.mas_bottom).offset(77*kScreenRatioHeight);
         make.size.mas_equalTo(CGSizeMake(55, 24));
-        
     }];
     
     //游客登录

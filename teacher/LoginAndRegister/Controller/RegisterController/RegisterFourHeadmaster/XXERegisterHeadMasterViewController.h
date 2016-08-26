@@ -18,6 +18,8 @@
 @property (nonatomic, copy)NSString *userAge;
 /** 用户的身份证号 */
 @property (nonatomic, copy)NSString *userIDCarNum;
+/** 用户护照 */
+@property (nonatomic, copy)NSString *headPassport;
 /** 用户的身份 */
 @property (nonatomic, copy)NSString *userIdentifier;
 /** 用户名 */
