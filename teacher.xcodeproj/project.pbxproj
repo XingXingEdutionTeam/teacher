@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		04304EEC1D6FD62E0066B80C /* XXEModifyEmailApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 04304EEB1D6FD62E0066B80C /* XXEModifyEmailApi.m */; };
 		043301271D62BDD000722DE2 /* XXERedFlowerSentHistoryApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 0433010B1D62BDD000722DE2 /* XXERedFlowerSentHistoryApi.m */; };
 		043301281D62BDD000722DE2 /* XXEChiefAndTeacherViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0433010E1D62BDD000722DE2 /* XXEChiefAndTeacherViewController.m */; };
 		043301291D62BDD000722DE2 /* XXEManagerAndHeadmasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 043301101D62BDD000722DE2 /* XXEManagerAndHeadmasterViewController.m */; };
@@ -355,6 +356,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		04304EEA1D6FD62E0066B80C /* XXEModifyEmailApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXEModifyEmailApi.h; sourceTree = "<group>"; };
+		04304EEB1D6FD62E0066B80C /* XXEModifyEmailApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXEModifyEmailApi.m; sourceTree = "<group>"; };
 		0433010A1D62BDD000722DE2 /* XXERedFlowerSentHistoryApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXERedFlowerSentHistoryApi.h; sourceTree = "<group>"; };
 		0433010B1D62BDD000722DE2 /* XXERedFlowerSentHistoryApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXERedFlowerSentHistoryApi.m; sourceTree = "<group>"; };
 		0433010D1D62BDD000722DE2 /* XXEChiefAndTeacherViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXEChiefAndTeacherViewController.h; sourceTree = "<group>"; };
@@ -1079,6 +1082,8 @@
 				043A7AB51D6F0624009A6ACB /* XXEModifyCharacterApi.m */,
 				043A7AB71D6F0659009A6ACB /* XXEIntroductionDetailApi.h */,
 				043A7AB81D6F0659009A6ACB /* XXEIntroductionDetailApi.m */,
+				04304EEA1D6FD62E0066B80C /* XXEModifyEmailApi.h */,
+				04304EEB1D6FD62E0066B80C /* XXEModifyEmailApi.m */,
 			);
 			path = Api;
 			sourceTree = "<group>";
@@ -2848,6 +2853,7 @@
 				9E6693DC1D6460BE00FFA0A7 /* KTSheetCell.m in Sources */,
 				043A7A6A1D6D804C009A6ACB /* XXERegisterTeacherTableViewCell.m in Sources */,
 				9E6693A81D6413B100FFA0A7 /* XXERegisterSecondViewController.m in Sources */,
+				04304EEC1D6FD62E0066B80C /* XXEModifyEmailApi.m in Sources */,
 				9E9B4C761D633B8700983F5E /* DFTextImageUserLineCell.m in Sources */,
 				9EFDC8541D549DE1005556AF /* HyLoglnButton.m in Sources */,
 				043A7A741D6D8C0A009A6ACB /* XXESchoolQQModifyViewController.m in Sources */,

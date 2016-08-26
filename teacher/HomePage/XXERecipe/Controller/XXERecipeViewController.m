@@ -166,17 +166,29 @@
                 if ([dic[@"breakfast"][@"pic_arr"] count] != 0) {
                     [mealPicArray addObject:dic[@"breakfast"][@"pic_arr"]];
                     [iconImageViewArray addObject:dic[@"breakfast"][@"pic_arr"][0][@"pic"]];
+                }else{
+                    NSArray *emptyArray = [[NSArray alloc] init];
+                    [mealPicArray addObject:emptyArray];
+                    [iconImageViewArray addObject:@""];
                 }
                 
                 if ([dic[@"lunch"][@"pic_arr"] count] != 0) {
                   [mealPicArray addObject:dic[@"lunch"][@"pic_arr"]];
                   [iconImageViewArray addObject:dic[@"lunch"][@"pic_arr"][0][@"pic"]];
+                }else{
+                NSArray *emptyArray = [[NSArray alloc] init];
+                [mealPicArray addObject:emptyArray];
+                [iconImageViewArray addObject:@""];
                 }
                 
                 
                 if ([dic[@"dinner"][@"pic_arr"] count] != 0) {
                     [mealPicArray addObject:dic[@"dinner"][@"pic_arr"]];
                     [iconImageViewArray addObject:dic[@"dinner"][@"pic_arr"][0][@"pic"]];
+                }else{
+                    NSArray *emptyArray = [[NSArray alloc] init];
+                    [mealPicArray addObject:emptyArray];
+                    [iconImageViewArray addObject:@""];
                 }
                 
                 [mealPicDataSource addObject:mealPicArray];
@@ -268,6 +280,8 @@
     }
 
     if ([iconImageViewDataSource[indexPath.section] count] != 0) {
+        
+//        NSLog(@"gg --  oo%@", iconImageViewDataSource[indexPath.section]);
         NSString *iconStr = [NSString stringWithFormat:@"%@%@", kXXEPicURL, iconImageViewDataSource[indexPath.section][indexPath.row]];
         
         [cell.iconImageView sd_setImageWithURL:[NSURL URLWithString:iconStr] placeholderImage:[UIImage imageNamed:@"home_recipe_placehoder_icon184x154"]];

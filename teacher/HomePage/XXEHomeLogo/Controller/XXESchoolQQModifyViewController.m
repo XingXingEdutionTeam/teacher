@@ -69,8 +69,8 @@
     
 }
 
-//- (void)returnStr:(ReturnStrBlock)block{
-//    self.returnStrBlock = block;
-//}
+- (void)returnStr:(ReturnStrBlock)block{
+    self.returnStrBlock = block;
+}
 
 @end

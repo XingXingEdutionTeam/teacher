@@ -8,20 +8,25 @@
 
 #import "XXEBaseViewController.h"
 
-@interface XXESchoolEmailModiyfViewController : XXEBaseViewController
+typedef void(^ReturnStrBlock) (NSString *str);
 
+
+@interface XXESchoolEmailModiyfViewController : XXEBaseViewController
+@property (nonatomic, copy) ReturnStrBlock returnStrBlock;
+
+
+@property (nonatomic, copy) NSString *emailStr;
+@property (nonatomic, strong) NSString *schoolId;
+@property (nonatomic, strong) NSString *classId;
 
 
 @property (weak, nonatomic) IBOutlet UITextField *emailTextField;
 
-
-@property (weak, nonatomic) IBOutlet UITextField *checkCodeTextField;
-
-
-- (IBAction)checkCodeButton:(UIButton *)sender;
-
-
-
 @property (weak, nonatomic) IBOutlet UIButton *submitButton;
+
+- (void)returnStr:(ReturnStrBlock)block;
+
+- (BOOL)validateEmail:(NSString *)email;
+
 
 @end

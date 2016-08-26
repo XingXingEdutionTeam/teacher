@@ -58,12 +58,17 @@
 -(AFConstructingBlock)constructingBodyBlock
 {
     return ^(id<AFMultipartFormData> formData){
-        int i = 1;
+
+        NSDateFormatter *formatter =[[NSDateFormatter alloc]init];
+        formatter.dateFormat =@"yyyyMMddHHmmss";
+        NSString *str =[formatter stringFromDate:[NSDate date]];
         NSData *data = UIImageJPEGRepresentation(_upImage, 0.5);
-        NSString *name = [NSString stringWithFormat:@"%d.jpeg",i];
-        NSString *formKey = [NSString stringWithFormat:@"file%d",i];
+        NSString *name = [NSString stringWithFormat:@"%@.jpeg",str];
+        NSString *formKey = [NSString stringWithFormat:@"file%@",str];
         NSString *type = @"image/jpeg";
+        
         [formData appendPartWithFileData:data name:formKey fileName:name mimeType:type];
+        NSLog(@"%@ ----  %@ ----- %@ ---- %@", _upImage, name, formKey, formData);
     };
 }
 

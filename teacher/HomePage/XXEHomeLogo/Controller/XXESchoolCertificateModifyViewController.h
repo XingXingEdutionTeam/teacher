@@ -10,6 +10,9 @@
 
 @interface XXESchoolCertificateModifyViewController : XXEBaseViewController
 
+@property (nonatomic, strong) NSString *schoolId;
+@property (nonatomic, strong) NSString *classId;
+
 
 @property (weak, nonatomic) IBOutlet UIView *upPicBgView;
 

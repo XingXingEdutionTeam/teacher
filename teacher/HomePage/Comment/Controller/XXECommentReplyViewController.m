@@ -191,27 +191,27 @@
 - (void)submitReplyTextAndPicInfo{
 
     NSMutableArray *arr1 = [NSMutableArray array];
-        for (int i = 0; i < pickerView.data.count - 1; i++) {
-            FSImageModel *mdoel = pickerView.data[i];
-            UIImage *image1 = [UIImage imageWithData:mdoel.data];
-            [arr1 addObject:image1];
-        }
-//    NSLog(@"上传 图片 %@", arr1);
+    
+    for (int i = 0; i < pickerView.data.count - 1; i++) {
+        
+        FSImageModel *mdoel = pickerView.data[i];
+        
+        UIImage *image1 = [UIImage imageWithData:mdoel.data];
+        [arr1 addObject:image1];
+        
+    }
+    //    NSLog(@"上传 图片 %@", arr1);
     
     [self showHudWithString:@"正在上传......"];
     NSMutableArray *arr = [NSMutableArray array];
-    
-//    NSLog(@"%@  ---  %@ ----  %@ --- %@ ---  %@ --- %@", XID, USER_ID, USER_TYPE, _classId, _comment_id, replyStr);
     for (int i =0; i < arr1.count; i++) {
-        XXEReplyTextAndPicInfoApi *replyTextAndPicInfoApi = [[XXEReplyTextAndPicInfoApi alloc]initWithXid:XID user_id:USER_ID user_type:USER_TYPE class_id:_classId comment_id:_comment_id com_con:replyStr upImage:arr1[i]];
+    XXEReplyTextAndPicInfoApi *replyTextAndPicInfoApi = [[XXEReplyTextAndPicInfoApi alloc] initWithXid:XID user_id:USER_ID user_type:USER_TYPE class_id:_classId comment_id:_comment_id com_con:replyStr upImage:arr1[i]];
         [arr addObject:replyTextAndPicInfoApi];
     }
     
-//    NSLog(@"%@", arr);
     YTKBatchRequest *bathRequest = [[YTKBatchRequest alloc]initWithRequestArray:arr];
     [bathRequest startWithCompletionBlockWithSuccess:^(YTKBatchRequest *batchRequest) {
-        
-//        NSLog(@"hjshafka  ====   %@",bathRequest.);
+        //        NSLog(@"%@",bathRequest);
         
         [self hideHud];
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1*NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
@@ -220,6 +220,8 @@
     } failure:^(YTKBatchRequest *batchRequest) {
         [self showHudWithString:@"上传失败" forSecond:1.f];
     }];
+    
+
 }
 
 

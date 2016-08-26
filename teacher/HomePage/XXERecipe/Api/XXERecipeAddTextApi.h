@@ -26,16 +26,10 @@
 	breakfast_name	//早餐名
 	lunch_name	//午餐名
 	dinner_name	//晚餐
- 
- -----------------------------图片 可传 可不传-----------
-	breakfast_file	//早餐图片(批量上传图片)
-	lunch_file	//午餐图片(批量上传图片)
-	dinner_file	//晚餐图片(批量上传图片)
- 
- ★在原先用的批量上传图片的格式上再加一层数组,键名分别是breakfast_file,lunch_file,dinner_file
+
  */
 
-- (instancetype)initWithXid:(NSString *)xid  user_id:(NSString *)user_id user_type:(NSString *)user_type school_id:(NSString *)school_id position:(NSString *)position date_tm:(NSString *)date_tm breakfast_name:(NSString *)breakfast_name lunch_name:(NSString *)lunch_name dinner_name:(NSString *)dinner_name;
+- (instancetype)initWithXid:(NSString *)xid  user_id:(NSString *)user_id user_type:(NSString *)user_type school_id:(NSString *)school_id position:(NSString *)position date_tm:(NSString *)date_tm breakfast_name:(NSString *)breakfast_name lunch_name:(NSString *)lunch_name dinner_name:(NSString *)dinner_name breakfast_url:(NSString *)breakfast_url lunch_url:(NSString *)lunch_url dinner_url:(NSString *)dinner_url;
 
 
 @end

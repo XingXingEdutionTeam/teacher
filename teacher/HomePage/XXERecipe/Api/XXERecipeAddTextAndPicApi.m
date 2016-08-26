@@ -10,7 +10,7 @@
 #import "XXERecipeAddTextAndPicApi.h"
 
 
-#define URL @"http://www.xingxingedu.cn/Teacher/school_cookbook_publish"
+#define URL @"http://www.xingxingedu.cn/Global/uploadFile"
 
 @interface XXERecipeAddTextAndPicApi()
 
@@ -24,15 +24,10 @@
 @property (nonatomic, copy) NSString *user_id;
 @property (nonatomic, copy) NSString *user_type;
 
-@property (nonatomic, copy) NSString *school_id;
-@property (nonatomic, copy) NSString *position;
-@property (nonatomic, copy) NSString *date_tm;
-@property (nonatomic, copy) NSString *breakfast_name;
-@property (nonatomic, copy) NSString *lunch_name;
-@property (nonatomic, copy) NSString *dinner_name;
-@property (nonatomic, strong) UIImage *breakfast_file;
-@property (nonatomic, strong) UIImage *lunch_file;
-@property (nonatomic, strong) UIImage *dinner_file;
+@property (nonatomic, copy) NSString *file_type;
+@property (nonatomic, copy) NSString *page_origin;
+@property (nonatomic, copy) NSString *upload_format;
+@property (nonatomic, strong) UIImage *upImage;
 
 
 @end
@@ -40,23 +35,18 @@
 
 @implementation XXERecipeAddTextAndPicApi
 
-- (instancetype)initWithXid:(NSString *)xid user_id:(NSString *)user_id user_type:(NSString *)user_type school_id:(NSString *)school_id position:(NSString *)position date_tm:(NSString *)date_tm breakfast_name:(NSString *)breakfast_name lunch_name:(NSString *)lunch_name dinner_name:(NSString *)dinner_name breakfast_file:(UIImage *)breakfast_file lunch_file:(UIImage *)lunch_file dinner_file:(UIImage *)dinner_file{
+- (instancetype)initWithXid:(NSString *)xid user_id:(NSString *)user_id user_type:(NSString *)user_type file_type:(NSString *)file_type page_origin:(NSString *)page_origin upload_format:(NSString *)upload_format upImage:(UIImage *)upImage{
     
     if (self = [super init]) {
         _xid = xid;
         _user_id = user_id;
         _user_type = user_type;
         
-        _school_id = school_id;
-        _position = position;
-        _date_tm = date_tm;
-        _breakfast_name = breakfast_name;
-        _lunch_name = lunch_name;
-        _dinner_name = dinner_name;
-        
-        _breakfast_file = breakfast_file;
-        _lunch_file = lunch_file;
-        _dinner_file = dinner_file;
+        _file_type = file_type;
+        _page_origin = page_origin;
+        _upload_format = upload_format;
+        _upImage = upImage;
+
     }
     return self;
 }
@@ -73,18 +63,23 @@
     
 }
 
-//-(AFConstructingBlock)constructingBodyBlock
-//{
-//    return ^(id<AFMultipartFormData> formData){
-//        int i = 1;
-//        NSData *data = UIImageJPEGRepresentation(_upImage, 0.5);
-//        //        NSString *name = [NSString stringWithFormat:@"%d.jpeg",i];
-//        NSString *name = [NSString stringWithFormat:@"%d.jpg",i];
-//        NSString *formKey = [NSString stringWithFormat:@"file%d",i];
-//        NSString *type = @"image/jpg";
+-(AFConstructingBlock)constructingBodyBlock
+{
+    return ^(id<AFMultipartFormData> formData){
+        
+        NSDateFormatter *formatter =[[NSDateFormatter alloc]init];
+        formatter.dateFormat =@"yyyyMMddHHmmss";
+        NSString *str =[formatter stringFromDate:[NSDate date]];
+        NSData *data = UIImageJPEGRepresentation(_upImage, 0.5);
+//        NSString *name = [NSString stringWithFormat:@"%@.jpeg",str];
+        NSString *formKey = [NSString stringWithFormat:@"file%@",str];
+        NSString *type = @"image/jpeg";
+        
 //        [formData appendPartWithFileData:data name:formKey fileName:name mimeType:type];
-//    };
-//}
+        [formData appendPartWithFileData:data name:formKey fileName:@"file" mimeType:type];
+//        NSLog(@"%@ ----  %@ ----- %@ ---- %@", _upImage, name, @"", formData);
+    };
+}
 
 - (id)requestArgument{
     
@@ -94,15 +89,9 @@
              @"xid":_xid,
              @"user_id":_user_id,
              @"user_type":_user_type,
-             @"school_id":_school_id,
-             @"position":_position,
-             @"date_tm":_date_tm,
-             @"breakfast_name":_breakfast_name,
-             @"lunch_name":_lunch_name,
-             @"dinner_name":_dinner_name,
-             @"breakfast_file":_breakfast_file,
-             @"lunch_file":_lunch_file,
-             @"dinner_file":_dinner_file
+             @"file_type":_file_type,
+             @"page_origin":_page_origin,
+             @"upload_format":_upload_format
              };
     
     

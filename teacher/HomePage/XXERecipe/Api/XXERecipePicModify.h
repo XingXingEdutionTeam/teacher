@@ -25,10 +25,10 @@
 	cookbook_id	//食谱id
 	meal_type	//餐类型,传数字(1:早餐  2:午餐  3:晚餐)
 	meal_name	//餐名
-	file		//餐图(批量上传图片)
+	url_group	//图片url集合(字符串,多个逗号隔开)
  */
 
-- (instancetype)initWithXid:(NSString *)xid  user_id:(NSString *)user_id user_type:(NSString *)user_type pic_id:(NSString *)pic_id position:(NSString *)position cookbook_id:(NSString *)cookbook_id;
+- (instancetype)initWithXid:(NSString *)xid  user_id:(NSString *)user_id user_type:(NSString *)user_type school_id:(NSString *)school_id position:(NSString *)position cookbook_id:(NSString *)cookbook_id meal_type:(NSString *)meal_type meal_name:(NSString *)meal_name url_group:(NSString *)url_group;
 
 
 

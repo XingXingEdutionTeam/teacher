@@ -111,7 +111,7 @@
         NSData *data = UIImageJPEGRepresentation(_upImage, 0.5);
         NSString *name = [NSString stringWithFormat:@"%d.jpeg",i];
         NSString *formKey = [NSString stringWithFormat:@"file%d",i];
-        NSString *type = @"image/jpeg/jpg/png";
+        NSString *type = @"image/jpeg";
         [formData appendPartWithFileData:data name:formKey fileName:name mimeType:type];
     };
 }
@@ -128,7 +128,8 @@
              @"school_id":_school_id,
              @"class_id":_class_id,
              @"baby_id":_baby_id,
-             @"com_con":_com_con
+             @"com_con":_com_con,
+             @"file":_upImage
              };
     
 }

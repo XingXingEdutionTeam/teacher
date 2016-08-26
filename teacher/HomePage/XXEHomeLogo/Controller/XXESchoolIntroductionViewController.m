@@ -159,13 +159,22 @@
             //修改邮箱 6
         }else if (indexPath.row == 6){
             XXESchoolEmailModiyfViewController *schoolEmailModiyfVC = [[XXESchoolEmailModiyfViewController alloc] init];
+            
+            schoolEmailModiyfVC.emailStr = _contentArray[6];
+            schoolEmailModiyfVC.schoolId = _schoolId;
+            [schoolEmailModiyfVC returnStr:^(NSString *str) {
+                //
+                _contentArray[6] = str;
+                [_myTableView reloadData];
+            }];
+            
             [self.navigationController pushViewController:schoolEmailModiyfVC animated:YES];
             
             //修改 资质
         }else if (indexPath.row == 7) {
             XXESchoolCertificateModifyViewController *schoolCertificateModifyVC = [[XXESchoolCertificateModifyViewController alloc] init];
             
-            
+            schoolCertificateModifyVC.schoolId = _schoolId;
             [self.navigationController pushViewController:schoolCertificateModifyVC animated:YES];
             //修改 特点
         }else if (indexPath.row == 8) {
