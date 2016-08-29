@@ -58,9 +58,20 @@
 #define W(x) WinWidth*(x)/375.0
 #define H(y) WinHeight*(y)/667.0
 
-//#import "WZYHttpTool.h"
-//图片地址
-//#import "WMUtil.h"
+//融云
+// iPhone 唯一Appkey为： 57c01a13f43e48118e000e55
+
+//微博信息
+//APP key 4148122833
+//App Secret：0d5d368c2dbc60bd15c1b3f9c446a7a8
+
+//微信
+//AppID：wxed731a36270b5a4f
+
+//QQ
+//APP ID1105651422
+//APP KEYk9FfqqGIWGNH6TDX
+
 
 
 
