@@ -13,4 +13,6 @@
 //图片名字
 @property (nonatomic,copy) NSString *imageName;
 
+
+
 @end

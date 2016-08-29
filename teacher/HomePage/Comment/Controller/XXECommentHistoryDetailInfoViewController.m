@@ -54,18 +54,15 @@
     titleArray =[[NSMutableArray alloc]initWithObjects:@"学生:",@"请求:",@"时间:", @"评价内容:", @"图片:", nil];
         contentArray = [[NSMutableArray alloc] initWithObjects:_name, _ask_con, timeStr, _com_con, @"", nil];
     }
+//        NSLog(@"%@", _picString);
     if (![_picString isEqualToString:@""]) {
         _picWallArray = [[NSMutableArray alloc] initWithObjects:_picString, nil];
     }
     
-//    if ([_picString containsString:@","]) {
-//        _picWallArray = [_picString componentsSeparatedByString:@","];
-//    }
-    
-//    NSLog(@"%@", _picString);
-    
-    //app_upload/class_album/2016/08/19/20160819150331_9903.jpg
-    
+    if ([_picString containsString:@","]) {
+        _picWallArray = [_picString componentsSeparatedByString:@","];
+    }
+
 //    NSLog(@"图片 数组  ---  %@", _picWallArray);
     
     [self createDeleteButton];

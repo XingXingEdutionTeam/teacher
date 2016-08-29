@@ -38,6 +38,9 @@
     
     NSString *conStr;
     
+    NSMutableArray *arr;
+    NSString *url_groupStr;
+    
 }
 
 @property (nonatomic, strong) NSMutableArray *selectedBabyInfoArray;
@@ -55,6 +58,8 @@
     didSelectSchoolIdArray = [[NSMutableArray alloc] init];
     didSelectClassIdArray = [[NSMutableArray alloc] init];
     
+    url_groupStr = @"";
+    conStr = @"";
     [self createContent];
     
 }
@@ -176,24 +181,29 @@
     
     // pickerView.data  里面 有一张加号占位图,所有 个数最少有 1 张
     //如果 count == 1  -> 没有 上传 图片
-    if (pickerView.data.count == 1){
-        [self submitReplyTextInfo];
-        
-        //如果 count > 1 -> 有 上传 图片
-    }else if (pickerView.data.count > 1){
-        
-        [self submitReplyTextAndPicInfo];
-        
+    arr = [[NSMutableArray alloc] init];
+    for (int i = 0; i < pickerView.data.count - 1; i++) {
+        FSImageModel *mdoel = pickerView.data[i];
+        UIImage *image1 = [UIImage imageWithData:mdoel.data];
+        [arr addObject:image1];
     }
-
     
+    if (arr.count != 0) {
+        [self submitReplyTextAndPicInfo];
+    }else{
+        if ([conStr isEqualToString:@""]) {
+            [self showHudWithString:@"请完善评论信息" forSecond:1.5];
+        }else{
+           [self submitReplyTextInfo];
+        }
+    }
 }
 
 
 //回复 只有  文字 的时候
 - (void)submitReplyTextInfo{
     
-    XXECommentTextInfoApi *commentTextInfoApi = [[XXECommentTextInfoApi alloc] initWithXid:XID user_id:USER_ID user_type:USER_TYPE school_id:_schoolId class_id:_classId baby_id:babyIdStr com_con:conStr];
+    XXECommentTextInfoApi *commentTextInfoApi = [[XXECommentTextInfoApi alloc] initWithXid:XID user_id:USER_ID user_type:USER_TYPE school_id:_schoolId class_id:_classId baby_id:babyIdStr com_con:conStr   url_group:url_groupStr];
     [commentTextInfoApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         
 //               NSLog(@"2222---   %@", request.responseJSONObject);
@@ -219,44 +229,85 @@
 }
 
 
-//点评  既有文字 又有 图片 时候
-- (void)submitReplyTextAndPicInfo{
+ - (void)submitReplyTextAndPicInfo{
+ /*
+ 【上传文件】
+ 
+ 接口:
+ http://www.xingxingedu.cn/Global/uploadFile
+ ★注: 默认传参只要appkey和backtype
+ 接口类型:2
+ 传参
+ file_type	//文件类型,1图片,2视频 			  (必须)
+ page_origin	//页面来源,传数字 			  (必须)
+ 18//老师点评
+ upload_format	//上传格式, 传数字,1:单个上传  2:批量上传 (必须)
+ file		//文件数据的数组名 			  (必须)
+ */
+NSString *url = @"http://www.xingxingedu.cn/Global/uploadFile";
+
+NSDictionary *parameter = @{@"url":url,
+                            @"appkey":APPKEY,
+                            @"backtype":BACKTYPE,
+                            @"xid":XID,
+                            @"user_id":USER_ID,
+                            @"user_type":USER_TYPE,
+                            @"file_type":@"1",
+                            @"page_origin":@"18",
+                            @"upload_format":@"2"
+                            };
+
+AFHTTPRequestOperationManager *mgr =[AFHTTPRequestOperationManager manager];
+[mgr POST:url parameters:parameter constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
     
-    NSMutableArray *arr1 = [NSMutableArray array];
-    
-    for (int i = 0; i < pickerView.data.count - 1; i++) {
-        
-        FSImageModel *mdoel = pickerView.data[i];
-        
-        UIImage *image1 = [UIImage imageWithData:mdoel.data];
-        [arr1 addObject:image1];
-        
+    for (int i = 0; i< arr.count; i++) {
+        NSData *data = UIImageJPEGRepresentation(arr[i], 0.5);
+        NSString *name = [NSString stringWithFormat:@"%d.jpeg",i];
+        NSString *formKey = [NSString stringWithFormat:@"file%d",i];
+        NSString *type = @"image/jpeg";
+        [formData appendPartWithFileData:data name:formKey fileName:name mimeType:type];
     }
-    //    NSLog(@"上传 图片 %@", arr1);
     
-    [self showHudWithString:@"正在上传......"];
-    NSMutableArray *arr = [NSMutableArray array];
-    for (int i =0; i < arr1.count; i++) {
-        XXECommentTextAndPicInfoApi *commentTextAndPicInfoApi = [[XXECommentTextAndPicInfoApi alloc]initWithXid:XID user_id:USER_ID user_type:USER_TYPE school_id:_schoolId class_id:_classId baby_id:babyIdStr com_con:conStr upImage:arr1[i]];
-        [arr addObject:commentTextAndPicInfoApi];
+    
+} success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
+    NSDictionary *dict =responseObject;
+//        NSLog(@"111111<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<%@",dict);
+    if([[NSString stringWithFormat:@"%@",dict[@"code"]]isEqualToString:@"1"] )
+    {
+        NSArray *commentArray = [[NSArray alloc] init];
+        
+        commentArray = dict[@"data"];
+        if (commentArray.count == 1) {
+            url_groupStr = commentArray[0];
+        }else if (commentArray.count > 1){
+            
+            NSMutableString *tidStr = [NSMutableString string];
+            
+            for (int j = 0; j < commentArray.count; j ++) {
+                NSString *str = commentArray[j];
+                
+                if (j != commentArray.count - 1) {
+                    [tidStr appendFormat:@"%@,", str];
+                }else{
+                    [tidStr appendFormat:@"%@", str];
+                }
+            }
+            
+            url_groupStr = tidStr;
+        }
+        
+        
+        //                NSLog(@"修改 图片 %@", url_groupStr);
     }
     
+    [self submitReplyTextInfo];
     
-    YTKBatchRequest *bathRequest = [[YTKBatchRequest alloc]initWithRequestArray:arr];
-    [bathRequest startWithCompletionBlockWithSuccess:^(YTKBatchRequest *batchRequest) {
-        //        NSLog(@"%@",bathRequest);
-        
-        [self hideHud];
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1*NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [self.navigationController popViewControllerAnimated:YES];
-        });
-    } failure:^(YTKBatchRequest *batchRequest) {
-        [self showHudWithString:@"上传失败" forSecond:1.f];
-    }];
-    
-    
-    
+} failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error) {
+    NSLog(@"%@", error);
+}];
+
 }
+
 
 - (void)textViewDidChange:(UITextView *)textView{
     if (textView == _contentTextField) {

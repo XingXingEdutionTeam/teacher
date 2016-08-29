@@ -80,9 +80,9 @@
     if (cell == nil) {
         cell = [[[NSBundle mainBundle] loadNibNamed:@"XXERedFlowerDetialTableViewCell" owner:self options:nil]lastObject];
     }
-//    if (indexPath.row != 0) {
+    if (indexPath.row != 2) {
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-//    }
+    }
     cell.iconImageView.image = [UIImage imageNamed:_pictureArray[indexPath.row]];
     cell.titleLabel.text = _titleArray[indexPath.row];
     cell.contentLabel.text = _contentArray[indexPath.row];
@@ -179,8 +179,13 @@
             //修改 特点
         }else if (indexPath.row == 8) {
           XXESchoolFeatureModifyViewController *schoolFeatureModifyVC =[[XXESchoolFeatureModifyViewController alloc]init];
-            
-            
+            schoolFeatureModifyVC.schoolId = _schoolId;
+            schoolFeatureModifyVC.schoolfeatureStr = _contentArray[8];
+            [schoolFeatureModifyVC returnStr:^(NSString *str) {
+                //
+                _contentArray[8] = str;
+                [_myTableView reloadData];
+            }];
         [self.navigationController pushViewController:schoolFeatureModifyVC animated:YES];
         }
         
@@ -189,11 +194,20 @@
     //简介
     if (indexPath.row == 9) {
         XXESchoolIntroductionDetailViewController *schoolIntroductionDetailVC = [[XXESchoolIntroductionDetailViewController alloc] init];
+        
+        schoolIntroductionDetailVC.schoolId = _schoolId;
+        schoolIntroductionDetailVC.schoolIntroductionStr = _contentArray[9];
+        [schoolIntroductionDetailVC returnStr:^(NSString *str) {
+            //
+            _contentArray[9] = str;
+            [_myTableView reloadData];
+        }];
         [self.navigationController pushViewController:schoolIntroductionDetailVC animated:YES];
         //相册
     }else if (indexPath.row == 10) {
         XXESchoolAlbumViewController *albumVC = [[XXESchoolAlbumViewController alloc] init];
-        albumVC.school_pic_groupArray = _school_pic_groupArray;
+        albumVC.schoolId = _schoolId;
+
         [self.navigationController pushViewController:albumVC animated:YES];
         //视频
     }else if (indexPath.row == 11){

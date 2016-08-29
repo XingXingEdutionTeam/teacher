@@ -27,7 +27,10 @@
     NSMutableArray *_dataSourceArray;
     
     NSInteger page;
-    
+    //传参 xid
+    NSString *parameterXid;
+    //传参 user_id
+    NSString *parameterUser_Id;
 }
 
 
@@ -92,7 +95,14 @@
         _classId = @"";
     }
     
-    XXECommentRequestApi *commentRequestApi = [[XXECommentRequestApi alloc] initWithXid:XID user_id:USER_ID user_type:USER_TYPE class_id:_classId require_con:@"1" page:pageStr];
+    if ([XXEUserInfo user].login){
+        parameterXid = [XXEUserInfo user].xid;
+        parameterUser_Id = [XXEUserInfo user].user_id;
+    }else{
+        parameterXid = XID;
+        parameterUser_Id = USER_ID;
+    }
+    XXECommentRequestApi *commentRequestApi = [[XXECommentRequestApi alloc] initWithXid:parameterXid user_id:parameterUser_Id user_type:USER_TYPE class_id:_classId require_con:@"1" page:pageStr];
     [commentRequestApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         
 //        NSLog(@"2222---   %@", request.responseJSONObject);

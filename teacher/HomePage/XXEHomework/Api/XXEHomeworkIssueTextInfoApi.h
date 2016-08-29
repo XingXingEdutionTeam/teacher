@@ -27,11 +27,11 @@
 	con		//内容
 	teach_course	//授课/科目(这里传的是中文)
 	date_end_tm	//交期(格式2016-08-02 09:10:00)
-	file		//批量上传图片
+	url_group	//图片url集合(字符串,多个逗号隔开)
  */
 
 
-- (instancetype)initWithXid:(NSString *)xid  user_id:(NSString *)user_id user_type:(NSString *)user_type school_id:(NSString *)school_id class_id:(NSString *)class_id title:(NSString *)title con:(NSString *)con teach_course:(NSString *)teach_course date_end_tm:(NSString *)date_end_tm;
+- (instancetype)initWithXid:(NSString *)xid  user_id:(NSString *)user_id user_type:(NSString *)user_type school_id:(NSString *)school_id class_id:(NSString *)class_id title:(NSString *)title con:(NSString *)con teach_course:(NSString *)teach_course date_end_tm:(NSString *)date_end_tm url_group:(NSString *)url_group;
 
 
 

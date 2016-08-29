@@ -34,11 +34,18 @@
 
 - (IBAction)submitButton:(UIButton *)sender {
     
-    XXEModifySchoolNameApi *modifySchoolNameApi = [[XXEModifySchoolNameApi alloc] initWithXid:XID user_id:USER_ID user_type:USER_TYPE school_id:_schoolId position:@"4" name:_schoolNameTextView.text];
+    if ([_schoolNameTextView.text isEqualToString:@""]) {
+        [self showHudWithString:@"请完善信息" forSecond:1.5];
+    }else{
+        [self submitSchoolNameInfo];
+    }
+}
 
+- (void)submitSchoolNameInfo{
+    XXEModifySchoolNameApi *modifySchoolNameApi = [[XXEModifySchoolNameApi alloc] initWithXid:XID user_id:USER_ID user_type:USER_TYPE school_id:_schoolId position:@"4" name:_schoolNameTextView.text];
+    
     [modifySchoolNameApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
-        //
-//        NSLog(@"%@", request.responseJSONObject);
+        //        NSLog(@"%@", request.responseJSONObject);
         NSString *codeStr = [NSString stringWithFormat:@"%@", request.responseJSONObject[@"code"]];
         
         if ([codeStr isEqualToString:@"1"]) {
@@ -59,9 +66,9 @@
         //
         [self showHudWithString:@"提交失败" forSecond:1.5];
     }];
-    
-}
 
+
+}
 
 - (void)returnStr:(ReturnStrBlock)block{
     self.returnStrBlock = block;

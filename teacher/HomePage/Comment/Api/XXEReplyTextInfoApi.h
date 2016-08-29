@@ -23,10 +23,10 @@
 	class_id	//班级id
 	comment_id	//评论id
 	com_con		//评论内容
-	file		//批量上传图片 ★现在的版本没有上传图片的,应该是之前遗漏了,请加上
+	url_group	//图片url集合(字符串,多个逗号隔开)
  */
 
-- (instancetype)initWithXid:(NSString *)xid  user_id:(NSString *)user_id user_type:(NSString *)user_type class_id:(NSString *)class_id comment_id:(NSString *)comment_id com_con:(NSString *)com_con;
+- (instancetype)initWithXid:(NSString *)xid  user_id:(NSString *)user_id user_type:(NSString *)user_type class_id:(NSString *)class_id comment_id:(NSString *)comment_id com_con:(NSString *)com_con url_group:(NSString *)url_group;
 
 
 @end

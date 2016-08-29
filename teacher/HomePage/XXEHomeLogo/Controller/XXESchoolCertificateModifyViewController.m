@@ -58,44 +58,47 @@
     //点评  既有文字 又有 图片 时候
     
     if (pickerView.data.count > 1){
-    
-        NSMutableArray *arr1 = [NSMutableArray array];
+        [self submitPicInfo];
         
-        for (int i = 0; i < pickerView.data.count - 1; i++) {
-            
-            FSImageModel *mdoel = pickerView.data[i];
-            
-            UIImage *image1 = [UIImage imageWithData:mdoel.data];
-            [arr1 addObject:image1];
-            
-        }
-        //    NSLog(@"上传 图片 %@", arr1);
-        
-        [self showHudWithString:@"正在上传......"];
-        NSMutableArray *arr = [NSMutableArray array];
-        for (int i =0; i < arr1.count; i++) {
-            XXEModifyCertificateApi *modifyCertificateApi = [[XXEModifyCertificateApi alloc] initWithXid:XID user_id:USER_ID user_type:USER_TYPE school_id:_schoolId position:@"4" upImage:arr1[i]];
-            [arr addObject:modifyCertificateApi];
-        }
-        
-        
-        YTKBatchRequest *bathRequest = [[YTKBatchRequest alloc]initWithRequestArray:arr];
-        [bathRequest startWithCompletionBlockWithSuccess:^(YTKBatchRequest *batchRequest) {
-            //        NSLog(@"%@",bathRequest);
-            
-            [self hideHud];
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1*NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                [self.navigationController popViewControllerAnimated:YES];
-            });
-        } failure:^(YTKBatchRequest *batchRequest) {
-            [self showHudWithString:@"上传失败" forSecond:1.f];
-        }];
-        
+    }else{
+        [self showHudWithString:@"请完善信息" forSecond:1.5];
     }
 
 }
 
-
+- (void)submitPicInfo{
+    NSMutableArray *arr1 = [NSMutableArray array];
+    
+    for (int i = 0; i < pickerView.data.count - 1; i++) {
+        
+        FSImageModel *mdoel = pickerView.data[i];
+        
+        UIImage *image1 = [UIImage imageWithData:mdoel.data];
+        [arr1 addObject:image1];
+        
+    }
+    //    NSLog(@"上传 图片 %@", arr1);
+    
+    [self showHudWithString:@"正在上传......"];
+    NSMutableArray *arr = [NSMutableArray array];
+    for (int i =0; i < arr1.count; i++) {
+        XXEModifyCertificateApi *modifyCertificateApi = [[XXEModifyCertificateApi alloc] initWithXid:XID user_id:USER_ID user_type:USER_TYPE school_id:_schoolId position:@"4" upImage:arr1[i]];
+        [arr addObject:modifyCertificateApi];
+    }
+    
+    
+    YTKBatchRequest *bathRequest = [[YTKBatchRequest alloc]initWithRequestArray:arr];
+    [bathRequest startWithCompletionBlockWithSuccess:^(YTKBatchRequest *batchRequest) {
+        //        NSLog(@"%@",bathRequest);
+        
+        [self hideHud];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1*NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [self.navigationController popViewControllerAnimated:YES];
+        });
+    } failure:^(YTKBatchRequest *batchRequest) {
+        [self showHudWithString:@"上传失败" forSecond:1.f];
+    }];
+}
 
 
 @end

@@ -8,13 +8,21 @@
 
 #import "XXEBaseViewController.h"
 
+typedef void(^ReturnStrBlock) (NSString *str);
+
 @interface XXESchoolFeatureModifyViewController : XXEBaseViewController
 
+@property (nonatomic, copy) ReturnStrBlock returnStrBlock;
+
+//学校 特点
+@property (nonatomic, copy) NSString *schoolfeatureStr;
+@property (nonatomic, strong) NSString *schoolId;
+@property (nonatomic, strong) NSString *classId;
 
 @property (weak, nonatomic) IBOutlet UITextView *featureTextView;
 
 - (IBAction)submitButton:(UIButton *)sender;
 
-
+- (void)returnStr:(ReturnStrBlock)block;
 
 @end

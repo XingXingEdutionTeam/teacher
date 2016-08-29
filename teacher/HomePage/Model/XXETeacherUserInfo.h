@@ -12,7 +12,11 @@
 
 @property (nonatomic, copy)NSString <Optional>*school_name;
 @property (nonatomic, copy)NSString <Optional>*school_id;
+@property (nonatomic, copy)NSString <Optional>*school_type;
+
 @property (nonatomic, copy)NSString <Optional>*class_name;
 @property (nonatomic, copy)NSString <Optional>*class_id;
+
+
 
 @end

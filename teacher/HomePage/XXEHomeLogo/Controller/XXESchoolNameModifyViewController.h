@@ -12,7 +12,6 @@ typedef void(^ReturnStrBlock) (NSString *str);
 
 @interface XXESchoolNameModifyViewController : XXEBaseViewController
 
-
 @property (nonatomic, copy) ReturnStrBlock returnStrBlock;
 
 //学校名称

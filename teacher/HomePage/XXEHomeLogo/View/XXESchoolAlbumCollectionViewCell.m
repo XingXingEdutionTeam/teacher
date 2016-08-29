@@ -29,9 +29,10 @@
 
 -(void)setImageName:(NSString *)imageName{
     _imageName = imageName;
-    NSLog(@"-----*******%@", imageName);
+    //    NSLog(@"-----*******%@", imageName);
     UIImageView *iconImageView = [self viewWithTag:11];
-    iconImageView.image = [UIImage imageNamed:_imageName];
+    [iconImageView sd_setImageWithURL:[NSURL URLWithString:imageName] placeholderImage:nil];
+    //    iconImageView.image = [UIImage imageNamed:_imageName];
     
 }
 

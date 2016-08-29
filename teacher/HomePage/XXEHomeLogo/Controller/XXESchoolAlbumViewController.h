@@ -10,8 +10,8 @@
 
 @interface XXESchoolAlbumViewController : XXEBaseViewController
 
-//相册
-@property (nonatomic) NSMutableArray *school_pic_groupArray;
+@property (nonatomic, strong) NSString *schoolId;
+@property (nonatomic, strong) NSString *classId;
 
 
 @end

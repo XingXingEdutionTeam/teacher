@@ -170,7 +170,7 @@
     }
     
     
-    - (void)submitRecipeAddTextAndPicInfo{
+- (void)submitRecipeAddTextAndPicInfo{
         /*
          【上传文件】
          
@@ -245,7 +245,7 @@
             NSLog(@"%@", error);
         }];
         
-    }
+}
     
     
     

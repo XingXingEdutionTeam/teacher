@@ -22,7 +22,7 @@
 
 
 //照片墙 照片数组
-@property (nonatomic, strong) NSMutableArray *picWallArray;
+@property (nonatomic, strong) NSArray *picWallArray;
 
 
 

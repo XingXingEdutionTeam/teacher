@@ -20,6 +20,8 @@
 
    HZQDatePickerView *_pikerView;
     FSImagePickerView *pickerView;
+    NSMutableArray *arr;
+    NSString *url_groupStr;
 }
 
 @property(nonatomic,strong)WJCommboxView *courseCombox;
@@ -50,7 +52,12 @@
     _submitTextField.delegate = self;
     _contentTextView.delegate = self;
     
-//    _teacherCourseStr = @"";
+    _subjectStr = @"";
+    _contentStr = @"";
+    _timeStr = @"";
+    _teacherCourseStr = @"";
+    url_groupStr = @"";
+    
     
     [self createContent];
 
@@ -62,16 +69,6 @@
     [homeworkGetCourseApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         
 //        NSLog(@"2222---   %@", request.responseJSONObject);
-        /*
-         2222---   {
-         code = 1;
-         data =     (
-         "\U8bed\U6587",
-         "\U97f3\U4e50"
-         );
-         msg = "Success!";
-         }
-         */
         NSString *codeStr = [NSString stringWithFormat:@"%@", request.responseJSONObject[@"code"]];
         
         if ([codeStr isEqualToString:@"1"]) {
@@ -198,11 +195,14 @@
     _timeStr = _submitTextField.text;
     _teacherCourseStr = self.courseCombox.textField.text;
     
-    if (_subjectStr == nil) {
+    
+    if ([_teacherCourseStr isEqualToString:@""]) {
+        [self showHudWithString:@"请完善作业科目" forSecond:1.5];
+    }else if ([_subjectStr isEqualToString:@""]) {
         [self showHudWithString:@"请完善作业主题" forSecond:1.5];
-    }else if (_contentStr == nil){
+    }else if ([_contentStr isEqualToString:@""]){
         [self showHudWithString:@"请完善作业内容" forSecond:1.5];
-    }else if (_timeStr == nil){
+    }else if ([_timeStr isEqualToString:@""]){
         [self showHudWithString:@"请完善交作业时间" forSecond:1.5];
     }else{
     
@@ -217,14 +217,17 @@
 - (void)submitHomeworkInfo{
     // pickerView.data  里面 有一张加号占位图,所有 个数最少有 1 张
     //如果 count == 1  -> 没有 上传 图片
-    if (pickerView.data.count == 1){
-        [self submitIssueTextInfo];
-        
-        //如果 count > 1 -> 有 上传 图片
-    }else if (pickerView.data.count > 1){
-        
+    arr = [[NSMutableArray alloc] init];
+    
+    if (pickerView.data.count > 1) {
+        for (int i = 0; i < pickerView.data.count - 1; i++) {
+            FSImageModel *mdoel = pickerView.data[i];
+            UIImage *image1 = [UIImage imageWithData:mdoel.data];
+            [arr addObject:image1];
+        }
         [self submitIssueTextAndPicInfo];
-        
+    }else{
+        [self submitIssueTextInfo];
     }
 
 }
@@ -234,8 +237,7 @@
 //回复 只有  文字 的时候
 - (void)submitIssueTextInfo{
     
-    XXEHomeworkIssueTextInfoApi *homeworkIssueTextInfoApi = [[XXEHomeworkIssueTextInfoApi alloc] initWithXid:XID user_id:USER_ID user_type:USER_TYPE school_id:_schoolId class_id:_classId title:_subjectStr con:_contentStr teach_course:_teacherCourseStr date_end_tm:_timeStr];
-    
+    XXEHomeworkIssueTextInfoApi *homeworkIssueTextInfoApi = [[XXEHomeworkIssueTextInfoApi alloc] initWithXid:XID user_id:USER_ID user_type:USER_TYPE school_id:_schoolId class_id:_classId title:_subjectStr con:_contentStr teach_course:_teacherCourseStr date_end_tm:_timeStr url_group:url_groupStr];
     
     [homeworkIssueTextInfoApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         
@@ -264,43 +266,84 @@
 
 
 - (void)submitIssueTextAndPicInfo{
-//    NSLog(@"学校 %@ ---  班级%@ --- 标题%@ -- 内容 %@ -- 老师 %@ -- 截止时间 %@", _schoolId, _classId, _subjectStr, _contentStr, _teacherCourseStr, _timeStr);
+    /*
+     【上传文件】
+     
+     接口:
+     http://www.xingxingedu.cn/Global/uploadFile
+     ★注: 默认传参只要appkey和backtype
+     接口类型:2
+     传参
+     file_type	//文件类型,1图片,2视频 			  (必须)
+     page_origin	//页面来源,传数字 			  (必须)
+     17	//班级作业
+     upload_format	//上传格式, 传数字,1:单个上传  2:批量上传 (必须)
+     file		//文件数据的数组名 			  (必须)
+     */
+    NSString *url = @"http://www.xingxingedu.cn/Global/uploadFile";
     
-    NSMutableArray *arr1 = [NSMutableArray array];
+    NSDictionary *parameter = @{@"url":url,
+                                @"appkey":APPKEY,
+                                @"backtype":BACKTYPE,
+                                @"xid":XID,
+                                @"user_id":USER_ID,
+                                @"user_type":USER_TYPE,
+                                @"file_type":@"1",
+                                @"page_origin":@"17",
+                                @"upload_format":@"2"
+                                };
     
-    for (int i = 0; i < pickerView.data.count - 1; i++) {
+    AFHTTPRequestOperationManager *mgr =[AFHTTPRequestOperationManager manager];
+    [mgr POST:url parameters:parameter constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
         
-        FSImageModel *mdoel = pickerView.data[i];
+        for (int i = 0; i< arr.count; i++) {
+            NSData *data = UIImageJPEGRepresentation(arr[i], 0.5);
+            NSString *name = [NSString stringWithFormat:@"%d.jpeg",i];
+            NSString *formKey = [NSString stringWithFormat:@"file%d",i];
+            NSString *type = @"image/jpeg";
+            [formData appendPartWithFileData:data name:formKey fileName:name mimeType:type];
+        }
         
-        UIImage *image1 = [UIImage imageWithData:mdoel.data];
-        [arr1 addObject:image1];
         
-    }
-    //    NSLog(@"上传 图片 %@", arr1);
-    
-    [self showHudWithString:@"正在上传......"];
-    NSMutableArray *arr = [NSMutableArray array];
-    for (int i =0; i < arr1.count; i++) {
-        XXEHomeworkIssueTextAndPicInfoApi *homeworkIssueTextAndPicInfoApi = [[XXEHomeworkIssueTextAndPicInfoApi alloc]initWithXid:XID user_id:USER_ID user_type:USER_TYPE school_id:_schoolId class_id:_classId title:_subjectStr con:_contentStr teach_course:_teacherCourseStr date_end_tm:_timeStr upImage:arr1[i]];
-        [arr addObject:homeworkIssueTextAndPicInfoApi];
-    }
-    
-    YTKBatchRequest *bathRequest = [[YTKBatchRequest alloc]initWithRequestArray:arr];
-    [bathRequest startWithCompletionBlockWithSuccess:^(YTKBatchRequest *batchRequest) {
+    } success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
+        NSDictionary *dict =responseObject;
+//        NSLog(@"111111<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<%@",dict);
+        if([[NSString stringWithFormat:@"%@",dict[@"code"]]isEqualToString:@"1"] )
+        {
+            
+            NSArray *homeworkPicArray = [[NSArray alloc] init];
+            homeworkPicArray = dict[@"data"];
+            if (homeworkPicArray.count == 1) {
+                url_groupStr = homeworkPicArray[0];
+            }else if (homeworkPicArray.count > 1){
+                
+                NSMutableString *tidStr = [NSMutableString string];
+                
+                for (int j = 0; j < homeworkPicArray.count; j ++) {
+                    NSString *str = homeworkPicArray[j];
+                    
+                    if (j != homeworkPicArray.count - 1) {
+                        [tidStr appendFormat:@"%@,", str];
+                    }else{
+                        [tidStr appendFormat:@"%@", str];
+                    }
+                }
+                
+                url_groupStr = tidStr;
+            }
+            
+            
+            //                NSLog(@"修改 图片 %@", url_groupStr);
+        }
         
-        //        NSLog(@"hjshafka  ====   %@",bathRequest);
+        [self submitIssueTextInfo];
         
-        [self hideHud];
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1*NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [self.navigationController popViewControllerAnimated:YES];
-        });
-    } failure:^(YTKBatchRequest *batchRequest) {
-        [self showHudWithString:@"上传失败" forSecond:1.f];
+    } failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error) {
+        NSLog(@"%@", error);
     }];
     
-    
-    
 }
+
 
 
 

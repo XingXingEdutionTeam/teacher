@@ -72,7 +72,8 @@
 //APP ID1105651422
 //APP KEYk9FfqqGIWGNH6TDX
 
-
+//沙盒 存储
+#define DEFAULTS [NSUserDefaults standardUserDefaults]
 
 
 

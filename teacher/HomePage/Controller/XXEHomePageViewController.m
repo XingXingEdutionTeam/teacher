@@ -27,6 +27,9 @@
 #import "XXEHomeLogoRootViewController.h"
 //监控
 #import "VideoMonitorViewController.h"
+//通讯录  (校长 和 管理员 控制器)
+#import "XXEClassAddressHeadermasterAndManagerViewController.h"
+
 
 @interface XXEHomePageViewController ()<XXEHomePageHeaderViewDelegate,XXEHomePageMiddleViewDelegate,XXEHomePageBottomViewDelegate>
 @property (nonatomic, strong)NSMutableArray *schoolDatasource;//学校信息
@@ -44,6 +47,8 @@
 @property (nonatomic, copy)NSString *schoolHomeId;
 /** 班级ID */
 @property (nonatomic, copy)NSString *classHomeId;
+//学校 类型
+@property (nonatomic, copy) NSString *schoolType;
 
 @property (nonatomic, strong)NSMutableArray *arraySchool;
 @property (nonatomic, strong)NSMutableArray *arrayClass;
@@ -145,6 +150,8 @@
     self.homeSchoolView.textField.text = model.school_name;
     self.schoolHomeId = model.school_id;
     self.classHomeId = model.class_id;
+    self.schoolType = model.school_type;
+    
     
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(calssAction2:) name:@"commboxNotice2" object:nil];
     
@@ -218,6 +225,7 @@
             self.homeClassView.textField.text = model.class_name;
             self.schoolHomeId = model.school_id;
             self.classHomeId = model.class_id;
+            self.schoolType = model.school_type;
             [self.classDatasource addObject:model.class_name];
             [self.classDatasource addObject:string1];
             self.homeClassView.dataArray = self.classDatasource;
@@ -328,8 +336,15 @@
             NSLog(@"----课程表----");
             break;
         case 3:
-            NSLog(@"---通讯录----");
+        {
+//            NSLog(@"---通讯录----");
+            XXEClassAddressHeadermasterAndManagerViewController *classAddressHeadermasterAndManagerVC = [[XXEClassAddressHeadermasterAndManagerViewController alloc] init];
+            classAddressHeadermasterAndManagerVC.schoolId = _schoolHomeId;
+            classAddressHeadermasterAndManagerVC.schoolType = _schoolType;
+            
+            [self.navigationController pushViewController:classAddressHeadermasterAndManagerVC animated:YES];
             break;
+        }
         case 4:
             NSLog(@"----聊天----");
             break;
@@ -394,6 +409,7 @@
     }else {
         strngXid = XID;
     }
+    
     XXEHomePageApi *homePageApi = [[XXEHomePageApi alloc]initWithHomePageXid:strngXid];
     [homePageApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         NSString * code = [request.responseJSONObject objectForKey:@"code"];
@@ -401,10 +417,10 @@
         if ([code intValue] == 1) {
             [self showHudWithString:@"正在请求数据..."];
             
-            NSLog(@"%@",request.responseJSONObject  );
+//            NSLog(@"%@",request.responseJSONObject  );
             NSDictionary *data = [request.responseJSONObject objectForKey:@"data"];
             XXEHomePageModel *homePageModel = [[XXEHomePageModel alloc]initWithDictionary:data error:nil];
-            NSLog(@"%@",homePageModel);
+//            NSLog(@"%@",homePageModel);
             [self.headView configCellWithInfo:homePageModel];
             [self.middleView configCellMiddleWithInfo:homePageModel];
             
@@ -420,6 +436,7 @@
                 XXETeacherUserInfo *modelInfo = [[XXETeacherUserInfo alloc]init];
                 modelInfo.school_name = schoolInfo.school_name;
                 modelInfo.school_id = schoolInfo.school_id;
+                modelInfo.school_type = schoolInfo.school_type;
                 [self.arraySchool addObject:modelInfo];
                 
                 [self.schoolDatasource addObject:schoolInfo.school_name];

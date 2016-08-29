@@ -10,13 +10,14 @@
 
 #import "XXESchoolAlbumViewController.h"
 #import "XXESchoolAlbumCollectionViewCell.h"
-
-
+#import "XXESchoolUpPicViewController.h"
+#import "XXESchoolPicApi.h"
+#import "XXESchoolAlbumModel.h"
 
 @interface XXESchoolAlbumViewController ()<UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout>
 
 //    数据源数组
-@property (nonatomic) NSMutableArray *dataArray;
+@property (nonatomic) NSMutableArray *dataSourceArray;
 
 //    UICollectionView 是IOS6之后出现的控件，继承自UIScrollView,多用于展示图片
 @property (nonatomic, strong) UICollectionView *myCollcetionView;
@@ -28,6 +29,11 @@
 
 - (void)viewWillAppear:(BOOL)animated{
     
+    [super viewWillAppear:animated];
+    //初始化数据源
+    [self fetchNetData];
+    [_myCollcetionView reloadData];
+    
 //    NSString * name =[[NSUserDefaults standardUserDefaults] objectForKey:@"KEENTEAM"];
 //    //教师 91 只有教师不能改
 //    if ([name integerValue] == 91) {
@@ -36,7 +42,7 @@
         //设置 navigationBar 右边 赠送
         UIButton *upButton = [UIButton buttonWithType:UIButtonTypeCustom];
         upButton.frame = CGRectMake(300, 5, 22, 22);
-        [upButton setImage:[UIImage imageNamed:@"上传图片44x44"] forState:UIControlStateNormal];
+        [upButton setImage:[UIImage imageNamed:@"class_album_upload"] forState:UIControlStateNormal];
         [upButton addTarget:self action:@selector(upButton:) forControlEvents:UIControlEventTouchUpInside];
         
         UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:upButton];
@@ -56,10 +62,6 @@
     
     self.title = @"相   册";
     
-    NSLog(@"%@", _school_pic_groupArray);
-    //初始化数据源
-//    [self createData];
-    
     //设置内容
     [self customContent];
     
@@ -68,36 +70,67 @@
 
 - (void)upButton:(UIButton *)upBtn{
     NSLog(@"上传图片");
-//    int i=1;
-//    LogoUpPicViewController *logoUpPicVC =[[LogoUpPicViewController alloc]init];
-//    logoUpPicVC.t =i;
-//    logoUpPicVC.albumName =@"上传图片";
-//    logoUpPicVC.vedioName =@"请为您发布的相册命名";
-//    [self.navigationController pushViewController:logoUpPicVC animated:YES];
+    int i=1;
+    XXESchoolUpPicViewController *schoolUpPicVC =[[XXESchoolUpPicViewController alloc]init];
+    schoolUpPicVC.t =i;
+    schoolUpPicVC.albumName =@"上传图片";
+    schoolUpPicVC.vedioName =@"请为您发布的相册命名";
+    
+    schoolUpPicVC.schoolId = _schoolId;
+    
+    [self.navigationController pushViewController:schoolUpPicVC animated:YES];
     
     
 }
 
-
-////初始化数据源
-//-(void)createData{
-//    _dataArray = [[NSMutableArray alloc]init];
 //
-//    
-//}
+- (void)fetchNetData{
 
+    XXESchoolPicApi *schoolPicApi = [[XXESchoolPicApi alloc] initWithXid:XID user_id:USER_ID user_type:USER_TYPE school_id:_schoolId];
+    [schoolPicApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
+        _dataSourceArray = [[NSMutableArray alloc] init];
+//        NSLog(@"2222---   %@", request.responseJSONObject);
+        /*
+         {
+         "good_num" = 1;
+         id = 2;
+         url = "app_upload/text/school/z1.jpg";
+         }
+         */
+        NSString *codeStr = [NSString stringWithFormat:@"%@", request.responseJSONObject[@"code"]];
+        
+        if ([codeStr isEqualToString:@"1"]) {
+            
+            NSArray *modelArray = [XXESchoolAlbumModel parseResondsData:request.responseJSONObject[@"data"]];
+            
+            [_dataSourceArray addObjectsFromArray:modelArray];
+            
+        }else{
+            
+        }
+        
+        NSLog(@"%@", _dataSourceArray);
+        
+        [self customContent];
+        
+    } failure:^(__kindof YTKBaseRequest *request) {
+        
+        [self showString:@"数据请求失败" forSecond:1.f];
+    }];
+    
+}
 
 
 //相册 有数据 和 无数据 进行判断
 - (void)customContent{
-    //    // 1、无数据的时候
-    //    UIImage *myImage = [UIImage imageNamed:@"人物@2x.png"];
-    //    CGFloat myImageWidth = myImage.size.width;
-    //    CGFloat myImageHeight = myImage.size.height;
-    //
-    //    UIImageView *myImageView = [[UIImageView alloc] initWithFrame:CGRectMake(kScreenWidth / 2 - myImageWidth / 2, (kScreenHeight - 64 - 49) / 2 - myImageHeight / 2, myImageWidth, myImageHeight)];
-    //    myImageView.image = myImage;
-    //    [self.view addSubview:myImageView];
+        // 1、无数据的时候
+        UIImage *myImage = [UIImage imageNamed:@"人物@2x.png"];
+        CGFloat myImageWidth = myImage.size.width;
+        CGFloat myImageHeight = myImage.size.height;
+    
+        UIImageView *myImageView = [[UIImageView alloc] initWithFrame:CGRectMake(KScreenWidth / 2 - myImageWidth / 2, (KScreenHeight - 64 - 49) / 2 - myImageHeight / 2, myImageWidth, myImageHeight)];
+        myImageView.image = myImage;
+        [self.view addSubview:myImageView];
     //2、有数据的时候
     
     [self createCollectionView];
@@ -144,14 +177,16 @@
 }
 //返回每组有几个
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
-    return _dataArray.count;
+    return _dataSourceArray.count;
 }
 -(UICollectionViewCell*)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     static NSString *identifier = @"XXESchoolAlbumCollectionViewCell";
     //    到复用池中找标识为AlbumCollectionViewCell 的空闲cell,如果有就使用，没有就创建
     XXESchoolAlbumCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:identifier forIndexPath:indexPath];
     
-    cell.imageName = _school_pic_groupArray[indexPath.item];
+    XXESchoolAlbumModel *model = _dataSourceArray[indexPath.item];
+    
+    cell.imageName = [NSString stringWithFormat:@"%@%@",kXXEPicURL,model.url];
     
     return cell;
 }

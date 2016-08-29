@@ -68,7 +68,7 @@
         NSString *type = @"image/jpeg";
         
         [formData appendPartWithFileData:data name:formKey fileName:name mimeType:type];
-        NSLog(@"%@ ----  %@ ----- %@ ---- %@", _upImage, name, formKey, formData);
+//        NSLog(@"%@ ----  %@ ----- %@ ---- %@", _upImage, name, formKey, formData);
     };
 }
 

@@ -22,7 +22,8 @@
     NSString *replyStr;
     //添加 照片
     FSImagePickerView *pickerView;
-
+    NSMutableArray *arr;
+    NSString *url_groupStr;
 }
 
 
@@ -33,7 +34,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-
+    url_groupStr = @"";
+    replyStr = @"";
     [self createContent];
 
 }
@@ -66,22 +68,30 @@
 - (IBAction)certainButton:(UIButton *)sender {
     // pickerView.data  里面 有一张加号占位图,所有 个数最少有 1 张
     //如果 count == 1  -> 没有 上传 图片
-    if (pickerView.data.count == 1){
-        [self submitReplyTextInfo];
-        
-        //如果 count > 1 -> 有 上传 图片
-    }else if (pickerView.data.count > 1){
-        
+    arr = [[NSMutableArray alloc] init];
+    for (int i = 0; i < pickerView.data.count - 1; i++) {
+        FSImageModel *mdoel = pickerView.data[i];
+        UIImage *image1 = [UIImage imageWithData:mdoel.data];
+        [arr addObject:image1];
+    }
+    
+    if (arr.count != 0) {
         [self submitReplyTextAndPicInfo];
-
+    }else{
+        if ([replyStr isEqualToString:@""]) {
+            [self showHudWithString:@"请完善回复信息" forSecond:1.5];
+        }else{
+            [self submitReplyTextInfo];
+        }
+        
     }
     
 }
 
-//回复 只有  文字 的时候
+//回复 文字 的时候
 - (void)submitReplyTextInfo{
 
-    XXEReplyTextInfoApi *replyTextInfoApi = [[XXEReplyTextInfoApi alloc] initWithXid:XID user_id:USER_ID user_type:USER_TYPE class_id:_classId comment_id:_comment_id com_con:replyStr];
+    XXEReplyTextInfoApi *replyTextInfoApi = [[XXEReplyTextInfoApi alloc] initWithXid:XID user_id:USER_ID user_type:USER_TYPE class_id:_classId comment_id:_comment_id com_con:replyStr url_group:url_groupStr];
     [replyTextInfoApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         
 //       NSLog(@"2222---   %@", request.responseJSONObject);
@@ -107,120 +117,84 @@
 }
 
 
-//- (void)submitReplyTextAndPicInfo{
-//    /*
-//     【点评->处理家长请求的点评】
-//     
-//     接口类型:2
-//     
-//     接口:
-//     http://www.xingxingedu.cn/Teacher/request_comment_action
-//     
-//     
-//     传参:
-//     class_id	//班级id
-//     comment_id	//评论id
-//     com_con		//评论内容
-//     file		//批量上传图片 ★现在的版本没有上传图片的,应该是之前遗漏了,请加上
-//     */
-//    NSMutableArray *arr1 = [NSMutableArray array];
-//    for (int i = 0; i < pickerView.data.count - 1; i++) {
-//        FSImageModel *mdoel = pickerView.data[i];
-//        UIImage *image1 = [UIImage imageWithData:mdoel.data];
-//        [arr1 addObject:image1];
-//    }
-//    //    NSLog(@"上传 图片 %@", arr1);
-//    
-//    //        [self showHudWithString:@"正在上传......"];
-//    //        NSMutableArray *arr = [NSMutableArray array];
-//    NSString *url = @"http://www.xingxingedu.cn/Teacher/request_comment_action";
-//    
-//    NSDictionary *parameter = @{
-//                                @"appkey":APPKEY,
-//                                @"backtype":BACKTYPE,
-//                                @"xid":XID,
-//                                @"user_id":USER_ID,
-//                                @"user_type":USER_TYPE,
-//                                @"class_id":_classId,
-//                                @"comment_id":_comment_id,
-//                                @"com_con":replyStr
-//                                };
-//    // @"file":_upImage
-//    NSLog(@"传参 --  %@", parameter);
-//    
-//    NSLog(@"%@", arr1);
-//
-//    AFHTTPRequestOperationManager *mgr =[AFHTTPRequestOperationManager manager];
-//    [mgr POST:url parameters:parameter constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
-////        [formData appendPartWithFileData:data name:@"file" fileName:fileName mimeType:@"image/png"];
-//        for (int i = 0; i< arr1.count; i++) {
-//            
-//            //NSData *data =UIImagePNGRepresentation(arr1[i]);
-//            // NSString *fileName =[NSString stringWithFormat:@"%d.png", i];
-//            // [formData appendPartWithFileData:data name:@"file" fileName:fileName mimeType:@"image/png"];
-//            
-//            NSData *data = UIImageJPEGRepresentation(arr1[i], 0.5);
-//            NSString *name = [NSString stringWithFormat:@"%d.jpeg",i];
-//            NSString *formKey = [NSString stringWithFormat:@"file%d",i];
-//            NSString *type = @"image/jpeg";
-//            [formData appendPartWithFileData:data name:formKey fileName:name mimeType:type];
-//            
-//        }
-//        
-//    } success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
-//        NSDictionary *dict =responseObject;
-//          NSLog(@"111111<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<%@",dict);
-//        if([[NSString stringWithFormat:@"%@",dict[@"code"]]isEqualToString:@"1"] )
-//        {
-//        
-//           dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1*NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-//            [self.navigationController popViewControllerAnimated:YES];
-//            });
-//
-//        }
-//        
-//    } failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error) {
-//        //  NSLog(@"EROOROROOREROOROROOREROOROROOREROOROROOREROOROROORE");
-//        
-//          NSLog(@"3333333%@", error);
-//    }];
-//    
-//}
 
 
 - (void)submitReplyTextAndPicInfo{
 
-    NSMutableArray *arr1 = [NSMutableArray array];
+    /*
+     【上传文件】
+     
+     接口:
+     http://www.xingxingedu.cn/Global/uploadFile
+     ★注: 默认传参只要appkey和backtype
+     接口类型:2
+     传参
+     file_type	//文件类型,1图片,2视频 			  (必须)
+     page_origin	//页面来源,传数字 			  (必须)
+     18//老师点评
+     upload_format	//上传格式, 传数字,1:单个上传  2:批量上传 (必须)
+     file		//文件数据的数组名 			  (必须)
+     */
+    NSString *url = @"http://www.xingxingedu.cn/Global/uploadFile";
     
-    for (int i = 0; i < pickerView.data.count - 1; i++) {
-        
-        FSImageModel *mdoel = pickerView.data[i];
-        
-        UIImage *image1 = [UIImage imageWithData:mdoel.data];
-        [arr1 addObject:image1];
-        
-    }
-    //    NSLog(@"上传 图片 %@", arr1);
+    NSDictionary *parameter = @{@"url":url,
+                                @"appkey":APPKEY,
+                                @"backtype":BACKTYPE,
+                                @"xid":XID,
+                                @"user_id":USER_ID,
+                                @"user_type":USER_TYPE,
+                                @"file_type":@"1",
+                                @"page_origin":@"18",
+                                @"upload_format":@"2"
+                                };
     
-    [self showHudWithString:@"正在上传......"];
-    NSMutableArray *arr = [NSMutableArray array];
-    for (int i =0; i < arr1.count; i++) {
-    XXEReplyTextAndPicInfoApi *replyTextAndPicInfoApi = [[XXEReplyTextAndPicInfoApi alloc] initWithXid:XID user_id:USER_ID user_type:USER_TYPE class_id:_classId comment_id:_comment_id com_con:replyStr upImage:arr1[i]];
-        [arr addObject:replyTextAndPicInfoApi];
-    }
-    
-    YTKBatchRequest *bathRequest = [[YTKBatchRequest alloc]initWithRequestArray:arr];
-    [bathRequest startWithCompletionBlockWithSuccess:^(YTKBatchRequest *batchRequest) {
-        //        NSLog(@"%@",bathRequest);
+    AFHTTPRequestOperationManager *mgr =[AFHTTPRequestOperationManager manager];
+    [mgr POST:url parameters:parameter constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
         
-        [self hideHud];
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1*NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [self.navigationController popViewControllerAnimated:YES];
-        });
-    } failure:^(YTKBatchRequest *batchRequest) {
-        [self showHudWithString:@"上传失败" forSecond:1.f];
+        for (int i = 0; i< arr.count; i++) {
+            NSData *data = UIImageJPEGRepresentation(arr[i], 0.5);
+            NSString *name = [NSString stringWithFormat:@"%d.jpeg",i];
+            NSString *formKey = [NSString stringWithFormat:@"file%d",i];
+            NSString *type = @"image/jpeg";
+            [formData appendPartWithFileData:data name:formKey fileName:name mimeType:type];
+        }
+        
+        
+    } success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
+        NSDictionary *dict =responseObject;
+//    NSLog(@"111111<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<%@",dict);
+        if([[NSString stringWithFormat:@"%@",dict[@"code"]]isEqualToString:@"1"] )
+        {
+            NSArray *commentArray = [[NSArray alloc] init];
+            
+            commentArray = dict[@"data"];
+            if (commentArray.count == 1) {
+                url_groupStr = commentArray[0];
+            }else if (commentArray.count > 1){
+                
+                NSMutableString *tidStr = [NSMutableString string];
+                
+                for (int j = 0; j < commentArray.count; j ++) {
+                    NSString *str = commentArray[j];
+                    
+                    if (j != commentArray.count - 1) {
+                        [tidStr appendFormat:@"%@,", str];
+                    }else{
+                        [tidStr appendFormat:@"%@", str];
+                    }
+                }
+                
+                url_groupStr = tidStr;
+            }
+            //                NSLog(@"修改 图片 %@", url_groupStr);
+        }
+        
+        [self submitReplyTextInfo];
+        
+    } failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error) {
+        NSLog(@"%@", error);
     }];
-    
+
 
 }
 

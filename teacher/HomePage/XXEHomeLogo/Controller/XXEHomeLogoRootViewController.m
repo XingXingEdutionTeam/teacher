@@ -246,8 +246,8 @@
                 _head_img=dic[@"president_head_img"];
             }
             
-            //相册
-            _school_pic_groupArray = dic[@"school_pic_group"];
+            //相册  是在 相册界面 单独 调的接口
+
             //视频
             _school_video_groupArray = dic[@"school_video_group"];
             
@@ -267,6 +267,7 @@
                 }
             }
         
+            
             //学校名称/学校地址/注册学生/注册老师/电话/QQ/邮箱/资质/特点/简介/相册/视频
             self.contentArray = [[NSMutableArray alloc] initWithObjects:  _schoolNameStr, _schoolAddressStr,baby_num, teacher_num, tel, qq, email, examine, charact, @"", @"", @"", nil];
            

@@ -25,14 +25,14 @@
 @property (nonatomic, copy) NSString *con;
 @property (nonatomic, copy) NSString *teach_course;
 @property (nonatomic, copy) NSString *date_end_tm;
-
+@property (nonatomic, copy) NSString *url_group;
 
 @end
 
 
 @implementation XXEHomeworkIssueTextInfoApi
 
-- (instancetype)initWithXid:(NSString *)xid user_id:(NSString *)user_id user_type:(NSString *)user_type school_id:(NSString *)school_id class_id:(NSString *)class_id title:(NSString *)title con:(NSString *)con teach_course:(NSString *)teach_course date_end_tm:(NSString *)date_end_tm{
+- (instancetype)initWithXid:(NSString *)xid user_id:(NSString *)user_id user_type:(NSString *)user_type school_id:(NSString *)school_id class_id:(NSString *)class_id title:(NSString *)title con:(NSString *)con teach_course:(NSString *)teach_course date_end_tm:(NSString *)date_end_tm  url_group:(NSString *)url_group{
     
     if (self = [super init]) {
         _xid = xid;
@@ -45,6 +45,7 @@
         _con = con;
         _teach_course = teach_course;
         _date_end_tm = date_end_tm;
+        _url_group = url_group;
     }
     return self;
 }
@@ -75,7 +76,8 @@
              @"title":_title,
              @"con":_con,
              @"teach_course":_teach_course,
-             @"date_end_tm":_date_end_tm
+             @"date_end_tm":_date_end_tm,
+             @"url_group":_url_group
              };
     
     
