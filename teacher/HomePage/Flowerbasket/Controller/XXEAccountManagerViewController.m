@@ -22,7 +22,10 @@
 #define URL @"http://www.xingxingedu.cn/Teacher/financial_account_list"
 
 @interface XXEAccountManagerViewController ()<UITableViewDataSource, UITableViewDelegate>
-
+{
+    NSString *parameterXid;
+    NSString *parameterUser_Id;
+}
 @property (nonatomic, strong) UITableView *myTableView;
 @property (nonatomic, strong) NSMutableArray *dataSourceArray;
 //账号 中间 隐藏 一部分
@@ -53,7 +56,13 @@
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    
+    if ([XXEUserInfo user].login){
+        parameterXid = [XXEUserInfo user].xid;
+        parameterUser_Id = [XXEUserInfo user].user_id;
+    }else{
+        parameterXid = XID;
+        parameterUser_Id = USER_ID;
+    }
     [_myTableView.mj_header beginRefreshing];
 }
 
@@ -105,7 +114,7 @@
      传参:     */
     
     
-    XXEAccountManagerApi *accountManagerApi = [[XXEAccountManagerApi alloc] initWithUrlString:URL appkey:APPKEY backtype:BACKTYPE xid:XID user_id:USER_ID user_type:USER_TYPE];
+    XXEAccountManagerApi *accountManagerApi = [[XXEAccountManagerApi alloc] initWithUrlString:URL appkey:APPKEY backtype:BACKTYPE xid:parameterXid user_id:parameterUser_Id user_type:USER_TYPE];
     [accountManagerApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         
         NSString *codeStr = [NSString stringWithFormat:@"%@", request.responseJSONObject[@"code"]];
@@ -137,7 +146,7 @@
         _myTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         
         // 1、无数据的时候
-        UIImage *myImage = [UIImage imageNamed:@"人物"];
+        UIImage *myImage = [UIImage imageNamed:@"all_placeholder"];
         CGFloat myImageWidth = myImage.size.width;
         CGFloat myImageHeight = myImage.size.height;
         

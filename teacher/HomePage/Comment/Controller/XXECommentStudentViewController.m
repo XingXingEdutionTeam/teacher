@@ -40,7 +40,8 @@
     
     NSMutableArray *arr;
     NSString *url_groupStr;
-    
+    NSString *parameterXid;
+    NSString *parameterUser_Id;
 }
 
 @property (nonatomic, strong) NSMutableArray *selectedBabyInfoArray;
@@ -60,6 +61,15 @@
     
     url_groupStr = @"";
     conStr = @"";
+    
+    if ([XXEUserInfo user].login){
+        parameterXid = [XXEUserInfo user].xid;
+        parameterUser_Id = [XXEUserInfo user].user_id;
+    }else{
+        parameterXid = XID;
+        parameterUser_Id = USER_ID;
+    }
+    
     [self createContent];
     
 }
@@ -203,7 +213,7 @@
 //回复 只有  文字 的时候
 - (void)submitReplyTextInfo{
     
-    XXECommentTextInfoApi *commentTextInfoApi = [[XXECommentTextInfoApi alloc] initWithXid:XID user_id:USER_ID user_type:USER_TYPE school_id:_schoolId class_id:_classId baby_id:babyIdStr com_con:conStr   url_group:url_groupStr];
+    XXECommentTextInfoApi *commentTextInfoApi = [[XXECommentTextInfoApi alloc] initWithXid:parameterXid user_id:parameterUser_Id user_type:USER_TYPE school_id:_schoolId class_id:_classId baby_id:babyIdStr com_con:conStr   url_group:url_groupStr];
     [commentTextInfoApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         
 //               NSLog(@"2222---   %@", request.responseJSONObject);
@@ -246,11 +256,11 @@
  */
 NSString *url = @"http://www.xingxingedu.cn/Global/uploadFile";
 
-NSDictionary *parameter = @{@"url":url,
+NSDictionary *parameter = @{
                             @"appkey":APPKEY,
                             @"backtype":BACKTYPE,
-                            @"xid":XID,
-                            @"user_id":USER_ID,
+                            @"xid":parameterXid,
+                            @"user_id":parameterUser_Id,
                             @"user_type":USER_TYPE,
                             @"file_type":@"1",
                             @"page_origin":@"18",

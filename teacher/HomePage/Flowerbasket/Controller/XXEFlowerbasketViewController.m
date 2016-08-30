@@ -27,7 +27,8 @@
     NSMutableArray *_dataSourceArray;
     
     NSInteger page;
-    
+    NSString *parameterXid;
+    NSString *parameterUser_Id;
 }
 
 
@@ -39,7 +40,13 @@
     _dataSourceArray = [[NSMutableArray alloc] init];
     
     page = 0;
-    
+    if ([XXEUserInfo user].login){
+        parameterXid = [XXEUserInfo user].xid;
+        parameterUser_Id = [XXEUserInfo user].user_id;
+    }else{
+        parameterXid = XID;
+        parameterUser_Id = USER_ID;
+    }
     [_myTableView reloadData];
     
 }
@@ -77,9 +84,7 @@
 
 
 - (void)sent:(UIButton *)button{
-#warning 访客登录 不允许 提现---------------------------------------
-
-    
+#warning 访客登录 不允许 提现-----------------------------
     XXEAccountManagerViewController *XXEAccountManagerVC = [[XXEAccountManagerViewController alloc] init];
     
     [self.navigationController pushViewController:XXEAccountManagerVC animated:YES];
@@ -101,7 +106,7 @@
     
     NSString *pageStr = [NSString stringWithFormat:@"%ld", page];
     
-    XXEFlowerbasketApi *flowerbasketApi = [[XXEFlowerbasketApi alloc] initWithUrlString:URL appkey:APPKEY backtype:BACKTYPE xid:XID user_id:USER_ID user_type:USER_TYPE page:pageStr];
+    XXEFlowerbasketApi *flowerbasketApi = [[XXEFlowerbasketApi alloc] initWithUrlString:URL appkey:APPKEY backtype:BACKTYPE xid:parameterXid user_id:parameterUser_Id user_type:USER_TYPE page:pageStr];
     [flowerbasketApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         
 //        NSLog(@"111   %@", request.responseJSONObject);
@@ -134,7 +139,7 @@
         _myTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         
         // 1、无数据的时候
-        UIImage *myImage = [UIImage imageNamed:@"人物"];
+        UIImage *myImage = [UIImage imageNamed:@"all_placeholder"];
         CGFloat myImageWidth = myImage.size.width;
         CGFloat myImageHeight = myImage.size.height;
         

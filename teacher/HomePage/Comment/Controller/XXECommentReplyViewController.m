@@ -24,6 +24,8 @@
     FSImagePickerView *pickerView;
     NSMutableArray *arr;
     NSString *url_groupStr;
+    NSString *parameterXid;
+    NSString *parameterUser_Id;
 }
 
 
@@ -36,6 +38,15 @@
 
     url_groupStr = @"";
     replyStr = @"";
+    
+    if ([XXEUserInfo user].login){
+        parameterXid = [XXEUserInfo user].xid;
+        parameterUser_Id = [XXEUserInfo user].user_id;
+    }else{
+        parameterXid = XID;
+        parameterUser_Id = USER_ID;
+    }
+    
     [self createContent];
 
 }
@@ -91,7 +102,7 @@
 //回复 文字 的时候
 - (void)submitReplyTextInfo{
 
-    XXEReplyTextInfoApi *replyTextInfoApi = [[XXEReplyTextInfoApi alloc] initWithXid:XID user_id:USER_ID user_type:USER_TYPE class_id:_classId comment_id:_comment_id com_con:replyStr url_group:url_groupStr];
+    XXEReplyTextInfoApi *replyTextInfoApi = [[XXEReplyTextInfoApi alloc] initWithXid:parameterXid user_id:parameterUser_Id user_type:USER_TYPE class_id:_classId comment_id:_comment_id com_con:replyStr url_group:url_groupStr];
     [replyTextInfoApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         
 //       NSLog(@"2222---   %@", request.responseJSONObject);
@@ -137,11 +148,11 @@
      */
     NSString *url = @"http://www.xingxingedu.cn/Global/uploadFile";
     
-    NSDictionary *parameter = @{@"url":url,
+    NSDictionary *parameter = @{
                                 @"appkey":APPKEY,
                                 @"backtype":BACKTYPE,
-                                @"xid":XID,
-                                @"user_id":USER_ID,
+                                @"xid":parameterXid,
+                                @"user_id":parameterUser_Id,
                                 @"user_type":USER_TYPE,
                                 @"file_type":@"1",
                                 @"page_origin":@"18",

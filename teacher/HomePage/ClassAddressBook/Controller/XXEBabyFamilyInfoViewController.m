@@ -39,9 +39,7 @@
     
     _myTableView.dataSource = self;
     _myTableView.delegate = self;
-    //注意 先 注册
-//    [_myTableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"telCell"];
-    
+
     [self.view addSubview:_myTableView];
 }
 
@@ -61,33 +59,13 @@
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    /*
-     {
-     id = 17;
-     lv = 1;
-     "relation_name" = "\U7238\U7238";
-     tname = "\U674e\U529f\U6210";
-     xid = 18886379;
-     }*/
-//    UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
-//    cell.textLabel.text = _familyInfoArray[indexPath.row][@"tname"];
-//    NSString *levelStr = [NSString stringWithFormat:@"等级%@",_familyInfoArray[indexPath.row][@"lv"]];
-//    cell.detailTextLabel.text = levelStr;
-////    NSLog(@"%@", levelStr);
-//    
-//    cell.detailTextLabel.textColor =UIColorFromRGB(168, 254, 84);
-//    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-//    return cell;
-    
+
     static NSString *cellId = @"telCell";
     UITableViewCell *cell = [_myTableView dequeueReusableCellWithIdentifier:cellId];
 
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellId];
     }
-//    cell.imageView.layer.cornerRadius = 30;
-//    cell.imageView.clipsToBounds = YES;
-    
     cell.textLabel.text = _familyInfoArray[indexPath.row][@"tname"];
     cell.detailTextLabel.textColor =UIColorFromRGB(168, 254, 84);
     cell.detailTextLabel.text = [NSString stringWithFormat:@"等级%@",_familyInfoArray[indexPath.row][@"lv"]];
@@ -104,9 +82,6 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     return 0.00000001;
 }
-
-
-
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     XXEBabyFamilyInfoDetailViewController *babyFamilyInfoDetailVC = [[XXEBabyFamilyInfoDetailViewController alloc] init];

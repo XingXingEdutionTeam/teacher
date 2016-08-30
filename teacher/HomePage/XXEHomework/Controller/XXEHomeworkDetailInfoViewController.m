@@ -32,6 +32,8 @@
     CGFloat picWidth;
     //照片墙 照片 高
     CGFloat picHeight;
+    NSString *parameterXid;
+    NSString *parameterUser_Id;
     
 }
 
@@ -45,7 +47,13 @@
 
     picArray =[[NSMutableArray alloc]initWithObjects:@"homework_teacher_icon", @"homework_subject_icon", @"homework_content_icon", @"homework_publishtime_icon", @"homework_submittime_icon",nil];
     titleArray =[[NSMutableArray alloc]initWithObjects:@"发布人:",@"作业主题:",@"作业内容:", @"发布时间:", @"交作业时间:", nil];
-    
+    if ([XXEUserInfo user].login){
+        parameterXid = [XXEUserInfo user].xid;
+        parameterUser_Id = [XXEUserInfo user].user_id;
+    }else{
+        parameterXid = XID;
+        parameterUser_Id = USER_ID;
+    }
     [self fetchNetData];
     [self createTableView];
 }
@@ -62,7 +70,7 @@
      传参:
      homework_id	//作业id */
     
-    XXEHomeworkDetailInfoApi *homeworkApi = [[XXEHomeworkDetailInfoApi alloc] initWithXid:XID user_id:USER_ID user_type:USER_TYPE homework_id:_homeworkId];
+    XXEHomeworkDetailInfoApi *homeworkApi = [[XXEHomeworkDetailInfoApi alloc] initWithXid:parameterXid user_id:parameterUser_Id user_type:USER_TYPE homework_id:_homeworkId];
     [homeworkApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         
 //             NSLog(@"2222---   %@", request.responseJSONObject);

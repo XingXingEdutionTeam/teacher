@@ -14,4 +14,7 @@
 
 @property (nonatomic, copy) NSString *selectedClassId;
 
+@property (nonatomic, copy) NSString *babyClassName;
+
+
 @end

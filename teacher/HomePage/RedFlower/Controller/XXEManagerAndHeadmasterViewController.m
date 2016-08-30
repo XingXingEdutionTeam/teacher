@@ -27,7 +27,8 @@
     NSMutableArray *baby_listArray;
     
     UIButton *arrowButton;
-
+    NSString *parameterXid;
+    NSString *parameterUser_Id;
     
 }
 
@@ -41,7 +42,13 @@
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    
+    if ([XXEUserInfo user].login){
+        parameterXid = [XXEUserInfo user].xid;
+        parameterUser_Id = [XXEUserInfo user].user_id;
+    }else{
+        parameterXid = XID;
+        parameterUser_Id = USER_ID;
+    }
     [_myTableView reloadData];
     
 }
@@ -87,7 +94,7 @@
      传参:
      
      school_id	//学校id   */
-    XXEManagerAndHeadmasterApi *managerAndHeadmasterApi = [[XXEManagerAndHeadmasterApi alloc] initWithXid:XID user_id:USER_ID user_type:USER_TYPE school_id:_schoolId];
+    XXEManagerAndHeadmasterApi *managerAndHeadmasterApi = [[XXEManagerAndHeadmasterApi alloc] initWithXid:parameterXid user_id:parameterUser_Id user_type:USER_TYPE school_id:_schoolId];
     [managerAndHeadmasterApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         _dataSourceArray = [[NSMutableArray alloc] init];
         class_idArray =  [[NSMutableArray alloc] init];
@@ -144,7 +151,7 @@
         _myTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         
         // 1、无数据的时候
-        UIImage *myImage = [UIImage imageNamed:@"人物"];
+        UIImage *myImage = [UIImage imageNamed:@"all_placeholder"];
         CGFloat myImageWidth = myImage.size.width;
         CGFloat myImageHeight = myImage.size.height;
         

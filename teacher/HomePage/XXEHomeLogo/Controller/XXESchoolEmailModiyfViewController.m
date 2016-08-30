@@ -14,6 +14,10 @@
 
 
 @interface XXESchoolEmailModiyfViewController ()
+{
+    NSString *parameterXid;
+    NSString *parameterUser_Id;
+}
 
 @end
 
@@ -25,6 +29,14 @@
     self.title = @"更换邮箱";
     
     _emailTextField.text = _emailStr;
+    
+    if ([XXEUserInfo user].login){
+        parameterXid = [XXEUserInfo user].xid;
+        parameterUser_Id = [XXEUserInfo user].user_id;
+    }else{
+        parameterXid = XID;
+        parameterUser_Id = USER_ID;
+    }
     
     [_submitButton addTarget:self action:@selector(submitButtonClick) forControlEvents:UIControlEventTouchUpInside];
     _submitButton.layer.masksToBounds = YES;
@@ -53,7 +65,7 @@
 
 - (void)modifyEmailInfo{
 
-    XXEModifyEmailApi *modifyEmailApi = [[XXEModifyEmailApi alloc] initWithXid:XID user_id:USER_ID user_type:USER_TYPE school_id:_schoolId position:@"4" email:_emailTextField.text];
+    XXEModifyEmailApi *modifyEmailApi = [[XXEModifyEmailApi alloc] initWithXid:parameterXid user_id:parameterUser_Id user_type:USER_TYPE school_id:_schoolId position:@"4" email:_emailTextField.text];
     
     [modifyEmailApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         

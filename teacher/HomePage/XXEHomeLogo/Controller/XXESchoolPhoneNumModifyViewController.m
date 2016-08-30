@@ -17,7 +17,11 @@
 #import "XXEVertifyTimesApi.h"
 
 @interface XXESchoolPhoneNumModifyViewController ()<UITextFieldDelegate>
-
+{
+    NSString *parameterXid;
+    NSString *parameterUser_Id;
+    
+}
 
 /** 用户名 */
 @property (nonatomic, copy)NSString *registerUserName;
@@ -34,6 +38,14 @@
     [super viewDidLoad];
 
     self.title = @"更换手机号";
+    
+    if ([XXEUserInfo user].login){
+        parameterXid = [XXEUserInfo user].xid;
+        parameterUser_Id = [XXEUserInfo user].user_id;
+    }else{
+        parameterXid = XID;
+        parameterUser_Id = USER_ID;
+    }
 
     [self createContent];
     
@@ -220,7 +232,7 @@
 - (void)submitNewPhoneNum{
     //position		//教职身份(传数字,1:授课老师  2:主任  3:管理  4:校长)
 
-    XXEModifyPhoneNumApi *modifyPhoneNumApi = [[XXEModifyPhoneNumApi alloc] initWithXid:XID user_id:USER_ID user_type:USER_TYPE school_id:_schoolId position:@"4" tel:_registerUserName];
+    XXEModifyPhoneNumApi *modifyPhoneNumApi = [[XXEModifyPhoneNumApi alloc] initWithXid:parameterXid user_id:parameterUser_Id user_type:USER_TYPE school_id:_schoolId position:@"4" tel:_registerUserName];
     [modifyPhoneNumApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         //
 //        NSLog(@"%@", request.responseJSONObject);

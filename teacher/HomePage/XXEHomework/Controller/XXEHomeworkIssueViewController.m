@@ -22,6 +22,8 @@
     FSImagePickerView *pickerView;
     NSMutableArray *arr;
     NSString *url_groupStr;
+    NSString *parameterXid;
+    NSString *parameterUser_Id;
 }
 
 @property(nonatomic,strong)WJCommboxView *courseCombox;
@@ -40,6 +42,14 @@
 
     [super viewWillAppear:animated];
     _teach_course_groupArray = [[NSArray alloc]init];
+    if ([XXEUserInfo user].login){
+        parameterXid = [XXEUserInfo user].xid;
+        parameterUser_Id = [XXEUserInfo user].user_id;
+    }else{
+        parameterXid = XID;
+        parameterUser_Id = USER_ID;
+    }
+    
     [self getCourseInfo];
 
 }
@@ -65,7 +75,7 @@
 
 - (void)getCourseInfo{
 
-    XXEHomeworkGetCourseApi *homeworkGetCourseApi = [[XXEHomeworkGetCourseApi alloc] initWithXid:XID user_id:USER_ID user_type:USER_TYPE];
+    XXEHomeworkGetCourseApi *homeworkGetCourseApi = [[XXEHomeworkGetCourseApi alloc] initWithXid:parameterXid user_id:parameterUser_Id user_type:USER_TYPE];
     [homeworkGetCourseApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         
 //        NSLog(@"2222---   %@", request.responseJSONObject);
@@ -237,7 +247,7 @@
 //回复 只有  文字 的时候
 - (void)submitIssueTextInfo{
     
-    XXEHomeworkIssueTextInfoApi *homeworkIssueTextInfoApi = [[XXEHomeworkIssueTextInfoApi alloc] initWithXid:XID user_id:USER_ID user_type:USER_TYPE school_id:_schoolId class_id:_classId title:_subjectStr con:_contentStr teach_course:_teacherCourseStr date_end_tm:_timeStr url_group:url_groupStr];
+    XXEHomeworkIssueTextInfoApi *homeworkIssueTextInfoApi = [[XXEHomeworkIssueTextInfoApi alloc] initWithXid:parameterXid user_id:parameterUser_Id user_type:USER_TYPE school_id:_schoolId class_id:_classId title:_subjectStr con:_contentStr teach_course:_teacherCourseStr date_end_tm:_timeStr url_group:url_groupStr];
     
     [homeworkIssueTextInfoApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         
@@ -282,11 +292,11 @@
      */
     NSString *url = @"http://www.xingxingedu.cn/Global/uploadFile";
     
-    NSDictionary *parameter = @{@"url":url,
+    NSDictionary *parameter = @{
                                 @"appkey":APPKEY,
                                 @"backtype":BACKTYPE,
-                                @"xid":XID,
-                                @"user_id":USER_ID,
+                                @"xid":parameterXid,
+                                @"user_id":parameterUser_Id,
                                 @"user_type":USER_TYPE,
                                 @"file_type":@"1",
                                 @"page_origin":@"17",

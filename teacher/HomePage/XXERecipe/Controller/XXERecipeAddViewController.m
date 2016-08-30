@@ -52,6 +52,8 @@
     NSString *breakfastPicStr;
     NSString *lunchPicStr;
     NSString *dinnerPicStr;
+    NSString *parameterXid;
+    NSString *parameterUser_Id;
 }
 
 
@@ -80,6 +82,14 @@
     
 
     self.title = @"上传食谱";
+    
+    if ([XXEUserInfo user].login){
+        parameterXid = [XXEUserInfo user].xid;
+        parameterUser_Id = [XXEUserInfo user].user_id;
+    }else{
+        parameterXid = XID;
+        parameterUser_Id = USER_ID;
+    }
     
     [self createContent];
     
@@ -253,7 +263,7 @@
      dinner_url	//晚餐图片(url集合,多个逗号隔开)
      */
     
-    XXERecipeAddTextApi *recipeAddTextApi = [[XXERecipeAddTextApi alloc] initWithXid:XID user_id:USER_ID user_type:USER_TYPE school_id:_schoolId position:@"4" date_tm:timeStr breakfast_name:breakfastStr lunch_name:lunchStr dinner_name:dinnerStr breakfast_url:breakfastPicStr lunch_url:lunchPicStr dinner_url:dinnerPicStr];
+    XXERecipeAddTextApi *recipeAddTextApi = [[XXERecipeAddTextApi alloc] initWithXid:parameterXid user_id:parameterUser_Id user_type:USER_TYPE school_id:_schoolId position:@"4" date_tm:timeStr breakfast_name:breakfastStr lunch_name:lunchStr dinner_name:dinnerStr breakfast_url:breakfastPicStr lunch_url:lunchPicStr dinner_url:dinnerPicStr];
     
 //    NSLog(@"早餐--- %@ 午餐 --- %@ 晚餐 -- %@", breakfastPicStr, lunchPicStr, dinnerPicStr);
     
@@ -300,11 +310,11 @@
      */
     NSString *url = @"http://www.xingxingedu.cn/Global/uploadFile";
 
-    NSDictionary *parameter = @{@"url":url,
+    NSDictionary *parameter = @{
                                 @"appkey":APPKEY,
                                 @"backtype":BACKTYPE,
-                                @"xid":XID,
-                                @"user_id":USER_ID,
+                                @"xid":parameterXid,
+                                @"user_id":parameterUser_Id,
                                 @"user_type":USER_TYPE,
                                 @"file_type":@"1",
                                 @"page_origin":@"11",
@@ -371,11 +381,11 @@
 
     NSString *url = @"http://www.xingxingedu.cn/Global/uploadFile";
     
-    NSDictionary *parameter = @{@"url":url,
+    NSDictionary *parameter = @{
                                 @"appkey":APPKEY,
                                 @"backtype":BACKTYPE,
-                                @"xid":XID,
-                                @"user_id":USER_ID,
+                                @"xid":parameterXid,
+                                @"user_id":parameterUser_Id,
                                 @"user_type":USER_TYPE,
                                 @"file_type":@"1",
                                 @"page_origin":@"11",
@@ -440,11 +450,11 @@
 
     NSString *url = @"http://www.xingxingedu.cn/Global/uploadFile";
     
-    NSDictionary *parameter = @{@"url":url,
+    NSDictionary *parameter = @{
                                 @"appkey":APPKEY,
                                 @"backtype":BACKTYPE,
-                                @"xid":XID,
-                                @"user_id":USER_ID,
+                                @"xid":parameterXid,
+                                @"user_id":parameterUser_Id,
                                 @"user_type":USER_TYPE,
                                 @"file_type":@"1",
                                 @"page_origin":@"11",

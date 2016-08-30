@@ -13,7 +13,11 @@
 
 
 @interface XXESchoolFeatureModifyViewController ()
-
+{
+    NSString *parameterXid;
+    NSString *parameterUser_Id;
+    
+}
 @end
 
 @implementation XXESchoolFeatureModifyViewController
@@ -22,6 +26,15 @@
     [super viewDidLoad];
 
     self.title = @"特   点";
+    
+    if ([XXEUserInfo user].login){
+        parameterXid = [XXEUserInfo user].xid;
+        parameterUser_Id = [XXEUserInfo user].user_id;
+    }else{
+        parameterXid = XID;
+        parameterUser_Id = USER_ID;
+    }
+    
     [self createContent];
 }
 
@@ -50,7 +63,7 @@
 
 - (void)submitSchoolFeatureInfo{
 
-    XXEModifyCharacterApi *modifySchoolCharacterApi = [[XXEModifyCharacterApi alloc] initWithXid:XID user_id:USER_ID user_type:USER_TYPE school_id:_schoolId position:@"4" charact:_featureTextView.text];
+    XXEModifyCharacterApi *modifySchoolCharacterApi = [[XXEModifyCharacterApi alloc] initWithXid:parameterXid user_id:parameterUser_Id user_type:USER_TYPE school_id:_schoolId position:@"4" charact:_featureTextView.text];
     
     [modifySchoolCharacterApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         //        NSLog(@"%@", request.responseJSONObject);

@@ -13,7 +13,11 @@
 
 
 @interface XXESchoolIntroductionDetailViewController ()
-
+{
+    NSString *parameterXid;
+    NSString *parameterUser_Id;
+    
+}
 @end
 
 @implementation XXESchoolIntroductionDetailViewController
@@ -22,7 +26,13 @@
     [super viewDidLoad];
 
     self.title = @"简   介";
-    
+    if ([XXEUserInfo user].login){
+        parameterXid = [XXEUserInfo user].xid;
+        parameterUser_Id = [XXEUserInfo user].user_id;
+    }else{
+        parameterXid = XID;
+        parameterUser_Id = USER_ID;
+    }
     
 }
 
@@ -44,7 +54,7 @@
 
 - (void)submitSchoolFeatureInfo{
     
-    XXEIntroductionDetailApi *introductionDetailApi = [[XXEIntroductionDetailApi alloc] initWithXid:XID user_id:USER_ID user_type:USER_TYPE school_id:_schoolId position:@"4" introduction:_introductionDetailTextView.text];
+    XXEIntroductionDetailApi *introductionDetailApi = [[XXEIntroductionDetailApi alloc] initWithXid:parameterXid user_id:parameterUser_Id user_type:USER_TYPE school_id:_schoolId position:@"4" introduction:_introductionDetailTextView.text];
     
     [introductionDetailApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         //        NSLog(@"%@", request.responseJSONObject);

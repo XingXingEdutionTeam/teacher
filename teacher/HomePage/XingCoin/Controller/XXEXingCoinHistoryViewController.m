@@ -23,7 +23,8 @@
     NSMutableArray *_dataSourceArray;
     
     NSInteger page;
-    
+    NSString *parameterXid;
+    NSString *parameterUser_Id;
 }
 
 @end
@@ -31,10 +32,17 @@
 @implementation XXEXingCoinHistoryViewController
 
 - (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
 //    _dataSourceArray = [[NSMutableArray alloc] init];
     
     page = 0;
-    
+    if ([XXEUserInfo user].login){
+        parameterXid = [XXEUserInfo user].xid;
+        parameterUser_Id = [XXEUserInfo user].user_id;
+    }else{
+        parameterXid = XID;
+        parameterUser_Id = USER_ID;
+    }
     [_myTableView reloadData];
     
 }
@@ -76,7 +84,7 @@
     
 //    NSString *pageStr = [NSString stringWithFormat:@"%ld", page];
     
-    XXEXingCoinHistoryApi *xingCoinHistoryApi = [[XXEXingCoinHistoryApi alloc] initWithUrlString:URL xid:XID user_id:USER_ID user_type:USER_TYPE require_con:@"" year:@""];
+    XXEXingCoinHistoryApi *xingCoinHistoryApi = [[XXEXingCoinHistoryApi alloc] initWithUrlString:URL xid:parameterXid user_id:parameterUser_Id user_type:USER_TYPE require_con:@"" year:@""];
     [xingCoinHistoryApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         _dataSourceArray = [[NSMutableArray alloc] init];
         
@@ -124,7 +132,7 @@
         _myTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         
         // 1、无数据的时候
-        UIImage *myImage = [UIImage imageNamed:@"人物"];
+        UIImage *myImage = [UIImage imageNamed:@"all_placeholder"];
         CGFloat myImageWidth = myImage.size.width;
         CGFloat myImageHeight = myImage.size.height;
         

@@ -15,7 +15,11 @@
 #import "XXESchoolAlbumModel.h"
 
 @interface XXESchoolAlbumViewController ()<UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout>
-
+{
+    NSString *parameterXid;
+    NSString *parameterUser_Id;
+    
+}
 //    数据源数组
 @property (nonatomic) NSMutableArray *dataSourceArray;
 
@@ -30,6 +34,13 @@
 - (void)viewWillAppear:(BOOL)animated{
     
     [super viewWillAppear:animated];
+    if ([XXEUserInfo user].login){
+        parameterXid = [XXEUserInfo user].xid;
+        parameterUser_Id = [XXEUserInfo user].user_id;
+    }else{
+        parameterXid = XID;
+        parameterUser_Id = USER_ID;
+    }
     //初始化数据源
     [self fetchNetData];
     [_myCollcetionView reloadData];
@@ -86,7 +97,7 @@
 //
 - (void)fetchNetData{
 
-    XXESchoolPicApi *schoolPicApi = [[XXESchoolPicApi alloc] initWithXid:XID user_id:USER_ID user_type:USER_TYPE school_id:_schoolId];
+    XXESchoolPicApi *schoolPicApi = [[XXESchoolPicApi alloc] initWithXid:parameterXid user_id:parameterUser_Id user_type:USER_TYPE school_id:_schoolId];
     [schoolPicApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         _dataSourceArray = [[NSMutableArray alloc] init];
 //        NSLog(@"2222---   %@", request.responseJSONObject);
@@ -124,7 +135,7 @@
 //相册 有数据 和 无数据 进行判断
 - (void)customContent{
         // 1、无数据的时候
-        UIImage *myImage = [UIImage imageNamed:@"人物@2x.png"];
+        UIImage *myImage = [UIImage imageNamed:@"all_placeholder"];
         CGFloat myImageWidth = myImage.size.width;
         CGFloat myImageHeight = myImage.size.height;
     

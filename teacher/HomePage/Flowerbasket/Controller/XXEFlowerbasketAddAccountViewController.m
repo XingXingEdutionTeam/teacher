@@ -26,7 +26,8 @@
     
     UITextField *nameTextfield;
     UITextField *accountTextfield;
-
+    NSString *parameterXid;
+    NSString *parameterUser_Id;
 }
 
 
@@ -39,7 +40,13 @@
     self.title = @"添加账号";
     
     self.view.backgroundColor = XXEColorFromRGB(229, 232, 233);
-    
+    if ([XXEUserInfo user].login){
+        parameterXid = [XXEUserInfo user].xid;
+        parameterUser_Id = [XXEUserInfo user].user_id;
+    }else{
+        parameterXid = XID;
+        parameterUser_Id = USER_ID;
+    }
     [self createContent];
 }
 
@@ -114,7 +121,7 @@
         
     }else{
     
-        XXEFlowerbasketAddAccountApi *flowerbasketAddAccountApi = [[XXEFlowerbasketAddAccountApi alloc] initWithUrlString: URL appkey:APPKEY backtype:BACKTYPE xid:XID user_id:USER_ID user_type:USER_TYPE tname:nameStr account:accountStr type:@"1"];
+        XXEFlowerbasketAddAccountApi *flowerbasketAddAccountApi = [[XXEFlowerbasketAddAccountApi alloc] initWithUrlString: URL appkey:APPKEY backtype:BACKTYPE xid:parameterXid user_id:parameterUser_Id user_type:USER_TYPE tname:nameStr account:accountStr type:@"1"];
         [flowerbasketAddAccountApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
             
 //                    NSLog(@"111   %@", request.responseJSONObject);

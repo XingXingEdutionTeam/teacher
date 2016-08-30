@@ -20,7 +20,8 @@
     UITableView *_myTableView;
     
     NSMutableArray *_dataSourceArray;
-    
+    NSString *parameterXid;
+    NSString *parameterUser_Id;
 }
 
 @end
@@ -28,7 +29,14 @@
 @implementation XXEChiefAndTeacherViewController
 
 - (void)viewWillAppear:(BOOL)animated{
-    
+    [super viewWillAppear:animated];
+    if ([XXEUserInfo user].login){
+        parameterXid = [XXEUserInfo user].xid;
+        parameterUser_Id = [XXEUserInfo user].user_id;
+    }else{
+        parameterXid = XID;
+        parameterUser_Id = USER_ID;
+    }
     
     [_myTableView reloadData];
     
@@ -76,7 +84,7 @@
     
 //    NSLog(@"%@---  %@", _schoolId, _classId);
     
-    XXEChiefAndTeacherApi *chiefAndTeacherApi = [[XXEChiefAndTeacherApi alloc] initWithXid:XID user_id:USER_ID user_type:USER_TYPE school_id:_schoolId class_id:_classId];
+    XXEChiefAndTeacherApi *chiefAndTeacherApi = [[XXEChiefAndTeacherApi alloc] initWithXid:parameterXid user_id:parameterUser_Id user_type:USER_TYPE school_id:_schoolId class_id:_classId];
     [chiefAndTeacherApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         _dataSourceArray = [[NSMutableArray alloc] init];
         
@@ -120,7 +128,7 @@
         _myTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         
         // 1、无数据的时候
-        UIImage *myImage = [UIImage imageNamed:@"人物"];
+        UIImage *myImage = [UIImage imageNamed:@"all_placeholder"];
         CGFloat myImageWidth = myImage.size.width;
         CGFloat myImageHeight = myImage.size.height;
         

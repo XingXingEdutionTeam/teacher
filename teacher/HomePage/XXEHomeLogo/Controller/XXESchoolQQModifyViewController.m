@@ -12,10 +12,12 @@
 #import "XXESchoolQQModifyViewController.h"
 #import "XXEModifyQQApi.h"
 
-
-
 @interface XXESchoolQQModifyViewController ()
-
+{
+    NSString *parameterXid;
+    NSString *parameterUser_Id;
+    
+}
 @end
 
 @implementation XXESchoolQQModifyViewController
@@ -26,6 +28,14 @@
     self.title = @"更换QQ号";
     
     _QQTextField.text = _qqStr;
+    
+    if ([XXEUserInfo user].login){
+        parameterXid = [XXEUserInfo user].xid;
+        parameterUser_Id = [XXEUserInfo user].user_id;
+    }else{
+        parameterXid = XID;
+        parameterUser_Id = USER_ID;
+    }
     
     [_submitButton addTarget:self action:@selector(submitButtonClick) forControlEvents:UIControlEventTouchUpInside];
     _submitButton.layer.masksToBounds = YES;
@@ -41,7 +51,7 @@
 
 - (void)submitButtonClick{
     
-    XXEModifyQQApi *modifyQQApi = [[XXEModifyQQApi alloc] initWithXid:XID user_id:USER_ID user_type:USER_TYPE school_id:_schoolId position:@"4" qq:_QQTextField.text];
+    XXEModifyQQApi *modifyQQApi = [[XXEModifyQQApi alloc] initWithXid:parameterXid user_id:parameterUser_Id user_type:USER_TYPE school_id:_schoolId position:@"4" qq:_QQTextField.text];
     
     [modifyQQApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         //

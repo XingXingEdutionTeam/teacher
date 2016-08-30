@@ -58,8 +58,9 @@
     NSInteger deleteSection;
     //记录 最初 历史 食谱 个数
     NSInteger historyCount;
+    NSString *parameterXid;
+    NSString *parameterUser_Id;
     
-//    XXERecipeBreAndLunAndDinModel *breAndLunAndDinModel;
 }
 
 @end
@@ -70,6 +71,14 @@
     
     [super viewWillAppear:animated];
     titleArray = [[NSArray alloc] initWithObjects:@"早餐", @"午餐", @"晚餐", nil];
+    if ([XXEUserInfo user].login){
+        parameterXid = [XXEUserInfo user].xid;
+        parameterUser_Id = [XXEUserInfo user].user_id;
+    }else{
+        parameterXid = XID;
+        parameterUser_Id = USER_ID;
+    }
+    
     [self fetchNetData];
 
 }
@@ -89,9 +98,6 @@
 //    [self fetchNetData];
     
     [self createTableView];
-    
-
-    
 }
 
 
@@ -120,7 +126,7 @@
      传参:
      school_id	//学校id (测试值:1)*/
     
-    XXERecipeApi *recipeApi = [[XXERecipeApi alloc] initWithXid:XID user_id:USER_ID user_type:USER_TYPE school_id:_schoolId];
+    XXERecipeApi *recipeApi = [[XXERecipeApi alloc] initWithXid:parameterXid user_id:parameterUser_Id user_type:USER_TYPE school_id:_schoolId];
     [recipeApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         dateArray = [[NSMutableArray alloc] init];
         cookbook_idArray = [[NSMutableArray alloc] init];
@@ -224,7 +230,7 @@
         _myTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         
         // 1、无数据的时候
-        UIImage *myImage = [UIImage imageNamed:@"人物"];
+        UIImage *myImage = [UIImage imageNamed:@"all_placeholder"];
         CGFloat myImageWidth = myImage.size.width;
         CGFloat myImageHeight = myImage.size.height;
         
@@ -363,7 +369,7 @@
      */
     NSString *cookbook_idStr = cookbook_idArray[deleteSection];
     
-    XXERecipeDeleteApi *recipeDeleteApi = [[XXERecipeDeleteApi alloc] initWithXid:XID user_id:USER_ID user_type:USER_TYPE school_id:_schoolId position:@"4" cookbook_id:cookbook_idStr];
+    XXERecipeDeleteApi *recipeDeleteApi = [[XXERecipeDeleteApi alloc] initWithXid:parameterXid user_id:parameterUser_Id user_type:USER_TYPE school_id:_schoolId position:@"4" cookbook_id:cookbook_idStr];
     [recipeDeleteApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         
 //        NSLog(@"2222---   %@", request.responseJSONObject);

@@ -29,6 +29,8 @@
     UIView *headerView;
     NSString * courseNameStr;
     NSString * dateNameStr;
+    NSString *parameterXid;
+    NSString *parameterUser_Id;
 }
 
 @property(nonatomic,strong)WJCommboxView *courseCombox;
@@ -60,7 +62,13 @@
     
     [super viewWillAppear:animated];
     _dataSourceArray = [[NSMutableArray alloc] init];
-    
+    if ([XXEUserInfo user].login){
+        parameterXid = [XXEUserInfo user].xid;
+        parameterUser_Id = [XXEUserInfo user].user_id;
+    }else{
+        parameterXid = XID;
+        parameterUser_Id = USER_ID;
+    }
     page = 0;
     
     [_myTableView reloadData];
@@ -147,7 +155,9 @@
     
     NSString *pageStr = [NSString stringWithFormat:@"%ld", page];
     
-    XXEHomeworkApi *homeworkApi = [[XXEHomeworkApi alloc] initWithXid:XID user_id:USER_ID user_type:USER_TYPE school_id:_schoolId class_id:_classId page:pageStr teach_course:courseNameStr month:dateNameStr];
+//    NSLog(@"%@ --- %@", _schoolId, _classId);
+    
+    XXEHomeworkApi *homeworkApi = [[XXEHomeworkApi alloc] initWithXid:parameterXid user_id:parameterUser_Id user_type:USER_TYPE school_id:_schoolId class_id:@"1" page:pageStr teach_course:courseNameStr month:dateNameStr];
     [homeworkApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         
 //             NSLog(@"2222---   %@", request.responseJSONObject);
@@ -196,7 +206,7 @@
         _myTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         
         // 1、无数据的时候
-        UIImage *myImage = [UIImage imageNamed:@"人物"];
+        UIImage *myImage = [UIImage imageNamed:@"all_placeholder"];
         CGFloat myImageWidth = myImage.size.width;
         CGFloat myImageHeight = myImage.size.height;
         

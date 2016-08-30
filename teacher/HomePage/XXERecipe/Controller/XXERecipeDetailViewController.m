@@ -24,6 +24,8 @@
     NSString *iconStr;
     //删除 图片 row
     NSInteger deleteRow;
+    NSString *parameterXid;
+    NSString *parameterUser_Id;
 }
 
 @end
@@ -36,7 +38,13 @@
     self.title = @"食谱详情";
     picArray = [[NSMutableArray alloc] init];
     picIdArray = [[NSMutableArray alloc] init];
-
+    if ([XXEUserInfo user].login){
+        parameterXid = [XXEUserInfo user].xid;
+        parameterUser_Id = [XXEUserInfo user].user_id;
+    }else{
+        parameterXid = XID;
+        parameterUser_Id = USER_ID;
+    }
 //    NSLog(@"%@", _cookbook_idStr);
     
     [self createData];
@@ -206,7 +214,7 @@
 
     NSString *pic_idStr = picIdArray[deleteRow];
     
-    XXERecipePicDeleteApi *recipePicDeleteApi = [[XXERecipePicDeleteApi alloc] initWithXid:XID user_id:USER_ID user_type:USER_TYPE pic_id:pic_idStr position:@"4" cookbook_id:_cookbook_idStr];
+    XXERecipePicDeleteApi *recipePicDeleteApi = [[XXERecipePicDeleteApi alloc] initWithXid:parameterXid user_id:parameterUser_Id user_type:USER_TYPE pic_id:pic_idStr position:@"4" cookbook_id:_cookbook_idStr];
     [recipePicDeleteApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         
 //        NSLog(@"2222---   %@", request.responseJSONObject);

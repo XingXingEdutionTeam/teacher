@@ -12,8 +12,6 @@
 
 @property (nonatomic, copy) NSString *schoolId;
 
-
-
 @property (nonatomic, copy) NSString *schoolType;
 
 @end

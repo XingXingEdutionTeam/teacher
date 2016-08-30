@@ -33,7 +33,8 @@
     NSString *coin_total;
     //升下一级所需猩币数
     NSString *next_grade_coin;
-    
+    NSString *parameterXid;
+    NSString *parameterUser_Id;
 }
 
 
@@ -45,7 +46,13 @@
 - (void)viewWillAppear:(BOOL)animated{
 
     [super viewWillAppear:animated];
-    
+    if ([XXEUserInfo user].login){
+        parameterXid = [XXEUserInfo user].xid;
+        parameterUser_Id = [XXEUserInfo user].user_id;
+    }else{
+        parameterXid = XID;
+        parameterUser_Id = USER_ID;
+    }
     [self fetchNetData];
 
 }
@@ -74,7 +81,7 @@
 
 - (void)fetchNetData{
 
-    XXEXingCoinApi *xingCoinApi = [[XXEXingCoinApi alloc] initWithUrlString:URL xid:XID user_id:USER_ID user_type:USER_TYPE];
+    XXEXingCoinApi *xingCoinApi = [[XXEXingCoinApi alloc] initWithUrlString:URL xid:parameterXid user_id:parameterUser_Id user_type:USER_TYPE];
     [xingCoinApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         /*
          {

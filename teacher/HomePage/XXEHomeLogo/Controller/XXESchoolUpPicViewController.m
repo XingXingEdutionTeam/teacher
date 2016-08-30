@@ -20,6 +20,8 @@
     UIButton *btn;
     UIScrollView *src;
     UIPageControl *pageControl;
+    NSString *parameterXid;
+    NSString *parameterUser_Id;
     
 }
 //上传图片 数组
@@ -34,6 +36,14 @@
     [super viewDidLoad];
     self.title =@"上传照片";
     _upPicArray = [[NSMutableArray alloc] init];
+    
+    if ([XXEUserInfo user].login){
+        parameterXid = [XXEUserInfo user].xid;
+        parameterUser_Id = [XXEUserInfo user].user_id;
+    }else{
+        parameterXid = XID;
+        parameterUser_Id = USER_ID;
+    }
     
     self.view.backgroundColor = UIColorFromRGB(229, 232, 233);
     // Do any additional setup after loading the view.
@@ -60,7 +70,7 @@
     [self showHudWithString:@"正在上传......"];
     NSMutableArray *arr = [NSMutableArray array];
     for (int i =0; i < _upPicArray.count; i++) {
-        XXESchoolUpPicApi *schoolUpPicApi = [[XXESchoolUpPicApi alloc] initWithXid:XID user_id:USER_ID user_type:USER_TYPE school_id:_schoolId position:@"4" upImage:_upPicArray[i]];
+        XXESchoolUpPicApi *schoolUpPicApi = [[XXESchoolUpPicApi alloc] initWithXid:parameterXid user_id:parameterUser_Id user_type:USER_TYPE school_id:_schoolId position:@"4" upImage:_upPicArray[i]];
         [arr addObject:schoolUpPicApi];
     }
     

@@ -14,4 +14,7 @@
 
 @property (nonatomic, copy) NSString *parent_id;
 
+//家人 是否 收藏
+@property (nonatomic) BOOL isCollected;
+
 @end

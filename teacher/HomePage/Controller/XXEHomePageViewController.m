@@ -364,9 +364,10 @@
         {
             NSLog(@"----作业----");
             XXEHomeworkViewController *homeworkVC = [[XXEHomeworkViewController alloc] init];
+            XXETeacherUserInfo *model = self.arraySchool[0];
             
             homeworkVC.schoolId = self.schoolHomeId;
-            homeworkVC.classId = self.classHomeId;
+            homeworkVC.classId = model.class_id;
             
             [self.navigationController pushViewController:homeworkVC animated:YES];
             

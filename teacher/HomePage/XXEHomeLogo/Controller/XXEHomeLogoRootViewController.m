@@ -31,6 +31,8 @@
     UILabel *browseLabel;
     //收藏
     UILabel *collectionLabel;
+    NSString *parameterXid;
+    NSString *parameterUser_Id;
 }
 
 
@@ -106,7 +108,13 @@
 - (void)viewWillAppear:(BOOL)animated{
     
     [super viewWillAppear:animated];
-
+    if ([XXEUserInfo user].login){
+        parameterXid = [XXEUserInfo user].xid;
+        parameterUser_Id = [XXEUserInfo user].user_id;
+    }else{
+        parameterXid = XID;
+        parameterUser_Id = USER_ID;
+    }
     [self fetchNetData];
     
 }
@@ -169,7 +177,7 @@
     
 //    NSLog(@"%@", _schoolId);
     
-    XXEHomeLogoApi *homeLogoApi = [[XXEHomeLogoApi alloc] initWithXid:XID user_id:USER_ID user_type:USER_TYPE school_id:_schoolId];
+    XXEHomeLogoApi *homeLogoApi = [[XXEHomeLogoApi alloc] initWithXid:parameterXid user_id:parameterUser_Id user_type:USER_TYPE school_id:_schoolId];
     [homeLogoApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
 //        NSLog(@"2222---   %@", request.responseJSONObject);
         /*

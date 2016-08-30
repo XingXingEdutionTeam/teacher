@@ -21,6 +21,10 @@
 
 
 @interface XXEFlowerbasketWithdrawCashViewController ()<UITextFieldDelegate>
+{
+    NSString *parameterXid;
+    NSString *parameterUser_Id;
+}
 //可用花篮数
 @property (nonatomic, copy) NSString *fbasket_able;
 //一个花篮 多少元
@@ -50,7 +54,13 @@
     [super viewDidLoad];
     
     self.title = @"花篮提现";
-    
+    if ([XXEUserInfo user].login){
+        parameterXid = [XXEUserInfo user].xid;
+        parameterUser_Id = [XXEUserInfo user].user_id;
+    }else{
+        parameterXid = XID;
+        parameterUser_Id = USER_ID;
+    }
     _numberTextField.delegate = self;
     [_numberTextField addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
     
@@ -74,7 +84,7 @@
 
 - (void)fetchNetData{
     
-    XXEFlowerbasketWithdrawCashApi *flowerbasketWithdrawCashApi = [[XXEFlowerbasketWithdrawCashApi alloc] initWithUrlString:requestUrl appkey:APPKEY backtype:BACKTYPE xid:XID user_id:USER_ID user_type:USER_TYPE];
+    XXEFlowerbasketWithdrawCashApi *flowerbasketWithdrawCashApi = [[XXEFlowerbasketWithdrawCashApi alloc] initWithUrlString:requestUrl appkey:APPKEY backtype:BACKTYPE xid:parameterXid user_id:parameterUser_Id user_type:USER_TYPE];
     [flowerbasketWithdrawCashApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         
         //        NSLog(@"%@", request.responseJSONObject);
@@ -163,7 +173,7 @@
     //    NSLog(@"账号%@ ---  数量%@", _account_id, _numberTextField.text);
     //账号13818657742 ---  数量1
     
-    XXEFlowerbasketSubmitAccountInfoApi *flowerbasketSubmitAccountInfoApi = [[XXEFlowerbasketSubmitAccountInfoApi alloc] initWithUrlString:submitUrl appkey:APPKEY backtype:BACKTYPE xid:XID user_id:USER_ID user_type:USER_TYPE account_id:self.account_id num:_numberTextField.text];
+    XXEFlowerbasketSubmitAccountInfoApi *flowerbasketSubmitAccountInfoApi = [[XXEFlowerbasketSubmitAccountInfoApi alloc] initWithUrlString:submitUrl appkey:APPKEY backtype:BACKTYPE xid:parameterXid user_id:parameterUser_Id user_type:USER_TYPE account_id:self.account_id num:_numberTextField.text];
     [flowerbasketSubmitAccountInfoApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         
         //            NSLog(@"hahahah %@", request.responseJSONObject);

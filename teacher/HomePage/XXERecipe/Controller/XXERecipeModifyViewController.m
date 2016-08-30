@@ -29,7 +29,8 @@
     
     NSArray *modifyMealArray;
     
-    
+    NSString *parameterXid;
+    NSString *parameterUser_Id;
 }
 
 
@@ -40,7 +41,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    
+    if ([XXEUserInfo user].login){
+        parameterXid = [XXEUserInfo user].xid;
+        parameterUser_Id = [XXEUserInfo user].user_id;
+    }else{
+        parameterXid = XID;
+        parameterUser_Id = USER_ID;
+    }
 
     [self createContent];
 }
@@ -138,7 +145,7 @@
          dinner_url	//晚餐图片(url集合,多个逗号隔开)
          */
         
-        XXERecipePicModify *recipePicModify = [[XXERecipePicModify alloc] initWithXid:XID user_id:USER_ID user_type:USER_TYPE school_id:_schoolId position:@"4" cookbook_id:_cookbook_idStr meal_type:meal_type meal_name:mealNameStr url_group:url_groupStr];
+        XXERecipePicModify *recipePicModify = [[XXERecipePicModify alloc] initWithXid:parameterXid user_id:parameterUser_Id user_type:USER_TYPE school_id:_schoolId position:@"4" cookbook_id:_cookbook_idStr meal_type:meal_type meal_name:mealNameStr url_group:url_groupStr];
         
 //            NSLog(@"_cookbook_idStr:%@ ---meal_type:%@ ----mealNameStr: %@ ---url_groupStr: %@", _cookbook_idStr, meal_type, mealNameStr, url_groupStr);
     
@@ -187,11 +194,11 @@
          */
         NSString *url = @"http://www.xingxingedu.cn/Global/uploadFile";
         
-        NSDictionary *parameter = @{@"url":url,
+        NSDictionary *parameter = @{
                                     @"appkey":APPKEY,
                                     @"backtype":BACKTYPE,
-                                    @"xid":XID,
-                                    @"user_id":USER_ID,
+                                    @"xid":parameterXid,
+                                    @"user_id":parameterUser_Id,
                                     @"user_type":USER_TYPE,
                                     @"file_type":@"1",
                                     @"page_origin":@"11",

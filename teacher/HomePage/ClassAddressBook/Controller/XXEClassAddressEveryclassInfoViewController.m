@@ -15,6 +15,8 @@
 #import "XXEClassAddressTeacherInfoModel.h"
 #import "XXEClassAddressManagerInfoModel.h"
 #import "XXEBabyFamilyInfoViewController.h"
+#import "XXEBabyInfoViewController.h"
+
 
 @interface XXEClassAddressEveryclassInfoViewController ()<UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate>
 {
@@ -25,6 +27,8 @@
     
     UIButton *arrowButton;
     NSString *search_wordsStr;
+    NSString *parameterXid;
+    NSString *parameterUser_Id;
 }
 
 @property (nonatomic,strong) NSMutableArray *flagArray;
@@ -92,7 +96,14 @@
     }
     
 //    NSLog(@"学校id  %@   ------  班级 id %@", _schoolId, _selectedClassId);
-    XXEClassAddressEveryclassInfoApi *classAddressEveryclassInfoApi = [[XXEClassAddressEveryclassInfoApi alloc] initWithXid:XID user_id:USER_ID user_type:USER_TYPE school_id:_schoolId class_id:_selectedClassId search_words:@""];
+    if ([XXEUserInfo user].login){
+        parameterXid = [XXEUserInfo user].xid;
+        parameterUser_Id = [XXEUserInfo user].user_id;
+    }else{
+        parameterXid = XID;
+        parameterUser_Id = USER_ID;
+    }
+    XXEClassAddressEveryclassInfoApi *classAddressEveryclassInfoApi = [[XXEClassAddressEveryclassInfoApi alloc] initWithXid:parameterXid user_id:parameterUser_Id user_type:USER_TYPE school_id:_schoolId class_id:_selectedClassId search_words:search_wordsStr];
     
     
     [classAddressEveryclassInfoApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
@@ -140,7 +151,7 @@
         _myTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         
         // 1、无数据的时候
-        UIImage *myImage = [UIImage imageNamed:@"人物"];
+        UIImage *myImage = [UIImage imageNamed:@"all_placeholder"];
         CGFloat myImageWidth = myImage.size.width;
         CGFloat myImageHeight = myImage.size.height;
         
@@ -228,6 +239,7 @@
         cell.nameLabel.text = model.tname;
         cell.detailLabel.text = [NSString stringWithFormat:@"%@岁", model.age];
         
+        cell.iconImageView.userInteractionEnabled = YES;
         UITapGestureRecognizer *iconTap =[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(iconTap:)];
         cell.iconImageView.tag =100+indexPath.row;
         [cell.iconImageView addGestureRecognizer:iconTap];
@@ -295,11 +307,16 @@
 
 
 - (void)iconTap:(UITapGestureRecognizer*)tap{
-    // NSLog(@">>>>>>>>>>>>>>tapViewTag>>>>>>>>>>>>>>>>>>>>>%ld",tap.view.tag);
+//NSLog(@">>>>>>>>>>>>>>tapViewTag>>>>>>>>>>%ld",tap.view.tag);
+    
+    XXEClassAddressStudentInfoModel *model = _dataSourceArray[0][tap.view.tag - 100];
 //    if ([XXEUserInfo user].login){
-//        KTClassTelephoneBabyViewController *telephoneBabyVC =[[KTClassTelephoneBabyViewController alloc]init];
-//        telephoneBabyVC.idKT =KTIDMArr[0][tap.view.tag-100];
-//        [self.navigationController pushViewController:telephoneBabyVC animated:NO];
+        XXEBabyInfoViewController *babyInfoVC =[[XXEBabyInfoViewController alloc]init];
+//    NSLog(@"%@", model.baby_id);
+    
+        babyInfoVC.babyId = model.baby_id;
+    babyInfoVC.babyClassName = _babyClassName;
+        [self.navigationController pushViewController:babyInfoVC animated:NO];
 //    }else{
 //        [SVProgressHUD showInfoWithStatus:@"请用账号登录后查看"];
 //    }
@@ -374,8 +391,8 @@
     
 //    if ([XXEUserInfo user].login){
         _searchBar = [[UISearchBar alloc]initWithFrame:CGRectMake(0,20, kWidth, 44)];
-//        UIImage *backgroundImg = [XXETool createImageWithColor:UIColorFromHex(0xf0eaf3) size:_searchBar.frame.size];
-//        [_searchBar setBackgroundImage:backgroundImg];
+        UIImage *backgroundImg = [XXETool createImageWithColor:UIColorFromHex(0xf0eaf3) size:_searchBar.frame.size];
+        [_searchBar setBackgroundImage:backgroundImg];
         _searchBar.placeholder =@"输入你想要查询的联系人";
         _searchBar.tintColor = [UIColor blackColor];
         _searchBar.delegate =self;

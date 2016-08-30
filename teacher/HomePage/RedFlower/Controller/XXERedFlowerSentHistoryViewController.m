@@ -24,7 +24,8 @@
     NSMutableArray *_dataSourceArray;
     
     NSInteger page;
-    
+    NSString *parameterXid;
+    NSString *parameterUser_Id;
 }
 
 
@@ -37,7 +38,13 @@
     [super viewWillAppear:animated];
 //    self.navigationController.navigationBar.topItem.title = @"小红花";
     _dataSourceArray = [[NSMutableArray alloc] init];
-    
+    if ([XXEUserInfo user].login){
+        parameterXid = [XXEUserInfo user].xid;
+        parameterUser_Id = [XXEUserInfo user].user_id;
+    }else{
+        parameterXid = XID;
+        parameterUser_Id = USER_ID;
+    }
     page = 0;
     
     [_myTableView reloadData];
@@ -103,7 +110,7 @@
     
     NSString *pageStr = [NSString stringWithFormat:@"%ld", page];
     
-    XXERedFlowerSentHistoryApi *redFlowerSentHistoryApi = [[XXERedFlowerSentHistoryApi alloc] initWithXid:XID user_id:USER_ID user_type:USER_TYPE page:pageStr];
+    XXERedFlowerSentHistoryApi *redFlowerSentHistoryApi = [[XXERedFlowerSentHistoryApi alloc] initWithXid:parameterXid user_id:parameterUser_Id user_type:USER_TYPE page:pageStr];
     [redFlowerSentHistoryApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         
 //                NSLog(@"2222---   %@", request.responseJSONObject);
@@ -144,7 +151,7 @@
         _myTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         
         // 1、无数据的时候
-        UIImage *myImage = [UIImage imageNamed:@"人物"];
+        UIImage *myImage = [UIImage imageNamed:@"all_placeholder"];
         CGFloat myImageWidth = myImage.size.width;
         CGFloat myImageHeight = myImage.size.height;
         
@@ -280,7 +287,7 @@
     
     XXERedFlowerSentHistoryModel *model = _dataSourceArray[indexPath.row];
     redFlowerDetialVC.name = model.tname;
-    redFlowerDetialVC.time = model.date_tm;
+    redFlowerDetialVC.time = [XXETool dateStringFromNumberTimer:model.date_tm];
     redFlowerDetialVC.schoolName = model.school_name;
     redFlowerDetialVC.className = model.class_name;
     redFlowerDetialVC.course = model.teach_course;

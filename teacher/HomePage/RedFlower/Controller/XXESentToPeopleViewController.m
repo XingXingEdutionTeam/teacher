@@ -30,7 +30,8 @@
     NSString *jsonString;
     
     NSString *conStr;
-
+    NSString *parameterXid;
+    NSString *parameterUser_Id;
 }
 
 @property (nonatomic, strong) NSMutableArray *selectedBabyInfoArray;
@@ -47,7 +48,13 @@
     didSelectClassIdArray = [[NSMutableArray alloc] init];
     
     submitBabyInfoArray = [[NSMutableArray alloc] init];
-    
+    if ([XXEUserInfo user].login){
+        parameterXid = [XXEUserInfo user].xid;
+        parameterUser_Id = [XXEUserInfo user].user_id;
+    }else{
+        parameterXid = XID;
+        parameterUser_Id = USER_ID;
+    }
     [self createContent];
     
 
@@ -206,7 +213,7 @@
         conStr = @"";
     }
     
-    XXESubmitSeletedBabyInfoApi *submitSeletedBabyInfoApi = [[XXESubmitSeletedBabyInfoApi alloc] initWithXid:XID user_id:USER_ID user_type:USER_TYPE position:@"4" baby_info:jsonString con:conStr];
+    XXESubmitSeletedBabyInfoApi *submitSeletedBabyInfoApi = [[XXESubmitSeletedBabyInfoApi alloc] initWithXid:parameterXid user_id:parameterUser_Id user_type:USER_TYPE position:@"4" baby_info:jsonString con:conStr];
     [submitSeletedBabyInfoApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         
 //    NSLog(@"111777   %@", request.responseJSONObject);

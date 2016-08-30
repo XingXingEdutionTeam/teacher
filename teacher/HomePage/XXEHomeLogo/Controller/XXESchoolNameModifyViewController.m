@@ -14,7 +14,11 @@
 
 
 @interface XXESchoolNameModifyViewController ()
-
+{
+    NSString *parameterXid;
+    NSString *parameterUser_Id;
+    
+}
 @end
 
 @implementation XXESchoolNameModifyViewController
@@ -42,7 +46,16 @@
 }
 
 - (void)submitSchoolNameInfo{
-    XXEModifySchoolNameApi *modifySchoolNameApi = [[XXEModifySchoolNameApi alloc] initWithXid:XID user_id:USER_ID user_type:USER_TYPE school_id:_schoolId position:@"4" name:_schoolNameTextView.text];
+    
+    if ([XXEUserInfo user].login){
+        parameterXid = [XXEUserInfo user].xid;
+        parameterUser_Id = [XXEUserInfo user].user_id;
+    }else{
+        parameterXid = XID;
+        parameterUser_Id = USER_ID;
+    }
+    
+    XXEModifySchoolNameApi *modifySchoolNameApi = [[XXEModifySchoolNameApi alloc] initWithXid:parameterXid user_id:parameterUser_Id user_type:USER_TYPE school_id:_schoolId position:@"4" name:_schoolNameTextView.text];
     
     [modifySchoolNameApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         //        NSLog(@"%@", request.responseJSONObject);

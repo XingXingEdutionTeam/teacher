@@ -17,6 +17,8 @@
 {
     //添加 照片
     FSImagePickerView *pickerView;
+    NSString *parameterXid;
+    NSString *parameterUser_Id;
 }
 
 
@@ -28,7 +30,13 @@
     [super viewDidLoad];
 
     self.title = @"资  质";
-    
+    if ([XXEUserInfo user].login){
+        parameterXid = [XXEUserInfo user].xid;
+        parameterUser_Id = [XXEUserInfo user].user_id;
+    }else{
+        parameterXid = XID;
+        parameterUser_Id = USER_ID;
+    }
     [self createContent];
     
 }
@@ -82,7 +90,7 @@
     [self showHudWithString:@"正在上传......"];
     NSMutableArray *arr = [NSMutableArray array];
     for (int i =0; i < arr1.count; i++) {
-        XXEModifyCertificateApi *modifyCertificateApi = [[XXEModifyCertificateApi alloc] initWithXid:XID user_id:USER_ID user_type:USER_TYPE school_id:_schoolId position:@"4" upImage:arr1[i]];
+        XXEModifyCertificateApi *modifyCertificateApi = [[XXEModifyCertificateApi alloc] initWithXid:parameterXid user_id:parameterUser_Id user_type:USER_TYPE school_id:_schoolId position:@"4" upImage:arr1[i]];
         [arr addObject:modifyCertificateApi];
     }
     
