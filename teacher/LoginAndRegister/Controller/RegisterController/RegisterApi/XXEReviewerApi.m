@@ -39,7 +39,8 @@
     return @{@"school_id":_school_id,
              @"position":_position,
              @"appkey":APPKEY,
-             @"backtype":BACKTYPE
+             @"backtype":BACKTYPE,
+             @"user_type":USER_TYPE
              };
 }
 

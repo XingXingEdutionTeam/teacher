@@ -30,6 +30,7 @@
 #import "FSImageModel.h"
 #import "UtilityFunc.h"
 #import "XXELoginViewController.h"
+#import "XXERegisterPicApi.h"
 #define awayX 20
 @interface XXERegisterHeadMasterViewController ()<UISearchBarDelegate,UITableViewDelegate,UITableViewDataSource,XXESearchSchoolMessageDelegate,UITextFieldDelegate>{
     UIButton *landBtn;
@@ -86,6 +87,11 @@
 @property (nonatomic, copy)NSString *schoolCity;
 /** 学校的区 */
 @property (nonatomic, copy)NSString *schoolDistrict;
+
+/** 获取头像url */
+@property (nonatomic, copy)NSString *theEndUserAvatarImage;
+/** 获取证件url */
+@property (nonatomic, copy)NSString *theEndFileImage;
 
 /** 证件照片 */
 @property (nonatomic, strong)NSMutableArray *fileHeadImageArray;
@@ -180,6 +186,34 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
     [self.teacherTableView registerNib:[UINib nibWithNibName:@"XXETeacherTableViewCell" bundle:nil] forCellReuseIdentifier:IdentifierCELL];
     [self.teacherTableView registerNib:[UINib nibWithNibName:@"XXETeacherMessTableViewCell" bundle:nil] forCellReuseIdentifier:IdentifierMessCELL];
     [self.view addSubview:self.teacherTableView];
+    
+    //校长的头像
+    [self headMasterImageUpLoad];
+}
+
+#pragma mark - 上传校长头像
+- (void)headMasterImageUpLoad
+{
+    NSLog(@"用户头像%@",self.userAvatarImage);
+    
+    if (self.userAvatarImage != nil) {
+        XXERegisterPicApi *headPicApi = [[XXERegisterPicApi alloc]initUpLoadRegisterPicFileType:@"1" PageOrigin:@"1" UploadFormat:@"1" UIImageHead:self.userAvatarImage];
+        [headPicApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
+            NSString *code = [request.responseJSONObject objectForKey:@"code"];
+            if ([code intValue]== 1) {
+                NSString *avatar = [request.responseJSONObject objectForKey:@"data"];
+                self.theEndUserAvatarImage = avatar;
+            }
+            NSLog(@"%@",request.responseJSONObject);
+            NSLog(@"%@",[request.responseJSONObject objectForKey:@"msg"]);
+            
+        } failure:^(__kindof YTKBaseRequest *request) {
+            
+        }];
+    }else{
+        
+    }
+    
 }
 
 #pragma mark - 初始化参数
@@ -241,9 +275,6 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
             break;
         }
         case 1:{
-//            if (self.isHave) {
-//                
-//            }else{
             XXESelectMessageView *schoolType = [[XXESelectMessageView alloc]initWithTWFrame:self.view.bounds TWselectCityTitle:@"学校类型" MessageArray:_schoolTypeArr];
             
             [schoolType showCityView:^(NSString *proviceStr) {
@@ -251,13 +282,9 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
                 self.teacherCell = [self cellAtIndexRow:1 andAtSection:0 Message:[NSString  stringWithFormat:@"%@",proviceStr]];
                 self.theEndSchoolType = proviceStr;
             }];
-//            }
             break;
         }
         case 2:{
-//            if (self.isHave) {
-//                
-//            }else{
             TWSelectCityView *city = [[TWSelectCityView alloc] initWithTWFrame:CGRectMake(0, -61, KScreenWidth, KScreenHeight) TWselectCityTitle:@"选择地区"];
             [city showCityView:^(NSString *proviceStr, NSString *cityStr, NSString *distr) {
                 NSString *string = [NSString stringWithFormat:@"%@-%@-%@",proviceStr,cityStr,distr];
@@ -358,7 +385,7 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
     //    //选择图片
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
     layout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
-    FSImagePickerView *picker = [[FSImagePickerView alloc] initWithFrame:CGRectMake(20, 310*kScreenRatioHeight, KScreenWidth -  40, 70*kScreenRatioHeight) collectionViewLayout:layout];
+    FSImagePickerView *picker = [[FSImagePickerView alloc] initWithFrame:CGRectMake(20, 318*kScreenRatioHeight, KScreenWidth -  40, 70*kScreenRatioHeight) collectionViewLayout:layout];
     picker.backgroundColor = UIColorFromRGB(255, 255, 255);
     picker.showsHorizontalScrollIndicator = NO;
     picker.controller = self;
@@ -386,22 +413,74 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
     
     NSLog(@"登录类型%@ 电话号码%@ 密码%@ 用户姓名%@ 用户身份证%@ 年龄%@ 性别%@ 用户身份%@ 用户头像%@",self.login_type,self.userPhoneNum,self.userPassword,self.userName,self.userIDCarNum,self.userAge,self.userSex,self.userIdentifier,self.userAvatarImage);
     NSLog(@"邀请码%@ 学校详细地址%@ 学校电话%@ 学校ID%@ 学校类型%@ 学校名字%@ 学校省%@ 学校市%@ 学校区%@ 审核人%@",self.theEndInviteCode,self.schoolAddrss,self.schoolTel,self.theEndSchoolId,self.theEndSchoolType,self.schoolName,self.schoolProvince,self.schoolCity,self.schoolDistrict,self.theEndReviewerId);
+}
+
+#pragma mark - 获取证件图片
+- (void)getIdCardPhotoImage
+{
+    NSMutableArray *arr = [NSMutableArray array];
+    [self.picker.data removeLastObject];
+    arr = self.picker.data;
     
-//    NSData *data = UIImageJPEGRepresentation(_userAvatarImage, 0.7);
-//    NSArray *arr = @[data];
-    
-//    NSLog(@"%@",arr);
-    NSMutableArray *array = [NSMutableArray array];
-    NSLog(@"%@",self.fileHeadImageArray);
-    
-    if (_fileHeadImageArray.count > 0) {
-        for (int i =0; i < self.fileHeadImageArray.count; i++) {
-            NSData *data = UIImageJPEGRepresentation(self.fileHeadImageArray[i], 0.5f);
-            //base64
-            NSString *encodeImage = [data base64EncodedStringWithOptions:NSDataBase64EncodingEndLineWithLineFeed];
-            [array addObject:encodeImage];
-        }
+    for (int i =0; i <arr.count; i++) {
+        FSImageModel *model = self.picker.data[i];
+        UIImage *fileImage = [UIImage imageWithData:model.data];
+        [self.fileHeadImageArray addObject:fileImage];
     }
+    //用户的证件照
+    [self fileUserUpLoadSomeImage];
+    
+}
+
+#pragma mark - 用户的证件照上传服务器得到返回值
+- (void)fileUserUpLoadSomeImage
+{
+    NSLog(@"%@",self.fileHeadImageArray);
+    NSDictionary *dict = @{@"file_type":@"1",
+                           @"page_origin":@"2",
+                           @"upload_format":@"2",
+                           @"appkey":APPKEY,
+                           @"user_type":USER_TYPE,
+                           @"backtype":BACKTYPE
+                           };
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    [manager POST:XXERegisterUpLoadPicUrl parameters:dict constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+        for (int i = 0; i< _fileHeadImageArray.count; i++) {
+            NSData *data = UIImageJPEGRepresentation(_fileHeadImageArray[i], 0.5);
+            NSString *name = [NSString stringWithFormat:@"%d.jpeg",i];
+            NSString *formKey = [NSString stringWithFormat:@"file%d",i];
+            NSString *type = @"image/jpeg";
+            [formData appendPartWithFileData:data name:formKey fileName:name mimeType:type];
+        }
+        
+    } success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
+        
+        NSString *code = [responseObject objectForKey:@"code"];
+        if ([code intValue] == 1) {
+            NSArray *data = [responseObject objectForKey:@"data"];
+            NSMutableString *str = [NSMutableString string];
+            for (int i =0; i< data.count; i++) {
+                NSString *string = data[i];
+                if (i != data.count -1) {
+                    [str appendFormat:@"%@,",string];
+                }else {
+                    [str appendFormat:@"%@",string];
+                }
+            }
+            self.theEndFileImage = str;
+            //往服务器传所有的参数
+            [self uploadHeadMasterRegisterMessage];
+        }
+        
+    } failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error) {
+        [self showString:@"注册失败" forSecond:1.f];
+    }];
+
+}
+
+#pragma mark - 网服务器传送注册
+- (void)uploadHeadMasterRegisterMessage
+{
     NSDictionary *parameter = @{
                                 @"login_type":_login_type,
                                 @"phone":_userPhoneNum,
@@ -424,24 +503,20 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
                                 @"province":_schoolProvince,
                                 @"city":_schoolCity,
                                 @"district":_schoolDistrict,
-                                @"file":array,
+                                @"head_img":_theEndUserAvatarImage,
+                                @"file":_theEndFileImage,
+                                @"qq":_headThirdQQToken,
+                                @"weixin":_headThirdWeiXinToken,
+                                @"weibo":_headThirdSinaToken,
+                                @"alipay":_headThirdAliPayToken,
                                 @"appkey":APPKEY,
-                                @"backtype":BACKTYPE
+                                @"backtype":BACKTYPE,
+                                @"user_type":USER_TYPE
                                 };
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     
     [manager POST:XXERegisterTeacherUrl parameters:parameter constructingBodyWithBlock:^(id<AFMultipartFormData> formData){
-//        if (_fileHeadImageArray.count > 0) {
-//            for (int i =0; i < _fileHeadImageArray.count; i++) {
-//                UIImage *image = _fileHeadImageArray[i];
-//                NSData *data = UIImageJPEGRepresentation(image, 0.7);
-//                NSString *fileName = [NSString stringWithFormat:@"%d.jpeg",i];
-//                //         NSString *name = [NSString stringWithFormat:@"file%d",i];
-//                NSString *type = @"image/jpeg";
-//                [formData appendPartWithFileData:data name:@"file" fileName:fileName mimeType:type];
-//            }
-//        }
         
     }success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
@@ -449,12 +524,18 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
         NSLog(@"%@",[responseObject objectForKey:@"msg"]);
         
         if ([[responseObject objectForKey:@"code"] intValue]==1) {
-
+            
             [self showString:@"你已注册成功,请到首页登录" forSecond:3.f];
             //跳转到登录页
             NSLog(@"-----进入主页------");
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 XXELoginViewController *loginVC = [[XXELoginViewController alloc]init];
+                loginVC.loginThirdType = self.login_type;
+                loginVC.loginThirdQQToken = self.headThirdQQToken;
+                loginVC.loginThirdWeiXinToken = self.headThirdWeiXinToken;
+                loginVC.loginThirdSinaToken = self.headThirdSinaToken;
+                loginVC.loginThirdAliPayToken = self.headThirdAliPayToken;
+                
                 UIWindow *window = [UIApplication sharedApplication].keyWindow;
                 window.rootViewController = loginVC;
                 [self.view removeFromSuperview];
@@ -466,23 +547,8 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
         }
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        
-        
+        [self showString:@"注册失败" forSecond:1.f];
     }];
-}
-
-#pragma mark - 获取证件图片
-- (void)getIdCardPhotoImage
-{
-    NSMutableArray *arr = [NSMutableArray array];
-    [self.picker.data removeLastObject];
-    arr = self.picker.data;
-    
-    for (int i =0; i <arr.count; i++) {
-        FSImageModel *model = self.picker.data[i];
-        UIImage *fileImage = [UIImage imageWithData:model.data];
-        [self.fileImageArray addObject:fileImage];
-    }
 }
 
 - (void)searchButtonClick:(UIButton *)sender

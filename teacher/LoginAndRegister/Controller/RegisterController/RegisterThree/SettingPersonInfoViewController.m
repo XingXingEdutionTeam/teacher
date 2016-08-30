@@ -79,6 +79,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.edgesForExtendedLayout = UIRectEdgeNone;
+    //    [self thirdUserMessage];
     self.userIDCard = @"";
     self.avatarImage = nil;
     self.userPassPort = @"";
@@ -94,6 +95,15 @@
     _ipc.allowsEditing  = YES;
 }
 
+#pragma mark - 第三方的信息
+- (void)thirdUserMessage
+{
+    if (self.t_head_img != nil) {
+        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:self.t_head_img]];
+        UIImage *image = [UIImage imageWithData:data];
+        self.avatarImage = image;
+    }
+}
 
 -(void)createUI
 {
@@ -247,6 +257,12 @@
             headVC.login_type = self.login_type;
             headVC.userSex = self.userSex;
             headVC.userAge = self.userAge;
+            headVC.headThirdNickName = self.nickName;
+            headVC.headThirdHeadImage = self.t_head_img;
+            headVC.headThirdQQToken = self.QQToken;
+            headVC.headThirdWeiXinToken = self.weixinToken;
+            headVC.headThirdSinaToken = self.sinaToken;
+            headVC.headThirdAliPayToken = self.aliPayToken;
             [self.navigationController pushViewController:headVC animated:YES];
         }
       else{
@@ -266,6 +282,12 @@
           teacherVC.login_type = self.login_type;
           teacherVC.userSex = self.userSex;
           teacherVC.userAge = self.userAge;
+          teacherVC.teacherThirdNickName = self.nickName;
+          teacherVC.teacherThirdHeadImage = self.t_head_img;
+          teacherVC.teacherThirdQQToken = self.QQToken;
+          teacherVC.teacherThirdWeiXinToken = self.weixinToken;
+          teacherVC.teacherThirdSinaToken = self.sinaToken;
+          teacherVC.teacherThirdAliPayToken = self.aliPayToken;
         [self.navigationController pushViewController:teacherVC animated:YES];
     }
 }

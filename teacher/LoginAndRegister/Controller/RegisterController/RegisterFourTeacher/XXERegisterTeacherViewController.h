@@ -31,4 +31,18 @@
 /** 登录类型 */
 @property (nonatomic, copy)NSString *login_type;
 
+//第三方信息
+/** 第三方昵称 */
+@property (nonatomic, copy)NSString *teacherThirdNickName;
+/** 第三方头像 */
+@property (nonatomic, copy)NSString *teacherThirdHeadImage;
+/** QQToken */
+@property (nonatomic, copy)NSString *teacherThirdQQToken;
+/** 微信Token */
+@property (nonatomic, copy)NSString *teacherThirdWeiXinToken;
+/** 微博Token */
+@property (nonatomic, copy)NSString *teacherThirdSinaToken;
+/** 支付宝Token */
+@property (nonatomic, copy)NSString *teacherThirdAliPayToken;
+
 @end

@@ -32,14 +32,18 @@
 
 @property (nonatomic, strong)CLLocationManager *locationManager;
 
+/** 第三方昵称 */
+@property (nonatomic, copy)NSString *thirdNickName;
+/** 第三放头像 */
+@property (nonatomic, copy)NSString *thirdHeadImage;
 /** QQToken */
-@property (nonatomic, copy)NSString *qqToken;
+@property (nonatomic, copy)NSString *qqLoginToken;
 /** 微信Token */
-@property (nonatomic, copy)NSString *weixinToken;
+@property (nonatomic, copy)NSString *weixinLoginToken;
 /** 新浪Token */
-@property (nonatomic, copy)NSString *sinaToken;
+@property (nonatomic, copy)NSString *sinaLoginToken;
 /** 支付宝Token */
-@property (nonatomic, copy)NSString *aliPayToken;
+@property (nonatomic, copy)NSString *aliPayLoginToken;
 /** 登录类型 1为手机 2为qq 3为微信 4为微博 5为 支付宝  10为访客模式(访客模式只要此参数)*/
 @property (nonatomic, copy)NSString *login_type;
 /** 访客模式 */
@@ -104,11 +108,13 @@
 {
     self.longitudeString = @"";
     self.latitudeString = @"";
-    self.qqToken = @"";
-    self.weixinToken = @"";
-    self.sinaToken = @"";
-    self.aliPayToken = @"";
+    self.qqLoginToken = @"";
+    self.weixinLoginToken = @"";
+    self.sinaLoginToken = @"";
+    self.aliPayLoginToken = @"";
     self.login_type = @"";
+    self.thirdNickName = @"";
+    self.thirdHeadImage = @"";
 }
 
 #pragma mark - 定位
@@ -164,7 +170,10 @@
     NSLog(@"纬度%f",currentLocation.coordinate.latitude);
     self.longitudeString = [NSString stringWithFormat:@"%f",currentLocation.coordinate.longitude];
     self.latitudeString = [NSString stringWithFormat:@"%f",currentLocation.coordinate.latitude];
-
+    NSLog(@"Token%@ loginType%@",self.loginThirdWeiXinToken,self.loginThirdType);
+    if (self.loginThirdWeiXinToken.length > 12) {
+        [self loginInterFaceApiSnsAccount:self.loginThirdWeiXinToken LoginTYpe:self.loginThirdType];
+    }
     [manager stopUpdatingLocation];
 }
 
@@ -480,7 +489,10 @@
             self.login_type = @"2";
             NSDictionary *dict = [UMSocialAccountManager socialAccountDictionary];
             UMSocialAccountEntity *snsAccount = [[UMSocialAccountManager socialAccountDictionary] valueForKey:snsPlatform.platformName];
-//            NSLog(@"\nusername = %@,\n usid = %@,\n token = %@ iconUrl = %@,\n unionId = %@,\n thirdPlatformUserProfile = %@,\n thirdPlatformResponse = %@ \n, message = %@",snsAccount.userName,snsAccount.usid,snsAccount.accessToken,snsAccount.iconURL, snsAccount.unionId, response.thirdPlatformUserProfile, response.thirdPlatformResponse, response.message);
+            self.qqLoginToken = snsAccount.unionId;
+            self.thirdNickName = snsAccount.userName;
+            self.thirdHeadImage = snsAccount.iconURL;
+            
             [self getAddInfomationMessage:snsAccount LoginType:self.login_type];
             
         }});
@@ -495,9 +507,13 @@
             self.login_type = @"3";
             NSDictionary *dict = [UMSocialAccountManager socialAccountDictionary];
             UMSocialAccountEntity *snsAccount = [[UMSocialAccountManager socialAccountDictionary]valueForKey:snsPlatform.platformName];
-//            NSLog(@"username = %@, userId = %@ token = %@, iconUrl = %@ unionId = %@,thirdPlatformUserProfile = %@, thirdPlatformResponse = %@, messgae = %@",snsAccount.userName,snsAccount.usid,
-//                  snsAccount.accessToken,snsAccount.iconURL,snsAccount.unionId,response.thirdPlatformUserProfile,response.thirdPlatformResponse,response.message);
+            self.weixinLoginToken = snsAccount.unionId;
+            self.thirdNickName = snsAccount.userName;
+            self.thirdHeadImage = snsAccount.iconURL;
+            
             NSLog(@"%lu",(unsigned long)[snsAccount.accessToken length]);
+            NSLog(@"微信的Token:%@",snsAccount.accessToken);
+            NSLog(@"iD微信:---%@",snsAccount.unionId);
             [self getAddInfomationMessage:snsAccount LoginType:self.login_type];
         }
     });
@@ -517,7 +533,10 @@
             self.login_type = @"4";
             NSDictionary *dict = [UMSocialAccountManager socialAccountDictionary];
             UMSocialAccountEntity *snsAccount = [[UMSocialAccountManager socialAccountDictionary] valueForKey:snsPlatform.platformName];
-//            NSLog(@"\nusername = %@,\n usid = %@,\n token = %@ iconUrl = %@,\n unionId = %@,\n thirdPlatformUserProfile = %@,\n thirdPlatformResponse = %@ \n, message = %@",snsAccount.userName,snsAccount.usid,snsAccount.accessToken,snsAccount.iconURL, snsAccount.unionId, response.thirdPlatformUserProfile, response.thirdPlatformResponse, response.message);
+            self.sinaLoginToken = snsAccount.unionId;
+            self.thirdNickName = snsAccount.userName;
+            self.thirdHeadImage = snsAccount.iconURL;
+            
             [self getAddInfomationMessage:snsAccount LoginType:self.login_type];
             
         }});
@@ -527,6 +546,9 @@
 - (void)ZhiFuBaoButtonClick:(UIButton *)sender
 {
     NSLog(@"------支付宝登录------");
+//    self.qqLoginToken = snsAccount.accessToken;
+//    self.thirdNickName = snsAccount.userName;
+//    self.thirdHeadImage = snsAccount.iconURL;
     
     self.login_type = @"5";
 }
@@ -536,30 +558,46 @@
 {
     NSLog(@"\nusername = %@,\n usid = %@,\n token = %@ iconUrl = %@,\n unionId = %@,\n",snsAccount.userName,snsAccount.usid,snsAccount.accessToken,snsAccount.iconURL, snsAccount.unionId);
     //调用登录接口
-    [self loginInterFaceApiSnsAccount:snsAccount.accessToken LoginTYpe:loginType];
+    [self loginInterFaceApiSnsAccount:snsAccount.unionId LoginTYpe:loginType];
 }
 
 #pragma mark - 登录接口
 - (void)loginInterFaceApiSnsAccount:(NSString *)accessToken LoginTYpe:(NSString *)logintype
 {
+    NSLog(@"Token%@ 类型%@ 经度%@ 纬度%@",accessToken,logintype,self.longitudeString,self.latitudeString);
     XXELoginApi *loginApi = [[XXELoginApi alloc]initLoginWithUserName:accessToken PassWord:@"" LoginType:logintype Lng:self.longitudeString Lat:self.latitudeString];
     [loginApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         NSLog(@"%@",request.responseJSONObject);
         NSLog(@"%@",[request.responseJSONObject objectForKey:@"msg"]);
-        NSString *code = [request.responseJSONObject objectForKey:@"msg"];
+        NSString *code = [request.responseJSONObject objectForKey:@"code"];
         if ([code intValue] == 1) {
             //存储数据直接进入首页
-            
+            [self showHudWithString:@"正在登录" forSecond:2.f];            
             NSDictionary *data = [request.responseJSONObject objectForKey:@"data"];
         
             [self LoginSetupUserInfoDict:data SnsAccessToken:accessToken LoginType:logintype];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3*NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            
+                XXETabBarControllerConfig *tabBarControllerConfig = [[XXETabBarControllerConfig alloc]init];
+                UIWindow *window = [UIApplication sharedApplication].keyWindow;
+                window.rootViewController = tabBarControllerConfig;
+                [self.view removeFromSuperview];
+                
+            });
+            
             
         }else{
             //进入注册的第三个
             SettingPersonInfoViewController *settingVC = [[SettingPersonInfoViewController alloc]init];
-            settingVC.userSettingPhoneNum = accessToken;
+            settingVC.userSettingPhoneNum = @"";
             settingVC.userSettingPassWord = @"";
+            settingVC.nickName = self.thirdNickName;
+            settingVC.t_head_img = self.thirdHeadImage;
             settingVC.login_type = logintype;
+            settingVC.QQToken = self.qqLoginToken;
+            settingVC.weixinToken = self.weixinLoginToken;
+            settingVC.sinaToken = self.sinaLoginToken;
+            settingVC.aliPayToken = self.aliPayLoginToken;
             [self.navigationController pushViewController:settingVC animated:YES];
         }
     
@@ -574,7 +612,6 @@
 {
     NSString *login_times = [data objectForKey:@"login_times"];
     NSString *nickname = [data objectForKey:@"nickname"];
-    NSString *position = [data objectForKey:@"position"];
     NSString *token = [data objectForKey:@"token"];
     NSString *user_head_img = [data objectForKey:@"user_head_img"];
     NSString *user_id = [data objectForKey:@"user_id"];
@@ -584,26 +621,25 @@
     if ([logintype  isEqualToString: @"1"]) {
 
     }else if ([logintype isEqualToString:@"2"]){
-        self.qqToken = accessToken;
+        self.qqLoginToken = accessToken;
     }else if ([logintype isEqualToString:@"3"]){
-        self.weixinToken = accessToken;
+        self.weixinLoginToken = accessToken;
     }else if ([logintype isEqualToString:@"4"]){
-        self.sinaToken = accessToken;
+        self.sinaLoginToken = accessToken;
     }else if ([logintype isEqualToString:@"5"]){
-        self.aliPayToken = accessToken;
+        self.aliPayLoginToken = accessToken;
     }else if ([logintype isEqualToString:@"10"]){
         
     }
     [XXEUserInfo user].login = YES;
     NSDictionary *userInfo = @{@"account":self.userNameTextField.text,
                                @"login_times":login_times,
-                               @"position":position,
                                @"nickname":nickname,
                                @"token":token,
-                               @"qqNumberToken":self.qqToken,
-                               @"weixinToken":self.weixinToken,
-                               @"sinaNumberToken":self.sinaToken,
-                               @"zhifubaoToken":self.aliPayToken,
+                               @"qqNumberToken":self.qqLoginToken,
+                               @"weixinToken":self.weixinLoginToken,
+                               @"sinaNumberToken":self.sinaLoginToken,
+                               @"zhifubaoToken":self.aliPayLoginToken,
                                @"login_type":login_type,
                                @"user_head_img":user_head_img,
                                @"user_id":user_id,

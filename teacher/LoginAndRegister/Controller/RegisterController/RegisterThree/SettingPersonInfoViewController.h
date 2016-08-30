@@ -31,6 +31,16 @@
 //第三方的话会有昵称 头像 唯一的token
 /** 第三方的昵称 */
 @property (nonatomic, copy)NSString *nickName;
+/** 第三方头像 */
+@property (nonatomic, copy)NSString *t_head_img;
+/** QQToken */
+@property (nonatomic, copy)NSString *QQToken;
+/** 微信Token */
+@property (nonatomic, copy)NSString *weixinToken;
+/** 微博Token */
+@property (nonatomic, copy)NSString *sinaToken;
+/** 支付宝Token */
+@property (nonatomic, copy)NSString *aliPayToken;
 
 
 @end

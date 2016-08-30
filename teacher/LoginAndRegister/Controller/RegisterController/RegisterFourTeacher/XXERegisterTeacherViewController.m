@@ -18,8 +18,6 @@
 #import "XXEReviewerApi.h"
 #import "XXEReviewerModel.h"
 #import "XXERegisterTeacherApi.h"
-#import "XXERegisterTeacherHeadApi.h"
-#import "XXERegisterTeacherFileApi.h"
 #import "YTKBatchRequest.h"
 #import "WZYSearchSchoolViewController.h"
 #import "XXERegisterClassSchoolApi.h"
@@ -297,7 +295,6 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
     
 }
 
-
 - (void)InitializeTheMessage
 {
     self.theEndSchoolId = @"";
@@ -306,6 +303,7 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
     self.theEndTeachType = @"";
     self.theEndReviewerId = @"";
     self.theEndInviteCode = @"";
+    
     self.theEndUserAvatarImage = @"";
     self.theEndFileImage = @"";
 }
@@ -650,6 +648,7 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
 #pragma mark - 点击注册按钮 提交信息
 - (void)uploadRegisterMessage
 {
+    NSLog(@"%@",_login_type);
     NSDictionary *parameter = @{
                                 @"login_type":_login_type,
                                 @"phone":_userPhoneNum,
@@ -668,8 +667,13 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
                                 @"code":_theEndInviteCode,
                                 @"head_img":_theEndUserAvatarImage,
                                 @"file":_theEndFileImage,
+                                @"qq":_teacherThirdQQToken,
+                                @"weixin":_teacherThirdWeiXinToken,
+                                @"weibo":_teacherThirdSinaToken,
+                                @"alipay":_teacherThirdAliPayToken,
                                 @"appkey":APPKEY,
-                                @"backtype":BACKTYPE
+                                @"backtype":BACKTYPE,
+                                @"user_type":USER_TYPE
                                 };
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
@@ -688,6 +692,11 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
             NSLog(@"-----进入主页------");
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 XXELoginViewController *loginVC = [[XXELoginViewController alloc]init];
+                loginVC.loginThirdType = self.login_type;
+                loginVC.loginThirdQQToken = self.teacherThirdQQToken;
+                loginVC.loginThirdWeiXinToken = self.teacherThirdWeiXinToken;
+                loginVC.loginThirdSinaToken = self.teacherThirdSinaToken;
+                loginVC.loginThirdAliPayToken = self.teacherThirdAliPayToken;
                 UIWindow *window = [UIApplication sharedApplication].keyWindow;
                 window.rootViewController = loginVC;
                 [self.view removeFromSuperview];
@@ -702,7 +711,6 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
         [self showString:@"注册失败" forSecond:1.f];
     }];
 }
-
 
 
 - (void)searchButtonClick:(UIButton *)sender
@@ -813,7 +821,6 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
     }];
     
 }
-
 
 #pragma mark  - UITextField
 - (void)textFieldDidEndEditing:(UITextField *)textField
