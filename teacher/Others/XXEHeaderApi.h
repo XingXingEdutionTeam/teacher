@@ -39,6 +39,9 @@
 //上传图片
 #define XXEAblumUpdataUrl @"http://www.xingxingedu.cn/Teacher/class_pic_upload"
 
+/** 注册页面上传图片 */
+#define XXERegisterUpLoadPicUrl @"http://www.xingxingedu.cn/Global/uploadFile"
+
 //相册的内容
 #define XXEAblumPhotoUrl @"http://www.xingxingedu.cn/Teacher/class_album_pic"
 //举报列表

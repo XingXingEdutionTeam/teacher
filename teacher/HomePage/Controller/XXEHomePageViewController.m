@@ -450,8 +450,6 @@
                 }
                 [self.classDatasource addObject:@"没有班级"];
                 [_classAllArray addObject:self.classDatasource];
-                
-                
             }
             
             NSLog(@"学校%@ 班级%@",self.arraySchool[0],self.arrayClass[1]);
@@ -472,14 +470,14 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)dealloc
+- (void)viewWillDisappear:(BOOL)animated
 {
-    NSLog(@"dealloc方法");
+    [super viewWillDisappear:animated];
     [[NSNotificationCenter defaultCenter]removeObserver:self];
     [self.homeSchoolView.textField removeObserver:self forKeyPath:@"text"];
     [self.homeClassView.textField removeObserver:self forKeyPath:@"text"];
-    
 }
+
 
 
 /*

@@ -28,5 +28,9 @@
 /** 登录类型 */
 @property (nonatomic, copy)NSString *login_type;
 
+//第三方的话会有昵称 头像 唯一的token
+/** 第三方的昵称 */
+@property (nonatomic, copy)NSString *nickName;
+
 
 @end
