@@ -374,8 +374,8 @@
     
 //    if ([XXEUserInfo user].login){
         _searchBar = [[UISearchBar alloc]initWithFrame:CGRectMake(0,20, kWidth, 44)];
-        UIImage *backgroundImg = [XXETool createImageWithColor:UIColorFromHex(0xf0eaf3) size:_searchBar.frame.size];
-        [_searchBar setBackgroundImage:backgroundImg];
+//        UIImage *backgroundImg = [XXETool createImageWithColor:UIColorFromHex(0xf0eaf3) size:_searchBar.frame.size];
+//        [_searchBar setBackgroundImage:backgroundImg];
         _searchBar.placeholder =@"输入你想要查询的联系人";
         _searchBar.tintColor = [UIColor blackColor];
         _searchBar.delegate =self;

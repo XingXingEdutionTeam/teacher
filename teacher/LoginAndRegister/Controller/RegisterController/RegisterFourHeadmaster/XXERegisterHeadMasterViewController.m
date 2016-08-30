@@ -355,11 +355,10 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
 
 
 -(void)commBoxInfo{
-    
     //    //选择图片
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
     layout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
-    FSImagePickerView *picker = [[FSImagePickerView alloc] initWithFrame:CGRectMake(20, 301*kScreenRatioHeight, KScreenWidth -  40, 70*kScreenRatioHeight) collectionViewLayout:layout];
+    FSImagePickerView *picker = [[FSImagePickerView alloc] initWithFrame:CGRectMake(20, 310*kScreenRatioHeight, KScreenWidth -  40, 70*kScreenRatioHeight) collectionViewLayout:layout];
     picker.backgroundColor = UIColorFromRGB(255, 255, 255);
     picker.showsHorizontalScrollIndicator = NO;
     picker.controller = self;

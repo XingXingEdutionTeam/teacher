@@ -15,15 +15,34 @@
 #import "XXELoginApi.h"
 #import "XXEUserInfo.h"
 #import "XXEChangeRoleViewController.h"
+#import "UMSocial.h"
+#import "SettingPersonInfoViewController.h"
 
-@interface XXELoginViewController ()<UITextFieldDelegate>
+@interface XXELoginViewController ()<UITextFieldDelegate,UIAlertViewDelegate,CLLocationManagerDelegate>
 /** 用户名登录 */
 @property (nonatomic, strong) UITextField *userNameTextField;
 /** 密码登录 */
 @property (nonatomic, strong) UITextField *passWordTextField;
 /** 登陆按钮 */
 @property (nonatomic, strong) HyLoglnButton *loginButton;
+/** 经度 */
+@property (nonatomic, copy)NSString *longitudeString;
+/** 纬度 */
+@property (nonatomic, copy)NSString *latitudeString;
 
+@property (nonatomic, strong)CLLocationManager *locationManager;
+
+/** QQToken */
+@property (nonatomic, copy)NSString *qqToken;
+/** 微信Token */
+@property (nonatomic, copy)NSString *weixinToken;
+/** 新浪Token */
+@property (nonatomic, copy)NSString *sinaToken;
+/** 支付宝Token */
+@property (nonatomic, copy)NSString *aliPayToken;
+/** 登录类型 1为手机 2为qq 3为微信 4为微博 5为 支付宝  10为访客模式(访客模式只要此参数)*/
+@property (nonatomic, copy)NSString *login_type;
+/** 访客模式 */
 @end
 
 @implementation XXELoginViewController
@@ -51,6 +70,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    self.view.backgroundColor = XXEBackgroundColor;
     self.navigationController.navigationBarHidden = YES;
 }
 /** 这个方法都可以,改变当前控制器的电池条颜色 */
@@ -69,12 +89,85 @@
     [self setUpRegister];
     //创建第三方登录
     [self setupThirdLoginView];
+    
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.view.backgroundColor = XXEBackgroundColor;
+    //初始化所有的参数
+    [self TheInitializationParameter];
+    //定位手机
+    [self startLocationManager];
 }
+#pragma mark - 初始化参数
+- (void)TheInitializationParameter
+{
+    self.longitudeString = @"";
+    self.latitudeString = @"";
+    self.qqToken = @"";
+    self.weixinToken = @"";
+    self.sinaToken = @"";
+    self.aliPayToken = @"";
+    self.login_type = @"";
+}
+
+#pragma mark - 定位
+- (void)startLocationManager
+{
+    //    判断定位操作是否允许
+    if ([CLLocationManager locationServicesEnabled])
+    {
+        //定位初始化
+        _locationManager = [[CLLocationManager alloc]init];
+        _locationManager.delegate = self;
+        _locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+        _locationManager.distanceFilter = 1000;//横向移动距离更新
+        [_locationManager requestWhenInUseAuthorization];
+        //定位开始
+        [_locationManager startUpdatingLocation];
+    }else{
+        //提示用户无法定位操作
+        [self initAlertWithTitle:@"温馨提醒" Message:@"您尚未开启定位是否开启" ActionTitle:@"开启" CancelTitle:@"取消" URLS:@"prefs:root=LOCATION_SERVICES"];
+    }
+}
+
+- (void)initAlertWithTitle:(NSString *)title Message:(NSString *)message ActionTitle:(NSString *)actionTitle CancelTitle:(NSString *)cancelTitle URLS:(NSString *)urls
+{
+    //提示用户无法定位操作
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *okAction = [UIAlertAction actionWithTitle:actionTitle style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        NSLog(@"确定操作");
+        NSURL*url=[NSURL URLWithString:urls];
+        [[UIApplication sharedApplication] openURL:url];
+    }];
+    if (cancelTitle==nil) {
+        [alert addAction:okAction];
+        [self presentViewController:alert animated:YES completion:nil];
+    }else{
+        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:cancelTitle style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+            NSLog(@"取消操作");
+        }];
+        [alert addAction:okAction];
+        [alert addAction:cancelAction];
+        [self presentViewController:alert animated:YES completion:nil];
+    }
+}
+
+#pragma mark - CoreLocationdelegate
+
+- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray<CLLocation *> *)locations
+{
+    CLLocation *currentLocation = [locations lastObject];
+    //获取当前所在城市的名字
+    
+    NSLog(@"经度%f",currentLocation.coordinate.longitude);
+    NSLog(@"纬度%f",currentLocation.coordinate.latitude);
+    self.longitudeString = [NSString stringWithFormat:@"%f",currentLocation.coordinate.longitude];
+    self.latitudeString = [NSString stringWithFormat:@"%f",currentLocation.coordinate.latitude];
+
+    [manager stopUpdatingLocation];
+}
+
 /** 创建视图View */
 #pragma mark - 创建视图View
 - (void)setUpSubviewLayout
@@ -301,36 +394,16 @@
 - (void)loginButtonClick:(HyLoglnButton *)sender
 {
     if ([self isChinaMobile:self.userNameTextField.text] && [self detectionPassword:self.passWordTextField.text]) {
-
         NSLog(@"可以登录");
+        self.login_type = @"1";
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             
-            XXELoginApi *loginApi = [[XXELoginApi alloc]initLoginWithUserName:self.userNameTextField.text PassWord:self.passWordTextField.text];
+            XXELoginApi *loginApi = [[XXELoginApi alloc]initLoginWithUserName:self.userNameTextField.text PassWord:self.passWordTextField.text LoginType:self.login_type Lng:self.longitudeString Lat:self.latitudeString];
             [loginApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
                 
                 NSLog(@"%@",request.responseJSONObject);
                 NSDictionary *data = [request.responseJSONObject objectForKey:@"data"];
-                NSString *login_times = [data objectForKey:@"login_times"];
-                NSString *nickname = [data objectForKey:@"nickname"];
-                NSString *position = [data objectForKey:@"position"];
-                NSString *token = [data objectForKey:@"token"];
-                NSString *user_head_img = [data objectForKey:@"user_head_img"];
-                NSString *user_id = [data objectForKey:@"user_id"];
-                NSString *user_type = [data objectForKey:@"user_type"];
-                NSString *xid = [data objectForKey:@"xid"];
-                [XXEUserInfo user].login = YES;
-                NSDictionary *userInfo = @{@"account":self.userNameTextField.text,
-                                           @"login_times":login_times,
-                                           @"position":position,
-                                           @"nickname":nickname,
-                                           @"token":token,
-                                           @"user_head_img":user_head_img,
-                                           @"user_id":user_id,
-                                           @"user_type":user_type,
-                                           @"xid":xid,
-                                           @"loginStatus":[NSNumber numberWithBool:YES]
-                                           };
-                [[XXEUserInfo user] setupUserInfoWithUserInfo:userInfo];
+                [self LoginSetupUserInfoDict:data SnsAccessToken:@"" LoginType:self.login_type];
                 
                 [_loginButton ExitAnimationCompletion:^{
                     NSLog(@"---点击登录按钮-------");
@@ -383,11 +456,6 @@
 
 - (void)guestButtonClick:(UIButton *)sender
 {
-//    XXEChangeRoleViewController *changeVC = [[XXEChangeRoleViewController alloc]init];
-//    UIWindow *window = [UIApplication sharedApplication].keyWindow;
-//    XXENavigationViewController *navi = [[XXENavigationViewController alloc]initWithRootViewController:changeVC];
-//    window.rootViewController = navi;
-    
     XXETabBarControllerConfig *tabBarConfig = [[XXETabBarControllerConfig alloc]init];
     UIWindow *window = [UIApplication sharedApplication].keyWindow;
     window.rootViewController = tabBarConfig;
@@ -402,20 +470,148 @@
 - (void)QQButtonClick:(UIButton *)sender
 {
     NSLog(@"------QQ登录------");
+    
+    UMSocialSnsPlatform *snsPlatform = [UMSocialSnsPlatformManager getSocialPlatformWithName:UMShareToQQ];
+    
+    snsPlatform.loginClickHandler(self,[UMSocialControllerService defaultControllerService],YES,^(UMSocialResponseEntity *response){
+        
+        //          获取QQ用户名、uid、token等
+        if (response.responseCode == UMSResponseCodeSuccess) {
+            self.login_type = @"2";
+            NSDictionary *dict = [UMSocialAccountManager socialAccountDictionary];
+            UMSocialAccountEntity *snsAccount = [[UMSocialAccountManager socialAccountDictionary] valueForKey:snsPlatform.platformName];
+//            NSLog(@"\nusername = %@,\n usid = %@,\n token = %@ iconUrl = %@,\n unionId = %@,\n thirdPlatformUserProfile = %@,\n thirdPlatformResponse = %@ \n, message = %@",snsAccount.userName,snsAccount.usid,snsAccount.accessToken,snsAccount.iconURL, snsAccount.unionId, response.thirdPlatformUserProfile, response.thirdPlatformResponse, response.message);
+            [self getAddInfomationMessage:snsAccount LoginType:self.login_type];
+            
+        }});
 }
 
 - (void)WechatButtonClick:(UIButton *)sender
 {
     NSLog(@"------微信登录------");
+    UMSocialSnsPlatform *snsPlatform = [UMSocialSnsPlatformManager getSocialPlatformWithName:UMShareToWechatSession];
+    snsPlatform.loginClickHandler(self,[UMSocialControllerService defaultControllerService],YES,^(UMSocialResponseEntity *response){
+        if (response.responseCode == UMSResponseCodeSuccess) {
+            self.login_type = @"3";
+            NSDictionary *dict = [UMSocialAccountManager socialAccountDictionary];
+            UMSocialAccountEntity *snsAccount = [[UMSocialAccountManager socialAccountDictionary]valueForKey:snsPlatform.platformName];
+//            NSLog(@"username = %@, userId = %@ token = %@, iconUrl = %@ unionId = %@,thirdPlatformUserProfile = %@, thirdPlatformResponse = %@, messgae = %@",snsAccount.userName,snsAccount.usid,
+//                  snsAccount.accessToken,snsAccount.iconURL,snsAccount.unionId,response.thirdPlatformUserProfile,response.thirdPlatformResponse,response.message);
+            NSLog(@"%lu",(unsigned long)[snsAccount.accessToken length]);
+            [self getAddInfomationMessage:snsAccount LoginType:self.login_type];
+        }
+    });
+    
 }
 
 - (void)SinaButtonClick:(UIButton *)sender
 {
     NSLog(@"------新浪登录------");
+    UMSocialSnsPlatform *snsPlatform = [UMSocialSnsPlatformManager getSocialPlatformWithName:UMShareToSina];
+    
+    snsPlatform.loginClickHandler(self,[UMSocialControllerService defaultControllerService],YES,^(UMSocialResponseEntity *response){
+        
+        //          获取微博用户名、uid、token等
+        
+        if (response.responseCode == UMSResponseCodeSuccess) {
+            self.login_type = @"4";
+            NSDictionary *dict = [UMSocialAccountManager socialAccountDictionary];
+            UMSocialAccountEntity *snsAccount = [[UMSocialAccountManager socialAccountDictionary] valueForKey:snsPlatform.platformName];
+//            NSLog(@"\nusername = %@,\n usid = %@,\n token = %@ iconUrl = %@,\n unionId = %@,\n thirdPlatformUserProfile = %@,\n thirdPlatformResponse = %@ \n, message = %@",snsAccount.userName,snsAccount.usid,snsAccount.accessToken,snsAccount.iconURL, snsAccount.unionId, response.thirdPlatformUserProfile, response.thirdPlatformResponse, response.message);
+            [self getAddInfomationMessage:snsAccount LoginType:self.login_type];
+            
+        }});
+    
+    
 }
 - (void)ZhiFuBaoButtonClick:(UIButton *)sender
 {
     NSLog(@"------支付宝登录------");
+    
+    self.login_type = @"5";
+}
+
+#pragma mark - 给数据库添加信息
+- (void)getAddInfomationMessage:(UMSocialAccountEntity *)snsAccount LoginType:(NSString *)loginType
+{
+    NSLog(@"\nusername = %@,\n usid = %@,\n token = %@ iconUrl = %@,\n unionId = %@,\n",snsAccount.userName,snsAccount.usid,snsAccount.accessToken,snsAccount.iconURL, snsAccount.unionId);
+    //调用登录接口
+    [self loginInterFaceApiSnsAccount:snsAccount.accessToken LoginTYpe:loginType];
+}
+
+#pragma mark - 登录接口
+- (void)loginInterFaceApiSnsAccount:(NSString *)accessToken LoginTYpe:(NSString *)logintype
+{
+    XXELoginApi *loginApi = [[XXELoginApi alloc]initLoginWithUserName:accessToken PassWord:@"" LoginType:logintype Lng:self.longitudeString Lat:self.latitudeString];
+    [loginApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
+        NSLog(@"%@",request.responseJSONObject);
+        NSLog(@"%@",[request.responseJSONObject objectForKey:@"msg"]);
+        NSString *code = [request.responseJSONObject objectForKey:@"msg"];
+        if ([code intValue] == 1) {
+            //存储数据直接进入首页
+            
+            NSDictionary *data = [request.responseJSONObject objectForKey:@"data"];
+        
+            [self LoginSetupUserInfoDict:data SnsAccessToken:accessToken LoginType:logintype];
+            
+        }else{
+            //进入注册的第三个
+            SettingPersonInfoViewController *settingVC = [[SettingPersonInfoViewController alloc]init];
+            settingVC.userSettingPhoneNum = accessToken;
+            settingVC.userSettingPassWord = @"";
+            settingVC.login_type = logintype;
+            [self.navigationController pushViewController:settingVC animated:YES];
+        }
+    
+    } failure:^(__kindof YTKBaseRequest *request) {
+        
+    }];
+    
+}
+
+#pragma mark - 保存数据信息
+- (void)LoginSetupUserInfoDict:(NSDictionary *)data SnsAccessToken:(NSString *)accessToken LoginType:(NSString *)logintype
+{
+    NSString *login_times = [data objectForKey:@"login_times"];
+    NSString *nickname = [data objectForKey:@"nickname"];
+    NSString *position = [data objectForKey:@"position"];
+    NSString *token = [data objectForKey:@"token"];
+    NSString *user_head_img = [data objectForKey:@"user_head_img"];
+    NSString *user_id = [data objectForKey:@"user_id"];
+    NSString *user_type = [data objectForKey:@"user_type"];
+    NSString *xid = [data objectForKey:@"xid"];
+    NSString *login_type = logintype;
+    if ([logintype  isEqualToString: @"1"]) {
+
+    }else if ([logintype isEqualToString:@"2"]){
+        self.qqToken = accessToken;
+    }else if ([logintype isEqualToString:@"3"]){
+        self.weixinToken = accessToken;
+    }else if ([logintype isEqualToString:@"4"]){
+        self.sinaToken = accessToken;
+    }else if ([logintype isEqualToString:@"5"]){
+        self.aliPayToken = accessToken;
+    }else if ([logintype isEqualToString:@"10"]){
+        
+    }
+    [XXEUserInfo user].login = YES;
+    NSDictionary *userInfo = @{@"account":self.userNameTextField.text,
+                               @"login_times":login_times,
+                               @"position":position,
+                               @"nickname":nickname,
+                               @"token":token,
+                               @"qqNumberToken":self.qqToken,
+                               @"weixinToken":self.weixinToken,
+                               @"sinaNumberToken":self.sinaToken,
+                               @"zhifubaoToken":self.aliPayToken,
+                               @"login_type":login_type,
+                               @"user_head_img":user_head_img,
+                               @"user_id":user_id,
+                               @"user_type":user_type,
+                               @"xid":xid,
+                               @"loginStatus":[NSNumber numberWithBool:YES]
+                               };
+    [[XXEUserInfo user] setupUserInfoWithUserInfo:userInfo];
 }
 
 

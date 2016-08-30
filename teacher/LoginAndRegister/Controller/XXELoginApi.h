@@ -10,6 +10,6 @@
 
 @interface XXELoginApi : YTKRequest
 
-- (id)initLoginWithUserName:(NSString *)userName PassWord:(NSString *)password;
+- (id)initLoginWithUserName:(NSString *)userName PassWord:(NSString *)password LoginType:(NSString *)loginType Lng:(NSString *)lng Lat:(NSString *)lat;
 
 @end

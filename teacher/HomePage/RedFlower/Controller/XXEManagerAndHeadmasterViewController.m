@@ -52,15 +52,25 @@
     [_myTableView.mj_header beginRefreshing];
 }
 
+- (void)viewDidDisappear:(BOOL)animated{
+    [super viewDidDisappear:animated];
+    
+}
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    
     
     self.title = @"";
     
     //    [self fetchNetData];
     
     [self createTableView];
+    
+
+    
 }
 
 
@@ -84,7 +94,7 @@
         class_nameArray = [[NSMutableArray alloc] init];
         baby_listArray = [[NSMutableArray alloc] init];
         
-            NSLog(@"111   %@", request.responseJSONObject);
+//                NSLog(@"111   %@", request.responseJSONObject);
         
         NSString *codeStr = [NSString stringWithFormat:@"%@", request.responseJSONObject[@"code"]];
         

@@ -10,6 +10,10 @@
 #import "XXETabBarControllerConfig.h"
 #import "XXEStarImageViewController.h"
 #import <SMS_SDK/SMSSDK.h>
+#import "UMSocial.h"
+#import "UMSocialWechatHandler.h"
+#import "UMSocialQQHandler.h"
+#import "UMSocialSinaSSOHandler.h"
 
 //测试------
 #import "XXELoginViewController.h"
@@ -28,6 +32,21 @@
     
     //初始化应用,appKey appSecret 从后天获取
     [SMSSDK registerApp:FreeSMSAPPKey withSecret:FreeSMSAPPSecret];
+    //初始化友盟分享 与登录
+    [UMSocialData setAppKey:UMSocialAppKey];
+    [UMSocialData openLog:YES];
+    //微信
+    [UMSocialWechatHandler setWXAppId:WeChatAppId appSecret:WeChatAppSecret url:@"http://www.umeng.com/social"];
+    //新浪
+    [UMSocialSinaSSOHandler openNewSinaSSOWithAppKey:SinaWebAppKey secret:SinaWebAppSecret RedirectURL:@"http://www.umeng.com/social"];
+    //QQ空间
+    [UMSocialQQHandler setQQWithAppId:QQAppId appKey:QQAppSecret url:@"http://www.umeng.com/social"];
+    //设置没有客户端的情况下使用SSO授权
+    [UMSocialQQHandler setSupportWebView:YES];
+    
+    //隐藏没有安装的APP图标
+    [UMSocialConfig hiddenNotInstallPlatforms:@[UMShareToQQ,UMShareToQzone,UMShareToWechatTimeline,UMShareToWechatSession]];
+    
     
     self.window = [[UIWindow alloc]init];
     self.window.frame = [UIScreen mainScreen].bounds;
@@ -81,6 +100,22 @@
 }
 
 
+/** 
+ 这里处理新浪微博SSO授权之后的跳转回来,和微信分享完成后跳转回来
+ */
+- (BOOL)application:(UIApplication *)app openURL:(NSURL *)url sourceApplication:(nullable NSString *)sourceApplication annotation:(nonnull id)annotation
+{
+    return [UMSocialSnsService handleOpenURL:url wxApiDelegate:nil];
+}
+
+/** 
+ 这里处理新浪微博SSO授权进入新浪微博客户端后进入后台,再返回来应用
+ */
+- (void)applicationDidBecomeActive:(UIApplication *)application
+{
+    [UMSocialSnsService applicationDidBecomeActive];
+}
+
 
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
@@ -96,9 +131,6 @@
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
 }
 
-- (void)applicationDidBecomeActive:(UIApplication *)application {
-    // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-}
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.

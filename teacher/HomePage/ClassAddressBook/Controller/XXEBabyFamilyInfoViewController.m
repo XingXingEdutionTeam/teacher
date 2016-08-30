@@ -39,6 +39,8 @@
     
     _myTableView.dataSource = self;
     _myTableView.delegate = self;
+    //注意 先 注册
+//    [_myTableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"telCell"];
     
     [self.view addSubview:_myTableView];
 }
@@ -67,18 +69,36 @@
      tname = "\U674e\U529f\U6210";
      xid = 18886379;
      }*/
-    UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
+//    UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
+//    cell.textLabel.text = _familyInfoArray[indexPath.row][@"tname"];
+//    NSString *levelStr = [NSString stringWithFormat:@"等级%@",_familyInfoArray[indexPath.row][@"lv"]];
+//    cell.detailTextLabel.text = levelStr;
+////    NSLog(@"%@", levelStr);
+//    
+//    cell.detailTextLabel.textColor =UIColorFromRGB(168, 254, 84);
+//    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+//    return cell;
+    
+    static NSString *cellId = @"telCell";
+    UITableViewCell *cell = [_myTableView dequeueReusableCellWithIdentifier:cellId];
+
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellId];
+    }
+//    cell.imageView.layer.cornerRadius = 30;
+//    cell.imageView.clipsToBounds = YES;
+    
     cell.textLabel.text = _familyInfoArray[indexPath.row][@"tname"];
-    NSString *levelStr = [NSString stringWithFormat:@"等级%@",_familyInfoArray[indexPath.row][@"lv"]];
-    cell.detailTextLabel.text = levelStr;
     cell.detailTextLabel.textColor =UIColorFromRGB(168, 254, 84);
+    cell.detailTextLabel.text = [NSString stringWithFormat:@"等级%@",_familyInfoArray[indexPath.row][@"lv"]];
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     return cell;
+    
 }
 
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 44;
+    return 60;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{

@@ -54,12 +54,13 @@ static NSString *userInfo_key = @"teacherInfo";
             _user_id = nil;
             _token = nil;
             _xid = nil;
-            _qqNumber = nil;
-            _weixin = nil;
-            _sinaNumber = nil;
-            _zhifubao = nil;
+            _qqNumberToken = nil;
+            _weixinToken = nil;
+            _sinaNumberToken = nil;
+            _zhifubaoToken = nil;
             _login_times = nil;
             _appkey = @"U3k8Dgj7e934bh5Y";
+            _login_type = nil;
             
         }
     }
@@ -74,13 +75,14 @@ static NSString *userInfo_key = @"teacherInfo";
     _user_head_img = userInfo[@"user_head_img"];
     _nickname = userInfo[@"nickname"];
     _user_type = userInfo[@"user_type"];
-    _qqNumber = userInfo[@"qqNumber"];
-    _sinaNumber = userInfo[@"sinaNumber"];
-    _weixin = userInfo[@"weixin"];
-    _zhifubao = userInfo[@"zhifubao"];
+    _qqNumberToken = userInfo[@"qqNumberToken"];
+    _sinaNumberToken = userInfo[@"sinaNumberToken"];
+    _weixinToken = userInfo[@"weixinToken"];
+    _zhifubaoToken = userInfo[@"zhifubaoToken"];
     _passWord = userInfo[@"passWord"];
     _token = userInfo[@"token"];
     _xid = userInfo[@"xid"];
+    _login_type = userInfo[@"login_type"];
     _login = [userInfo[@"loginStatus"] boolValue]?:NO;
     _login_times = userInfo[@"login_times"];
     YTKKeyValueStore *store = [[YTKKeyValueStore alloc]initDBWithName:@"data.db"];
@@ -97,11 +99,12 @@ static NSString *userInfo_key = @"teacherInfo";
                                    @"user_type":self.user_type,
                                    @"token":self.token,
                                    @"xid":self.xid,
-                                   @"qqNumber":self.qqNumber,
-                                   @"weixin":self.weixin?self.weixin:@"",
-                                   @"sinaNumber":self.sinaNumber?self.sinaNumber:@"",
+                                   @"login_type":self.login_type,
+                                   @"qqNumberToken":self.qqNumberToken,
+                                   @"weixinToken":self.weixinToken?self.weixinToken:@"",
+                                   @"sinaNumberToken":self.sinaNumberToken?self.sinaNumberToken:@"",
                                    @"password":self.passWord?self.passWord:@"",
-                                   @"zhifubao":self.zhifubao?self.zhifubao:@"",
+                                   @"zhifubaoToken":self.zhifubaoToken?self.zhifubaoToken:@"",
                                    @"loginStatus":[NSNumber numberWithBool:self.login],
                                    @"login_times":self.login_times
                                    };

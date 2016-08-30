@@ -27,7 +27,6 @@
 #import "XXEHomeLogoRootViewController.h"
 //监控
 #import "VideoMonitorViewController.h"
-//通讯录  (校长 和 管理员 控制器)
 #import "XXEClassAddressHeadermasterAndManagerViewController.h"
 
 
@@ -50,6 +49,7 @@
 //学校 类型
 @property (nonatomic, copy) NSString *schoolType;
 
+
 @property (nonatomic, strong)NSMutableArray *arraySchool;
 @property (nonatomic, strong)NSMutableArray *arrayClass;
 
@@ -65,8 +65,6 @@
     }
     return _classAllArray;
 }
-
-
 
 - (NSMutableArray *)arraySchool
 {
@@ -105,6 +103,8 @@
     [super viewWillAppear:animated];
     self.view.backgroundColor = XXEBackgroundColor;
     self.navigationController.navigationBarHidden = YES;
+    //获取数据
+    [self setupHomePageRequeue];
 }
 /** 这两个方法都可以,改变当前控制器的电池条颜色 */
 -(UIStatusBarStyle)preferredStatusBarStyle
@@ -145,13 +145,14 @@
     //监听 班级 改变
     [self.homeClassView.textField addObserver:self forKeyPath:@"text" options:NSKeyValueObservingOptionNew context:@"2"];
     
+    NSLog(@"%@",self.arraySchool[0]);
+
     XXETeacherUserInfo *model=self.arraySchool[0];
     self.homeClassView.textField.text = model.class_name;
     self.homeSchoolView.textField.text = model.school_name;
     self.schoolHomeId = model.school_id;
     self.classHomeId = model.class_id;
     self.schoolType = model.school_type;
-    
     
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(calssAction2:) name:@"commboxNotice2" object:nil];
     
@@ -252,11 +253,9 @@
     [self.view addSubview:bottomView];
     [self.view addSubview:self.middleView];
     [self.view addSubview:self.headView];
-    
 //    self.tabBarItem.badgeValue = @"10";
 
-    //获取数据
-        [self setupHomePageRequeue];
+    
 }
 
 #pragma mark - 点击代理方法 Delegate
@@ -337,8 +336,10 @@
             break;
         case 3:
         {
-//            NSLog(@"---通讯录----");
+            //            NSLog(@"---通讯录----");
             XXEClassAddressHeadermasterAndManagerViewController *classAddressHeadermasterAndManagerVC = [[XXEClassAddressHeadermasterAndManagerViewController alloc] init];
+//            NSLog(@"--  %@", _schoolType);
+            
             classAddressHeadermasterAndManagerVC.schoolId = _schoolHomeId;
             classAddressHeadermasterAndManagerVC.schoolType = _schoolType;
             
@@ -409,7 +410,6 @@
     }else {
         strngXid = XID;
     }
-    
     XXEHomePageApi *homePageApi = [[XXEHomePageApi alloc]initWithHomePageXid:strngXid];
     [homePageApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         NSString * code = [request.responseJSONObject objectForKey:@"code"];
@@ -417,10 +417,10 @@
         if ([code intValue] == 1) {
             [self showHudWithString:@"正在请求数据..."];
             
-//            NSLog(@"%@",request.responseJSONObject  );
+            NSLog(@"%@",request.responseJSONObject  );
             NSDictionary *data = [request.responseJSONObject objectForKey:@"data"];
             XXEHomePageModel *homePageModel = [[XXEHomePageModel alloc]initWithDictionary:data error:nil];
-//            NSLog(@"%@",homePageModel);
+            NSLog(@"%@",homePageModel);
             [self.headView configCellWithInfo:homePageModel];
             [self.middleView configCellMiddleWithInfo:homePageModel];
             
@@ -430,15 +430,14 @@
             [self.arrayClass removeAllObjects];
             
             for (int i =0; i < homePageModel.school_info.count; i++) {
-                
-                
+
                 XXEHomePageSchoolModel *schoolInfo = ((XXEHomePageSchoolModel *)(homePageModel.school_info[i]));
                 XXETeacherUserInfo *modelInfo = [[XXETeacherUserInfo alloc]init];
                 modelInfo.school_name = schoolInfo.school_name;
                 modelInfo.school_id = schoolInfo.school_id;
                 modelInfo.school_type = schoolInfo.school_type;
                 [self.arraySchool addObject:modelInfo];
-                
+//                NSLog(@"%@",self.arraySchool);
                 [self.schoolDatasource addObject:schoolInfo.school_name];
                 
                 for (XXEHomePageClassModel *classInfo in schoolInfo.class_info) {
@@ -449,7 +448,6 @@
                     
                 }
                 [self.classDatasource addObject:@"没有班级"];
-//                _classAllArray = [[NSMutableArray alloc] init];
                 [_classAllArray addObject:self.classDatasource];
                 
                 

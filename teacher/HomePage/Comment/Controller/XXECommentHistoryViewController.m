@@ -17,7 +17,7 @@
 #import "XXECommentRequestApi.h"
 #import "XXERedFlowerSentHistoryViewController.h"
 #import "XXECommentHistoryDetailInfoViewController.h"
-
+#import "XXEUserInfo.h"
 
 
 @interface XXECommentHistoryViewController ()<UITableViewDelegate, UITableViewDataSource>

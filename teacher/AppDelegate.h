@@ -11,10 +11,7 @@
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
-@property (nonatomic, strong) NSMutableArray *friendsArray;
-@property (nonatomic, strong) NSMutableArray *groupsArray;
 
-+  (AppDelegate *)shareAppDelegate;
 
 @end
 

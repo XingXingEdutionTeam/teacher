@@ -14,17 +14,16 @@
 
 /** 唯一的标示 */
 @property (nonatomic, copy) NSString *appkey;
-
 /** 密码 */
 @property (nonatomic, copy) NSString *passWord;
 /** QQ */
-@property (nonatomic, copy) NSString *qqNumber;
+@property (nonatomic, copy) NSString *qqNumberToken;
 /** 微信 */
-@property (nonatomic, copy) NSString *weixin;
+@property (nonatomic, copy) NSString *weixinToken;
 /** 新浪 */
-@property (nonatomic, copy) NSString *sinaNumber;
+@property (nonatomic, copy) NSString *sinaNumberToken;
 /** 支付宝 */
-@property (nonatomic, copy) NSString *zhifubao;
+@property (nonatomic, copy) NSString *zhifubaoToken;
 /** 用户头像 */
 @property (nonatomic, copy) NSString *user_head_img;
 /** 用户昵称 */
@@ -43,6 +42,9 @@
 @property (nonatomic, assign, getter=isLogin) BOOL login;
 /** 判断是否注册 */
 @property (nonatomic, assign, getter=isRegiste) BOOL registe;
+
+/** 登录类型 */
+@property (nonatomic, copy)NSString *login_type;
 
 
 + (instancetype)user;

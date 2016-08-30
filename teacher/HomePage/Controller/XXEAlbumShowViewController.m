@@ -13,8 +13,10 @@
 #import "KTActionSheet.h"
 #import "ReportPicViewController.h"
 #import "XXEHomePageCollectionPhotoApi.h"
+#import "AppDelegate.h"
+#import "UMSocial.h"
 
-@interface XXEAlbumShowViewController ()<SDCycleScrollViewDelegate,KTActionSheetDelegate>
+@interface XXEAlbumShowViewController ()<SDCycleScrollViewDelegate,KTActionSheetDelegate,UMSocialUIDelegate>
 
 @property (nonatomic, strong)NSMutableArray *albumNameDatasource;
 /** 索引 图片的位置 */
@@ -198,6 +200,7 @@
         }else if (action.tag == 1001) {
             if (index  == 0) {
                 NSLog(@"分享");
+                [self shareText];
             }else {
                 NSLog(@"举报");
                 XXEAlbumDetailsModel *model = self.showDatasource[self.albumIndexPaths];
@@ -210,6 +213,33 @@
                 [self.navigationController pushViewController:reportVC animated:YES];
             }
         }
+}
+#pragma mark - 分享
+- (void)shareText
+{
+    NSString *shareText = @"分享的文字";
+    UIImage *shareImage = [UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"qqq_1_5" ofType:@"png"]];
+//    snsNames 你要分享到的sns平台类型，该NSArray值是`UMSocialSnsPlatformManager.h`定义的平台名的字符串常量，有UMShareToSina，UMShareToTencent，UMShareToRenren，UMShareToDouban，UMShareToQzone，UMShareToEmail，UMShareToSms等
+    //调用快速分享接口
+    [UMSocialSnsService presentSnsIconSheetView:self appKey:UMSocialAppKey shareText:shareText shareImage:shareImage shareToSnsNames:[NSArray arrayWithObjects:UMShareToSina,UMShareToQzone,UMShareToQQ,UMShareToWechatSession,UMShareToWechatTimeline,nil] delegate:self];
+}
+
+//分享的代理方法
+- (void)didCloseUIViewController:(UMSViewControllerType)fromViewControllerType
+{
+    NSLog(@"关闭的是%u",fromViewControllerType);
+}
+
+//分享完成后的回调
+- (void)didFinishGetUMSocialDataInViewController:(UMSocialResponseEntity *)response
+{
+    NSLog(@"信息是什么%@",response);
+    //根据responseCode得到发送结果,如果分享成功
+    if (response.responseCode == UMSResponseCodeSuccess) {
+        //得到分享的微博平台名
+        NSLog(@"share to sns name is%@",[[response.data allKeys]objectAtIndex:0]);
+    }
+    
 }
 
 #pragma mark  - 收藏

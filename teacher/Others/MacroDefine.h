@@ -58,22 +58,35 @@
 #define W(x) WinWidth*(x)/375.0
 #define H(y) WinHeight*(y)/667.0
 
-//融云
+//1148468535 app id苹果唯一标示
+
+//友盟
 // iPhone 唯一Appkey为： 57c01a13f43e48118e000e55
 
+#define UMSocialAppKey @"57c01a13f43e48118e000e55"
+
 //微博信息
-//APP key 4148122833
-//App Secret：0d5d368c2dbc60bd15c1b3f9c446a7a8
+
+#define SinaWebAppKey @"4148122833"
+#define SinaWebAppSecret @"0d5d368c2dbc60bd15c1b3f9c446a7a8"
 
 //微信
 //AppID：wxed731a36270b5a4f
+//App Secret 55bf91c8002799d1fe13045e3f5cee7c
+/** 微信的APPID */
+#define WeChatAppId @"wxed731a36270b5a4f"
+/** 微信的APPSecret */
+#define WeChatAppSecret @"55bf91c8002799d1fe13045e3f5cee7c"
 
 //QQ
 //APP ID1105651422
 //APP KEYk9FfqqGIWGNH6TDX
+#define QQAppId @"1105651422"
+#define QQAppSecret @"k9FfqqGIWGNH6TDX"
 
-//沙盒 存储
-#define DEFAULTS [NSUserDefaults standardUserDefaults]
+//支付宝
+
+#define AliPayAppId @"2016082901818469"
 
 
 

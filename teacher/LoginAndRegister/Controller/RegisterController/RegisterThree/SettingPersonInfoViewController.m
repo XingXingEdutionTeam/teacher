@@ -129,7 +129,6 @@
     }];
     
     //姓名
-    
     UILabel *parentsNameLabel = [UILabel setupMessageLabel:@"注册姓名:"];
     [bgImageView addSubview:parentsNameLabel];
     [parentsNameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -159,7 +158,7 @@
 
     parentsIDCard = [UITextField createTextFieldWithIsOpen:NO textPlaceholder:@"请输入您的身份证号或者护照"];
     parentsIDCard.delegate = self;
-    parentsIDCard.borderStyle = UITextBorderStyleNone;
+    parentsIDCard.keyboardType = UITextBorderStyleNone;
     [bgImageView addSubview:parentsIDCard];
     [parentsIDCard mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(parentsIDCardLabel.mas_right).offset(2);
@@ -178,7 +177,6 @@
     }];
     
     self.teacherTypeArr = [[NSArray alloc]initWithObjects:@"授课老师",@"班主任",@"管理员",@"校长",nil];
-    
     
     self.teacherTypeCombox = [[WJCommboxView alloc]initWithFrame:CGRectMake(95*kScreenRatioWidth, 318*kScreenRatioHeight, 260*kScreenRatioWidth, 100*kScreenRatioHeight)];
     self.teacherTypeCombox.textField.placeholder = @"请选择职位";

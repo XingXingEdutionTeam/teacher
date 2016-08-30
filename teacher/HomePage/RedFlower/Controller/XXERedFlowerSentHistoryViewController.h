@@ -11,9 +11,9 @@
 
 @interface XXERedFlowerSentHistoryViewController : XXEBaseViewController
 
-@property (nonatomic, copy) NSString *schoolId;
+@property (nonatomic, strong) NSString *schoolId;
 
-@property (nonatomic, copy) NSString *classId;
+@property (nonatomic, strong) NSString *classId;
 
  //已赠花篮数量
 @property (nonatomic, copy) NSString *give_num;
