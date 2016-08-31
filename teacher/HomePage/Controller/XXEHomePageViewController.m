@@ -31,6 +31,13 @@
 
 
 @interface XXEHomePageViewController ()<XXEHomePageHeaderViewDelegate,XXEHomePageMiddleViewDelegate,XXEHomePageBottomViewDelegate>
+{
+
+    //左边 选中 学校 的是第几行
+    NSInteger didSelectedSchoolRow;
+}
+
+
 @property (nonatomic, strong)NSMutableArray *schoolDatasource;//学校信息
 @property (nonatomic, strong)NSMutableArray *classDatasource;//班级信息
 
@@ -58,6 +65,9 @@
 @property (nonatomic, strong)NSMutableArray *arrayClass;
 
 @property (nonatomic, strong) NSMutableArray *classAllArray;
+
+@property (nonatomic, strong) NSMutableArray *classGroupArray;
+
 
 @end
 
@@ -151,7 +161,10 @@
     //班级
     self.homeClassView = [[WJCommboxView alloc] initWithFrame:CGRectMake(60 * kScreenRatioWidth+120 * kScreenRatioWidth+5, 45*kScreenRatioWidth, 120 * kScreenRatioWidth, 30 * kScreenRatioHeight)];
     
-    self.homeClassView.dataArray = self.arrayClass;
+    if (self.classAllArray.count != 0) {
+     self.homeClassView.dataArray = self.classAllArray[0];
+    }
+    
     [self.view addSubview:self.homeClassView];
     
     self.homeClassView.textField.placeholder = @"班级";
@@ -171,7 +184,6 @@
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context{
 
     NSString *str = [NSString stringWithFormat:@"%@",context];
-    NSInteger didSelectedSchoolRow ;
     
     if ([str integerValue] == 1) {
         if ([object isKindOfClass:[UITextField class]]){
@@ -179,6 +191,8 @@
             //取出name的旧值和新值
             NSString * newNameOne=[change objectForKey:@"new"];
 //                NSLog(@"object:%@,new:%@",object,newNameOne);
+            
+            NSLog(@"%@ --- %@ ", _arraySchool, _classAllArray);
             
             if (_arraySchool.count != 0 && _classAllArray.count != 0) {
                 didSelectedSchoolRow =[_arraySchool indexOfObject:newNameOne];
@@ -197,7 +211,7 @@
         if ([object isKindOfClass:[UITextField class]]){
             //如果 改变 右边的年级班级信息  ——》自动关联到 左边 学校
             //取出name的旧值和新值
-            NSString * newNameTwo=[change objectForKey:@"new"];
+//            NSString * newNameTwo=[change objectForKey:@"new"];
         }
         
     }
@@ -210,31 +224,35 @@
 
 - (void)calssAction2:(NSNotification *)notif
 {
-    NSLog(@"%@",notif.object);
-    NSLog(@"%@",self.homeSchoolView.textField.text);
-    NSString *string1 = @"没有班级";
-    [self.classDatasource removeAllObjects];
-    NSString *string = self.homeSchoolView.textField.text;
-    for (XXETeacherUserInfo *model in self.arraySchool) {
-        if ([model.school_name isEqualToString:string]) {
-            self.homeClassView.textField.text = model.class_name;
-            self.schoolHomeId = model.school_id;
-            self.classHomeId = model.class_id;
-            self.schoolType = model.school_type;
-            [self.classDatasource addObject:model.class_name];
-            [self.classDatasource addObject:string1];
-            self.homeClassView.dataArray = self.classDatasource;
-//            NSLog(@"%@",self.classDatasource);
-//            NSLog(@"===!!!%@ %@",model.school_id,model.class_id);
-        }
-    }
-    NSLog(@"7890");
+//    NSLog(@"%@",notif.object);
+//    NSLog(@"%@",self.homeSchoolView.textField.text);
+//    NSString *string1 = @"没有班级";
+//    [self.classDatasource removeAllObjects];
+//    NSString *string = self.homeSchoolView.textField.text;
+//    for (XXETeacherUserInfo *model in self.arraySchool) {
+//        if ([model.school_name isEqualToString:string]) {
+//            self.homeClassView.textField.text = model.class_name;
+//            self.schoolHomeId = model.school_id;
+//            self.classHomeId = model.class_id;
+//            self.schoolType = model.school_type;
+//            [self.classDatasource addObject:model.class_name];
+//            [self.classDatasource addObject:string1];
+//            self.homeClassView.dataArray = self.classDatasource;
+////            NSLog(@"%@",self.classDatasource);
+////            NSLog(@"===!!!%@ %@",model.school_id,model.class_id);
+//        }
+//    }
+//    NSLog(@"7890");
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     NSLog(@"首页控制器");
+    
+    _classGroupArray = [[NSMutableArray alloc] init];
+    
+    didSelectedSchoolRow = 0;
     
     self.headView = [[XXEHomePageHeaderView alloc]init];
     self.headView.frame = CGRectMake(0, 0, KScreenWidth, 276*kScreenRatioHeight);
@@ -321,7 +339,7 @@
             NSLog(@"%@",request.responseJSONObject  );
             NSDictionary *data = [request.responseJSONObject objectForKey:@"data"];
             XXEHomePageModel *homePageModel = [[XXEHomePageModel alloc]initWithDictionary:data error:nil];
-            NSLog(@"%@",homePageModel);
+//            NSLog(@"首页 -- %@",homePageModel);
             [self.headView configCellWithInfo:homePageModel];
             [self.middleView configCellMiddleWithInfo:homePageModel];
 //
@@ -331,25 +349,34 @@
             [self.arrayClass removeAllObjects];
             
             NSArray *schoolArray = [data objectForKey:@"school_info"];
-            NSLog(@"%@",schoolArray);
+//            NSLog(@"%@",schoolArray);
             for (int g = 0; g<schoolArray.count; g++) {
+                _arrayClass = [[NSMutableArray alloc] init];
+                
                 XXEHomePageSchoolModel *schoolModel = [[XXEHomePageSchoolModel alloc]initWithDictionary:schoolArray[g] error:nil];
-                NSLog(@"所有学校的%@",schoolModel);
+//                NSLog(@"所有学校的%@",schoolModel);
                 [self.arraySchool addObject:schoolModel.school_name];
                 [self.schoolDatasource addObject:schoolModel];
-                NSLog(@"学校%@",self.schoolDatasource);
+//                NSLog(@"学校%@",self.schoolDatasource);
                 NSArray *classArray = [schoolArray[g] objectForKey:@"class_info"];
+//                NSLog(@"kkk --  %@", classArray);
+                
                 for (int k =0; k<classArray.count; k++) {
                     XXEHomePageClassModel *classModel = [[XXEHomePageClassModel alloc]initWithDictionary:classArray[k] error:nil];
-                    NSLog(@"所有班级的%@",classModel);
+                    
                     [self.arrayClass addObject:classModel.class_name];
                     [self.classDatasource addObject:classModel];
                 }
+                
                 [self.classAllArray addObject:self.arrayClass];
+                
+//                NSLog(@"uuu  %@", self.classAllArray);
                 
                 [self.schoolModelDatasource addObject:self.classDatasource];
                 NSLog(@"班级的数组%@",self.classDatasource);
             }
+            
+
             
         } else {
             [self showHudWithString:@"数据请求失败" forSecond:1.f];
