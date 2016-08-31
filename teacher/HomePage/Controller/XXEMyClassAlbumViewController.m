@@ -51,7 +51,7 @@ static NSString * IdentifierCELL = @"IdentifierCELL";
     [super viewWillAppear:animated];
     self.view.backgroundColor = XXEBackgroundColor;
     self.navigationController.navigationBarHidden = NO;
-    [self setupMyselfAlbumMessage];
+//    [self setupMyselfAlbumMessage];
 }
 -(UIStatusBarStyle)preferredStatusBarStyle
 {
@@ -70,8 +70,7 @@ static NSString * IdentifierCELL = @"IdentifierCELL";
     //创建导航栏右边的按钮设置
     [self rightNavigationButton];
     //请求数据
-//    [self setupMyselfAlbumMessage];
-
+    [self setupMyselfAlbumMessage];
 }
 
 #pragma mark - 获取数据 我的相册
@@ -79,20 +78,33 @@ static NSString * IdentifierCELL = @"IdentifierCELL";
 - (void)setupMyselfAlbumMessage
 {
     [self showHudWithString:@"正在请求数据..."];
+    NSString *strngXid;
+    NSString *albumUserId;
+    if ([XXEUserInfo user].login) {
+        strngXid = [XXEUserInfo user].xid;
+        albumUserId = [XXEUserInfo user].user_id;
+    }else {
+        strngXid = XID;
+        albumUserId = USER_ID;
+    }
     //真实环境
-//    XXEMyselfAblumApi *myselfAblum = [[XXEMyselfAblumApi alloc]initWithMyselfAblumSchoolId:self.myAlbumSchoolId ClassId:self.myAlbumClassId TeacherId:self.myAlbumTeacherId];
-    //测试环境
-    XXEMyselfAblumApi *myselfAblum = [[XXEMyselfAblumApi alloc]initWithMyselfAblumSchoolId:@"1" ClassId:@"1" TeacherId:@"1"];
+    XXEMyselfAblumApi *myselfAblum = [[XXEMyselfAblumApi alloc]initWithMyselfAblumSchoolId:self.myAlbumSchoolId ClassId:self.myAlbumClassId TeacherId:self.myAlbumTeacherId AlbumXid:strngXid AlbumUserId:albumUserId];
+
     [myselfAblum startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
-        
+
         NSArray *data = [request.responseJSONObject objectForKey:@"data"];
-        //取出之前的数据
-        [self.datasource removeAllObjects];
-        for (int i =0; i < data.count; i++) {
-            XXEMySelfAlbumModel *model = [[XXEMySelfAlbumModel alloc]initWithDictionary:data[i] error:nil];
-            [self.datasource addObject:model];
+        NSLog(@"--=-=-%@",data);
+        if ([[request.responseJSONObject objectForKey:@"data"] isKindOfClass:[NSString class]]) {
+            NSLog(@"shizifuchuan");
+            
+        }else{
+            //取出之前的数据
+            [self.datasource removeAllObjects];
+            for (int i =0; i < data.count; i++) {
+                XXEMySelfAlbumModel *model = [[XXEMySelfAlbumModel alloc]initWithDictionary:data[i] error:nil];
+                [self.datasource addObject:model];
+            }
         }
-        
         NSLog(@"%@",self.datasource);
         [self.myClassAlumTableView reloadData];
         [self hideHud];
@@ -209,10 +221,19 @@ static NSString * IdentifierCELL = @"IdentifierCELL";
 #pragma mark - 添加相册
 - (void)myClassAlbumAdd:(NSString *)string
 {
+    NSString *strngXid;
+    NSString *albumUserId;
+    if ([XXEUserInfo user].login) {
+        strngXid = [XXEUserInfo user].xid;
+        albumUserId = [XXEUserInfo user].user_id;
+    }else {
+        strngXid = XID;
+        albumUserId = USER_ID;
+    }
     //正式
-//    XXEMyselfAblumAddApi *addMySelfAblum = [[XXEMyselfAblumAddApi alloc]initWithAddMyselfAblumSchoolId:self.myAlbumSchoolId ClassId:self.myAlbumClassId AlbumName:string];
+    XXEMyselfAblumAddApi *addMySelfAblum = [[XXEMyselfAblumAddApi alloc]initWithAddMyselfAblumSchoolId:self.myAlbumSchoolId ClassId:self.myAlbumClassId AlbumName:string AlbumXid:strngXid AlbumUserId:albumUserId];
     //测试
-    XXEMyselfAblumAddApi *addMySelfAblum = [[XXEMyselfAblumAddApi alloc]initWithAddMyselfAblumSchoolId:@"1" ClassId:@"1" AlbumName:string];
+//    XXEMyselfAblumAddApi *addMySelfAblum = [[XXEMyselfAblumAddApi alloc]initWithAddMyselfAblumSchoolId:@"1" ClassId:@"1" AlbumName:string];
     
     [addMySelfAblum startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         NSString *code = [request.responseJSONObject objectForKey:@"code"];

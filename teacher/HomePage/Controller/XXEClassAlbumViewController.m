@@ -87,15 +87,21 @@ static NSString *const IdentifierCell = @"classAlbunCell";
 #pragma mark - 获取数据
 - (void)loadClassAlbumMessage
 {
-    XXEClassAlbumApi *classApi = [[XXEClassAlbumApi alloc]initWithClassAlbumSchoolID:@"1" classID:@"1"];
+    XXEClassAlbumApi *classApi = [[XXEClassAlbumApi alloc]initWithClassAlbumSchoolID:self.schoolID classID:self.classID];
     [classApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         NSArray *data = [request.responseJSONObject objectForKey:@"data"];
-//        NSLog(@"我的相册:%lu",(unsigned long)data.count );
-//        NSLog(@"%@",data);
+        NSLog(@"我的相册:%lu",(unsigned long)data.count );
+        NSLog(@"%@",data);
         [self showHudWithString:@"正在请求数据" forSecond:1.f];
         for (int i =0 ; i < data.count; i++) {
             XXEClassAlbumModel *model = [[XXEClassAlbumModel alloc]initWithDictionary:data[i] error:nil];
-            [self.headDatasource addObject:model.tname];
+            NSString *stringName;
+            if (i==0) {
+                stringName = @"我的相册";
+            }else{
+                stringName = [NSString stringWithFormat:@"%@老师的相册",model.tname];
+            }
+            [self.headDatasource addObject:stringName];
             [self.imageViewDatasource addObject:model.pic_arr];
             [self.teacherDatasource addObject:model.teacher_id];
 //            NSLog(@"老师的ID%@",self.teacherDatasource);
@@ -149,6 +155,7 @@ static NSString *const IdentifierCell = @"classAlbunCell";
 {
      XXEClassAlbumTableViewCell * cell = [tableView cellForRowAtIndexPath:indexPath];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
+
     if (indexPath.row ==0 && indexPath.section==0) {
     
         XXEMyClassAlbumViewController *myClassVC = [[XXEMyClassAlbumViewController alloc]init];
@@ -165,6 +172,7 @@ static NSString *const IdentifierCell = @"classAlbunCell";
         otherVC.otherClassId=self.classID;
         otherVC.otherSchoolId=self.schoolID;
         otherVC.otherTeacherId = self.teacherDatasource[indexPath.section];
+        NSLog(@"%@ %@ %@",otherVC.otherSchoolId,otherVC.otherClassId,otherVC.otherTeacherId);
         [self.navigationController pushViewController:otherVC animated:YES];
     }
 }

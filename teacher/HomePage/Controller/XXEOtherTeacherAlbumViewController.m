@@ -63,10 +63,19 @@ static NSString * OTherCELL = @"OTHERCELL";
 #pragma mark - 请求数据
 - (void)setupOtherMyselfAlbumMessage
 {
+    NSString *strngXid;
+    NSString *albumUserId;
+    if ([XXEUserInfo user].login) {
+        strngXid = [XXEUserInfo user].xid;
+        albumUserId = [XXEUserInfo user].user_id;
+    }else {
+        strngXid = XID;
+        albumUserId = USER_ID;
+    }
     //真实环境
-    //    XXEMyselfAblumApi *myselfAblum = [[XXEMyselfAblumApi alloc]initWithMyselfAblumSchoolId:self.myAlbumSchoolId ClassId:self.myAlbumClassId TeacherId:self.myAlbumTeacherId];
+        XXEMyselfAblumApi *myselfAblum = [[XXEMyselfAblumApi alloc]initWithMyselfAblumSchoolId:self.otherSchoolId ClassId:self.otherClassId TeacherId:self.otherTeacherId AlbumXid:strngXid AlbumUserId:albumUserId];
     //测试环境
-    XXEMyselfAblumApi *myselfAblum = [[XXEMyselfAblumApi alloc]initWithMyselfAblumSchoolId:@"1" ClassId:@"1" TeacherId:@"1"];
+//    XXEMyselfAblumApi *myselfAblum = [[XXEMyselfAblumApi alloc]initWithMyselfAblumSchoolId:@"1" ClassId:@"1" TeacherId:@"1"];
     [myselfAblum startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         
         NSArray *data = [request.responseJSONObject objectForKey:@"data"];
@@ -115,10 +124,6 @@ static NSString * OTherCELL = @"OTHERCELL";
     NSLog(@"%@",contentVC.contentModel);
     [self.navigationController pushViewController:contentVC animated:YES];
 }
-
-
-
-
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
