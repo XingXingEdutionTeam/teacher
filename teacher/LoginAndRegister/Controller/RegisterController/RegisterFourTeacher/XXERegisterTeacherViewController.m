@@ -232,7 +232,13 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
 {
     [super viewWillAppear:animated];
     self.view.backgroundColor = XXEColorFromRGB(239, 239, 244);
-    self.navigationItem.title = @"4/4注册老师";
+    
+    if ([[XXEUserInfo user].login_type isEqualToString:@"1"]) {
+        self.navigationItem.title = @"4/4注册";
+    }else{
+        self.navigationItem.title = @"完善资料2/2";
+    }
+    
     self.navigationController.navigationBarHidden = NO;
     //导航栏的按钮
     UIButton*rightButton = [[UIButton alloc]initWithFrame:CGRectMake(-10,0,22,22)];
@@ -562,8 +568,8 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
                 [self.teachOfTypeArray addObject:model.teachTypeName];
             }
 //            self.teacherCell = [self cellAtIndexRow:4 andAtSection:0 Message:self.teachOfTypeArray[0]];
-            XXETeachOfTypeModel *model = self.teachOfTypeDatasource[0];
-            self.theEndTeachType = model.teachTypeId;
+//            XXETeachOfTypeModel *model = self.teachOfTypeDatasource[0];
+//            self.theEndTeachType = model.teachTypeId;
         }else {
         
             [self showString:@"教学类型数据请求失败" forSecond:1.f];
@@ -594,10 +600,10 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
                     [self.classNameDatasource addObject:classModel];
                     [self.classNameArray addObject:classModel.className];
                 }
-                NSString *calssName = self.classNameArray[0];
+//                NSString *calssName = self.classNameArray[0];
 //                self.teacherCell = [self cellAtIndexRow:3 andAtSection:0 Message:calssName];
-                XXETeacherClassModel *model = self.classNameDatasource[0];
-                self.theEndClassId = model.class_id;
+//                XXETeacherClassModel *model = self.classNameDatasource[0];
+//                self.theEndClassId = model.class_id;
                 
             }else {
                 [self showString:@"获取班级信息失败" forSecond:1.f];
@@ -627,8 +633,8 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
             [self.reviewerNameArray addObject:model.reviewerName];
         }
 //        self.teacherCell = [self cellAtIndexRow:6 andAtSection:0 Message:self.reviewerNameArray[0]];
-        XXEReviewerModel *model = self.reviewerDatasource[0];
-        self.theEndReviewerId = model.reviewerId;
+//        XXEReviewerModel *model = self.reviewerDatasource[0];
+//        self.theEndReviewerId = model.reviewerId;
     } failure:^(__kindof YTKBaseRequest *request) {
         
     }];
@@ -637,12 +643,25 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
 #pragma mark - 点击确定提交注册
 - (void)sureButtonClick:(UIButton *)sender
 {
+    NSLog(@"%@%@%@",self.theEndClassId,self.theEndTeachType,self.theEndReviewerId);
+    
+    if ([self.theEndClassId isEqualToString:@""]) {
+        [self showString:@"请选择年级" forSecond:1.f];
+        return;
+    }else if ([self.theEndTeachType isEqualToString:@""]){
+        [self showString:@"请选择教学类型" forSecond:1.f];
+        return;
+    }else if ([self.theEndReviewerId isEqualToString:@""]){
+        [self showString:@"请选择审核人" forSecond:1.f];
+        return;
+    }else{
+        //获取身份图片
+        [self setupFileImage];
+    }
+    
     NSLog(@"确认按钮");
     NSLog(@"学校ID%@ 学校类型%@ 班级Id%@ 教学类型%@ 审核人ID%@",self.theEndSchoolId,self.theEndSchoolType,self.theEndClassId,self.theEndTeachType,self.theEndReviewerId);
     NSLog(@"登录类型%@ 电话号码%@ 密码%@ 用户姓名%@ 用户身份证%@ 年龄%@ 性别%@ 用户身份%@",self.login_type,self.userPhoneNum,self.userPassword,self.userName,self.userIDCarNum,self.userAge,self.userSex,self.userIdentifier);
-    
-    //获取身份图片
-    [self setupFileImage];
 }
 
 #pragma mark - 点击注册按钮 提交信息
@@ -684,7 +703,6 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
         
         NSLog(@"%@",responseObject);
         NSLog(@"%@",[responseObject objectForKey:@"msg"]);
-        NSString *msg = [responseObject objectForKey:@"msg"];
         NSString *code = [responseObject objectForKey:@"code"];
         if ([code intValue]==1) {
             [self showString:@"你已注册成功,请到首页登录" forSecond:3.f];
@@ -703,7 +721,7 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
             });
             
         }else {
-            [self showString:msg forSecond:2.f];
+            [self showString:@"注册失败" forSecond:2.f];
         }
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {

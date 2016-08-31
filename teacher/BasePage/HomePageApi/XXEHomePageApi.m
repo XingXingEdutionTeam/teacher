@@ -10,14 +10,18 @@
 
 @implementation XXEHomePageApi{
 
-    NSString *_xid;
+    NSString *_UserXid;
+    NSString *_userType;
+    NSString *_userId;
 }
 
-- (id)initWithHomePageXid:(NSString *)xid
+- (id)initWithHomePageXid:(NSString *)xid UserType:(NSString *)userType UserId:(NSString *)userId
 {
     self = [super init];
     if (self) {
-        _xid = xid;
+        _UserXid = xid;
+        _userType = userType;
+        _userId = userId;
     }
     return self;
 }
@@ -34,12 +38,11 @@
 
 - (id)requestArgument
 {
-    return @{@"xid":_xid,
+    return @{@"xid":_UserXid,
              @"appkey":APPKEY,
              @"backtype":BACKTYPE,
-//             @"login_type":@"1",//1为手机号 2 .3.4.5 分别为第三放登录
-             @"user_id":@"1",
-             @"user_type":@"2"
+             @"user_id":_userId,
+             @"user_type":_userType
              };
 }
 

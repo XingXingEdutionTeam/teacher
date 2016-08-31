@@ -31,6 +31,7 @@
 #import "UtilityFunc.h"
 #import "XXELoginViewController.h"
 #import "XXERegisterPicApi.h"
+#import "XXEUserInfo.h"
 #define awayX 20
 @interface XXERegisterHeadMasterViewController ()<UISearchBarDelegate,UITableViewDelegate,UITableViewDataSource,XXESearchSchoolMessageDelegate,UITextFieldDelegate>{
     UIButton *landBtn;
@@ -103,7 +104,7 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
 
 @implementation XXERegisterHeadMasterViewController
 
-- (NSMutableArray *)fileImageArray
+- (NSMutableArray *)fileHeadImageArray
 {
     if (!_fileHeadImageArray) {
         _fileHeadImageArray = [NSMutableArray array];
@@ -149,7 +150,13 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
 {
     [super viewWillAppear:animated];
     self.view.backgroundColor = XXEBackgroundColor;
-    self.navigationItem.title = @"4/4注册校长";
+    
+    
+    if ([[XXEUserInfo user].login_type isEqualToString:@"1"]) {
+       self.navigationItem.title = @"4/4注册";
+    }else{
+        self.navigationItem.title = @"完善资料2/2";
+    }
     self.navigationController.navigationBarHidden = NO;
     
     UIButton*rightButton = [[UIButton alloc]initWithFrame:CGRectMake(-10,0,22,22)];
@@ -386,6 +393,7 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
     layout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
     FSImagePickerView *picker = [[FSImagePickerView alloc] initWithFrame:CGRectMake(20, 318*kScreenRatioHeight, KScreenWidth -  40, 70*kScreenRatioHeight) collectionViewLayout:layout];
+    self.picker = picker;
     picker.backgroundColor = UIColorFromRGB(255, 255, 255);
     picker.showsHorizontalScrollIndicator = NO;
     picker.controller = self;
@@ -409,7 +417,25 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
 //注册成功的按钮
 - (void)sureButtonClick:(UIButton *)sender
 {
+    if ([self.theEndReviewerId isEqualToString:@""]) {
+        [self showString:@"请选择审核人" forSecond:1.f];
+        return;
+    }else if ([self.schoolAddrss isEqualToString:@""]){
+        [self showString:@"请填写学校详细地址" forSecond:1.f];
+        return;
+    }else if ([self.schoolTel isEqualToString:@""]){
+        [self showString:@"请填写学校电话" forSecond:1.f];
+        return;
+    }else if ([self.schoolType isEqualToString:@""]){
+        [self showString:@"请选择学校类" forSecond:1.f];
+        return;
+    }else if ([self.schoolProvince isEqualToString:@""]){
+        [self showString:@"请填写学校地址" forSecond:1.f];
+        return;
+    }else
+    {
     [self getIdCardPhotoImage];
+    }
     
     NSLog(@"登录类型%@ 电话号码%@ 密码%@ 用户姓名%@ 用户身份证%@ 年龄%@ 性别%@ 用户身份%@ 用户头像%@",self.login_type,self.userPhoneNum,self.userPassword,self.userName,self.userIDCarNum,self.userAge,self.userSex,self.userIdentifier,self.userAvatarImage);
     NSLog(@"邀请码%@ 学校详细地址%@ 学校电话%@ 学校ID%@ 学校类型%@ 学校名字%@ 学校省%@ 学校市%@ 学校区%@ 审核人%@",self.theEndInviteCode,self.schoolAddrss,self.schoolTel,self.theEndSchoolId,self.theEndSchoolType,self.schoolName,self.schoolProvince,self.schoolCity,self.schoolDistrict,self.theEndReviewerId);
@@ -421,12 +447,14 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
     NSMutableArray *arr = [NSMutableArray array];
     [self.picker.data removeLastObject];
     arr = self.picker.data;
+    NSLog(@"%@",arr);
     
     for (int i =0; i <arr.count; i++) {
         FSImageModel *model = self.picker.data[i];
         UIImage *fileImage = [UIImage imageWithData:model.data];
         [self.fileHeadImageArray addObject:fileImage];
     }
+    NSLog(@"照片%@",self.fileHeadImageArray);
     //用户的证件照
     [self fileUserUpLoadSomeImage];
     
@@ -454,7 +482,7 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
         }
         
     } success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
-        
+        NSLog(@"%@",responseObject);
         NSString *code = [responseObject objectForKey:@"code"];
         if ([code intValue] == 1) {
             NSArray *data = [responseObject objectForKey:@"data"];
@@ -542,8 +570,7 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
             });
             
         } else {
-            NSString *string = [responseObject objectForKey:@"msg"];
-            [self showString:string forSecond:2.f];
+            [self showString:@"注册失败" forSecond:2.f];
         }
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {

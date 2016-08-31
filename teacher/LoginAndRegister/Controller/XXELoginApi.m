@@ -43,6 +43,7 @@
     return @{@"account":_userName,
              @"appkey":APPKEY,
              @"backtype":BACKTYPE,
+             @"user_type":USER_TYPE,
              @"pass":_password,
              @"lng":_lng,
              @"lat":_lat,

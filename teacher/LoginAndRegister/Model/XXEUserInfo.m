@@ -46,7 +46,7 @@ static NSString *userInfo_key = @"teacherInfo";
             [self setupUserInfoWithUserInfo:userInfo];
         }
         else {
-            _account = nil;
+//            _account = nil;
             _user_head_img = nil;
             _nickname = nil;
             _user_type = nil;
@@ -70,10 +70,11 @@ static NSString *userInfo_key = @"teacherInfo";
 
 - (void)setupUserInfoWithUserInfo:(NSDictionary *)userInfo
 {
-    _account = userInfo[@"account"];
+//    _account = userInfo[@"account"];
     
     _user_head_img = userInfo[@"user_head_img"];
     _nickname = userInfo[@"nickname"];
+    _user_id = userInfo[@"user_id"];
     _user_type = userInfo[@"user_type"];
     _qqNumberToken = userInfo[@"qqNumberToken"];
     _sinaNumberToken = userInfo[@"sinaNumberToken"];
@@ -93,12 +94,14 @@ static NSString *userInfo_key = @"teacherInfo";
 - (void)synchronizeDefaultsInfo
 {
     if (self.xid) {
-        NSDictionary *userInfo = @{@"account":self.account,
+        NSDictionary *userInfo = @{
+//                                   @"account":self.account,
                                    @"user_head_img":self.user_head_img,
                                    @"nickname":self.nickname,
                                    @"user_type":self.user_type,
                                    @"token":self.token,
                                    @"xid":self.xid,
+                                   @"user_id":self.user_id,
                                    @"login_type":self.login_type,
                                    @"qqNumberToken":self.qqNumberToken,
                                    @"weixinToken":self.weixinToken?self.weixinToken:@"",

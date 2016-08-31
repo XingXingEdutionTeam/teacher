@@ -10,4 +10,6 @@
 
 @interface XXEHomePageViewController : XXEBaseViewController
 
+@property (nonatomic, copy)NSString *xinxgixng;
+
 @end

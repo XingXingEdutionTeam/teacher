@@ -37,6 +37,9 @@
 @property (nonatomic, strong)XXEHomePageHeaderView *headView;
 @property (nonatomic, strong)XXEHomePageMiddleView *middleView;
 
+/** 学校数组里面包含班级Model */
+@property (nonatomic, strong)NSMutableArray *schoolModelDatasource;
+
 /** 下拉框 学校 */
 @property (nonatomic, strong)WJCommboxView *homeSchoolView;
 /** 下拉框 班级 */
@@ -49,8 +52,9 @@
 //学校 类型
 @property (nonatomic, copy) NSString *schoolType;
 
-
+/** 学校的名字 */
 @property (nonatomic, strong)NSMutableArray *arraySchool;
+/** 班级的名字 */
 @property (nonatomic, strong)NSMutableArray *arrayClass;
 
 @property (nonatomic, strong) NSMutableArray *classAllArray;
@@ -58,6 +62,14 @@
 @end
 
 @implementation XXEHomePageViewController
+
+- (NSMutableArray *)schoolModelDatasource
+{
+    if (!_schoolModelDatasource) {
+        _schoolModelDatasource = [NSMutableArray array];
+    }
+    return _schoolModelDatasource;
+}
 
 - (NSMutableArray *)classAllArray{
     if (!_classAllArray) {
@@ -115,29 +127,35 @@
 #pragma mark - 下拉选择框
 - (void)setUpDropDownSelection
 {
+    NSLog(@"%@",self.schoolDatasource);
+    XXEHomePageSchoolModel *model3 = [self.schoolDatasource firstObject];
+    NSLog(@"%@",model3.school_name);
+    NSLog(@"%@",model3.class_info);
+    XXEHomePageClassModel *model1 = [model3.class_info firstObject];
+    NSLog(@"%@",model1.class_name);
+    
     self.homeSchoolView = [[WJCommboxView alloc] initWithFrame:CGRectMake(60 * kScreenRatioWidth, 45 * kScreenRatioWidth, 120 * kScreenRatioWidth, 30 * kScreenRatioHeight)];
-    self.homeSchoolView.dataArray = self.schoolDatasource;
+    self.homeSchoolView.dataArray = self.arraySchool;
     [self.view addSubview:self.homeSchoolView];
     
     self.homeSchoolView.textField.placeholder = @"学校";
-    self.homeSchoolView.textField.text = @"请选择学校";
+    self.homeSchoolView.textField.text = model3.school_name;
     self.homeSchoolView.textField.textAlignment = NSTextAlignmentCenter;
     self.homeSchoolView.textField.tag = 102;
     self.homeSchoolView.textField.layer.cornerRadius =10 * KScreenWidth / 375;
     self.homeSchoolView.textField.layer.masksToBounds =YES;
-    //监听 学校 名称 改变
+//    //监听 学校 名称 改变
     [self.homeSchoolView.textField addObserver:self forKeyPath:@"text" options:NSKeyValueObservingOptionNew context:@"1"];
     
     
     //班级
     self.homeClassView = [[WJCommboxView alloc] initWithFrame:CGRectMake(60 * kScreenRatioWidth+120 * kScreenRatioWidth+5, 45*kScreenRatioWidth, 120 * kScreenRatioWidth, 30 * kScreenRatioHeight)];
     
-    self.homeClassView.dataArray = self.classDatasource;
-    //    NSLog(@"学校数组:%@",self.homeClassView.dataArray);
+    self.homeClassView.dataArray = self.arrayClass;
     [self.view addSubview:self.homeClassView];
     
     self.homeClassView.textField.placeholder = @"班级";
-    self.homeClassView.textField.text = @"请选择你的班级";
+    self.homeClassView.textField.text = model1.class_name;
     self.homeClassView.textField.textAlignment = NSTextAlignmentCenter;
     self.homeClassView.textField.tag = 103;
     self.homeClassView.textField.layer.cornerRadius =10 * KScreenWidth / 375;
@@ -145,15 +163,7 @@
     //监听 班级 改变
     [self.homeClassView.textField addObserver:self forKeyPath:@"text" options:NSKeyValueObservingOptionNew context:@"2"];
     
-    NSLog(@"%@",self.arraySchool[0]);
 
-    XXETeacherUserInfo *model=self.arraySchool[0];
-    self.homeClassView.textField.text = model.class_name;
-    self.homeSchoolView.textField.text = model.school_name;
-    self.schoolHomeId = model.school_id;
-    self.classHomeId = model.class_id;
-    self.schoolType = model.school_type;
-    
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(calssAction2:) name:@"commboxNotice2" object:nil];
     
 }
@@ -170,8 +180,8 @@
             NSString * newNameOne=[change objectForKey:@"new"];
 //                NSLog(@"object:%@,new:%@",object,newNameOne);
             
-            if (_schoolDatasource.count != 0 && _classDatasource.count != 0) {
-                didSelectedSchoolRow =[_schoolDatasource indexOfObject:newNameOne];
+            if (_arraySchool.count != 0 && _classAllArray.count != 0) {
+                didSelectedSchoolRow =[_arraySchool indexOfObject:newNameOne];
 //                NSLog(@"%ld", didSelectedSchoolRow);
 //                NSLog(@"_classDatasource -- %@", _classDatasource);
 //                self.homeClassView.textField.text = _classAllArray[didSelectedSchoolRow][0];
@@ -188,22 +198,6 @@
             //如果 改变 右边的年级班级信息  ——》自动关联到 左边 学校
             //取出name的旧值和新值
             NSString * newNameTwo=[change objectForKey:@"new"];
-            
-//            if([newNameTwo isEqualToString:@"编辑班级"]){
-//                // 添加班级 // 添加班级 // 添加班级 // 添加班级 // 添加班级 // 添加班级 // 添加班级 // 添加班级  // 添加班级
-//                ClassEditInfoViewController *classEditVC =[[ClassEditInfoViewController alloc]init];
-//                
-//                if (baby_id1 == nil) {
-//                    baby_id1 = baby_idArray[0];
-//                    
-//                }
-//                classEditVC.babyId = baby_id1;
-//                classEditVC.hidesBottomBarWhenPushed =YES;
-//                [self.navigationController pushViewController:classEditVC animated:YES];
-//                
-//                
-//            }
-//            
         }
         
     }
@@ -234,8 +228,8 @@
 //            NSLog(@"===!!!%@ %@",model.school_id,model.class_id);
         }
     }
+    NSLog(@"7890");
 }
-
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -254,8 +248,6 @@
     [self.view addSubview:self.middleView];
     [self.view addSubview:self.headView];
 //    self.tabBarItem.badgeValue = @"10";
-
-    
 }
 
 #pragma mark - 点击代理方法 Delegate
@@ -300,10 +292,78 @@
     //    NSLog(@"%@%@",self.schoolHomeId,self.classHomeId);
     
     [self.navigationController pushViewController:redFlowerSentHistoryVC animated:YES];
-    
-    
 }
 
+
+#pragma mark - 获取数据
+- (void)setupHomePageRequeue
+{
+    NSString *strngXid;
+    NSString *homeUserId;
+    if ([XXEUserInfo user].login) {
+        strngXid = [XXEUserInfo user].xid;
+        homeUserId = [XXEUserInfo user].user_id;
+    }else {
+        strngXid = XID;
+        homeUserId = USER_ID;
+    }
+    
+    
+    NSLog(@"%@%@",strngXid,homeUserId);
+    
+    XXEHomePageApi *homePageApi = [[XXEHomePageApi alloc]initWithHomePageXid:strngXid UserType:@"2" UserId:homeUserId];
+    [homePageApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
+        NSString * code = [request.responseJSONObject objectForKey:@"code"];
+        
+        if ([code intValue] == 1) {
+            [self showHudWithString:@"正在请求数据..."];
+            
+            NSLog(@"%@",request.responseJSONObject  );
+            NSDictionary *data = [request.responseJSONObject objectForKey:@"data"];
+            XXEHomePageModel *homePageModel = [[XXEHomePageModel alloc]initWithDictionary:data error:nil];
+            NSLog(@"%@",homePageModel);
+            [self.headView configCellWithInfo:homePageModel];
+            [self.middleView configCellMiddleWithInfo:homePageModel];
+//
+            [self.arraySchool removeAllObjects];
+            [self.schoolDatasource removeAllObjects];
+            [self.classDatasource removeAllObjects];
+            [self.arrayClass removeAllObjects];
+            
+            NSArray *schoolArray = [data objectForKey:@"school_info"];
+            NSLog(@"%@",schoolArray);
+            for (int g = 0; g<schoolArray.count; g++) {
+                XXEHomePageSchoolModel *schoolModel = [[XXEHomePageSchoolModel alloc]initWithDictionary:schoolArray[g] error:nil];
+                NSLog(@"所有学校的%@",schoolModel);
+                [self.arraySchool addObject:schoolModel.school_name];
+                [self.schoolDatasource addObject:schoolModel];
+                NSLog(@"学校%@",self.schoolDatasource);
+                NSArray *classArray = [schoolArray[g] objectForKey:@"class_info"];
+                for (int k =0; k<classArray.count; k++) {
+                    XXEHomePageClassModel *classModel = [[XXEHomePageClassModel alloc]initWithDictionary:classArray[k] error:nil];
+                    NSLog(@"所有班级的%@",classModel);
+                    [self.arrayClass addObject:classModel.class_name];
+                    [self.classDatasource addObject:classModel];
+                }
+                [self.classAllArray addObject:self.arrayClass];
+                
+                [self.schoolModelDatasource addObject:self.classDatasource];
+                NSLog(@"班级的数组%@",self.classDatasource);
+            }
+            
+        } else {
+            [self showHudWithString:@"数据请求失败" forSecond:1.f];
+        }
+                //创建下拉选择框
+        [self setUpDropDownSelection];
+        [self hideHud];
+    } failure:^(__kindof YTKBaseRequest *request) {
+        [self showHudWithString:@"数据请求失败" forSecond:1.f];
+    }];
+}
+
+
+#pragma mark - 点击事件
 - (void)homeMiddleThreeButtonClick
 {
     NSLog(@"----猩币点击事件---");
@@ -328,6 +388,9 @@
             classAlbumVC.schoolID = self.schoolHomeId;
             classAlbumVC.classID = self.classHomeId;
 //            NSLog(@"%@ == %@",self.schoolHomeId,self.classHomeId);
+            classAlbumVC.schoolID = @"2";
+            classAlbumVC.classID = @"1";
+            NSLog(@"%@%@",self.schoolHomeId,self.classHomeId);
             [self.navigationController pushViewController:classAlbumVC animated:YES];
             break;
         }
@@ -338,7 +401,7 @@
         {
             //            NSLog(@"---通讯录----");
             XXEClassAddressHeadermasterAndManagerViewController *classAddressHeadermasterAndManagerVC = [[XXEClassAddressHeadermasterAndManagerViewController alloc] init];
-//            NSLog(@"--  %@", _schoolType);
+            //            NSLog(@"--  %@", _schoolType);
             
             classAddressHeadermasterAndManagerVC.schoolId = _schoolHomeId;
             classAddressHeadermasterAndManagerVC.schoolType = _schoolType;
@@ -376,7 +439,7 @@
         }
         case 7:
         {
-        
+            
             NSLog(@"---食谱----");
             XXERecipeViewController *recipeViewController = [[XXERecipeViewController alloc] init];
             recipeViewController.schoolId = self.schoolHomeId;
@@ -403,68 +466,7 @@
     
 }
 
-#pragma mark - 获取数据
-- (void)setupHomePageRequeue
-{
-    NSString *strngXid;
-    if ([XXEUserInfo user].login) {
-        strngXid = [XXEUserInfo user].xid;
-    }else {
-        strngXid = XID;
-    }
-    XXEHomePageApi *homePageApi = [[XXEHomePageApi alloc]initWithHomePageXid:strngXid];
-    [homePageApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
-        NSString * code = [request.responseJSONObject objectForKey:@"code"];
-        
-        if ([code intValue] == 1) {
-            [self showHudWithString:@"正在请求数据..."];
-            
-            NSLog(@"%@",request.responseJSONObject  );
-            NSDictionary *data = [request.responseJSONObject objectForKey:@"data"];
-            XXEHomePageModel *homePageModel = [[XXEHomePageModel alloc]initWithDictionary:data error:nil];
-            NSLog(@"%@",homePageModel);
-            [self.headView configCellWithInfo:homePageModel];
-            [self.middleView configCellMiddleWithInfo:homePageModel];
-            
-            [self.arraySchool removeAllObjects];
-            [self.schoolDatasource removeAllObjects];
-            [self.classDatasource removeAllObjects];
-            [self.arrayClass removeAllObjects];
-            
-            for (int i =0; i < homePageModel.school_info.count; i++) {
 
-                XXEHomePageSchoolModel *schoolInfo = ((XXEHomePageSchoolModel *)(homePageModel.school_info[i]));
-                XXETeacherUserInfo *modelInfo = [[XXETeacherUserInfo alloc]init];
-                modelInfo.school_name = schoolInfo.school_name;
-                modelInfo.school_id = schoolInfo.school_id;
-                modelInfo.school_type = schoolInfo.school_type;
-                [self.arraySchool addObject:modelInfo];
-//                NSLog(@"%@",self.arraySchool);
-                [self.schoolDatasource addObject:schoolInfo.school_name];
-                
-                for (XXEHomePageClassModel *classInfo in schoolInfo.class_info) {
-                    modelInfo.class_id = classInfo.class_id;
-                    modelInfo.class_name = classInfo.class_name;
-                    [self.arrayClass addObject:modelInfo];
-                    [self.classDatasource addObject:classInfo.class_name];
-                    
-                }
-                [self.classDatasource addObject:@"没有班级"];
-                [_classAllArray addObject:self.classDatasource];
-            }
-            
-            NSLog(@"学校%@ 班级%@",self.arraySchool[0],self.arrayClass[1]);
-            
-        } else {
-            [self showHudWithString:@"数据请求失败" forSecond:1.f];
-        }
-                //创建下拉选择框
-        [self setUpDropDownSelection];
-        [self hideHud];
-    } failure:^(__kindof YTKBaseRequest *request) {
-        [self showHudWithString:@"数据请求失败" forSecond:1.f];
-    }];
-}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

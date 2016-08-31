@@ -39,7 +39,6 @@
 
 //图片地址
 #define kXXEPicURL    @"http://www.xingxingedu.cn/Public/"
-//s测试
 
 // 加入的测试
 //==========

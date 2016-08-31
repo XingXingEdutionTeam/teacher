@@ -181,7 +181,8 @@ static NSString *headerCell = @"HEADERCELL";
             [self.timeDatasource addObject:newTime];
             [self.originalDatasource addObject:timeStr];
         }
-        for (int i=0; i<self.originalDatasource.count; i++) {
+        int k = (int)self.originalDatasource.count;
+        for (int i = k; i<0; i--) {
             NSMutableArray *arr = [[NSMutableArray alloc]initWithArray:[data objectForKey:self.originalDatasource[i]]];
             
             self.datasource = NULL;

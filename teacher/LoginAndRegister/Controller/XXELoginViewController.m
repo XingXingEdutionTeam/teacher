@@ -19,6 +19,8 @@
 #import "SettingPersonInfoViewController.h"
 
 @interface XXELoginViewController ()<UITextFieldDelegate,UIAlertViewDelegate,CLLocationManagerDelegate>
+/** 登陆的首页头像 */
+@property (nonatomic, strong)UIImageView *loginHeadImageView;
 /** 用户名登录 */
 @property (nonatomic, strong) UITextField *userNameTextField;
 /** 密码登录 */
@@ -50,6 +52,19 @@
 @end
 
 @implementation XXELoginViewController
+
+
+- (UIImageView *)loginHeadImageView {
+    if (!_loginHeadImageView) {
+        _loginHeadImageView = [[UIImageView alloc] init];
+        _loginHeadImageView.layer.masksToBounds = YES;
+        _loginHeadImageView.layer.cornerRadius = 100*kScreenRatioWidth/2;
+        [_loginHeadImageView setContentMode:UIViewContentModeScaleAspectFill];
+        _loginHeadImageView.userInteractionEnabled = YES;
+        _loginHeadImageView.backgroundColor = [UIColor clearColor];
+    }
+    return _loginHeadImageView;
+}
 
 - (UITextField *)userNameTextField
 {
@@ -83,7 +98,6 @@
     return UIStatusBarStyleLightContent;
 }
 
-
 - (void)loadView
 {
     [super loadView];
@@ -93,7 +107,6 @@
     [self setUpRegister];
     //创建第三方登录
     [self setupThirdLoginView];
-    
 }
 
 - (void)viewDidLoad {
@@ -106,6 +119,13 @@
 #pragma mark - 初始化参数
 - (void)TheInitializationParameter
 {
+    NSString *str = [XXEUserInfo user].user_head_img;
+    NSLog(@"%@",str);
+    if (str == nil ) {
+        self.loginHeadImageView.image = [UIImage imageNamed:@"img"];
+    }else{
+    [self.loginHeadImageView sd_setImageWithURL:[NSURL URLWithString:str]];
+    }
     self.longitudeString = @"";
     self.latitudeString = @"";
     self.qqLoginToken = @"";
@@ -165,7 +185,6 @@
 {
     CLLocation *currentLocation = [locations lastObject];
     //获取当前所在城市的名字
-    
     NSLog(@"经度%f",currentLocation.coordinate.longitude);
     NSLog(@"纬度%f",currentLocation.coordinate.latitude);
     self.longitudeString = [NSString stringWithFormat:@"%f",currentLocation.coordinate.longitude];
@@ -183,13 +202,11 @@
 {
     __weak typeof(self)weakSelf = self;
     
-    UIImageView *loginHeadImageView = [[UIImageView alloc]init];
-    loginHeadImageView.image = [UIImage imageNamed:@"xingxing_click"];
-    [self.view addSubview:loginHeadImageView];
-    [loginHeadImageView mas_makeConstraints:^(MASConstraintMaker *make) {
+    [self.view addSubview:self.loginHeadImageView];
+    [self.loginHeadImageView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(weakSelf.view);
         make.top.equalTo(weakSelf.view).offset(70*kScreenRatioHeight);
-        make.size.mas_equalTo(CGSizeMake(90*kScreenRatioWidth, 172*kScreenRatioHeight));
+        make.size.mas_equalTo(CGSizeMake(100*kScreenRatioWidth, 100*kScreenRatioHeight));
     }];
     
     UIImageView *userImageView = [[UIImageView alloc]init];
@@ -198,7 +215,7 @@
     userImageView.userInteractionEnabled = YES;
     [userImageView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(weakSelf.view);
-        make.top.equalTo(loginHeadImageView.mas_bottom).offset(18*kScreenRatioHeight);
+        make.top.equalTo(_loginHeadImageView.mas_bottom).offset(18*kScreenRatioHeight);
         make.size.mas_equalTo(CGSizeMake(335*kScreenRatioWidth, 41*kScreenRatioHeight));
     }];
     
@@ -406,23 +423,34 @@
         NSLog(@"可以登录");
         self.login_type = @"1";
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            
+        
             XXELoginApi *loginApi = [[XXELoginApi alloc]initLoginWithUserName:self.userNameTextField.text PassWord:self.passWordTextField.text LoginType:self.login_type Lng:self.longitudeString Lat:self.latitudeString];
             [loginApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
                 
                 NSLog(@"%@",request.responseJSONObject);
                 NSDictionary *data = [request.responseJSONObject objectForKey:@"data"];
-                [self LoginSetupUserInfoDict:data SnsAccessToken:@"" LoginType:self.login_type];
-                
-                [_loginButton ExitAnimationCompletion:^{
-                    NSLog(@"---点击登录按钮-------");
+                NSString *code = [request.responseJSONObject objectForKey:@"code"];
+                if ([code intValue]==1) {
+                    [self LoginSetupUserInfoDict:data SnsAccessToken:@"" LoginType:self.login_type];
                     
-                    XXETabBarControllerConfig *tabBarControllerConfig = [[XXETabBarControllerConfig alloc]init];
-                    UIWindow *window = [UIApplication sharedApplication].keyWindow;
-                    window.rootViewController = tabBarControllerConfig;
-                    [self.view removeFromSuperview];
                     
-                }];
+                    [_loginButton ExitAnimationCompletion:^{
+                        NSLog(@"---点击登录按钮-------");
+                        
+                        XXETabBarControllerConfig *tabBarControllerConfig = [[XXETabBarControllerConfig alloc]init];
+                        UIWindow *window = [UIApplication sharedApplication].keyWindow;
+                        window.rootViewController = tabBarControllerConfig;
+                        [self.view removeFromSuperview];
+                        
+                    }];
+                }else
+                {
+                    [self showString:@"登录失败" forSecond:1.f];
+                    [_loginButton ErrorRevertAnimationCompletion:^{
+                        NSString *stringMsg = [request.responseJSONObject objectForKey:@"msg"];
+                        [self showHudWithString:stringMsg forSecond:2.f];
+                    }];
+                }
             } failure:^(__kindof YTKBaseRequest *request) {
                 
                 [_loginButton ErrorRevertAnimationCompletion:^{
@@ -465,10 +493,29 @@
 
 - (void)guestButtonClick:(UIButton *)sender
 {
-    XXETabBarControllerConfig *tabBarConfig = [[XXETabBarControllerConfig alloc]init];
+    XXETabBarControllerConfig *tabBarControllerConfig = [[XXETabBarControllerConfig alloc]init];
     UIWindow *window = [UIApplication sharedApplication].keyWindow;
-    window.rootViewController = tabBarConfig;
-    NSLog(@"-----游客登录-----");
+    window.rootViewController = tabBarControllerConfig;
+    [self.view removeFromSuperview];
+    
+//    XXELoginApi *loginApi = [[XXELoginApi alloc]initLoginWithUserName:@"" PassWord:@"" LoginType:@"10" Lng:self.longitudeString Lat:self.latitudeString];
+//    [loginApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
+//        NSLog(@"%@",request.responseJSONObject);
+//        NSDictionary *data = [request.responseJSONObject objectForKey:@"data"];
+//        NSString *code = [request.responseJSONObject objectForKey:@"code"];
+//        NSString *msg = [request.responseJSONObject objectForKey:@"msg"];
+//        NSLog(@"%@",msg);
+//        if ([code intValue]==1) {
+//            [self LoginSetupUserInfoDict:data SnsAccessToken:@"" LoginType:@"10"];
+//            XXETabBarControllerConfig *tabBarControllerConfig = [[XXETabBarControllerConfig alloc]init];
+//            UIWindow *window = [UIApplication sharedApplication].keyWindow;
+//            window.rootViewController = tabBarControllerConfig;
+//            [self.view removeFromSuperview];
+//        }
+//        
+//    } failure:^(__kindof YTKBaseRequest *request) {
+//        
+//    }];
 }
 
 - (void)forgetPassWordButtonClick:(UIButton *)sender
@@ -585,7 +632,6 @@
                 
             });
             
-            
         }else{
             //进入注册的第三个
             SettingPersonInfoViewController *settingVC = [[SettingPersonInfoViewController alloc]init];
@@ -618,6 +664,9 @@
     NSString *user_type = [data objectForKey:@"user_type"];
     NSString *xid = [data objectForKey:@"xid"];
     NSString *login_type = logintype;
+    
+    NSLog(@"登录次数%@ 昵称%@ token%@ 用头像%@ 用户Id%@ 用户类型%@ XID%@ ",login_times,nickname,token,user_head_img, user_id, user_type,xid);
+    
     if ([logintype  isEqualToString: @"1"]) {
 
     }else if ([logintype isEqualToString:@"2"]){
@@ -629,10 +678,10 @@
     }else if ([logintype isEqualToString:@"5"]){
         self.aliPayLoginToken = accessToken;
     }else if ([logintype isEqualToString:@"10"]){
-        
     }
+    
     [XXEUserInfo user].login = YES;
-    NSDictionary *userInfo = @{@"account":self.userNameTextField.text,
+    NSDictionary *userInfo = @{
                                @"login_times":login_times,
                                @"nickname":nickname,
                                @"token":token,
@@ -647,6 +696,7 @@
                                @"xid":xid,
                                @"loginStatus":[NSNumber numberWithBool:YES]
                                };
+    NSLog(@"%@",userInfo);
     [[XXEUserInfo user] setupUserInfoWithUserInfo:userInfo];
 }
 

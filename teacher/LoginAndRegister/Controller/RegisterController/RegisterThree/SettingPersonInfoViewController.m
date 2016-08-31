@@ -42,6 +42,9 @@
 @property (nonatomic, copy)NSString *userAge;
 /** 用户性别 */
 @property (nonatomic, copy)NSString *userSex;
+/** 下一步按钮 */
+@property (nonatomic, strong)UIButton *nextButton;
+
 @end
 
 @implementation SettingPersonInfoViewController
@@ -66,7 +69,11 @@
 {
     [super viewWillAppear:animated];
     self.view.backgroundColor = XXEBackgroundColor;
-    self.navigationItem.title = @"3/4注册";
+    if ([[XXEUserInfo user].login_type isEqualToString:@"1"]) {
+        self.navigationItem.title = @"3/4注册";
+    }else{
+        self.navigationItem.title = @"完善资料1/2";
+    }
     self.navigationController.navigationBarHidden = NO;
 }
 
@@ -86,7 +93,13 @@
     self.userAge = @"";
     self.userSex = @"";
     self.userType = @"";
-    
+    if ([self.login_type isEqualToString:@"1"]) {
+        self.QQToken = @"";
+        self.t_head_img = @"";
+        self.weixinToken = @"";
+        self.sinaToken = @"";
+        self.aliPayToken = @"";
+    }
     [self createUI];
     if (!_ipc) {
         _ipc = [[UIImagePickerController alloc]init];
@@ -197,12 +210,13 @@
     self.teacherTypeCombox.listTableView.showsVerticalScrollIndicator = NO;
     [self.view addSubview:self.teacherTypeCombox];
     
-    UIButton *nextButton = [[UIButton alloc]init];
-    [nextButton setBackgroundImage:[UIImage imageNamed:@"login_green"] forState:UIControlStateNormal];
-    [nextButton setTitle:@"下一步" forState:UIControlStateNormal];
-    [nextButton addTarget:self action:@selector(landClick:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:nextButton];
-    [nextButton mas_makeConstraints:^(MASConstraintMaker *make) {
+    self.nextButton = [[UIButton alloc]init];
+    [self.nextButton setBackgroundImage:[UIImage imageNamed:@"login_green"] forState:UIControlStateNormal];
+    [self.nextButton setTitle:@"下一步" forState:UIControlStateNormal];
+    [self.nextButton addTarget:self action:@selector(landClick:) forControlEvents:UIControlEventTouchUpInside];
+    self.nextButton.userInteractionEnabled = NO;
+    [self.view addSubview:self.nextButton];
+    [self.nextButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(weakSelf.view.mas_centerX);
         make.bottom.equalTo(weakSelf.view.mas_bottom).offset(-30*kScreenRatioHeight);
         make.size.mas_equalTo(CGSizeMake(335*kScreenRatioWidth, 41*kScreenRatioHeight));
@@ -238,6 +252,10 @@
         else if ([parentsIDCard.text isEqualToString:@""])
         {
             [self showString:@"请输入正确的证件号" forSecond:1.f];
+            return;
+        }else if ([self.teacherTypeCombox.textField.text isEqualToString:@""])
+        {
+            [self showString:@"请选择教职身份" forSecond:1.f];
             return;
         }else if ([self.teacherTypeCombox.textField.text isEqualToString:@"校长"] || [self.teacherTypeCombox.textField.text isEqualToString:@"管理员"]){
          if ([self.teacherTypeCombox.textField.text isEqualToString:@"校长"]) {
@@ -339,10 +357,11 @@
         NSString *code = [responseObject objectForKey:@"code"];
         if ([code intValue]== 1) {
             [self showString:@"可以注册" forSecond:2.f];
+            self.nextButton.userInteractionEnabled = YES;
         }else if ([code intValue]== 3){
             [self showString:@"证件号已存在" forSecond:2.f];
+            self.nextButton.userInteractionEnabled = NO;
         }
-        
     } failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error) {
         
     }];
