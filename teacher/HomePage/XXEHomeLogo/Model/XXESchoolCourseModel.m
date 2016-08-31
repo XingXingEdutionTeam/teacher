@@ -1,21 +1,21 @@
 
 //
-//  XXEHomeworkDetailInfoModel.m
+//  XXESchoolCourseModel.m
 //  teacher
 //
-//  Created by Mac on 16/8/18.
+//  Created by Mac on 16/8/31.
 //  Copyright © 2016年 XingXingEdu. All rights reserved.
 //
 
-#import "XXEHomeworkDetailInfoModel.h"
+#import "XXESchoolCourseModel.h"
 
-@implementation XXEHomeworkDetailInfoModel
+@implementation XXESchoolCourseModel
 
-+ (NSDictionary*)parseResondsData:(id)respondObject
++ (NSArray*)parseResondsData:(id)respondObject
 {
     NSMutableArray *modelArray = [NSMutableArray array];
     for (NSDictionary *dic  in respondObject) {
-        XXEHomeworkDetailInfoModel *model = [[XXEHomeworkDetailInfoModel alloc]initWithDictionary:dic error:nil];
+        XXESchoolCourseModel *model = [[XXESchoolCourseModel alloc]initWithDictionary:dic error:nil];
         [modelArray addObject:model];
     }
     return modelArray;
@@ -24,9 +24,8 @@
 +(JSONKeyMapper*)keyMapper
 {
     return [[JSONKeyMapper alloc] initWithDictionary:@{
-                                                       @"id": @"homeworkId"
+                                                       @"id": @"courseId"
                                                        }];
 }
-
 
 @end

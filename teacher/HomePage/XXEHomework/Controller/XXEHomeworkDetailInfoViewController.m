@@ -10,8 +10,6 @@
 
 #import "XXEHomeworkDetailInfoViewController.h"
 #import "XXERedFlowerDetialTableViewCell.h"
-
-#import "XXEHomeworkDetailInfoModel.h"
 #import "XXEHomeworkDetailInfoApi.h"
 
 @interface XXEHomeworkDetailInfoViewController ()<UITableViewDelegate, UITableViewDataSource>
@@ -72,9 +70,7 @@
     
     XXEHomeworkDetailInfoApi *homeworkApi = [[XXEHomeworkDetailInfoApi alloc] initWithXid:parameterXid user_id:parameterUser_Id user_type:USER_TYPE homework_id:_homeworkId];
     [homeworkApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
-        
 //             NSLog(@"2222---   %@", request.responseJSONObject);
-        
         NSString *codeStr = [NSString stringWithFormat:@"%@", request.responseJSONObject[@"code"]];
         
         if ([codeStr isEqualToString:@"1"]) {
@@ -85,8 +81,8 @@
             _name = dic[@"tname"];
             _subject = dic[@"title"];
             _content = dic[@"con"];
-            _publishTime = dic[@"date_tm"];
-            _submitTime = dic[@"date_end_tm"];
+            _publishTime = [XXETool dateStringFromNumberTimer:dic[@"date_tm"]];
+            _submitTime = [XXETool dateStringFromNumberTimer:dic[@"date_end_tm"]];
             _picWallArray = dic[@"pic_group"];
             
             contentArray = [[NSMutableArray alloc] initWithObjects:_name, _subject, _content, _publishTime, _submitTime, nil];

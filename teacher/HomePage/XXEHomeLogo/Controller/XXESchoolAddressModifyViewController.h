@@ -8,8 +8,13 @@
 
 #import "XXEBaseViewController.h"
 
+typedef void(^ReturnStrBlock) (NSString *str);
+
 @interface XXESchoolAddressModifyViewController : XXEBaseViewController
 
+@property (nonatomic, copy) ReturnStrBlock returnStrBlock;
+@property (nonatomic, strong) NSString *schoolId;
+@property (nonatomic, strong) NSString *classId;
 
 //学校地址
 @property (nonatomic, copy) NSString *schoolAddressStr;
@@ -19,6 +24,6 @@
 
 - (IBAction)submitButton:(UIButton *)sender;
 
-
+- (void)returnStr:(ReturnStrBlock)block;
 
 @end

@@ -12,7 +12,7 @@
 
 
 /*
- province		//省
+ province		    //省
 	city			//市
 	district		//区
 	address			//详细地址

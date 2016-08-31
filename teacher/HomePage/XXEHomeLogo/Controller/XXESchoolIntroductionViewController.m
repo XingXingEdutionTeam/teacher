@@ -118,6 +118,13 @@
     if (indexPath.row == 1) {
         XXESchoolAddressModifyViewController *schoolAddressModifyVC = [[XXESchoolAddressModifyViewController alloc] init];
         schoolAddressModifyVC.schoolAddressStr = _contentArray[1];
+        schoolAddressModifyVC.schoolId = _schoolId;
+        [schoolAddressModifyVC returnStr:^(NSString *str) {
+            //
+            _contentArray[1] = str;
+            [_myTableView reloadData];
+        }];
+        
         [self.navigationController pushViewController:schoolAddressModifyVC animated:YES];
     }
     
@@ -126,6 +133,7 @@
     //注册教师 3
     if (indexPath.row == 3) {
     XXESchoolRegisterTeacherInfoViewController *schoolRegisterTeacherInfoVC = [[XXESchoolRegisterTeacherInfoViewController alloc] init];
+        schoolRegisterTeacherInfoVC.schoolId = _schoolId;
     [self.navigationController pushViewController:schoolRegisterTeacherInfoVC animated:YES];
         
     }

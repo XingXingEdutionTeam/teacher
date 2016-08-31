@@ -65,23 +65,9 @@
 
 //    NSLog(@"图片 数组  ---  %@", _picWallArray);
     
-    [self createDeleteButton];
-    
     [self createTableView];
 }
 
-
-- (void)createDeleteButton{
-
-    UIButton *deleteButton = [UIButton createButtonWithFrame:CGRectMake((KScreenWidth - 325 * kScreenRatioWidth) / 2, KScreenHeight - 150, 325 * kScreenRatioWidth, 42 * kScreenRatioHeight) backGruondImageName:@"login_green" Target:self Action:@selector(deleteBurronClick) Title:@"删除评论"];
-    [self.view addSubview:deleteButton];
-}
-
-- (void)deleteBurronClick{
-
-
-
-}
 
 - (void)createTableView{
     _myTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, KScreenWidth, KScreenHeight) style:UITableViewStyleGrouped];
@@ -214,9 +200,29 @@
     
 }
 
+- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
+    UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, KScreenWidth, 100)];
+    UIButton *deleteButton = [UIButton createButtonWithFrame:CGRectMake((KScreenWidth - 325 * kScreenRatioWidth) / 2, 30 * kScreenRatioHeight, 325 * kScreenRatioWidth, 42 * kScreenRatioHeight) backGruondImageName:@"login_green" Target:self Action:@selector(deleteBurronClick) Title:@"删除评论"];
+    [deleteButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [footerView addSubview:deleteButton];
+    return footerView;
+}
+
+- (void)deleteBurronClick{
+    
+    NSLog(@"0000");
+    
+}
+
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     
-    return 0.00000001;
+    return 0.0000001;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
+    
+    return 100;
+
 }
 
 @end

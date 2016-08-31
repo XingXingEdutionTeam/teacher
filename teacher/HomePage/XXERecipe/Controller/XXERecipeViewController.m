@@ -79,6 +79,8 @@
         parameterUser_Id = USER_ID;
     }
     
+//   NSLog(@"parameterXid:%@ *****parameterUser_Id:%@ ****   _schoolId  +++  %@",  parameterXid, parameterUser_Id, _schoolId);
+    
     [self fetchNetData];
 
 }
@@ -125,7 +127,6 @@
      
      传参:
      school_id	//学校id (测试值:1)*/
-    
     XXERecipeApi *recipeApi = [[XXERecipeApi alloc] initWithXid:parameterXid user_id:parameterUser_Id user_type:USER_TYPE school_id:_schoolId];
     [recipeApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         dateArray = [[NSMutableArray alloc] init];
@@ -140,7 +141,7 @@
         mealPicDataSource = [[NSMutableArray alloc] init];
         iconImageViewDataSource = [[NSMutableArray alloc] init];
         contentDataSource = [[NSMutableArray alloc] init];
-//        NSLog(@"2222---   %@", request.responseJSONObject);
+//        NSLog(@"食谱 ---   %@", request.responseJSONObject);
         
         NSString *codeStr = [NSString stringWithFormat:@"%@", request.responseJSONObject[@"code"]];
         
@@ -211,7 +212,7 @@
         }else{
             
         }
-        
+//        NSLog(@"%@", iconImageViewDataSource);
         [self customContent];
         
     } failure:^(__kindof YTKBaseRequest *request) {
@@ -259,8 +260,6 @@
     
 }
 
-
-
 #pragma mark
 #pragma mark - dataSource
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
@@ -289,6 +288,8 @@
         
 //        NSLog(@"gg --  oo%@", iconImageViewDataSource[indexPath.section]);
         NSString *iconStr = [NSString stringWithFormat:@"%@%@", kXXEPicURL, iconImageViewDataSource[indexPath.section][indexPath.row]];
+        
+//        NSLog(@"===  %@", iconStr);
         
         [cell.iconImageView sd_setImageWithURL:[NSURL URLWithString:iconStr] placeholderImage:[UIImage imageNamed:@"home_recipe_placehoder_icon184x154"]];
     }else{

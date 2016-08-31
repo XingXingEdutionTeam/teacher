@@ -13,6 +13,7 @@
 #import "XXESchoolIntroductionViewController.h"
 #import "XXESchoolCourseViewController.h"
 #import "XXEHeadmasterSpeechViewController.h"
+#import "XXEStarRemarkViewController.h"
 #import "XXEHomeLogoApi.h"
 
 
@@ -237,6 +238,7 @@
             //课程
             _course_groupArray = dic[@"course_group"];
             
+            
             //校长致辞
             _pdt_speech = dic[@"pdt_speech"];
             
@@ -368,12 +370,12 @@
 
 #pragma mark 星级评分 跳转----------------------------------------------
 - (void)starRankButtonClick{
-//    StarRemarkViewController *starRemarkVC = [[StarRemarkViewController alloc] init];
-//    starRemarkVC.hidesBottomBarWhenPushed = YES;
-//    [self.navigationController pushViewController:starRemarkVC animated:YES];
+    XXEStarRemarkViewController *starRemarkVC = [[XXEStarRemarkViewController alloc] init];
+    starRemarkVC.hidesBottomBarWhenPushed = YES;
+    starRemarkVC.schoolId = _schoolId;
+    [self.navigationController pushViewController:starRemarkVC animated:YES];
     
 }
-
 
 
 - (void)createBottomViewButton{

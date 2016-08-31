@@ -52,7 +52,8 @@
 //月份
 @property(nonatomic,strong)NSMutableArray *areaArray;
 
-
+//bool值 判断 是否 是第一次 获取  数据
+@property (nonatomic, assign) BOOL firstFetchNetData;
 
 @end
 
@@ -61,6 +62,7 @@
 - (void)viewWillAppear:(BOOL)animated{
     
     [super viewWillAppear:animated];
+    
     _dataSourceArray = [[NSMutableArray alloc] init];
     if ([XXEUserInfo user].login){
         parameterXid = [XXEUserInfo user].xid;
@@ -70,6 +72,7 @@
         parameterUser_Id = USER_ID;
     }
     page = 0;
+    _firstFetchNetData = YES;
     
     [_myTableView reloadData];
     
@@ -97,14 +100,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     //[self addHeadView];
-    _teach_course_groupArray = [[NSMutableArray alloc] init];
-    _month_groupArray = [[NSMutableArray alloc] init];
-    _homework_listArray = [[NSArray alloc] init];
+
     //[condit] => 3		//状态 1:急  2:写  3:新  4:结
     _stateImageViewArray = [[NSMutableArray alloc] initWithObjects:@"homework_urgent_icon", @"homework_write_icon", @"homework_new_icon", @"homework_end_icon", nil];
-    
-    self.cityArray = [[NSMutableArray alloc]initWithObjects:@"全部",@"英语",@"数学",@"语文",nil];
-    self.areaArray = [[NSMutableArray alloc]initWithObjects:@"全部",@"6",@"7",@"8",@"9",@"10",@"11",nil];
     
     courseNameStr = @"";
     dateNameStr = @"";
@@ -159,26 +157,27 @@
     
     XXEHomeworkApi *homeworkApi = [[XXEHomeworkApi alloc] initWithXid:parameterXid user_id:parameterUser_Id user_type:USER_TYPE school_id:_schoolId class_id:@"1" page:pageStr teach_course:courseNameStr month:dateNameStr];
     [homeworkApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
-        
-//             NSLog(@"2222---   %@", request.responseJSONObject);
+            _teach_course_groupArray = [[NSMutableArray alloc] init];
+            _month_groupArray = [[NSMutableArray alloc] init];
+            _homework_listArray = [[NSArray alloc] init];
+//        NSLog(@"2222---   %@", request.responseJSONObject);
         
         NSString *codeStr = [NSString stringWithFormat:@"%@", request.responseJSONObject[@"code"]];
         
         if ([codeStr isEqualToString:@"1"]) {
             
             NSDictionary *dict = request.responseJSONObject[@"data"];
-            //科目
-            [_teach_course_groupArray addObject:@"全部"];
-            [_teach_course_groupArray addObjectsFromArray:dict[@"teach_course_group"]];
-//            _teach_course_groupArray = dict[@"teach_course_group"];
-//            [_teach_course_groupArray insertObject:[NSString stringWithFormat:@"%@", @"全部"] atIndex:0];
             
-            //月份
-            [_month_groupArray addObject:@"全部"];
-            [_month_groupArray addObjectsFromArray:dict[@"month_group"]];
-            
-//            [_month_groupArray insertObject:[NSString stringWithFormat:@"%@", @"全部"] atIndex:0];
-            
+            if (_firstFetchNetData == YES) {
+                _firstFetchNetData = NO;
+                //科目
+                [_teach_course_groupArray addObject:@"全部"];
+                [_teach_course_groupArray addObjectsFromArray:dict[@"teach_course_group"]];
+                
+                //月份
+                [_month_groupArray addObject:@"全部"];
+                [_month_groupArray addObjectsFromArray:dict[@"month_group"]];
+            }
             //作业 列表
             _homework_listArray = [XXEHomeworkModel parseResondsData:dict[@"homework_list"]];
             
@@ -186,8 +185,7 @@
         }else{
             
         }
-        //        NSLog(@"科目 %@ ------- 月份 %@", _teach_course_groupArray, _month_groupArray);
-        
+
         [self customContent];
         
     } failure:^(__kindof YTKBaseRequest *request) {
@@ -432,9 +430,7 @@
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context{
-    
-    [_teach_course_groupArray removeAllObjects];
-    [_month_groupArray removeAllObjects];
+
     [_dataSourceArray removeAllObjects];
     
     //    筛选的时候 让 page =  1

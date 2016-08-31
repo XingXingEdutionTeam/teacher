@@ -230,8 +230,8 @@
             [self.classDatasource addObject:model.class_name];
             [self.classDatasource addObject:string1];
             self.homeClassView.dataArray = self.classDatasource;
-            NSLog(@"%@",self.classDatasource);
-            NSLog(@"===!!!%@ %@",model.school_id,model.class_id);
+//            NSLog(@"%@",self.classDatasource);
+//            NSLog(@"===!!!%@ %@",model.school_id,model.class_id);
         }
     }
 }
@@ -327,7 +327,7 @@
             XXEClassAlbumViewController *classAlbumVC = [[XXEClassAlbumViewController alloc]init];
             classAlbumVC.schoolID = self.schoolHomeId;
             classAlbumVC.classID = self.classHomeId;
-            NSLog(@"%@%@",self.schoolHomeId,self.classHomeId);
+//            NSLog(@"%@ == %@",self.schoolHomeId,self.classHomeId);
             [self.navigationController pushViewController:classAlbumVC animated:YES];
             break;
         }
@@ -353,6 +353,8 @@
         {
             NSLog(@"---点评----");
             XXECommentRootViewController *commentRootVC = [[XXECommentRootViewController alloc] init];
+            
+//                NSLog(@"%@%@",self.schoolHomeId,self.classHomeId);
             commentRootVC.classId = self.classHomeId;
             
             commentRootVC.schoolId = self.schoolHomeId;
@@ -364,10 +366,9 @@
         {
             NSLog(@"----作业----");
             XXEHomeworkViewController *homeworkVC = [[XXEHomeworkViewController alloc] init];
-            XXETeacherUserInfo *model = self.arraySchool[0];
-            
+//                NSLog(@"%@ =====  %@",self.schoolHomeId,self.classHomeId);
             homeworkVC.schoolId = self.schoolHomeId;
-            homeworkVC.classId = model.class_id;
+            homeworkVC.classId = self.classHomeId;
             
             [self.navigationController pushViewController:homeworkVC animated:YES];
             

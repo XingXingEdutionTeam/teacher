@@ -10,6 +10,7 @@
 //
 
 #import "XXESchoolAddressModifyViewController.h"
+#import "XXEModifySchoolAddressApi.h"
 #import "XXESchoolAddressApi.h"
 
 
@@ -32,6 +33,11 @@
     //区 ID
     NSMutableArray *areaIDArray;
     NSString *areaStr;
+    
+    NSString *parameterXid;
+    NSString *parameterUser_Id;
+    
+    NSString *newShoolAddressStr;
 }
 
 @property(nonatomic,strong)WJCommboxView *provinceCombox;
@@ -51,20 +57,26 @@
 
     self.view.backgroundColor = UIColorFromRGB(229, 232, 233);
     
-//    [self fetchProvinceData];
+    newShoolAddressStr = @"";
+    if ([XXEUserInfo user].login){
+        parameterXid = [XXEUserInfo user].xid;
+        parameterUser_Id = [XXEUserInfo user].user_id;
+    }else{
+        parameterXid = XID;
+        parameterUser_Id = USER_ID;
+    }
+
+    [self fetchProvinceData];
     [self customContent];
     
 }
 
 - (void)customContent{
-    UILabel *areaLable = [[UILabel alloc]initWithFrame:CGRectMake(30 * kWidth / 375,70 * kWidth / 375, 92 * kWidth / 375, 30 * kWidth / 375)];
+    UILabel *areaLable = [[UILabel alloc]initWithFrame:CGRectMake(10 * kWidth / 375,40 * kWidth / 375, 50 * kWidth / 375, 30 * kWidth / 375)];
     areaLable.textAlignment = NSTextAlignmentLeft;
-    areaLable.text = @"区     域";
+    areaLable.text = @"区 域";
     areaLable.font = [UIFont systemFontOfSize:14 * kWidth / 375];
     [self.view addSubview:areaLable];
-    UIImageView *starImgV =[[UIImageView alloc]initWithFrame:CGRectMake(5 * kWidth / 375,73 * kWidth / 375, 20 * kWidth / 375, 20 * kWidth / 375)];
-    starImgV.image =[UIImage imageNamed:@"必填符号38x38"];
-    [self.view addSubview:starImgV];
     
     /**省   98  */
     
@@ -77,20 +89,17 @@
     /**区   100  */
     [self createAreaCombox];
 
-
-
 }
 
 /**
  *  创建 省 下拉框 10
  */
 - (void)createProvinceCombox{
-    self.provinceCombox = [[WJCommboxView alloc] initWithFrame:CGRectMake(100 * kWidth / 375+(80+10)*0, 70 * kWidth / 375, 80 * kWidth / 375, 30 * kWidth / 375)];
+    self.provinceCombox = [[WJCommboxView alloc] initWithFrame:CGRectMake(50 * kWidth / 375+(100+5)*0, 40 * kWidth / 375, 100 * kWidth / 375, 30 * kWidth / 375)];
     CGRect rect =  self.provinceCombox.listTableView.frame;
     rect = CGRectMake(rect.origin.x - 10, rect.origin.y , rect.size.width + 20, rect.size.height);
     self.provinceCombox.listTableView.frame = rect;
     
-    //    self.provinceCombox.listTableView =[[UITableView alloc] initWithFrame:CGRectMake(-10, 30, frame.size.width, 0) style:UITableViewStyleGrouped];
     self.provinceCombox.textField.backgroundColor =UIColorFromRGB(246, 246, 246);
     self.provinceCombox.textField.placeholder= @"省";
     self.provinceCombox.textField.textAlignment = NSTextAlignmentLeft;
@@ -104,9 +113,9 @@
     self.provinceView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, kWidth, kHeight+300)];
     self.provinceView.backgroundColor = [UIColor clearColor];
     self.provinceView.alpha = 0.5;
-    UITapGestureRecognizer *provinceTouch = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(commboxHidden)];
+    UITapGestureRecognizer *provinceTouch = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(commboxHidden1)];
     [self.provinceView addGestureRecognizer:provinceTouch];
-    //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(commboxAction:) name:@"commboxNotice"object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(commboxAction:) name:@"commboxNotice"object:nil];
     
     [self.provinceCombox.textField addObserver:self forKeyPath:@"text" options:NSKeyValueObservingOptionNew context:@"10"];
     
@@ -119,13 +128,11 @@
  */
 - (void)createCityCombox{
     
-    self.cityCombox = [[WJCommboxView alloc]initWithFrame:CGRectMake((100+(80+10)*1) * kWidth / 375, 70 * kWidth / 375, 80 * kWidth / 375, 30 * kWidth / 375)];
+    self.cityCombox = [[WJCommboxView alloc]initWithFrame:CGRectMake((50+(100+5)*1) * kWidth / 375, 40 * kWidth / 375, 100 * kWidth / 375, 30 * kWidth / 375)];
     
     CGRect rect =  self.cityCombox.listTableView.frame;
     rect = CGRectMake(rect.origin.x - 10, rect.origin.y , rect.size.width + 20, rect.size.height);
     self.cityCombox.listTableView.frame = rect;
-    
-    
     self.cityCombox.textField.backgroundColor =UIColorFromRGB(246, 246, 246);
     self.cityCombox.textField.placeholder= @"市";
     self.cityCombox.textField.textAlignment = NSTextAlignmentLeft;
@@ -135,9 +142,9 @@
     self.cityView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, kWidth, kHeight+300)];
     self.cityView.backgroundColor = [UIColor clearColor];
     self.cityView.alpha = 0.5;
-    UITapGestureRecognizer *cityTouch = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(commboxHidden)];
+    UITapGestureRecognizer *cityTouch = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(commboxHidden2)];
     [self.cityView addGestureRecognizer:cityTouch];
-    //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(commboxAction:) name:@"commboxNotice"object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(commboxAction:) name:@"commboxNotice"object:nil];
     
     [self.cityCombox.textField addObserver:self forKeyPath:@"text" options:NSKeyValueObservingOptionNew context:@"11"];
     
@@ -148,7 +155,7 @@
  */
 - (void)createAreaCombox{
     
-    self.areaCombox = [[WJCommboxView alloc]initWithFrame:CGRectMake((100+(80+10)*2) * kWidth / 375, 70 * kWidth / 375, 80 * kWidth / 375, 30 * kWidth / 375)];
+    self.areaCombox = [[WJCommboxView alloc]initWithFrame:CGRectMake((50+(100+5)*2) * kWidth / 375, 40 * kWidth / 375, 100 * kWidth / 375, 30 * kWidth / 375)];
     
     CGRect rect =  self.areaCombox.listTableView.frame;
     rect = CGRectMake(rect.origin.x - 10, rect.origin.y , rect.size.width + 20, rect.size.height);
@@ -165,265 +172,253 @@
     self.areaView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, kWidth, kHeight+300)];
     self.areaView.backgroundColor = [UIColor clearColor];
     self.areaView.alpha = 0.5;
-    UITapGestureRecognizer *areaTouch = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(commboxHidden)];
+    UITapGestureRecognizer *areaTouch = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(commboxHidden3)];
     [self.areaView addGestureRecognizer:areaTouch];
-    //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(commboxAction:) name:@"commboxNotice"object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(commboxAction:) name:@"commboxNotice"object:nil];
     
     [self.areaCombox.textField addObserver:self forKeyPath:@"text" options:NSKeyValueObservingOptionNew context:@"12"];
+}
+
+
+- (void)commboxAction:(NSNotification *)notif{
+    switch ([notif.object integerValue]) {
+        case 98:
+        {
+            
+            [self.provinceCombox removeFromSuperview];
+            
+            [self.view addSubview:self.provinceView];
+            [self.view addSubview:self.provinceCombox];
+            
+        }
+            break;
+        case 99:
+        {
+            
+            [self.cityCombox removeFromSuperview];
+            [self.view addSubview:self.cityView];
+            [self.view addSubview:self.cityCombox];
+        }
+            break;
+        case 100:
+        {
+            
+            [self.areaCombox removeFromSuperview];
+            [self.view addSubview:self.areaView];
+            [self.view addSubview:self.areaCombox];
+        }
+            break;
+        default:
+            break;
+    }
     
+}
+
+
+- (void)commboxHidden1{
+    [self.provinceView removeFromSuperview];
+    [self.provinceCombox setShowList:NO];
+    self.provinceCombox.listTableView.hidden = YES;
+}
+- (void)commboxHidden2{
+    [self.cityView removeFromSuperview];
+    [self.cityCombox setShowList:NO];
+    self.cityCombox.listTableView.hidden = YES;
     
+}
+
+- (void)commboxHidden3{
+    [self.areaView removeFromSuperview];
+    [self.areaCombox setShowList:NO];
+    self.areaCombox.listTableView.hidden = YES;
+
 }
 
 
 /**
  *  省
  */
-//- (void)fetchProvinceData{
-//    
-//    /*
-//     【获取省,城市,区】
-//     
-//     接口:
-//     http://www.xingxingedu.cn/Global/provinces_city_area
-//     
-//     
-//     传参:
-//     action_type	//执行类型 1:获取省 , 2:获取城市, 3:获取区
-//     fatherID	//父级id, 获取市和区需要, 获取省不需要
-//     */
-//    //路径
-//    NSString *urlStr = @"http://www.xingxingedu.cn/Global/provinces_city_area";
-//    
-//    //请求参数  无
-//    
-//    NSDictionary *params = @{@"appkey":APPKEY, @"backtype":BACKTYPE, @"xid":XID, @"user_id":USER_ID, @"user_type":USER_TYPE, @"action_type":@"1"};
-//    
-//    [WZYHttpTool post:urlStr params:params success:^(id responseObj) {
-//        provinceArr = [[NSMutableArray alloc] init];
-//        provinceIDArray = [[NSMutableArray alloc] init];
-//        //
-//        //        NSLog(@"省---responseObj --- %@", responseObj);
-//        /*
-//         {
-//         provinceID = 820000,
-//         province = 澳门特别行政区
-//         }
-//         */
-//        NSArray *dataSource = responseObj[@"data"];
-//        
-//        NSString *codeStr = [NSString stringWithFormat:@"%@", responseObj[@"code"]];
-//        
-//        if ([codeStr isEqualToString:@"1"]) {
-//            
-//            for (NSDictionary *dic in dataSource) {
-//                
-//                [provinceArr addObject:dic[@"province"]];
-//                [provinceIDArray addObject:dic[@"provinceID"]];
-//            }
-//            
-//        }else{
-//            
-//            
-//        }
-//        
-//        
-//        //     [self createProvinceCombox];
-//        
-//        //        NSLog(@"%@", provinceArr);
-//        self.provinceCombox.dataArray = provinceArr;
-//        [self.provinceCombox.listTableView reloadData];
-//        
-//    } failure:^(NSError *error) {
-//        //
-//        NSLog(@"%@", error);
-//    }];
-//}
+- (void)fetchProvinceData{
 
-//- (void)fetchProvinceData{
-//    xxesc *redFlowerSentHistoryApi = [[XXERedFlowerSentHistoryApi alloc] initWithXid:XID user_id:USER_ID user_type:USER_TYPE page:pageStr];
-//    [redFlowerSentHistoryApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
-//        
-//        //                NSLog(@"2222---   %@", request.responseJSONObject);
-//        
-//        NSString *codeStr = [NSString stringWithFormat:@"%@", request.responseJSONObject[@"code"]];
-//        
-//        if ([codeStr isEqualToString:@"1"]) {
-//            
-//            NSDictionary *dict = request.responseJSONObject[@"data"];
-//            //已赠花篮数量
-//            _give_num = dict[@"give_num"];
-//            
-//            //剩余花篮 数量
-//            _flower_able = dict[@"flower_able"];
-//            
-//            NSArray *modelArray = [XXERedFlowerSentHistoryModel parseResondsData:dict[@"list"]];
-//            
-//            [_dataSourceArray addObjectsFromArray:modelArray];
-//        }else{
-//            
-//        }
-//        
-//        [self customContent];
-//        
-//    } failure:^(__kindof YTKBaseRequest *request) {
-//        
-//        [self showString:@"数据请求失败" forSecond:1.f];
-//    }];
-//
-//
-//}
-//
-//
-///**
-// *  市
-// */
-//- (void)fetchCityData{
-//    
-//    /*
-//     【获取省,城市,区】
-//     
-//     接口:
-//     http://www.xingxingedu.cn/Global/provinces_city_area
-//     
-//     
-//     传参:
-//     action_type	//执行类型 1:获取省 , 2:获取城市, 3:获取区
-//     fatherID	//父级id, 获取市和区需要, 获取省不需要
-//     */
-//    //路径
-//    NSString *urlStr = @"http://www.xingxingedu.cn/Global/provinces_city_area";
-//    
-//    //请求参数
-//    
-//    NSUInteger index;
-//    NSString *fatherID;
-//    
-//    if (provinceStr) {
-//        index = [provinceArr indexOfObject:provinceStr];
-//        fatherID = provinceIDArray[index];
-//    }
-//    
-//    NSDictionary *params = @{@"appkey":APPKEY, @"backtype":BACKTYPE, @"xid":XID, @"user_id":USER_ID, @"user_type":USER_TYPE, @"action_type":@"2", @"fatherID":fatherID};
-//    
-//    [WZYHttpTool post:urlStr params:params success:^(id responseObj) {
-//        
-//        cityArr = [[NSMutableArray alloc] init];
-//        cityIDArray = [[NSMutableArray alloc] init];
-//        //
-//        //        NSLog(@"市----responseObj --- %@", responseObj);
-//        /*
-//         {
-//         cityID = 110200,
-//         city = 县
-//         }
-//         
-//         */
-//        NSArray *dataSource = responseObj[@"data"];
-//        
-//        NSString *codeStr = [NSString stringWithFormat:@"%@", responseObj[@"code"]];
-//        
-//        if ([codeStr isEqualToString:@"1"]) {
-//            
-//            for (NSDictionary *dic in dataSource) {
-//                
-//                [cityArr addObject:dic[@"city"]];
-//                [cityIDArray addObject:dic[@"cityID"]];
-//            }
-//            
-//        }else{
-//            
-//            
-//        }
-//        self.cityCombox.dataArray = cityArr;
-//        [self.cityCombox.listTableView reloadData];
-//        
-//        //        //如果从 搜索界面 跳转过来  重新赋值
-//        //        if (searchArray.count != 0) {
-//        //         _cityCombox.textField.text = searchArray[1];
-//        //         _cityCombox.textField.enabled = NO;
-//        //        }
-//        
-//        
-//    } failure:^(NSError *error) {
-//        //
-//        NSLog(@"%@", error);
-//    }];
-//    
-//}
-//
-///**
-// *  区
-// */
-//- (void)fetchAreaData{
-//    
-//    //    /*
-//    //     【获取省,城市,区】
-//    //
-//    //     接口:
-//    //     http://www.xingxingedu.cn/Global/provinces_city_area
-//    //
-//    //
-//    //     传参:
-//    //     action_type	//执行类型 1:获取省 , 2:获取城市, 3:获取区
-//    //     fatherID	//父级id, 获取市和区需要, 获取省不需要
-//    //     */
-//    //路径
-//    NSString *urlStr = @"http://www.xingxingedu.cn/Global/provinces_city_area";
-//    NSUInteger index;
-//    NSString *fatherID;
-//    
-//    if (cityStr) {
-//        index = [cityArr indexOfObject:cityStr];
-//        fatherID = cityIDArray[index];
-//    }
-//    
-//    NSDictionary *params = @{@"appkey":APPKEY, @"backtype":BACKTYPE, @"xid":XID, @"user_id":USER_ID, @"user_type":USER_TYPE, @"action_type":@"3", @"fatherID":fatherID};
-//    
-//    [WZYHttpTool post:urlStr params:params success:^(id responseObj) {
-//        
-//        areaArr = [[NSMutableArray alloc] init];
-//        areaIDArray = [[NSMutableArray alloc] init];
-//        //
-//        //                NSLog(@"区---responseObj --- %@", responseObj);
-//        /*
-//         {
-//         areaID = 120110,
-//         area = 东丽区
-//         },
-//         */
-//        NSArray *dataSource = responseObj[@"data"];
-//        
-//        NSString *codeStr = [NSString stringWithFormat:@"%@", responseObj[@"code"]];
-//        
-//        if ([codeStr isEqualToString:@"1"]) {
-//            
-//            for (NSDictionary *dic in dataSource) {
-//                
-//                [areaArr addObject:dic[@"area"]];
-//                [areaIDArray addObject:dic[@"areaID"]];
-//            }
-//            
-//        }else{
-//            
-//            
-//        }
-//        
-//        self.areaCombox.dataArray = areaArr;
-//        [self.areaCombox.listTableView reloadData];
-//        
-//        //        //如果从 搜索界面 跳转过来  重新赋值
-//        //        if (searchArray.count != 0) {
-//        //            _areaCombox.textField.text = searchArray[2];
-//        //            _areaCombox.textField.enabled = NO;
-//        //        }
-//        
-//        
-//    } failure:^(NSError *error) {
-//        //
-//        NSLog(@"%@", error);
-//    }];
-//}
+    /*
+     【获取省,城市,区】
 
+     接口:
+     http://www.xingxingedu.cn/Global/provinces_city_area
+
+
+     传参:
+     action_type	//执行类型 1:获取省 , 2:获取城市, 3:获取区
+     fatherID	//父级id, 获取市和区需要, 获取省不需要
+     */
+    
+    XXESchoolAddressApi *schoolAddressApi = [[XXESchoolAddressApi alloc] initWithXid:parameterXid user_id:parameterUser_Id user_type:USER_TYPE action_type:@"1" fatherID:@""];
+    [schoolAddressApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
+//        NSLog(@"%@", request.responseJSONObject);
+        NSString *codeStr = [NSString stringWithFormat:@"%@", request.responseJSONObject[@"code"]];
+        provinceArr = [[NSMutableArray alloc] init];
+        provinceIDArray = [[NSMutableArray alloc] init];
+        
+        if ([codeStr isEqualToString:@"1"]) {
+             NSArray *dataSource = request.responseJSONObject[@"data"];
+            for (NSDictionary *dic in dataSource) {
+                
+                [provinceArr addObject:dic[@"province"]];
+                [provinceIDArray addObject:dic[@"provinceID"]];
+            }
+        }else{
+        
+        
+        }
+        self.provinceCombox.dataArray = provinceArr;
+        [self.provinceCombox.listTableView reloadData];
+    } failure:^(__kindof YTKBaseRequest *request) {
+        //
+        [self showHudWithString:@"数据请求失败" forSecond:1.5];
+    }];
+    
+}
+
+
+/**
+ *  市
+ */
+- (void)fetchCityData{
+
+    NSUInteger index;
+    NSString *fatherID;
+    
+    if (provinceStr) {
+        index = [provinceArr indexOfObject:provinceStr];
+        fatherID = provinceIDArray[index];
+    }
+    XXESchoolAddressApi *schoolAddressApi = [[XXESchoolAddressApi alloc] initWithXid:parameterXid user_id:parameterUser_Id user_type:USER_TYPE action_type:@"2" fatherID:fatherID];
+    [schoolAddressApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
+//        NSLog(@"市 -- %@", request.responseJSONObject);
+        NSString *codeStr = [NSString stringWithFormat:@"%@", request.responseJSONObject[@"code"]];
+        cityArr = [[NSMutableArray alloc] init];
+        cityIDArray = [[NSMutableArray alloc] init];
+        
+        if ([codeStr isEqualToString:@"1"]) {
+            NSArray *dataSource = request.responseJSONObject[@"data"];
+            for (NSDictionary *dic in dataSource) {
+                
+                [cityArr addObject:dic[@"city"]];
+                [cityIDArray addObject:dic[@"cityID"]];
+            }
+        }else{
+            
+            
+        }
+        self.cityCombox.dataArray = cityArr;
+        [self.cityCombox.listTableView reloadData];
+    } failure:^(__kindof YTKBaseRequest *request) {
+        //
+        [self showHudWithString:@"数据请求失败" forSecond:1.5];
+    }];
+
+}
+
+/**
+ *  区
+ */
+- (void)fetchAreaData{
+
+    NSUInteger index;
+    NSString *fatherID;
+    
+    if (cityStr) {
+        index = [cityArr indexOfObject:cityStr];
+        fatherID = cityIDArray[index];
+    }
+    XXESchoolAddressApi *schoolAddressApi = [[XXESchoolAddressApi alloc] initWithXid:parameterXid user_id:parameterUser_Id user_type:USER_TYPE action_type:@"3" fatherID:fatherID];
+    [schoolAddressApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
+//                NSLog(@"区 --  %@", request.responseJSONObject);
+        NSString *codeStr = [NSString stringWithFormat:@"%@", request.responseJSONObject[@"code"]];
+        areaArr = [[NSMutableArray alloc] init];
+        areaIDArray = [[NSMutableArray alloc] init];
+        
+        if ([codeStr isEqualToString:@"1"]) {
+            NSArray *dataSource = request.responseJSONObject[@"data"];
+            for (NSDictionary *dic in dataSource) {
+                
+                [areaArr addObject:dic[@"area"]];
+                [areaIDArray addObject:dic[@"areaID"]];
+            }
+        }else{
+            
+            
+        }
+        self.areaCombox.dataArray = areaArr;
+        [self.areaCombox.listTableView reloadData];
+    } failure:^(__kindof YTKBaseRequest *request) {
+        //
+        [self showHudWithString:@"数据请求失败" forSecond:1.5];
+    }];
+
+    
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context{
+    
+    switch ([[NSString stringWithFormat:@"%@",context] integerValue]) {
+        case 10:
+        {
+            //省
+            if ([keyPath isEqualToString:@"text"]) {
+                NSString * newName=[change objectForKey:@"new"];
+                if (newName) {
+                    provinceStr = newName;
+                }
+                //获取 城市 数据
+                [self fetchCityData];
+
+            }else{
+            
+            }
+            
+        }
+            break;
+        case 11:
+        {
+            //市
+            
+            if (_provinceCombox.textField.text) {
+                if ([keyPath isEqualToString:@"text"]) {
+                    NSString * newName=[change objectForKey:@"new"];
+                    if (newName) {
+                        cityStr = newName;
+                    }
+                        
+                 //获取 区 数据
+                 [self fetchAreaData];
+                }
+            }else{
+            [self showHudWithString:@"请先完善“省”信息" forSecond:1.5];
+            }
+            
+        }
+            break;
+
+        default:
+            break;
+    }
+    
+}
+
+
+
+- (void)dealloc
+{
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    
+    [self.provinceCombox.textField removeObserver:self forKeyPath:@"text"];
+    
+    [self.cityCombox.textField removeObserver:self forKeyPath:@"text"];
+    
+    [self.areaCombox.textField removeObserver:self forKeyPath:@"text"];
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -434,6 +429,57 @@
 
 - (IBAction)submitButton:(UIButton *)sender {
     
+    if ([_provinceCombox.textField.text isEqualToString:@""]) {
+        [self showHudWithString:@"请完善省" forSecond:1.5];
+    }else if ([_cityCombox.textField.text isEqualToString:@""]){
+        [self showHudWithString:@"请完善市" forSecond:1.5];
+    }else if ([_areaCombox.textField.text isEqualToString:@""]){
+        [self showHudWithString:@"请完善区" forSecond:1.5];
+    }else if ([_schoolAddressTextView.text isEqualToString:@""]){
+    
+        [self showHudWithString:@"请完善详细信息" forSecond:1.5];
+    }else{
+        newShoolAddressStr = [NSString stringWithFormat:@"%@%@%@%@", _provinceCombox.textField.text, _cityCombox.textField.text, _areaCombox.textField.text, _schoolAddressTextView.text];
+    
+        [self submitNewSchoolAddressInfo];
+    }
+    
     
 }
+
+- (void)submitNewSchoolAddressInfo{
+    XXEModifySchoolAddressApi *modifySchoolAddressApi = [[XXEModifySchoolAddressApi alloc] initWithXid:parameterXid user_id:parameterUser_Id user_type:USER_TYPE school_id:_schoolId position:@"4" province:_provinceCombox.textField.text city:_cityCombox.textField.text district:_areaCombox.textField.text address:_schoolAddressTextView.text];
+    
+
+    [modifySchoolAddressApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
+        //
+        NSString *codeStr = [NSString stringWithFormat:@"%@", request.responseJSONObject[@"code"]];
+        
+        if ([codeStr isEqualToString:@"1"]) {
+            
+            [self showHudWithString:@"提交成功!" forSecond:1.5];
+                        
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                //
+                self.returnStrBlock(newShoolAddressStr);
+                [self.navigationController popViewControllerAnimated:YES];
+            });
+            
+        }else{
+            
+        }
+
+    } failure:^(__kindof YTKBaseRequest *request) {
+        //
+        [self showHudWithString:@"提交失败" forSecond:1.5];
+    }];
+
+
+}
+
+- (void)returnStr:(ReturnStrBlock)block{
+    self.returnStrBlock = block;
+}
+
+
 @end
