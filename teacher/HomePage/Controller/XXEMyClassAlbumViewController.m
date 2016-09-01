@@ -235,11 +235,19 @@ static NSString * IdentifierCELL = @"IdentifierCELL";
     XXEMyselfAblumAddApi *addMySelfAblum = [[XXEMyselfAblumAddApi alloc]initWithAddMyselfAblumSchoolId:self.myAlbumSchoolId ClassId:self.myAlbumClassId AlbumName:string AlbumXid:strngXid AlbumUserId:albumUserId];
     NSLog(@"=== %@ %@ %@ %@ %@",self.myAlbumSchoolId,self.myAlbumClassId,string,strngXid,albumUserId);
     
-    //测试
-//    XXEMyselfAblumAddApi *addMySelfAblum = [[XXEMyselfAblumAddApi alloc]initWithAddMyselfAblumSchoolId:@"1" ClassId:@"1" AlbumName:string];
+//    [addMySelfAblum startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
+//        
+//        NSLog(@"%@",request.responseJSONObject);
+//        
+//    } failure:^(__kindof YTKBaseRequest *request) {
+//        
+//    }];
     
     [addMySelfAblum startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         NSString *code = [request.responseJSONObject objectForKey:@"code"];
+        
+        NSLog(@"==============  %@",request.responseJSONObject);
+        
         if ([code intValue] == 1) {
             [self showString:@"创建成功" forSecond:1.f];
             [self.datasource removeAllObjects];
