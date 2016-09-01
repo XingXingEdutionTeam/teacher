@@ -53,7 +53,7 @@
         
         
         _lineImageViewOne = [[UIImageView alloc] initWithFrame:CGRectMake(120 * kWidth / 375, 30, kWidth - 100 - 10, 2)];
-        [_lineImageViewOne setImage:[UIImage imageNamed:@"线552x1"]];
+        [_lineImageViewOne setImage:[UIImage imageNamed:@"home_logo_line_icon552x1"]];
         [self.contentView addSubview:_lineImageViewOne];
         
         
@@ -64,7 +64,7 @@
         [self.contentView addSubview:_teacherNameLabel];
         
         _lineImageViewTwo = [[UIImageView alloc] initWithFrame:CGRectMake(120 * kWidth / 375, 55, kWidth - 100 - 10, 2)];
-        [_lineImageViewTwo setImage:[UIImage imageNamed:@"线552x1"]];
+        [_lineImageViewTwo setImage:[UIImage imageNamed:@"home_logo_line_icon552x1"]];
         [self.contentView addSubview:_lineImageViewTwo];
         
         
@@ -79,7 +79,7 @@
         [self.contentView addSubview:_numberLabel];
         
         _lineImageViewThree = [[UIImageView alloc] initWithFrame:CGRectMake(120 * kWidth / 375, 80, kWidth - 100 - 10, 2)];
-        [_lineImageViewThree setImage:[UIImage imageNamed:@"线552x1"]];
+        [_lineImageViewThree setImage:[UIImage imageNamed:@"home_logo_line_icon552x1"]];
         [self.contentView addSubview:_lineImageViewThree];
         
         //原价

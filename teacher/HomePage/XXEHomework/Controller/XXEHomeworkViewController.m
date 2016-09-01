@@ -155,7 +155,7 @@
     
 //    NSLog(@"%@ --- %@", _schoolId, _classId);
     
-    XXEHomeworkApi *homeworkApi = [[XXEHomeworkApi alloc] initWithXid:parameterXid user_id:parameterUser_Id user_type:USER_TYPE school_id:_schoolId class_id:@"1" page:pageStr teach_course:courseNameStr month:dateNameStr];
+    XXEHomeworkApi *homeworkApi = [[XXEHomeworkApi alloc] initWithXid:parameterXid user_id:parameterUser_Id user_type:USER_TYPE school_id:_schoolId class_id:_classId page:pageStr teach_course:courseNameStr month:dateNameStr];
     [homeworkApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
             _teach_course_groupArray = [[NSMutableArray alloc] init];
             _month_groupArray = [[NSMutableArray alloc] init];

@@ -49,8 +49,13 @@
 
 /** 下拉框 学校 */
 @property (nonatomic, strong)WJCommboxView *homeSchoolView;
+//学校 下拉框 背景
+@property (nonatomic, strong) UIView *schoolBgView;
+
 /** 下拉框 班级 */
 @property (nonatomic, strong)WJCommboxView *homeClassView;
+//班级 下拉框 背景
+@property (nonatomic, strong) UIView *classBgView;
 
 /** 学校ID */
 @property (nonatomic, copy)NSString *schoolHomeId;
@@ -137,15 +142,20 @@
 #pragma mark - 下拉选择框
 - (void)setUpDropDownSelection
 {
-    NSLog(@"%@",self.schoolDatasource);
     XXEHomePageSchoolModel *model3 = [self.schoolDatasource firstObject];
-    NSLog(@"%@",model3.school_name);
-    NSLog(@"%@",model3.class_info);
     XXEHomePageClassModel *model1 = [model3.class_info firstObject];
-    NSLog(@"%@",model1.class_name);
+    //    NSLog(@"model1:%@ --- model3:%@", model1, model3);
     
+    self.schoolHomeId = model3.school_id;
+    self.schoolType = model3.school_type;
+    self.classHomeId = model1.class_id;
+    
+    //*******************  学 校  *************************
     self.homeSchoolView = [[WJCommboxView alloc] initWithFrame:CGRectMake(60 * kScreenRatioWidth, 45 * kScreenRatioWidth, 120 * kScreenRatioWidth, 30 * kScreenRatioHeight)];
-    self.homeSchoolView.dataArray = self.arraySchool;
+    if (self.arraySchool.count != 0) {
+        self.homeSchoolView.dataArray = self.arraySchool;
+    }
+    
     [self.view addSubview:self.homeSchoolView];
     
     self.homeSchoolView.textField.placeholder = @"学校";
@@ -154,15 +164,23 @@
     self.homeSchoolView.textField.tag = 102;
     self.homeSchoolView.textField.layer.cornerRadius =10 * KScreenWidth / 375;
     self.homeSchoolView.textField.layer.masksToBounds =YES;
-//    //监听 学校 名称 改变
+    //    //监听 学校 名称 改变
     [self.homeSchoolView.textField addObserver:self forKeyPath:@"text" options:NSKeyValueObservingOptionNew context:@"1"];
     
+    self.schoolBgView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, kWidth,kHeight+300)];
+    self.schoolBgView.backgroundColor = [UIColor clearColor];
+    self.schoolBgView.alpha = 0.5;
     
-    //班级
+    UITapGestureRecognizer *singleTap1 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(commboxHidden1)];
+    [self.schoolBgView addGestureRecognizer:singleTap1];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(commboxAction:) name:@"commboxNotice"object:nil];
+    
+    //***********************  班 级  ***************************
     self.homeClassView = [[WJCommboxView alloc] initWithFrame:CGRectMake(60 * kScreenRatioWidth+120 * kScreenRatioWidth+5, 45*kScreenRatioWidth, 120 * kScreenRatioWidth, 30 * kScreenRatioHeight)];
     
     if (self.classAllArray.count != 0) {
-     self.homeClassView.dataArray = self.classAllArray[0];
+        self.homeClassView.dataArray = self.classAllArray[0];
     }
     
     [self.view addSubview:self.homeClassView];
@@ -175,14 +193,62 @@
     self.homeClassView.textField.layer.masksToBounds =YES;
     //监听 班级 改变
     [self.homeClassView.textField addObserver:self forKeyPath:@"text" options:NSKeyValueObservingOptionNew context:@"2"];
-    
 
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(calssAction2:) name:@"commboxNotice2" object:nil];
+    self.classBgView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, kWidth,kHeight+300)];
+    self.classBgView.backgroundColor = [UIColor clearColor];
+     self.classBgView.alpha = 0.5;
+
+    UITapGestureRecognizer *singleTap2 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(commboxHidden2)];
+    [self.classBgView addGestureRecognizer:singleTap2];
+
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(commboxAction:) name:@"commboxNotice"object:nil];
+}
+
+- (void)commboxAction:(NSNotification *)notif{
+    switch ([notif.object integerValue]) {
+        case 102:
+        {
+            
+            [self.homeSchoolView removeFromSuperview];
+            
+            [self.view addSubview:self.schoolBgView];
+            [self.view addSubview:self.homeSchoolView];
+            
+        }
+            break;
+        case 103:
+        {
+            
+            [self.homeClassView removeFromSuperview];
+            [self.view addSubview:self.classBgView];
+            [self.view addSubview:self.homeClassView];
+        }
+            break;
+        default:
+            break;
+    }
     
 }
 
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context{
 
+- (void)commboxHidden1{
+    
+    [self.schoolBgView removeFromSuperview];
+    [self.homeSchoolView setShowList:NO];
+    self.homeSchoolView.listTableView.hidden = YES;
+    
+}
+- (void)commboxHidden2{
+    
+    [self.classBgView removeFromSuperview];
+    [self.homeClassView setShowList:NO];
+    self.homeClassView.listTableView.hidden = YES;
+    
+}
+
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context{
+    
     NSString *str = [NSString stringWithFormat:@"%@",context];
     
     if ([str integerValue] == 1) {
@@ -190,35 +256,47 @@
             //如果 改变 左边 学校 ——》自动关联到 右边的年级班级信息
             //取出name的旧值和新值
             NSString * newNameOne=[change objectForKey:@"new"];
-//                NSLog(@"object:%@,new:%@",object,newNameOne);
+            //                NSLog(@"object:%@,new:%@",object,newNameOne);
             
             NSLog(@"%@ --- %@ ", _arraySchool, _classAllArray);
             
             if (_arraySchool.count != 0 && _classAllArray.count != 0) {
                 didSelectedSchoolRow =[_arraySchool indexOfObject:newNameOne];
-//                NSLog(@"%ld", didSelectedSchoolRow);
-//                NSLog(@"_classDatasource -- %@", _classDatasource);
-//                self.homeClassView.textField.text = _classAllArray[didSelectedSchoolRow][0];
+                self.homeClassView.dataArray = _classAllArray[didSelectedSchoolRow];
+//                NSLog(@"%@", _classAllArray[didSelectedSchoolRow]);
                 
-                _homeClassView.dataArray = _classAllArray[didSelectedSchoolRow];
+//                if ([_classAllArray[didSelectedSchoolRow] count] != 0) {
+                    self.homeClassView.textField.text = _classAllArray[didSelectedSchoolRow][0];
+//                }
+                
                 [_homeClassView.listTableView reloadData];
-            
+                
+                for (XXEHomePageSchoolModel *model in self.schoolDatasource) {
+                    
+                    if ([model.school_name isEqualToString:newNameOne]) {
+                        self.schoolHomeId = model.school_id;
+                        self.schoolType = model.school_type;
+                        
+                        XXEHomePageClassModel *classModel = [model.class_info firstObject];
+                        self.classHomeId = classModel.class_id;
+                        
+                    }
+                }
             }
-
+            
         }
         return;
     }else if ([str integerValue] == 2){
         if ([object isKindOfClass:[UITextField class]]){
             //如果 改变 右边的年级班级信息  ——》自动关联到 左边 学校
             //取出name的旧值和新值
-//            NSString * newNameTwo=[change objectForKey:@"new"];
+            //            NSString * newNameTwo=[change objectForKey:@"new"];
         }
         
     }
-
-
+    
+    
 }
-
 
 #pragma mark - 通知选择的学校
 
@@ -336,8 +414,9 @@
         if ([code intValue] == 1) {
             [self showHudWithString:@"正在请求数据..."];
             
-            NSLog(@"%@",request.responseJSONObject  );
+//            NSLog(@"%@",request.responseJSONObject  );
             NSDictionary *data = [request.responseJSONObject objectForKey:@"data"];
+            
             XXEHomePageModel *homePageModel = [[XXEHomePageModel alloc]initWithDictionary:data error:nil];
 //            NSLog(@"首页 -- %@",homePageModel);
             [self.headView configCellWithInfo:homePageModel];
@@ -347,6 +426,7 @@
             [self.schoolDatasource removeAllObjects];
             [self.classDatasource removeAllObjects];
             [self.arrayClass removeAllObjects];
+            [self.classAllArray removeAllObjects];
             
             NSArray *schoolArray = [data objectForKey:@"school_info"];
 //            NSLog(@"%@",schoolArray);
@@ -354,12 +434,9 @@
                 _arrayClass = [[NSMutableArray alloc] init];
                 
                 XXEHomePageSchoolModel *schoolModel = [[XXEHomePageSchoolModel alloc]initWithDictionary:schoolArray[g] error:nil];
-//                NSLog(@"所有学校的%@",schoolModel);
                 [self.arraySchool addObject:schoolModel.school_name];
                 [self.schoolDatasource addObject:schoolModel];
-//                NSLog(@"学校%@",self.schoolDatasource);
                 NSArray *classArray = [schoolArray[g] objectForKey:@"class_info"];
-//                NSLog(@"kkk --  %@", classArray);
                 
                 for (int k =0; k<classArray.count; k++) {
                     XXEHomePageClassModel *classModel = [[XXEHomePageClassModel alloc]initWithDictionary:classArray[k] error:nil];
@@ -375,9 +452,6 @@
                 [self.schoolModelDatasource addObject:self.classDatasource];
                 NSLog(@"班级的数组%@",self.classDatasource);
             }
-            
-
-            
         } else {
             [self showHudWithString:@"数据请求失败" forSecond:1.f];
         }

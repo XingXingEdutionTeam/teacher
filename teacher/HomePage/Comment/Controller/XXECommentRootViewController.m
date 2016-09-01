@@ -66,9 +66,7 @@
     
     _childViews = [[NSMutableArray alloc] init];
     
-//    self.navigationController.navigationBar.backgroundColor = XXEColorFromRGB(0, 170, 42);
     self.navigationController.navigationBarHidden = YES;
-//    self.navigationController.navigationBar.hidden = YES;
     
     [self createBigScrollView];
     

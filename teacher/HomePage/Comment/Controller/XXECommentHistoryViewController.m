@@ -102,7 +102,7 @@
         parameterXid = XID;
         parameterUser_Id = USER_ID;
     }
-    XXECommentRequestApi *commentRequestApi = [[XXECommentRequestApi alloc] initWithXid:parameterXid user_id:parameterUser_Id user_type:USER_TYPE class_id:@"1" require_con:@"1" page:pageStr];
+    XXECommentRequestApi *commentRequestApi = [[XXECommentRequestApi alloc] initWithXid:parameterXid user_id:parameterUser_Id user_type:USER_TYPE class_id:_classId require_con:@"1" page:pageStr];
     [commentRequestApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         
 //        NSLog(@"2222---   %@", request.responseJSONObject);

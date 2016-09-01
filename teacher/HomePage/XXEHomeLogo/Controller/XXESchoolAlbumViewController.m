@@ -25,6 +25,9 @@
 
 //    UICollectionView 是IOS6之后出现的控件，继承自UIScrollView,多用于展示图片
 @property (nonatomic, strong) UICollectionView *myCollcetionView;
+//多选
+@property (nonatomic, copy) NSMutableIndexSet *selectedIndexSet;
+
 
 
 @end
@@ -51,16 +54,20 @@
 //        self.navigationItem.rightBarButtonItem = nil;
 //    }else{
         //设置 navigationBar 右边 赠送
+    
         UIButton *upButton = [UIButton buttonWithType:UIButtonTypeCustom];
         upButton.frame = CGRectMake(300, 5, 22, 22);
         [upButton setImage:[UIImage imageNamed:@"class_album_upload"] forState:UIControlStateNormal];
         [upButton addTarget:self action:@selector(upButton:) forControlEvents:UIControlEventTouchUpInside];
         
         UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:upButton];
-        self.navigationItem.rightBarButtonItem = rightItem;
+    
+    
+       //home_recipe_delete_icon 删除
         
 //    }
 }
+
 
 
 - (void)viewDidLoad {
@@ -75,7 +82,6 @@
     
     //设置内容
     [self customContent];
-    
     
 }
 
@@ -174,6 +180,8 @@
     //    设置代理
     self.myCollcetionView.dataSource = self;
     self.myCollcetionView.delegate = self;
+    
+    self.myCollcetionView.allowsMultipleSelection = YES;
     
     [self.view addSubview:self.myCollcetionView];
     

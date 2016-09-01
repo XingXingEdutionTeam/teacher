@@ -50,6 +50,14 @@
         parameterUser_Id = USER_ID;
     }
     
+    _schoolId = @"";
+    _classId = @"";
+    _subjectStr = @"";
+    _contentStr = @"";
+    _timeStr = @"";
+    _teacherCourseStr = @"";
+    url_groupStr = @"";
+    
     [self getCourseInfo];
 
 }
@@ -62,13 +70,7 @@
     _submitTextField.delegate = self;
     _contentTextView.delegate = self;
     
-    _subjectStr = @"";
-    _contentStr = @"";
-    _timeStr = @"";
-    _teacherCourseStr = @"";
-    url_groupStr = @"";
-    
-    
+
     [self createContent];
 
 }
@@ -247,13 +249,13 @@
 //回复 只有  文字 的时候
 - (void)submitIssueTextInfo{
     
-    NSLog(@"_schoolId:%@ --- _classId:%@ ",_schoolId, _classId);
+//    NSLog(@"_schoolId:%@ --- _classId:%@ ",_schoolId, _classId);
     
     XXEHomeworkIssueTextInfoApi *homeworkIssueTextInfoApi = [[XXEHomeworkIssueTextInfoApi alloc] initWithXid:parameterXid user_id:parameterUser_Id user_type:USER_TYPE school_id:_schoolId class_id:_classId title:_subjectStr con:_contentStr teach_course:_teacherCourseStr date_end_tm:_timeStr url_group:url_groupStr];
     
     [homeworkIssueTextInfoApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         
-               NSLog(@"2222---   %@", request.responseJSONObject);
+//               NSLog(@"2222---   %@", request.responseJSONObject);
         
         NSString *codeStr = [NSString stringWithFormat:@"%@", request.responseJSONObject[@"code"]];
         

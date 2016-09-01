@@ -106,43 +106,46 @@
     XXESchoolCourseTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
     
     if (cell == nil) {
-        cell = [[[NSBundle mainBundle] loadNibNamed:@"XXESchoolCourseTableViewCell" owner:self options:nil]lastObject];
+        cell = [[XXESchoolCourseTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
     }
-//    XXESchoolCourseModel *model = _dataSourceArray[indexPath.row];
-//    
-//    cell.bookIconImage.layer.cornerRadius= cell.bookIconImage.bounds.size.width/2;
-//    cell.bookIconImage.layer.masksToBounds=YES;
-//    
-////    NSLog(@"%@", model.course_pic);
-//    
-//    NSString *coursePicStr = [NSString stringWithFormat:@"%@%@", kXXEPicURL, model.course_pic];
-//    
-//    [cell.bookIconImage sd_setImageWithURL:[NSURL URLWithString:coursePicStr] placeholderImage:[UIImage imageNamed:@"home_logo_course_icon80x80"]];
-//    
-//    //
-//    cell.courseNameLabel.text = model.course_name;
-//    
-//    if ([model.teacher_tname_group count] != 0) {
-//        
-//        for (int i = 0; i < [model.teacher_tname_group count]; i++) {
-//            UILabel *teacherNameLabel = [UILabel createLabelWithFrame:CGRectMake((190 + 70 * i) * kWidth / 375, 35 , 60 * kWidth / 375, 20) Font:14 * kWidth / 375 Text:model.teacher_tname_group[i]];
-//            [cell.contentView addSubview:teacherNameLabel];
-//        }
-//        
-//    }
-//    
-//    cell.totalNumberLabel.text = [NSString stringWithFormat:@"%@", model.need_num];
-//    NSInteger leftNum = [model.need_num integerValue] - [model.now_num integerValue];
-//    
-//    cell.numberLabel.text = [NSString stringWithFormat:@"还剩%ld人", leftNum];
-//    cell.oldPriceLabel.text = [NSString stringWithFormat:@"原价:%@", model.original_price];
-//    cell.nowPriceLbl.text = [NSString stringWithFormat:@"限时抢购价:%@", model.now_price];
-//    
-//    //    cell.coinImageView.image = [UIImage imageNamed:@"猩币icon28x30"];
-//    //    cell.reduceImageView.image = [UIImage imageNamed:@"退icon28x30@2x.png"];
-//    //    cell.saveImageView.image = [UIImage imageNamed:@"收藏icon28x30"];
-//    cell.fullImageView.image = [UIImage imageNamed:@"满班icon28x30"];
-
+    XXESchoolCourseModel *model = _dataSourceArray[indexPath.row];
+    
+//    NSLog(@"model --- %@", model);
+    
+    cell.bookIconImage.layer.cornerRadius= cell.bookIconImage.bounds.size.width/2;
+    cell.bookIconImage.layer.masksToBounds=YES;
+    
+    NSString *coursePicStr = [NSString stringWithFormat:@"%@%@", kXXEPicURL, model.course_pic];
+//        NSLog(@"hhh %@", coursePicStr);
+    [cell.bookIconImage sd_setImageWithURL:[NSURL URLWithString:coursePicStr] placeholderImage:[UIImage imageNamed:@"home_logo_course_icon80x80"]];
+    
+    //
+    cell.courseNameLabel.text = model.course_name;
+    
+    if ([model.teacher_tname_group count] != 0) {
+        
+        for (int i = 0; i < [model.teacher_tname_group count]; i++) {
+            UILabel *teacherNameLabel = [UILabel createLabelWithFrame:CGRectMake((190 + 65 * i) * kWidth / 375, 35 , 60 * kWidth / 375, 20) Font:14 * kWidth / 375 Text:model.teacher_tname_group[i]];
+            [cell.contentView addSubview:teacherNameLabel];
+        }
+        
+    }
+    
+    cell.totalNumberLabel.text = [NSString stringWithFormat:@"%@人班级", model.need_num];
+    NSInteger leftNum = [model.need_num integerValue] - [model.now_num integerValue];
+    
+    cell.numberLabel.text = [NSString stringWithFormat:@"还剩%ld人", leftNum];
+    cell.oldPriceLabel.text = [NSString stringWithFormat:@"原价:%@", model.original_price];
+    cell.nowPriceLbl.text = [NSString stringWithFormat:@"限时抢购价:%@", model.now_price];
+    
+    //    cell.coinImageView.image = [UIImage imageNamed:@"猩币icon28x30"];
+    //    cell.reduceImageView.image = [UIImage imageNamed:@"退icon28x30@2x.png"];
+    //    cell.saveImageView.image = [UIImage imageNamed:@"收藏icon28x30"];
+    cell.fullImageView.image = [UIImage imageNamed:@"home_logo_course_state_icon28x30"];
+    //剩余 人数 不为0 ,说明 还没招满,则该"满员"图标 不显示
+    if (leftNum != 0) {
+        cell.fullImageView.hidden = YES;
+    }
     
     return cell;
 }

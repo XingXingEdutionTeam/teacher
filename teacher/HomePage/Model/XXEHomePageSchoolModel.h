@@ -18,6 +18,8 @@
 @property (nonatomic, copy)NSString <Optional>*school_name;
 /** 学校Id */
 @property (nonatomic, copy)NSString <Optional>*school_id;
+//学校 logo
+@property (nonatomic, copy) NSString <Optional>*school_logo;
 /** 学校类型:其他模块也都需要这个参数 */
 @property (nonatomic, copy)NSString <Optional>*school_type;
 /** 一个学校对应的班级 */
