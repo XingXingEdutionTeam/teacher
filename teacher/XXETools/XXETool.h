@@ -12,6 +12,8 @@
 
 //@"yyyy-MM-dd HH:mm:ss";
 + (NSString *)dateStringFromNumberTimer:(NSString *)timerStr;
+//@"yyyy-MM-dd";
++ (NSString *)dateAboutStringFromNumberTimer:(NSString *)timerStr;
 
 + (UIImage*)createImageWithColor:(UIColor*)color size:(CGSize)imageSize;
 

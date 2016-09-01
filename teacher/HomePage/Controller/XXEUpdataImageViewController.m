@@ -99,7 +99,10 @@
 
     [self showHudWithString:@"正在上传"];
     NSLog(@"%@",self.photoDatasource);
-    
+    if (self.photoDatasource.count == 0) {
+        [self hideHud];
+        [self showString:@"请选择相片" forSecond:1.f];
+    }
     
     NSMutableArray *arr = [NSMutableArray array];
     for (int i =0; i < self.photoDatasource.count; i++) {
@@ -111,13 +114,13 @@
     YTKBatchRequest *bathRequest = [[YTKBatchRequest alloc]initWithRequestArray:arr];
     [bathRequest startWithCompletionBlockWithSuccess:^(YTKBatchRequest *batchRequest) {
         NSLog(@"----%@",bathRequest);
-        NSArray *array = bathRequest.requestArray;
-        XXEMyselfAblumUpDataApi *api1 = (XXEMyselfAblumUpDataApi *)array[0];
-        NSLog(@"信息%@",api1.responseJSONObject);
-        XXEMyselfAblumUpDataApi *api2 = (XXEMyselfAblumUpDataApi *)array[1];
-        NSLog(@"信息%@",api2.responseJSONObject);
-        XXEMyselfAblumUpDataApi *api3 = (XXEMyselfAblumUpDataApi *)array[2];
-        NSLog(@"信息%@",api3.responseJSONObject);
+//        NSArray *array = bathRequest.requestArray;
+//        XXEMyselfAblumUpDataApi *api1 = (XXEMyselfAblumUpDataApi *)array[0];
+//        NSLog(@"信息%@",api1.responseJSONObject);
+//        XXEMyselfAblumUpDataApi *api2 = (XXEMyselfAblumUpDataApi *)array[1];
+//        NSLog(@"信息%@",api2.responseJSONObject);
+//        XXEMyselfAblumUpDataApi *api3 = (XXEMyselfAblumUpDataApi *)array[2];
+//        NSLog(@"信息%@",api3.responseJSONObject);
 
         [self hideHud];
         [self.navigationController popViewControllerAnimated:YES];

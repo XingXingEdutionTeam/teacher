@@ -23,6 +23,8 @@
 
 //登录
 #define XXELoginUrl @"http://www.xingxingedu.cn/Teacher/login"
+//忘记密码
+#define XXEForgetPassUrl @"http://www.xingxingedu.cn/Global/update_pass"
 //首页
 #define XXEHomePageUrl @"http://www.xingxingedu.cn/Teacher/home_data"
 //相册

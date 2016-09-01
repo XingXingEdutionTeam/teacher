@@ -17,6 +17,7 @@
 #import "XXEChangeRoleViewController.h"
 #import "UMSocial.h"
 #import "SettingPersonInfoViewController.h"
+#import "XXEForgetPassWordViewController.h"
 
 @interface XXELoginViewController ()<UITextFieldDelegate,UIAlertViewDelegate,CLLocationManagerDelegate>
 /** 登陆的首页头像 */
@@ -121,7 +122,7 @@
 {
     NSString *str = [XXEUserInfo user].user_head_img;
     NSLog(@"%@",str);
-    if (str == nil ) {
+    if ([str isEqualToString:@""] || str == nil ) {
         self.loginHeadImageView.image = [UIImage imageNamed:@"img"];
     }else{
     [self.loginHeadImageView sd_setImageWithURL:[NSURL URLWithString:str]];
@@ -205,7 +206,7 @@
     [self.view addSubview:self.loginHeadImageView];
     [self.loginHeadImageView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(weakSelf.view);
-        make.top.equalTo(weakSelf.view).offset(70*kScreenRatioHeight);
+        make.top.equalTo(weakSelf.view).offset(100*kScreenRatioHeight);
         make.size.mas_equalTo(CGSizeMake(100*kScreenRatioWidth, 100*kScreenRatioHeight));
     }];
     
@@ -251,7 +252,7 @@
     _loginButton.userInteractionEnabled = NO;
     [_loginButton setTitle:@"登    录" forState:UIControlStateNormal];
     [_loginButton addTarget:self action:@selector(loginButtonClick:) forControlEvents:UIControlEventTouchUpInside];
-    _loginButton.backgroundColor = XXEColorFromRGB(153, 153, 153);
+    _loginButton.backgroundColor = XXEGreenColor;
     _loginButton.titleLabel.font = [UIFont systemFontOfSize:19];
     [_loginButton setTintColor:[UIColor whiteColor]];
     _loginButton.layer.cornerRadius = 20.0f*kScreenRatioWidth;
@@ -493,33 +494,32 @@
 
 - (void)guestButtonClick:(UIButton *)sender
 {
-    XXETabBarControllerConfig *tabBarControllerConfig = [[XXETabBarControllerConfig alloc]init];
-    UIWindow *window = [UIApplication sharedApplication].keyWindow;
-    window.rootViewController = tabBarControllerConfig;
-    [self.view removeFromSuperview];
-    
-//    XXELoginApi *loginApi = [[XXELoginApi alloc]initLoginWithUserName:@"" PassWord:@"" LoginType:@"10" Lng:self.longitudeString Lat:self.latitudeString];
-//    [loginApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
-//        NSLog(@"%@",request.responseJSONObject);
-//        NSDictionary *data = [request.responseJSONObject objectForKey:@"data"];
-//        NSString *code = [request.responseJSONObject objectForKey:@"code"];
-//        NSString *msg = [request.responseJSONObject objectForKey:@"msg"];
-//        NSLog(@"%@",msg);
-//        if ([code intValue]==1) {
-//            [self LoginSetupUserInfoDict:data SnsAccessToken:@"" LoginType:@"10"];
-//            XXETabBarControllerConfig *tabBarControllerConfig = [[XXETabBarControllerConfig alloc]init];
-//            UIWindow *window = [UIApplication sharedApplication].keyWindow;
-//            window.rootViewController = tabBarControllerConfig;
-//            [self.view removeFromSuperview];
-//        }
-//        
-//    } failure:^(__kindof YTKBaseRequest *request) {
-//        
-//    }];
+    XXELoginApi *loginApi = [[XXELoginApi alloc]initLoginWithUserName:@"" PassWord:@"" LoginType:@"10" Lng:@"" Lat:@""];
+    [loginApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
+        NSLog(@"%@",request.responseJSONObject);
+        NSDictionary *data = [request.responseJSONObject objectForKey:@"data"];
+        NSString *code = [request.responseJSONObject objectForKey:@"code"];
+        NSString *msg = [request.responseJSONObject objectForKey:@"msg"];
+        NSLog(@"%@",msg);
+        if ([code intValue]==1) {
+            [self LoginSetupUserInfoDict:data SnsAccessToken:@"" LoginType:@"10"];
+            XXETabBarControllerConfig *tabBarControllerConfig = [[XXETabBarControllerConfig alloc]init];
+            UIWindow *window = [UIApplication sharedApplication].keyWindow;
+            window.rootViewController = tabBarControllerConfig;
+            [self.view removeFromSuperview];
+        }
+        
+    } failure:^(__kindof YTKBaseRequest *request) {
+        
+    }];
 }
 
 - (void)forgetPassWordButtonClick:(UIButton *)sender
 {
+    XXEForgetPassWordViewController *forgetVC = [[XXEForgetPassWordViewController alloc]init];
+    UIWindow *window = [UIApplication sharedApplication].keyWindow;
+    XXENavigationViewController *navi = [[XXENavigationViewController alloc]initWithRootViewController:forgetVC];
+    window.rootViewController = navi;
     NSLog(@"-----忘记密码-----");
 }
 

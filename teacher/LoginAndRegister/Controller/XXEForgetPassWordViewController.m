@@ -1,21 +1,20 @@
 //
-//  XXERegisterViewController.m
+//  XXEForgetPassWordViewController.m
 //  teacher
 //
-//  Created by codeDing on 16/8/8.
+//  Created by codeDing on 16/9/1.
 //  Copyright © 2016年 XingXingEdu. All rights reserved.
 //
 
-#import "XXERegisterViewController.h"
-#import "XXERegisterSecondViewController.h"
-#import "XXERegisterCheckApi.h"
-#import "XXEVerificationApi.h"
-#import "XXELoginViewController.h"
-#import "XXENavigationViewController.h"
+#import "XXEForgetPassWordViewController.h"
 #import <SMS_SDK/SMSSDK.h>
 #import "XXEVertifyTimesApi.h"
+#import "XXERegisterCheckApi.h"
+#import "XXERegisterSecondViewController.h"
+#import "XXELoginViewController.h"
+#import "XXENavigationViewController.h"
 
-@interface XXERegisterViewController ()<UITextFieldDelegate>
+@interface XXEForgetPassWordViewController ()<UITextFieldDelegate>
 
 @property (nonatomic, strong)UITextField *registerUerTextField;
 @property (nonatomic, strong)UITextField *registerVerificationTextField;
@@ -28,10 +27,10 @@
 /** 验证码按钮 */
 @property (nonatomic, strong)UIButton *verificationButton;
 
+
 @end
 
-@implementation XXERegisterViewController
-
+@implementation XXEForgetPassWordViewController
 - (UITextField *)registerUerTextField
 {
     if (!_registerUerTextField) {
@@ -55,12 +54,11 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    self.navigationItem.title = @"1/2忘记密码";
     self.view.backgroundColor = XXEBackgroundColor;
-    self.navigationItem.title = @"1/4注册";
     self.navigationController.navigationBarHidden = NO;
 }
-
-/** 这个方法都可以,改变当前控制器的电池条颜色 */
+/** 这两个方法都可以,改变当前控制器的电池条颜色 */
 -(UIStatusBarStyle)preferredStatusBarStyle
 {
     return UIStatusBarStyleLightContent;
@@ -77,7 +75,7 @@
     [self.view addSubview:label];
     
     __weak typeof(self)weakSelf = self;
-
+    
     [label mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(weakSelf.view.mas_centerX);
         make.top.equalTo(weakSelf.view.mas_top).offset(26);
@@ -158,7 +156,7 @@
         make.right.equalTo(verificationImageView.mas_right).offset(0);
         make.height.mas_equalTo(41*kScreenRatioHeight);
     }];
-
+    
     
     UIButton *verificationButton = [[UIButton alloc]init];
     [verificationButton setTitle:@"获取验证码" forState:UIControlStateNormal];
@@ -195,9 +193,12 @@
         make.size.mas_equalTo(CGSizeMake(335*kScreenRatioWidth, 41*kScreenRatioHeight));
     }];
 }
+
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
     [button setTitle:@"返回" forState:UIControlStateNormal];
     [button setImage:[UIImage imageNamed:@"navigationButtonReturn"] forState:UIControlStateNormal];
@@ -212,7 +213,7 @@
     
     [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [button setTitleColor:[UIColor redColor] forState:UIControlStateHighlighted];
-    [button addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
+    [button addTarget:self action:@selector(forgetPageBack) forControlEvents:UIControlEventTouchUpInside];
     
     // 修改导航栏左边的item
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:button];
@@ -246,6 +247,33 @@
     }
 }
 
+#pragma mark - 网络请求
+
+- (void)checkPhoneNumber
+{
+    XXERegisterCheckApi *registerCheckApi = [[XXERegisterCheckApi alloc]initWithChechPhoneNumber:self.registerUserName];
+    [registerCheckApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
+        NSLog(@"电话可不可以用%@",request.responseJSONObject);
+        NSDictionary *dic = request.responseJSONObject;
+        NSString *string = [dic objectForKey:@"code"];
+        if ([string intValue] == 1) {
+            [self showString:@"此号码没有注册过" forSecond:1.f];
+            self.verificationButton.userInteractionEnabled = NO;
+            self.registerVerificationTextField.enabled = NO;
+        } else if ([string intValue] == 3) {
+            [self showString:@"可以更改密码" forSecond:3.f];
+            
+            self.registerVerificationTextField.enabled = YES;
+            self.verificationButton.userInteractionEnabled = YES;
+        } else{
+            [self showString:@"请重新输入" forSecond:1.f];
+        }
+    } failure:^(__kindof YTKBaseRequest *request) {
+        [self showString:@"网络不好请重新输入" forSecond:1.f];
+    }];
+}
+
+
 - (void)textFieldDidBeginEditing:(UITextField *)textField
 {
     if (self.registerVerificationTextField == textField) {
@@ -253,19 +281,6 @@
     }else {
         
     }
-}
-
-
-#pragma mark - 点击相应方法actionClick
-
-- (void)back
-{
-    XXELoginViewController *registerVC = [[XXELoginViewController alloc]init];
-    UIWindow *window = [UIApplication sharedApplication].keyWindow;
-    XXENavigationViewController *navi = [[XXENavigationViewController alloc]initWithRootViewController:registerVC];
-    window.rootViewController = navi;
-    NSLog(@"-----免费注册-----");
-    
 }
 
 - (void)setupVerificationNumber:(UIButton *)sender
@@ -280,13 +295,12 @@
 {
     //验证验证码对不对
 //    [self verifyNumberISRight];
-//
-    //测试环境
-    [self showString:@"测试" forSecond:1.f];
-    XXERegisterSecondViewController *registerSecondVC = [[XXERegisterSecondViewController alloc]init];
-    registerSecondVC.userPhoneNum = @"15026418286";
-    registerSecondVC.login_type = @"1";
-    [self.navigationController pushViewController:registerSecondVC animated:YES];
+    
+    XXERegisterSecondViewController *registerVC = [[XXERegisterSecondViewController alloc]init];
+    registerVC.forgetPassWordPage = @"忘记密码--";
+    registerVC.forgetPhonrNum = self.registerUserName;
+    [self.navigationController pushViewController:registerVC animated:YES];
+    
 }
 
 #pragma mark - 验证验证码对不对
@@ -297,10 +311,12 @@
         if (error) {
             [self showString:@"验证码错误" forSecond:1.f];
         }else {
-            XXERegisterSecondViewController *registerSecondVC = [[XXERegisterSecondViewController alloc]init];
-            registerSecondVC.userPhoneNum = self.registerUserName;
-            registerSecondVC.login_type = @"1";
-            [self.navigationController pushViewController:registerSecondVC animated:YES];
+            //标示是不是从忘记页面跳转过去的
+            NSString *forgetPass = @"忘记密码--";
+            XXERegisterSecondViewController *registerVC = [[XXERegisterSecondViewController alloc]init];
+            registerVC.forgetPassWordPage = forgetPass;
+            registerVC.forgetPhonrNum = self.registerUserName;
+            [self.navigationController pushViewController:registerVC animated:YES];
         }
     }];
 }
@@ -311,36 +327,9 @@
     [self.registerVerificationTextField resignFirstResponder];
 }
 
-
-#pragma mark - 网络请求
-
-- (void)checkPhoneNumber
-{
-    XXERegisterCheckApi *registerCheckApi = [[XXERegisterCheckApi alloc]initWithChechPhoneNumber:self.registerUserName];
-    [registerCheckApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
-        NSLog(@"电话可不可以用%@",request.responseJSONObject);
-        NSDictionary *dic = request.responseJSONObject;
-        NSString *string = [dic objectForKey:@"code"];
-        if ([string intValue] == 1) {
-            [self showString:@"此号码可以注册" forSecond:1.f];
-            self.verificationButton.userInteractionEnabled = YES;
-            self.registerVerificationTextField.enabled = YES;
-        } else if ([string intValue] == 3) {
-            [self showString:@"手机已存在" forSecond:3.f];
-            [self.registerVerificationTextField resignFirstResponder];
-            self.registerVerificationTextField.enabled = NO;
-            self.verificationButton.userInteractionEnabled = NO;
-        } else{
-            [self showString:@"请重新注册" forSecond:1.f];
-        }
-    } failure:^(__kindof YTKBaseRequest *request) {
-        [self showString:@"网络不好请重新注册" forSecond:1.f];
-    }];
-}
-
 - (void)getVerificationNumber
 {
-   //短信验证码
+    //短信验证码
     [SMSSDK getVerificationCodeByMethod:SMSGetCodeMethodSMS phoneNumber:self.registerUserName zone:@"86" customIdentifier:nil result:^(NSError *error) {
         if (!error) {
             [self showString:@"获取验证码成功" forSecond:1.f];
@@ -353,7 +342,7 @@
 #pragma mark - 获取验证码次数
 - (void)recordTheVerifyCodeNum
 {
-    XXEVertifyTimesApi *timesApi = [[XXEVertifyTimesApi alloc]initWithVertifyTimesActionPage:@"1" PhoneNum:self.registerUserName];
+    XXEVertifyTimesApi *timesApi = [[XXEVertifyTimesApi alloc]initWithVertifyTimesActionPage:@"2" PhoneNum:self.registerUserName];
     [timesApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         NSLog(@"%@",request.responseJSONObject);
         NSString *code = [request.responseJSONObject objectForKey:@"code"];
@@ -361,7 +350,7 @@
         
         if (code1 == 4) {
             [self showString:@"已达今日5条上线" forSecond:1.f];
-           self.verificationButton.userInteractionEnabled = NO;
+            self.verificationButton.userInteractionEnabled = NO;
         }
         
     } failure:^(__kindof YTKBaseRequest *request) {
@@ -395,6 +384,18 @@
     }
     return isChinaMobile;
 }
+
+
+#pragma mark - 导航栏的返回按钮
+- (void)forgetPageBack
+{
+    XXELoginViewController *registerVC = [[XXELoginViewController alloc]init];
+    UIWindow *window = [UIApplication sharedApplication].keyWindow;
+    XXENavigationViewController *navi = [[XXENavigationViewController alloc]initWithRootViewController:registerVC];
+    window.rootViewController = navi;
+    NSLog(@"-----免费注册-----");
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

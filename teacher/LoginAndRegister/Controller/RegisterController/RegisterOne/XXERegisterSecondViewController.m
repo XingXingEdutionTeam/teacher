@@ -8,11 +8,12 @@
 
 #import "XXERegisterSecondViewController.h"
 #import "SettingPersonInfoViewController.h"
+#import "XXEForgetPassApi.h"
+#import "XXELoginViewController.h"
 
 @interface XXERegisterSecondViewController ()
 @property (nonatomic, strong)UITextField *passWordTextField;
 @property (nonatomic, strong)UITextField *confirmPassWordTextField;
-
 @end
 
 @implementation XXERegisterSecondViewController
@@ -35,12 +36,15 @@
     return _confirmPassWordTextField;
 }
 
-
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
     self.view.backgroundColor = XXEBackgroundColor;
-    self.navigationItem.title = @"2/4注册";
+    if ([self.forgetPassWordPage isEqualToString:@"忘记密码--"]) {
+        self.navigationItem.title = @"2/2找回密码";
+    }else{
+        self.navigationItem.title = @"2/4注册";
+    }
     self.navigationController.navigationBarHidden = NO;
 }
 
@@ -134,7 +138,6 @@
         make.left.equalTo(confirmPassWordImageView.mas_left).offset(15);
         make.top.equalTo(confirmPassWordImageView.mas_top).offset(0);
         make.size.mas_equalTo(CGSizeMake(60*kScreenRatioWidth, 41*kScreenRatioHeight));
-        
     }];
     
     [passWordImageView addSubview:self.passWordTextField];
@@ -203,7 +206,6 @@
     }];
 }
 
-
 #pragma mark - action点击相应方法
 - (void)showThePassWord:(UIButton *)sender
 {
@@ -233,18 +235,50 @@
     NSLog(@"000:%@ 999:%@",self.confirmPassWordTextField.text,self.passWordTextField.text);
     if ([self.confirmPassWordTextField.text isEqualToString:@""] || [self.passWordTextField.text isEqualToString:@""]) {
         [self showString:@"不能为空" forSecond:1.f];
-    }else {
-    if (self.confirmPassWordTextField.text == self.passWordTextField.text) {
-        SettingPersonInfoViewController *settingVC = [[SettingPersonInfoViewController alloc]init];
-        settingVC.userSettingPhoneNum = self.userPhoneNum;
-        settingVC.userSettingPassWord = self.confirmPassWordTextField.text;
-        settingVC.login_type = self.login_type;
-        [self.navigationController pushViewController:settingVC animated:YES];
+    }else if (self.confirmPassWordTextField.text == self.passWordTextField.text) {
+        if ([self.forgetPassWordPage isEqualToString:@"忘记密码--"]) {
+            [self setupAgainForgetPassWord];
+            
+        }else {
+            SettingPersonInfoViewController *settingVC = [[SettingPersonInfoViewController alloc]init];
+            settingVC.userSettingPhoneNum = self.userPhoneNum;
+            settingVC.userSettingPassWord = self.confirmPassWordTextField.text;
+            settingVC.login_type = self.login_type;
+            [self.navigationController pushViewController:settingVC animated:YES];
+        }
+        
     } else {
         [self showString:@"两次输的密码不一样" forSecond:1.f];
     }
+}
+
+#pragma mark - 重新设置密码的网路请求
+- (void)setupAgainForgetPassWord
+{
+    XXEForgetPassApi *forgetPassApi = [[XXEForgetPassApi alloc]initWithForgetPassWordUserType:@"2" Phone:self.forgetPhonrNum NewPass:self.confirmPassWordTextField.text];
+    [forgetPassApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         
-  }
+        NSLog(@"%@",request.responseJSONObject);
+        
+        NSString *code = [request.responseJSONObject objectForKey:@"code"];
+        if ([code intValue]==1) {
+            [self showString:@"密码更改成功" forSecond:2.f];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2*NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                XXELoginViewController *loginVC = [[XXELoginViewController alloc]init];
+                UIWindow *window = [UIApplication sharedApplication].keyWindow;
+                window.rootViewController = loginVC;
+                [self.view removeFromSuperview];
+            });
+            
+        }else{
+            [self showString:@"密码更改失败" forSecond:2.f];
+        }
+        
+        
+    } failure:^(__kindof YTKBaseRequest *request) {
+        [self showString:@"密码更改失败" forSecond:2.f];
+    }];
+    
 }
 
 - (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event

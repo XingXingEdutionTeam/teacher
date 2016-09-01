@@ -27,6 +27,8 @@
 #import<Foundation/Foundation.h>
 #import <ReactiveCocoa/ReactiveCocoa.h>
 #import "XXEUserInfo.h"
+#import "XXEHomePageHeader.h"
+
 
 
 

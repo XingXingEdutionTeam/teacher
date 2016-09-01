@@ -168,21 +168,20 @@ static NSString *headerCell = @"HEADERCELL";
 - (void)setupAlbumContentRequeue
 {
     XXEAlbumContentApi *contentApi = [[XXEAlbumContentApi alloc]initWithAlbumContentAlbumId:self.contentModel.album_id];
+    NSLog(@"%@",self.contentModel.album_id);
+    
     [contentApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         NSLog(@"总的%@",request.responseJSONObject);
         NSDictionary *data = [request.responseJSONObject objectForKey:@"data"];
         NSLog(@"data:%@",data);
         
-//        [self.itemDatasource removeAllObjects];
-//        [self.timeDatasource removeAllObjects];
-//        [self.originalDatasource removeAllObjects];
         for (NSString *timeStr in data) {
             NSString *newTime = [XXETool dateStringFromNumberTimer:timeStr];
             [self.timeDatasource addObject:newTime];
             [self.originalDatasource addObject:timeStr];
         }
-        int k = (int)self.originalDatasource.count;
-        for (int i = k; i<0; i--) {
+        
+        for (int i = 0; i<self.originalDatasource.count; i++) {
             NSMutableArray *arr = [[NSMutableArray alloc]initWithArray:[data objectForKey:self.originalDatasource[i]]];
             
             self.datasource = NULL;

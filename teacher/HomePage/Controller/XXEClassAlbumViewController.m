@@ -91,22 +91,28 @@ static NSString *const IdentifierCell = @"classAlbunCell";
     [classApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         NSArray *data = [request.responseJSONObject objectForKey:@"data"];
         NSLog(@"我的相册:%lu",(unsigned long)data.count );
+        if (data.count ==0) {
+            [self showString:@"赶紧上传照片哦" forSecond:1.f];
+        }else{
         NSLog(@"%@",data);
-        [self showHudWithString:@"正在请求数据" forSecond:1.f];
-        for (int i =0 ; i < data.count; i++) {
-            XXEClassAlbumModel *model = [[XXEClassAlbumModel alloc]initWithDictionary:data[i] error:nil];
-            NSString *stringName;
-            if (i==0) {
-                stringName = @"我的相册";
-            }else{
-                stringName = [NSString stringWithFormat:@"%@老师的相册",model.tname];
+         
+            [self showHudWithString:@"正在请求数据" forSecond:1.f];
+            for (int i =0 ; i < data.count; i++) {
+                XXEClassAlbumModel *model = [[XXEClassAlbumModel alloc]initWithDictionary:data[i] error:nil];
+                NSString *stringName;
+                if (i==0) {
+                    stringName = @"我的相册";
+                }else{
+                    stringName = [NSString stringWithFormat:@"%@老师的相册",model.tname];
+                }
+                [self.headDatasource addObject:stringName];
+                [self.imageViewDatasource addObject:model.pic_arr];
+                [self.teacherDatasource addObject:model.teacher_id];
+                //            NSLog(@"老师的ID%@",self.teacherDatasource);
             }
-            [self.headDatasource addObject:stringName];
-            [self.imageViewDatasource addObject:model.pic_arr];
-            [self.teacherDatasource addObject:model.teacher_id];
-//            NSLog(@"老师的ID%@",self.teacherDatasource);
+            [self.classAlbumTableView reloadData];
+            
         }
-        [self.classAlbumTableView reloadData];
         
     } failure:^(__kindof YTKBaseRequest *request) {
         [self showHudWithString:@"数据请求失败" forSecond:1.f];
@@ -144,7 +150,7 @@ static NSString *const IdentifierCell = @"classAlbunCell";
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 
         NSArray *model = self.imageViewDatasource[indexPath.section];
-//    NSLog(@"---------%@",self.imageViewDatasource);
+    NSLog(@"---------%@",self.imageViewDatasource);
     
         [cell getTheImageViewData:model];
     
@@ -159,10 +165,9 @@ static NSString *const IdentifierCell = @"classAlbunCell";
     if (indexPath.row ==0 && indexPath.section==0) {
     
         XXEMyClassAlbumViewController *myClassVC = [[XXEMyClassAlbumViewController alloc]init];
-    
-    myClassVC.myAlbumClassId=self.classID;
-    myClassVC.myAlbumSchoolId=self.schoolID;
-    myClassVC.myAlbumTeacherId = self.teacherDatasource[indexPath.section];
+        myClassVC.myAlbumClassId=self.classID;
+        myClassVC.myAlbumSchoolId=self.schoolID;
+        myClassVC.myAlbumTeacherId = self.teacherDatasource[indexPath.section];
         NSLog(@"%@ %@ %@",myClassVC.myAlbumSchoolId,myClassVC.myAlbumClassId,myClassVC.myAlbumTeacherId);
     [self.navigationController pushViewController:myClassVC animated:YES];
         

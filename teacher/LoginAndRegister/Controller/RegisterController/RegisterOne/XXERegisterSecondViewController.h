@@ -15,4 +15,9 @@
 /** 登录类型 */
 @property (nonatomic, copy)NSString *login_type;
 
+/** 从忘记页面跳转过来的 */
+@property (nonatomic, copy)NSString *forgetPassWordPage;
+/** 从忘记页面传过来的电话号码 */
+@property (nonatomic, copy)NSString *forgetPhonrNum;
+
 @end

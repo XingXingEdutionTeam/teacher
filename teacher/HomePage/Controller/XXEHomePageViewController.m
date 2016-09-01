@@ -25,6 +25,8 @@
 #import "XXEHomeworkViewController.h"
 #import "XXERecipeViewController.h"
 #import "XXEHomeLogoRootViewController.h"
+//编辑身份
+#import "XXEAddIdentityViewController.h"
 //监控
 #import "VideoMonitorViewController.h"
 #import "XXEClassAddressHeadermasterAndManagerViewController.h"
@@ -179,8 +181,12 @@
     
     //***********************  班 级  ***************************
     self.homeClassView = [[WJCommboxView alloc] initWithFrame:CGRectMake(60 * kScreenRatioWidth+120 * kScreenRatioWidth+5, 45*kScreenRatioWidth, 120 * kScreenRatioWidth, 30 * kScreenRatioHeight)];
+    NSString *string = @"编辑班级";
     
     if (self.classAllArray.count != 0) {
+        for (int i =0; i<self.classAllArray.count; i++) {
+            [self.classAllArray[i] addObject:string];
+        }
         self.homeClassView.dataArray = self.classAllArray[0];
     }
     
@@ -203,13 +209,26 @@
     [self.classBgView addGestureRecognizer:singleTap2];
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(commboxAction:) name:@"commboxNotice"object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(commboxAction2:) name:@"commboxNotice2"object:nil];
 }
+
+- (void)commboxAction2:(NSNotification *)notif{
+    
+    if ([self.homeClassView.textField.text isEqualToString:@"编辑班级"]) {
+        NSLog(@"调转页面");
+        XXEAddIdentityViewController *addIdenVC = [[XXEAddIdentityViewController alloc]init];
+        [self.navigationController pushViewController:addIdenVC animated:YES];
+    }
+}
+
+
 
 - (void)commboxAction:(NSNotification *)notif{
     switch ([notif.object integerValue]) {
         case 102:
         {
-            
+            NSLog(@"%@",notif.object);
+            NSLog(@"文字是什么%@",self.homeClassView.textField.text);
             [self.homeSchoolView removeFromSuperview];
             
             [self.view addSubview:self.schoolBgView];
@@ -257,7 +276,7 @@
             //如果 改变 左边 学校 ——》自动关联到 右边的年级班级信息
             //取出name的旧值和新值
             NSString * newNameOne=[change objectForKey:@"new"];
-            //                NSLog(@"object:%@,new:%@",object,newNameOne);
+            // NSLog(@"object:%@,new:%@",object,newNameOne);
             
             NSLog(@"%@ --- %@ ", _arraySchool, _classAllArray);
             
@@ -303,7 +322,8 @@
 
 - (void)calssAction2:(NSNotification *)notif
 {
-//    NSLog(@"%@",notif.object);
+    NSLog(@"点击联动:%@",notif.object);
+    
 //    NSLog(@"%@",self.homeSchoolView.textField.text);
 //    NSString *string1 = @"没有班级";
 //    [self.classDatasource removeAllObjects];
@@ -321,7 +341,7 @@
 ////            NSLog(@"===!!!%@ %@",model.school_id,model.class_id);
 //        }
 //    }
-//    NSLog(@"7890");
+    NSLog(@"7890");
 }
 
 - (void)viewDidLoad {
@@ -489,9 +509,7 @@
             XXEClassAlbumViewController *classAlbumVC = [[XXEClassAlbumViewController alloc]init];
             classAlbumVC.schoolID = self.schoolHomeId;
             classAlbumVC.classID = self.classHomeId;
-//            NSLog(@"%@ == %@",self.schoolHomeId,self.classHomeId);
-            classAlbumVC.schoolID = @"2";
-            classAlbumVC.classID = @"1";
+            NSLog(@"%@ == %@",self.schoolHomeId,self.classHomeId);
             NSLog(@"%@%@",self.schoolHomeId,self.classHomeId);
             [self.navigationController pushViewController:classAlbumVC animated:YES];
             break;

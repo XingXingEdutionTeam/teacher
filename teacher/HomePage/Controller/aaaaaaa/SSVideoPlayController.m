@@ -153,7 +153,7 @@
     [self.screenBtn addTarget:self action:@selector(screenBtn:) forControlEvents:UIControlEventTouchUpInside];
    
     self.volume = [[UISlider alloc]initWithFrame:CGRectMake(0, 0, 150, 20)];
-    
+
     self.volume.value = [[MPMusicPlayerController applicationMusicPlayer] volume];
     [self.volume setThumbImage:[self imageWithName:@"player_volume"] forState:UIControlStateNormal];
     [self.volume addTarget:self action:@selector(volumeChanged:) forControlEvents:UIControlEventValueChanged];

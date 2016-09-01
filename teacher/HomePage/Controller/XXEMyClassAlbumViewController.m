@@ -41,7 +41,7 @@ static NSString * IdentifierCELL = @"IdentifierCELL";
 {
     if (!_myClassAlumTableView) {
         _myClassAlumTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, -30*kScreenRatioHeight, KScreenWidth, KScreenHeight) style:UITableViewStyleGrouped];
-        _myClassAlumTableView.separatorStyle = UITableViewCellSelectionStyleNone;
+        _myClassAlumTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     }
     return _myClassAlumTableView;
 }
@@ -51,7 +51,8 @@ static NSString * IdentifierCELL = @"IdentifierCELL";
     [super viewWillAppear:animated];
     self.view.backgroundColor = XXEBackgroundColor;
     self.navigationController.navigationBarHidden = NO;
-//    [self setupMyselfAlbumMessage];
+    //请求数据
+    [self setupMyselfAlbumMessage];
 }
 -(UIStatusBarStyle)preferredStatusBarStyle
 {
@@ -69,8 +70,7 @@ static NSString * IdentifierCELL = @"IdentifierCELL";
     [self.view addSubview:self.myClassAlumTableView];
     //创建导航栏右边的按钮设置
     [self rightNavigationButton];
-    //请求数据
-    [self setupMyselfAlbumMessage];
+    
 }
 
 #pragma mark - 获取数据 我的相册
@@ -87,6 +87,7 @@ static NSString * IdentifierCELL = @"IdentifierCELL";
         strngXid = XID;
         albumUserId = USER_ID;
     }
+    
     //真实环境
     XXEMyselfAblumApi *myselfAblum = [[XXEMyselfAblumApi alloc]initWithMyselfAblumSchoolId:self.myAlbumSchoolId ClassId:self.myAlbumClassId TeacherId:self.myAlbumTeacherId AlbumXid:strngXid AlbumUserId:albumUserId];
 
@@ -232,6 +233,8 @@ static NSString * IdentifierCELL = @"IdentifierCELL";
     }
     //正式
     XXEMyselfAblumAddApi *addMySelfAblum = [[XXEMyselfAblumAddApi alloc]initWithAddMyselfAblumSchoolId:self.myAlbumSchoolId ClassId:self.myAlbumClassId AlbumName:string AlbumXid:strngXid AlbumUserId:albumUserId];
+    NSLog(@"=== %@ %@ %@ %@ %@",self.myAlbumSchoolId,self.myAlbumClassId,string,strngXid,albumUserId);
+    
     //测试
 //    XXEMyselfAblumAddApi *addMySelfAblum = [[XXEMyselfAblumAddApi alloc]initWithAddMyselfAblumSchoolId:@"1" ClassId:@"1" AlbumName:string];
     
@@ -240,7 +243,7 @@ static NSString * IdentifierCELL = @"IdentifierCELL";
         if ([code intValue] == 1) {
             [self showString:@"创建成功" forSecond:1.f];
             [self.datasource removeAllObjects];
-            //获取数据
+            //请求数据
             [self setupMyselfAlbumMessage];
         } else {
             [self showHudWithString:@"创建失败" forSecond:1.f];
@@ -270,10 +273,6 @@ static NSString * IdentifierCELL = @"IdentifierCELL";
     self.navigationItem.rightBarButtonItems = @[rightItem2, rightItem1];
 }
 
-- (void)dealloc
-{
-    NSLog(@"9049023423940-2394");
-}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
