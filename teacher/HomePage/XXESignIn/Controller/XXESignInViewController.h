@@ -8,6 +8,15 @@
 
 #import "XXEBaseViewController.h"
 
+#import "QHNavSliderMenu.h"
+
 @interface XXESignInViewController : XXEBaseViewController
+
+@property (nonatomic) QHNavSliderMenuType menuType;
+
+@property (nonatomic, strong) NSString *schoolId;
+
+@property (nonatomic, strong) NSString *classId;
+
 
 @end

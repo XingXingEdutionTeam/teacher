@@ -1,0 +1,68 @@
+
+
+//
+//  XXEStudentSignInApi.m
+//  teacher
+//
+//  Created by Mac on 16/9/1.
+//  Copyright © 2016年 XingXingEdu. All rights reserved.
+//
+
+#import "XXEStudentSignInApi.h"
+
+#define URL @"http://www.xingxingedu.cn/Teacher/sign_in_all_action"
+
+
+@interface XXEStudentSignInApi()
+
+@property (nonatomic, copy) NSString *xid;
+@property (nonatomic, copy) NSString *user_id;
+@property (nonatomic, copy) NSString *user_type;
+
+@property (nonatomic, copy) NSString *position;
+@property (nonatomic, copy) NSString *class_id;
+@property (nonatomic, copy) NSString *school_id;
+
+@end
+
+@implementation XXEStudentSignInApi
+
+- (instancetype)initWithXid:(NSString *)xid user_id:(NSString *)user_id user_type:(NSString *)user_type position:(NSString *)position class_id:(NSString *)class_id school_id:(NSString *)school_id{
+    
+    if (self = [super init]) {
+        _xid = xid;
+        _user_id = user_id;
+        _position = position;
+        _class_id = class_id;
+        _school_id = school_id;
+    }
+    return self;
+}
+
+
+- (NSString *)requestUrl{
+    return URL;
+}
+
+- (YTKRequestMethod)requestMethod{
+    return YTKRequestMethodPost;
+    
+}
+
+- (id)requestArgument{
+    
+    return @{@"url":URL,
+             @"appkey":APPKEY,
+             @"backtype":BACKTYPE,
+             @"xid":_xid,
+             @"user_id":_user_id,
+             @"user_type":_user_type,
+             @"position":_position,
+             @"class_id":_class_id,
+             @"school_id":_school_id
+             };
+    
+}
+
+
+@end

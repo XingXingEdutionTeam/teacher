@@ -8,10 +8,22 @@
 
 #import "XXEBaseViewController.h"
 
+@class XXESchoolAlbumViewController;
+
+@protocol XXESchoolAlbumViewControllerDelegate <NSObject>
+
+- (void)contactsPickerViewControllerDidFinish:(XXESchoolAlbumViewController *)controller withSelectedContacts:(NSArray *)contacts;
+
+@end
+
+
 @interface XXESchoolAlbumViewController : XXEBaseViewController
 
 @property (nonatomic, strong) NSString *schoolId;
 @property (nonatomic, strong) NSString *classId;
 
+@property (nonatomic, strong) NSSet *selectedContactIds;
+@property (nonatomic, strong) NSSet *disabledContactIds;
+@property (nonatomic, strong) id<XXESchoolAlbumViewControllerDelegate>delegate;
 
 @end

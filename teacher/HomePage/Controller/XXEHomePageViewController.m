@@ -28,6 +28,7 @@
 //监控
 #import "VideoMonitorViewController.h"
 #import "XXEClassAddressHeadermasterAndManagerViewController.h"
+#import "XXESignInViewController.h"
 
 
 @interface XXEHomePageViewController ()<XXEHomePageHeaderViewDelegate,XXEHomePageMiddleViewDelegate,XXEHomePageBottomViewDelegate>
@@ -549,8 +550,18 @@
             break;
         }
         case 8:
-            NSLog(@"----签到----");
-            break;
+            //XXESignInViewController
+        {
+        
+//            NSLog(@"----签到----");
+//            XXESignInViewController *signInVC = [[XXESignInViewController alloc] init];
+//            signInVC.schoolId = self.schoolHomeId;
+//            signInVC.classId = self.classHomeId;
+//            
+//            [self.navigationController pushViewController:signInVC animated:YES];
+//            break;
+        }
+
         case 9:
             NSLog(@"---签到----");
             break;

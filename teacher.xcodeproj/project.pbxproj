@@ -177,6 +177,9 @@
 		04BB3AB81D75672400AA5C5C /* XXEBabyInfoApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 04BB3AB71D75672400AA5C5C /* XXEBabyInfoApi.m */; };
 		04BB3ABE1D758FD700AA5C5C /* XXEGlobalCollectApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 04BB3ABD1D758FD700AA5C5C /* XXEGlobalCollectApi.m */; };
 		04BB3AC11D75910500AA5C5C /* XXEGlobalDecollectApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 04BB3AC01D75910500AA5C5C /* XXEGlobalDecollectApi.m */; };
+		04C985881D78382700BE6EDA /* XXEStudentSignInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04C985861D78382700BE6EDA /* XXEStudentSignInViewController.m */; };
+		04C985891D78382700BE6EDA /* XXEStudentSignInViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04C985871D78382700BE6EDA /* XXEStudentSignInViewController.xib */; };
+		04C9858F1D7842D200BE6EDA /* XXEStudentSignInApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 04C9858E1D7842D200BE6EDA /* XXEStudentSignInApi.m */; };
 		04D5B1EF1D6B262500ABA89A /* XXEReviewerModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D5B1E81D6B262500ABA89A /* XXEReviewerModel.m */; };
 		04D5B1F01D6B262500ABA89A /* XXETeacherGradeModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D5B1EA1D6B262500ABA89A /* XXETeacherGradeModel.m */; };
 		04D5B1F11D6B262500ABA89A /* XXETeacherModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D5B1EC1D6B262500ABA89A /* XXETeacherModel.m */; };
@@ -767,6 +770,11 @@
 		04BB3ABD1D758FD700AA5C5C /* XXEGlobalCollectApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXEGlobalCollectApi.m; sourceTree = "<group>"; };
 		04BB3ABF1D75910500AA5C5C /* XXEGlobalDecollectApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXEGlobalDecollectApi.h; sourceTree = "<group>"; };
 		04BB3AC01D75910500AA5C5C /* XXEGlobalDecollectApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXEGlobalDecollectApi.m; sourceTree = "<group>"; };
+		04C985851D78382700BE6EDA /* XXEStudentSignInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXEStudentSignInViewController.h; sourceTree = "<group>"; };
+		04C985861D78382700BE6EDA /* XXEStudentSignInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXEStudentSignInViewController.m; sourceTree = "<group>"; };
+		04C985871D78382700BE6EDA /* XXEStudentSignInViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XXEStudentSignInViewController.xib; sourceTree = "<group>"; };
+		04C9858D1D7842D200BE6EDA /* XXEStudentSignInApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXEStudentSignInApi.h; sourceTree = "<group>"; };
+		04C9858E1D7842D200BE6EDA /* XXEStudentSignInApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXEStudentSignInApi.m; sourceTree = "<group>"; };
 		04D5B1E71D6B262500ABA89A /* XXEReviewerModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXEReviewerModel.h; sourceTree = "<group>"; };
 		04D5B1E81D6B262500ABA89A /* XXEReviewerModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXEReviewerModel.m; sourceTree = "<group>"; };
 		04D5B1E91D6B262500ABA89A /* XXETeacherGradeModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXETeacherGradeModel.h; sourceTree = "<group>"; };
@@ -1963,6 +1971,8 @@
 		04F216551D766E0B005C2EBF /* Api */ = {
 			isa = PBXGroup;
 			children = (
+				04C9858D1D7842D200BE6EDA /* XXEStudentSignInApi.h */,
+				04C9858E1D7842D200BE6EDA /* XXEStudentSignInApi.m */,
 			);
 			path = Api;
 			sourceTree = "<group>";
@@ -1972,6 +1982,9 @@
 			children = (
 				04F216601D766E86005C2EBF /* XXESignInViewController.h */,
 				04F216611D766E86005C2EBF /* XXESignInViewController.m */,
+				04C985851D78382700BE6EDA /* XXEStudentSignInViewController.h */,
+				04C985861D78382700BE6EDA /* XXEStudentSignInViewController.m */,
+				04C985871D78382700BE6EDA /* XXEStudentSignInViewController.xib */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -3225,6 +3238,7 @@
 				04F2169E1D7671BB005C2EBF /* images-6.jpeg in Resources */,
 				9E2F7F801D73D24B00DD9CD1 /* ios-social-sdk-comment-detail.html in Resources */,
 				04F216A81D7671BB005C2EBF /* ws_leimu_pink@3x.png in Resources */,
+				04C985891D78382700BE6EDA /* XXEStudentSignInViewController.xib in Resources */,
 				9E2F7F881D73D24B00DD9CD1 /* ios-social-sdk-socialbar.html in Resources */,
 				04F216971D7671BB005C2EBF /* goback_back_orange_on@2x.png in Resources */,
 				9E2F7F6E1D73D24B00DD9CD1 /* UMSCommentInputControlleriPad.xib in Resources */,
@@ -3501,6 +3515,7 @@
 				0487549A1D5C0BF200F680C5 /* XXEFlowerbasketWithdrawCashViewController.m in Sources */,
 				9E50F4061D5B13B400FA6594 /* XXEHomePageClassModel.m in Sources */,
 				04BB3AA31D74743300AA5C5C /* XXECommentRequestApi.m in Sources */,
+				04C985881D78382700BE6EDA /* XXEStudentSignInViewController.m in Sources */,
 				04BB3A121D74742A00AA5C5C /* XXEModifyQQApi.m in Sources */,
 				0433012C1D62BDD000722DE2 /* XXESentToPeopleViewController.m in Sources */,
 				9E10C6981D6DA3C400ACAF50 /* XXEChangeRoleViewController.m in Sources */,
@@ -3701,6 +3716,7 @@
 				048754A51D5C0BF200F680C5 /* XXEAccountManagerTableViewCell.m in Sources */,
 				04BB3ABE1D758FD700AA5C5C /* XXEGlobalCollectApi.m in Sources */,
 				04BB3A301D74742B00AA5C5C /* XXESchoolAlbumModel.m in Sources */,
+				04C9858F1D7842D200BE6EDA /* XXEStudentSignInApi.m in Sources */,
 				9EEA0E2F1D6E83550070C8C3 /* TADotView.m in Sources */,
 				9E50F4001D5B0E9700FA6594 /* XXEHomePageModel.m in Sources */,
 				0433013E1D63047900722DE2 /* DynamicScrollView.m in Sources */,

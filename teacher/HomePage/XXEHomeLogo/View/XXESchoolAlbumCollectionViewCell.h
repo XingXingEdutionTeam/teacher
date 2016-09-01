@@ -7,11 +7,17 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "XXESchoolAlbumModel.h"
+
 
 @interface XXESchoolAlbumCollectionViewCell : UICollectionViewCell
 
-//图片名字
-@property (nonatomic,copy) NSString *imageName;
+//学校 图片 名字
+@property (nonatomic,copy) NSString *schoolPicName;
+
+//是否 选中 图标 名字
+@property (nonatomic, copy) NSString *checkImageName;
+
 
 
 
