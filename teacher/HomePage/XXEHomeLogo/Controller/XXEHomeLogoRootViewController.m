@@ -522,7 +522,7 @@
 
 
 -(void)scrollViewWillBeginDragging:(UIScrollView *)scrollView{
-    NSLog(@"**********");
+//    NSLog(@"**********");
     NSLog(@"----%ld",scrollView.tag);
     
 }

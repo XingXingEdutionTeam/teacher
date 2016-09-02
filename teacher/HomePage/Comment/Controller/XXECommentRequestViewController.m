@@ -191,10 +191,8 @@
         
     }else{
         //2、有数据的时候
-        [_myTableView reloadData];
-        
     }
-    
+    [_myTableView reloadData];
 }
 
 

@@ -241,11 +241,11 @@
         
     }else{
         //2、有数据的时候
-        [_myTableView reloadData];
 //        NSLog(@"%ld", historyRecipeArray.count);
         //滚动到 时间 为今天 的食谱 cell
         [_myTableView setContentOffset:CGPointMake(0.0, historyRecipeArray.count  *(80 * 3 + 30) ) animated:NO];
     }
+    [_myTableView reloadData];
     
 }
 

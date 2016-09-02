@@ -9,10 +9,10 @@
             <connections>
                 <outlet property="allRegisterBtn" destination="CLG-dt-hbr" id="4Qr-72-m3X"/>
                 <outlet property="chooseTimeBtn" destination="YPs-eY-ssr" id="0Tj-zq-iac"/>
-                <outlet property="myTableView" destination="SxN-xP-FTK" id="TfZ-eg-Ryx"/>
                 <outlet property="registerNumBtn" destination="gSu-49-Q13" id="gg9-aN-Jp3"/>
                 <outlet property="timeLabel" destination="sPG-ed-1HI" id="Vu4-lu-HQC"/>
                 <outlet property="unRegisterNumBtn" destination="T6v-E2-aQA" id="wNa-GB-K3k"/>
+                <outlet property="upBgView" destination="2zx-Aq-yot" id="8tw-bc-Kp7"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -22,17 +22,17 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2zx-Aq-yot">
-                    <rect key="frame" x="0.0" y="0.0" width="375" height="230"/>
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="200"/>
                     <subviews>
                         <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Udt-Zk-yBz">
                             <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
                             <subviews>
-                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wum-xd-kEP">
+                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="home_redflower_timeIcon" translatesAutoresizingMaskIntoConstraints="NO" id="wum-xd-kEP">
                                     <rect key="frame" x="10" y="15" width="20" height="20"/>
                                 </imageView>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sPG-ed-1HI">
                                     <rect key="frame" x="38" y="14" width="185" height="21"/>
-                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
@@ -47,45 +47,48 @@
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         </view>
                         <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hEz-Ys-hZg">
-                            <rect key="frame" x="0.0" y="51" width="375" height="100"/>
+                            <rect key="frame" x="0.0" y="52" width="375" height="150"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="已签到人数" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="amM-3E-6ko">
-                                    <rect key="frame" x="220" y="70" width="70" height="21"/>
+                                    <rect key="frame" x="220" y="60" width="70" height="21"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="未签到人数" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JFd-jV-ROU">
-                                    <rect key="frame" x="50" y="70" width="70" height="21"/>
+                                    <rect key="frame" x="50" y="60" width="70" height="21"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="T6v-E2-aQA">
-                                    <rect key="frame" x="62" y="10" width="50" height="50"/>
-                                    <state key="normal" title="Button"/>
+                                    <rect key="frame" x="62" y="0.0" width="50" height="50"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                    <state key="normal">
+                                        <color key="titleColor" red="0.99570826480263153" green="0.40481085526315769" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    </state>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gSu-49-Q13">
-                                    <rect key="frame" x="232" y="10" width="50" height="50"/>
-                                    <state key="normal" title="Button"/>
+                                    <rect key="frame" x="232" y="0.0" width="50" height="50"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                    <state key="normal">
+                                        <color key="titleColor" red="0.99570826480263153" green="0.40481085526315769" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    </state>
+                                </button>
+                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CLG-dt-hbr">
+                                    <rect key="frame" x="25" y="100" width="325" height="42"/>
+                                    <color key="backgroundColor" red="0.99542557565789469" green="0.40224095394736842" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                    <state key="normal" title="一 键 签 到">
+                                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </state>
                                 </button>
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         </view>
-                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CLG-dt-hbr">
-                            <rect key="frame" x="25" y="180" width="325" height="42"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                            <state key="normal" title="一 键 签 到" backgroundImage="login_green">
-                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            </state>
-                        </button>
                     </subviews>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <color key="backgroundColor" red="0.89925986842105265" green="0.91100431743421051" blue="0.91557874177631571" alpha="1" colorSpace="calibratedRGB"/>
                 </view>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="SxN-xP-FTK">
-                    <rect key="frame" x="0.0" y="238" width="375" height="429"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                </tableView>
             </subviews>
             <color key="backgroundColor" red="0.89985094572368418" green="0.91043893914473684" blue="0.91388260690789469" alpha="1" colorSpace="calibratedRGB"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
@@ -93,6 +96,6 @@
         </view>
     </objects>
     <resources>
-        <image name="login_green" width="325" height="42"/>
+        <image name="home_redflower_timeIcon" width="20" height="20"/>
     </resources>
 </document>

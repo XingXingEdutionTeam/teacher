@@ -208,10 +208,11 @@
         CGFloat myImageWidth = myImage.size.width;
         CGFloat myImageHeight = myImage.size.height;
         
-        UIImageView *myImageView = [[UIImageView alloc] initWithFrame:CGRectMake(KScreenWidth / 2 - myImageWidth / 2, (KScreenHeight - 64 - 49) / 2 - myImageHeight / 2, myImageWidth, myImageHeight)];
+        UIImageView *myImageView = [[UIImageView alloc] initWithFrame:CGRectMake(KScreenWidth / 2 - myImageWidth / 2, _myTableView.frame.size.height / 2 - myImageHeight / 2, myImageWidth, myImageHeight)];
         myImageView.image = myImage;
-        [self.view addSubview:myImageView];
+        [_myTableView addSubview:myImageView];
         
+        [_myTableView reloadData];
     }else{
         //2、有数据的时候
         if (_teach_course_groupArray.count != 0) {
@@ -223,10 +224,9 @@
             self.dateNameCombox.dataArray = _month_groupArray;
             [self.dateNameCombox.listTableView reloadData];
         }
-        [_myTableView reloadData];
-        
-    }
     
+    }
+    [_myTableView reloadData];
 }
 
 

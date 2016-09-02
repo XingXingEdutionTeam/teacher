@@ -33,6 +33,8 @@
 #import "XXESignInViewController.h"
 
 
+
+
 @interface XXEHomePageViewController ()<XXEHomePageHeaderViewDelegate,XXEHomePageMiddleViewDelegate,XXEHomePageBottomViewDelegate>
 {
 
@@ -426,7 +428,7 @@
     }
     
     
-    NSLog(@"%@%@",strngXid,homeUserId);
+//    NSLog(@"%@%@",strngXid,homeUserId);
     
     XXEHomePageApi *homePageApi = [[XXEHomePageApi alloc]initWithHomePageXid:strngXid UserType:@"2" UserId:homeUserId];
     [homePageApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
@@ -572,12 +574,13 @@
         {
         
 //            NSLog(@"----签到----");
-//            XXESignInViewController *signInVC = [[XXESignInViewController alloc] init];
-//            signInVC.schoolId = self.schoolHomeId;
-//            signInVC.classId = self.classHomeId;
-//            
-//            [self.navigationController pushViewController:signInVC animated:YES];
-//            break;
+            XXESignInViewController *signInVC = [[XXESignInViewController alloc] init];
+            signInVC.schoolId = self.schoolHomeId;
+            signInVC.classId = self.classHomeId;
+            signInVC.schoolType = self.schoolType;
+            [self.navigationController pushViewController:signInVC animated:YES];
+            
+        break;
         }
 
         case 9:

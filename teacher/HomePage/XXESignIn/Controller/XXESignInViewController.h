@@ -18,5 +18,7 @@
 
 @property (nonatomic, strong) NSString *classId;
 
+@property (nonatomic, copy) NSString *schoolType;
+
 
 @end

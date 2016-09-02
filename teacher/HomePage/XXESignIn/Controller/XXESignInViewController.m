@@ -8,6 +8,7 @@
 
 #import "XXESignInViewController.h"
 #import "XXEStudentSignInViewController.h"
+#import "XXEStudentSignInManagerAndHeadmasterViewController.h"
 #import "QHNavSliderMenu.h"
 
 
@@ -31,6 +32,10 @@
     
     self.title = @"签到";
     
+    menuCount = 1;
+    
+//    NSLog(@"%@  ***   %@", _schoolId, _classId);
+    
     [self customContent];
     
 }
@@ -40,8 +45,8 @@
     ///第一个子视图为scrollView或者其子类的时候 会自动设置 inset为64 这样navSliderMenu会被下移 所以最好设置automaticallyAdjustsScrollViewInsets为no 或者[self.view addSubview:[UIView new]];
     self.automaticallyAdjustsScrollViewInsets = NO;
     QHNavSliderMenuStyleModel *model = [QHNavSliderMenuStyleModel new];
-    NSMutableArray *normalImages = [[NSMutableArray alloc] init];
-    NSMutableArray *selectImages = [[NSMutableArray alloc] init];
+    NSMutableArray *normalImages = [[NSMutableArray alloc] initWithCapacity:1];
+    NSMutableArray *selectImages = [[NSMutableArray alloc] initWithCapacity:1];
     [normalImages addObject:[UIImage imageNamed:@"ws_leimu_gray"]];
     [selectImages addObject:[UIImage imageNamed:@"ws_leimu_pink"]];
     NSMutableArray *titles = [[NSMutableArray alloc] initWithObjects:@"学生签到", nil];
@@ -110,12 +115,20 @@
         return;
     }
     //根据页数添加相对应的视图 并存入数组
-    XXEStudentSignInViewController * vc0 = [[XXEStudentSignInViewController alloc]init];
-    [self addChildViewController:vc0];
-    vc0.view.left = 0*screenWidth;
-    vc0.view.top  = 0;
+    //如果 是 班主任 身份的话
+//    XXEStudentSignInViewController * vc0 = [[XXEStudentSignInViewController alloc]init];
+    //如果 是 校长或者 管理人员
+    XXEStudentSignInManagerAndHeadmasterViewController *vc0 = [[XXEStudentSignInManagerAndHeadmasterViewController alloc] init];
+    
     vc0.schoolId = _schoolId;
     vc0.classId = _classId;
+    vc0.schoolType = _schoolType;
+    vc0.view.left = 0*screenWidth;
+    vc0.view.top  = 0;
+
+    
+    [self addChildViewController:vc0];
+
     [contentScrollView addSubview:vc0.view];
     [listVCQueue setObject:vc0 forKey:@(0)];
     

@@ -10,6 +10,9 @@
 
 @interface XXEStudentSignInViewController : XXEBaseViewController
 
+@property (weak, nonatomic) IBOutlet UIView *upBgView;
+
+
 
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
 
@@ -21,11 +24,10 @@
 
 @property (weak, nonatomic) IBOutlet UIButton *allRegisterBtn;
 
-@property (weak, nonatomic) IBOutlet UITableView *myTableView;
-
 @property (nonatomic, strong) NSString *schoolId;
 
 @property (nonatomic, strong) NSString *classId;
 
+@property (nonatomic, copy) NSString *schoolType;
 
 @end
