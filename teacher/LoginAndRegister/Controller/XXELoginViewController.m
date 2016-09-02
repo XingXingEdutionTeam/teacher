@@ -18,6 +18,7 @@
 #import "UMSocial.h"
 #import "SettingPersonInfoViewController.h"
 #import "XXEForgetPassWordViewController.h"
+#import "XXEPerfectInfoViewController.h"
 
 @interface XXELoginViewController ()<UITextFieldDelegate,UIAlertViewDelegate,CLLocationManagerDelegate>
 /** 登陆的首页头像 */
@@ -417,7 +418,7 @@
     }];
 }
 
-#pragma mark - action - 按钮的点击方法
+#pragma mark - action - 按钮的点击方法非第三方登录
 - (void)loginButtonClick:(HyLoglnButton *)sender
 {
     if ([self isChinaMobile:self.userNameTextField.text] && [self detectionPassword:self.passWordTextField.text]) {
@@ -428,12 +429,23 @@
             XXELoginApi *loginApi = [[XXELoginApi alloc]initLoginWithUserName:self.userNameTextField.text PassWord:self.passWordTextField.text LoginType:self.login_type Lng:self.longitudeString Lat:self.latitudeString];
             [loginApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
                 
-                NSLog(@"%@",request.responseJSONObject);
                 NSDictionary *data = [request.responseJSONObject objectForKey:@"data"];
                 NSString *code = [request.responseJSONObject objectForKey:@"code"];
+                NSLog(@"%@",[request.responseJSONObject objectForKey:@"msg"]);
                 if ([code intValue]==1) {
                     [self LoginSetupUserInfoDict:data SnsAccessToken:@"" LoginType:self.login_type];
+                    NSString *login_times = [data objectForKey:@"login_times"];
                     
+                    if ([login_times intValue]==1) {
+                        NSLog(@"进入信息补全");
+                        XXEPerfectInfoViewController *perfecVC = [[XXEPerfectInfoViewController alloc]init];
+                        XXENavigationViewController *navi = [[XXENavigationViewController alloc]initWithRootViewController:perfecVC];
+                        UIWindow *window = [UIApplication sharedApplication].keyWindow;
+                        window.rootViewController = navi;
+                        [self.view removeFromSuperview];
+
+                        
+                    }else{
                     
                     [_loginButton ExitAnimationCompletion:^{
                         NSLog(@"---点击登录按钮-------");
@@ -444,19 +456,24 @@
                         [self.view removeFromSuperview];
                         
                     }];
-                }else
+                    }
+                }else if([code intValue]==3)
                 {
-                    [self showString:@"登录失败" forSecond:1.f];
+                    [self showString:@"账号或密码错误" forSecond:1.f];
                     [_loginButton ErrorRevertAnimationCompletion:^{
                         NSString *stringMsg = [request.responseJSONObject objectForKey:@"msg"];
                         [self showHudWithString:stringMsg forSecond:2.f];
                     }];
+                }else{
+                    
+                    [self showString:@"登录失败" forSecond:1.f];
                 }
+                
             } failure:^(__kindof YTKBaseRequest *request) {
                 
                 [_loginButton ErrorRevertAnimationCompletion:^{
-                    NSString *stringMsg = [request.responseJSONObject objectForKey:@"msg"];
-                    [self showHudWithString:stringMsg forSecond:2.f];
+                    
+                    [self showHudWithString:@"网络请求失败" forSecond:2.f];
                 }];
                 
             }];
@@ -465,6 +482,7 @@
         [self showString:@"用户名或密码不能为空" forSecond:1.f];
     }
 }
+
 
 - (void)showThePassWord:(UIButton *)sender
 {
@@ -623,6 +641,8 @@
             NSDictionary *data = [request.responseJSONObject objectForKey:@"data"];
         
             [self LoginSetupUserInfoDict:data SnsAccessToken:accessToken LoginType:logintype];
+            
+            
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3*NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             
                 XXETabBarControllerConfig *tabBarControllerConfig = [[XXETabBarControllerConfig alloc]init];

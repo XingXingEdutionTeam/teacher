@@ -12,14 +12,18 @@
 @implementation XXEClassAlbumApi{
     NSString *_schoolId;
     NSString *_classId;
+    NSString *_userXid;
+    NSString *_userId;
 }
 
-- (id)initWithClassAlbumSchoolID:(NSString *)schoolId classID:(NSString *)classId
+- (id)initWithClassAlbumSchoolID:(NSString *)schoolId classID:(NSString *)classId UserXId:(NSString *)userXid UserID:(NSString *)userId;
 {
     self = [super init];
     if (self) {
         _schoolId = schoolId;
         _classId = classId;
+        _userXid = userXid;
+        _userId = userId;
     }
     return self;
 }
@@ -40,9 +44,9 @@
              @"class_id":_classId,
              @"appkey":APPKEY,
              @"backtype":BACKTYPE,
-             @"user_id":USER_ID,
+             @"user_id":_userId,
              @"user_type":USER_TYPE,
-             @"xid":XID
+             @"xid":_userXid
              };
 }
 

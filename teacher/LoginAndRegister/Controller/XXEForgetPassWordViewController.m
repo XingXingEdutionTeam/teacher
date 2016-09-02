@@ -294,12 +294,12 @@
 - (void)nextButtonsClick:(UIButton *)sender
 {
     //验证验证码对不对
-//    [self verifyNumberISRight];
+    [self verifyNumberISRight];
     
-    XXERegisterSecondViewController *registerVC = [[XXERegisterSecondViewController alloc]init];
-    registerVC.forgetPassWordPage = @"忘记密码--";
-    registerVC.forgetPhonrNum = self.registerUserName;
-    [self.navigationController pushViewController:registerVC animated:YES];
+//    XXERegisterSecondViewController *registerVC = [[XXERegisterSecondViewController alloc]init];
+//    registerVC.forgetPassWordPage = @"忘记密码--";
+//    registerVC.forgetPhonrNum = self.registerUserName;
+//    [self.navigationController pushViewController:registerVC animated:YES];
     
 }
 

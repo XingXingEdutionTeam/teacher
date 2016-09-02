@@ -25,6 +25,7 @@
 #import "XXEHomeworkViewController.h"
 #import "XXERecipeViewController.h"
 #import "XXEHomeLogoRootViewController.h"
+#import "XXENavigationViewController.h"
 //编辑身份
 #import "XXEAddIdentityViewController.h"
 //监控
@@ -135,8 +136,7 @@
     [super viewWillAppear:animated];
     self.view.backgroundColor = XXEBackgroundColor;
     self.navigationController.navigationBarHidden = YES;
-    //获取数据
-    [self setupHomePageRequeue];
+    
 }
 /** 这两个方法都可以,改变当前控制器的电池条颜色 */
 -(UIStatusBarStyle)preferredStatusBarStyle
@@ -179,7 +179,7 @@
     UITapGestureRecognizer *singleTap1 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(commboxHidden1)];
     [self.schoolBgView addGestureRecognizer:singleTap1];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(commboxAction:) name:@"commboxNotice"object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(commboxAction:) name:@"commboxNotice"object:nil];
     
     //***********************  班 级  ***************************
     self.homeClassView = [[WJCommboxView alloc] initWithFrame:CGRectMake(60 * kScreenRatioWidth+120 * kScreenRatioWidth+5, 45*kScreenRatioWidth, 120 * kScreenRatioWidth, 30 * kScreenRatioHeight)];
@@ -214,8 +214,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(commboxAction2:) name:@"commboxNotice2"object:nil];
 }
 
-- (void)commboxAction2:(NSNotification *)notif{
-    
+- (void)commboxAction2:(NSNotification *)notif{  
     if ([self.homeClassView.textField.text isEqualToString:@"编辑班级"]) {
         NSLog(@"调转页面");
         XXEAddIdentityViewController *addIdenVC = [[XXEAddIdentityViewController alloc]init];
@@ -223,9 +222,12 @@
     }
 }
 
+#pragma mark - 通知选择的学校
 
 
 - (void)commboxAction:(NSNotification *)notif{
+    NSLog(@"%@",notif.object);
+    NSLog(@"文字是什么%@",self.homeClassView.textField.text);
     switch ([notif.object integerValue]) {
         case 102:
         {
@@ -240,16 +242,15 @@
             break;
         case 103:
         {
-            
             [self.homeClassView removeFromSuperview];
             [self.view addSubview:self.classBgView];
             [self.view addSubview:self.homeClassView];
+            
         }
             break;
         default:
             break;
     }
-    
 }
 
 
@@ -320,31 +321,6 @@
     
 }
 
-#pragma mark - 通知选择的学校
-
-- (void)calssAction2:(NSNotification *)notif
-{
-    NSLog(@"点击联动:%@",notif.object);
-    
-//    NSLog(@"%@",self.homeSchoolView.textField.text);
-//    NSString *string1 = @"没有班级";
-//    [self.classDatasource removeAllObjects];
-//    NSString *string = self.homeSchoolView.textField.text;
-//    for (XXETeacherUserInfo *model in self.arraySchool) {
-//        if ([model.school_name isEqualToString:string]) {
-//            self.homeClassView.textField.text = model.class_name;
-//            self.schoolHomeId = model.school_id;
-//            self.classHomeId = model.class_id;
-//            self.schoolType = model.school_type;
-//            [self.classDatasource addObject:model.class_name];
-//            [self.classDatasource addObject:string1];
-//            self.homeClassView.dataArray = self.classDatasource;
-////            NSLog(@"%@",self.classDatasource);
-////            NSLog(@"===!!!%@ %@",model.school_id,model.class_id);
-//        }
-//    }
-    NSLog(@"7890");
-}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -366,6 +342,8 @@
     [self.view addSubview:bottomView];
     [self.view addSubview:self.middleView];
     [self.view addSubview:self.headView];
+    //获取数据
+    [self setupHomePageRequeue];
 //    self.tabBarItem.badgeValue = @"10";
 }
 
@@ -381,7 +359,6 @@
     homeLogoRootVC.classId = _classHomeId;
     
     [self.navigationController pushViewController:homeLogoRootVC animated:NO];
-    
 }
 
 - (void)homePageRightButtonClick
@@ -430,6 +407,7 @@
     
 //    NSLog(@"%@%@",strngXid,homeUserId);
     
+    NSLog(@"%@%@",strngXid,homeUserId);
     XXEHomePageApi *homePageApi = [[XXEHomePageApi alloc]initWithHomePageXid:strngXid UserType:@"2" UserId:homeUserId];
     [homePageApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         NSString * code = [request.responseJSONObject objectForKey:@"code"];
@@ -437,14 +415,13 @@
         if ([code intValue] == 1) {
             [self showHudWithString:@"正在请求数据..."];
             
-//            NSLog(@"%@",request.responseJSONObject  );
+            NSLog(@"%@",request.responseJSONObject  );
             NSDictionary *data = [request.responseJSONObject objectForKey:@"data"];
             
             XXEHomePageModel *homePageModel = [[XXEHomePageModel alloc]initWithDictionary:data error:nil];
-//            NSLog(@"首页 -- %@",homePageModel);
+            NSLog(@"首页 -- %@",homePageModel);
             [self.headView configCellWithInfo:homePageModel];
             [self.middleView configCellMiddleWithInfo:homePageModel];
-//
             [self.arraySchool removeAllObjects];
             [self.schoolDatasource removeAllObjects];
             [self.classDatasource removeAllObjects];
@@ -522,7 +499,7 @@
         case 3:
         {
             //            NSLog(@"---通讯录----");
-            XXEClassAddressHeadermasterAndManagerViewController *classAddressHeadermasterAndManagerVC = [[XXEClassAddressHeadermasterAndManagerViewController alloc] init];
+        XXEClassAddressHeadermasterAndManagerViewController *classAddressHeadermasterAndManagerVC = [[XXEClassAddressHeadermasterAndManagerViewController alloc] init];
             //            NSLog(@"--  %@", _schoolType);
             
             classAddressHeadermasterAndManagerVC.schoolId = _schoolHomeId;
@@ -539,9 +516,7 @@
             NSLog(@"---点评----");
             XXECommentRootViewController *commentRootVC = [[XXECommentRootViewController alloc] init];
             
-//                NSLog(@"%@%@",self.schoolHomeId,self.classHomeId);
             commentRootVC.classId = self.classHomeId;
-            
             commentRootVC.schoolId = self.schoolHomeId;
             
             [self.navigationController pushViewController:commentRootVC animated:NO];
@@ -551,7 +526,6 @@
         {
             NSLog(@"----作业----");
             XXEHomeworkViewController *homeworkVC = [[XXEHomeworkViewController alloc] init];
-//                NSLog(@"%@ =====  %@",self.schoolHomeId,self.classHomeId);
             homeworkVC.schoolId = self.schoolHomeId;
             homeworkVC.classId = self.classHomeId;
             
@@ -561,7 +535,6 @@
         }
         case 7:
         {
-            
             NSLog(@"---食谱----");
             XXERecipeViewController *recipeViewController = [[XXERecipeViewController alloc] init];
             recipeViewController.schoolId = self.schoolHomeId;
@@ -606,14 +579,12 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
+
+- (void)dealloc{
     [[NSNotificationCenter defaultCenter]removeObserver:self];
     [self.homeSchoolView.textField removeObserver:self forKeyPath:@"text"];
     [self.homeClassView.textField removeObserver:self forKeyPath:@"text"];
 }
-
 
 
 /*

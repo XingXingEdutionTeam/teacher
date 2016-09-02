@@ -14,7 +14,7 @@
 @interface XXEAddIdentityViewController ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic, strong)UITableView *identityTableView;
 /** 身份列表的数据 */
-@property (nonatomic, strong)NSMutableArray *idenDatasouce;
+@property (nonatomic, weak)NSMutableArray *idenDatasouce;
 
 @end
 
@@ -35,13 +35,23 @@
 {
     [super viewWillAppear:animated];
     self.view.backgroundColor = XXEBackgroundColor;
+    self.navigationItem.title = @"";
     self.navigationController.navigationBarHidden = NO;
     [self creatNavigaRightButton];
 }
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [self.navigationController popToRootViewControllerAnimated:YES];
+    [self.view removeFromSuperview];
+}
+
+/** 这个方法都可以,改变当前控制器的电池条颜色 */
 -(UIStatusBarStyle)preferredStatusBarStyle
 {
+    
     return UIStatusBarStyleLightContent;
 }
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -49,6 +59,8 @@
     [self.view addSubview:self.identityTableView];
     //获取网络数据
     [self setupIdentityList];
+    
+    
 }
 
 #pragma mark - 获取网络 数据
@@ -69,11 +81,21 @@
         NSLog(@"%@",[request.responseJSONObject objectForKey:@"msg"]);
         NSString *code = [request.responseJSONObject objectForKey:@"code"];
         NSLog(@"%@",code);
-        if ([code intValue]== 1) {
-            NSLog(@"成功");
-        }else{
+        if ([[request.responseJSONObject objectForKey:@"data"] isKindOfClass:[NSString class]]) {
+            [self showString:@"没有数据" forSecond:1.f];
+            return ;
+        }else if ([code intValue]==1) {
             
+             NSArray *messageArray = [request.responseJSONObject objectForKey:@"data"];
+            for (int i =0; i<messageArray.count; i++) {
+                XXEIdentityListModel *identityModel = [[XXEIdentityListModel alloc]initWithDictionary:messageArray[i] error:nil];
+                [self.idenDatasouce addObject:identityModel];
+            }
+            NSLog(@"编辑学校详情%@",self.idenDatasouce);
         }
+            
+            
+       
         
     } failure:^(__kindof YTKBaseRequest *request) {
         
@@ -109,7 +131,7 @@
 
 
 #pragma mark - 按钮的点击事件
-- (void)addNavigationButton:(UIButton *)sender
+- (void)addNavigationButton
 {
     
 }
@@ -118,9 +140,16 @@
 #pragma mark - 创建导航栏后边的按钮
 - (void)creatNavigaRightButton
 {
-    UIButton *addButton = [UIButton createButtonWithFrame:CGRectMake(0, 0, 22, 22) backGruondImageName:@"home_flowerbasket_addIcon44x44" Target:self Action:@selector(addNavigationButton:) Title:@""];
-    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithCustomView:addButton];
-    self.navigationItem.rightBarButtonItem = rightItem;
+//    UIButton *addButton = [UIButton createButtonWithFrame:CGRectMake(0, 0, 22, 22) backGruondImageName:@"home_flowerbasket_addIcon44x44" Target:self Action:@selector(addNavigationButton) Title:@""];
+//    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithCustomView:addButton];
+    
+    //设置 navigationBar 右边 上传图片
+    UIButton *updataButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    updataButton.frame = CGRectMake(300, 5, 22, 22);
+    [updataButton setImage:[UIImage imageNamed:@"home_flowerbasket_addIcon44x44"] forState:UIControlStateNormal];
+    [updataButton addTarget:self action:@selector(addNavigationButton) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *rightItem1 = [[UIBarButtonItem alloc] initWithCustomView:updataButton];
+    self.navigationItem.rightBarButtonItem = rightItem1;
 }
 
 - (void)didReceiveMemoryWarning {

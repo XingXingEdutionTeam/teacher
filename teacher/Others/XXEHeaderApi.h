@@ -29,7 +29,6 @@
 #define XXEHomePageUrl @"http://www.xingxingedu.cn/Teacher/home_data"
 //相册
 #define XXEClassAlubmUrl @"http://www.xingxingedu.cn/Teacher/class_album_new"
-
 //我的相册
 #define  XXEMySelfAlubmUrl @"http://www.xingxingedu.cn/Teacher/class_teacher_album"
 //添加相册
@@ -40,7 +39,6 @@
 #define XXEHomeCollectionPhotoUrl @"http://www.xingxingedu.cn/Global/col_pic_all"
 //上传图片
 #define XXEAblumUpdataUrl @"http://www.xingxingedu.cn/Teacher/class_pic_upload"
-
 /** 注册页面上传图片 */
 #define XXERegisterUpLoadPicUrl @"http://www.xingxingedu.cn/Global/uploadFile"
 

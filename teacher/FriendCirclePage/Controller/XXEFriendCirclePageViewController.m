@@ -20,7 +20,6 @@
 @interface XXEFriendCirclePageViewController ()
 /** 朋友圈的头部视图信息 */
 @property (nonatomic, strong)NSMutableArray *headerDatasource;
-
 @end
 
 @implementation XXEFriendCirclePageViewController

@@ -223,11 +223,10 @@
     }];
 }
 
-
 -(void)landClick:(UIButton *)sender
 {
 //    //测试
-//    XXERegisterTeacherViewController *teacherVC = [[XXERegisterTeacherViewController alloc]init];
+//    XXERegisterHeadMasterViewController *teacherVC = [[XXERegisterHeadMasterViewController alloc]init];
 //    teacherVC.userPhoneNum = self.userSettingPhoneNum;
 //    teacherVC.userName = parentsName.text;
 //    teacherVC.userIDCarNum = parentsIDCard.text;
@@ -338,6 +337,7 @@
 
 - (void)testIdCardIsRegister
 {
+    
     NSLog(@"身份证%@ 护照%@",self.userIDCard,self.userPassPort );
 
     NSString *globalUrl = @"http://www.xingxingedu.cn/Global/id_card_verify";
@@ -365,7 +365,7 @@
     } failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error) {
         
     }];
-    
+//
     
 }
 

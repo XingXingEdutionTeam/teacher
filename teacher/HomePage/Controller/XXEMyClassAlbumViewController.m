@@ -90,6 +90,7 @@ static NSString * IdentifierCELL = @"IdentifierCELL";
     
     //真实环境
     XXEMyselfAblumApi *myselfAblum = [[XXEMyselfAblumApi alloc]initWithMyselfAblumSchoolId:self.myAlbumSchoolId ClassId:self.myAlbumClassId TeacherId:self.myAlbumTeacherId AlbumXid:strngXid AlbumUserId:albumUserId];
+    NSLog(@"学校%@ 班级%@ 教师%@ XID%@ USerID%@",self.myAlbumSchoolId,self.myAlbumClassId,self.myAlbumTeacherId,strngXid,albumUserId);
 
     [myselfAblum startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
 
@@ -235,17 +236,8 @@ static NSString * IdentifierCELL = @"IdentifierCELL";
     XXEMyselfAblumAddApi *addMySelfAblum = [[XXEMyselfAblumAddApi alloc]initWithAddMyselfAblumSchoolId:self.myAlbumSchoolId ClassId:self.myAlbumClassId AlbumName:string AlbumXid:strngXid AlbumUserId:albumUserId];
     NSLog(@"=== %@ %@ %@ %@ %@",self.myAlbumSchoolId,self.myAlbumClassId,string,strngXid,albumUserId);
     
-//    [addMySelfAblum startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
-//        
-//        NSLog(@"%@",request.responseJSONObject);
-//        
-//    } failure:^(__kindof YTKBaseRequest *request) {
-//        
-//    }];
-    
     [addMySelfAblum startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         NSString *code = [request.responseJSONObject objectForKey:@"code"];
-        
         NSLog(@"==============  %@",request.responseJSONObject);
         
         if ([code intValue] == 1) {

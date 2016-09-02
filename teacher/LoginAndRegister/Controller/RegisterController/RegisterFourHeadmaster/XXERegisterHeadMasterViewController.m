@@ -97,12 +97,16 @@
 /** 证件照片 */
 @property (nonatomic, strong)NSMutableArray *fileHeadImageArray;
 
+///** 测试存储的图片 */
+//@property (nonatomic, strong)NSMutableArray *mutableHeadArray;
+
 @end
 
 static NSString *IdentifierCELL = @"TeacherCell";
 static NSString *IdentifierMessCELL = @"TeacherMessCell";
 
 @implementation XXERegisterHeadMasterViewController
+
 
 - (NSMutableArray *)fileHeadImageArray
 {
@@ -168,6 +172,12 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
     
 }
 
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+//    [self.picker removeFromSuperview];
+}
+
 /** 这个方法都可以,改变当前控制器的电池条颜色 */
 -(UIStatusBarStyle)preferredStatusBarStyle
 {
@@ -176,9 +186,10 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
-    [self commBoxInfo];
+    
     [self LnitializeTheParameter];
+    [self commBoxInfo];
+    
     self.isHave = NO;
     
     NSLog(@"打印传过来的数据:电话号码%@ 姓名%@ 身份证%@ 密码%@ 类型%@ 头像%@ 登录类型%@ 性别%@ 年龄%@",self.userPhoneNum,self.userName,self.userIDCarNum,self.userPassword,self.userIdentifier,self.userAvatarImage,self.login_type,self.userSex,self.userAge);
@@ -237,6 +248,12 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
     self.schoolCity = @"";
     self.schoolDistrict = @"";
     self.theEndReviewerId = @"";
+    [self.picker removeFromSuperview];
+    [self.picker.data removeAllObjects];
+    self.teacherCell = [self cellAtIndexRow:3 andAtSection:0 Message:@""];
+    self.teacherCell = [self cellAtIndexRow:4 andAtSection:0 Message:@""];
+    self.teacherCell = [self cellAtIndexRow:7 andAtSection:0 Message:@""];
+    [self commBoxInfo];
 }
 
 #pragma mark - tableView代理
@@ -392,7 +409,7 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
     //    //选择图片
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
     layout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
-    FSImagePickerView *picker = [[FSImagePickerView alloc] initWithFrame:CGRectMake(20, 318*kScreenRatioHeight, KScreenWidth -  40, 70*kScreenRatioHeight) collectionViewLayout:layout];
+    FSImagePickerView *picker = [[FSImagePickerView alloc] initWithFrame:CGRectMake(20, 310*kScreenRatioHeight, KScreenWidth -  40, 70*kScreenRatioHeight) collectionViewLayout:layout];
     self.picker = picker;
     picker.backgroundColor = UIColorFromRGB(255, 255, 255);
     picker.showsHorizontalScrollIndicator = NO;
@@ -417,10 +434,12 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
 //注册成功的按钮
 - (void)sureButtonClick:(UIButton *)sender
 {
+    NSLog(@"蛇和人的ID %@",self.theEndReviewerId);
+    
     if ([self.theEndReviewerId isEqualToString:@""]) {
         [self showString:@"请选择审核人" forSecond:1.f];
         return;
-    }else if ([self.schoolAddrss isEqualToString:@""]){
+    }else if ([self.schoolAddrss isEqualToString:@""] ){
         [self showString:@"请填写学校详细地址" forSecond:1.f];
         return;
     }else if ([self.schoolTel isEqualToString:@""]){
@@ -445,19 +464,21 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
 - (void)getIdCardPhotoImage
 {
     NSMutableArray *arr = [NSMutableArray array];
-    [self.picker.data removeLastObject];
-    arr = self.picker.data;
-    NSLog(@"%@",arr);
-    
-    for (int i =0; i <arr.count; i++) {
-        FSImageModel *model = self.picker.data[i];
-        UIImage *fileImage = [UIImage imageWithData:model.data];
-        [self.fileHeadImageArray addObject:fileImage];
+    if (self.picker.data.count ==1) {
+        //往服务器传所有的参数
+        self.theEndFileImage = @"";
+        [self uploadHeadMasterRegisterMessage];
+    }else{
+        [self.picker.data removeLastObject];
+        arr = self.picker.data;
+        for (int i =0; i <arr.count; i++) {
+            FSImageModel *model = self.picker.data[i];
+            UIImage *fileImage = [UIImage imageWithData:model.data];
+            [self.fileHeadImageArray addObject:fileImage];
+        }
+        //用户的证件照
+        [self fileUserUpLoadSomeImage];
     }
-    NSLog(@"照片%@",self.fileHeadImageArray);
-    //用户的证件照
-    [self fileUserUpLoadSomeImage];
-    
 }
 
 #pragma mark - 用户的证件照上传服务器得到返回值
@@ -591,6 +612,7 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
         }else {
             self.isHave = NO;
         }
+        [self LnitializeTheParameter];
         self.schoolDatasource = mArr;
         self.schoolVC.delegate = self;
     }];
@@ -600,6 +622,7 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
 #pragma mark - 搜索的代理方法
 - (void)searchSchoolMessage:(XXETeacherModel *)model
 {
+    
     self.theEndSchoolId = model.schoolId;
     self.theEndSchoolType = model.type;
     self.schoolName = model.name;
@@ -649,7 +672,8 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
         self.teacherCell = [self cellAtIndexRow:6 andAtSection:0 Message:self.reviewerNameArray[0]];
         XXEReviewerModel *model = self.reviewerDatasource[0];
         self.theEndReviewerId = model.reviewerId;
-
+        
+        NSLog(@"-=-=%@",self.theEndReviewerId);
         
     } failure:^(__kindof YTKBaseRequest *request) {
         

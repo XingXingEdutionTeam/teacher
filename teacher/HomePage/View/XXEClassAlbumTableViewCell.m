@@ -15,7 +15,7 @@
 {
     if (!_LeftImageView) {
         _LeftImageView = [[UIImageView alloc]init];
-        _LeftImageView.backgroundColor = [UIColor lightGrayColor];
+        _LeftImageView.backgroundColor = [UIColor clearColor];
     }
     return _LeftImageView;
 }
@@ -24,7 +24,7 @@
 {
     if (!_MiddleImageView) {
         _MiddleImageView = [[UIImageView alloc]init];
-        _MiddleImageView.backgroundColor = [UIColor lightGrayColor];
+        _MiddleImageView.backgroundColor = [UIColor clearColor];
     }
     return _MiddleImageView;
 }
@@ -33,7 +33,7 @@
 {
     if (!_rightImageView) {
         _rightImageView = [[UIImageView alloc]init];
-        _rightImageView.backgroundColor = [UIColor lightGrayColor];
+        _rightImageView.backgroundColor = [UIColor clearColor];
     }
     return _rightImageView;
 }
@@ -84,15 +84,24 @@
         make.top.equalTo(weakSelf.mas_top).offset(0);
         make.size.mas_equalTo(CGSizeMake(40, 40));
     }];
+    
 }
 
 - (void)getTheImageViewData:(NSArray *)model
 {
-    NSLog(@"imageArray---:%@",model[0]);
-    [self.LeftImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",kXXEPicURL,model[0]]]];
-    [self.MiddleImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",kXXEPicURL,model[1]]]];
-    [self.rightImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",kXXEPicURL,model[2]]]];
+//    NSLog(@"imageArray---:%@",model[0]);
     
+    if (model.count != 0) {
+        self.titleLabel.text = @"新";
+        [self.LeftImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",kXXEPicURL,model[0]]]];
+        [self.MiddleImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",kXXEPicURL,model[1]]]];
+        [self.rightImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",kXXEPicURL,model[2]]]];
+    }else{
+        self.titleLabel.text = @"";
+        self.LeftImageView.image = [UIImage imageNamed:@"album_icon"];
+        self.MiddleImageView.image = [UIImage imageNamed:@"album_icon"];
+        self.rightImageView.image = [UIImage imageNamed:@"album_icon"];
+    }
 }
 
 

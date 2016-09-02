@@ -9,9 +9,9 @@
 #import <JSONModel/JSONModel.h>
 
 @interface XXEClassAlbumModel : JSONModel
-/** 教室Id */
+/** 教师Id */
 @property (nonatomic, copy)NSString <Optional>*teacher_id;
-/** 教室姓名 */
+/** 教师姓名 */
 @property (nonatomic, copy)NSString <Optional>*tname;
 /** 图片 */
 @property (nonatomic, copy)NSArray *pic_arr;

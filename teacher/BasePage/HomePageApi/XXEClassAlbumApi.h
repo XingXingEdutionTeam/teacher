@@ -10,6 +10,6 @@
 
 @interface XXEClassAlbumApi : YTKRequest
 
-- (id)initWithClassAlbumSchoolID:(NSString *)schoolId classID:(NSString *)classId;
+- (id)initWithClassAlbumSchoolID:(NSString *)schoolId classID:(NSString *)classId UserXId:(NSString *)userXid UserID:(NSString *)userId;
 
 @end

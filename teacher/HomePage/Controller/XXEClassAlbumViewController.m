@@ -87,15 +87,35 @@ static NSString *const IdentifierCell = @"classAlbunCell";
 #pragma mark - 获取数据
 - (void)loadClassAlbumMessage
 {
-    XXEClassAlbumApi *classApi = [[XXEClassAlbumApi alloc]initWithClassAlbumSchoolID:self.schoolID classID:self.classID];
+    NSString *strngXid;
+    NSString *albumUserId;
+    if ([XXEUserInfo user].login) {
+        strngXid = [XXEUserInfo user].xid;
+        albumUserId = [XXEUserInfo user].user_id;
+    }else {
+        strngXid = XID;
+        albumUserId = USER_ID;
+    }
+    NSLog(@"学校ID%@ 班级ID%@ 本人XID%@ 本人ID%@",self.schoolID,self.classID,strngXid,albumUserId);
+    
+    
+    XXEClassAlbumApi *classApi = [[XXEClassAlbumApi alloc]initWithClassAlbumSchoolID:self.schoolID classID:self.classID UserXId:strngXid UserID:albumUserId];
     [classApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
-        NSArray *data = [request.responseJSONObject objectForKey:@"data"];
-        NSLog(@"我的相册:%lu",(unsigned long)data.count );
-        if (data.count ==0) {
-            [self showString:@"赶紧上传照片哦" forSecond:1.f];
+        
+        
+        if ([[request.responseJSONObject objectForKey:@"data"] isKindOfClass:[NSString class]]) {
+            // 1、无数据的时候
+            UIImage *myImage = [UIImage imageNamed:@"all_placeholder"];
+            CGFloat myImageWidth = myImage.size.width;
+            CGFloat myImageHeight = myImage.size.height;
+            UIImageView *myImageView = [[UIImageView alloc] initWithFrame:CGRectMake(KScreenWidth / 2 - myImageWidth / 2, (KScreenHeight - 64 - 49) / 2 - myImageHeight / 2, myImageWidth, myImageHeight)];
+            myImageView.image = myImage;
+            [self.view addSubview:myImageView];
+            
         }else{
+            NSLog(@"%@",request.responseJSONObject);
+            NSArray *data = [request.responseJSONObject objectForKey:@"data"];
         NSLog(@"%@",data);
-         
             [self showHudWithString:@"正在请求数据" forSecond:1.f];
             for (int i =0 ; i < data.count; i++) {
                 XXEClassAlbumModel *model = [[XXEClassAlbumModel alloc]initWithDictionary:data[i] error:nil];
@@ -108,8 +128,9 @@ static NSString *const IdentifierCell = @"classAlbunCell";
                 [self.headDatasource addObject:stringName];
                 [self.imageViewDatasource addObject:model.pic_arr];
                 [self.teacherDatasource addObject:model.teacher_id];
-                //            NSLog(@"老师的ID%@",self.teacherDatasource);
+                
             }
+            NSLog(@"数组%@",self.imageViewDatasource);
             [self.classAlbumTableView reloadData];
             
         }

@@ -105,12 +105,23 @@
 /** 选择相片的数据源 */
 @property (nonatomic, strong)NSMutableArray *fileImageArray;
 
+/** 测试照片 */
+@property (nonatomic, strong)NSMutableArray *mutableArray;
+
 @end
 
 static NSString *IdentifierCELL = @"TeacherCell";
 static NSString *IdentifierMessCELL = @"TeacherMessCell";
 
 @implementation XXERegisterTeacherViewController
+
+- (NSMutableArray *)mutableArray
+{
+    if (!_mutableArray) {
+        _mutableArray = [NSMutableArray array];
+    }
+    return _mutableArray;
+}
 
 - (NSMutableArray *)classNameTwoArray
 {
@@ -255,11 +266,17 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
     return UIStatusBarStyleLightContent;
 }
 
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    [self commBoxInfo];
     [self InitializeTheMessage];
+    [self commBoxInfo];
+    
     
     _titleArr = @[@"学校名称:",@"学校类型:",@"班级信息:",@"年级信息:",@"教学类型:",@"",@"审核人员:",@"邀请码"];
     
@@ -309,9 +326,14 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
     self.theEndTeachType = @"";
     self.theEndReviewerId = @"";
     self.theEndInviteCode = @"";
-    
-    self.theEndUserAvatarImage = @"";
     self.theEndFileImage = @"";
+    [self.picker removeFromSuperview];
+    self.teacherCell = [self cellAtIndexRow:3 andAtSection:0 Message:@""];
+    self.teacherCell = [self cellAtIndexRow:4 andAtSection:0 Message:@""];
+    self.teacherCell = [self cellAtIndexRow:6 andAtSection:0 Message:@""];
+    self.teacherCell = [self cellAtIndexRow:7 andAtSection:0 Message:@""];
+    [self.mutableArray removeAllObjects];
+    [self commBoxInfo];
 }
 
 #pragma mark - tableView代理
@@ -744,6 +766,7 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
         }else {
             self.isHave = NO;
         }
+        [self InitializeTheMessage];
         self.schoolDatasource = mArr;
         self.schoolVC.delegate = self;
     }];
@@ -780,18 +803,23 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
 #pragma mark - 获取身份图片
 - (void)setupFileImage
 {
-    NSMutableArray *arr = [NSMutableArray array];
-    [self.picker.data removeLastObject];
-    arr = self.picker.data;
-    
-    for (int i =0; i <arr.count; i++) {
-        FSImageModel *model = self.picker.data[i];
-        UIImage *fileImage = [UIImage imageWithData:model.data];
-        [self.fileImageArray addObject:fileImage];
+    if (self.picker.data.count ==1) {
+        //往服务器传所有的参数
+        self.theEndFileImage = @"";
+        [self uploadRegisterMessage];
+    }else{
+        [self.picker.data removeLastObject];
+        self.mutableArray = self.picker.data;
+        for (int i =0; i <_mutableArray.count; i++) {
+            FSImageModel *model = self.picker.data[i];
+            UIImage *fileImage = [UIImage imageWithData:model.data];
+            [self.fileImageArray addObject:fileImage];
+        }
+        //用户的证件照
+        [self fileUserSomeImage];
     }
+
     
-    //用户的证件照
-    [self fileUserSomeImage];
 }
 
 #pragma mark - 用户所选择的证件照
