@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="XXEHomeworkIssueViewController">
@@ -21,7 +22,7 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="D0S-v0-8j4">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="D0S-v0-8j4">
                     <rect key="frame" x="0.0" y="54" width="375" height="44"/>
                     <subviews>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="homework_subject_icon" translatesAutoresizingMaskIntoConstraints="NO" id="WeV-36-7bw">
@@ -40,8 +41,12 @@
                         </textField>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="375" id="Wpg-S1-JB2"/>
+                        <constraint firstAttribute="width" secondItem="D0S-v0-8j4" secondAttribute="height" multiplier="375:44" id="gme-Wi-Aye"/>
+                    </constraints>
                 </view>
-                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="iVh-c9-qZh">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iVh-c9-qZh">
                     <rect key="frame" x="0.0" y="108" width="375" height="174"/>
                     <subviews>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="homework_content_icon" translatesAutoresizingMaskIntoConstraints="NO" id="qQa-DX-0wU">
@@ -67,8 +72,12 @@
                         </label>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="375" id="ZGJ-FF-XAP"/>
+                        <constraint firstAttribute="width" secondItem="iVh-c9-qZh" secondAttribute="height" multiplier="125:58" id="uBU-DH-41e"/>
+                    </constraints>
                 </view>
-                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Pkn-6g-ngn">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Pkn-6g-ngn">
                     <rect key="frame" x="0.0" y="292" width="375" height="44"/>
                     <subviews>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="homework_submittime_icon" translatesAutoresizingMaskIntoConstraints="NO" id="GCf-Ya-HXq">
@@ -87,8 +96,12 @@
                         </textField>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="width" secondItem="Pkn-6g-ngn" secondAttribute="height" multiplier="375:44" id="60O-Fj-EML"/>
+                        <constraint firstAttribute="width" constant="375" id="OhJ-FX-Mg0"/>
+                    </constraints>
                 </view>
-                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="x36-B6-Ivn">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="x36-B6-Ivn">
                     <rect key="frame" x="0.0" y="346" width="375" height="120"/>
                     <subviews>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="home_redflower_picIcon" translatesAutoresizingMaskIntoConstraints="NO" id="usf-wE-lFe">
@@ -102,15 +115,23 @@
                         </label>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="width" secondItem="x36-B6-Ivn" secondAttribute="height" multiplier="25:8" id="Mgk-Lv-hvo"/>
+                        <constraint firstAttribute="width" constant="375" id="p5o-Ej-m3W"/>
+                    </constraints>
                 </view>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3Kt-tu-UbS">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3Kt-tu-UbS">
                     <rect key="frame" x="25" y="554" width="325" height="42"/>
+                    <constraints>
+                        <constraint firstAttribute="width" secondItem="3Kt-tu-UbS" secondAttribute="height" multiplier="325:42" id="Dyg-GT-9tY"/>
+                        <constraint firstAttribute="width" constant="325" id="K7u-wO-wmh"/>
+                    </constraints>
                     <state key="normal" title="确 认 发 布" backgroundImage="login_green"/>
                     <connections>
                         <action selector="certainButton:" destination="-1" eventType="touchUpInside" id="YXe-PK-l0C"/>
                     </connections>
                 </button>
-                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VNy-r9-VkZ">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VNy-r9-VkZ">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                     <subviews>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="home_redflower_courseIcon" translatesAutoresizingMaskIntoConstraints="NO" id="2t2-Um-zzI">
@@ -124,9 +145,33 @@
                         </label>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="375" id="p4F-bX-0Ki"/>
+                        <constraint firstAttribute="width" secondItem="VNy-r9-VkZ" secondAttribute="height" multiplier="375:44" id="tgg-uc-iED"/>
+                    </constraints>
                 </view>
             </subviews>
             <color key="backgroundColor" red="0.89923416940789469" green="0.90871710526315785" blue="0.91557874177631571" alpha="1" colorSpace="calibratedRGB"/>
+            <constraints>
+                <constraint firstItem="Pkn-6g-ngn" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="7Yo-gQ-EhF"/>
+                <constraint firstAttribute="trailing" secondItem="VNy-r9-VkZ" secondAttribute="trailing" id="AXj-2d-tVc"/>
+                <constraint firstItem="iVh-c9-qZh" firstAttribute="top" secondItem="D0S-v0-8j4" secondAttribute="bottom" constant="10" id="BkB-vW-cq5"/>
+                <constraint firstItem="3Kt-tu-UbS" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="25" id="F9V-bK-fpS"/>
+                <constraint firstItem="D0S-v0-8j4" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="KA8-rC-ybJ"/>
+                <constraint firstItem="x36-B6-Ivn" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="KOZ-EO-1ia"/>
+                <constraint firstAttribute="trailing" secondItem="D0S-v0-8j4" secondAttribute="trailing" id="KZ2-21-IOR"/>
+                <constraint firstItem="Pkn-6g-ngn" firstAttribute="top" secondItem="iVh-c9-qZh" secondAttribute="bottom" constant="10" id="NOZ-ta-zff"/>
+                <constraint firstItem="VNy-r9-VkZ" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="Nty-bc-6Zm"/>
+                <constraint firstItem="x36-B6-Ivn" firstAttribute="top" secondItem="Pkn-6g-ngn" secondAttribute="bottom" constant="10" id="Oru-Ex-vgc"/>
+                <constraint firstItem="VNy-r9-VkZ" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="PDE-9o-FiO"/>
+                <constraint firstAttribute="trailing" secondItem="Pkn-6g-ngn" secondAttribute="trailing" id="PfV-sg-q4x"/>
+                <constraint firstAttribute="trailing" secondItem="3Kt-tu-UbS" secondAttribute="trailing" constant="25" id="VdL-Lf-rYw"/>
+                <constraint firstAttribute="trailing" secondItem="x36-B6-Ivn" secondAttribute="trailing" id="dli-8U-fiA"/>
+                <constraint firstAttribute="trailing" secondItem="iVh-c9-qZh" secondAttribute="trailing" id="iqb-uV-G1a"/>
+                <constraint firstItem="3Kt-tu-UbS" firstAttribute="top" secondItem="x36-B6-Ivn" secondAttribute="bottom" constant="88" id="oQj-7W-4hi"/>
+                <constraint firstItem="iVh-c9-qZh" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="p1V-wE-EaN"/>
+                <constraint firstItem="D0S-v0-8j4" firstAttribute="top" secondItem="VNy-r9-VkZ" secondAttribute="bottom" constant="10" id="rxu-Yp-xcc"/>
+            </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <point key="canvasLocation" x="317.5" y="264.5"/>
         </view>

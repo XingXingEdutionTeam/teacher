@@ -14,10 +14,16 @@
                 <rect key="frame" x="0.0" y="0.0" width="375" height="199"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="l9d-d8-bzX">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="l9d-d8-bzX">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="199"/>
                     </imageView>
                 </subviews>
+                <constraints>
+                    <constraint firstItem="l9d-d8-bzX" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="BBw-9e-CBq"/>
+                    <constraint firstAttribute="bottom" secondItem="l9d-d8-bzX" secondAttribute="bottom" id="FSa-ak-6Wt"/>
+                    <constraint firstItem="l9d-d8-bzX" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="GD1-8A-cPs"/>
+                    <constraint firstAttribute="trailing" secondItem="l9d-d8-bzX" secondAttribute="trailing" id="XYx-mP-Cbp"/>
+                </constraints>
             </tableViewCellContentView>
             <connections>
                 <outlet property="foodImageView" destination="l9d-d8-bzX" id="wTh-Im-Qrt"/>
