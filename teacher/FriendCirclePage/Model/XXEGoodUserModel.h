@@ -14,8 +14,8 @@
 @interface XXEGoodUserModel : JSONModel
 
 /** 点赞的xid */
-@property (nonatomic, copy)NSString <Optional>*xid;
+@property (nonatomic, copy)NSString <Optional>*goodXid;
 /** 点赞人的昵称 */
-@property (nonatomic, copy)NSString <Optional>*nickname;
+@property (nonatomic, copy)NSString <Optional>*goodNickName;
 
 @end

@@ -10,4 +10,9 @@
 
 @implementation XXECircleModel
 
++ (JSONKeyMapper *)keyMapper
+{
+    return [[JSONKeyMapper alloc]initWithDictionary:@{@"id":@"talkId"}];
+}
+
 @end

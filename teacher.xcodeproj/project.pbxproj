@@ -238,6 +238,9 @@
 		04F216C81D76ECFD005C2EBF /* XXESchoolCourseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 04F216C71D76ECFD005C2EBF /* XXESchoolCourseModel.m */; };
 		04F216CC1D76F0CE005C2EBF /* XXESchoolCourseTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04F216CA1D76F0CE005C2EBF /* XXESchoolCourseTableViewCell.m */; };
 		04F216CD1D76F0CE005C2EBF /* XXESchoolCourseTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04F216CB1D76F0CE005C2EBF /* XXESchoolCourseTableViewCell.xib */; };
+		9E0022581D7D10790082F6F0 /* XXEDiffentIdentityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E0022571D7D10790082F6F0 /* XXEDiffentIdentityViewController.m */; };
+		9E00225B1D7D17DF0082F6F0 /* XXEIdentityAddHeadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E00225A1D7D17DF0082F6F0 /* XXEIdentityAddHeadViewController.m */; };
+		9E00225E1D7D17F30082F6F0 /* XXEIdentityAddTeacherViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E00225D1D7D17F30082F6F0 /* XXEIdentityAddTeacherViewController.m */; };
 		9E02B41E1D78133200BE40E3 /* XXEForgetPassApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E02B41D1D78133200BE40E3 /* XXEForgetPassApi.m */; };
 		9E02B4221D782F7B00BE40E3 /* XXEAddIdentityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E02B4211D782F7B00BE40E3 /* XXEAddIdentityViewController.m */; };
 		9E02B4271D7831FC00BE40E3 /* XXEHomeIdentityApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E02B4261D7831FC00BE40E3 /* XXEHomeIdentityApi.m */; };
@@ -890,6 +893,12 @@
 		04F216CA1D76F0CE005C2EBF /* XXESchoolCourseTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXESchoolCourseTableViewCell.m; sourceTree = "<group>"; };
 		04F216CB1D76F0CE005C2EBF /* XXESchoolCourseTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XXESchoolCourseTableViewCell.xib; sourceTree = "<group>"; };
 		16EC2C4BB8E577B5CE2BABDD /* Pods-teacher.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-teacher.debug.xcconfig"; path = "Pods/Target Support Files/Pods-teacher/Pods-teacher.debug.xcconfig"; sourceTree = "<group>"; };
+		9E0022561D7D10790082F6F0 /* XXEDiffentIdentityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXEDiffentIdentityViewController.h; sourceTree = "<group>"; };
+		9E0022571D7D10790082F6F0 /* XXEDiffentIdentityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXEDiffentIdentityViewController.m; sourceTree = "<group>"; };
+		9E0022591D7D17DF0082F6F0 /* XXEIdentityAddHeadViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXEIdentityAddHeadViewController.h; sourceTree = "<group>"; };
+		9E00225A1D7D17DF0082F6F0 /* XXEIdentityAddHeadViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXEIdentityAddHeadViewController.m; sourceTree = "<group>"; };
+		9E00225C1D7D17F30082F6F0 /* XXEIdentityAddTeacherViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXEIdentityAddTeacherViewController.h; sourceTree = "<group>"; };
+		9E00225D1D7D17F30082F6F0 /* XXEIdentityAddTeacherViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXEIdentityAddTeacherViewController.m; sourceTree = "<group>"; };
 		9E02B41C1D78133200BE40E3 /* XXEForgetPassApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXEForgetPassApi.h; sourceTree = "<group>"; };
 		9E02B41D1D78133200BE40E3 /* XXEForgetPassApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXEForgetPassApi.m; sourceTree = "<group>"; };
 		9E02B4201D782F7B00BE40E3 /* XXEAddIdentityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXEAddIdentityViewController.h; sourceTree = "<group>"; };
@@ -2193,6 +2202,12 @@
 			children = (
 				9E02B4201D782F7B00BE40E3 /* XXEAddIdentityViewController.h */,
 				9E02B4211D782F7B00BE40E3 /* XXEAddIdentityViewController.m */,
+				9E0022561D7D10790082F6F0 /* XXEDiffentIdentityViewController.h */,
+				9E0022571D7D10790082F6F0 /* XXEDiffentIdentityViewController.m */,
+				9E0022591D7D17DF0082F6F0 /* XXEIdentityAddHeadViewController.h */,
+				9E00225A1D7D17DF0082F6F0 /* XXEIdentityAddHeadViewController.m */,
+				9E00225C1D7D17F30082F6F0 /* XXEIdentityAddTeacherViewController.h */,
+				9E00225D1D7D17F30082F6F0 /* XXEIdentityAddTeacherViewController.m */,
 			);
 			path = EditorIdentity;
 			sourceTree = "<group>";
@@ -3306,7 +3321,7 @@
 				TargetAttributes = {
 					9E48137E1D504D0900C614AC = {
 						CreatedOnToolsVersion = 7.2;
-						DevelopmentTeam = T66J45HUSH;
+						DevelopmentTeam = UC7R7ETD35;
 					};
 					9E4813971D504D0900C614AC = {
 						CreatedOnToolsVersion = 7.2;
@@ -3672,6 +3687,7 @@
 				9E9B4C521D633B8700983F5E /* DFTextImageLineCellAdapter.m in Sources */,
 				0433012A1D62BDD000722DE2 /* XXERedFlowerDetialViewController.m in Sources */,
 				9E4FF3611D766F66005E3C94 /* HHControl.m in Sources */,
+				9E0022581D7D10790082F6F0 /* XXEDiffentIdentityViewController.m in Sources */,
 				048F58801D5C7A3A002E4855 /* XXEXingCoinHistoryViewController.m in Sources */,
 				04BB3A151D74742A00AA5C5C /* XXESchoolAddressApi.m in Sources */,
 				04BB3A0E1D74742A00AA5C5C /* XXEModifyCertificateApi.m in Sources */,
@@ -3730,6 +3746,7 @@
 				9E6693EB1D646C0900FFA0A7 /* CheckIDCard.m in Sources */,
 				9E9B4C5F1D633B8700983F5E /* DFFaceManager.m in Sources */,
 				9E9B4C571D633B8700983F5E /* DFTimeLineViewController.m in Sources */,
+				9E00225E1D7D17F30082F6F0 /* XXEIdentityAddTeacherViewController.m in Sources */,
 				04BB3A9F1D74743300AA5C5C /* XXEClassAddressStudentInfoModel.m in Sources */,
 				04F216951D7671BB005C2EBF /* QHUtil.m in Sources */,
 				9E02B4221D782F7B00BE40E3 /* XXEAddIdentityViewController.m in Sources */,
@@ -3833,6 +3850,7 @@
 				9EEA0E301D6E83550070C8C3 /* TAPageControl.m in Sources */,
 				04BB3AA81D74743300AA5C5C /* XXECommentHistoryDetailInfoViewController.m in Sources */,
 				9E94B77D1D75A62D0045D575 /* XXERegisterTeacherApi.m in Sources */,
+				9E00225B1D7D17DF0082F6F0 /* XXEIdentityAddHeadViewController.m in Sources */,
 				04F216B41D76B3EF005C2EBF /* XXESchoolRegisterTeacherInfoModel.m in Sources */,
 				9E9B4C541D633B8700983F5E /* DFTextImageUserLineCellAdapter.m in Sources */,
 				0445A3C31D65E82E00C3A4CA /* UIColor+HexString.m in Sources */,

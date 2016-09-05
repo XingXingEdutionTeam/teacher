@@ -10,15 +10,24 @@
 #import "XXEHomeIdentityApi.h"
 #import "XXEIdentityListViewCell.h"
 #import "XXEIdentityListModel.h"
+#import "XXEDiffentIdentityViewController.h"
 
 @interface XXEAddIdentityViewController ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic, strong)UITableView *identityTableView;
 /** 身份列表的数据 */
-@property (nonatomic, weak)NSMutableArray *idenDatasouce;
+@property (nonatomic, strong)NSMutableArray *idenDatasouces;
 
 @end
 
 @implementation XXEAddIdentityViewController
+
+- (NSMutableArray *)idenDatasouces
+{
+    if (!_idenDatasouces) {
+        _idenDatasouces = [NSMutableArray array];
+    }
+    return _idenDatasouces;
+}
 
 - (UITableView *)identityTableView
 {
@@ -35,14 +44,14 @@
 {
     [super viewWillAppear:animated];
     self.view.backgroundColor = XXEBackgroundColor;
-    self.navigationItem.title = @"";
+    self.navigationItem.title = @"编辑身份";
     self.navigationController.navigationBarHidden = NO;
     [self creatNavigaRightButton];
 }
 - (void)viewDidDisappear:(BOOL)animated
 {
-    [self.navigationController popToRootViewControllerAnimated:YES];
-    [self.view removeFromSuperview];
+//    [self.navigationController popToRootViewControllerAnimated:YES];
+//    [self.view removeFromSuperview];
 }
 
 /** 这个方法都可以,改变当前控制器的电池条颜色 */
@@ -59,8 +68,6 @@
     [self.view addSubview:self.identityTableView];
     //获取网络数据
     [self setupIdentityList];
-    
-    
 }
 
 #pragma mark - 获取网络 数据
@@ -86,16 +93,15 @@
             return ;
         }else if ([code intValue]==1) {
             
-             NSArray *messageArray = [request.responseJSONObject objectForKey:@"data"];
+             NSMutableArray *messageArray = [request.responseJSONObject objectForKey:@"data"];
             for (int i =0; i<messageArray.count; i++) {
                 XXEIdentityListModel *identityModel = [[XXEIdentityListModel alloc]initWithDictionary:messageArray[i] error:nil];
-                [self.idenDatasouce addObject:identityModel];
+                NSLog(@"model的值:%@",identityModel);
+                [self.idenDatasouces addObject:identityModel];
             }
-            NSLog(@"编辑学校详情%@",self.idenDatasouce);
+            NSLog(@"编辑学校详情%@",self.idenDatasouces);
+            [self.identityTableView reloadData];
         }
-            
-            
-       
         
     } failure:^(__kindof YTKBaseRequest *request) {
         
@@ -110,7 +116,7 @@
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 10;
+    return self.idenDatasouces.count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -121,6 +127,8 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     XXEIdentityListViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CELL" forIndexPath:indexPath];
+    XXEIdentityListModel *model = self.idenDatasouces[indexPath.row];
+    [cell identityListMessage:model];
     return cell;
 }
 
@@ -133,16 +141,14 @@
 #pragma mark - 按钮的点击事件
 - (void)addNavigationButton
 {
-    
+    XXEDiffentIdentityViewController *diffentIdVC = [[XXEDiffentIdentityViewController alloc]init];
+    [self.navigationController pushViewController:diffentIdVC animated:YES];
 }
 
 
 #pragma mark - 创建导航栏后边的按钮
 - (void)creatNavigaRightButton
 {
-//    UIButton *addButton = [UIButton createButtonWithFrame:CGRectMake(0, 0, 22, 22) backGruondImageName:@"home_flowerbasket_addIcon44x44" Target:self Action:@selector(addNavigationButton) Title:@""];
-//    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithCustomView:addButton];
-    
     //设置 navigationBar 右边 上传图片
     UIButton *updataButton = [UIButton buttonWithType:UIButtonTypeCustom];
     updataButton.frame = CGRectMake(300, 5, 22, 22);

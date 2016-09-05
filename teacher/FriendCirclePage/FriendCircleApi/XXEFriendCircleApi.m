@@ -11,14 +11,16 @@
 @implementation XXEFriendCircleApi{
     NSString *_xid;
     NSString *_pageNum;
+    NSString *_userId;
 }
 
-- (id)initWithFriendCircleXid:(NSString *)xid PageNumber:(NSString *)pageNum
+- (id)initWithFriendCircleXid:(NSString *)xid CircleUserId:(NSString *)userId PageNumber:(NSString *)pageNum
 {
     self = [super init];
     if (self) {
         _xid = xid;
         _pageNum = pageNum;
+        _userId = userId;
     }
     return self;
 }
@@ -36,10 +38,10 @@
 - (id)requestArgument
 {
     return @{@"page":_pageNum,
-             @"xid":XID,
+             @"xid":_xid,
              @"appkey":APPKEY,
              @"backtype":BACKTYPE,
-             @"user_id":@"1",
+             @"user_id":_userId,
              @"user_type":@"2"
              };
 }

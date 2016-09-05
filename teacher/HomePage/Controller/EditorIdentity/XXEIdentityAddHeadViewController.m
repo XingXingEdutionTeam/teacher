@@ -1,45 +1,46 @@
 //
-//  XXERegisterHeadMasterViewController.m
+//  XXEIdentityAddHeadViewController.m
 //  teacher
 //
-//  Created by codeDing on 16/8/17.
+//  Created by codeDing on 16/9/5.
 //  Copyright © 2016年 XingXingEdu. All rights reserved.
 //
 
-
-//
-//  XXERegisterHeadMasterViewController.m
-//  teacher
-//
-//  Created by codeDing on 16/8/17.
-//  Copyright © 2016年 XingXingEdu. All rights reserved.
-//
-
-#import "XXERegisterHeadMasterViewController.h"
+#import "XXEIdentityAddHeadViewController.h"
 #import "XXETeacherTableViewCell.h"
 #import "XXETeacherMessTableViewCell.h"
 #import "XXERegisterSearchSchoolApi.h"
 #import "XXETeacherModel.h"
-#import "WZYSearchSchoolViewController.h"
+#import "XXERegisterGradeSchoolApi.h"
+#import "XXETeacherGradeModel.h"
+#import "XXETeachOfTypeModel.h"
+#import "XXERegisterTeachOfTypeApi.h"
 #import "XXEReviewerApi.h"
 #import "XXEReviewerModel.h"
+#import "XXERegisterTeacherApi.h"
+#import "YTKBatchRequest.h"
+#import "WZYSearchSchoolViewController.h"
+#import "XXERegisterClassSchoolApi.h"
+#import "XXETeacherClassModel.h"
+#import "XXELoginViewController.h"
+#import "XXEAddIdentityViewController.h"
 //选择城市相关
 #import "TWSelectCityView.h"
 #import "XXESelectMessageView.h"
 #import "FSImagePickerView.h"
-#import "FSImageModel.h"
 #import "UtilityFunc.h"
 #import "XXELoginViewController.h"
+#import "FSImageModel.h"
 #import "XXERegisterPicApi.h"
-#import "XXEUserInfo.h"
-#define awayX 20
-@interface XXERegisterHeadMasterViewController ()<UISearchBarDelegate,UITableViewDelegate,UITableViewDataSource,XXESearchSchoolMessageDelegate,UITextFieldDelegate>{
+
+@interface XXEIdentityAddHeadViewController ()<UISearchBarDelegate,UITableViewDelegate,UITableViewDataSource,XXESearchSchoolMessageDelegate,UITextFieldDelegate>{
     UIButton *landBtn;
     //ding
     NSArray *_titleArr;
     NSArray *_titleTextArr;
     NSMutableArray *_schoolTypeArr;
 }
+
 @property (nonatomic, strong)FSImagePickerView *picker;
 @property(nonatomic,strong)UISearchBar *searchBar;
 @property(nonatomic,strong)UISearchController *searchDC;
@@ -88,24 +89,18 @@
 /** 学校的区 */
 @property (nonatomic, copy)NSString *schoolDistrict;
 
-/** 获取头像url */
-@property (nonatomic, copy)NSString *theEndUserAvatarImage;
 /** 获取证件url */
 @property (nonatomic, copy)NSString *theEndFileImage;
 
 /** 证件照片 */
 @property (nonatomic, strong)NSMutableArray *fileHeadImageArray;
 
-///** 测试存储的图片 */
-//@property (nonatomic, strong)NSMutableArray *mutableHeadArray;
-
 @end
 
 static NSString *IdentifierCELL = @"TeacherCell";
 static NSString *IdentifierMessCELL = @"TeacherMessCell";
 
-@implementation XXERegisterHeadMasterViewController
-
+@implementation XXEIdentityAddHeadViewController
 
 - (NSMutableArray *)fileHeadImageArray
 {
@@ -156,7 +151,7 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
     
     
     if ([[XXEUserInfo user].login_type isEqualToString:@"1"]) {
-       self.navigationItem.title = @"4/4注册";
+        self.navigationItem.title = @"4/4注册";
     }else{
         self.navigationItem.title = @"完善资料2/2";
     }
@@ -170,13 +165,6 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
     self.navigationItem.rightBarButtonItem= rightItem;
     
 }
-
-- (void)viewDidDisappear:(BOOL)animated
-{
-    [super viewDidDisappear:animated];
-//    [self.picker removeFromSuperview];
-}
-
 /** 这个方法都可以,改变当前控制器的电池条颜色 */
 -(UIStatusBarStyle)preferredStatusBarStyle
 {
@@ -191,8 +179,6 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
     
     self.isHave = NO;
     
-    NSLog(@"打印传过来的数据:电话号码%@ 姓名%@ 身份证%@ 密码%@ 类型%@ 头像%@ 登录类型%@ 性别%@ 年龄%@",self.userPhoneNum,self.userName,self.userIDCarNum,self.userPassword,self.userIdentifier,self.userAvatarImage,self.login_type,self.userSex,self.userAge);
-    
     _titleArr = @[@"学校名称:",@"学校类型:",@"学校地址:",@"详细地址:",@"联系方式:",@"",@"审核人员:",@"邀请码"];
     
     _titleTextArr = @[@"请输入或搜索学校名称",@"请选择你学校类型",@"学校地址",@"请输入详细地址",@"联系方式",@"",@"请选择审核人",@"可不填"];
@@ -203,35 +189,8 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
     [self.teacherTableView registerNib:[UINib nibWithNibName:@"XXETeacherTableViewCell" bundle:nil] forCellReuseIdentifier:IdentifierCELL];
     [self.teacherTableView registerNib:[UINib nibWithNibName:@"XXETeacherMessTableViewCell" bundle:nil] forCellReuseIdentifier:IdentifierMessCELL];
     [self.view addSubview:self.teacherTableView];
-    
-    //校长的头像
-    [self headMasterImageUpLoad];
 }
 
-#pragma mark - 上传校长头像
-- (void)headMasterImageUpLoad
-{
-    NSLog(@"用户头像%@",self.userAvatarImage);
-    
-    if (self.userAvatarImage != nil) {
-        XXERegisterPicApi *headPicApi = [[XXERegisterPicApi alloc]initUpLoadRegisterPicFileType:@"1" PageOrigin:@"1" UploadFormat:@"1" UIImageHead:self.userAvatarImage];
-        [headPicApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
-            NSString *code = [request.responseJSONObject objectForKey:@"code"];
-            if ([code intValue]== 1) {
-                NSString *avatar = [request.responseJSONObject objectForKey:@"data"];
-                self.theEndUserAvatarImage = avatar;
-            }
-            NSLog(@"%@",request.responseJSONObject);
-            NSLog(@"%@",[request.responseJSONObject objectForKey:@"msg"]);
-            
-        } failure:^(__kindof YTKBaseRequest *request) {
-            
-        }];
-    }else{
-        
-    }
-    
-}
 
 #pragma mark - 初始化参数
 - (void)LnitializeTheParameter
@@ -294,7 +253,7 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
     switch (indexPath.row) {
         case 0:{
             self.teacherCell = [self cellAtIndexRow:0 andAtSection:0 Message:@""];
-                [self tureOrFalseCellClick:YES Tag:100];
+            [self tureOrFalseCellClick:YES Tag:100];
             break;
         }
         case 1:{
@@ -317,27 +276,27 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
                 self.schoolDistrict = distr;
                 NSLog(@"地点%@",self.teacherCell.teacherRegisTextField.text);
             }];
-//            }
+            //            }
             break;
         }
         case 3:{
             self.teacherCell = [self cellAtIndexRow:3 andAtSection:0 Message:@""];
             [self tureOrFalseCellClick:YES Tag:103];
-             NSLog(@"详细地点%@",self.teacherCell.teacherRegisTextField.text);
+            NSLog(@"详细地点%@",self.teacherCell.teacherRegisTextField.text);
             break;
         }
         case 4:{
             self.teacherCell = [self cellAtIndexRow:4 andAtSection:0 Message:@""];
             [self tureOrFalseCellClick:YES Tag:104];
             
-             NSLog(@"电话%@",self.teacherCell.teacherRegisTextField.text);
+            NSLog(@"电话%@",self.teacherCell.teacherRegisTextField.text);
             break;
         }
         case 6:{
             if (self.isHave) {
                 
             }else {
-               self.teacherCell = [self cellAtIndexRow:6 andAtSection:0 Message:@"平台审核"];
+                self.teacherCell = [self cellAtIndexRow:6 andAtSection:0 Message:@"平台审核"];
             }
             [self tureOrFalseCellClick:NO Tag:106];
             break;
@@ -345,8 +304,8 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
         case 7:{
             self.teacherCell = [self cellAtIndexRow:7 andAtSection:0 Message:@""];
             [self tureOrFalseCellClick:YES Tag:107];
-
-             NSLog(@"蛇和好%@",self.teacherCell.teacherRegisTextField.text);
+            
+            NSLog(@"蛇和好%@",self.teacherCell.teacherRegisTextField.text);
             break;
         }
         default:
@@ -452,10 +411,9 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
         return;
     }else
     {
-    [self getIdCardPhotoImage];
+        [self getIdCardPhotoImage];
     }
     
-    NSLog(@"登录类型%@ 电话号码%@ 密码%@ 用户姓名%@ 用户身份证%@ 年龄%@ 性别%@ 用户身份%@ 用户头像%@",self.login_type,self.userPhoneNum,self.userPassword,self.userName,self.userIDCarNum,self.userAge,self.userSex,self.userIdentifier,self.userAvatarImage);
     NSLog(@"邀请码%@ 学校详细地址%@ 学校电话%@ 学校ID%@ 学校类型%@ 学校名字%@ 学校省%@ 学校市%@ 学校区%@ 审核人%@",self.theEndInviteCode,self.schoolAddrss,self.schoolTel,self.theEndSchoolId,self.theEndSchoolType,self.schoolName,self.schoolProvince,self.schoolCity,self.schoolDistrict,self.theEndReviewerId);
 }
 
@@ -523,22 +481,26 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
     } failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error) {
         [self showString:@"注册失败" forSecond:1.f];
     }];
-
+    
 }
 
 #pragma mark - 网服务器传送注册
 - (void)uploadHeadMasterRegisterMessage
 {
+    NSString *strngXid;
+    NSString *homeUserId;
+    if ([XXEUserInfo user].login) {
+        strngXid = [XXEUserInfo user].xid;
+        homeUserId = [XXEUserInfo user].user_id;
+    }else {
+        strngXid = XID;
+        homeUserId = USER_ID;
+    }
+    
+    NSLog(@"邀请码%@ 学校详细地址%@ 学校电话%@ 学校ID%@ 学校类型%@ 学校名字%@ 学校省%@ 学校市%@ 学校区%@ 审核人%@ 本人类型%@",self.theEndInviteCode,self.schoolAddrss,self.schoolTel,self.theEndSchoolId,self.theEndSchoolType,self.schoolName,self.schoolProvince,self.schoolCity,self.schoolDistrict,self.theEndReviewerId,self.headPosition);
+    NSLog(@"班级ID%@",_theEndClassId);
     NSDictionary *parameter = @{
-                                @"login_type":_login_type,
-                                @"phone":_userPhoneNum,
-                                @"pass":_userPassword,
-                                @"tname":_userName,
-                                @"id_card":_userIDCarNum,
-                                @"passport":_headPassport,
-                                @"age":_userAge,
-                                @"sex":_userSex,
-                                @"position":_userIdentifier,
+                                @"position":self.headPosition,
                                 @"teach_course_id":@"",
                                 @"school_id":_theEndSchoolId,
                                 @"class_id":_theEndClassId,
@@ -551,20 +513,18 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
                                 @"province":_schoolProvince,
                                 @"city":_schoolCity,
                                 @"district":_schoolDistrict,
-                                @"head_img":_theEndUserAvatarImage,
+                                
                                 @"file":_theEndFileImage,
-                                @"qq":_headThirdQQToken,
-                                @"weixin":_headThirdWeiXinToken,
-                                @"weibo":_headThirdSinaToken,
-                                @"alipay":_headThirdAliPayToken,
                                 @"appkey":APPKEY,
                                 @"backtype":BACKTYPE,
-                                @"user_type":USER_TYPE
+                                @"user_type":USER_TYPE,
+                                @"xid":strngXid,
+                                @"user_id":homeUserId
                                 };
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     
-    [manager POST:XXERegisterTeacherUrl parameters:parameter constructingBodyWithBlock:^(id<AFMultipartFormData> formData){
+    [manager POST:XXEHomeAddIdentityUrl parameters:parameter constructingBodyWithBlock:^(id<AFMultipartFormData> formData){
         
     }success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
@@ -573,28 +533,24 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
         
         if ([[responseObject objectForKey:@"code"] intValue]==1) {
             
-            [self showString:@"你已注册成功,请到首页登录" forSecond:3.f];
-            //跳转到登录页
-            NSLog(@"-----进入主页------");
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                XXELoginViewController *loginVC = [[XXELoginViewController alloc]init];
-                loginVC.loginThirdType = self.login_type;
-                loginVC.loginThirdQQToken = self.headThirdQQToken;
-                loginVC.loginThirdWeiXinToken = self.headThirdWeiXinToken;
-                loginVC.loginThirdSinaToken = self.headThirdSinaToken;
-                loginVC.loginThirdAliPayToken = self.headThirdAliPayToken;
-                
-                UIWindow *window = [UIApplication sharedApplication].keyWindow;
-                window.rootViewController = loginVC;
-                [self.view removeFromSuperview];
+            [self showString:@"你已添加成功成功" forSecond:3.f];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1*NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                //
+                XXEAddIdentityViewController *addIdentityVC = self.navigationController.viewControllers[1];
+                [self.navigationController popToViewController:addIdentityVC animated:YES];
             });
+
             
-        } else {
-            [self showString:@"注册失败" forSecond:2.f];
+        } else if([[responseObject objectForKey:@"code"] intValue]==16){
+            [self showString:@"你要添加的身份已存在" forSecond:2.f];
+        }else{
+            [self showString:@"添加身份失败" forSecond:1.f];
         }
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        [self showString:@"注册失败" forSecond:1.f];
+        [self showString:@"添加学校失败" forSecond:1.f];
+        NSLog(@"%@",error);
+        
     }];
 }
 
@@ -688,9 +644,20 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
     return cell;
 }
 
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+/*
+#pragma mark - Navigation
+
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+}
+*/
 
 @end

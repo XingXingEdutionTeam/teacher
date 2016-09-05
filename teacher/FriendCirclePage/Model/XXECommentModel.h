@@ -16,13 +16,15 @@
 /** 评论的Id */
 @property (nonatomic, copy)NSString <Optional>*commentId;
 /** 评论人的xid */
-@property (nonatomic, copy)NSString <Optional>*xid;
+@property (nonatomic, copy)NSString <Optional>*commentXid;
 /** 评论人的昵称 */
-@property (nonatomic, copy)NSString <Optional>*nickname;
+@property (nonatomic, copy)NSString <Optional>*commentNicknName;
 /** to_who_xid */
 @property (nonatomic, copy)NSString <Optional>*to_who_xid;
 /** to_who_nickname */
 @property (nonatomic, copy)NSString <Optional>*to_who_nickname;
-/** 回复类型 1为评论 2为回复别人 */
+/** 评论类型 1为评论 2为回复别人 */
 @property (nonatomic, copy)NSString <Optional>*com_type;
+/** 评论的内容 */
+@property (nonatomic, copy)NSString <Optional>*con;
 @end

@@ -10,4 +10,9 @@
 
 @implementation XXEGoodUserModel
 
++(JSONKeyMapper *)keyMapper
+{
+    return [[JSONKeyMapper alloc]initWithDictionary:@{@"xid":@"goodXid",@"nickname":@"goodNickName"}];
+}
+
 @end

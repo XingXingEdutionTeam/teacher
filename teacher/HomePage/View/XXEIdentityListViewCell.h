@@ -7,7 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
-
+@class XXEIdentityListModel;
 @interface XXEIdentityListViewCell : UITableViewCell
+@property (weak, nonatomic) IBOutlet UIImageView *identitySchoolImageView;
+@property (weak, nonatomic) IBOutlet UILabel *identitySchoolNameLabel;
+@property (weak, nonatomic) IBOutlet UILabel *identityClassNameLabel;
+@property (weak, nonatomic) IBOutlet UILabel *identityTeacheCourseLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *identityReviewImageView;
+
+- (void)identityListMessage:(XXEIdentityListModel *)model;
+
 
 @end
