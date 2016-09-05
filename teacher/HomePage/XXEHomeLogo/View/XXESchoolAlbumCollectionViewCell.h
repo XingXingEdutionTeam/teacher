@@ -18,7 +18,10 @@
 //是否 选中 图标 名字
 @property (nonatomic, copy) NSString *checkImageName;
 
+@property (nonatomic, strong) UIImageView *checkImageView;
 
+@property (nonatomic, strong) XXESchoolAlbumModel *model;
 
+@property (nonatomic) BOOL disabled;
 
 @end

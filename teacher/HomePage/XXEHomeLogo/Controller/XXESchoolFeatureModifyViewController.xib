@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="XXESchoolFeatureModifyViewController">
@@ -16,15 +17,22 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="vVv-nd-ETK">
+                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="vVv-nd-ETK">
                     <rect key="frame" x="10" y="10" width="355" height="432"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="355" id="4Zq-Mw-xbK"/>
+                        <constraint firstAttribute="width" secondItem="vVv-nd-ETK" secondAttribute="height" multiplier="355:432" id="O6e-bm-FES"/>
+                    </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                 </textView>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1aQ-JC-QnL">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1aQ-JC-QnL">
                     <rect key="frame" x="25" y="494" width="325" height="42"/>
+                    <constraints>
+                        <constraint firstAttribute="width" secondItem="1aQ-JC-QnL" secondAttribute="height" multiplier="325:42" id="aoa-wF-dVc"/>
+                        <constraint firstAttribute="width" constant="325" id="p0s-eo-4o7"/>
+                    </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="18"/>
                     <state key="normal" title="提     交" backgroundImage="login_green">
                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -35,6 +43,14 @@
                 </button>
             </subviews>
             <color key="backgroundColor" red="0.89925986842105265" green="0.91128700657894635" blue="0.91473067434210531" alpha="1" colorSpace="calibratedRGB"/>
+            <constraints>
+                <constraint firstItem="vVv-nd-ETK" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="10" id="Hgq-fj-WwL"/>
+                <constraint firstItem="vVv-nd-ETK" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="10" id="NN8-7L-uuH"/>
+                <constraint firstAttribute="trailing" secondItem="vVv-nd-ETK" secondAttribute="trailing" constant="10" id="jZS-Wh-FmA"/>
+                <constraint firstItem="1aQ-JC-QnL" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="25" id="kyg-U0-Vn7"/>
+                <constraint firstAttribute="trailing" secondItem="1aQ-JC-QnL" secondAttribute="trailing" constant="25" id="vbA-rA-vvM"/>
+                <constraint firstItem="1aQ-JC-QnL" firstAttribute="top" secondItem="vVv-nd-ETK" secondAttribute="bottom" constant="52" id="zbC-rH-Lxn"/>
+            </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <point key="canvasLocation" x="176.5" y="231.5"/>
         </view>

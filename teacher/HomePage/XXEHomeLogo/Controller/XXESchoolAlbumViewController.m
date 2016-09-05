@@ -161,7 +161,7 @@
     
     //左下  切换 按钮
     _toggleSelectionBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _toggleSelectionBtn.frame = CGRectMake(10, 15, 40, 20);
+    _toggleSelectionBtn.frame = CGRectMake(10, 15, 100, 20);
     [_toggleSelectionBtn setTitle:@"全选" forState:UIControlStateNormal];
     [_toggleSelectionBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [_toggleSelectionBtn addTarget:self action:@selector(toggleSelectionBtnClick) forControlEvents:UIControlEventTouchUpInside];
@@ -172,6 +172,7 @@
     UIButton *editButton = [UIButton buttonWithType:UIButtonTypeCustom];
     editButton.frame = CGRectMake(KScreenWidth - 50, 15, 40, 20);
     [editButton setTitle:@"编辑" forState:UIControlStateNormal];
+    [editButton setTitle:@"删除" forState:UIControlStateSelected];
     [editButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [editButton addTarget:self action:@selector(editButtonClick) forControlEvents:UIControlEventTouchUpInside];
     [bottomView addSubview:editButton];
@@ -216,8 +217,19 @@
 - (void)editButtonClick{
 
     [self.delegate contactsPickerViewControllerDidFinish:self withSelectedContacts:[self selectedContacts]];
+    
+    [self deleteShoolPic];
 
 }
+
+- (void)deleteShoolPic{
+//    NSLog(@"self.selectedIndexSet -- %@", self.selectedIndexSet);
+//
+//    NSLog(@"self.disabledContactIds == %@", self.disabledContactIds);
+//    //selectedContactIds
+//    NSLog(@"self.selectedContactIds == %@", self.selectedContactIds);
+}
+
 
 - (void)upButton:(UIButton *)upBtn{
     NSLog(@"上传图片");
@@ -333,7 +345,7 @@
     XXESchoolAlbumModel *model = _dataSourceArray[indexPath.item];
     
     cell.schoolPicName = [NSString stringWithFormat:@"%@%@",kXXEPicURL,model.url];
-
+    cell.checkImageView.hidden = YES;
     return cell;
 }
 
@@ -366,27 +378,30 @@
 - (BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     
     NSLog(@"111");
+    XXESchoolAlbumCollectionViewCell *cell = (XXESchoolAlbumCollectionViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
+    cell.checkImageView.hidden = NO;
     if ([self.disabledContactIds count]) {
-        NSInteger item = indexPath.item;
-        XXESchoolAlbumModel *picModel = _dataSourceArray[item];
-        return ![self.disabledContactIds containsObject:picModel.schoolPicId];
+    NSInteger item = indexPath.item;
+    XXESchoolAlbumModel *picModel = _dataSourceArray[item];
+    return ![self.disabledContactIds containsObject:picModel.schoolPicId];
     }
     return YES;
 }
 
 - (BOOL)collectionView:(UICollectionView *)collectionView shouldDeselectItemAtIndexPath:(NSIndexPath *)indexPath {
     NSLog(@"222");
+    XXESchoolAlbumCollectionViewCell *cell = (XXESchoolAlbumCollectionViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
+    cell.checkImageView.hidden = YES;
     if ([self.disabledContactIds count]) {
-        NSInteger item = indexPath.item;
-        XXESchoolAlbumModel *picModel = _dataSourceArray[item];
-        return ![self.disabledContactIds containsObject:picModel.schoolPicId];
+
+    NSInteger item = indexPath.item;
+    XXESchoolAlbumModel *picModel = _dataSourceArray[item];
+    return ![self.disabledContactIds containsObject:picModel.schoolPicId];
     }
     return YES;
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    
-//    NSLog(@"选中第%ld个", indexPath.item);
     
     [self.selectedIndexSet addIndex:indexPath.item];
     [self updateToggleSelectionButton];

@@ -50,7 +50,6 @@
 }
 
 - (void)createData{
-
     if (_course_groupArray.count == 0) {
         _myTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         
@@ -59,18 +58,20 @@
         CGFloat myImageWidth = myImage.size.width;
         CGFloat myImageHeight = myImage.size.height;
         
-        UIImageView *myImageView = [[UIImageView alloc] initWithFrame:CGRectMake(KScreenWidth / 2 - myImageWidth / 2, (KScreenHeight - 64 - 49) / 2 - myImageHeight / 2, myImageWidth, myImageHeight)];
+        UIImageView *myImageView = [[UIImageView alloc] initWithFrame:CGRectMake(KScreenWidth / 2 - myImageWidth / 2, _myTableView.frame.size.height / 2, myImageWidth, myImageHeight)];
+        myImageView.backgroundColor = [UIColor redColor];
         myImageView.image = myImage;
-        [self.view addSubview:myImageView];
+        [_myTableView addSubview:myImageView];
+        
+//        [_myTableView bringSubviewToFront:myImageView];
+
     }else{
     
         NSArray *modelArray = [XXESchoolCourseModel parseResondsData:_course_groupArray];
         
         [_dataSourceArray addObjectsFromArray:modelArray];
-        
-        [_myTableView reloadData];
     }
-
+    [_myTableView reloadData];
 }
 
 - (void)createTableView{

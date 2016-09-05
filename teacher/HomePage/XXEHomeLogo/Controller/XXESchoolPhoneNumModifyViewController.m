@@ -11,6 +11,7 @@
 
 #import "XXESchoolPhoneNumModifyViewController.h"
 #import "XXEModifyPhoneNumApi.h"
+#import "XXEMyselfInfoModifyPhoneNumApi.h"
 
 #import "XXERegisterCheckApi.h"
 #import <SMS_SDK/SMSSDK.h>
@@ -228,6 +229,9 @@
         }
     }];
 }
+
+
+
 
 - (void)submitNewPhoneNum{
     //position		//教职身份(传数字,1:授课老师  2:主任  3:管理  4:校长)

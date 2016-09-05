@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="XXESchoolIntroductionDetailViewController">
@@ -16,14 +17,22 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="v7J-5H-yas">
+                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="v7J-5H-yas">
                     <rect key="frame" x="10" y="10" width="355" height="439"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="355" id="7ii-2g-nMc"/>
+                        <constraint firstAttribute="width" secondItem="v7J-5H-yas" secondAttribute="height" multiplier="355:439" id="ef7-q3-GTu"/>
+                    </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                 </textView>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="69w-9T-8p1">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="69w-9T-8p1">
                     <rect key="frame" x="25" y="482" width="325" height="42"/>
+                    <constraints>
+                        <constraint firstAttribute="width" secondItem="69w-9T-8p1" secondAttribute="height" multiplier="325:42" id="ryJ-Rl-Bgt"/>
+                        <constraint firstAttribute="width" constant="325" id="y4z-uv-gvp"/>
+                    </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="18"/>
                     <state key="normal" title="提      交" backgroundImage="login_green">
                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -34,6 +43,14 @@
                 </button>
             </subviews>
             <color key="backgroundColor" red="0.89928556743421051" green="0.91128700657894623" blue="0.91329152960526316" alpha="1" colorSpace="calibratedRGB"/>
+            <constraints>
+                <constraint firstItem="v7J-5H-yas" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="10" id="A7f-bS-Lu4"/>
+                <constraint firstAttribute="trailing" secondItem="v7J-5H-yas" secondAttribute="trailing" constant="10" id="BM8-wY-2re"/>
+                <constraint firstItem="v7J-5H-yas" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="10" id="I4I-fO-OYR"/>
+                <constraint firstAttribute="trailing" secondItem="69w-9T-8p1" secondAttribute="trailing" constant="25" id="e4n-CU-sLp"/>
+                <constraint firstItem="69w-9T-8p1" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="25" id="j8t-9b-Gip"/>
+                <constraint firstItem="69w-9T-8p1" firstAttribute="top" secondItem="v7J-5H-yas" secondAttribute="bottom" constant="33" id="nj1-XG-eX0"/>
+            </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <point key="canvasLocation" x="306.5" y="245.5"/>
         </view>

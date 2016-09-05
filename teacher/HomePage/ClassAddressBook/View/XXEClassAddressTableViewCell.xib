@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -14,29 +15,59 @@
                 <rect key="frame" x="0.0" y="0.0" width="375" height="79"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dRf-lN-SDF">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dRf-lN-SDF">
                         <rect key="frame" x="80" y="10" width="150" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="150" id="2FS-CP-Fd2"/>
+                            <constraint firstAttribute="width" secondItem="dRf-lN-SDF" secondAttribute="height" multiplier="50:7" id="Vmd-bm-3mk"/>
+                        </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bqZ-Ve-6cE">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bqZ-Ve-6cE">
                         <rect key="frame" x="80" y="50" width="150" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="150" id="1FQ-QH-0ng"/>
+                            <constraint firstAttribute="width" secondItem="bqZ-Ve-6cE" secondAttribute="height" multiplier="50:7" id="IiY-wg-szF"/>
+                        </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KQo-wz-ddZ">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="KQo-wz-ddZ">
                         <rect key="frame" x="10" y="10" width="60" height="60"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="KQo-wz-ddZ" secondAttribute="height" multiplier="1:1" id="PHg-CM-n4B"/>
+                            <constraint firstAttribute="height" constant="60" id="VeI-wv-6ad"/>
+                        </constraints>
                     </imageView>
-                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ze5-pb-H5W">
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ze5-pb-H5W">
                         <rect key="frame" x="260" y="25" width="100" height="30"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="ze5-pb-H5W" secondAttribute="height" multiplier="10:3" id="Vgh-jg-58S"/>
+                            <constraint firstAttribute="width" constant="100" id="oUz-uy-ZWz"/>
+                        </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <state key="normal" title="查看家人">
                             <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
                     </button>
                 </subviews>
+                <constraints>
+                    <constraint firstItem="ze5-pb-H5W" firstAttribute="leading" secondItem="dRf-lN-SDF" secondAttribute="trailing" constant="30" id="LXc-4s-3Qn"/>
+                    <constraint firstItem="KQo-wz-ddZ" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="Svr-ps-uZi"/>
+                    <constraint firstItem="dRf-lN-SDF" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="Vw9-nK-BnO"/>
+                    <constraint firstItem="dRf-lN-SDF" firstAttribute="leading" secondItem="KQo-wz-ddZ" secondAttribute="trailing" constant="10" id="Z8y-nv-TXX"/>
+                    <constraint firstItem="ze5-pb-H5W" firstAttribute="leading" secondItem="bqZ-Ve-6cE" secondAttribute="trailing" constant="30" id="lWB-b8-eVC"/>
+                    <constraint firstItem="ze5-pb-H5W" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="25" id="oFU-x6-8Sk"/>
+                    <constraint firstItem="ze5-pb-H5W" firstAttribute="leading" secondItem="bqZ-Ve-6cE" secondAttribute="trailing" constant="30" id="oXI-lf-zoG"/>
+                    <constraint firstAttribute="trailing" secondItem="ze5-pb-H5W" secondAttribute="trailing" constant="15" id="ogY-tl-3R8"/>
+                    <constraint firstItem="bqZ-Ve-6cE" firstAttribute="leading" secondItem="KQo-wz-ddZ" secondAttribute="trailing" constant="10" id="pWf-oc-8my"/>
+                    <constraint firstItem="bqZ-Ve-6cE" firstAttribute="top" secondItem="dRf-lN-SDF" secondAttribute="bottom" constant="19" id="s3d-hX-dBv"/>
+                    <constraint firstAttribute="bottom" secondItem="KQo-wz-ddZ" secondAttribute="bottom" constant="9" id="uog-Eo-08M"/>
+                    <constraint firstItem="KQo-wz-ddZ" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="zMJ-xH-3EY"/>
+                </constraints>
             </tableViewCellContentView>
             <connections>
                 <outlet property="detailLabel" destination="bqZ-Ve-6cE" id="y6M-ap-Bds"/>

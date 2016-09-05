@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="XXESchoolNameModifyViewController">
@@ -16,16 +17,20 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="学校名称" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ge9-Sb-TM3">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="学校名称" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ge9-Sb-TM3">
                     <rect key="frame" x="10" y="11" width="239" height="21"/>
+                    <constraints>
+                        <constraint firstAttribute="width" secondItem="Ge9-Sb-TM3" secondAttribute="height" multiplier="239:21" id="JjO-zJ-w0s"/>
+                        <constraint firstAttribute="width" constant="239" id="a7g-bM-Tz9"/>
+                    </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tqY-yQ-NZC">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tqY-yQ-NZC">
                     <rect key="frame" x="10" y="41" width="355" height="100"/>
                     <subviews>
-                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Yza-tn-s6p">
+                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Yza-tn-s6p">
                             <rect key="frame" x="8" y="8" width="339" height="84"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -33,9 +38,21 @@
                         </textView>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstItem="Yza-tn-s6p" firstAttribute="leading" secondItem="tqY-yQ-NZC" secondAttribute="leading" constant="8" id="70h-4u-uar"/>
+                        <constraint firstAttribute="bottom" secondItem="Yza-tn-s6p" secondAttribute="bottom" constant="8" id="Qhm-KU-CBu"/>
+                        <constraint firstAttribute="width" secondItem="tqY-yQ-NZC" secondAttribute="height" multiplier="71:20" id="fva-Jz-BpI"/>
+                        <constraint firstAttribute="width" constant="355" id="igJ-Vj-6Il"/>
+                        <constraint firstItem="Yza-tn-s6p" firstAttribute="top" secondItem="tqY-yQ-NZC" secondAttribute="top" constant="8" id="oDt-4F-qVk"/>
+                        <constraint firstAttribute="trailing" secondItem="Yza-tn-s6p" secondAttribute="trailing" constant="8" id="pnQ-mG-RtI"/>
+                    </constraints>
                 </view>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="H19-EJ-yZ9">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="H19-EJ-yZ9">
                     <rect key="frame" x="25" y="187" width="325" height="42"/>
+                    <constraints>
+                        <constraint firstAttribute="width" secondItem="H19-EJ-yZ9" secondAttribute="height" multiplier="325:42" id="9EP-vm-SCE"/>
+                        <constraint firstAttribute="width" constant="325" id="Vh4-vJ-W3T"/>
+                    </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="18"/>
                     <state key="normal" title="提     交" backgroundImage="login_green">
                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -46,6 +63,17 @@
                 </button>
             </subviews>
             <color key="backgroundColor" red="0.89612458881578949" green="0.90984786184210509" blue="0.91246916118421051" alpha="1" colorSpace="calibratedRGB"/>
+            <constraints>
+                <constraint firstItem="H19-EJ-yZ9" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="25" id="A1l-HX-sVw"/>
+                <constraint firstItem="tqY-yQ-NZC" firstAttribute="top" secondItem="Ge9-Sb-TM3" secondAttribute="bottom" constant="9" id="Mdw-Sf-Jzs"/>
+                <constraint firstAttribute="trailing" secondItem="H19-EJ-yZ9" secondAttribute="trailing" constant="25" id="Pjd-As-h7h"/>
+                <constraint firstAttribute="trailing" secondItem="Ge9-Sb-TM3" secondAttribute="trailing" constant="126" id="Pkf-v9-J2D"/>
+                <constraint firstItem="H19-EJ-yZ9" firstAttribute="top" secondItem="tqY-yQ-NZC" secondAttribute="bottom" constant="46" id="X3M-Xn-wp2"/>
+                <constraint firstItem="Ge9-Sb-TM3" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="10" id="dMG-f2-GUi"/>
+                <constraint firstAttribute="trailing" secondItem="tqY-yQ-NZC" secondAttribute="trailing" constant="10" id="fNK-fO-PDt"/>
+                <constraint firstItem="tqY-yQ-NZC" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="10" id="g9d-Kg-25C"/>
+                <constraint firstItem="Ge9-Sb-TM3" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="11" id="z4a-Z7-hnu"/>
+            </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <point key="canvasLocation" x="342.5" y="339.5"/>
         </view>

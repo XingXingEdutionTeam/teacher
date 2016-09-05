@@ -12,8 +12,8 @@ typedef void(^ReturnStrBlock) (NSString *str);
 
 
 @interface XXESchoolEmailModiyfViewController : XXEBaseViewController
-@property (nonatomic, copy) ReturnStrBlock returnStrBlock;
 
+@property (nonatomic, copy) ReturnStrBlock returnStrBlock;
 
 @property (nonatomic, copy) NSString *emailStr;
 @property (nonatomic, strong) NSString *schoolId;
@@ -26,6 +26,7 @@ typedef void(^ReturnStrBlock) (NSString *str);
 
 - (void)returnStr:(ReturnStrBlock)block;
 
+//验证邮箱 ???
 - (BOOL)validateEmail:(NSString *)email;
 
 

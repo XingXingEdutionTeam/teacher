@@ -257,9 +257,18 @@
         _allRegisterBtn.enabled = YES;
     
     }
+
+    if (no_sign_in_num == nil) {
+        no_sign_in_num = @"";
+    }
+    NSString  *unsignNumStr = [NSString stringWithFormat:@"%@", no_sign_in_num];
+    [_unRegisterNumBtn setTitle:unsignNumStr forState:UIControlStateNormal];
     
-    [_unRegisterNumBtn setTitle:[NSString stringWithFormat:@"%@", no_sign_in_num] forState:UIControlStateNormal];
-    [_registerNumBtn setTitle:[NSString stringWithFormat:@"%@", sign_in_num] forState:UIControlStateNormal];
+    if (sign_in_num == nil) {
+        sign_in_num = @"";
+    }
+    NSString  *signNumStr = [NSString stringWithFormat:@"%@", sign_in_num];
+    [_registerNumBtn setTitle:signNumStr forState:UIControlStateNormal];
 
 }
 

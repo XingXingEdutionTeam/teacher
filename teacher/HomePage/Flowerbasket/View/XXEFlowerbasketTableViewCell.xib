@@ -45,7 +45,7 @@
                             <constraint firstAttribute="width" secondItem="h4W-qg-k1L" secondAttribute="height" multiplier="11:1" id="Tvo-8z-dgL"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>

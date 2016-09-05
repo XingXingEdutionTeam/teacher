@@ -23,9 +23,6 @@
 #import "XXESchoolVideoViewController.h"
 
 
-
-
-
 @interface XXESchoolIntroductionViewController ()<UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, strong) NSMutableArray *pictureArray;
@@ -51,7 +48,7 @@
 }
 
 - (void)createTableView{
-    _myTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, KScreenWidth, KScreenHeight - 120 * kScreenRatioHeight - 64) style:UITableViewStyleGrouped];
+    _myTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, KScreenWidth, KScreenHeight - 120 * kScreenRatioHeight - 64 * kScreenRatioWidth) style:UITableViewStyleGrouped];
     
     _myTableView.dataSource = self;
     _myTableView.delegate = self;

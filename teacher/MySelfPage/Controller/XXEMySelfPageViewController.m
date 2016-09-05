@@ -9,8 +9,7 @@
 #import "XXEMySelfPageViewController.h"
 #import "XXERedFlowerDetialTableViewCell.h"
 #import "XXEMySelfInfoApi.h"
-
-
+#import "XXEMyselfInfoViewController.h"
 
 @interface XXEMySelfPageViewController ()<UITableViewDelegate, UITableViewDataSource>
 {
@@ -161,7 +160,7 @@
     
     //等级
     NSString *lvString = [NSString stringWithFormat:@"LV%@", lvStr];
-    UILabel *lvLabel = [UILabel createLabelWithFrame:CGRectMake(300, 42, 30, 15) Font:12 Text:lvString];
+    UILabel *lvLabel = [UILabel createLabelWithFrame:CGRectMake(300 * kScreenRatioWidth , 42, 30, 15) Font:12 Text:lvString];
     lvLabel.textColor = UIColorFromRGB(3, 169, 244);
     lvLabel.textAlignment = NSTextAlignmentCenter;
     lvLabel.backgroundColor = [UIColor whiteColor];
@@ -242,7 +241,40 @@
     return 44;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    //如果 不是 校长 身份
+    if (indexPath.row == 0) {
+      //@"我的资料"
+        XXEMyselfInfoViewController *myselfInfoVC = [[XXEMyselfInfoViewController alloc] init];
+        [self.navigationController pushViewController:myselfInfoVC animated:YES];
+    }else if (indexPath.row == 1){
+      //@"我的订单"
+        
+    }else if (indexPath.row == 2){
+      //@"我的好友"
+        
+        
+    }else if (indexPath.row == 3){
+       //@"我的聊天"
+        
+    }else if (indexPath.row == 4){
+       //@"我的收藏"
+        
+    }else if (indexPath.row == 5){
+       //@"我的圈子"
+    
+    }else if (indexPath.row == 6){
+       //@"我的黑名单"
+    }else if (indexPath.row == 7){
+       //@"系统设置"
+    
+    }else if (indexPath.row == 8){
+       //@"隐私设置"
+    
+    }
 
+}
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     return 0.000001;

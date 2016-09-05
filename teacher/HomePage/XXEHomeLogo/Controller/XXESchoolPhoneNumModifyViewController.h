@@ -24,7 +24,8 @@
 @property (nonatomic, strong) NSString *schoolId;
 
 
-
+//如果  是 从 "我的"跳转 进来  fromMyselfInfo
+@property (nonatomic, copy) NSString *flagStr;
 
 
 

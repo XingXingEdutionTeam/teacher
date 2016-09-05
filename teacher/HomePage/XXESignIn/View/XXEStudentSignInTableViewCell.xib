@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -14,22 +15,45 @@
                 <rect key="frame" x="0.0" y="0.0" width="375" height="79"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9Wq-Hf-GgW">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="9Wq-Hf-GgW">
                         <rect key="frame" x="10" y="10" width="60" height="60"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="9Wq-Hf-GgW" secondAttribute="height" multiplier="1:1" id="4zv-N5-4xF"/>
+                            <constraint firstAttribute="height" constant="60" id="uJs-dh-teP"/>
+                        </constraints>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qtb-a5-hLo">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qtb-a5-hLo">
                         <rect key="frame" x="80" y="29" width="100" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="100" id="Ygx-cl-2oM"/>
+                            <constraint firstAttribute="width" secondItem="Qtb-a5-hLo" secondAttribute="height" multiplier="100:21" id="Z48-FZ-4Uj"/>
+                        </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8dv-9B-3u5">
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8dv-9B-3u5">
                         <rect key="frame" x="250" y="25" width="100" height="30"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="8dv-9B-3u5" secondAttribute="height" multiplier="10:3" id="eD6-V6-jSu"/>
+                            <constraint firstAttribute="width" constant="100" id="jXn-9A-OL6"/>
+                        </constraints>
                         <state key="normal" title="签到">
                             <color key="titleColor" red="0.0" green="0.66755756580000003" blue="0.163985403" alpha="1" colorSpace="calibratedRGB"/>
                         </state>
                     </button>
                 </subviews>
+                <constraints>
+                    <constraint firstItem="8dv-9B-3u5" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="25" id="2Q5-5B-nCt"/>
+                    <constraint firstItem="Qtb-a5-hLo" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="29" id="3tF-0j-bfo"/>
+                    <constraint firstItem="9Wq-Hf-GgW" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="B1x-vf-Nbs"/>
+                    <constraint firstAttribute="bottom" secondItem="9Wq-Hf-GgW" secondAttribute="bottom" constant="9" id="Heb-Cz-x9S"/>
+                    <constraint firstAttribute="trailing" secondItem="8dv-9B-3u5" secondAttribute="trailing" constant="25" id="Oj2-XQ-2we"/>
+                    <constraint firstItem="8dv-9B-3u5" firstAttribute="leading" secondItem="Qtb-a5-hLo" secondAttribute="trailing" constant="70" id="dPi-KK-6gA"/>
+                    <constraint firstItem="8dv-9B-3u5" firstAttribute="leading" secondItem="Qtb-a5-hLo" secondAttribute="trailing" constant="70" id="hfN-Ac-PWL"/>
+                    <constraint firstItem="Qtb-a5-hLo" firstAttribute="leading" secondItem="9Wq-Hf-GgW" secondAttribute="trailing" constant="10" id="oDo-4G-Jb0"/>
+                    <constraint firstItem="9Wq-Hf-GgW" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="t8v-HM-e5G"/>
+                </constraints>
             </tableViewCellContentView>
             <connections>
                 <outlet property="iconImageView" destination="9Wq-Hf-GgW" id="sbF-kA-DRp"/>

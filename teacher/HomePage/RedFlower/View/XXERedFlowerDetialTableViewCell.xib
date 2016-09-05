@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -14,22 +15,43 @@
                 <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZNj-Of-wZ4">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ZNj-Of-wZ4">
                         <rect key="frame" x="20" y="12" width="20" height="20"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="20" id="HxZ-vU-oCe"/>
+                            <constraint firstAttribute="width" constant="20" id="WFg-Yc-Y0p"/>
+                        </constraints>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PK3-pU-PDE">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PK3-pU-PDE">
                         <rect key="frame" x="50" y="11" width="83" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="83" id="376-6D-v5p"/>
+                            <constraint firstAttribute="height" constant="21" id="acS-fO-Tr5"/>
+                        </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b9z-Jb-Ts1">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b9z-Jb-Ts1">
                         <rect key="frame" x="144" y="11" width="220" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="220" id="0oj-Kr-1sh"/>
+                            <constraint firstAttribute="width" secondItem="b9z-Jb-Ts1" secondAttribute="height" multiplier="220:21" id="V4f-a7-ahv"/>
+                        </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
+                <constraints>
+                    <constraint firstItem="PK3-pU-PDE" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="11" id="EG0-Mr-B5H"/>
+                    <constraint firstItem="ZNj-Of-wZ4" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="FsY-h8-eul"/>
+                    <constraint firstAttribute="trailing" secondItem="b9z-Jb-Ts1" secondAttribute="trailing" constant="11" id="RfT-Fu-2p1"/>
+                    <constraint firstItem="b9z-Jb-Ts1" firstAttribute="leading" secondItem="PK3-pU-PDE" secondAttribute="trailing" constant="11" id="jZM-68-w1J"/>
+                    <constraint firstItem="ZNj-Of-wZ4" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="12" id="o2l-hT-Yqh"/>
+                    <constraint firstItem="PK3-pU-PDE" firstAttribute="leading" secondItem="ZNj-Of-wZ4" secondAttribute="trailing" constant="10" id="sdL-FN-Y66"/>
+                    <constraint firstItem="b9z-Jb-Ts1" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="11" id="wmY-ol-z7z"/>
+                </constraints>
             </tableViewCellContentView>
             <connections>
                 <outlet property="contentLabel" destination="b9z-Jb-Ts1" id="lKm-iA-YcO"/>

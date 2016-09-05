@@ -77,9 +77,11 @@
     CGFloat checkWidth = 25;
     CGFloat checkHeight = 25;
 
-    UIImageView *checkImageView = [[UIImageView alloc] initWithFrame:CGRectMake(checkX, checkY, checkWidth, checkHeight)];
-    checkImageView.image = [UIImage imageNamed:@"home_logo_pic_seleted_icon"];
-    [myImageView addSubview:checkImageView];
+    _checkImageView = [[UIImageView alloc] initWithFrame:CGRectMake(checkX, checkY, checkWidth, checkHeight)];
+    _checkImageView.image = [UIImage imageNamed:@"home_logo_pic_seleted_icon"];
+    [myImageView addSubview:_checkImageView];
+    
+//    self.checkImageView.hidden = !self.selected;
     
     [self.contentView addSubview:myImageView];
 }

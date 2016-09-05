@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0430B1601D7D5689001F463F /* XXEMyselfInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0430B15F1D7D5689001F463F /* XXEMyselfInfoViewController.m */; };
+		0430B1641D7D79CC001F463F /* XXEMyselfInfoNameModifyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0430B1621D7D79CC001F463F /* XXEMyselfInfoNameModifyViewController.m */; };
+		0430B1651D7D79CC001F463F /* XXEMyselfInfoNameModifyViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0430B1631D7D79CC001F463F /* XXEMyselfInfoNameModifyViewController.xib */; };
+		0430B16B1D7D84D6001F463F /* XXEMyselfInfoModifyNicknameApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 0430B16A1D7D84D6001F463F /* XXEMyselfInfoModifyNicknameApi.m */; };
+		0430B16E1D7D8675001F463F /* XXEMyselfInfoModifyPhoneNumApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 0430B16D1D7D8675001F463F /* XXEMyselfInfoModifyPhoneNumApi.m */; };
 		043301271D62BDD000722DE2 /* XXERedFlowerSentHistoryApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 0433010B1D62BDD000722DE2 /* XXERedFlowerSentHistoryApi.m */; };
 		043301281D62BDD000722DE2 /* XXEChiefAndTeacherViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0433010E1D62BDD000722DE2 /* XXEChiefAndTeacherViewController.m */; };
 		043301291D62BDD000722DE2 /* XXEManagerAndHeadmasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 043301101D62BDD000722DE2 /* XXEManagerAndHeadmasterViewController.m */; };
@@ -117,8 +122,6 @@
 		04BB3A2E1D74742B00AA5C5C /* XXESchoolUpPicViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04BB39B91D74742A00AA5C5C /* XXESchoolUpPicViewController.m */; };
 		04BB3A2F1D74742B00AA5C5C /* XXESchoolVideoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04BB39BB1D74742A00AA5C5C /* XXESchoolVideoViewController.m */; };
 		04BB3A301D74742B00AA5C5C /* XXESchoolAlbumModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 04BB39BE1D74742A00AA5C5C /* XXESchoolAlbumModel.m */; };
-		04BB3A311D74742B00AA5C5C /* XXERegisterTeacherTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04BB39C11D74742A00AA5C5C /* XXERegisterTeacherTableViewCell.m */; };
-		04BB3A321D74742B00AA5C5C /* XXERegisterTeacherTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04BB39C21D74742A00AA5C5C /* XXERegisterTeacherTableViewCell.xib */; };
 		04BB3A331D74742B00AA5C5C /* XXESchoolAlbumCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04BB39C41D74742A00AA5C5C /* XXESchoolAlbumCollectionViewCell.m */; };
 		04BB3A341D74742B00AA5C5C /* XXESchoolAlbumCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04BB39C51D74742A00AA5C5C /* XXESchoolAlbumCollectionViewCell.xib */; };
 		04BB3A351D74742B00AA5C5C /* XXEHomeworkApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 04BB39C91D74742A00AA5C5C /* XXEHomeworkApi.m */; };
@@ -485,6 +488,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0430B15E1D7D5689001F463F /* XXEMyselfInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXEMyselfInfoViewController.h; sourceTree = "<group>"; };
+		0430B15F1D7D5689001F463F /* XXEMyselfInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXEMyselfInfoViewController.m; sourceTree = "<group>"; };
+		0430B1611D7D79CC001F463F /* XXEMyselfInfoNameModifyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXEMyselfInfoNameModifyViewController.h; sourceTree = "<group>"; };
+		0430B1621D7D79CC001F463F /* XXEMyselfInfoNameModifyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXEMyselfInfoNameModifyViewController.m; sourceTree = "<group>"; };
+		0430B1631D7D79CC001F463F /* XXEMyselfInfoNameModifyViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XXEMyselfInfoNameModifyViewController.xib; sourceTree = "<group>"; };
+		0430B1691D7D84D6001F463F /* XXEMyselfInfoModifyNicknameApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXEMyselfInfoModifyNicknameApi.h; sourceTree = "<group>"; };
+		0430B16A1D7D84D6001F463F /* XXEMyselfInfoModifyNicknameApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXEMyselfInfoModifyNicknameApi.m; sourceTree = "<group>"; };
+		0430B16C1D7D8675001F463F /* XXEMyselfInfoModifyPhoneNumApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXEMyselfInfoModifyPhoneNumApi.h; sourceTree = "<group>"; };
+		0430B16D1D7D8675001F463F /* XXEMyselfInfoModifyPhoneNumApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXEMyselfInfoModifyPhoneNumApi.m; sourceTree = "<group>"; };
 		0433010A1D62BDD000722DE2 /* XXERedFlowerSentHistoryApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXERedFlowerSentHistoryApi.h; sourceTree = "<group>"; };
 		0433010B1D62BDD000722DE2 /* XXERedFlowerSentHistoryApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXERedFlowerSentHistoryApi.m; sourceTree = "<group>"; };
 		0433010D1D62BDD000722DE2 /* XXEChiefAndTeacherViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXEChiefAndTeacherViewController.h; sourceTree = "<group>"; };
@@ -678,9 +690,6 @@
 		04BB39BB1D74742A00AA5C5C /* XXESchoolVideoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXESchoolVideoViewController.m; sourceTree = "<group>"; };
 		04BB39BD1D74742A00AA5C5C /* XXESchoolAlbumModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXESchoolAlbumModel.h; sourceTree = "<group>"; };
 		04BB39BE1D74742A00AA5C5C /* XXESchoolAlbumModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXESchoolAlbumModel.m; sourceTree = "<group>"; };
-		04BB39C01D74742A00AA5C5C /* XXERegisterTeacherTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXERegisterTeacherTableViewCell.h; sourceTree = "<group>"; };
-		04BB39C11D74742A00AA5C5C /* XXERegisterTeacherTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXERegisterTeacherTableViewCell.m; sourceTree = "<group>"; };
-		04BB39C21D74742A00AA5C5C /* XXERegisterTeacherTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XXERegisterTeacherTableViewCell.xib; sourceTree = "<group>"; };
 		04BB39C31D74742A00AA5C5C /* XXESchoolAlbumCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXESchoolAlbumCollectionViewCell.h; sourceTree = "<group>"; };
 		04BB39C41D74742A00AA5C5C /* XXESchoolAlbumCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXESchoolAlbumCollectionViewCell.m; sourceTree = "<group>"; };
 		04BB39C51D74742A00AA5C5C /* XXESchoolAlbumCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XXESchoolAlbumCollectionViewCell.xib; sourceTree = "<group>"; };
@@ -1421,6 +1430,10 @@
 			children = (
 				044349EA1D7982C900DD8CCE /* XXEMySelfInfoApi.h */,
 				044349EB1D7982C900DD8CCE /* XXEMySelfInfoApi.m */,
+				0430B1691D7D84D6001F463F /* XXEMyselfInfoModifyNicknameApi.h */,
+				0430B16A1D7D84D6001F463F /* XXEMyselfInfoModifyNicknameApi.m */,
+				0430B16C1D7D8675001F463F /* XXEMyselfInfoModifyPhoneNumApi.h */,
+				0430B16D1D7D8675001F463F /* XXEMyselfInfoModifyPhoneNumApi.m */,
 			);
 			path = Api;
 			sourceTree = "<group>";
@@ -1712,9 +1725,6 @@
 		04BB39BF1D74742A00AA5C5C /* View */ = {
 			isa = PBXGroup;
 			children = (
-				04BB39C01D74742A00AA5C5C /* XXERegisterTeacherTableViewCell.h */,
-				04BB39C11D74742A00AA5C5C /* XXERegisterTeacherTableViewCell.m */,
-				04BB39C21D74742A00AA5C5C /* XXERegisterTeacherTableViewCell.xib */,
 				04BB39C31D74742A00AA5C5C /* XXESchoolAlbumCollectionViewCell.h */,
 				04BB39C41D74742A00AA5C5C /* XXESchoolAlbumCollectionViewCell.m */,
 				04BB39C51D74742A00AA5C5C /* XXESchoolAlbumCollectionViewCell.xib */,
@@ -2598,6 +2608,11 @@
 			children = (
 				9E4813E11D50788300C614AC /* XXEMySelfPageViewController.h */,
 				9E4813E21D50788300C614AC /* XXEMySelfPageViewController.m */,
+				0430B15E1D7D5689001F463F /* XXEMyselfInfoViewController.h */,
+				0430B15F1D7D5689001F463F /* XXEMyselfInfoViewController.m */,
+				0430B1611D7D79CC001F463F /* XXEMyselfInfoNameModifyViewController.h */,
+				0430B1621D7D79CC001F463F /* XXEMyselfInfoNameModifyViewController.m */,
+				0430B1631D7D79CC001F463F /* XXEMyselfInfoNameModifyViewController.xib */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -3392,7 +3407,6 @@
 				9E9B4C691D633B8700983F5E /* Like@2x.png in Resources */,
 				04BB3AA21D74743300AA5C5C /* XXEClassAddressTableViewCell.xib in Resources */,
 				9E2F7F6C1D73D24B00DD9CD1 /* UMSCommentDetailController.xib in Resources */,
-				04BB3A321D74742B00AA5C5C /* XXERegisterTeacherTableViewCell.xib in Resources */,
 				04F2169A1D7671BB005C2EBF /* images-2.jpeg in Resources */,
 				9E6693C71D6417C500FFA0A7 /* CityPlace.plist in Resources */,
 				9EBA6F611D5CAE2D001B45C3 /* VedioCell.xib in Resources */,
@@ -3433,6 +3447,7 @@
 				9E2F7F7E1D73D24B00DD9CD1 /* iOS-social-analytics-releasenote.html in Resources */,
 				048F58881D5C7A76002E4855 /* XXEXingCoinHistoryTableViewCell.xib in Resources */,
 				9E2F7F841D73D24B00DD9CD1 /* ios-social-sdk-login-quick.html in Resources */,
+				0430B1651D7D79CC001F463F /* XXEMyselfInfoNameModifyViewController.xib in Resources */,
 				0445A3DE1D65E8CA00C3A4CA /* demoShow.gif in Resources */,
 				0445A3E71D65E8CA00C3A4CA /* information_delete_icon.png in Resources */,
 				048754A81D5C0BF200F680C5 /* XXEFlowerbasketSentHistoryTableViewCell.xib in Resources */,
@@ -3538,7 +3553,6 @@
 				04BB3A461D74742B00AA5C5C /* XXERecipePicDeleteApi.m in Sources */,
 				0445A3E61D65E8CA00C3A4CA /* FSPhotoGroupController.m in Sources */,
 				9E6693BD1D64140700FFA0A7 /* SettingPersonInfoViewController.m in Sources */,
-				04BB3A311D74742B00AA5C5C /* XXERegisterTeacherTableViewCell.m in Sources */,
 				9EBDB54D1D61D4D900A2F252 /* XXEContentAlbumCollectionViewCell.m in Sources */,
 				9ED147091D59B0BF0049D2AA /* XXEHomePageMiddleView.m in Sources */,
 				048754981D5C0BF200F680C5 /* XXEFlowerbasketSentHistoryViewController.m in Sources */,
@@ -3681,6 +3695,7 @@
 				9E94B7811D75A62D0045D575 /* XXEReviewerApi.m in Sources */,
 				9EB99F5A1D6C20BE0009C60C /* XXERegisterSearchSchoolCell.m in Sources */,
 				9E9FAF1C1D5DC09800C15AD5 /* XXEOtherTeacherAlbumViewController.m in Sources */,
+				0430B16E1D7D8675001F463F /* XXEMyselfInfoModifyPhoneNumApi.m in Sources */,
 				04BB3A451D74742B00AA5C5C /* XXERecipeDeleteApi.m in Sources */,
 				9E2F7F211D703F7400DD9CD1 /* XXEReportSubmitMessageApi.m in Sources */,
 				04F216C01D76C086005C2EBF /* XXEStarRemarkModel.m in Sources */,
@@ -3697,6 +3712,7 @@
 				9E9B4C731D633B8700983F5E /* DFLikeCommentView.m in Sources */,
 				04F216AC1D76AF47005C2EBF /* XXESchoolRegisterTeacherInfoApi.m in Sources */,
 				9E9B4C5C1D633B8700983F5E /* DFLineLikeItem.m in Sources */,
+				0430B1601D7D5689001F463F /* XXEMyselfInfoViewController.m in Sources */,
 				04BB3A2D1D74742B00AA5C5C /* XXESchoolRegisterTeacherInfoViewController.m in Sources */,
 				048F587A1D5C5402002E4855 /* XXEXingCoinViewController.m in Sources */,
 				04BB3A4A1D74742B00AA5C5C /* XXERecipeDetailViewController.m in Sources */,
@@ -3772,6 +3788,7 @@
 				04BB3A391D74742B00AA5C5C /* XXEHomeworkIssueTextInfoApi.m in Sources */,
 				04BB3A291D74742B00AA5C5C /* XXESchoolPhoneNumModifyViewController.m in Sources */,
 				9EBA6F811D5D9E85001B45C3 /* XXEMySelfAlbumModel.m in Sources */,
+				0430B1641D7D79CC001F463F /* XXEMyselfInfoNameModifyViewController.m in Sources */,
 				04BB3A2F1D74742B00AA5C5C /* XXESchoolVideoViewController.m in Sources */,
 				9E6912F51D54341F0000E566 /* XXEStarImageViewController.m in Sources */,
 				04BB3A4B1D74742B00AA5C5C /* XXERecipeModifyViewController.m in Sources */,
@@ -3792,6 +3809,7 @@
 				9EFDC8541D549DE1005556AF /* HyLoglnButton.m in Sources */,
 				9EBA6F511D5CADBA001B45C3 /* SSVideoPlayContainer.m in Sources */,
 				04BB3AC11D75910500AA5C5C /* XXEGlobalDecollectApi.m in Sources */,
+				0430B16B1D7D84D6001F463F /* XXEMyselfInfoModifyNicknameApi.m in Sources */,
 				04BB3A101D74742A00AA5C5C /* XXEModifyEmailApi.m in Sources */,
 				04BB3A181D74742B00AA5C5C /* XXEHeadmasterSpeechViewController.m in Sources */,
 				9E10C68F1D6D422E00ACAF50 /* XXETeacherClassModel.m in Sources */,

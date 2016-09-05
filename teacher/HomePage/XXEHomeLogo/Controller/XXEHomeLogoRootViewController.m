@@ -124,17 +124,6 @@
     [super viewDidAppear:animated];
     
     self.navigationController.navigationBarHidden = NO;
-//    speechButton.selected = NO;
-//    courseButton.selected = NO;
-//
-//    _myScrollView.contentOffset = CGPointMake(0, 0);
-    
-//    self.navigationItem.title = @"机构简介";
-//    UIButton *sentBtn =[UIButton createButtonWithFrame:CGRectMake(0, 0, 22, 22) backGruondImageName:@"" Target:self Action:@selector(request:) Title:@""];
-//    UIBarButtonItem *requestItem =[[UIBarButtonItem alloc]initWithCustomView:sentBtn];
-//    self.navigationItem.rightBarButtonItem =requestItem;
-    
-
 }
 
 
@@ -152,9 +141,7 @@
     
     _childViews = [[NSMutableArray alloc] init];
     
-    //    self.navigationController.navigationBar.backgroundColor = XXEColorFromRGB(0, 170, 42);
     self.navigationController.navigationBarHidden = YES;
-    //    self.navigationController.navigationBar.hidden = YES;
     
     [self createBigScrollView];
     
@@ -386,7 +373,7 @@
     bottomView.userInteractionEnabled =YES;
     
     CGFloat itemWidth = KScreenWidth / 3;
-    CGFloat itemHeight = 49;
+    CGFloat itemHeight = 49 * kScreenRatioHeight;
     
     CGFloat buttonWidth = itemWidth;
     CGFloat buttonHeight = itemHeight;
@@ -440,13 +427,11 @@
 //        UIButton *collectionBtn =[UIButton createButtonWithFrame:CGRectMake(0, 0, 22, 22) backGruondImageName:@"comment_request_icon" Target:self Action:@selector(collectionBtnClick:) Title:@""];
 //        UIBarButtonItem *requestItem =[[UIBarButtonItem alloc]initWithCustomView:collectionBtn];
 //        self.navigationItem.rightBarButtonItem =requestItem;
-        
-        
         self.schoolIntroductionVC.contentArray = _contentArray;
         self.schoolIntroductionVC.schoolId = _schoolId;
         [self addChildViewController:self.schoolIntroductionVC];
         [self.myScrollView addSubview:self.schoolIntroductionVC.view];
-        self.schoolIntroductionVC.view.frame = CGRectMake(0, 0, KScreenWidth, KScreenHeight - 49 - 64);
+        self.schoolIntroductionVC.view.frame = CGRectMake(0, 0, KScreenWidth, KScreenHeight - 49 * kScreenRatioHeight - 64 * kScreenRatioHeight);
         
     }else if (button == courseButton){
         self.navigationItem.title = @"学校课程";
@@ -456,7 +441,7 @@
         self.schoolCourseVC.course_groupArray = _course_groupArray;
         [self addChildViewController:self.schoolCourseVC];
         [self.myScrollView addSubview:self.schoolCourseVC.view];
-        self.schoolCourseVC.view.frame = CGRectMake(KScreenWidth, 0, KScreenWidth, KScreenHeight - 49 - 64);
+        self.schoolCourseVC.view.frame = CGRectMake(KScreenWidth, 0, KScreenWidth, KScreenHeight - (49 + 64) * kScreenRatioHeight);
         
     }else if (button == speechButton){
         self.navigationItem.title = @"校长致辞";
@@ -469,7 +454,7 @@
         self.headmasterSpeechVC.head_img = _head_img;
         [self addChildViewController:self.headmasterSpeechVC];
         [self.myScrollView addSubview:self.headmasterSpeechVC.view];
-        self.headmasterSpeechVC.view.frame = CGRectMake(KScreenWidth * 2, 0, KScreenWidth, KScreenHeight - 49 - 64);
+        self.headmasterSpeechVC.view.frame = CGRectMake(KScreenWidth * 2, 0, KScreenWidth, KScreenHeight - (49 + 64) * kScreenRatioHeight);
     }
     
     
@@ -505,10 +490,10 @@
 
 - (void)createBigScrollView{
     
-    _myScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 120, KScreenWidth, KScreenHeight - 64 - 49)];
+    _myScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 120 * kScreenRatioHeight, KScreenWidth, KScreenHeight - (49 + 64) * kScreenRatioHeight)];
     _myScrollView.delegate = self;
     _myScrollView.backgroundColor = [UIColor whiteColor];
-    _myScrollView.contentSize = CGSizeMake(KScreenWidth * 3, KScreenHeight - 64 - 49);
+    _myScrollView.contentSize = CGSizeMake(KScreenWidth * 3, KScreenHeight - (49 + 64) * kScreenRatioHeight);
     //    _myScrollView.contentSize = CGSizeMake(kScreenWidth * 3, 3000);
     _myScrollView.pagingEnabled = YES;
     _myScrollView.bounces = NO;

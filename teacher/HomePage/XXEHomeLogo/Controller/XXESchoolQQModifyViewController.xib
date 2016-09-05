@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="XXESchoolQQModifyViewController">
@@ -17,32 +18,57 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Wfq-bH-j5x">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Wfq-bH-j5x">
                     <rect key="frame" x="10" y="40" width="355" height="50"/>
                     <subviews>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="QQ号" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OBQ-gZ-bvA">
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="QQ号" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OBQ-gZ-bvA">
                             <rect key="frame" x="10" y="14" width="50" height="21"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="50" id="Kf6-P2-Qkn"/>
+                                <constraint firstAttribute="height" constant="21" id="gn9-li-IuB"/>
+                            </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="请输入您的新QQ号" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="23e-rt-lTX">
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="请输入您的新QQ号" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="23e-rt-lTX">
                             <rect key="frame" x="73" y="10" width="264" height="30"/>
+                            <constraints>
+                                <constraint firstAttribute="width" secondItem="23e-rt-lTX" secondAttribute="height" multiplier="44:5" id="PFc-nH-1q1"/>
+                                <constraint firstAttribute="width" constant="264" id="ohG-wq-DQE"/>
+                            </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <textInputTraits key="textInputTraits"/>
                         </textField>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="trailing" secondItem="23e-rt-lTX" secondAttribute="trailing" constant="18" id="33b-Bf-xyq"/>
+                        <constraint firstItem="23e-rt-lTX" firstAttribute="leading" secondItem="OBQ-gZ-bvA" secondAttribute="trailing" constant="13" id="KLI-aY-6hE"/>
+                        <constraint firstItem="OBQ-gZ-bvA" firstAttribute="top" secondItem="Wfq-bH-j5x" secondAttribute="top" constant="14" id="YIM-KU-nDt"/>
+                        <constraint firstItem="OBQ-gZ-bvA" firstAttribute="leading" secondItem="Wfq-bH-j5x" secondAttribute="leading" constant="10" id="bo0-iN-Dfa"/>
+                        <constraint firstAttribute="width" secondItem="Wfq-bH-j5x" secondAttribute="height" multiplier="71:10" id="cs6-gf-VaV"/>
+                        <constraint firstAttribute="width" constant="355" id="e7o-T2-kHG"/>
+                        <constraint firstItem="23e-rt-lTX" firstAttribute="top" secondItem="Wfq-bH-j5x" secondAttribute="top" constant="10" id="ey0-WY-tgd"/>
+                    </constraints>
                 </view>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="请输入您的新QQ号" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WYU-mk-9ZE">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="请输入您的新QQ号" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WYU-mk-9ZE">
                     <rect key="frame" x="10" y="11" width="239" height="21"/>
+                    <constraints>
+                        <constraint firstAttribute="width" secondItem="WYU-mk-9ZE" secondAttribute="height" multiplier="239:21" id="8S7-q8-hzj"/>
+                        <constraint firstAttribute="width" constant="239" id="KoP-Ul-aGB"/>
+                    </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wZ5-FM-0sO">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wZ5-FM-0sO">
                     <rect key="frame" x="10" y="120" width="355" height="30"/>
                     <color key="backgroundColor" red="0.97281044407894501" green="0.56535259046052388" blue="0.13384046052631579" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="355" id="1lD-Ij-8uG"/>
+                        <constraint firstAttribute="width" secondItem="wZ5-FM-0sO" secondAttribute="height" multiplier="71:6" id="gDN-Lg-3db"/>
+                    </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <state key="normal" title="提         交">
                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -50,6 +76,17 @@
                 </button>
             </subviews>
             <color key="backgroundColor" red="0.89640727796052633" green="0.91128700657894535" blue="0.91213507401315785" alpha="1" colorSpace="calibratedRGB"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="wZ5-FM-0sO" secondAttribute="trailing" constant="10" id="JtR-sb-rUW"/>
+                <constraint firstItem="WYU-mk-9ZE" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="10" id="c6u-Nm-Dlt"/>
+                <constraint firstItem="Wfq-bH-j5x" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="10" id="cQ4-Rh-Ch8"/>
+                <constraint firstItem="WYU-mk-9ZE" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="11" id="cbs-TL-uXo"/>
+                <constraint firstAttribute="trailing" secondItem="WYU-mk-9ZE" secondAttribute="trailing" constant="126" id="dTj-RO-abd"/>
+                <constraint firstItem="wZ5-FM-0sO" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="10" id="kuS-IS-iFJ"/>
+                <constraint firstItem="Wfq-bH-j5x" firstAttribute="top" secondItem="WYU-mk-9ZE" secondAttribute="bottom" constant="8" id="rRR-HG-4Zz"/>
+                <constraint firstItem="wZ5-FM-0sO" firstAttribute="top" secondItem="Wfq-bH-j5x" secondAttribute="bottom" constant="30" id="wcd-ct-FjU"/>
+                <constraint firstAttribute="trailing" secondItem="Wfq-bH-j5x" secondAttribute="trailing" constant="10" id="xpH-Jm-njw"/>
+            </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
         </view>
     </objects>
