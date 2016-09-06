@@ -13,7 +13,7 @@
 #import "XXECommentModel.h"
 #import "XXEGoodUserModel.h"
 
-@interface XXEFriendCirclePageViewController ()<KTActionSheetDelegate>
+@interface XXEFriendCirclePageViewController ()
 /** 朋友圈的头部视图信息 */
 @property (nonatomic, strong)NSMutableArray *headerDatasource;
 /** 朋友圈列表的信息 */
@@ -213,10 +213,10 @@
 
 
 
-
+#pragma mark - DFImagesSendViewControllerDelegate 发布圈子的代理
 -(void)onSendTextImage:(NSString *)text images:(NSArray *)images
 {
-    
+    NSLog(@"发布的文字%@ 发布的图片%@",text,images);
 }
 
 
