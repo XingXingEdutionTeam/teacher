@@ -30,71 +30,50 @@
 
 #pragma mark - header
 static const char MJRefreshHeaderKey = '\0';
-- (void)setMj_header:(MJRefreshHeader *)mj_header
+- (void)setHeader:(MJRefreshHeader *)header
 {
-    if (mj_header != self.mj_header) {
+    if (header != self.header) {
         // 删除旧的，添加新的
-        [self.mj_header removeFromSuperview];
-        [self insertSubview:mj_header atIndex:0];
+        [self.header removeFromSuperview];
+        [self addSubview:header];
         
         // 存储新的
-        [self willChangeValueForKey:@"mj_header"]; // KVO
+        [self willChangeValueForKey:@"header"]; // KVO
         objc_setAssociatedObject(self, &MJRefreshHeaderKey,
-                                 mj_header, OBJC_ASSOCIATION_ASSIGN);
-        [self didChangeValueForKey:@"mj_header"]; // KVO
+                                 header, OBJC_ASSOCIATION_ASSIGN);
+        [self didChangeValueForKey:@"header"]; // KVO
     }
 }
 
-- (MJRefreshHeader *)mj_header
+- (MJRefreshHeader *)header
 {
     return objc_getAssociatedObject(self, &MJRefreshHeaderKey);
 }
 
 #pragma mark - footer
 static const char MJRefreshFooterKey = '\0';
-- (void)setMj_footer:(MJRefreshFooter *)mj_footer
-{
-    if (mj_footer != self.mj_footer) {
-        // 删除旧的，添加新的
-        [self.mj_footer removeFromSuperview];
-        [self insertSubview:mj_footer atIndex:0];
-        
-        // 存储新的
-        [self willChangeValueForKey:@"mj_footer"]; // KVO
-        objc_setAssociatedObject(self, &MJRefreshFooterKey,
-                                 mj_footer, OBJC_ASSOCIATION_ASSIGN);
-        [self didChangeValueForKey:@"mj_footer"]; // KVO
-    }
-}
-
-- (MJRefreshFooter *)mj_footer
-{
-    return objc_getAssociatedObject(self, &MJRefreshFooterKey);
-}
-
-#pragma mark - 过期
 - (void)setFooter:(MJRefreshFooter *)footer
 {
-    self.mj_footer = footer;
+    if (footer != self.footer) {
+        // 删除旧的，添加新的
+        [self.footer removeFromSuperview];
+        [self addSubview:footer];
+        
+        // 存储新的
+        [self willChangeValueForKey:@"footer"]; // KVO
+        objc_setAssociatedObject(self, &MJRefreshFooterKey,
+                                 footer, OBJC_ASSOCIATION_ASSIGN);
+        [self didChangeValueForKey:@"footer"]; // KVO
+    }
 }
 
 - (MJRefreshFooter *)footer
 {
-    return self.mj_footer;
-}
-
-- (void)setHeader:(MJRefreshHeader *)header
-{
-    self.mj_header = header;
-}
-
-- (MJRefreshHeader *)header
-{
-    return self.mj_header;
+    return objc_getAssociatedObject(self, &MJRefreshFooterKey);
 }
 
 #pragma mark - other
-- (NSInteger)mj_totalDataCount
+- (NSInteger)totalDataCount
 {
     NSInteger totalCount = 0;
     if ([self isKindOfClass:[UITableView class]]) {
@@ -114,21 +93,21 @@ static const char MJRefreshFooterKey = '\0';
 }
 
 static const char MJRefreshReloadDataBlockKey = '\0';
-- (void)setMj_reloadDataBlock:(void (^)(NSInteger))mj_reloadDataBlock
+- (void)setReloadDataBlock:(void (^)(NSInteger))reloadDataBlock
 {
-    [self willChangeValueForKey:@"mj_reloadDataBlock"]; // KVO
-    objc_setAssociatedObject(self, &MJRefreshReloadDataBlockKey, mj_reloadDataBlock, OBJC_ASSOCIATION_COPY_NONATOMIC);
-    [self didChangeValueForKey:@"mj_reloadDataBlock"]; // KVO
+    [self willChangeValueForKey:@"reloadDataBlock"]; // KVO
+    objc_setAssociatedObject(self, &MJRefreshReloadDataBlockKey, reloadDataBlock, OBJC_ASSOCIATION_COPY_NONATOMIC);
+    [self didChangeValueForKey:@"reloadDataBlock"]; // KVO
 }
 
-- (void (^)(NSInteger))mj_reloadDataBlock
+- (void (^)(NSInteger))reloadDataBlock
 {
     return objc_getAssociatedObject(self, &MJRefreshReloadDataBlockKey);
 }
 
 - (void)executeReloadDataBlock
 {
-    !self.mj_reloadDataBlock ? : self.mj_reloadDataBlock(self.mj_totalDataCount);
+    !self.reloadDataBlock ? : self.reloadDataBlock(self.totalDataCount);
 }
 @end
 

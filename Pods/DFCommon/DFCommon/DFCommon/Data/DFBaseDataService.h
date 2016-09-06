@@ -11,7 +11,6 @@
 #import "AFNetworking.h"
 #import "DFBaseResponse.h"
 
-
 typedef enum:NSUInteger
 {
     DFRequestTypeGet,
@@ -21,53 +20,41 @@ typedef enum:NSUInteger
 }DFRequestType;
 
 
-@class DFBaseDataService;
+typedef void(^ RequestSuccess)(DFBaseResponse *response);
 
 @protocol DFDataServiceDelegate <NSObject>
 
--(void) onStatusOk:(DFBaseResponse *)response dataService:(DFBaseDataService *)dataService;
--(void) onStatusError:(DFBaseResponse *)response dataService:(DFBaseDataService *)dataService;
-
 @optional
--(void) onRequestError:(NSError *)error dataService:(DFBaseDataService *)dataService;
+-(void) onStatusOk:(DFBaseResponse *)response classType:(Class)classType;
+-(void) onStatusError:(DFBaseResponse *)response;
+-(void) onRequestError:(NSError *)error;
 
 @end
 
 
 @interface DFBaseDataService : NSObject
 
-@property (nonatomic,weak) id<DFDataServiceDelegate> delegate;
+@property (nonatomic,assign) id<DFDataServiceDelegate> delegate;
 
 @property (nonatomic,assign) DFRequestType requestType;
 
-//执行请求
+@property (nonatomic,strong) AFHTTPRequestOperationManager *manager;
+
 -(void) execute;
 
-
-//完整的url
 -(NSString *) getRequestUrl;
 
-//不带域名的路径
 -(NSString *) getRequestPath;
 
-//域名
 -(NSString *) getRequestDomain;
 
-//代理IP
--(NSString *) getRequestIp;
 
-
-//设置请求参数
 -(void) setRequestParams:(NSMutableDictionary *)params;
 
-//上传文件时获取文件类型
--(NSString *) getFileType;
 
-//上传文件时获取文件数据
--(NSData *) getFileData;
+-(void) onSuccess:(id)result;
+-(void) onError:(NSError *)error;
 
-
-//解析数据回调
--(void) parseResponse:(NSDictionary *)data;
+-(void) parseResponse:(DFBaseResponse *)response;
 
 @end

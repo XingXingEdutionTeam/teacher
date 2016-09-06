@@ -51,7 +51,7 @@
 {
     [super viewDidAppear:animated];
     
-    [_myTableView.mj_header beginRefreshing];
+    [_myTableView.header beginRefreshing];
 }
 
 - (void)viewDidLoad {
@@ -174,9 +174,9 @@
     
     [self.view addSubview:_myTableView];
     
-    _myTableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadNewData)];
+    _myTableView.header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadNewData)];
     
-    _myTableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadFooterNewData)];
+    _myTableView.footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadFooterNewData)];
     
     
 }
@@ -184,17 +184,17 @@
 -(void)loadNewData{
     
     [self fetchNetData];
-    [ _myTableView.mj_header endRefreshing];
+    [ _myTableView.header endRefreshing];
 }
 -(void)endRefresh{
-    [_myTableView.mj_header endRefreshing];
-    [_myTableView.mj_footer endRefreshing];
+    [_myTableView.header endRefreshing];
+    [_myTableView.footer endRefreshing];
 }
 
 - (void)loadFooterNewData{
     
     [self fetchNetData];
-    [ _myTableView.mj_footer endRefreshing];
+    [ _myTableView.footer endRefreshing];
     
 }
 

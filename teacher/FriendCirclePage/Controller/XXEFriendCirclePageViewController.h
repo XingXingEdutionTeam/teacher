@@ -6,7 +6,7 @@
 //  Copyright © 2016年 XingXingEdu. All rights reserved.
 //
 
-#import "DFTimeLineViewController.h"
+#import "DFTimelineView.h"
 
 @interface XXEFriendCirclePageViewController : DFTimeLineViewController
 

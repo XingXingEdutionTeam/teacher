@@ -18,7 +18,8 @@
     self = [super init];
     if (self) {
         self.style = UITableViewStylePlain;
-        self.refreshControlType = DFTableViewRefreshControlTypeMJ;
+        self.refreshHeaderControlType = DFTableViewRefreshControlTypeNative;
+        self.refreshFooterControlType = DFTableViewRefreshControlTypeMJ;
         self.bAddHeader = NO;
         self.bAddFooter = NO;
         
@@ -26,10 +27,9 @@
         self.bottomOffset=0;
         
         _refreshControlDic = [NSMutableDictionary dictionary];
-        
         [_refreshControlDic setObject:[DFTableViewNativeRefreshControl class] forKey:[NSNumber numberWithInteger:DFTableViewRefreshControlTypeNative]];
+//        [_refreshControlDic setObject:[DFTableViewEGORefreshControl class] forKey:[NSNumber numberWithInteger:DFTableViewRefreshControlTypeEGO]];
         [_refreshControlDic setObject:[DFTableViewMJRefreshControl class] forKey:[NSNumber numberWithInteger:DFTableViewRefreshControlTypeMJ]];
-        [_refreshControlDic setObject:[DFTableViewMJRefreshPlainControl class] forKey:[NSNumber numberWithInteger:DFTableViewRefreshControlTypeMJPlain]];
         [_refreshControlDic setObject:[DFTableViewODRefreshControl class] forKey:[NSNumber numberWithInteger:DFTableViewRefreshControlTypeOD]];
     }
     return self;
@@ -74,25 +74,24 @@
 
 -(void) initRefreshControl
 {
-    if (_refreshControl == nil && ( _bAddFooter || _bAddHeader)) {
-        _refreshControl = [self getRefreshControl: self.refreshControlType];
+    
+    _refreshHeaderControl = [self getRefreshControl: self.refreshHeaderControlType];
+    
+    if (self.refreshHeaderControlType != self.refreshFooterControlType) {
+        _refreshFooterControl = [self getRefreshControl: self.refreshFooterControlType];
+    }else{
+        _refreshFooterControl = _refreshHeaderControl;
     }
-
-    if (self.refreshControlType == DFTableViewRefreshControlTypeOD) {
-        ((DFTableViewODRefreshControl *)_refreshControl).topOffset = self.topOffset+64;
-    }
-    _refreshControl.tableView = _tableView;
-    _refreshControl.delegate = self;
     
     
     if (_bAddHeader) {
         
-        [_refreshControl addHeader];
+        [_refreshHeaderControl addHeader];
         
     }
     
     if (_bAddFooter) {
-        [_refreshControl addFooter];
+        [_refreshFooterControl addFooter];
     }
     
 }
@@ -104,6 +103,11 @@
     
     DFTableViewRefreshControl  *control = (DFTableViewRefreshControl *)[[clazz alloc] init];
     
+    if (type == DFTableViewRefreshControlTypeOD) {
+        ((DFTableViewODRefreshControl *)control).topOffset = self.topOffset+64;
+    }
+    control.tableView = _tableView;
+    control.delegate = self;
     return control;
 }
 
@@ -169,7 +173,7 @@
 
 -(void) autoRefresh
 {
-    [_refreshControl autoRefresh];
+    [_refreshHeaderControl autoRefresh];
     
 }
 
@@ -186,17 +190,17 @@
 
 -(void) endRefresh
 {
-    [_refreshControl endRefresh];
+    [_refreshHeaderControl endRefresh];
 }
 -(void) endLoadMore
 {
-    [_refreshControl endLoadMore];
+    [_refreshFooterControl endLoadMore];
 }
 
 
 -(void) loadOver
 {
-    [_refreshControl loadOver];
+    [_refreshFooterControl loadOver];
     
 }
 
@@ -206,25 +210,25 @@
 #pragma - mark DFDataServiceDelegate
 
 
--(void)onRequestError:(NSError *)error dataService:(DFBaseDataService *)dataService
+-(void)onRequestError:(NSError *)error
 {
-    [super onRequestError:error dataService:dataService];
+    [super onRequestError:error];
     
     //BOOL reload = self.refreshFooterControlType == DFTableViewRefreshControlTypeEGO?YES:NO;
     [self onEnd:NO];
 }
 
--(void)onStatusError:(DFBaseResponse *)response dataService:(DFBaseDataService *)dataService
+-(void)onStatusError:(DFBaseResponse *)response
 {
-    [super onStatusError:response dataService:dataService];
+    [super onStatusError:response];
     
     //BOOL reload = self.refreshFooterControlType == DFTableViewRefreshControlTypeEGO?YES:NO;
     [self onEnd:NO];
 }
 
-- (void)onStatusOk:(DFBaseResponse *)response dataService:(DFBaseDataService *)dataService
+- (void)onStatusOk:(DFBaseResponse *)response classType:(Class)classType
 {
-    [super onStatusOk:response dataService:dataService];
+    [super onStatusOk:response classType:classType];
     
     [self onEnd:YES];
     

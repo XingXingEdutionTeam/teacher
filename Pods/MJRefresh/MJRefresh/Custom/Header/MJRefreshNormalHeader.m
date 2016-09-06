@@ -7,11 +7,10 @@
 //
 
 #import "MJRefreshNormalHeader.h"
-#import "NSBundle+MJRefresh.h"
 
 @interface MJRefreshNormalHeader()
 {
-    __unsafe_unretained UIImageView *_arrowView;
+    __weak UIImageView *_arrowView;
 }
 @property (weak, nonatomic) UIActivityIndicatorView *loadingView;
 @end
@@ -21,7 +20,11 @@
 - (UIImageView *)arrowView
 {
     if (!_arrowView) {
-        UIImageView *arrowView = [[UIImageView alloc] initWithImage:[NSBundle mj_arrowImage]];
+        UIImage *image = [UIImage imageNamed:MJRefreshSrcName(@"arrow.png")];
+        if (!image) {
+            image = [UIImage imageNamed:MJRefreshFrameworkSrcName(@"arrow.png")];
+        }
+        UIImageView *arrowView = [[UIImageView alloc] initWithImage:image];
         [self addSubview:_arrowView = arrowView];
     }
     return _arrowView;
@@ -46,7 +49,7 @@
     [self setNeedsLayout];
 }
 
-#pragma mark - 重写父类的方法
+#pragma makr - 重写父类的方法
 - (void)prepare
 {
     [super prepare];
@@ -58,33 +61,17 @@
 {
     [super placeSubviews];
     
-    // 箭头的中心点
+    // 箭头
+    self.arrowView.mj_size = self.arrowView.image.size;
     CGFloat arrowCenterX = self.mj_w * 0.5;
     if (!self.stateLabel.hidden) {
-        CGFloat offset = 20;
-        CGFloat stateWidth = self.stateLabel.mj_textWith;
-        CGFloat timeWidth = 0.0;
-        if (!self.lastUpdatedTimeLabel.hidden) {
-            timeWidth = self.lastUpdatedTimeLabel.mj_textWith;
-        }
-        CGFloat textWidth = MAX(stateWidth, timeWidth);
-        arrowCenterX -= textWidth / 2 + offset;
+        arrowCenterX -= 100;
     }
     CGFloat arrowCenterY = self.mj_h * 0.5;
-    CGPoint arrowCenter = CGPointMake(arrowCenterX, arrowCenterY);
+    self.arrowView.center = CGPointMake(arrowCenterX, arrowCenterY);
     
-    // 箭头
-    if (self.arrowView.constraints.count == 0) {
-        self.arrowView.mj_size = self.arrowView.image.size;
-        self.arrowView.center = arrowCenter;
-    }
-        
     // 圈圈
-    if (self.loadingView.constraints.count == 0) {
-        self.loadingView.center = arrowCenter;
-    }
-    
-    self.arrowView.tintColor = self.stateLabel.textColor;
+    self.loadingView.frame = self.arrowView.frame;
 }
 
 - (void)setState:(MJRefreshState)state

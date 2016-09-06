@@ -50,12 +50,6 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     self.view.backgroundColor = XXEBackgroundColor;
-    UIButton*rightPublishButton = [[UIButton alloc]initWithFrame:CGRectMake(-10,0,40,40)];
-    [rightPublishButton setImage:[UIImage imageNamed:@"Camera_icon"]  forState:UIControlStateNormal];
-    [rightPublishButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [rightPublishButton addTarget:self action:@selector(rightPublishButtonClick:) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem*rightItem = [[UIBarButtonItem alloc]initWithCustomView:rightPublishButton];
-    self.navigationItem.rightBarButtonItem= rightItem;
 }
 
 - (instancetype)init

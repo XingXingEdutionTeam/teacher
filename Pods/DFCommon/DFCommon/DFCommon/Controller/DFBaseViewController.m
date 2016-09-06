@@ -138,7 +138,7 @@
 
 -(void) hudShowOk:(NSString *) text
 {
-    NSString *imageName = @"check_success";
+    NSString *imageName = @"success";
     [self hudShowIcon:imageName text:text];
 }
 
@@ -298,7 +298,7 @@
 #pragma - mark DFDataServiceDelegate
 
 
--(void)onRequestError:(NSError *)error dataService:(DFBaseDataService *)dataService
+-(void)onRequestError:(NSError *)error
 {
     if (error.code == CustomErrorConnectFailed || error.code == -1005) {
         [self hudShowText:@"网络无法连接"];
@@ -317,7 +317,7 @@
     NSLog(@"%@",error);
 }
 
--(void)onStatusError:(DFBaseResponse *)response dataService:(DFBaseDataService *)dataService
+-(void)onStatusError:(DFBaseResponse *)response
 {
     if (response.errorCode == 0 || response.errorMsg == nil) {
         [self hudShowText:@"未知错误, 请联系客服"];
@@ -334,7 +334,7 @@
     
 }
 
-- (void)onStatusOk:(DFBaseResponse *)response dataService:(DFBaseDataService *)dataService
+- (void)onStatusOk:(DFBaseResponse *)response classType:(Class)classType
 {
     if ([self enableAutoLoadStateView]) {
         [self hideLoadingView];

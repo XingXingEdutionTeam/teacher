@@ -11,7 +11,7 @@
 
 #import "DFTableViewNativeRefreshControl.h"
 #import "DFTableViewMJRefreshControl.h"
-#import "DFTableViewMJRefreshPlainControl.h"
+//#import "DFTableViewEGORefreshControl.h"
 #import "DFTableViewODRefreshControl.h"
 
 
@@ -19,7 +19,7 @@ typedef NS_ENUM(NSInteger,DFTableViewRefreshControlType)
 {
     DFTableViewRefreshControlTypeNative,
     DFTableViewRefreshControlTypeMJ,
-    DFTableViewRefreshControlTypeMJPlain,
+    //DFTableViewRefreshControlTypeEGO,
     DFTableViewRefreshControlTypeOD,
     
 };
@@ -29,8 +29,10 @@ typedef NS_ENUM(NSInteger,DFTableViewRefreshControlType)
 @property (nonatomic,strong) UITableView *tableView;
 @property (nonatomic,assign) UITableViewStyle style;
 
-@property (nonatomic,assign) DFTableViewRefreshControlType refreshControlType;
-@property (nonatomic,strong) DFTableViewRefreshControl *refreshControl;
+@property (nonatomic,assign) DFTableViewRefreshControlType refreshHeaderControlType;
+@property (nonatomic,assign) DFTableViewRefreshControlType refreshFooterControlType;
+@property (nonatomic,strong) DFTableViewRefreshControl *refreshHeaderControl;
+@property (nonatomic,strong) DFTableViewRefreshControl *refreshFooterControl;
 
 @property (nonatomic,strong) NSMutableDictionary *refreshControlDic;
 

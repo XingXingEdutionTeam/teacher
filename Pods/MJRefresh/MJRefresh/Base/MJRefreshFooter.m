@@ -36,8 +36,8 @@
     // 设置自己的高度
     self.mj_h = MJRefreshFooterHeight;
     
-    // 默认不会自动隐藏
-    self.automaticallyHidden = NO;
+    // 默认是自动隐藏
+    self.automaticallyHidden = YES;
 }
 
 - (void)willMoveToSuperview:(UIView *)newSuperview
@@ -46,13 +46,11 @@
     
     if (newSuperview) {
         // 监听scrollView数据的变化
-        if ([self.scrollView isKindOfClass:[UITableView class]] || [self.scrollView isKindOfClass:[UICollectionView class]]) {
-            [self.scrollView setMj_reloadDataBlock:^(NSInteger totalDataCount) {
-                if (self.isAutomaticallyHidden) {
-                    self.hidden = (totalDataCount == 0);
-                }
-            }];
-        }
+        [self.scrollView setReloadDataBlock:^(NSInteger totalDataCount) {
+            if (self.isAutomaticallyHidden) {
+                self.hidden = (totalDataCount == 0);
+            }
+        }];
     }
 }
 
