@@ -66,7 +66,7 @@
     if ([_flagStr isEqualToString:@"formSchoolInfo"]) {
         //修改 学校 邮箱
         [self modifySchoolEmail];
-    }else if ([_flagStr isEqualToString:@""]) {
+    }else if ([_flagStr isEqualToString:@"fromMyselfInfo"]) {
        //修改 个人 邮箱
         [self modifyMyselfEmail];
     }

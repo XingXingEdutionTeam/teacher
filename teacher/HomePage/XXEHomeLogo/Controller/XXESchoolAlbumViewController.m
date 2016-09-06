@@ -246,6 +246,14 @@
 
 //
 - (void)fetchNetData{
+    if ([_flagStr isEqualToString:@"formSchoolInfo"]) {
+        //修改 学校 邮箱
+        [self modifySchoolEmail];
+    }else if ([_flagStr isEqualToString:@"fromMyselfInfo"]) {
+        //修改 个人 邮箱
+        [self modifyMyselfEmail];
+    }
+    
 
     XXESchoolPicApi *schoolPicApi = [[XXESchoolPicApi alloc] initWithXid:parameterXid user_id:parameterUser_Id user_type:USER_TYPE school_id:_schoolId];
     [schoolPicApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {

@@ -187,6 +187,7 @@
           XXESchoolFeatureModifyViewController *schoolFeatureModifyVC =[[XXESchoolFeatureModifyViewController alloc]init];
             schoolFeatureModifyVC.schoolId = _schoolId;
             schoolFeatureModifyVC.schoolfeatureStr = _contentArray[8];
+            schoolFeatureModifyVC.flagStr = @"formSchoolInfo";
             [schoolFeatureModifyVC returnStr:^(NSString *str) {
                 //
                 _contentArray[8] = str;
@@ -212,6 +213,7 @@
         //相册
     }else if (indexPath.row == 10) {
         XXESchoolAlbumViewController *albumVC = [[XXESchoolAlbumViewController alloc] init];
+        albumVC.flagStr = @"formSchoolInfo";
         albumVC.schoolId = _schoolId;
 
         [self.navigationController pushViewController:albumVC animated:YES];

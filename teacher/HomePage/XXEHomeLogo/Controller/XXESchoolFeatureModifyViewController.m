@@ -10,6 +10,9 @@
 
 #import "XXESchoolFeatureModifyViewController.h"
 #import "XXEModifyCharacterApi.h"
+#import "XXEMyselfInfoTeachingExpericenceApi.h"
+#import "XXEMyselfInfoModifyTeachingFeelingApi.h"
+#import "XXEMyselfInfoModifyPersonal_signApi.h"
 
 
 @interface XXESchoolFeatureModifyViewController ()
@@ -62,6 +65,24 @@
 }
 
 - (void)submitSchoolFeatureInfo{
+    if ([_flagStr isEqualToString:@"formSchoolInfo"]) {
+        //修改 学校 特点
+        [self modifySchoolFeatureInfo];
+    }else if ([_flagStr isEqualToString:@"fromMyselfInfoTeachingExperience"]) {
+        //修改 个人 教学经历
+        [self modifyMyselfTeachingExperience];
+    }else if ([_flagStr isEqualToString:@"fromMyselfInfoTeachingFeeling"]) {
+        //修改 个人 教学感悟
+        [self modifyMyselfTeachingFeeling];
+    }else if ([_flagStr isEqualToString:@"fromMyselfInfoPersonalSignApi"]) {
+        //修改 个人 个性签名
+        [self modifyMyselfTeachingPersonalSign];
+    }
+
+}
+
+//修改 学校 特点
+- (void)modifySchoolFeatureInfo{
 
     XXEModifyCharacterApi *modifySchoolCharacterApi = [[XXEModifyCharacterApi alloc] initWithXid:parameterXid user_id:parameterUser_Id user_type:USER_TYPE school_id:_schoolId position:@"4" charact:_featureTextView.text];
     
@@ -75,7 +96,67 @@
             
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 //
-//               self.returnStrBlock(_featureTextView.text);
+                //               self.returnStrBlock(_featureTextView.text);
+                self.returnStrBlock(_featureTextView.text);
+                [self.navigationController popViewControllerAnimated:YES];
+            });
+            
+        }else{
+            
+        }
+        
+    } failure:^(__kindof YTKBaseRequest *request) {
+        //
+        [self showHudWithString:@"提交失败" forSecond:1.5];
+    }];
+}
+
+//修改 个人 教学经历
+- (void)modifyMyselfTeachingExperience{
+
+    XXEMyselfInfoTeachingExpericenceApi *modifyMyselfTeachingExperienceApi = [[XXEMyselfInfoTeachingExpericenceApi alloc] initWithXid:parameterXid user_id:parameterUser_Id user_type:USER_TYPE teach_life:_featureTextView.text];
+    
+    [modifyMyselfTeachingExperienceApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
+        //        NSLog(@"%@", request.responseJSONObject);
+        NSString *codeStr = [NSString stringWithFormat:@"%@", request.responseJSONObject[@"code"]];
+        
+        if ([codeStr isEqualToString:@"1"]) {
+            
+            [self showHudWithString:@"提交成功!" forSecond:1.5];
+            
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                //
+                //               self.returnStrBlock(_featureTextView.text);
+                self.returnStrBlock(_featureTextView.text);
+                [self.navigationController popViewControllerAnimated:YES];
+            });
+            
+        }else{
+            
+        }
+        
+    } failure:^(__kindof YTKBaseRequest *request) {
+        //
+        [self showHudWithString:@"提交失败" forSecond:1.5];
+    }];
+}
+
+//修改 个人 教学感悟
+- (void)modifyMyselfTeachingFeeling{
+
+    XXEMyselfInfoModifyTeachingFeelingApi *modifyMyselfTeachingFeelingApi = [[XXEMyselfInfoModifyTeachingFeelingApi alloc] initWithXid:parameterXid user_id:parameterUser_Id user_type:USER_TYPE teach_feel:_featureTextView.text];
+    
+    [modifyMyselfTeachingFeelingApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
+        //        NSLog(@"%@", request.responseJSONObject);
+        NSString *codeStr = [NSString stringWithFormat:@"%@", request.responseJSONObject[@"code"]];
+        
+        if ([codeStr isEqualToString:@"1"]) {
+            
+            [self showHudWithString:@"提交成功!" forSecond:1.5];
+            
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                //
+                //               self.returnStrBlock(_featureTextView.text);
                 self.returnStrBlock(_featureTextView.text);
                 [self.navigationController popViewControllerAnimated:YES];
             });
@@ -90,6 +171,38 @@
     }];
 
 }
+
+//修改 个人 个性签名
+- (void)modifyMyselfTeachingPersonalSign{
+    
+    XXEMyselfInfoModifyPersonal_signApi *modifyMyselfPersonal_signApi = [[XXEMyselfInfoModifyPersonal_signApi alloc] initWithXid:parameterXid user_id:parameterUser_Id user_type:USER_TYPE personal_sign:_featureTextView.text];
+    
+    [modifyMyselfPersonal_signApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
+        //        NSLog(@"%@", request.responseJSONObject);
+        NSString *codeStr = [NSString stringWithFormat:@"%@", request.responseJSONObject[@"code"]];
+        
+        if ([codeStr isEqualToString:@"1"]) {
+            
+            [self showHudWithString:@"提交成功!" forSecond:1.5];
+            
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                //
+                //               self.returnStrBlock(_featureTextView.text);
+                self.returnStrBlock(_featureTextView.text);
+                [self.navigationController popViewControllerAnimated:YES];
+            });
+            
+        }else{
+            
+        }
+        
+    } failure:^(__kindof YTKBaseRequest *request) {
+        //
+        [self showHudWithString:@"提交失败" forSecond:1.5];
+    }];
+
+}
+
 
 - (void)returnStr:(ReturnStrBlock)block{
     self.returnStrBlock = block;

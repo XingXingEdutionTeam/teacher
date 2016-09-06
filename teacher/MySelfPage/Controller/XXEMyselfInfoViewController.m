@@ -15,7 +15,7 @@
 #import "XXEMyselfInfoNameModifyViewController.h"
 #import "XXESchoolPhoneNumModifyViewController.h"
 #import "XXESchoolEmailModiyfViewController.h"
-
+#import "XXESchoolFeatureModifyViewController.h"
 
 @interface XXEMyselfInfoViewController ()<UITableViewDelegate, UITableViewDataSource>
 {
@@ -321,8 +321,10 @@
     cell.titleLabel.text = titleArray[indexPath.row];
     cell.contentLabel.text = contentArray[indexPath.row];
 //@"猩ID"--0,@"昵称"--1,@"姓名"--2,@"教龄"--3,@"科目"--4 , @"手机号"--5, @"邮箱"--6, @"毕业院校"--7, @"所学专业"--8, @"教学经历"--9,@"教学感悟"--10, @"个性签名"--11, @"相册"--12
-    if (indexPath.row == 1 || indexPath.row == 5 || indexPath.row == 6 || indexPath.row == 9 || indexPath.row == 10 || indexPath.row == 7 || indexPath.row == 8 || indexPath.row == 11) {
-      cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;  
+    if (indexPath.row == 0 || indexPath.row == 2) {
+        //
+    }else {
+    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
     
     return cell;
@@ -368,20 +370,44 @@
     }
     //邮箱
     if (indexPath.row == 6) {
-        XXESchoolPhoneNumModifyViewController *schoolPhoneNumModifyVC = [[XXESchoolPhoneNumModifyViewController alloc] init];
-        schoolPhoneNumModifyVC.flagStr = @"fromMyselfInfo";
-        [schoolPhoneNumModifyVC returnStr:^(NSString *str) {
+        XXESchoolEmailModiyfViewController *schoolEmailModifyVC = [[XXESchoolEmailModiyfViewController alloc] init];
+        schoolEmailModifyVC.flagStr = @"fromMyselfInfo";
+        
+        schoolEmailModifyVC.emailStr = contentArray[6];
+        [schoolEmailModifyVC returnStr:^(NSString *str) {
             //
-            contentArray[5] = str;
+            contentArray[6] = str;
             [_myTableView reloadData];
         }];
         
-        [self.navigationController pushViewController:schoolPhoneNumModifyVC animated:YES];
+        [self.navigationController pushViewController:schoolEmailModifyVC animated:YES];
     }
     //经历
-    
+    if (indexPath.row == 9) {
+        XXESchoolFeatureModifyViewController *schoolFeatureModifyVC = [[XXESchoolFeatureModifyViewController alloc] init];
+        schoolFeatureModifyVC.flagStr = @"fromMyselfInfoTeachingExperience";
+        schoolFeatureModifyVC.schoolfeatureStr = contentArray[9];
+        [schoolFeatureModifyVC returnStr:^(NSString *str) {
+            //
+            contentArray[9] = str;
+            [_myTableView reloadData];
+        }];
+        
+        [self.navigationController pushViewController:schoolFeatureModifyVC animated:YES];
+    }
     //感悟
-    
+    if (indexPath.row == 10) {
+        XXESchoolFeatureModifyViewController *schoolFeatureModifyVC = [[XXESchoolFeatureModifyViewController alloc] init];
+        schoolFeatureModifyVC.flagStr = @"fromMyselfInfoTeachingFeeling";
+        schoolFeatureModifyVC.schoolfeatureStr = contentArray[10];
+        [schoolFeatureModifyVC returnStr:^(NSString *str) {
+            //
+            contentArray[10] = str;
+            [_myTableView reloadData];
+        }];
+        
+        [self.navigationController pushViewController:schoolFeatureModifyVC animated:YES];
+    }
     //毕业院校
     
     //所学专业
@@ -390,9 +416,18 @@
     
     
     //个性签名
-    
-    //修改头像
-    
+    if (indexPath.row == 11) {
+        XXESchoolFeatureModifyViewController *schoolFeatureModifyVC = [[XXESchoolFeatureModifyViewController alloc] init];
+        schoolFeatureModifyVC.flagStr = @"fromMyselfInfoPersonalSignApi";
+        schoolFeatureModifyVC.schoolfeatureStr = contentArray[11];
+        [schoolFeatureModifyVC returnStr:^(NSString *str) {
+            //
+            contentArray[11] = str;
+            [_myTableView reloadData];
+        }];
+        
+        [self.navigationController pushViewController:schoolFeatureModifyVC animated:YES];
+    }
 }
 
 

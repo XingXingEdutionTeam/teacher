@@ -192,7 +192,7 @@
     }
     if (indexPath.row==t) {
 
-        return 44 + picRow * picHeight;
+        return 44 + picRow * (picHeight + 10);
     }
     else{
         return 44;
