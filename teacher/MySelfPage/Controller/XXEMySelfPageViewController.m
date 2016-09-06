@@ -131,28 +131,39 @@
 
 - (void)createHeadView{
 
-    headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kWidth, 150)];
+    headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, KScreenWidth, 150 * kScreenRatioHeight)];
     [self.view addSubview:headerView];
     
-    headerBgImageView=[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, kWidth, 150)];
+    headerBgImageView=[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, KScreenWidth, 150 * kScreenRatioHeight)];
     headerBgImageView.image = [UIImage imageNamed:@"green_background_banner"];
     headerBgImageView.userInteractionEnabled =YES;
     [headerView addSubview:headerBgImageView];
     
     iconImageView = [[UIImageView alloc] init];
     [iconImageView sd_setImageWithURL:[NSURL URLWithString:headImageStr] placeholderImage:[UIImage imageNamed:@"headplaceholder"]];
-    [iconImageView setFrame:CGRectMake(30, 30, 86,86)];
-    iconImageView.layer.cornerRadius =43;
+    
+    CGFloat iconWidth = 86 *kScreenRatioWidth;
+    CGFloat iconHeight = iconWidth;
+
+    [iconImageView setFrame:CGRectMake(30 * kScreenRatioWidth, 30 * kScreenRatioHeight, iconWidth,iconHeight)];
+    iconImageView.layer.cornerRadius =iconWidth / 2;
     iconImageView.layer.masksToBounds =YES;
     [headerView addSubview:iconImageView];
     iconImageView.userInteractionEnabled =YES;
     
-    manimage = [[UIImageView alloc]initWithFrame:CGRectMake(35, 60, 20, 20)];
+    
+    CGFloat sexWidth = 20 * kScreenRatioWidth;
+    CGFloat sexHeight = sexWidth;
+    
+    manimage = [[UIImageView alloc]initWithFrame:CGRectMake(35 * kScreenRatioWidth, 60 * kScreenRatioHeight, sexWidth, sexHeight)];
     manimage.image = sexPic;
     [iconImageView addSubview:manimage];
     
     //名称
-    nameLbl =[UILabel createLabelWithFrame:CGRectMake(150, 40, 150, 20) Font:18 Text:nil];
+    CGFloat nameLabelWidth = 150 * kScreenRatioWidth;
+    CGFloat nameLabelHeight = 20 *kScreenRatioHeight;
+    
+    nameLbl =[UILabel createLabelWithFrame:CGRectMake(150 * kScreenRatioWidth, 40 * kScreenRatioHeight, nameLabelWidth, nameLabelHeight) Font:18 * kScreenRatioWidth Text:nil];
     nameLbl.text = nameStr;
     nameLbl.textAlignment = NSTextAlignmentLeft;
     nameLbl.textColor =UIColorFromRGB(255, 255, 255);
@@ -160,7 +171,11 @@
     
     //等级
     NSString *lvString = [NSString stringWithFormat:@"LV%@", lvStr];
-    UILabel *lvLabel = [UILabel createLabelWithFrame:CGRectMake(300 * kScreenRatioWidth , 42, 30, 15) Font:12 Text:lvString];
+    
+    CGFloat lvLabelWidth = 30 * kScreenRatioWidth;
+    CGFloat lvLabelHeight = 15 * kScreenRatioHeight;
+    
+    UILabel *lvLabel = [UILabel createLabelWithFrame:CGRectMake(300 * kScreenRatioWidth , 42 * kScreenRatioHeight, lvLabelWidth, lvLabelHeight) Font:12 Text:lvString];
     lvLabel.textColor = UIColorFromRGB(3, 169, 244);
     lvLabel.textAlignment = NSTextAlignmentCenter;
     lvLabel.backgroundColor = [UIColor whiteColor];
@@ -178,7 +193,11 @@
     //    NSLog(@"%d  ////   %d  //// %d //// %d", a, b,c,d);
     
     NSString *titleStr = [NSString stringWithFormat:@"还差%d星币升级到%d级会员  %d/%d", c, d, b, a];
-    UILabel *titleLbl =[UILabel createLabelWithFrame:CGRectMake(150, 70, 200, 35) Font:12 Text:titleStr];
+    
+    CGFloat titleLabelWidth = 200 * kScreenRatioWidth;
+    CGFloat titleLabelHeight = 35 * kScreenRatioHeight;
+    
+    UILabel *titleLbl =[UILabel createLabelWithFrame:CGRectMake(150 * kScreenRatioWidth, 70 * kScreenRatioHeight, titleLabelWidth, titleLabelHeight) Font:12 * kScreenRatioWidth Text:titleStr];
     titleLbl.numberOfLines = 0;
     titleLbl.textAlignment = NSTextAlignmentLeft;
     titleLbl.text = titleStr;
@@ -189,7 +208,7 @@
     
     //中间 进度条
     UIProgressView * progressView = [[UIProgressView alloc] initWithProgressViewStyle:UIProgressViewStyleDefault];
-    progressView.frame = CGRectMake(150, 110, 150, 10);
+    progressView.frame = CGRectMake(150 * kScreenRatioWidth, 110 * kScreenRatioHeight, 150 * kScreenRatioWidth, 10 * kScreenRatioHeight);
     // 设置已过进度部分的颜色
     progressView.progressTintColor = XXEColorFromRGB(255, 255, 255);
     // 设置未过进度部分的颜色
@@ -200,7 +219,7 @@
 }
 
 - (void)createTableView{
-    _myTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 150, KScreenWidth, KScreenHeight) style:UITableViewStyleGrouped];
+    _myTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 150 * kScreenRatioHeight, KScreenWidth, KScreenHeight - 150 * kScreenRatioHeight - 49 - 64) style:UITableViewStyleGrouped];
     
     _myTableView.dataSource = self;
     _myTableView.delegate = self;

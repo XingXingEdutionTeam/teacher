@@ -53,7 +53,7 @@
 
 - (id)requestArgument{
     
-    return @{@"url":URL,
+    return @{
              @"appkey":APPKEY,
              @"backtype":BACKTYPE,
              @"xid":_xid,

@@ -146,7 +146,7 @@
       if (indexPath.row == 4){
       XXESchoolPhoneNumModifyViewController *schoolPhoneNumModifyVC = [[XXESchoolPhoneNumModifyViewController alloc] init];
           schoolPhoneNumModifyVC.schoolId = _schoolId;
-          
+          schoolPhoneNumModifyVC.flagStr = @"fromSchoolInfo";
     [self.navigationController pushViewController:schoolPhoneNumModifyVC animated:YES];
           
             //修改QQ 5
@@ -167,6 +167,7 @@
             
             schoolEmailModiyfVC.emailStr = _contentArray[6];
             schoolEmailModiyfVC.schoolId = _schoolId;
+            schoolEmailModiyfVC.flagStr = @"formSchoolInfo";
             [schoolEmailModiyfVC returnStr:^(NSString *str) {
                 //
                 _contentArray[6] = str;

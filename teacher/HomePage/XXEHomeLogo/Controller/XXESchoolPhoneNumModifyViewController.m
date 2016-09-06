@@ -230,29 +230,42 @@
     }];
 }
 
+//@"fromMyselfInfo"
+
 
 
 
 - (void)submitNewPhoneNum{
-    //position		//教职身份(传数字,1:授课老师  2:主任  3:管理  4:校长)
+    if ([_flagStr isEqualToString:@"fromSchoolInfo"]) {
+        //修改 学校 电话
+        [self modifySchoolPhoneNum];
+    }else if ([_flagStr isEqualToString:@"fromMyselfInfo"]){
+        //修改 个人 电话
+        [self modifyProvatePhoneNum];
+    }
+}
 
+- (void)modifySchoolPhoneNum{
+
+    //position		//教职身份(传数字,1:授课老师  2:主任  3:管理  4:校长)
     XXEModifyPhoneNumApi *modifyPhoneNumApi = [[XXEModifyPhoneNumApi alloc] initWithXid:parameterXid user_id:parameterUser_Id user_type:USER_TYPE school_id:_schoolId position:@"4" tel:_registerUserName];
     [modifyPhoneNumApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         //
-//        NSLog(@"%@", request.responseJSONObject);
+        //        NSLog(@"%@", request.responseJSONObject);
         NSString *codeStr = [NSString stringWithFormat:@"%@", request.responseJSONObject[@"code"]];
         
         if ([codeStr isEqualToString:@"1"]) {
-        
+            
             [self showHudWithString:@"提交成功!" forSecond:1.5];
             
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 //
+                self.returnStrBlock(_registerUserName);
                 [self.navigationController popViewControllerAnimated:YES];
             });
             
         }else{
-        
+            
         }
         
     } failure:^(__kindof YTKBaseRequest *request) {
@@ -260,9 +273,39 @@
         [self showHudWithString:@"提交失败!" forSecond:1.5];
     }];
     
-
 }
 
+- (void)modifyProvatePhoneNum{
+    XXEMyselfInfoModifyPhoneNumApi *modifyMyselfInfoPhoneNumApi = [[XXEMyselfInfoModifyPhoneNumApi alloc] initWithXid:parameterXid user_id:parameterUser_Id user_type:USER_TYPE phone:_registerUserName];
+    [modifyMyselfInfoPhoneNumApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
+        //
+        //        NSLog(@"%@", request.responseJSONObject);
+        NSString *codeStr = [NSString stringWithFormat:@"%@", request.responseJSONObject[@"code"]];
+        
+        if ([codeStr isEqualToString:@"1"]) {
+            
+            [self showHudWithString:@"提交成功!" forSecond:1.5];
+            
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                //
+                self.returnStrBlock(_registerUserName);
+                [self.navigationController popViewControllerAnimated:YES];
+            });
+            
+        }else{
+            
+        }
+        
+    } failure:^(__kindof YTKBaseRequest *request) {
+        //
+        [self showHudWithString:@"提交失败!" forSecond:1.5];
+    }];
+    
+    
+}
 
+- (void)returnStr:(ReturnStrBlock)block{
+    self.returnStrBlock = block;
+}
 
 @end

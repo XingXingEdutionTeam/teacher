@@ -106,7 +106,7 @@
     //选择图片
     UICollectionViewFlowLayout *layout1 = [[UICollectionViewFlowLayout alloc] init];
     layout1.scrollDirection = UICollectionViewScrollDirectionHorizontal;
-    pickerView1 = [[FSImagePickerView alloc] initWithFrame:CGRectMake(10, 10, kWidth - 10 * 2, 80) collectionViewLayout:layout1];
+    pickerView1 = [[FSImagePickerView alloc] initWithFrame:CGRectMake(10, 5 * kScreenRatioHeight, kWidth - 10 * kScreenRatioWidth * 2, 80 * kScreenRatioHeight) collectionViewLayout:layout1];
     pickerView1.showsHorizontalScrollIndicator = NO;
     pickerView1.backgroundColor = [UIColor whiteColor];
     pickerView1.controller = self;
@@ -116,7 +116,7 @@
     //选择图片
     UICollectionViewFlowLayout *layout2 = [[UICollectionViewFlowLayout alloc] init];
     layout2.scrollDirection = UICollectionViewScrollDirectionHorizontal;
-    pickerView2 = [[FSImagePickerView alloc] initWithFrame:CGRectMake(10, 10, kWidth - 10 * 2, 80) collectionViewLayout:layout2];
+    pickerView2 = [[FSImagePickerView alloc] initWithFrame:CGRectMake(10, 5 * kScreenRatioHeight, kWidth - 10 * kScreenRatioWidth * 2, 80 * kScreenRatioHeight) collectionViewLayout:layout2];
     pickerView2.showsHorizontalScrollIndicator = NO;
     pickerView2.backgroundColor = [UIColor whiteColor];
     pickerView2.controller = self;
@@ -126,7 +126,7 @@
     //选择图片
     UICollectionViewFlowLayout *layout3 = [[UICollectionViewFlowLayout alloc] init];
     layout3.scrollDirection = UICollectionViewScrollDirectionHorizontal;
-    pickerView3 = [[FSImagePickerView alloc] initWithFrame:CGRectMake(10, 10, kWidth - 10 * 2, 80) collectionViewLayout:layout3];
+    pickerView3 = [[FSImagePickerView alloc] initWithFrame:CGRectMake(10, 5 * kScreenRatioHeight, kWidth - 10 * kScreenRatioWidth * 2, 80 * kScreenRatioHeight) collectionViewLayout:layout3];
     pickerView3.showsHorizontalScrollIndicator = NO;
     pickerView3.backgroundColor = [UIColor whiteColor];
     pickerView3.controller = self;

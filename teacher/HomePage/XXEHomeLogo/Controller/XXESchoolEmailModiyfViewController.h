@@ -19,6 +19,7 @@ typedef void(^ReturnStrBlock) (NSString *str);
 @property (nonatomic, strong) NSString *schoolId;
 @property (nonatomic, strong) NSString *classId;
 
+@property (nonatomic, copy) NSString *flagStr;
 
 @property (weak, nonatomic) IBOutlet UITextField *emailTextField;
 
@@ -26,7 +27,7 @@ typedef void(^ReturnStrBlock) (NSString *str);
 
 - (void)returnStr:(ReturnStrBlock)block;
 
-//验证邮箱 ???
+//验证邮箱
 - (BOOL)validateEmail:(NSString *)email;
 
 

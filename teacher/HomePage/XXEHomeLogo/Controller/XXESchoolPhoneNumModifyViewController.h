@@ -8,7 +8,11 @@
 
 #import "XXEBaseViewController.h"
 
+typedef void(^ReturnStrBlock) (NSString *str);
+
 @interface XXESchoolPhoneNumModifyViewController : XXEBaseViewController
+
+@property (nonatomic, copy) ReturnStrBlock returnStrBlock;
 
 @property (weak, nonatomic) IBOutlet UITextField *phoneNumTextField;
 
@@ -28,7 +32,7 @@
 @property (nonatomic, copy) NSString *flagStr;
 
 
-
+- (void)returnStr:(ReturnStrBlock)block;
 
 
 

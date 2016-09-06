@@ -14,6 +14,7 @@
 #import "XXEMySelfInfoApi.h"
 #import "XXEMyselfInfoNameModifyViewController.h"
 #import "XXESchoolPhoneNumModifyViewController.h"
+#import "XXESchoolEmailModiyfViewController.h"
 
 
 @interface XXEMyselfInfoViewController ()<UITableViewDelegate, UITableViewDataSource>
@@ -198,39 +199,49 @@
 
 - (void)createHeadView{
     
-    headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kWidth, 180 * kScreenRatioHeight)];
+    headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, KScreenWidth, 180 * kScreenRatioHeight)];
 //    headerBgImageView.backgroundColor = [UIColor redColor];
     [self.view addSubview:headerView];
     
-    headerBgImageView=[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, kWidth, 180 * kScreenRatioHeight)];
+    headerBgImageView=[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, KScreenWidth, 180 * kScreenRatioHeight)];
     headerBgImageView.image = [UIImage imageNamed:@"green_background_banner"];
     headerBgImageView.userInteractionEnabled =YES;
     [headerView addSubview:headerBgImageView];
     
     iconImageView = [[UIImageView alloc] init];
 
-    [iconImageView setFrame:CGRectMake(30, 30, 86,86)];
-    iconImageView.layer.cornerRadius =43;
+    CGFloat iconWidth = 86 * kScreenRatioWidth;
+    CGFloat iconHeight = iconWidth;
+    
+    [iconImageView setFrame:CGRectMake(30 * kScreenRatioWidth, 30 * kScreenRatioHeight, iconWidth, iconHeight)];
+    iconImageView.layer.cornerRadius =iconWidth / 2;
     iconImageView.layer.masksToBounds =YES;
     [headerView addSubview:iconImageView];
     iconImageView.userInteractionEnabled =YES;
     
     CGFloat iconBottom = iconImageView.frame.origin.y + iconImageView.frame.size.height;
     
-    manimage = [[UIImageView alloc]initWithFrame:CGRectMake(35, 60, 20, 20)];
+    CGFloat sexWidth = 20  *kScreenRatioWidth;
+    CGFloat sexHeight = sexWidth;
+    
+    manimage = [[UIImageView alloc]initWithFrame:CGRectMake(35 * kScreenRatioWidth, 60 * kScreenRatioHeight, sexWidth, sexHeight)];
     
     [iconImageView addSubview:manimage];
     
     //名称
-    nameLbl =[UILabel createLabelWithFrame:CGRectMake(150, 40, 150, 20) Font:18 Text:nil];
+    CGFloat nameLabelWidth = 150 * kScreenRatioWidth;
+    CGFloat nameLabelHeight = 20 * kScreenRatioHeight;
     
+    nameLbl =[UILabel createLabelWithFrame:CGRectMake(150 * kScreenRatioWidth, 40 * kScreenRatioHeight, nameLabelWidth, nameLabelHeight) Font:18 * kScreenRatioWidth Text:nil];
     nameLbl.textAlignment = NSTextAlignmentLeft;
     nameLbl.textColor =UIColorFromRGB(255, 255, 255);
     [headerView addSubview:nameLbl];
     
     //等级
+    CGFloat lvLabelWidth = 30 * kScreenRatioWidth;
+    CGFloat lvLabelHeight = 15 * kScreenRatioHeight;
     
-    lvLabel = [UILabel createLabelWithFrame:CGRectMake(300 * kScreenRatioWidth, 42, 30, 15) Font:12 Text:@""];
+    lvLabel = [UILabel createLabelWithFrame:CGRectMake(300 * kScreenRatioWidth, 42 * kScreenRatioHeight, lvLabelWidth, lvLabelHeight) Font:12 * kScreenRatioWidth Text:@""];
     lvLabel.textColor = UIColorFromRGB(3, 169, 244);
     lvLabel.textAlignment = NSTextAlignmentCenter;
     lvLabel.backgroundColor = [UIColor whiteColor];
@@ -238,8 +249,10 @@
     lvLabel.layer.masksToBounds = YES;
     [headerView addSubview:lvLabel];
     
-
-    titleLbl =[UILabel createLabelWithFrame:CGRectMake(150, 70, 200, 35) Font:12 Text:@""];
+    CGFloat titleLabelWidth = 200 *kScreenRatioWidth;
+    CGFloat titleLabelHeight = 35 * kScreenRatioHeight;
+    
+    titleLbl =[UILabel createLabelWithFrame:CGRectMake(150 * kScreenRatioWidth, 70 * kScreenRatioHeight, titleLabelWidth, titleLabelHeight) Font:12 * kScreenRatioWidth Text:@""];
     titleLbl.numberOfLines = 0;
     titleLbl.textAlignment = NSTextAlignmentLeft;
     titleLbl.textColor = [UIColor whiteColor];
@@ -247,18 +260,18 @@
     
     //中间 进度条
     progressView = [[UIProgressView alloc] initWithProgressViewStyle:UIProgressViewStyleDefault];
-    progressView.frame = CGRectMake(150, 110, 150, 10);
+    progressView.frame = CGRectMake(150 * kScreenRatioWidth, 110 * kScreenRatioHeight, 150 * kScreenRatioWidth, 10 * kScreenRatioHeight);
     // 设置已过进度部分的颜色
     progressView.progressTintColor = XXEColorFromRGB(255, 255, 255);
     // 设置未过进度部分的颜色
     progressView.trackTintColor = XXEColorFromRGB(220, 220, 220);
     [headerView addSubview:progressView];
     
-    UIButton *checkBtn =[UIButton createButtonWithFrame:CGRectMake(40 * kScreenRatioWidth, iconBottom + 15 * kScreenRatioHeight, 57 * kScreenRatioWidth, 26 * kScreenRatioHeight) backGruondImageName:@"myself_signIn_icon106x48" Target:self Action:@selector(check) Title:@""];
+    UIButton *checkBtn =[UIButton createButtonWithFrame:CGRectMake(40 * kScreenRatioWidth, iconBottom + 24 * kScreenRatioHeight, 57 * kScreenRatioWidth, 26 * kScreenRatioHeight) backGruondImageName:@"myself_signIn_icon106x48" Target:self Action:@selector(check) Title:@""];
     
     [headerView addSubview:checkBtn];
     
-    continuedLabel =[UILabel createLabelWithFrame:CGRectMake(145 * kScreenRatioWidth, iconBottom + 10 * kScreenRatioHeight, 120 * kScreenRatioWidth, 15 * kScreenRatioHeight) Font:12 * kScreenRatioWidth Text:@""];
+    continuedLabel =[UILabel createLabelWithFrame:CGRectMake(145 * kScreenRatioWidth, iconBottom + 20 * kScreenRatioHeight, 120 * kScreenRatioWidth, 15 * kScreenRatioHeight) Font:12 * kScreenRatioWidth Text:@""];
     continuedLabel.textColor =UIColorFromRGB(255, 255, 255);
     [headerView addSubview:continuedLabel];
     
@@ -343,12 +356,28 @@
     }
     //手机号
     if (indexPath.row == 5) {
-//        XXESchoolPhoneNumModifyViewController *schoolPhoneNumModifyVC = [[XXESchoolPhoneNumModifyViewController alloc] init];
-//        schoolPhoneNumModifyVC.flagStr = @"fromMyselfInfo";
-//        [self.navigationController pushViewController:schoolPhoneNumModifyVC animated:YES];
+        XXESchoolPhoneNumModifyViewController *schoolPhoneNumModifyVC = [[XXESchoolPhoneNumModifyViewController alloc] init];
+        schoolPhoneNumModifyVC.flagStr = @"fromMyselfInfo";
+        [schoolPhoneNumModifyVC returnStr:^(NSString *str) {
+            //
+            contentArray[5] = str;
+            [_myTableView reloadData];
+        }];
+        
+        [self.navigationController pushViewController:schoolPhoneNumModifyVC animated:YES];
     }
     //邮箱
-    
+    if (indexPath.row == 6) {
+        XXESchoolPhoneNumModifyViewController *schoolPhoneNumModifyVC = [[XXESchoolPhoneNumModifyViewController alloc] init];
+        schoolPhoneNumModifyVC.flagStr = @"fromMyselfInfo";
+        [schoolPhoneNumModifyVC returnStr:^(NSString *str) {
+            //
+            contentArray[5] = str;
+            [_myTableView reloadData];
+        }];
+        
+        [self.navigationController pushViewController:schoolPhoneNumModifyVC animated:YES];
+    }
     //经历
     
     //感悟

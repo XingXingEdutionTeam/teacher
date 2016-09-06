@@ -10,8 +10,7 @@
 
 #import "XXESchoolEmailModiyfViewController.h"
 #import "XXEModifyEmailApi.h"
-
-
+#import "XXEMyselfInfoModifyEmailApi.h"
 
 @interface XXESchoolEmailModiyfViewController ()
 {
@@ -64,6 +63,16 @@
 }
 
 - (void)modifyEmailInfo{
+    if ([_flagStr isEqualToString:@"formSchoolInfo"]) {
+        //修改 学校 邮箱
+        [self modifySchoolEmail];
+    }else if ([_flagStr isEqualToString:@""]) {
+       //修改 个人 邮箱
+        [self modifyMyselfEmail];
+    }
+}
+
+- (void)modifySchoolEmail{
 
     XXEModifyEmailApi *modifyEmailApi = [[XXEModifyEmailApi alloc] initWithXid:parameterXid user_id:parameterUser_Id user_type:USER_TYPE school_id:_schoolId position:@"4" email:_emailTextField.text];
     
@@ -90,11 +99,37 @@
         //
         [self showHudWithString:@"提交失败" forSecond:1.5];
     }];
-
 }
 
+- (void)modifyMyselfEmail{
 
+    XXEMyselfInfoModifyEmailApi *modifyMyselfEmailApi = [[XXEMyselfInfoModifyEmailApi alloc] initWithXid:parameterXid user_id:parameterUser_Id user_type:USER_TYPE email:_emailTextField.text];
+    
+    [modifyMyselfEmailApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
+        
+        //        NSLog(@"%@", request.responseJSONObject);
+        NSString *codeStr = [NSString stringWithFormat:@"%@", request.responseJSONObject[@"code"]];
+        
+        if ([codeStr isEqualToString:@"1"]) {
+            
+            [self showHudWithString:@"提交成功!" forSecond:1.5];
+            
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                //
+                self.returnStrBlock(_emailTextField.text);
+                [self.navigationController popViewControllerAnimated:YES];
+            });
+            
+        }else{
+            
+        }
+        
+    } failure:^(__kindof YTKBaseRequest *request) {
+        //
+        [self showHudWithString:@"提交失败" forSecond:1.5];
+    }];
 
+}
 
 - (BOOL)validateEmail:(NSString *)email
 {

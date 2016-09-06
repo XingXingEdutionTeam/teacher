@@ -87,7 +87,7 @@
     //选择图片
     UICollectionViewFlowLayout *layout1 = [[UICollectionViewFlowLayout alloc] init];
     layout1.scrollDirection = UICollectionViewScrollDirectionHorizontal;
-    pickerView = [[FSImagePickerView alloc] initWithFrame:CGRectMake(10, 30, kWidth - 10 * 2, 80) collectionViewLayout:layout1];
+    pickerView = [[FSImagePickerView alloc] initWithFrame:CGRectMake(10, 40 * kScreenRatioHeight, kWidth - 10 * kScreenRatioWidth * 2, 80 * kScreenRatioHeight) collectionViewLayout:layout1];
     pickerView.backgroundColor = UIColorFromRGB(255, 255, 255);
     pickerView.showsHorizontalScrollIndicator = NO;
     pickerView.controller = self;

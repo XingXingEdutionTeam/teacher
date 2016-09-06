@@ -59,7 +59,7 @@
 #pragma mark - collectionView
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    return CGSizeMake(65, 65);
+    return CGSizeMake(65 , 65 );
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
@@ -104,7 +104,7 @@
             [self.controller presentViewController:photoBrowser animated:YES completion:^{
             }];
         }
-        NSLog(@"弹出图片浏览器");
+//        NSLog(@"弹出图片浏览器");
     }
 }
 
