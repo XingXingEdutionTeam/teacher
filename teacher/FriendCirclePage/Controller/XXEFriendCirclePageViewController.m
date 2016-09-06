@@ -7,10 +7,6 @@
 //
 
 #import "XXEFriendCirclePageViewController.h"
-#import "DFTextImageLineItem.h"
-#import "DFLineLikeItem.h"
-#import "DFLineCommentItem.h"
-#import "KTActionSheet.h"
 #import "XXEFriendCircleApi.h"
 #import "XXECircleUserModel.h"
 #import "XXECircleModel.h"
@@ -242,25 +238,6 @@
 
 
 
-#pragma mark - 发布朋友圈
-- (void)rightPublishButtonClick:(UIButton *)sender
-{
-    KTActionSheet *actionSheet = [[KTActionSheet alloc]initWithTitle:@"" itemTitles:@[@"小视频",@"拍照",@"从相册选取"]];
-    actionSheet.delegate =self;
-}
-
-#pragma KTActionSheetDelegate
-
-- (void)sheetViewDidSelectIndex:(NSInteger)index title:(NSString *)title sender:(id)sender
-{
-    if (index == 0) {
-        NSLog(@"发视频");
-    }else if (index == 1){
-        NSLog(@"拍照");
-    }else if (index == 2){
-        NSLog(@"从相册选取");
-    }
-}
 
 
 

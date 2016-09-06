@@ -77,13 +77,14 @@
     
     CGFloat x, y, width, heigh;
     x=10;
-    y=74;
+    y=14;
     width = self.view.frame.size.width -2*x;
     heigh = 100;
     _contentView = [[UITextView alloc] initWithFrame:CGRectMake(x, y, width, heigh)];
     _contentView.scrollEnabled = YES;
     _contentView.delegate = self;
     _contentView.font = [UIFont systemFontOfSize:17];
+    _contentView.backgroundColor = [UIColor redColor];
     //_contentView.layer.borderColor = [UIColor redColor].CGColor;
     //_contentView.layer.borderWidth =2;
     [self.view addSubview:_contentView];
