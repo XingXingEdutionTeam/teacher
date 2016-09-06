@@ -20,4 +20,8 @@
 
 @property (nonatomic, weak)id<XXEHomePageBottomViewDelegate>delegate;
 
+/** 给试图赋值 */
+- (void)configBottomViewButton:(NSString *)position;
+
+
 @end

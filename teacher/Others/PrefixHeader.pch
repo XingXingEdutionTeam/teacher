@@ -28,6 +28,7 @@
 #import <ReactiveCocoa/ReactiveCocoa.h>
 #import "XXEUserInfo.h"
 #import "XXEHomePageHeader.h"
+#import "FriendCircleHeader.h"
 
 
 

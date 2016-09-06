@@ -300,7 +300,7 @@
 //    registerVC.forgetPassWordPage = @"忘记密码--";
 //    registerVC.forgetPhonrNum = self.registerUserName;
 //    [self.navigationController pushViewController:registerVC animated:YES];
-    
+//    
 }
 
 #pragma mark - 验证验证码对不对

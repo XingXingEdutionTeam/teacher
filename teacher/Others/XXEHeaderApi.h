@@ -49,8 +49,6 @@
 //举报提交
 #define XXEHomeReportSubmitUrl @"http://www.xingxingedu.cn/Global/report_sub"
 
-//我的朋友圈
-#define XXEFriendCircleUrl @"http://www.xingxingedu.cn/Global/my_friend_circle"
 
 //搜索学校
 #define XXESearchSchoolUrl @"http://www.xingxingedu.cn/Global/get_school_info"

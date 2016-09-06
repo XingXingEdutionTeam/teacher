@@ -29,7 +29,7 @@
     [self.homeMiddleFirstButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(weakSelf.mas_left).offset(15);
         make.centerY.equalTo(weakSelf.mas_centerY);
-        make.width.mas_equalTo((KScreenWidth-30)/4);
+        make.width.mas_equalTo(86.25 *kScreenRatioWidth);
     }];
     
     self.homeMiddleTwoButton = [UIButton creatHomePageImage:@"home_redflower" title:@":  12" target:self action:@selector(homeMiddleTwoButtonClick:)];
@@ -37,32 +37,43 @@
     [self.homeMiddleTwoButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(weakSelf.homeMiddleFirstButton.mas_right).offset(0);
         make.centerY.equalTo(weakSelf.mas_centerY);
-        make.width.mas_equalTo((KScreenWidth-30)/4);
+        make.width.mas_equalTo(86.25 *kScreenRatioWidth);
     }];
     
     self.homeMiddleThreeButton = [UIButton creatHomePageImage:@"home_xid" title:@":  14" target:self action:@selector(homeMiddleThreeButtonClick:)];
     [self addSubview:self.homeMiddleThreeButton];
     [self.homeMiddleThreeButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(weakSelf.homeMiddleTwoButton.mas_right).offset(0);
+        make.left.equalTo(weakSelf.homeMiddleTwoButton.mas_right).offset(5);
         make.centerY.equalTo(weakSelf.mas_centerY);
-        make.width.mas_equalTo((KScreenWidth-30)/4);
+       make.width.mas_equalTo(96.25 *kScreenRatioWidth);
     }];
     
     self.homeMiddleFourButton = [UIButton creatHomePageImage:@"home_tongzhi" title:@"" target:self action:@selector(homeMiddleFourButtonClick:)];
     [self addSubview:self.homeMiddleFourButton];
     [self.homeMiddleFourButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.equalTo(weakSelf.mas_right).offset(-15);
+        make.left.equalTo(weakSelf.homeMiddleThreeButton.mas_right).offset(0);
         make.centerY.equalTo(weakSelf.mas_centerY);
-        make.width.mas_equalTo((KScreenWidth-30)/4);
+        make.width.mas_equalTo(76.25 *kScreenRatioWidth);
     }];
 }
 
 #pragma mark - 给视图赋值
 - (void)configCellMiddleWithInfo:(XXEHomePageModel *)homeModel
 {
+    if (homeModel.coin_able.length == 4) {
+        float coin = [homeModel.coin_able floatValue]/1000;
+        NSLog(@"%@",homeModel.coin_able);
+        [self.homeMiddleThreeButton setTitle:[NSString stringWithFormat:@":  %.1f千",coin] forState:UIControlStateNormal];
+    }else if (homeModel.coin_able.length == 5){
+        float coin = [homeModel.coin_able floatValue]/10000;
+        
+        [self.homeMiddleThreeButton setTitle:[NSString stringWithFormat:@":  %.1f万",coin] forState:UIControlStateNormal];
+    }else{
+         [self.homeMiddleThreeButton setTitle:[NSString stringWithFormat:@":  %@",homeModel.coin_able] forState:UIControlStateNormal];
+    }
     [self.homeMiddleFirstButton setTitle:[NSString stringWithFormat:@":  %@",homeModel.fbasket_able] forState:UIControlStateNormal];
     [self.homeMiddleTwoButton setTitle:[NSString stringWithFormat:@":  %@",homeModel.flower_able] forState:UIControlStateNormal];
-    [self.homeMiddleThreeButton setTitle:[NSString stringWithFormat:@":  %@",homeModel.coin_able] forState:UIControlStateNormal];
+    
 }
 
 #pragma mark - 点击相应事件
@@ -90,7 +101,7 @@
 
 - (void)homeMiddleFourButtonClick:(UIButton *)sender
 {
-    NSLog(@"----通知点击相应时间------");
+    NSLog(@"----通知点击相应通知------");
 }
 
 @end

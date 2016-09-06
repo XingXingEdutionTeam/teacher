@@ -60,7 +60,7 @@
     UIButton *button = [[UIButton alloc]init];
     [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     if (![title isEqual: @""]) {
-        button.imageEdgeInsets = UIEdgeInsetsMake(0, -25, 0, 0);
+        button.imageEdgeInsets = UIEdgeInsetsMake(0, -15, 0, 0);
         //    self.homeMiddleFirstButton.titleEdgeInsets = UIEdgeInsetsMake(0, 30, 0, 0);
     }
     

@@ -12,6 +12,7 @@
 #import "XXECircleModel.h"
 #import "XXECommentModel.h"
 #import "XXEGoodUserModel.h"
+#import "XXEFriendMyCircleViewController.h"
 
 @interface XXEFriendCirclePageViewController ()
 /** 朋友圈的头部视图信息 */
@@ -46,6 +47,12 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     self.view.backgroundColor = XXEBackgroundColor;
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    [self.view removeFromSuperview];
 }
 
 - (instancetype)init
@@ -99,6 +106,7 @@
             NSMutableArray *srcSmallImages = [NSMutableArray array];
             NSMutableArray *thumbBigImages = [NSMutableArray array];
             //判断图片的字符串里面有没有逗号
+            
             if ([circleModel.pic_url containsString:@","]) {
                 NSLog(@"包含");
                 NSArray *array = [circleModel.pic_url componentsSeparatedByString:@","];
@@ -121,36 +129,43 @@
             }
             NSLog(@"每一个单元格有几个人点赞%lu",(unsigned long)circleModel.good_user.count);
             NSLog(@"点赞%@",circleModel.good_user);
+            NSLog(@"评论%@",circleModel.comment_group);
             
-//            [self addItem:textImageItem];
             
-//            if (circleModel.good_user.count == 0) {
-//                NSLog(@"没有人点赞");
-//            }else{
-//                for (int j =0; j<circleModel.good_user.count; j++) {
-//                    XXEGoodUserModel *goodModel = circleModel.good_user[j];
-//                    NSLog(@"%@",goodModel.goodXid);
-//                    DFTextImageLineItem *likeItem = [[DFTextImageLineItem alloc]init];
-//                    likeItem.userNick = goodModel.goodNickName;
-//                    likeItem.userId = [goodModel.goodXid integerValue];
-//                    [textImageItem.likes addObject:circleModel.good_user];
+            if (circleModel.good_user.count == 0) {
+                NSLog(@"没有人点赞");
+            }else{
+                for (int j =0; j<circleModel.good_user.count; j++) {
+                    XXEGoodUserModel *goodModel = circleModel.good_user[j];
+                    NSLog(@"%@",goodModel.goodXid);
+                    DFTextImageLineItem *likeItem = [[DFTextImageLineItem alloc]init];
+                    likeItem.userNick = goodModel.goodNickName;
+                    likeItem.userId = [goodModel.goodXid integerValue];
+                    [textImageItem.likes addObject:likeItem];
+                }
+                NSLog(@"点赞的信息%@",textImageItem.likes);
+            }
+//                    评论内容
             
-                    //评论内容
-//                    DFLineCommentItem *commentItem = [[DFLineCommentItem alloc]init];
-//                    XXECommentModel *commentModel = circleModel.comment_group[j];
-//                    if (circleModel.comment_group.count != 0) {
-//                        commentItem.commentId = [commentModel.commentId intValue];
-//                        commentItem.userId = [commentModel.commentXid intValue];
-//                        commentItem.userNick = commentModel.commentNicknName;
-//                        commentItem.replyUserId = [commentModel.to_who_xid intValue];
-//                        commentItem.replyUserNick = commentModel.to_who_nickname;
-//                        commentItem.text = commentModel.con;
-//                        [textImageItem.comments addObject:commentItem];
-//                    }else{
-//                        NSLog(@"数组为空");
-//                    }
-//                }
-//            }
+            
+                    if (circleModel.comment_group.count != 0) {
+                        for (int k =0; k<circleModel.comment_group.count; k++) {
+                            DFLineCommentItem *commentItem = [[DFLineCommentItem alloc]init];
+                            XXECommentModel *commentModel = circleModel.comment_group[k];
+                            commentItem.commentId = [commentModel.commentId intValue];
+                            commentItem.userId = [commentModel.commentXid intValue];
+                            commentItem.userNick = commentModel.commentNicknName;
+                            commentItem.replyUserId = [commentModel.to_who_xid intValue];
+                            commentItem.replyUserNick = commentModel.to_who_nickname;
+                            commentItem.text = commentModel.con;
+                            [textImageItem.comments addObject:commentItem];
+                        }
+                        NSLog(@"评论的信息%@",textImageItem.comments);
+                        
+                    }else{
+                        NSLog(@"数组为空");
+                    }
+            
             [self addItem:textImageItem];
         }
     }else{
@@ -220,24 +235,74 @@
 }
 
 
+#pragma mark - 评论和点赞
+-(void)onCommentCreate:(long long)commentId text:(NSString *)text itemId:(long long) itemId
+{
+    NSLog(@"评论%@",text);
+    NSInteger myXId = [[XXEUserInfo user].xid integerValue];
+    
+    DFLineCommentItem *commentItem = [[DFLineCommentItem alloc] init];
+    commentItem.commentId = [[NSDate date] timeIntervalSince1970];
+    commentItem.userId = myXId;
+    commentItem.userNick = [XXEUserInfo user].nickname;
+    commentItem.text = text;
+    [self addCommentItem:commentItem itemId:itemId replyCommentId:commentId];
+}
 
 
+-(void)onLike:(long long)itemId
+{
+    NSLog(@"点赞");
+    //点赞
+    NSLog(@"onLike: %lld", itemId);
+    DFLineLikeItem *likeItem = [[DFLineLikeItem alloc] init];
+    likeItem.userId = 10092;
+    likeItem.userNick = @"琅琊榜";
+    [self addLikeItem:likeItem itemId:itemId];
+
+}
+
+//点击左边头像 或者 点击评论和赞的用户昵称
+-(void)onClickUser:(NSUInteger)userId
+{
+    NSLog(@"%lu",(unsigned long)userId);
+    XXEFriendMyCircleViewController *myCircleVC = [[XXEFriendMyCircleViewController alloc]init];
+    myCircleVC.otherXid = 1212;
+    [self.navigationController pushViewController:myCircleVC animated:YES];
+}
 
 
+-(void)onClickHeaderUserAvatar
+{
+    NSString *string = [XXEUserInfo user].xid;
+    NSInteger myXId = [string integerValue];
+    [self onClickUser:myXId];
+}
 
 
-
-
-
-
-
-
-
-
-
-
-
-
+//发送视频 目前没有实现填写文字
+-(void)onSendVideo:(NSString *)text videoPath:(NSString *)videoPath screenShot:(UIImage *)screenShot
+{
+    DFVideoLineItem *videoItem = [[DFVideoLineItem alloc] init];
+    videoItem.itemId = 10000000; //随便设置一个 待服务器生成
+    videoItem.userId = 10018;
+    videoItem.userAvatar = @"http://file-cdn.datafans.net/avatar/1.jpeg";
+    videoItem.userNick = @"富二代";
+    videoItem.title = @"发表了";
+    videoItem.text = @"新年过节 哈哈"; //这里需要present一个界面 用户填入文字后再发送 场景和发图片一样
+    videoItem.location = @"广州";
+    
+    videoItem.localVideoPath = videoPath;
+    videoItem.videoUrl = @""; //网络路径
+    videoItem.thumbUrl = @"";
+    videoItem.thumbImage = screenShot; //如果thumbImage存在 优先使用thumbImage
+    
+    [self addItemTop:videoItem];
+    
+    //接着上传图片 和 请求服务器接口
+    //请求完成之后 刷新整个界面
+    
+}
 
 
 

@@ -70,6 +70,9 @@
 //学校 类型
 @property (nonatomic, copy) NSString *schoolType;
 
+/** 老师身份 */
+@property (nonatomic, copy)NSString *userPosition;
+
 /** 学校的名字 */
 @property (nonatomic, strong)NSMutableArray *arraySchool;
 /** 班级的名字 */
@@ -78,6 +81,9 @@
 @property (nonatomic, strong) NSMutableArray *classAllArray;
 
 @property (nonatomic, strong) NSMutableArray *classGroupArray;
+
+/** 底部的试图 */
+@property (nonatomic, strong)XXEHomePageBottomView *bottomView;
 
 
 @end
@@ -154,6 +160,8 @@
     self.schoolHomeId = model3.school_id;
     self.schoolType = model3.school_type;
     self.classHomeId = model1.class_id;
+    self.userPosition = model1.position;
+    NSLog(@"身份:%@",self.userPosition);
     
     //*******************  学 校  *************************
     self.homeSchoolView = [[WJCommboxView alloc] initWithFrame:CGRectMake(60 * kScreenRatioWidth, 45 * kScreenRatioWidth, 120 * kScreenRatioWidth, 30 * kScreenRatioHeight)];
@@ -196,6 +204,8 @@
     
     self.homeClassView.textField.placeholder = @"班级";
     self.homeClassView.textField.text = model1.class_name;
+    self.userPosition = model1.position;
+    NSLog(@"身份%@",self.userPosition);
     self.homeClassView.textField.textAlignment = NSTextAlignmentCenter;
     self.homeClassView.textField.tag = 103;
     self.homeClassView.textField.layer.cornerRadius =10 * KScreenWidth / 375;
@@ -212,6 +222,19 @@
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(commboxAction:) name:@"commboxNotice"object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(commboxAction2:) name:@"commboxNotice2"object:nil];
+    
+    //获取下部试图
+    [self bottomViewShowPosition:self.userPosition];
+}
+
+- (void)bottomViewShowPosition:(NSString *)position
+{
+    [self.bottomView removeFromSuperview];
+    XXEHomePageBottomView *bottomView = [[XXEHomePageBottomView alloc]initWithFrame:CGRectMake(0, self.middleView.frame.origin.y+43*kScreenRatioHeight, KScreenWidth, 290*kScreenRatioHeight)];
+    [bottomView configBottomViewButton:self.userPosition];
+    self.bottomView = bottomView;
+    bottomView.delegate = self;
+    [self.view addSubview:bottomView];
 }
 
 - (void)commboxAction2:(NSNotification *)notif{  
@@ -223,7 +246,6 @@
 }
 
 #pragma mark - 通知选择的学校
-
 
 - (void)commboxAction:(NSNotification *)notif{
     NSLog(@"%@",notif.object);
@@ -245,6 +267,7 @@
             [self.homeClassView removeFromSuperview];
             [self.view addSubview:self.classBgView];
             [self.view addSubview:self.homeClassView];
+            NSLog(@"老师的身份是什么%@",self.userPosition);
             
         }
             break;
@@ -273,13 +296,14 @@
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context{
     
     NSString *str = [NSString stringWithFormat:@"%@",context];
+    NSLog(@"str:%@",str);
     
     if ([str integerValue] == 1) {
         if ([object isKindOfClass:[UITextField class]]){
             //如果 改变 左边 学校 ——》自动关联到 右边的年级班级信息
             //取出name的旧值和新值
             NSString * newNameOne=[change objectForKey:@"new"];
-            // NSLog(@"object:%@,new:%@",object,newNameOne);
+             NSLog(@"object:%@,new:%@",object,newNameOne);
             
             NSLog(@"%@ --- %@ ", _arraySchool, _classAllArray);
             
@@ -302,18 +326,25 @@
                         
                         XXEHomePageClassModel *classModel = [model.class_info firstObject];
                         self.classHomeId = classModel.class_id;
+                        self.userPosition = classModel.position;
+                        NSLog(@"身份%@",self.userPosition);
+                        //获取下部试图
+                        [self bottomViewShowPosition:self.userPosition];
                         
                     }
                 }
             }
             
         }
+        
+        
         return;
     }else if ([str integerValue] == 2){
         if ([object isKindOfClass:[UITextField class]]){
             //如果 改变 右边的年级班级信息  ——》自动关联到 左边 学校
             //取出name的旧值和新值
-            //            NSString * newNameTwo=[change objectForKey:@"new"];
+            // NSString * newNameTwo=[change objectForKey:@"new"];
+            
         }
         
     }
@@ -327,6 +358,9 @@
     // Do any additional setup after loading the view.
     NSLog(@"首页控制器");
     
+    //获取数据
+    [self setupHomePageRequeue];
+    
     _classGroupArray = [[NSMutableArray alloc] init];
     
     didSelectedSchoolRow = 0;
@@ -337,13 +371,9 @@
     self.middleView = [[XXEHomePageMiddleView alloc]initWithFrame:CGRectMake(0, 276*kScreenRatioHeight, KScreenWidth, 43*kScreenRatioHeight)];
     self.middleView.delegate = self;
     
-    XXEHomePageBottomView *bottomView = [[XXEHomePageBottomView alloc]initWithFrame:CGRectMake(0, self.middleView.frame.origin.y+43*kScreenRatioHeight, KScreenWidth, 290*kScreenRatioHeight)];
-    bottomView.delegate = self;
-    [self.view addSubview:bottomView];
     [self.view addSubview:self.middleView];
     [self.view addSubview:self.headView];
-    //获取数据
-    [self setupHomePageRequeue];
+   
 //    self.tabBarItem.badgeValue = @"10";
 }
 
@@ -511,7 +541,7 @@
         case 4:
             NSLog(@"----聊天----");
             break;
-        case 5:
+        case 10:
         {
             NSLog(@"---点评----");
             XXECommentRootViewController *commentRootVC = [[XXECommentRootViewController alloc] init];
@@ -522,7 +552,7 @@
             [self.navigationController pushViewController:commentRootVC animated:NO];
             break;
         }
-        case 6:
+        case 11:
         {
             NSLog(@"----作业----");
             XXEHomeworkViewController *homeworkVC = [[XXEHomeworkViewController alloc] init];
@@ -533,7 +563,7 @@
             
             break;
         }
-        case 7:
+        case 5:
         {
             NSLog(@"---食谱----");
             XXERecipeViewController *recipeViewController = [[XXERecipeViewController alloc] init];
@@ -542,27 +572,24 @@
             
             break;
         }
-        case 8:
-            //XXESignInViewController
+        case 6:
         {
-        
-//            NSLog(@"----签到----");
+            NSLog(@"----签到----");
             XXESignInViewController *signInVC = [[XXESignInViewController alloc] init];
             signInVC.schoolId = self.schoolHomeId;
             signInVC.classId = self.classHomeId;
             signInVC.schoolType = self.schoolType;
             [self.navigationController pushViewController:signInVC animated:YES];
-            
         break;
         }
 
-        case 9:
-            NSLog(@"---签到----");
+        case 7:
+            NSLog(@"---管理----");
             break;
-        case 10:
+        case 8:
             NSLog(@"----星天地----");
             break;
-        case 11:
+        case 9:
             NSLog(@"---猩猩商城----");
             break;
             
