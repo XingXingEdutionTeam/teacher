@@ -254,11 +254,21 @@
 //        [self modifyMyselfEmail];
 //    }
     
+    if ([_flagStr isEqualToString:@"formSchoolInfo"]) {
+        //修改 学校 相册
+        [self modifySchoolPic];
+    }else if ([_flagStr isEqualToString:@"fromMyselfInfo"]) {
+        //修改 个人 相册
+        [self modifyMyselfPic];
+    }
+}
+
+- (void)modifySchoolPic{
 
     XXESchoolPicApi *schoolPicApi = [[XXESchoolPicApi alloc] initWithXid:parameterXid user_id:parameterUser_Id user_type:USER_TYPE school_id:_schoolId];
     [schoolPicApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         _dataSourceArray = [[NSMutableArray alloc] init];
-//        NSLog(@"2222---   %@", request.responseJSONObject);
+        //        NSLog(@"2222---   %@", request.responseJSONObject);
         /*
          {
          "good_num" = 1;
@@ -278,7 +288,7 @@
             
         }
         
-//        NSLog(@"%@", _dataSourceArray);
+        //        NSLog(@"%@", _dataSourceArray);
         
         [self customContent];
         
@@ -286,7 +296,12 @@
         
         [self showString:@"数据请求失败" forSecond:1.f];
     }];
-    
+
+}
+
+- (void)modifyMyselfPic{
+
+
 }
 
 

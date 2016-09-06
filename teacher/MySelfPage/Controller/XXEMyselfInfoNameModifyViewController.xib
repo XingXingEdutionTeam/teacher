@@ -3,11 +3,13 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="XXEMyselfInfoNameModifyViewController">
             <connections>
                 <outlet property="nameTextField" destination="FMc-l2-gWv" id="1vP-oE-hcc"/>
+                <outlet property="titleLabel" destination="RzZ-QL-SBZ" id="kl6-lG-ZZj"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -16,19 +18,30 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="昵称" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RzZ-QL-SBZ">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="昵称" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RzZ-QL-SBZ">
                     <rect key="frame" x="10" y="10" width="100" height="21"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="100" id="27S-Pm-qsv"/>
+                        <constraint firstAttribute="height" constant="21" id="Fvc-fs-bQ8"/>
+                    </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="请输入昵称" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="FMc-l2-gWv">
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="请输入昵称" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="FMc-l2-gWv">
                     <rect key="frame" x="20" y="39" width="335" height="30"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="335" id="pdo-ug-8aW"/>
+                        <constraint firstAttribute="width" secondItem="FMc-l2-gWv" secondAttribute="height" multiplier="67:6" id="y4Z-Og-Sap"/>
+                    </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits"/>
                 </textField>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9Cx-F0-mG1">
-                    <rect key="frame" x="25" y="120" width="325" height="42"/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9Cx-F0-mG1">
+                    <rect key="frame" x="25" y="100" width="325" height="42"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="325" id="O2t-BN-wup"/>
+                    </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="18"/>
                     <state key="normal" title="提     交" backgroundImage="login_green">
                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -39,6 +52,16 @@
                 </button>
             </subviews>
             <color key="backgroundColor" red="0.89784642269736847" green="0.90874280427631504" blue="0.91529605263157898" alpha="1" colorSpace="calibratedRGB"/>
+            <constraints>
+                <constraint firstItem="FMc-l2-gWv" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="20" id="Ax7-jp-do5"/>
+                <constraint firstItem="9Cx-F0-mG1" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="25" id="RhN-qj-aGI"/>
+                <constraint firstItem="9Cx-F0-mG1" firstAttribute="top" secondItem="FMc-l2-gWv" secondAttribute="bottom" constant="31" id="X0h-bs-uko"/>
+                <constraint firstAttribute="trailing" secondItem="FMc-l2-gWv" secondAttribute="trailing" constant="20" id="q91-f3-Adc"/>
+                <constraint firstAttribute="trailing" secondItem="9Cx-F0-mG1" secondAttribute="trailing" constant="25" id="qCA-ha-4md"/>
+                <constraint firstItem="RzZ-QL-SBZ" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="10" id="qfa-FI-b7u"/>
+                <constraint firstItem="RzZ-QL-SBZ" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="10" id="tu9-cb-UJc"/>
+                <constraint firstItem="FMc-l2-gWv" firstAttribute="top" secondItem="RzZ-QL-SBZ" secondAttribute="bottom" constant="8" id="ysA-N7-Cs8"/>
+            </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
         </view>
     </objects>

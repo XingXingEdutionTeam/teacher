@@ -14,8 +14,11 @@ typedef void(^ReturnStrBlock) (NSString *str);
 
 @property (nonatomic, copy) ReturnStrBlock returnStrBlock;
 
-
+@property (nonatomic, copy) NSString *flagStr;
 @property (nonatomic, copy) NSString *nickNameStr;
+
+@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
+
 
 @property (weak, nonatomic) IBOutlet UITextField *nameTextField;
 

@@ -10,6 +10,7 @@
 #import "XXERedFlowerDetialTableViewCell.h"
 #import "XXEMySelfInfoApi.h"
 #import "XXEMyselfInfoViewController.h"
+#import "XXEMyselfInfoCollectionViewController.h"
 
 @interface XXEMySelfPageViewController ()<UITableViewDelegate, UITableViewDataSource>
 {
@@ -56,11 +57,8 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
+    [super viewWillAppear:animated];
     self.view.backgroundColor = XXEBackgroundColor;
-}
-
-- (void)viewDidLoad {
-    [super viewDidLoad];
     pictureArray = [[NSMutableArray alloc] initWithObjects:@"myself_info_icon40x40", @"myself_order_icon40x48", @"myself_friend_icon40x44", @"myself_chat_icon40x40", @"myself_collection_icon40x40", @"myself_friend_circle_icon40x40", @"myself_blackorder_icon40x40", @"myself_system_setting_icon40x40", @"myself_privacy_setting_icon40x40", nil];
     titleArray = [[NSMutableArray alloc] initWithObjects:@"我的资料",@"我的订单",@"我的好友",@"我的聊天",@"我的收藏" , @"我的圈子", @"我的黑名单", @"系统设置", @"隐私设置", nil];
     
@@ -74,6 +72,11 @@
     
     [self fetchNetData];
     [self createTableView];
+}
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+
 }
 
 - (void)fetchNetData{
@@ -279,6 +282,9 @@
         
     }else if (indexPath.row == 4){
        //@"我的收藏"
+        XXEMyselfInfoCollectionViewController *myselfInfoCollectionVC = [[XXEMyselfInfoCollectionViewController alloc] init];
+        
+        [self.navigationController pushViewController:myselfInfoCollectionVC animated:YES];
         
     }else if (indexPath.row == 5){
        //@"我的圈子"

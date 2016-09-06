@@ -27,8 +27,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
-    self.title = @"特   点";
     
     if ([XXEUserInfo user].login){
         parameterXid = [XXEUserInfo user].xid;
@@ -67,15 +65,20 @@
 - (void)submitSchoolFeatureInfo{
     if ([_flagStr isEqualToString:@"formSchoolInfo"]) {
         //修改 学校 特点
+        
+        self.title = @"特   点";
         [self modifySchoolFeatureInfo];
     }else if ([_flagStr isEqualToString:@"fromMyselfInfoTeachingExperience"]) {
         //修改 个人 教学经历
+        self.title = @"教学经历";
         [self modifyMyselfTeachingExperience];
     }else if ([_flagStr isEqualToString:@"fromMyselfInfoTeachingFeeling"]) {
         //修改 个人 教学感悟
+        self.title = @"教学感悟";
         [self modifyMyselfTeachingFeeling];
     }else if ([_flagStr isEqualToString:@"fromMyselfInfoPersonalSignApi"]) {
         //修改 个人 个性签名
+        self.title = @"个性签名";
         [self modifyMyselfTeachingPersonalSign];
     }
 

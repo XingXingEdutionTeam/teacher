@@ -66,6 +66,8 @@
 
 - (void)createTableView{
     
+//    NSLog(@"hh %@", NSStringFromCGRect(_upBgView.frame));
+    
     CGFloat tableViewY = _upBgView.frame.origin.y + _upBgView.frame.size.height;
     
     _myTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, tableViewY, KScreenWidth, KScreenHeight - tableViewY - 64) style:UITableViewStyleGrouped];

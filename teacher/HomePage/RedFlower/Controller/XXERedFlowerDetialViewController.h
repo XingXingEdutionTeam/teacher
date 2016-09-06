@@ -17,7 +17,7 @@
 @property (nonatomic, copy) NSString *course;
 @property (nonatomic, copy) NSString *content;
  //照片墙 照片数组
-@property (nonatomic, strong) NSMutableArray *picWallArray;
+@property (nonatomic, strong) NSArray *picWallArray;
 //头像
 @property (nonatomic, copy) NSString *iconUrl;
 

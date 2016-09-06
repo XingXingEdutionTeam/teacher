@@ -321,7 +321,7 @@
         
     } success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
         NSDictionary *dict =responseObject;
-        NSLog(@"111111<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<%@",dict);
+//        NSLog(@"111111<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<%@",dict);
         if([[NSString stringWithFormat:@"%@",dict[@"code"]]isEqualToString:@"1"] )
         {
             
@@ -345,7 +345,7 @@
                 
                 url_groupStr = tidStr;
             }
-                            NSLog(@"修改 图片 %@", url_groupStr);
+//                            NSLog(@"修改 图片 %@", url_groupStr);
         }
         
         [self submitIssueTextInfo];
@@ -355,8 +355,6 @@
     }];
     
 }
-
-
 
 
 - (void)textViewDidChange:(UITextView *)textView{
