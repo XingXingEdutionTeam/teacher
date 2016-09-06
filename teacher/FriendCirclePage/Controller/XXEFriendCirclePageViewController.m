@@ -191,22 +191,25 @@
         
         NSLog(@"%@",request.responseJSONObject);
         NSLog(@"%@",[request.responseJSONObject objectForKey:@"msg"]);
-        NSDictionary *data = [request.responseJSONObject objectForKey:@"data"];
+        
         
         NSString *code = [request.responseJSONObject objectForKey:@"code"];
-        NSArray *list = [data objectForKey:@"list"];
         
-        NSLog(@"用户信息%@",[data objectForKey:@"user_info"]);
-        NSDictionary *userInfo = [data objectForKey:@"user_info"];
-        
-        XXECircleUserModel *Usermodel = [[XXECircleUserModel alloc]initWithDictionary:userInfo error:nil];
-        [self.headerDatasource addObject:Usermodel];
-        //设置顶部视图信息
-        [self setHeaderMessage:Usermodel];
-        NSLog(@"评论信息的列表的%@",list);
-        NSLog(@"数组为%@",list[0]);
-        
-        if ([code intValue]==1) {
+        if ([code intValue]==1 && [[request.responseJSONObject objectForKey:@"data"] isKindOfClass:[NSDictionary class]]) {
+            NSDictionary *data = [request.responseJSONObject objectForKey:@"data"];
+            NSArray *list = [data objectForKey:@"list"];
+            
+            NSLog(@"用户信息%@",[data objectForKey:@"user_info"]);
+            NSDictionary *userInfo = [data objectForKey:@"user_info"];
+            
+            XXECircleUserModel *Usermodel = [[XXECircleUserModel alloc]initWithDictionary:userInfo error:nil];
+            [self.headerDatasource addObject:Usermodel];
+            //设置顶部视图信息
+            [self setHeaderMessage:Usermodel];
+            NSLog(@"评论信息的列表的%@",list);
+            NSLog(@"数组为%@",list[0]);
+
+            
             for (int i =0; i<list.count; i++) {
                 XXECircleModel *circleModel = [[XXECircleModel alloc]initWithDictionary:list[i] error:nil];
                 [self.circleListDatasource addObject:circleModel];
@@ -218,10 +221,14 @@
         NSLog(@"圈子顶部信息数组信息%@",self.headerDatasource);
             [self endRefresh];
             [self endLoadMore];
+        }else{
+            [self endRefresh];
+            [self endLoadMore];
         }
         
     } failure:^(__kindof YTKBaseRequest *request) {
-        
+        [self endRefresh];
+        [self endLoadMore];
     }];
 }
 
