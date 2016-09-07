@@ -74,16 +74,17 @@ static NSString * OTherCELL = @"OTHERCELL";
     }
     //真实环境
         XXEMyselfAblumApi *myselfAblum = [[XXEMyselfAblumApi alloc]initWithMyselfAblumSchoolId:self.otherSchoolId ClassId:self.otherClassId TeacherId:self.otherTeacherId AlbumXid:strngXid AlbumUserId:albumUserId];
-    //测试环境
-//    XXEMyselfAblumApi *myselfAblum = [[XXEMyselfAblumApi alloc]initWithMyselfAblumSchoolId:@"1" ClassId:@"1" TeacherId:@"1"];
     [myselfAblum startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         
         NSArray *data = [request.responseJSONObject objectForKey:@"data"];
-        
-        for (int i =0; i < data.count; i++) {
-            XXEMySelfAlbumModel *model = [[XXEMySelfAlbumModel alloc]initWithDictionary:data[i] error:nil];
-            [self.datasource addObject:model];
+        if ([request.responseJSONObject isKindOfClass:[NSArray class]]) {
+            for (int i =0; i < data.count; i++) {
+                XXEMySelfAlbumModel *model = [[XXEMySelfAlbumModel alloc]initWithDictionary:data[i] error:nil];
+                [self.datasource addObject:model];
+            }
         }
+        
+        
         
         NSLog(@"%@",self.datasource);
         [self.otherTeacherTableView reloadData];

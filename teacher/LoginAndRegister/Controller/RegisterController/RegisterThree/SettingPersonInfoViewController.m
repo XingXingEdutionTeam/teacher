@@ -69,7 +69,7 @@
 {
     [super viewWillAppear:animated];
     self.view.backgroundColor = XXEBackgroundColor;
-    if ([[XXEUserInfo user].login_type isEqualToString:@"1"]) {
+    if ([self.login_type isEqualToString:@"1"]) {
         self.navigationItem.title = @"3/4注册";
     }else{
         self.navigationItem.title = @"完善资料1/2";

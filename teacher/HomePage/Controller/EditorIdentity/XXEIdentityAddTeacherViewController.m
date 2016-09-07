@@ -246,12 +246,7 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
     [super viewWillAppear:animated];
     self.view.backgroundColor = XXEColorFromRGB(239, 239, 244);
     
-    if ([[XXEUserInfo user].login_type isEqualToString:@"1"]) {
-        self.navigationItem.title = @"4/4注册";
-    }else{
-        self.navigationItem.title = @"完善资料2/2";
-    }
-    
+    self.navigationItem.title = @"完善资料";
     self.navigationController.navigationBarHidden = NO;
     //导航栏的按钮
     UIButton*rightButton = [[UIButton alloc]initWithFrame:CGRectMake(-10,0,22,22)];

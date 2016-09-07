@@ -576,8 +576,6 @@
             self.thirdNickName = snsAccount.userName;
             self.thirdHeadImage = snsAccount.iconURL;
             
-            NSLog(@"%lu",(unsigned long)[snsAccount.accessToken length]);
-            NSLog(@"微信的Token:%@",snsAccount.accessToken);
             NSLog(@"iD微信:---%@",snsAccount.unionId);
             [self getAddInfomationMessage:snsAccount LoginType:self.login_type];
         }
@@ -593,12 +591,13 @@
     snsPlatform.loginClickHandler(self,[UMSocialControllerService defaultControllerService],YES,^(UMSocialResponseEntity *response){
         
         //          获取微博用户名、uid、token等
-        
         if (response.responseCode == UMSResponseCodeSuccess) {
             self.login_type = @"4";
             NSDictionary *dict = [UMSocialAccountManager socialAccountDictionary];
             UMSocialAccountEntity *snsAccount = [[UMSocialAccountManager socialAccountDictionary] valueForKey:snsPlatform.platformName];
-            self.sinaLoginToken = snsAccount.unionId;
+            NSLog(@"%@",snsAccount);
+             NSLog(@"\nusername = %@,\n usid = %@,\n token = %@ iconUrl = %@,\n unionId = %@,\n thirdPlatformUserProfile = %@,\n thirdPlatformResponse = %@ \n, message = %@",snsAccount.userName,snsAccount.usid,snsAccount.accessToken,snsAccount.iconURL, snsAccount.unionId, response.thirdPlatformUserProfile, response.thirdPlatformResponse, response.message);
+            self.sinaLoginToken = snsAccount.usid;
             self.thirdNickName = snsAccount.userName;
             self.thirdHeadImage = snsAccount.iconURL;
             
@@ -621,7 +620,7 @@
 #pragma mark - 给数据库添加信息
 - (void)getAddInfomationMessage:(UMSocialAccountEntity *)snsAccount LoginType:(NSString *)loginType
 {
-    NSLog(@"\nusername = %@,\n usid = %@,\n token = %@ iconUrl = %@,\n unionId = %@,\n",snsAccount.userName,snsAccount.usid,snsAccount.accessToken,snsAccount.iconURL, snsAccount.unionId);
+    NSLog(@"\nusername = %@,\n usid = %@,\n token = %@ iconUrl = %@,\n unionId = %@,\n",snsAccount.userName,snsAccount.unionId,snsAccount.accessToken,snsAccount.iconURL, snsAccount.unionId);
     //调用登录接口
     [self loginInterFaceApiSnsAccount:snsAccount.unionId LoginTYpe:loginType];
 }
@@ -629,28 +628,41 @@
 #pragma mark - 登录接口
 - (void)loginInterFaceApiSnsAccount:(NSString *)accessToken LoginTYpe:(NSString *)logintype
 {
+    //微博第三方蹦是因为没有审核通过没有unionId 为空
     NSLog(@"Token%@ 类型%@ 经度%@ 纬度%@",accessToken,logintype,self.longitudeString,self.latitudeString);
     XXELoginApi *loginApi = [[XXELoginApi alloc]initLoginWithUserName:accessToken PassWord:@"" LoginType:logintype Lng:self.longitudeString Lat:self.latitudeString];
     [loginApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         NSLog(@"%@",request.responseJSONObject);
+        
         NSLog(@"%@",[request.responseJSONObject objectForKey:@"msg"]);
         NSString *code = [request.responseJSONObject objectForKey:@"code"];
         if ([code intValue] == 1) {
             //存储数据直接进入首页
             [self showHudWithString:@"正在登录" forSecond:2.f];            
             NSDictionary *data = [request.responseJSONObject objectForKey:@"data"];
-        
+            NSString * logintimes = [data objectForKey:@"login_times"];
             [self LoginSetupUserInfoDict:data SnsAccessToken:accessToken LoginType:logintype];
-            
-            
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3*NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            
-                XXETabBarControllerConfig *tabBarControllerConfig = [[XXETabBarControllerConfig alloc]init];
+            NSLog(@"%@",logintimes);
+            if ([logintimes integerValue]==1 ) {
+                XXEPerfectInfoViewController *perfecVC = [[XXEPerfectInfoViewController alloc]init];
+                XXENavigationViewController *navi = [[XXENavigationViewController alloc]initWithRootViewController:perfecVC];
                 UIWindow *window = [UIApplication sharedApplication].keyWindow;
-                window.rootViewController = tabBarControllerConfig;
+                window.rootViewController = navi;
                 [self.view removeFromSuperview];
                 
-            });
+            }else{
+                
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3*NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    
+                    XXETabBarControllerConfig *tabBarControllerConfig = [[XXETabBarControllerConfig alloc]init];
+                    UIWindow *window = [UIApplication sharedApplication].keyWindow;
+                    window.rootViewController = tabBarControllerConfig;
+                    [self.view removeFromSuperview];
+                    
+                });
+            }
+            
+            
             
         }else{
             //进入注册的第三个

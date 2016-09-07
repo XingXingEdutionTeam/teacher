@@ -14,7 +14,7 @@
 {
     NSString *picUrl = [NSString stringWithFormat:@"%@%@",kXXEPicURL,model.album_pic];
     
-    [self.classAlubmImgeView sd_setImageWithURL:[NSURL URLWithString:picUrl] placeholderImage:[UIImage imageNamed:@""]];
+    [self.classAlubmImgeView sd_setImageWithURL:[NSURL URLWithString:picUrl] placeholderImage:[UIImage imageNamed:@"album_icon"]];
     NSString *times = [XXETool dateAboutStringFromNumberTimer:model.date_tm];
     self.classAlubmTimeLabel.text = times;
     self.classAlubmNameLabel.text = model.album_name;

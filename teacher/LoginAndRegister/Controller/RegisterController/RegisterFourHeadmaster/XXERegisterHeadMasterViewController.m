@@ -154,8 +154,7 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
     [super viewWillAppear:animated];
     self.view.backgroundColor = XXEBackgroundColor;
     
-    
-    if ([[XXEUserInfo user].login_type isEqualToString:@"1"]) {
+    if ([self.login_type isEqualToString:@"1"]) {
        self.navigationItem.title = @"4/4注册";
     }else{
         self.navigationItem.title = @"完善资料2/2";
@@ -334,11 +333,7 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
             break;
         }
         case 6:{
-            if (self.isHave) {
-                
-            }else {
                self.teacherCell = [self cellAtIndexRow:6 andAtSection:0 Message:@"平台审核"];
-            }
             [self tureOrFalseCellClick:NO Tag:106];
             break;
         }
@@ -434,29 +429,33 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
 - (void)sureButtonClick:(UIButton *)sender
 {
     NSLog(@"蛇和人的ID %@",self.theEndReviewerId);
+    NSLog(@"证件%@",self.fileHeadImageArray);
     
     if ([self.theEndReviewerId isEqualToString:@""]) {
         [self showString:@"请选择审核人" forSecond:1.f];
-        return;
+        
     }else if ([self.schoolAddrss isEqualToString:@""] ){
         [self showString:@"请填写学校详细地址" forSecond:1.f];
-        return;
+        
     }else if ([self.schoolTel isEqualToString:@""]){
         [self showString:@"请填写学校电话" forSecond:1.f];
-        return;
+        
     }else if ([self.schoolType isEqualToString:@""]){
         [self showString:@"请选择学校类" forSecond:1.f];
-        return;
+        
     }else if ([self.schoolProvince isEqualToString:@""]){
         [self showString:@"请填写学校地址" forSecond:1.f];
-        return;
-    }else
+        
+    }else if (self.picker.data.count ==1){
+        [self showString:@"请选择学校证件" forSecond:1.f];
+        
+    } else
     {
     [self getIdCardPhotoImage];
     }
     
-    NSLog(@"登录类型%@ 电话号码%@ 密码%@ 用户姓名%@ 用户身份证%@ 年龄%@ 性别%@ 用户身份%@ 用户头像%@",self.login_type,self.userPhoneNum,self.userPassword,self.userName,self.userIDCarNum,self.userAge,self.userSex,self.userIdentifier,self.userAvatarImage);
-    NSLog(@"邀请码%@ 学校详细地址%@ 学校电话%@ 学校ID%@ 学校类型%@ 学校名字%@ 学校省%@ 学校市%@ 学校区%@ 审核人%@",self.theEndInviteCode,self.schoolAddrss,self.schoolTel,self.theEndSchoolId,self.theEndSchoolType,self.schoolName,self.schoolProvince,self.schoolCity,self.schoolDistrict,self.theEndReviewerId);
+//    NSLog(@"登录类型%@ 电话号码%@ 密码%@ 用户姓名%@ 用户身份证%@ 年龄%@ 性别%@ 用户身份%@ 用户头像%@",self.login_type,self.userPhoneNum,self.userPassword,self.userName,self.userIDCarNum,self.userAge,self.userSex,self.userIdentifier,self.userAvatarImage);
+//    NSLog(@"邀请码%@ 学校详细地址%@ 学校电话%@ 学校ID%@ 学校类型%@ 学校名字%@ 学校省%@ 学校市%@ 学校区%@ 审核人%@",self.theEndInviteCode,self.schoolAddrss,self.schoolTel,self.theEndSchoolId,self.theEndSchoolType,self.schoolName,self.schoolProvince,self.schoolCity,self.schoolDistrict,self.theEndReviewerId);
 }
 
 #pragma mark - 获取证件图片

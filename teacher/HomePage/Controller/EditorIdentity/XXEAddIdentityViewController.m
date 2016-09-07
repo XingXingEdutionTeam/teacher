@@ -47,11 +47,8 @@
     self.navigationItem.title = @"编辑身份";
     self.navigationController.navigationBarHidden = NO;
     [self creatNavigaRightButton];
-}
-- (void)viewDidDisappear:(BOOL)animated
-{
-//    [self.navigationController popToRootViewControllerAnimated:YES];
-//    [self.view removeFromSuperview];
+    //获取网络数据
+    [self setupIdentityList];
 }
 
 /** 这个方法都可以,改变当前控制器的电池条颜色 */
@@ -67,7 +64,7 @@
     [self.identityTableView registerNib:[UINib nibWithNibName:@"XXEIdentityListViewCell" bundle:nil] forCellReuseIdentifier:@"CELL"];
     [self.view addSubview:self.identityTableView];
     //获取网络数据
-    [self setupIdentityList];
+//    [self setupIdentityList];
 }
 
 #pragma mark - 获取网络 数据

@@ -416,6 +416,12 @@
 		9ED147021D59A9BF0049D2AA /* ProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9ED147011D59A9BF0049D2AA /* ProgressView.m */; };
 		9ED147061D59AC9B0049D2AA /* XXEHomePageApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 9ED147051D59AC9B0049D2AA /* XXEHomePageApi.m */; };
 		9ED147091D59B0BF0049D2AA /* XXEHomePageMiddleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9ED147081D59B0BF0049D2AA /* XXEHomePageMiddleView.m */; };
+		9ED3DCD21D7FE3B500743B79 /* XXESearchUniversityController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9ED3DCD11D7FE3B500743B79 /* XXESearchUniversityController.m */; };
+		9ED3DCD51D7FEB0F00743B79 /* XXESearchUnApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 9ED3DCD41D7FEB0F00743B79 /* XXESearchUnApi.m */; };
+		9ED3DCD81D7FED5E00743B79 /* XXESearchUNModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9ED3DCD71D7FED5E00743B79 /* XXESearchUNModel.m */; };
+		9ED3DCDC1D7FF6C400743B79 /* XXEEditorMySelfInfoApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 9ED3DCDB1D7FF6C400743B79 /* XXEEditorMySelfInfoApi.m */; };
+		9ED3DCE01D7FFFA200743B79 /* XXEPerfectInfoViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9ED3DCDE1D7FFFA200743B79 /* XXEPerfectInfoViewCell.m */; };
+		9ED3DCE11D7FFFA200743B79 /* XXEPerfectInfoViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9ED3DCDF1D7FFFA200743B79 /* XXEPerfectInfoViewCell.xib */; };
 		9ED9AB101D7EB6B400B63B53 /* XXEFriendMyCircleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9ED9AB0F1D7EB6B400B63B53 /* XXEFriendMyCircleViewController.m */; };
 		9ED9AB131D7EB7DD00B63B53 /* XXEFriendMyCircleApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 9ED9AB121D7EB7DD00B63B53 /* XXEFriendMyCircleApi.m */; };
 		9ED9AB171D7EC0A200B63B53 /* XXEFriendCirclegoodApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 9ED9AB161D7EC0A200B63B53 /* XXEFriendCirclegoodApi.m */; };
@@ -1203,6 +1209,18 @@
 		9ED147051D59AC9B0049D2AA /* XXEHomePageApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXEHomePageApi.m; sourceTree = "<group>"; };
 		9ED147071D59B0BF0049D2AA /* XXEHomePageMiddleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXEHomePageMiddleView.h; sourceTree = "<group>"; };
 		9ED147081D59B0BF0049D2AA /* XXEHomePageMiddleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXEHomePageMiddleView.m; sourceTree = "<group>"; };
+		9ED3DCD01D7FE3B500743B79 /* XXESearchUniversityController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXESearchUniversityController.h; sourceTree = "<group>"; };
+		9ED3DCD11D7FE3B500743B79 /* XXESearchUniversityController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXESearchUniversityController.m; sourceTree = "<group>"; };
+		9ED3DCD31D7FEB0F00743B79 /* XXESearchUnApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXESearchUnApi.h; sourceTree = "<group>"; };
+		9ED3DCD41D7FEB0F00743B79 /* XXESearchUnApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXESearchUnApi.m; sourceTree = "<group>"; };
+		9ED3DCD61D7FED5E00743B79 /* XXESearchUNModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXESearchUNModel.h; sourceTree = "<group>"; };
+		9ED3DCD71D7FED5E00743B79 /* XXESearchUNModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXESearchUNModel.m; sourceTree = "<group>"; };
+		9ED3DCD91D7FF47300743B79 /* XXEMyselfPageHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXEMyselfPageHeader.h; sourceTree = "<group>"; };
+		9ED3DCDA1D7FF6C400743B79 /* XXEEditorMySelfInfoApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXEEditorMySelfInfoApi.h; sourceTree = "<group>"; };
+		9ED3DCDB1D7FF6C400743B79 /* XXEEditorMySelfInfoApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXEEditorMySelfInfoApi.m; sourceTree = "<group>"; };
+		9ED3DCDD1D7FFFA200743B79 /* XXEPerfectInfoViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXEPerfectInfoViewCell.h; sourceTree = "<group>"; };
+		9ED3DCDE1D7FFFA200743B79 /* XXEPerfectInfoViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXEPerfectInfoViewCell.m; sourceTree = "<group>"; };
+		9ED3DCDF1D7FFFA200743B79 /* XXEPerfectInfoViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XXEPerfectInfoViewCell.xib; sourceTree = "<group>"; };
 		9ED9AB0E1D7EB6B400B63B53 /* XXEFriendMyCircleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXEFriendMyCircleViewController.h; sourceTree = "<group>"; };
 		9ED9AB0F1D7EB6B400B63B53 /* XXEFriendMyCircleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXEFriendMyCircleViewController.m; sourceTree = "<group>"; };
 		9ED9AB111D7EB7DD00B63B53 /* XXEFriendMyCircleApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXEFriendMyCircleApi.h; sourceTree = "<group>"; };
@@ -1381,6 +1399,8 @@
 		044349E71D79829000DD8CCE /* Api */ = {
 			isa = PBXGroup;
 			children = (
+				9ED3DCDA1D7FF6C400743B79 /* XXEEditorMySelfInfoApi.h */,
+				9ED3DCDB1D7FF6C400743B79 /* XXEEditorMySelfInfoApi.m */,
 				044349EA1D7982C900DD8CCE /* XXEMySelfInfoApi.h */,
 				044349EB1D7982C900DD8CCE /* XXEMySelfInfoApi.m */,
 				0430B1691D7D84D6001F463F /* XXEMyselfInfoModifyNicknameApi.h */,
@@ -2577,6 +2597,7 @@
 		9E4813C21D50695200C614AC /* MySelfPage */ = {
 			isa = PBXGroup;
 			children = (
+				9ED3DCD91D7FF47300743B79 /* XXEMyselfPageHeader.h */,
 				044349E71D79829000DD8CCE /* Api */,
 				044349E81D79829000DD8CCE /* Model */,
 				044349E91D79829000DD8CCE /* View */,
@@ -2717,6 +2738,10 @@
 				9E6912F41D54341F0000E566 /* XXEStarImageViewController.m */,
 				9E7EF2191D798887003A06E1 /* XXEPerfectInfoViewController.h */,
 				9E7EF21A1D798887003A06E1 /* XXEPerfectInfoViewController.m */,
+				9ED3DCD01D7FE3B500743B79 /* XXESearchUniversityController.h */,
+				9ED3DCD11D7FE3B500743B79 /* XXESearchUniversityController.m */,
+				9ED3DCD31D7FEB0F00743B79 /* XXESearchUnApi.h */,
+				9ED3DCD41D7FEB0F00743B79 /* XXESearchUnApi.m */,
 				9EFDC7F61D546089005556AF /* qqq_1_5.png */,
 				9EFDC7F71D546089005556AF /* qqq_2_5.png */,
 				9EFDC7FA1D5460E6005556AF /* qqq_3_5.png */,
@@ -2740,6 +2765,8 @@
 				04D5B1EE1D6B262500ABA89A /* XXETeachOfTypeModel.m */,
 				9E50F3F71D5AC11300FA6594 /* XXEUserInfo.h */,
 				9E50F3F61D5AC11300FA6594 /* XXEUserInfo.m */,
+				9ED3DCD61D7FED5E00743B79 /* XXESearchUNModel.h */,
+				9ED3DCD71D7FED5E00743B79 /* XXESearchUNModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -2756,6 +2783,9 @@
 				9EB99F571D6C20BE0009C60C /* XXERegisterSearchSchoolCell.h */,
 				9EB99F581D6C20BE0009C60C /* XXERegisterSearchSchoolCell.m */,
 				9EB99F591D6C20BE0009C60C /* XXERegisterSearchSchoolCell.xib */,
+				9ED3DCDD1D7FFFA200743B79 /* XXEPerfectInfoViewCell.h */,
+				9ED3DCDE1D7FFFA200743B79 /* XXEPerfectInfoViewCell.m */,
+				9ED3DCDF1D7FFFA200743B79 /* XXEPerfectInfoViewCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -3234,6 +3264,7 @@
 				9E2F7F841D73D24B00DD9CD1 /* ios-social-sdk-login-quick.html in Resources */,
 				0430B1651D7D79CC001F463F /* XXEMyselfInfoNameModifyViewController.xib in Resources */,
 				0445A3DE1D65E8CA00C3A4CA /* demoShow.gif in Resources */,
+				9ED3DCE11D7FFFA200743B79 /* XXEPerfectInfoViewCell.xib in Resources */,
 				0445A3E71D65E8CA00C3A4CA /* information_delete_icon.png in Resources */,
 				048754A81D5C0BF200F680C5 /* XXEFlowerbasketSentHistoryTableViewCell.xib in Resources */,
 				0445A3E81D65E8CA00C3A4CA /* photo_selected.png in Resources */,
@@ -3384,6 +3415,7 @@
 				048754991D5C0BF200F680C5 /* XXEFlowerbasketViewController.m in Sources */,
 				0445A3E41D65E8CA00C3A4CA /* FSPhotoAssetsModel.m in Sources */,
 				9EEA0E2E1D6E83550070C8C3 /* TAAnimatedDotView.m in Sources */,
+				9ED3DCD21D7FE3B500743B79 /* XXESearchUniversityController.m in Sources */,
 				9E6693A91D6413B100FFA0A7 /* XXERegisterViewController.m in Sources */,
 				0445A3E11D65E8CA00C3A4CA /* FSImagePickerView.m in Sources */,
 				044349E51D7961D000DD8CCE /* XXEStudentSignInManagerAndHeadmasterViewController.m in Sources */,
@@ -3394,6 +3426,7 @@
 				9E4813DD1D50784900C614AC /* XXEChatPageViewController.m in Sources */,
 				04C52CE21D801CC500DB7C4A /* XXEStudentSignInListApi.m in Sources */,
 				9EBA6F641D5CAEAA001B45C3 /* VideoMonitorViewController.m in Sources */,
+				9ED3DCD51D7FEB0F00743B79 /* XXESearchUnApi.m in Sources */,
 				048754A41D5C0BF200F680C5 /* XXEFlowerbasketSentHistoryModel.m in Sources */,
 				04BB3AAE1D74743300AA5C5C /* XXECommentStudentViewController.m in Sources */,
 				04BB3A4F1D74742B00AA5C5C /* XXEMealPicArrModel.m in Sources */,
@@ -3442,6 +3475,7 @@
 				04BB3A9E1D74743300AA5C5C /* XXEClassAddressManagerInfoModel.m in Sources */,
 				9E94B77A1D75A62D0045D575 /* XXERegisterGradeSchoolApi.m in Sources */,
 				9E10C6951D6D837C00ACAF50 /* XXEAlbumDetailsModel.m in Sources */,
+				9ED3DCD81D7FED5E00743B79 /* XXESearchUNModel.m in Sources */,
 				04BB3A961D74743300AA5C5C /* XXEBabyFamilyInfoDetailApi.m in Sources */,
 				048754921D5C0BF200F680C5 /* XXEFlowerbasketApi.m in Sources */,
 				9E4FF3811D780D9B005E3C94 /* XXEForgetPassWordViewController.m in Sources */,
@@ -3454,6 +3488,7 @@
 				9E4FF3611D766F66005E3C94 /* HHControl.m in Sources */,
 				9E0022581D7D10790082F6F0 /* XXEDiffentIdentityViewController.m in Sources */,
 				048F58801D5C7A3A002E4855 /* XXEXingCoinHistoryViewController.m in Sources */,
+				9ED3DCDC1D7FF6C400743B79 /* XXEEditorMySelfInfoApi.m in Sources */,
 				04BB3A151D74742A00AA5C5C /* XXESchoolAddressApi.m in Sources */,
 				04BB3A0E1D74742A00AA5C5C /* XXEModifyCertificateApi.m in Sources */,
 				04BB3A3A1D74742B00AA5C5C /* XXEHomeworkDetailInfoViewController.m in Sources */,
@@ -3496,6 +3531,7 @@
 				04BB3A4A1D74742B00AA5C5C /* XXERecipeDetailViewController.m in Sources */,
 				04BB3A431D74742B00AA5C5C /* XXERecipeAddTextApi.m in Sources */,
 				043301271D62BDD000722DE2 /* XXERedFlowerSentHistoryApi.m in Sources */,
+				9ED3DCE01D7FFFA200743B79 /* XXEPerfectInfoViewCell.m in Sources */,
 				048F587D1D5C6BDB002E4855 /* XXEXingCoinApi.m in Sources */,
 				04BB3A2B1D74742B00AA5C5C /* XXESchoolQQModifyViewController.m in Sources */,
 				9EFDC8551D549DE1005556AF /* SpinerLayer.m in Sources */,

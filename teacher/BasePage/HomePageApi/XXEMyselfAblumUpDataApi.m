@@ -13,9 +13,11 @@
     NSString *_class_id;
     NSString *_ablum_id;
     UIImage *_imageArray;
+    NSString *_userXid;
+    NSString *_userId;
 }
 
-- (id)initWithAblumSchoolId:(NSString *)schoolId ClassId:(NSString *)classId AblumId:(NSString *)ablumId ImageArray:(UIImage *)imageArray
+- (id)initWithAblumSchoolId:(NSString *)schoolId ClassId:(NSString *)classId AblumId:(NSString *)ablumId ImageArray:(UIImage *)imageArray UserXid:(NSString *)userXid UserId:(NSString *)userId
 {
     self = [super init];
     if (self) {
@@ -23,6 +25,8 @@
         _class_id = classId;
         _ablum_id = ablumId;
         _imageArray = imageArray;
+        _userXid = userXid;
+        _userId = userId;
     }
     return self;
 }
@@ -57,10 +61,9 @@
              @"album_id":_ablum_id,
              @"appkey":APPKEY,
              @"backtype":BACKTYPE,
-             @"user_id":USER_ID,
+             @"user_id":_userId,
              @"user_type":USER_TYPE,
-             @"xid":XID
-             
+             @"xid":_userXid
              };
 }
 

@@ -65,6 +65,8 @@ static NSString *const IdentifierCell = @"classAlbunCell";
     [super viewWillAppear:animated];
     self.view.backgroundColor = XXEBackgroundColor;
     self.navigationController.navigationBarHidden = NO;
+    //获取数据
+    [self loadClassAlbumMessage];
 }
 -(UIStatusBarStyle)preferredStatusBarStyle
 {
@@ -75,8 +77,6 @@ static NSString *const IdentifierCell = @"classAlbunCell";
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.title = @"相册";
-    //获取数据
-    [self loadClassAlbumMessage];
     [self.classAlbumTableView registerClass:[XXEClassAlbumTableViewCell class] forCellReuseIdentifier:IdentifierCell];
      _classAlbumTableView.delegate = self;
     _classAlbumTableView.dataSource = self;
@@ -96,45 +96,40 @@ static NSString *const IdentifierCell = @"classAlbunCell";
         strngXid = XID;
         albumUserId = USER_ID;
     }
-    NSLog(@"学校ID%@ 班级ID%@ 本人XID%@ 本人ID%@",self.schoolID,self.classID,strngXid,albumUserId);
-    
-    
+//    [self.imageViewDatasource removeLastObject];
     XXEClassAlbumApi *classApi = [[XXEClassAlbumApi alloc]initWithClassAlbumSchoolID:self.schoolID classID:self.classID UserXId:strngXid UserID:albumUserId];
     [classApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         
-        
-        if ([[request.responseJSONObject objectForKey:@"data"] isKindOfClass:[NSString class]]) {
-            // 1、无数据的时候
-            UIImage *myImage = [UIImage imageNamed:@"all_placeholder"];
-            CGFloat myImageWidth = myImage.size.width;
-            CGFloat myImageHeight = myImage.size.height;
-            UIImageView *myImageView = [[UIImageView alloc] initWithFrame:CGRectMake(KScreenWidth / 2 - myImageWidth / 2, (KScreenHeight - 64 - 49) / 2 - myImageHeight / 2, myImageWidth, myImageHeight)];
-            myImageView.image = myImage;
-            [self.view addSubview:myImageView];
-            
-        }else{
-            NSLog(@"%@",request.responseJSONObject);
-            NSArray *data = [request.responseJSONObject objectForKey:@"data"];
-        NSLog(@"%@",data);
-            [self showHudWithString:@"正在请求数据" forSecond:1.f];
-            for (int i =0 ; i < data.count; i++) {
-                XXEClassAlbumModel *model = [[XXEClassAlbumModel alloc]initWithDictionary:data[i] error:nil];
-                NSString *stringName;
-                if (i==0) {
-                    stringName = @"我的相册";
-                }else{
-                    stringName = [NSString stringWithFormat:@"%@老师的相册",model.tname];
+        NSString *code = [request.responseJSONObject objectForKey:@"code"];
+        if ([code intValue]==1) {
+            if ([[request.responseJSONObject objectForKey:@"data"] isKindOfClass:[NSString class]]) {
+                // 1、无数据的时候
+                [self.imageViewDatasource addObject:@"album_icon"];
+                [self.imageViewDatasource addObject:@"album_icon"];
+                [self.imageViewDatasource addObject:@"album_icon"];
+                
+            }else{
+                NSArray *data = [request.responseJSONObject objectForKey:@"data"];
+                [self showHudWithString:@"正在请求数据" forSecond:1.f];
+                for (int i =0 ; i < data.count; i++) {
+                    XXEClassAlbumModel *model = [[XXEClassAlbumModel alloc]initWithDictionary:data[i] error:nil];
+                    NSString *stringName;
+                    if (i==0) {
+                        stringName = @"我的相册";
+                    }else{
+                        stringName = [NSString stringWithFormat:@"%@老师的相册",model.tname];
+                    }
+                    [self.headDatasource addObject:stringName];
+                    [self.imageViewDatasource addObject:model.pic_arr];
+                    [self.teacherDatasource addObject:model.teacher_id];
                 }
-                [self.headDatasource addObject:stringName];
-                [self.imageViewDatasource addObject:model.pic_arr];
-                [self.teacherDatasource addObject:model.teacher_id];
+                NSLog(@"数组%@",self.imageViewDatasource);
+                [self.classAlbumTableView reloadData];
                 
             }
-            NSLog(@"数组%@",self.imageViewDatasource);
-            [self.classAlbumTableView reloadData];
-            
+        }else{
+            [self showHudWithString:@"数据请求失败" forSecond:1.f];
         }
-        
     } failure:^(__kindof YTKBaseRequest *request) {
         [self showHudWithString:@"数据请求失败" forSecond:1.f];
     }];
@@ -169,12 +164,13 @@ static NSString *const IdentifierCell = @"classAlbunCell";
 {
     XXEClassAlbumTableViewCell *cell = (XXEClassAlbumTableViewCell*) [tableView dequeueReusableCellWithIdentifier:IdentifierCell];
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-
-        NSArray *model = self.imageViewDatasource[indexPath.section];
+    if (self.imageViewDatasource.count ==0) {
+        
+    }else{
+    NSArray *model = self.imageViewDatasource[indexPath.section];
     NSLog(@"---------%@",self.imageViewDatasource);
-    
         [cell getTheImageViewData:model];
-    
+    }
     return cell;
 }
 

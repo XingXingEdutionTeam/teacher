@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="132" id="KGk-i7-Jjw" customClass="XXEPerfectInfoViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="378" height="132"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="378" height="131"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0fA-ve-VhG">
+                        <rect key="frame" x="5" y="130" width="373" height="1"/>
+                        <color key="backgroundColor" red="0.75686274509999996" green="0.75686274509999996" blue="0.75686274509999996" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="1" id="ejF-3J-kZ1"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="从教经历:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fvB-Fj-ICe">
+                        <rect key="frame" x="15" y="15" width="77" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="21" id="yJl-5u-Hc9"/>
+                            <constraint firstAttribute="width" constant="77" id="zOD-7s-Y52"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="PingFangSC-Regular" family="PingFang SC" pointSize="15"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="a0O-th-28V">
+                        <rect key="frame" x="100" y="8" width="258" height="115"/>
+                        <color key="backgroundColor" red="0.99269458246469833" green="1" blue="0.93585032107202304" alpha="1" colorSpace="calibratedRGB"/>
+                        <fontDescription key="fontDescription" name="PingFangSC-Regular" family="PingFang SC" pointSize="15"/>
+                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                    </textView>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="a0O-th-28V" firstAttribute="leading" secondItem="fvB-Fj-ICe" secondAttribute="trailing" constant="8" id="0LF-Ph-dQx"/>
+                    <constraint firstItem="fvB-Fj-ICe" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="15" id="5wj-ry-0io"/>
+                    <constraint firstAttribute="trailing" secondItem="0fA-ve-VhG" secondAttribute="trailing" id="F45-24-xSM"/>
+                    <constraint firstAttribute="trailing" secondItem="a0O-th-28V" secondAttribute="trailing" constant="20" id="RiF-CP-jCH"/>
+                    <constraint firstItem="fvB-Fj-ICe" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="Wmn-oI-vvV"/>
+                    <constraint firstItem="0fA-ve-VhG" firstAttribute="top" secondItem="a0O-th-28V" secondAttribute="bottom" constant="7" id="Zda-rE-L97"/>
+                    <constraint firstItem="a0O-th-28V" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="ffJ-dj-rlk"/>
+                    <constraint firstAttribute="bottom" secondItem="0fA-ve-VhG" secondAttribute="bottom" id="vBm-hI-n4f"/>
+                    <constraint firstItem="0fA-ve-VhG" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="5" id="vhe-6M-hXD"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="perFectLabel" destination="fvB-Fj-ICe" id="TKA-6H-CiA"/>
+                <outlet property="perFectTextView" destination="a0O-th-28V" id="EZL-vk-YfM"/>
+            </connections>
+            <point key="canvasLocation" x="308" y="244"/>
+        </tableViewCell>
+    </objects>
+</document>

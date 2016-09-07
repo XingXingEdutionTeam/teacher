@@ -243,7 +243,7 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
     [super viewWillAppear:animated];
     self.view.backgroundColor = XXEColorFromRGB(239, 239, 244);
     
-    if ([[XXEUserInfo user].login_type isEqualToString:@"1"]) {
+    if ([self.login_type isEqualToString:@"1"]) {
         self.navigationItem.title = @"4/4注册";
     }else{
         self.navigationItem.title = @"完善资料2/2";
@@ -668,13 +668,10 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
     
     if ([self.theEndClassId isEqualToString:@""]) {
         [self showString:@"请选择年级" forSecond:1.f];
-        return;
     }else if ([self.theEndTeachType isEqualToString:@""]){
         [self showString:@"请选择教学类型" forSecond:1.f];
-        return;
     }else if ([self.theEndReviewerId isEqualToString:@""]){
         [self showString:@"请选择审核人" forSecond:1.f];
-        return;
     }else{
         //获取身份图片
         [self setupFileImage];

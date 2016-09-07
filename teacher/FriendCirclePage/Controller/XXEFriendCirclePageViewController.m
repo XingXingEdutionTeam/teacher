@@ -192,7 +192,6 @@
         NSLog(@"%@",request.responseJSONObject);
         NSLog(@"%@",[request.responseJSONObject objectForKey:@"msg"]);
         
-        
         NSString *code = [request.responseJSONObject objectForKey:@"code"];
         
         if ([code intValue]==1 && [[request.responseJSONObject objectForKey:@"data"] isKindOfClass:[NSDictionary class]]) {
@@ -208,14 +207,11 @@
             [self setHeaderMessage:Usermodel];
             NSLog(@"评论信息的列表的%@",list);
             NSLog(@"数组为%@",list[0]);
-
-            
             for (int i =0; i<list.count; i++) {
                 XXECircleModel *circleModel = [[XXECircleModel alloc]initWithDictionary:list[i] error:nil];
                 [self.circleListDatasource addObject:circleModel];
             }
             NSLog(@"朋友圈列表的信息:%@",self.circleListDatasource);
-       
         //朋友圈的信息列表
         [self friendCircleMessage];
         NSLog(@"圈子顶部信息数组信息%@",self.headerDatasource);
@@ -223,6 +219,7 @@
             [self endLoadMore];
         }else{
             [self endRefresh];
+            [self hudShowText:@"获取数据错误" second:2.f];
             [self endLoadMore];
         }
         

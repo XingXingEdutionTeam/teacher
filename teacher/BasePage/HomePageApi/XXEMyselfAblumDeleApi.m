@@ -10,13 +10,17 @@
 
 @implementation XXEMyselfAblumDeleApi{
     NSString *_ablumId;
+    NSString *_userXid;
+    NSString *_userId;
 }
 
-- (id)initWithDeleMyselfAblumId:(NSString *)ablumId
+- (id)initWithDeleMyselfAblumId:(NSString *)ablumId UserXid:(NSString *)userXid UserId:(NSString *)userId;
 {
     self = [super init];
     if (self) {
         _ablumId = ablumId;
+        _userXid = userXid;
+        _userId = userId;
     }
     return self;
 }
@@ -37,9 +41,9 @@
              @"album_id":_ablumId,
              @"appkey":APPKEY,
              @"backtype":BACKTYPE,
-             @"user_id":USER_ID,
+             @"user_id":_userId,
              @"user_type":USER_TYPE,
-             @"xid":XID
+             @"xid":_userXid
              };
 }
 

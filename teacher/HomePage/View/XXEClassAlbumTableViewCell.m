@@ -89,13 +89,13 @@
 
 - (void)getTheImageViewData:(NSArray *)model
 {
-//    NSLog(@"imageArray---:%@",model[0]);
-    
     if (model.count != 0) {
         self.titleLabel.text = @"新";
-        [self.LeftImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",kXXEPicURL,model[0]]]];
-        [self.MiddleImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",kXXEPicURL,model[1]]]];
-        [self.rightImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",kXXEPicURL,model[2]]]];
+        [self.LeftImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",kXXEPicURL,model[0]]] placeholderImage:[UIImage imageNamed:@"album_icon"]];
+        [self.MiddleImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",kXXEPicURL,model[1]]] placeholderImage:[UIImage imageNamed:@"album_icon"]];
+        [self.rightImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",kXXEPicURL,model[2]]] placeholderImage:[UIImage imageNamed:@"album_icon"]];
+//        [self.MiddleImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",kXXEPicURL,model[1]]]];
+//        [self.rightImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",kXXEPicURL,model[2]]]];
     }else{
         self.titleLabel.text = @"";
         self.LeftImageView.image = [UIImage imageNamed:@"album_icon"];

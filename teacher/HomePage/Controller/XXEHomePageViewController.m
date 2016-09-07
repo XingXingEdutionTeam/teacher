@@ -230,7 +230,7 @@
 - (void)bottomViewShowPosition:(NSString *)position
 {
     [self.bottomView removeFromSuperview];
-    XXEHomePageBottomView *bottomView = [[XXEHomePageBottomView alloc]initWithFrame:CGRectMake(0, self.middleView.frame.origin.y+43*kScreenRatioHeight, KScreenWidth, 290*kScreenRatioHeight)];
+    XXEHomePageBottomView *bottomView = [[XXEHomePageBottomView alloc]initWithFrame:CGRectMake(0, self.middleView.frame.origin.y+43*kScreenRatioHeight+1, KScreenWidth, 296*kScreenRatioHeight)];
     [bottomView configBottomViewButton:self.userPosition];
     self.bottomView = bottomView;
     bottomView.delegate = self;
@@ -268,14 +268,12 @@
             [self.view addSubview:self.classBgView];
             [self.view addSubview:self.homeClassView];
             NSLog(@"老师的身份是什么%@",self.userPosition);
-            
         }
             break;
         default:
             break;
     }
 }
-
 
 - (void)commboxHidden1{
     
@@ -346,10 +344,7 @@
             // NSString * newNameTwo=[change objectForKey:@"new"];
             
         }
-        
     }
-    
-    
 }
 
 
@@ -433,8 +428,6 @@
         strngXid = XID;
         homeUserId = USER_ID;
     }
-    
-    
 //    NSLog(@"%@%@",strngXid,homeUserId);
     
     NSLog(@"%@%@",strngXid,homeUserId);

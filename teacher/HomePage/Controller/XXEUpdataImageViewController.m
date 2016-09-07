@@ -103,10 +103,20 @@
         [self hideHud];
         [self showString:@"请选择相片" forSecond:1.f];
     }
+    NSString *strngXid;
+    NSString *albumUserId;
+    if ([XXEUserInfo user].login) {
+        strngXid = [XXEUserInfo user].xid;
+        albumUserId = [XXEUserInfo user].user_id;
+    }else {
+        strngXid = XID;
+        albumUserId = USER_ID;
+    }
+    
     
     NSMutableArray *arr = [NSMutableArray array];
     for (int i =0; i < self.photoDatasource.count; i++) {
-        XXEMyselfAblumUpDataApi *updataApi = [[XXEMyselfAblumUpDataApi alloc]initWithAblumSchoolId:self.myAlbumUpSchoolId ClassId:self.myAlbumUpClassId AblumId:self.albumID ImageArray:self.photoDatasource[i]];
+        XXEMyselfAblumUpDataApi *updataApi = [[XXEMyselfAblumUpDataApi alloc]initWithAblumSchoolId:self.myAlbumUpSchoolId ClassId:self.myAlbumUpClassId AblumId:self.albumID ImageArray:self.photoDatasource[i] UserXid:strngXid UserId:albumUserId];
         [arr addObject:updataApi];
     }
     

@@ -10,6 +10,6 @@
 
 @interface XXEMyselfAblumDeleApi : YTKRequest
 
-- (id)initWithDeleMyselfAblumId:(NSString *)ablumId;
+- (id)initWithDeleMyselfAblumId:(NSString *)ablumId UserXid:(NSString *)userXid UserId:(NSString *)userId;
 
 @end

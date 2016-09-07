@@ -200,7 +200,9 @@
         }else if (action.tag == 1001) {
             if (index  == 0) {
                 NSLog(@"分享");
-                [self shareText];
+                 XXEAlbumDetailsModel *model = self.showDatasource[self.albumIndexPaths];
+                NSLog(@"图片的位置%@",model.pic);
+                [self shareTextPicUrl:model.pic];
             }else {
                 NSLog(@"举报");
                 XXEAlbumDetailsModel *model = self.showDatasource[self.albumIndexPaths];
@@ -215,10 +217,13 @@
         }
 }
 #pragma mark - 分享
-- (void)shareText
+- (void)shareTextPicUrl:(NSString *)picUrl
 {
-    NSString *shareText = @"分享的文字";
-    UIImage *shareImage = [UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"qqq_1_5" ofType:@"png"]];
+    NSString *shareText = @"来自猩猩教室:";
+    NSString *PicURL= [NSString stringWithFormat:@"%@%@",kXXEPicURL,picUrl];
+     UIImage *shareImage=[UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:PicURL]]];
+    NSLog(@"%@",shareImage);
+    
 //    snsNames 你要分享到的sns平台类型，该NSArray值是`UMSocialSnsPlatformManager.h`定义的平台名的字符串常量，有UMShareToSina，UMShareToTencent，UMShareToRenren，UMShareToDouban，UMShareToQzone，UMShareToEmail，UMShareToSms等
     //调用快速分享接口
     [UMSocialSnsService presentSnsIconSheetView:self appKey:UMSocialAppKey shareText:shareText shareImage:shareImage shareToSnsNames:[NSArray arrayWithObjects:UMShareToSina,UMShareToQzone,UMShareToQQ,UMShareToWechatSession,UMShareToWechatTimeline,nil] delegate:self];

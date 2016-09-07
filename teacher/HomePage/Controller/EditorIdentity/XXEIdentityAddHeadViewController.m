@@ -149,12 +149,8 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
     [super viewWillAppear:animated];
     self.view.backgroundColor = XXEBackgroundColor;
     
+    self.navigationItem.title = @"完善资料";
     
-    if ([[XXEUserInfo user].login_type isEqualToString:@"1"]) {
-        self.navigationItem.title = @"4/4注册";
-    }else{
-        self.navigationItem.title = @"完善资料2/2";
-    }
     self.navigationController.navigationBarHidden = NO;
     
     UIButton*rightButton = [[UIButton alloc]initWithFrame:CGRectMake(-10,0,22,22)];
@@ -293,11 +289,8 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
             break;
         }
         case 6:{
-            if (self.isHave) {
-                
-            }else {
+            
                 self.teacherCell = [self cellAtIndexRow:6 andAtSection:0 Message:@"平台审核"];
-            }
             [self tureOrFalseCellClick:NO Tag:106];
             break;
         }

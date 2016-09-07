@@ -29,6 +29,7 @@
 #import "XXEUserInfo.h"
 #import "XXEHomePageHeader.h"
 #import "FriendCircleHeader.h"
+#import "XXEMyselfPageHeader.h"
 
 
 

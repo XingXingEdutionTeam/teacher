@@ -154,10 +154,20 @@ static NSString * IdentifierCELL = @"IdentifierCELL";
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(nonnull NSIndexPath *)indexPath
 {
+    NSString *strngXid;
+    NSString *albumUserId;
+    if ([XXEUserInfo user].login) {
+        strngXid = [XXEUserInfo user].xid;
+        albumUserId = [XXEUserInfo user].user_id;
+    }else {
+        strngXid = XID;
+        albumUserId = USER_ID;
+    }
+    
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         XXEMySelfAlbumModel *model = self.datasource[indexPath.row];
         
-        XXEMyselfAblumDeleApi *ablumApi = [[XXEMyselfAblumDeleApi alloc]initWithDeleMyselfAblumId:model.album_id];
+        XXEMyselfAblumDeleApi *ablumApi = [[XXEMyselfAblumDeleApi alloc]initWithDeleMyselfAblumId:model.album_id UserXid:strngXid UserId:albumUserId];
         [ablumApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
             
             NSString *code = [request.responseJSONObject objectForKey:@"code"];
@@ -172,7 +182,6 @@ static NSString * IdentifierCELL = @"IdentifierCELL";
         } failure:^(__kindof YTKBaseRequest *request) {
             [self showHudWithString:@"删除失败" forSecond:1.f];
         }];
-        
     }
 }
 
