@@ -161,7 +161,8 @@
             for (NSDictionary *dic in totalArray) {
                 //日期
                 NSString *dateString = [XXETool dateStringFromNumberTimer:dic[@"date_tm"]];
-                [dateArray addObject:dateString];
+                NSArray *array = [dateString componentsSeparatedByString:@" "];
+                [dateArray addObject:array[0]];
                 
                 //食谱 id
                 [cookbook_idArray addObject:dic[@"cookbook_id"]];
@@ -291,10 +292,10 @@
         
 //        NSLog(@"===  %@", iconStr);
         
-        [cell.iconImageView sd_setImageWithURL:[NSURL URLWithString:iconStr] placeholderImage:[UIImage imageNamed:@"home_recipe_placehoder_icon184x154"]];
+        [cell.iconImageView sd_setImageWithURL:[NSURL URLWithString:iconStr] placeholderImage:[UIImage imageNamed:@"home_recipe_placehoder_icon"]];
     }else{
     
-        cell.iconImageView.image = [UIImage imageNamed:@"home_recipe_placehoder_icon184x154"];
+        cell.iconImageView.image = [UIImage imageNamed:@"home_recipe_placehoder_icon"];
     }
     
     

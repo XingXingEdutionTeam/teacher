@@ -19,12 +19,12 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "teacher/HomePage/XXESignIn/Controller/XXEManagerAndHeadmasterStudentSignInViewController.m"
-            timestampString = "494493710.12963"
+            filePath = "teacher/HomePage/XXESignIn/Controller/XXEStudentUnsignInListViewController.m"
+            timestampString = "494938769.498717"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "79"
-            endingLineNumber = "79"
+            startingLineNumber = "60"
+            endingLineNumber = "60"
             landmarkName = "-fetchNetData"
             landmarkType = "5">
          </BreakpointContent>
@@ -35,13 +35,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "teacher/HomePage/XXEHomeLogo/Controller/XXEHomeLogoRootViewController.m"
-            timestampString = "494736505.114792"
+            filePath = "teacher/HomePage/XXESignIn/Controller/XXEStudentUnsignInListViewController.m"
+            timestampString = "494938783.185548"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "436"
-            endingLineNumber = "436"
-            landmarkName = "-tabbarButtonClick:"
+            startingLineNumber = "57"
+            endingLineNumber = "57"
+            landmarkName = "-fetchNetData"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

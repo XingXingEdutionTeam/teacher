@@ -208,7 +208,7 @@
     XXEXingCoinHistoryTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
     
     if (cell == nil) {
-        cell = [[[NSBundle mainBundle] loadNibNamed:@"XXEXingCoinHistoryTableViewCell" owner:self options:nil]lastObject];
+        cell = [[XXEXingCoinHistoryTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
     }
     XXEXingCoinHistoryModel *model = _dataSourceArray[indexPath.row];
     
@@ -236,16 +236,16 @@
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, KScreenWidth, 20)];
     headerView.backgroundColor = [UIColor whiteColor];
     
-    CGFloat labelWidth = KScreenWidth / 3;
-    UILabel *titleLabel1 = [UILabel createLabelWithFrame:CGRectMake(80 * kScreenRatioWidth, 5, labelWidth - 80 * kScreenRatioWidth, 20) Font:14 Text:@"时间"];
+//    CGFloat labelWidth = KScreenWidth / 3;
+    UILabel *titleLabel1 = [UILabel createLabelWithFrame:CGRectMake(80 * kScreenRatioWidth, 5, 135 * kScreenRatioWidth, 20 * kScreenRatioHeight) Font:16 * kScreenRatioHeight Text:@"时间"];
     titleLabel1.textAlignment = NSTextAlignmentCenter;
     [headerView addSubview:titleLabel1];
     
-    UILabel *titleLabel2 = [UILabel createLabelWithFrame:CGRectMake(labelWidth + 80 * kScreenRatioWidth, 5, labelWidth - 80 * kScreenRatioWidth, 20) Font:14 Text:@"用途"];
+    UILabel *titleLabel2 = [UILabel createLabelWithFrame:CGRectMake(215 * kScreenRatioWidth, 5, 80 * kScreenRatioWidth, 20 * kScreenRatioHeight) Font:16 * kScreenRatioHeight Text:@"用途"];
     titleLabel2.textAlignment = NSTextAlignmentCenter;
     [headerView addSubview:titleLabel2];
     
-    UILabel *titleLabel3 = [UILabel createLabelWithFrame:CGRectMake(labelWidth * 2, 5, labelWidth, 20) Font:14 Text:@"金额"];
+    UILabel *titleLabel3 = [UILabel createLabelWithFrame:CGRectMake(295 * kScreenRatioWidth, 5, 80 * kScreenRatioWidth, 20 * kScreenRatioHeight) Font:16 * kScreenRatioHeight Text:@"金额"];
     titleLabel3.textAlignment = NSTextAlignmentCenter;
     [headerView addSubview:titleLabel3];
     

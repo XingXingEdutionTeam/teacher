@@ -16,6 +16,8 @@
 #import "XXEStudentSignInModel.h"
 #import "XXEStudentSingleSignApi.h"
 #import "XXEStudentAllSignApi.h"
+#import "XXEStudentUnsignInListViewController.h"
+
 
 @interface XXEStudentSignInViewController ()<HZQDatePickerViewDelegate,UITableViewDelegate,UITableViewDataSource>{
     HZQDatePickerView *_pikerView;//截止日期选择器
@@ -31,6 +33,27 @@
     NSString *parameterUser_Id;
     NSString *nowDateStr;
 }
+//上部分 视图 背景
+@property (nonatomic,strong) UIView *upBgView;
+//中间 视图 背景
+@property (nonatomic, strong) UIView *middleBgView;
+//时间 图标
+@property (nonatomic, strong) UIImageView *icon;
+//时间 文本框
+@property (nonatomic, strong) UILabel *timeLabel;
+//选取 时间 按钮
+@property (nonatomic, strong) UIButton *chooseButton;
+//未签到人数 按钮
+@property (nonatomic, strong) UIButton *unSignButton;
+//签到人数 按钮
+@property (nonatomic, strong) UIButton *signButton;
+//未签到 人数 文本框
+@property (nonatomic, strong) UILabel *unSignLabel;
+//签到 人数 文本框
+@property (nonatomic, strong) UILabel *signLabel;
+//一键签到 按钮
+@property (nonatomic, strong) UIButton *allRegisterBtn;
+
 
 
 @end
@@ -55,8 +78,6 @@
     [formatter setDateFormat:@"YYYY-MM-dd"];
     nowDateStr  = [formatter stringFromDate:date];
     
-    _timeLabel.text = nowDateStr;
-    
     [self createContent];
     
     [self createTableView];
@@ -65,12 +86,8 @@
 }
 
 - (void)createTableView{
-    
-//    NSLog(@"hh %@", NSStringFromCGRect(_upBgView.frame));
-    
-    CGFloat tableViewY = _upBgView.frame.origin.y + _upBgView.frame.size.height;
-    
-    _myTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, tableViewY, KScreenWidth, KScreenHeight - tableViewY - 64) style:UITableViewStyleGrouped];
+
+    _myTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 205 * kScreenRatioHeight, KScreenWidth, KScreenHeight - 205 * kScreenRatioHeight - 64) style:UITableViewStyleGrouped];
     
     _myTableView.dataSource = self;
     _myTableView.delegate = self;
@@ -106,7 +123,7 @@
     cell.iconImageView.layer.cornerRadius = cell.iconImageView.frame.size.width / 2;
     cell.iconImageView.layer.masksToBounds = YES;
     
-    [cell.iconImageView sd_setImageWithURL:[NSURL URLWithString:head_img] placeholderImage:[UIImage imageNamed:@"home_flowerbasket_placehoderIcon120x120"]];
+    [cell.iconImageView sd_setImageWithURL:[NSURL URLWithString:head_img] placeholderImage:[UIImage imageNamed:@"headplaceholder"]];
     
     if (![_timeLabel.text isEqualToString:nowDateStr]) {
       [cell.signInButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
@@ -264,38 +281,102 @@
         no_sign_in_num = @"";
     }
     NSString  *unsignNumStr = [NSString stringWithFormat:@"%@", no_sign_in_num];
-    [_unRegisterNumBtn setTitle:unsignNumStr forState:UIControlStateNormal];
+    [_unSignButton setTitle:unsignNumStr forState:UIControlStateNormal];
     
     if (sign_in_num == nil) {
         sign_in_num = @"";
     }
     NSString  *signNumStr = [NSString stringWithFormat:@"%@", sign_in_num];
-    [_registerNumBtn setTitle:signNumStr forState:UIControlStateNormal];
+    [_signButton setTitle:signNumStr forState:UIControlStateNormal];
 
 }
+
+
 
 - (void)createContent{
-
-   //选取 时间  按钮
-    [_chooseTimeBtn addTarget:self action:@selector(chooseTimeBtnClick) forControlEvents:UIControlEventTouchUpInside];
+    //---------------------- 上部分 视图 ------------------
+    _upBgView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, KScreenWidth, 40 * kScreenRatioHeight)];
+    _upBgView.backgroundColor = [UIColor whiteColor];
+    [self.view addSubview:_upBgView];
+    //icon
+    _icon = [[UIImageView alloc] initWithFrame:CGRectMake(20 * kScreenRatioWidth, 10 * kScreenRatioHeight, 20 * kScreenRatioWidth, 20 * kScreenRatioWidth)];
+    _icon.image = [UIImage imageNamed:@"home_redflower_timeIcon"];
+    [_upBgView addSubview:_icon];
+    
+    //label
+    _timeLabel = [UILabel createLabelWithFrame:CGRectMake(50 * kScreenRatioWidth, 10 * kScreenRatioHeight, 200 * kScreenRatioWidth, 20 * kScreenRatioHeight) Font:14* kScreenRatioWidth Text:nowDateStr];
+    _timeLabel.text = nowDateStr;
+    [_upBgView addSubview:_timeLabel];
+    
+    //选取 时间 按钮
+    _chooseButton = [UIButton createButtonWithFrame:CGRectMake(260 * kScreenRatioWidth, 10 * kScreenRatioHeight, 100 * kScreenRatioWidth, 20 * kScreenRatioHeight) backGruondImageName:nil Target:self Action:@selector(chooseTimeButtonClick) Title:@"选取时间"];
+    _chooseButton.titleLabel.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];
+    [_chooseButton setTitleColor:UIColorFromRGB(0, 170, 42) forState:UIControlStateNormal];
+    [_upBgView addSubview:_chooseButton];
+    
+    // ================== 中间 视图 ===============
+    CGFloat _upBgViewBottom = _upBgView.frame.origin.y + _upBgView.frame.size.height;
+    _middleBgView = [[UIView alloc] initWithFrame:CGRectMake(0, _upBgViewBottom + 10 * kScreenRatioHeight, KScreenWidth, 150 * kScreenRatioHeight)];
+    _middleBgView.backgroundColor = [UIColor whiteColor];
+    [self.view addSubview:_middleBgView];
     
     //未签到 人数 按钮
-    [_unRegisterNumBtn addTarget:self action:@selector(unRegisterNumBtnClick) forControlEvents:UIControlEventTouchUpInside];
+    _unSignButton = [UIButton createButtonWithFrame:CGRectMake(60 * kScreenRatioWidth, 5 * kScreenRatioHeight, 50 * kScreenRatioWidth, 50 * kScreenRatioWidth) backGruondImageName:nil Target:self Action:@selector(unSignButtonClick) Title:@""];
+    [_unSignButton setTitleColor:UIColorFromRGB(254, 103, 0) forState:UIControlStateNormal];
+    _unSignButton.titleLabel.font = [UIFont systemFontOfSize:24 * kScreenRatioWidth];
+    
+    [_middleBgView addSubview:_unSignButton];
     
     //签到 人数 按钮
-    [_registerNumBtn addTarget:self action:@selector(registerNumBtnClick) forControlEvents:UIControlEventTouchUpInside];
+    _signButton = [UIButton createButtonWithFrame:CGRectMake(265 * kScreenRatioWidth, 5 * kScreenRatioHeight, 50 * kScreenRatioWidth, 50 * kScreenRatioWidth) backGruondImageName:nil Target:self Action:@selector(signButtonClick) Title:@""];
+    [_signButton setTitleColor:UIColorFromRGB(254, 103, 0) forState:UIControlStateNormal];
+    _signButton.titleLabel.font = [UIFont systemFontOfSize:24 * kScreenRatioWidth];
+    [_middleBgView addSubview:_signButton];
+    
+    //未签到 人数 label
+    _unSignLabel = [UILabel createLabelWithFrame:CGRectMake(50 * kScreenRatioWidth, 60 * kScreenRatioHeight, 100 * kScreenRatioWidth, 20 * kScreenRatioHeight) Font:16 * kScreenRatioWidth Text:@"未签到人数"];
+    [_middleBgView addSubview:_unSignLabel];
+    
+    //签到 人数 label
+    _signLabel = [UILabel createLabelWithFrame:CGRectMake(255 * kScreenRatioWidth, 60 * kScreenRatioHeight, 100 * kScreenRatioWidth, 20 * kScreenRatioHeight) Font:16 * kScreenRatioWidth Text:@"签到人数"];
+    [_middleBgView addSubview:_signLabel];
     
     //一键签到 按钮
-    
+    _allRegisterBtn = [UIButton createButtonWithFrame:CGRectMake((KScreenWidth - 325 * kScreenRatioWidth) / 2, 100 * kScreenRatioHeight, 325 * kScreenRatioWidth, 42 * kScreenRatioHeight) backGruondImageName:nil Target:self Action:@selector(allRegisterBtnClick) Title:@"一键签到"];
     _allRegisterBtn.layer.cornerRadius = _allRegisterBtn.frame.size.height / 2;
     _allRegisterBtn.layer.masksToBounds = YES;
+    [_allRegisterBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    _allRegisterBtn.titleLabel.font = [UIFont systemFontOfSize:24 * kScreenRatioWidth];
+    [_middleBgView addSubview:_allRegisterBtn];
     
-    [_allRegisterBtn addTarget:self action:@selector(allRegisterBtnClick) forControlEvents:UIControlEventTouchUpInside];
-    
-
 }
 
-- (void)chooseTimeBtnClick{
+//未签到 人数 按钮
+- (void)unSignButtonClick{
+    
+    XXEStudentUnsignInListViewController *studentUnsignInListVC = [[XXEStudentUnsignInListViewController alloc] init];
+    studentUnsignInListVC.schoolId = _schoolId;
+    studentUnsignInListVC.classId = _classId;
+    studentUnsignInListVC.timeStr = _timeLabel.text;
+    //sign_type	//1:已签到  2:未签到
+    studentUnsignInListVC.sign_type = @"2";
+    [self.navigationController pushViewController:studentUnsignInListVC animated:YES];
+}
+
+//签到 人数 按钮
+- (void)signButtonClick{
+    
+    XXEStudentUnsignInListViewController *studentUnsignInListVC = [[XXEStudentUnsignInListViewController alloc] init];
+    studentUnsignInListVC.schoolId = _schoolId;
+    studentUnsignInListVC.classId = _classId;
+    studentUnsignInListVC.timeStr = _timeLabel.text;
+    //sign_type	//1:已签到  2:未签到
+    studentUnsignInListVC.sign_type = @"1";
+    [self.navigationController pushViewController:studentUnsignInListVC animated:YES];
+    
+}
+
+- (void)chooseTimeButtonClick{
 
     _pikerView = [HZQDatePickerView instanceDatePickerView];
     _pikerView.frame = CGRectMake(0, 0, KScreenWidth, KScreenHeight + 20);
@@ -310,17 +391,7 @@
 
 }
 
-- (void)unRegisterNumBtnClick{
-    
-    
-    
-}
 
-- (void)registerNumBtnClick{
-    
-    
-    
-}
 
 
 //----------------------------  一键签到  --------------------

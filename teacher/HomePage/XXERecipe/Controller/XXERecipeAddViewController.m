@@ -184,32 +184,15 @@
     breakfastStr = _breakfastTextView.text;
     lunchStr = _lunchTextView.text;
     dinnerStr = _dinnerTextView.text;
-
-    if ([timeStr isEqualToString:@""]) {
-        [self showHudWithString:@"请完发布时间" forSecond:1.5];
-    }else if ([breakfastStr isEqualToString:@""]){
-        [self showHudWithString:@"请完善早餐内容" forSecond:1.5];
-    }else if ([lunchStr isEqualToString:@""]){
-        [self showHudWithString:@"请完善午餐内容" forSecond:1.5];
-    }else if ([dinnerStr isEqualToString:@""]){
-        [self showHudWithString:@"请完善晚餐内容" forSecond:1.5];
-    }else{
-        
-        [self submitRecipeAddInfo];
-        
-    }
     
-    
-}
-
-- (void)submitRecipeAddInfo{
     // pickerView.data  里面 有一张加号占位图,所有 个数最少有 1 张
-    
     for (int i = 0; i < pickerView1.data.count - 1; i++) {
         FSImageModel *mdoel = pickerView1.data[i];
         UIImage *image1 = [UIImage imageWithData:mdoel.data];
         [arr1 addObject:image1];
     }
+    
+    [arr addObjectsFromArray:arr1];
     
     for (int i = 0; i < pickerView2.data.count - 1; i++) {
         FSImageModel *mdoel = pickerView2.data[i];
@@ -217,12 +200,21 @@
         [arr2 addObject:image1];
     }
     
+    [arr addObjectsFromArray:arr2];
+    
     for (int i = 0; i < pickerView3.data.count - 1; i++) {
         FSImageModel *mdoel = pickerView3.data[i];
         UIImage *image1 = [UIImage imageWithData:mdoel.data];
         [arr3 addObject:image1];
     }
- 
+    
+    [arr addObjectsFromArray:arr3];
+    
+    if ([timeStr isEqualToString:@""]) {
+        [self showHudWithString:@"请完发布时间" forSecond:1.5];
+    }else if ([breakfastStr isEqualToString:@""] && [lunchStr isEqualToString:@""] && [dinnerStr isEqualToString:@""] && arr.count == 0) {
+        [self showHudWithString:@"请完善信息" forSecond:1.5];
+    }else{
         if (arr1.count != 0) {
             [self submitRecipeAddTextAndPicInfo1];
         }else if (arr2.count != 0){
@@ -230,13 +222,11 @@
         }else if (arr3.count != 0) {
             [self submitRecipeAddTextAndPicInfo3];
         }else{
-        
-        [self submitRecipeAddTextInfo];
-        
+            [self submitRecipeAddTextInfo];
+            
+        }
     }
-
 }
-
 
 
 //回复 只有  文字 的时候

@@ -21,7 +21,7 @@
 
 @property (nonatomic, copy) NSString *head_img;
 @property (nonatomic, copy) NSString *babyId;
-@property (nonatomic, copy) NSString *sign_in_condit;
+@property (nonatomic, copy) NSString <Optional>*sign_in_condit;
 @property (nonatomic, copy) NSString *tname;
 
 + (NSArray*)parseResondsData:(id)respondObject;

@@ -10,14 +10,18 @@
 
 @interface XXEXingCoinHistoryTableViewCell : UITableViewCell
 
-@property (weak, nonatomic) IBOutlet UIImageView *iconImageView;
+//@property (weak, nonatomic) IBOutlet UIImageView *iconImageView;
+//
+//@property (weak, nonatomic) IBOutlet UILabel *timeLabel;
+//
+//@property (weak, nonatomic) IBOutlet UILabel *useLabel;
+//@property (weak, nonatomic) IBOutlet UILabel *moneyLabel;
 
-@property (weak, nonatomic) IBOutlet UILabel *timeLabel;
 
-@property (weak, nonatomic) IBOutlet UILabel *useLabel;
-@property (weak, nonatomic) IBOutlet UILabel *moneyLabel;
-
-
+@property (nonatomic, strong) UIImageView *iconImageView;
+@property (nonatomic, strong) UILabel *timeLabel;
+@property (nonatomic, strong) UILabel *useLabel;
+@property (nonatomic, strong) UILabel *moneyLabel;
 
 
 @end

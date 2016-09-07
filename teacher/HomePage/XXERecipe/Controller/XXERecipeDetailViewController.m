@@ -111,7 +111,7 @@
     if (cell == nil) {
         cell = [[[NSBundle mainBundle] loadNibNamed:@"XXERecipeDetailTableViewCell" owner:self options:nil]lastObject];
     }
-    [cell.foodImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", kXXEPicURL, picArray[indexPath.row]]] placeholderImage:[UIImage imageNamed:@""]];
+    [cell.foodImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", kXXEPicURL, picArray[indexPath.row]]] placeholderImage:[UIImage imageNamed:@"placeholder"]];
     
     return cell;
 }

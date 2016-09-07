@@ -18,20 +18,20 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="vVv-nd-ETK">
-                    <rect key="frame" x="10" y="10" width="355" height="432"/>
+                    <rect key="frame" x="10" y="10" width="355" height="190"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="355" id="4Zq-Mw-xbK"/>
-                        <constraint firstAttribute="width" secondItem="vVv-nd-ETK" secondAttribute="height" multiplier="355:432" id="O6e-bm-FES"/>
+                        <constraint firstAttribute="width" constant="355" id="KnX-Tx-HcA"/>
+                        <constraint firstAttribute="width" secondItem="vVv-nd-ETK" secondAttribute="height" multiplier="71:38" id="lZy-pV-u4c"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                 </textView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1aQ-JC-QnL">
-                    <rect key="frame" x="25" y="494" width="325" height="42"/>
+                    <rect key="frame" x="25" y="220" width="325" height="42"/>
                     <constraints>
-                        <constraint firstAttribute="width" secondItem="1aQ-JC-QnL" secondAttribute="height" multiplier="325:42" id="aoa-wF-dVc"/>
-                        <constraint firstAttribute="width" constant="325" id="p0s-eo-4o7"/>
+                        <constraint firstAttribute="width" secondItem="1aQ-JC-QnL" secondAttribute="height" multiplier="325:42" id="AkH-oW-JdZ"/>
+                        <constraint firstAttribute="width" constant="325" id="wSI-fj-em6"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="18"/>
                     <state key="normal" title="提     交" backgroundImage="login_green">
@@ -44,12 +44,12 @@
             </subviews>
             <color key="backgroundColor" red="0.89925986842105265" green="0.91128700657894635" blue="0.91473067434210531" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
-                <constraint firstItem="vVv-nd-ETK" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="10" id="Hgq-fj-WwL"/>
-                <constraint firstItem="vVv-nd-ETK" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="10" id="NN8-7L-uuH"/>
-                <constraint firstAttribute="trailing" secondItem="vVv-nd-ETK" secondAttribute="trailing" constant="10" id="jZS-Wh-FmA"/>
-                <constraint firstItem="1aQ-JC-QnL" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="25" id="kyg-U0-Vn7"/>
-                <constraint firstAttribute="trailing" secondItem="1aQ-JC-QnL" secondAttribute="trailing" constant="25" id="vbA-rA-vvM"/>
-                <constraint firstItem="1aQ-JC-QnL" firstAttribute="top" secondItem="vVv-nd-ETK" secondAttribute="bottom" constant="52" id="zbC-rH-Lxn"/>
+                <constraint firstItem="vVv-nd-ETK" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="10" id="B0r-Rw-TdC"/>
+                <constraint firstItem="1aQ-JC-QnL" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="25" id="Goe-iO-a8v"/>
+                <constraint firstItem="vVv-nd-ETK" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="10" id="Ip4-5e-F4A"/>
+                <constraint firstItem="1aQ-JC-QnL" firstAttribute="top" secondItem="vVv-nd-ETK" secondAttribute="bottom" constant="20" id="kNK-Jd-6nR"/>
+                <constraint firstAttribute="trailing" secondItem="1aQ-JC-QnL" secondAttribute="trailing" constant="25" id="p3T-ZW-l0G"/>
+                <constraint firstAttribute="trailing" secondItem="vVv-nd-ETK" secondAttribute="trailing" constant="10" id="rZH-Fn-3Mb"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <point key="canvasLocation" x="176.5" y="231.5"/>

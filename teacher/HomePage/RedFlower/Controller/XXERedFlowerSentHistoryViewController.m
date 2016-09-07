@@ -46,6 +46,9 @@
         parameterUser_Id = USER_ID;
     }
     page = 0;
+    _give_num = @"";
+    _flower_able = @"";
+    
     
     [_myTableView reloadData];
     
@@ -121,11 +124,17 @@
 
         NSDictionary *dict = request.responseJSONObject[@"data"];
             //已赠花篮数量
-            _give_num = dict[@"give_num"];
-            
+            if (dict[@"give_num"] == nil) {
+                _give_num = @"";
+            }else{
+                _give_num = [NSString stringWithFormat:@"已颁发:%@朵", dict[@"give_num"]];
+            }
             //剩余花篮 数量
-            _flower_able = dict[@"flower_able"];
-            
+            if (dict[@"flower_able"] == nil) {
+                _flower_able = @"";
+            }else{
+                _flower_able = [NSString stringWithFormat:@"剩余:%@朵", dict[@"flower_able"]];
+            }
             NSArray *modelArray = [XXERedFlowerSentHistoryModel parseResondsData:dict[@"list"]];
 
             [_dataSourceArray addObjectsFromArray:modelArray];
@@ -266,11 +275,13 @@
     titleLabel1.textAlignment = NSTextAlignmentCenter;
     [headerView addSubview:titleLabel1];
     
-    UILabel *titleLabel2 = [UILabel createLabelWithFrame:CGRectMake(labelWidth, 5, labelWidth, 20) Font:14 Text:[NSString stringWithFormat:@"已颁发:%@朵", _give_num]];
+    UILabel *titleLabel2 = [UILabel createLabelWithFrame:CGRectMake(labelWidth, 5, labelWidth, 20) Font:14 Text:@""];
+    titleLabel2.text = _give_num;
     titleLabel2.textAlignment = NSTextAlignmentCenter;
     [headerView addSubview:titleLabel2];
     
-    UILabel *titleLabel3 = [UILabel createLabelWithFrame:CGRectMake(labelWidth * 2, 5, labelWidth, 20) Font:14 Text:[NSString stringWithFormat:@"剩余:%@朵", _flower_able]];
+    UILabel *titleLabel3 = [UILabel createLabelWithFrame:CGRectMake(labelWidth * 2, 5, labelWidth, 20) Font:14 Text:@""];
+    titleLabel3.text = _flower_able;
     titleLabel3.textAlignment = NSTextAlignmentCenter;
     [headerView addSubview:titleLabel3];
     

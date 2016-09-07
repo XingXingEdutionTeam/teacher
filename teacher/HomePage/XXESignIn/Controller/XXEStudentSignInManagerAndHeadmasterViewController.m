@@ -28,6 +28,26 @@
     NSString *nowDateStr;
 }
 
+//上部分 视图 背景
+@property (nonatomic,strong) UIView *upBgView;
+//中间 视图 背景
+@property (nonatomic, strong) UIView *middleBgView;
+//时间 图标
+@property (nonatomic, strong) UIImageView *icon;
+//时间 文本框
+@property (nonatomic, strong) UILabel *timeLabel;
+//选取 时间 按钮
+@property (nonatomic, strong) UIButton *chooseButton;
+//未签到人数 按钮
+@property (nonatomic, strong) UIButton *unSignButton;
+//签到人数 按钮
+@property (nonatomic, strong) UIButton *signButton;
+//未签到 人数 文本框
+@property (nonatomic, strong) UILabel *unSignLabel;
+//签到 人数 文本框
+@property (nonatomic, strong) UILabel *signLabel;
+
+
 
 @end
 
@@ -45,24 +65,86 @@
         parameterUser_Id = USER_ID;
     }
     
+    sign_in_num = @"";
+    no_sign_in_num = @"";
+    
     //获取 当前 系统 时间
     NSDate *date = [NSDate date];
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     [formatter setDateFormat:@"YYYY-MM-dd"];
     nowDateStr  = [formatter stringFromDate:date];
     
-    _timeLabel.text = nowDateStr;
-    
-    [_chooseButton addTarget:self action:@selector(chooseTimeBtnClick) forControlEvents:UIControlEventTouchUpInside];
+    [self createContent];
     
     [self createTableView];
     
     [self fetchNetData];
 }
 
+- (void)createContent{
+    //---------------------- 上部分 视图 ------------------
+    _upBgView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, KScreenWidth, 40 * kScreenRatioHeight)];
+    _upBgView.backgroundColor = [UIColor whiteColor];
+    [self.view addSubview:_upBgView];
+    //icon
+    _icon = [[UIImageView alloc] initWithFrame:CGRectMake(20 * kScreenRatioWidth, 10 * kScreenRatioHeight, 20 * kScreenRatioWidth, 20 * kScreenRatioWidth)];
+    _icon.image = [UIImage imageNamed:@"home_redflower_timeIcon"];
+    [_upBgView addSubview:_icon];
+    
+    //label
+    _timeLabel = [UILabel createLabelWithFrame:CGRectMake(50 * kScreenRatioWidth, 10 * kScreenRatioHeight, 200 * kScreenRatioWidth, 20 * kScreenRatioHeight) Font:14* kScreenRatioWidth Text:nowDateStr];
+    [_upBgView addSubview:_timeLabel];
+    
+    //选取 时间 按钮
+    _chooseButton = [UIButton createButtonWithFrame:CGRectMake(260 * kScreenRatioWidth, 10 * kScreenRatioHeight, 100 * kScreenRatioWidth, 20 * kScreenRatioHeight) backGruondImageName:nil Target:self Action:@selector(chooseTimeBtnClick) Title:@"选取时间"];
+    _chooseButton.titleLabel.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];
+    [_chooseButton setTitleColor:UIColorFromRGB(0, 170, 42) forState:UIControlStateNormal];
+    [_upBgView addSubview:_chooseButton];
+    
+    // ================== 中间 视图 ===============
+    CGFloat _upBgViewBottom = _upBgView.frame.origin.y + _upBgView.frame.size.height;
+    _middleBgView = [[UIView alloc] initWithFrame:CGRectMake(0, _upBgViewBottom + 10 * kScreenRatioHeight, KScreenWidth, 100 * kScreenRatioHeight)];
+    _middleBgView.backgroundColor = [UIColor whiteColor];
+    [self.view addSubview:_middleBgView];
+    
+    //未签到 人数 按钮
+    _unSignButton = [UIButton createButtonWithFrame:CGRectMake(60 * kScreenRatioWidth, 5 * kScreenRatioHeight, 50 * kScreenRatioWidth, 50 * kScreenRatioWidth) backGruondImageName:nil Target:self Action:@selector(unSignButtonClick) Title:@""];
+    [_unSignButton setTitleColor:UIColorFromRGB(254, 103, 0) forState:UIControlStateNormal];
+    _unSignButton.titleLabel.font = [UIFont systemFontOfSize:24 * kScreenRatioWidth];
+    
+    [_middleBgView addSubview:_unSignButton];
+    
+    //签到 人数 按钮
+    _signButton = [UIButton createButtonWithFrame:CGRectMake(265 * kScreenRatioWidth, 5 * kScreenRatioHeight, 50 * kScreenRatioWidth, 50 * kScreenRatioWidth) backGruondImageName:nil Target:self Action:@selector(signButtonClick) Title:@""];
+    [_signButton setTitleColor:UIColorFromRGB(254, 103, 0) forState:UIControlStateNormal];
+    _signButton.titleLabel.font = [UIFont systemFontOfSize:24 * kScreenRatioWidth];
+    [_middleBgView addSubview:_signButton];
+    
+    //未签到 人数 label
+    _unSignLabel = [UILabel createLabelWithFrame:CGRectMake(50 * kScreenRatioWidth, 60 * kScreenRatioHeight, 100 * kScreenRatioWidth, 20 * kScreenRatioHeight) Font:16 * kScreenRatioWidth Text:@"未签到人数"];
+    [_middleBgView addSubview:_unSignLabel];
+    
+    //签到 人数 label
+    _signLabel = [UILabel createLabelWithFrame:CGRectMake(255 * kScreenRatioWidth, 60 * kScreenRatioHeight, 100 * kScreenRatioWidth, 20 * kScreenRatioHeight) Font:16 * kScreenRatioWidth Text:@"签到人数"];
+    [_middleBgView addSubview:_signLabel];
+
+}
+
+//未签到 人数 按钮
+- (void)unSignButtonClick{
+
+
+}
+
+//签到 人数 按钮
+- (void)signButtonClick{
+    
+    
+}
+
 - (void)createTableView{
     
-    CGFloat tableViewY = _upBgView.frame.origin.y + _upBgView.frame.size.height;
+    CGFloat tableViewY = _middleBgView.frame.origin.y + _middleBgView.frame.size.height + 10 * kScreenRatioHeight;
     
     _myTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, tableViewY, KScreenWidth, KScreenHeight - tableViewY - 64) style:UITableViewStyleGrouped];
     
@@ -83,7 +165,7 @@
     
 - (void)fetchUpInfo{
 
-    XXEManagerAndHeadmasterStudentSignInApi *managerAndHeadmasterStudentSignInApi = [[XXEManagerAndHeadmasterStudentSignInApi alloc] initWithXid:parameterXid user_id:parameterUser_Id user_type:USER_TYPE date_tm:nowDateStr school_id:_schoolId];
+    XXEManagerAndHeadmasterStudentSignInApi *managerAndHeadmasterStudentSignInApi = [[XXEManagerAndHeadmasterStudentSignInApi alloc] initWithXid:parameterXid user_id:parameterUser_Id user_type:USER_TYPE date_tm:_timeLabel.text school_id:_schoolId];
     [managerAndHeadmasterStudentSignInApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
 //        NSLog(@"kkk%@", request.responseJSONObject);
         NSString *codeStr = [NSString stringWithFormat:@"%@", request.responseJSONObject[@"code"]];
@@ -101,13 +183,13 @@
             no_sign_in_num = @"";
         }
         NSString  *unsignNumStr = [NSString stringWithFormat:@"%@", no_sign_in_num];
-        [_unsignNumButton setTitle:unsignNumStr forState:UIControlStateNormal];
+        [_unSignButton setTitle:unsignNumStr forState:UIControlStateNormal];
         
         if (sign_in_num == nil) {
             sign_in_num = @"";
         }
         NSString  *signNumStr = [NSString stringWithFormat:@"%@", sign_in_num];
-        [_signNumButton setTitle:signNumStr forState:UIControlStateNormal];
+        [_signButton setTitle:signNumStr forState:UIControlStateNormal];
 
         
     } failure:^(__kindof YTKBaseRequest *request) {

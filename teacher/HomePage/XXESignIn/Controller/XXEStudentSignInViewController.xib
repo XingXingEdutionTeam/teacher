@@ -3,17 +3,10 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
-        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="XXEStudentSignInViewController">
             <connections>
-                <outlet property="allRegisterBtn" destination="CLG-dt-hbr" id="4Qr-72-m3X"/>
-                <outlet property="chooseTimeBtn" destination="YPs-eY-ssr" id="0Tj-zq-iac"/>
-                <outlet property="registerNumBtn" destination="gSu-49-Q13" id="gg9-aN-Jp3"/>
-                <outlet property="timeLabel" destination="sPG-ed-1HI" id="Vu4-lu-HQC"/>
-                <outlet property="unRegisterNumBtn" destination="T6v-E2-aQA" id="wNa-GB-K3k"/>
-                <outlet property="upBgView" destination="2zx-Aq-yot" id="8tw-bc-Kp7"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -21,123 +14,9 @@
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-            <subviews>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2zx-Aq-yot">
-                    <rect key="frame" x="0.0" y="0.0" width="375" height="205"/>
-                    <subviews>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Udt-Zk-yBz">
-                            <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
-                            <subviews>
-                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="home_redflower_timeIcon" translatesAutoresizingMaskIntoConstraints="NO" id="wum-xd-kEP">
-                                    <rect key="frame" x="10" y="15" width="20" height="20"/>
-                                    <constraints>
-                                        <constraint firstAttribute="height" constant="20" id="dNe-dX-M6G"/>
-                                        <constraint firstAttribute="width" constant="20" id="t4a-pl-8xy"/>
-                                    </constraints>
-                                </imageView>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sPG-ed-1HI">
-                                    <rect key="frame" x="38" y="14" width="185" height="21"/>
-                                    <constraints>
-                                        <constraint firstAttribute="width" constant="185" id="t7h-xQ-0cx"/>
-                                    </constraints>
-                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                    <nil key="highlightedColor"/>
-                                </label>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YPs-eY-ssr">
-                                    <rect key="frame" x="278" y="8" width="56" height="30"/>
-                                    <constraints>
-                                        <constraint firstAttribute="width" constant="56" id="sUb-sn-Cn3"/>
-                                        <constraint firstAttribute="height" constant="30" id="vfH-Sq-roc"/>
-                                    </constraints>
-                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                    <state key="normal" title="选取时间">
-                                        <color key="titleColor" red="0.0" green="0.66675675299959192" blue="0.16376042165962726" alpha="1" colorSpace="calibratedRGB"/>
-                                    </state>
-                                </button>
-                            </subviews>
-                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            <constraints>
-                                <constraint firstItem="sPG-ed-1HI" firstAttribute="top" secondItem="Udt-Zk-yBz" secondAttribute="top" constant="14" id="0Nu-Op-RBU"/>
-                                <constraint firstItem="wum-xd-kEP" firstAttribute="top" secondItem="Udt-Zk-yBz" secondAttribute="top" constant="15" id="3cv-Zw-czv"/>
-                                <constraint firstItem="YPs-eY-ssr" firstAttribute="leading" secondItem="sPG-ed-1HI" secondAttribute="trailing" constant="55" id="9pz-gG-83C"/>
-                                <constraint firstAttribute="width" secondItem="Udt-Zk-yBz" secondAttribute="height" multiplier="15:2" id="Fzf-yt-OSu"/>
-                                <constraint firstAttribute="trailing" secondItem="YPs-eY-ssr" secondAttribute="trailing" constant="41" id="JfU-Ny-qxn"/>
-                                <constraint firstItem="wum-xd-kEP" firstAttribute="leading" secondItem="Udt-Zk-yBz" secondAttribute="leading" constant="10" id="XAr-mD-Yp9"/>
-                                <constraint firstAttribute="width" constant="375" id="qGa-z8-rgT"/>
-                                <constraint firstItem="YPs-eY-ssr" firstAttribute="top" secondItem="Udt-Zk-yBz" secondAttribute="top" constant="8" id="sWS-8d-vm2"/>
-                                <constraint firstItem="sPG-ed-1HI" firstAttribute="leading" secondItem="wum-xd-kEP" secondAttribute="trailing" constant="8" id="zpr-7D-JEK"/>
-                            </constraints>
-                        </view>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hEz-Ys-hZg">
-                            <rect key="frame" x="0.0" y="52" width="375" height="150"/>
-                            <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="已签到人数" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="amM-3E-6ko">
-                                    <rect key="frame" x="220" y="60" width="70" height="21"/>
-                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                    <nil key="highlightedColor"/>
-                                </label>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="未签到人数" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JFd-jV-ROU">
-                                    <rect key="frame" x="50" y="60" width="70" height="21"/>
-                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                    <nil key="highlightedColor"/>
-                                </label>
-                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="T6v-E2-aQA">
-                                    <rect key="frame" x="62" y="0.0" width="50" height="50"/>
-                                    <fontDescription key="fontDescription" type="system" pointSize="24"/>
-                                    <state key="normal">
-                                        <color key="titleColor" red="0.99570826480263153" green="0.40481085526315769" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                    </state>
-                                </button>
-                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gSu-49-Q13">
-                                    <rect key="frame" x="232" y="0.0" width="50" height="50"/>
-                                    <fontDescription key="fontDescription" type="system" pointSize="24"/>
-                                    <state key="normal">
-                                        <color key="titleColor" red="0.99570826480263153" green="0.40481085526315769" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                    </state>
-                                </button>
-                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CLG-dt-hbr">
-                                    <rect key="frame" x="25" y="100" width="325" height="42"/>
-                                    <color key="backgroundColor" red="0.99542557565789469" green="0.40224095394736842" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                    <state key="normal" title="一 键 签 到">
-                                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    </state>
-                                </button>
-                            </subviews>
-                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            <constraints>
-                                <constraint firstAttribute="width" constant="375" id="Zwl-OE-1Qe"/>
-                                <constraint firstAttribute="width" secondItem="hEz-Ys-hZg" secondAttribute="height" multiplier="5:2" id="rGt-4Z-roJ"/>
-                            </constraints>
-                        </view>
-                    </subviews>
-                    <color key="backgroundColor" red="0.89925986842105265" green="0.91100431743421051" blue="0.91557874177631571" alpha="1" colorSpace="calibratedRGB"/>
-                    <constraints>
-                        <constraint firstItem="hEz-Ys-hZg" firstAttribute="leading" secondItem="2zx-Aq-yot" secondAttribute="leading" id="1IV-2v-mCQ"/>
-                        <constraint firstAttribute="trailing" secondItem="Udt-Zk-yBz" secondAttribute="trailing" id="5Uo-aD-3oS"/>
-                        <constraint firstItem="Udt-Zk-yBz" firstAttribute="leading" secondItem="2zx-Aq-yot" secondAttribute="leading" id="Bdk-wM-eYh"/>
-                        <constraint firstItem="Udt-Zk-yBz" firstAttribute="top" secondItem="2zx-Aq-yot" secondAttribute="top" id="H0V-qG-55E"/>
-                        <constraint firstAttribute="width" constant="375" id="IYt-YE-Qr1"/>
-                        <constraint firstAttribute="trailing" secondItem="hEz-Ys-hZg" secondAttribute="trailing" id="Okf-fc-1IJ"/>
-                        <constraint firstAttribute="width" secondItem="2zx-Aq-yot" secondAttribute="height" multiplier="75:41" id="Vju-jS-1hK"/>
-                        <constraint firstItem="hEz-Ys-hZg" firstAttribute="top" secondItem="Udt-Zk-yBz" secondAttribute="bottom" constant="2" id="z0m-Lp-PNj"/>
-                    </constraints>
-                </view>
-            </subviews>
             <color key="backgroundColor" red="0.89985094572368418" green="0.91043893914473684" blue="0.91388260690789469" alpha="1" colorSpace="calibratedRGB"/>
-            <constraints>
-                <constraint firstItem="2zx-Aq-yot" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="Lgh-9Q-0sB"/>
-                <constraint firstAttribute="trailing" secondItem="2zx-Aq-yot" secondAttribute="trailing" id="YNJ-D2-7CF"/>
-                <constraint firstItem="2zx-Aq-yot" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="l5T-Vp-HcP"/>
-            </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <point key="canvasLocation" x="379.5" y="257.5"/>
         </view>
     </objects>
-    <resources>
-        <image name="home_redflower_timeIcon" width="20" height="20"/>
-    </resources>
 </document>

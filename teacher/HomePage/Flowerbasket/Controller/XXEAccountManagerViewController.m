@@ -17,7 +17,7 @@
 #import "XXEFlowerbasketWithdrawCashViewController.h"
 #import "XXEAccountManagerApi.h"
 #import "XXEFlowerbasketAddAccountViewController.h"
-
+#import "XXEFlowerAccountDeleteApi.h"
 
 #define URL @"http://www.xingxingedu.cn/Teacher/financial_account_list"
 
@@ -75,6 +75,7 @@
     [super viewDidLoad];
     self.title =@"账号管理";
     
+    _dataSourceArray = [[NSMutableArray alloc] init];
     _aliPayAccountArray = [[NSMutableArray alloc] init];
     _accountArray = [[NSMutableArray alloc] init];
     _account_idArray = [[NSMutableArray alloc] init];
@@ -96,7 +97,6 @@
     //添加账户
     XXEFlowerbasketAddAccountViewController *flowerbasketAddAccountVC =[[XXEFlowerbasketAddAccountViewController alloc]init];
     
-    //    [self.navigationController pushViewController:flowerbasketAddAccountVC animated:YES];
     [self.navigationController pushViewController:flowerbasketAddAccountVC animated:YES];
     
 }
@@ -120,7 +120,14 @@
         NSString *codeStr = [NSString stringWithFormat:@"%@", request.responseJSONObject[@"code"]];
         
         if ([codeStr isEqualToString:@"1"]) {
-            _dataSourceArray = [[NSMutableArray alloc] init];
+
+            if (_dataSourceArray.count != 0) {
+                [_dataSourceArray removeAllObjects];
+                [_aliPayAccountArray removeAllObjects];
+                [_accountArray removeAllObjects];
+                [_account_idArray removeAllObjects];
+                [_nameArray removeAllObjects];
+            }
             
             NSArray *modelArray = [XXEAccountManagerModel parseResondsData:request.responseJSONObject[@"data"]];
             
@@ -273,6 +280,49 @@
     [self.navigationController pushViewController:XXEFlowerbasketWithdrawCashVC animated:YES];
     
 }
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath{
+
+    return YES;
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath{
+
+return @"删除";
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (_dataSourceArray.count != 0) {
+        XXEAccountManagerModel *model = _dataSourceArray[indexPath.row];
+    
+//        NSLog(@"账号 -- %@", model.idStr);
+        XXEFlowerAccountDeleteApi * flowerAccountDeleteApi = [[XXEFlowerAccountDeleteApi alloc] initWithXid:parameterXid user_id:parameterUser_Id user_type:USER_TYPE account_id:model.idStr];
+        [flowerAccountDeleteApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
+            //
+            
+            NSString *codeStr = [NSString stringWithFormat:@"%@", request.responseJSONObject[@"code"]];
+            
+            if ([codeStr isEqualToString:@"1"]) {
+                [self showHudWithString:@"删除成功!" forSecond:1.5];
+                //从 数据源中 删除
+                [_dataSourceArray removeObjectAtIndex:indexPath.row];
+                //从 列表 中 删除
+                [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+                
+            }else{
+                [self showHudWithString:@"删除失败!" forSecond:1.5];
+            }
+            
+            
+        } failure:^(__kindof YTKBaseRequest *request) {
+            //
+            [self showHudWithString:@"数据请求失败!" forSecond:1.5];
+        }];
+
+    
+    }
+}
+
 
 
 

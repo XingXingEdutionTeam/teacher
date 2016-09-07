@@ -3,16 +3,10 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
-        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="XXEStudentSignInManagerAndHeadmasterViewController">
             <connections>
-                <outlet property="chooseButton" destination="Fv8-ti-BKq" id="ZMM-Af-qBC"/>
-                <outlet property="signNumButton" destination="q5g-01-QT1" id="g1a-Bi-ij1"/>
-                <outlet property="timeLabel" destination="hU1-1v-GH4" id="AyQ-FI-GMB"/>
-                <outlet property="unsignNumButton" destination="SIU-rj-Gid" id="329-of-XHF"/>
-                <outlet property="upBgView" destination="3Gu-HI-UWr" id="lhA-2j-Rh0"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -20,91 +14,8 @@
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-            <subviews>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3Gu-HI-UWr">
-                    <rect key="frame" x="0.0" y="0.0" width="375" height="155"/>
-                    <subviews>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0oC-70-4Ut">
-                            <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
-                            <subviews>
-                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="home_redflower_timeIcon" translatesAutoresizingMaskIntoConstraints="NO" id="8gV-Dt-Cdy">
-                                    <rect key="frame" x="10" y="15" width="20" height="20"/>
-                                </imageView>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hU1-1v-GH4">
-                                    <rect key="frame" x="38" y="14" width="212" height="21"/>
-                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                    <nil key="highlightedColor"/>
-                                </label>
-                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fv8-ti-BKq">
-                                    <rect key="frame" x="278" y="8" width="56" height="30"/>
-                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                    <state key="normal" title="选取时间">
-                                        <color key="titleColor" red="0.0" green="0.66675675300000004" blue="0.16376042169999999" alpha="1" colorSpace="calibratedRGB"/>
-                                    </state>
-                                </button>
-                            </subviews>
-                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        </view>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RWt-7s-ekq">
-                            <rect key="frame" x="0.0" y="52" width="375" height="100"/>
-                            <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="已签到人数" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VnG-NT-RFa">
-                                    <rect key="frame" x="255" y="70" width="70" height="21"/>
-                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                    <nil key="highlightedColor"/>
-                                </label>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="未签到人数" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7nH-BV-daq">
-                                    <rect key="frame" x="50" y="70" width="70" height="21"/>
-                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                    <nil key="highlightedColor"/>
-                                </label>
-                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SIU-rj-Gid">
-                                    <rect key="frame" x="60" y="5" width="50" height="50"/>
-                                    <fontDescription key="fontDescription" type="system" pointSize="24"/>
-                                    <state key="normal">
-                                        <color key="titleColor" red="0.99570826479999996" green="0.40481085529999999" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                    </state>
-                                </button>
-                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="q5g-01-QT1">
-                                    <rect key="frame" x="265" y="5" width="50" height="50"/>
-                                    <fontDescription key="fontDescription" type="system" pointSize="24"/>
-                                    <state key="normal">
-                                        <color key="titleColor" red="0.99570826479999996" green="0.40481085529999999" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                    </state>
-                                </button>
-                            </subviews>
-                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        </view>
-                    </subviews>
-                    <color key="backgroundColor" red="0.89925986840000005" green="0.91100431739999999" blue="0.91557874179999998" alpha="1" colorSpace="calibratedRGB"/>
-                    <constraints>
-                        <constraint firstAttribute="bottom" secondItem="RWt-7s-ekq" secondAttribute="bottom" constant="3" id="4vh-q3-0pl"/>
-                        <constraint firstItem="RWt-7s-ekq" firstAttribute="top" secondItem="0oC-70-4Ut" secondAttribute="bottom" constant="2" id="6Dj-nf-nlX"/>
-                        <constraint firstAttribute="trailing" secondItem="RWt-7s-ekq" secondAttribute="trailing" id="8z5-2M-S5E"/>
-                        <constraint firstItem="RWt-7s-ekq" firstAttribute="leading" secondItem="3Gu-HI-UWr" secondAttribute="leading" id="Bmk-Yg-dJv"/>
-                        <constraint firstItem="RWt-7s-ekq" firstAttribute="top" secondItem="0oC-70-4Ut" secondAttribute="bottom" constant="2" id="Lf9-5b-R26"/>
-                        <constraint firstAttribute="trailing" secondItem="0oC-70-4Ut" secondAttribute="trailing" id="QkS-8O-GwX"/>
-                        <constraint firstItem="RWt-7s-ekq" firstAttribute="top" secondItem="3Gu-HI-UWr" secondAttribute="top" constant="52" id="Rf4-VZ-ltG"/>
-                        <constraint firstItem="0oC-70-4Ut" firstAttribute="top" secondItem="3Gu-HI-UWr" secondAttribute="top" id="gih-uj-JTV"/>
-                        <constraint firstAttribute="width" constant="375" id="lYX-Vz-3EW"/>
-                        <constraint firstItem="0oC-70-4Ut" firstAttribute="leading" secondItem="3Gu-HI-UWr" secondAttribute="leading" id="lwb-3A-rHr"/>
-                        <constraint firstAttribute="width" secondItem="3Gu-HI-UWr" secondAttribute="height" multiplier="75:31" id="qBd-aU-dsE"/>
-                    </constraints>
-                </view>
-            </subviews>
-            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-            <constraints>
-                <constraint firstItem="3Gu-HI-UWr" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="1CI-Uh-4e1"/>
-                <constraint firstAttribute="trailing" secondItem="3Gu-HI-UWr" secondAttribute="trailing" id="N4f-eE-XvV"/>
-                <constraint firstItem="3Gu-HI-UWr" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="k2U-Na-Hms"/>
-            </constraints>
+            <color key="backgroundColor" red="0.89699835526315785" green="0.90843441611842102" blue="0.91557874177631571" alpha="1" colorSpace="calibratedRGB"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
         </view>
     </objects>
-    <resources>
-        <image name="home_redflower_timeIcon" width="20" height="20"/>
-    </resources>
 </document>
