@@ -60,7 +60,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.title = @"花篮提现记录";
+    self.title = @"小红花";
     
     [self createTableView];
     
@@ -71,7 +71,7 @@
     
     NSString *pageStr = [NSString stringWithFormat:@"%ld", page];
     
-    XXEMyselfInfoCollectionRedFlowerApi *myselfInfoCollectionRedFlowerApi = [[XXEMyselfInfoCollectionRedFlowerApi alloc] initWithXid:parameterXid user_id:parameterUser_Id user_type:USER_TYPE page:pageStr];
+    XXEMyselfInfoCollectionRedFlowerApi *myselfInfoCollectionRedFlowerApi = [[XXEMyselfInfoCollectionRedFlowerApi alloc] initWithXid:parameterXid user_id:parameterUser_Id page:pageStr];
     [myselfInfoCollectionRedFlowerApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         
 //        NSLog(@"111   %@", request.responseJSONObject);
@@ -192,7 +192,7 @@
     cell.iconImageView.layer.cornerRadius = cell.iconImageView.frame.size.width / 2;
     cell.iconImageView.layer.masksToBounds = YES;
     
-    [cell.iconImageView sd_setImageWithURL:[NSURL URLWithString:head_img] placeholderImage:[UIImage imageNamed:@"home_flowerbasket_placehoderIcon120x120"]];
+    [cell.iconImageView sd_setImageWithURL:[NSURL URLWithString:head_img] placeholderImage:[UIImage imageNamed:@"headplaceholder"]];
     
     //    NSLog(@"课程  %@", model.teach_course);
     cell.titleLabel.text = [NSString stringWithFormat:@"%@ / %@ / %@", model.tname, model.teach_course, model.class_name];

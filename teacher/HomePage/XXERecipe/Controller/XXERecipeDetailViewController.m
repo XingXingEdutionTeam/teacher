@@ -11,7 +11,7 @@
 #import "XXERecipeDetailTableViewCell.h"
 #import "XXERecipePicDeleteApi.h"
 #import "XXERecipeModifyViewController.h"
-
+#import "XXERecipeSingleMealDetailInfoApi.h"
 
 @interface XXERecipeDetailViewController ()<UITableViewDelegate, UITableViewDataSource, UIAlertViewDelegate>
 {
@@ -32,12 +32,13 @@
 
 @implementation XXERecipeDetailViewController
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
- 
-    self.title = @"食谱详情";
+
+- (void)viewWillAppear:(BOOL)animated{
+    
+    [super viewWillAppear:animated];
     picArray = [[NSMutableArray alloc] init];
     picIdArray = [[NSMutableArray alloc] init];
+//    _dataSourceArray = [[NSMutableArray alloc] init];
     if ([XXEUserInfo user].login){
         parameterXid = [XXEUserInfo user].xid;
         parameterUser_Id = [XXEUserInfo user].user_id;
@@ -45,38 +46,77 @@
         parameterXid = XID;
         parameterUser_Id = USER_ID;
     }
-//    NSLog(@"%@", _cookbook_idStr);
     
     [self createData];
+    
+}
+
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+ 
+    self.title = @"食谱详情";
+
     [self createTableView];
     
 }
 
 - (void)createData{
-    
-    if (_mealPicDataSource.count != 0) {
-        for (NSDictionary *dic in _mealPicDataSource) {
-            
-            [picArray addObject:dic[@"pic"]];
-            [picIdArray addObject:dic[@"id"]];
-        }
-    }
     if (_titleStr != nil) {
         if ([_titleStr isEqualToString:@"早餐"]) {
         
             iconStr = @"home_recipe_breakfast_icon38x34";
-            
+            _meal_type = @"1";
         }else if ([_titleStr isEqualToString:@"午餐"]) {
             
             iconStr = @"home_recipe_lunch_icon38x34";
+            _meal_type = @"2";
             
         }else if ([_titleStr isEqualToString:@"晚餐"]) {
             
             iconStr = @"home_recipe_dinner_icon38x34";
+            _meal_type = @"3";
         }
     }
     
+    [self fetchNetData];
+    
 }
+
+- (void)fetchNetData{
+
+    XXERecipeSingleMealDetailInfoApi *recipeSingleMealDetailInfoApi = [[XXERecipeSingleMealDetailInfoApi alloc] initWithXid:parameterXid user_id:parameterUser_Id school_id:_schoolId date_tm:_date_tm meal_type:_meal_type];
+    [recipeSingleMealDetailInfoApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
+        
+//        NSLog(@"2222---   %@", request.responseJSONObject);
+        
+        NSString *codeStr = [NSString stringWithFormat:@"%@", request.responseJSONObject[@"code"]];
+        
+        if ([codeStr isEqualToString:@"1"]) {
+            
+            NSDictionary *dict = request.responseJSONObject[@"data"];
+            _contentStr = dict[@"title"];
+            if ([dict[@"pic_arr"] count] != 0) {
+                for (NSDictionary *dic in dict[@"pic_arr"]) {
+                    
+                    [picArray addObject:dic[@"pic"]];
+                    [picIdArray addObject:dic[@"id"]];
+                }
+            }
+        }else{
+            
+        }
+        
+        [_myTableView reloadData];
+        
+    } failure:^(__kindof YTKBaseRequest *request) {
+        
+        [self showString:@"数据请求失败" forSecond:1.f];
+    }];
+    
+}
+
+
 
 
 - (void)createTableView{
@@ -118,7 +158,7 @@
 
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 200;
+    return 220;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
@@ -162,7 +202,7 @@
     recipeModifyVC.titleStr = _titleStr;
     recipeModifyVC.contentStr = _contentStr;
     recipeModifyVC.cookbook_idStr = _cookbook_idStr;
-    recipeModifyVC.dateStr = _dateStr;
+    recipeModifyVC.dateStr = _date_tm;
     
     [self.navigationController pushViewController:recipeModifyVC animated:YES];
 

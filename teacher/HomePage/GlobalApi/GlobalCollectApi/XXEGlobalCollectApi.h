@@ -23,6 +23,6 @@
 	collect_type	//收藏品种类型	1:商品  2:点评  3:用户  4:课程  5:学校  6:花朵
  */
 
-- (instancetype)initWithXid:(NSString *)xid  user_id:(NSString *)user_id user_type:(NSString *)user_type collect_id:(NSString *)collect_id collect_type:(NSString *)collect_type;
+- (instancetype)initWithXid:(NSString *)xid  user_id:(NSString *)user_id collect_id:(NSString *)collect_id collect_type:(NSString *)collect_type;
 
 @end

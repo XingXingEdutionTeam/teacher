@@ -215,6 +215,7 @@
     }else if ([breakfastStr isEqualToString:@""] && [lunchStr isEqualToString:@""] && [dinnerStr isEqualToString:@""] && arr.count == 0) {
         [self showHudWithString:@"请完善信息" forSecond:1.5];
     }else{
+        [self showHudWithString:@"正在上传中......"];
         if (arr1.count != 0) {
             [self submitRecipeAddTextAndPicInfo1];
         }else if (arr2.count != 0){

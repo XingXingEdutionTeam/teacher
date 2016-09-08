@@ -48,7 +48,8 @@
         parameterXid = XID;
         parameterUser_Id = USER_ID;
     }
-
+   mealNameStr = @"";
+    url_groupStr = @"";
     [self createContent];
 }
 
@@ -105,19 +106,19 @@
 - (IBAction)certainButton:(UIButton *)sender {
     
     mealNameStr = _contentTextView.text;
+    arr = [[NSMutableArray alloc] init];
+    for (int i = 0; i < pickerView.data.count - 1; i++) {
+        FSImageModel *mdoel = pickerView.data[i];
+        UIImage *image1 = [UIImage imageWithData:mdoel.data];
+        [arr addObject:image1];
+    }
     
-    if ([mealNameStr isEqualToString:@""]){
+    if ([mealNameStr isEqualToString:@""] && arr.count == 0){
         [self showHudWithString:@"请完善晚餐内容" forSecond:1.5];
     }else{
         
-        arr = [[NSMutableArray alloc] init];
-        for (int i = 0; i < pickerView.data.count - 1; i++) {
-            FSImageModel *mdoel = pickerView.data[i];
-            UIImage *image1 = [UIImage imageWithData:mdoel.data];
-            [arr addObject:image1];
-        }
-        
         if (arr.count != 0) {
+            [self showHudWithString:@"正在上传中......"];
             [self submitRecipeAddTextAndPicInfo];
         }else{
             [self submitRecipeAddTextInfo];
@@ -144,10 +145,14 @@
          lunch_url	//午餐图片(url集合,多个逗号隔开)
          dinner_url	//晚餐图片(url集合,多个逗号隔开)
          */
-        
+    
+//    NSLog(@"mealNameStr -- %@", mealNameStr);
+    
+    if ([mealNameStr isEqualToString:@"\n"]) {
+        mealNameStr = @"";
+    }
+    
         XXERecipePicModify *recipePicModify = [[XXERecipePicModify alloc] initWithXid:parameterXid user_id:parameterUser_Id user_type:USER_TYPE school_id:_schoolId position:@"4" cookbook_id:_cookbook_idStr meal_type:meal_type meal_name:mealNameStr url_group:url_groupStr];
-        
-//            NSLog(@"_cookbook_idStr:%@ ---meal_type:%@ ----mealNameStr: %@ ---url_groupStr: %@", _cookbook_idStr, meal_type, mealNameStr, url_groupStr);
     
         [recipePicModify startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
             
@@ -161,8 +166,6 @@
                 
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1*NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                     [self.navigationController popViewControllerAnimated:YES];
-//                    XXERecipeViewController *vc = [[XXERecipeViewController alloc] init];
-//                    [self.navigationController popToViewController:vc animated:YES];
                 });
                 
             }else{
@@ -245,7 +248,6 @@
                 
 //                NSLog(@"修改 图片 %@", url_groupStr);
             }
-
                 [self submitRecipeAddTextInfo];
             
         } failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error) {

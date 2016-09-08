@@ -265,6 +265,8 @@
 #pragma mark - dataSource
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     
+//    NSLog(@"%@", totalArray);
+    
     return totalArray.count;
     
 }
@@ -414,8 +416,8 @@
     }
 
     recipeDetailVC.titleStr = titleArray[indexPath.row];
-    recipeDetailVC.dateStr = dateArray[indexPath.section];
-    recipeDetailVC.contentStr = contentDataSource[indexPath.section][indexPath.row];
+    recipeDetailVC.date_tm = dateArray[indexPath.section];
+//    recipeDetailVC.contentStr = contentDataSource[indexPath.section][indexPath.row];
     recipeDetailVC.cookbook_idStr = cookbook_idArray[indexPath.section];
     
     recipeDetailVC.schoolId = _schoolId;

@@ -10,6 +10,8 @@
 
 #import "XXEMyselfInfoCollectionViewController.h"
 #import "XXEMyselfInfoCollectionRedFlowerViewController.h"
+#import "XXEMyselfInfoCollectionUsersViewController.h"
+#import "XXEMyselfInfoCollectionCommentViewController.h"
 
 
 @interface XXEMyselfInfoCollectionViewController ()<QHNavSliderMenuDelegate, UIScrollViewDelegate, UISearchBarDelegate>
@@ -105,21 +107,21 @@
         [listVCQueue setObject:myselfInfoCollectionRedFlowerVC forKey:@(0)];
     }else if (index == 1){
         //@"用户"
-//        ContactPersonViewController *classSubjectVC = [[ContactPersonViewController alloc]init];
-//        [self addChildViewController:classSubjectVC];
-//        classSubjectVC.view.left =1*screenWidth;
-//        classSubjectVC.view.top=0;
-//        [contentScrollView addSubview:classSubjectVC.view];
-//        [listVCQueue setObject:classSubjectVC forKey:@(1)];
+        XXEMyselfInfoCollectionUsersViewController *myselfInfoCollectionUsersVC = [[XXEMyselfInfoCollectionUsersViewController alloc]init];
+        [self addChildViewController:myselfInfoCollectionUsersVC];
+        myselfInfoCollectionUsersVC.view.left =1*screenWidth;
+        myselfInfoCollectionUsersVC.view.top=0;
+        [contentScrollView addSubview:myselfInfoCollectionUsersVC.view];
+        [listVCQueue setObject:myselfInfoCollectionUsersVC forKey:@(1)];
         
     }else if (index == 2){
         //@"点评"
-//        KTCommentViewController *classTelephoneVC =[[KTCommentViewController alloc]init];
-//        [self addChildViewController:classTelephoneVC];
-//        classTelephoneVC.view.left =2*screenWidth;
-//        classTelephoneVC.view.top =0;
-//        [contentScrollView addSubview:classTelephoneVC.view];
-//        [listVCQueue setObject:classTelephoneVC forKey:@(2)];
+        XXEMyselfInfoCollectionCommentViewController *myselfInfoCollectionCommentVC =[[XXEMyselfInfoCollectionCommentViewController alloc]init];
+        [self addChildViewController:myselfInfoCollectionCommentVC];
+        myselfInfoCollectionCommentVC.view.left =2*screenWidth;
+        myselfInfoCollectionCommentVC.view.top =0;
+        [contentScrollView addSubview:myselfInfoCollectionCommentVC.view];
+        [listVCQueue setObject:myselfInfoCollectionCommentVC forKey:@(2)];
         
     }else if (index == 3){
         //@"图片"

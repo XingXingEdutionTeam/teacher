@@ -12,4 +12,8 @@
 /** 编辑我的资料 */
 #define XXEEditMessURL @"http://www.xingxingedu.cn/Teacher/edit_my_info"
 
+//我的收藏
+//#define XXEMyselfInfoCollectionURL @"http://www.xingxingedu.cn/Global/col_%@_list"
+
+
 #endif /* XXEMyselfPageHeader_h */

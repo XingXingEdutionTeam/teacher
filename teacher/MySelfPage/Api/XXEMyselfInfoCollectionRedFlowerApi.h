@@ -20,6 +20,6 @@
  http://www.xingxingedu.cn/Global/col_flower_list (详情页数据也在这里)
  */
 
-- (instancetype)initWithXid:(NSString *)xid  user_id:(NSString *)user_id user_type:(NSString *)user_type page:(NSString *)page;
+- (instancetype)initWithXid:(NSString *)xid  user_id:(NSString *)user_id page:(NSString *)page;
 
 @end

@@ -11,13 +11,12 @@
 #import "XXEBabyFamilyInfoDetailApi.h"
 #import "XXEGlobalCollectApi.h"
 #import "XXEGlobalDecollectApi.h"
-
+#import "XXEPermissionSettingViewController.h"
 
 
 @interface XXEBabyFamilyInfoDetailViewController ()<UITableViewDelegate, UITableViewDataSource>
 {
     UITableView *_myTableView;
-    
     NSMutableArray *_dataSourceArray;
     
     //头像
@@ -28,10 +27,8 @@
     NSMutableArray *contentArray;
     //宝贝 头像
     NSString *headImageStr;
-    
     NSString *parameterXid;
     NSString *parameterUser_Id;
-    
     //头部 视图
     UIView *headerView;
     UIImageView *headerBgImageView;
@@ -44,14 +41,20 @@
     NSString *lvStr;
     //性别
     UIImage *sexPic;
-    
     //右边 收藏
     UIButton *rightBtn;
-    
+    //
     UIImage *saveImage;
-    
     //家人 xid
     NSString *familyXidStr;
+    //发起聊天 按钮
+    UIButton *chartButton;
+    //查看圈子 按钮
+    UIButton *seeButton;
+    //分享 按钮
+    UIButton *shareButton;
+    //举报 按钮
+    UIButton *reportButton;
 }
 
 
@@ -74,6 +77,8 @@
     
     [self fetchNetData];
     [self createTableView];
+    [self createRightBar];
+    [self createBottomViewButton];
 }
 
 - (void)fetchNetData{
@@ -82,26 +87,8 @@
     
     [babyFamilyInfoDetailApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         
-//                NSLog(@"111   %@", request.responseJSONObject);
-        /*
-         {
-         "cheeck_collect" = 2;
-         "coin_total" = 100;
-         email = "";
-         "head_img" = "app_upload/text/parent/p12.jpg";
-         "head_img_type" = 0;
-         id = 17;
-         lv = 1;
-         "next_grade_coin" = 500;
-         nickname = "\U4f59\U751f\U957f\U9189";
-         phone = 15026511468;
-         relation = "\U7238\U7238";
-         sex = "\U7537";
-         tname = "\U674e\U529f\U6210";
-         token = "";
-         xid = 18886379;
-         };
-         */
+//              NSLog(@"111   %@", request.responseJSONObject);
+
         NSString *codeStr = [NSString stringWithFormat:@"%@", request.responseJSONObject[@"code"]];
         
         if ([codeStr isEqualToString:@"1"]) {
@@ -221,8 +208,11 @@
     
     cell.iconImageView.image = [UIImage imageNamed:pictureArray[indexPath.row]];
     cell.titleLabel.text = titleArray[indexPath.row];
-    
     cell.contentLabel.text = contentArray[indexPath.row];
+    if (indexPath.row == 4) {
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    }
+    
     return cell;
 }
 
@@ -230,6 +220,17 @@
     
     return 44;
 }
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (indexPath.row == 4) {
+        XXEPermissionSettingViewController *permissionSettingVC = [[XXEPermissionSettingViewController alloc] init];
+        
+        permissionSettingVC.XIDStr = familyXidStr;
+        [self.navigationController pushViewController:permissionSettingVC animated:YES];
+    }
+
+}
+
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     
@@ -312,8 +313,7 @@
     
     //中间 进度条
     UIProgressView * progressView = [[UIProgressView alloc] initWithProgressViewStyle:UIProgressViewStyleDefault];
-    
-    
+
     progressView.frame = CGRectMake(150 * kScreenRatioWidth, 110 * kScreenRatioHeight, 150 * kScreenRatioWidth, 10 * kScreenRatioHeight);
     // 设置已过进度部分的颜色
     progressView.progressTintColor = XXEColorFromRGB(255, 255, 255);
@@ -325,83 +325,93 @@
     return headerView;
 }
 
+- (void)createBottomViewButton{
+    //发起聊天/查看圈子/分享/举报
+    UIImageView *bottomView= [[UIImageView alloc]initWithFrame:CGRectMake(0, KScreenHeight - 49 - 64, KScreenWidth, 49)];
+    bottomView.backgroundColor = [UIColor whiteColor];
+    [self.view addSubview:bottomView];
+    bottomView.userInteractionEnabled =YES;
+    
+    CGFloat itemWidth = KScreenWidth / 4;
+    CGFloat itemHeight = 49;
+    
+    CGFloat buttonWidth = itemWidth;
+    CGFloat buttonHeight = itemHeight;
+    
+    //----------------------------发起聊天 ---------
+    chartButton = [UIButton createButtonWithFrame:CGRectMake(buttonWidth / 2 * 0, 2 * kScreenRatioHeight, buttonWidth, buttonHeight) backGruondImageName:nil Target:self Action:@selector(chartButtonClick:) Title:@"发起聊天"];
+    [chartButton setImage:[UIImage imageNamed:@"classAddress_chart_unseleted_icon"] forState:UIControlStateNormal];
+    [chartButton setImage:[UIImage imageNamed:@"classAddress_chart_seleted_icon"] forState:UIControlStateHighlighted];
+    chartButton.titleLabel.font = [UIFont systemFontOfSize:10];
+    //设置 图片 位置
+    chartButton.imageEdgeInsets = UIEdgeInsetsMake(-10 * kScreenRatioHeight, buttonWidth / 2 - 15 * kScreenRatioWidth, 0, 0);
+    //设置title在button上的位置（上top，左left，下bottom，右right）
+    chartButton.titleEdgeInsets = UIEdgeInsetsMake(30 * kScreenRatioHeight, -chartButton.titleLabel.bounds.size.width-20, 0, 0);
+    [bottomView addSubview:chartButton];
+    
+    //---------------------------查看圈子 ----------
+    seeButton = [UIButton createButtonWithFrame:CGRectMake(buttonWidth, 2 * kScreenRatioHeight, buttonWidth, buttonHeight) backGruondImageName:nil Target:self Action:@selector(seeButtonClick:) Title:@"查看圈子"];
+    [seeButton setImage:[UIImage imageNamed:@"classAddress_seeCircle_unseleted_icon"] forState:UIControlStateNormal];
+    [seeButton setImage:[UIImage imageNamed:@"classAddress_seeCircle_seleted_icon"] forState:UIControlStateHighlighted];
+    seeButton.titleLabel.font = [UIFont systemFontOfSize:10];
+    //设置 图片 位置
+    seeButton.imageEdgeInsets = UIEdgeInsetsMake(-10 * kScreenRatioHeight, buttonWidth / 2 - 15 * kScreenRatioWidth, 0, 0);
+    //设置title在button上的位置（上top，左left，下bottom，右right）
+    seeButton.titleEdgeInsets = UIEdgeInsetsMake(30 * kScreenRatioHeight, -seeButton.titleLabel.bounds.size.width-20, 0, 0);
+    [bottomView addSubview:seeButton];
+    
+    //--------------------------------分享-------
+    shareButton = [UIButton createButtonWithFrame:CGRectMake(buttonWidth * 2, 2 * kScreenRatioHeight, buttonWidth, buttonHeight) backGruondImageName:nil Target:self Action:@selector(shareButtonClick:) Title:@"分享"];
+    [shareButton setImage:[UIImage imageNamed:@"classAddress_share_unseleted_icon"] forState:UIControlStateNormal];
+    [shareButton setImage:[UIImage imageNamed:@"classAddress_share_seleted_icon"] forState:UIControlStateHighlighted];
+    shareButton.titleLabel.font = [UIFont systemFontOfSize:10];
+    //设置 图片 位置
+    shareButton.imageEdgeInsets = UIEdgeInsetsMake(-10 * kScreenRatioHeight, buttonWidth / 2 - 20 * kScreenRatioWidth, 0, 0);
+    //设置title在button上的位置（上top，左left，下bottom，右right）
+    shareButton.titleEdgeInsets = UIEdgeInsetsMake(30 * kScreenRatioHeight, -shareButton.titleLabel.bounds.size.width-20, 0, 0);
+    [bottomView addSubview:shareButton];
+    
+    //--------------------------------举报-------
+    reportButton = [UIButton createButtonWithFrame:CGRectMake(buttonWidth * 3, 2 * kScreenRatioHeight, buttonWidth, buttonHeight) backGruondImageName:nil Target:self Action:@selector(reportButtonClick:) Title:@"举报"];
+    [reportButton setImage:[UIImage imageNamed:@"classAddress_report_unseleted_icon"] forState:UIControlStateNormal];
+    [reportButton setImage:[UIImage imageNamed:@"classAddress_report_seleted_icon"] forState:UIControlStateHighlighted];
+    reportButton.titleLabel.font = [UIFont systemFontOfSize:10];
+    //设置 图片 位置
+    reportButton.imageEdgeInsets = UIEdgeInsetsMake(-10 * kScreenRatioHeight, buttonWidth / 2 - 20 * kScreenRatioWidth, 0, 0);
+    //设置title在button上的位置（上top，左left，下bottom，右right）
+    reportButton.titleEdgeInsets = UIEdgeInsetsMake(30 * kScreenRatioHeight, -reportButton.titleLabel.bounds.size.width-20, 0, 0);
+    [bottomView addSubview:reportButton];
 
-- (void)createToolBar{
-    
-    UIImageView *imageV= [[UIImageView alloc]initWithFrame:CGRectMake(0, kHeight-44, kWidth, 44)];
-    imageV.backgroundColor = UIColorFromRGB(255, 255, 255 );
-    [self.view addSubview:imageV];
-    imageV.userInteractionEnabled =YES;
-    
-    UIButton *shareBtn = [[UIButton alloc]initWithFrame:CGRectMake(25, 5, 24, 24)];
-    [shareBtn setTitle:@"" forState:UIControlStateNormal];
-    [shareBtn setImage:[UIImage imageNamed:@"发起聊天icon48x48"] forState:UIControlStateNormal];
-    [shareBtn setImage:[UIImage imageNamed:@"发起聊天(H)icon48x48"] forState:UIControlStateHighlighted];
-    [shareBtn addTarget:self action:@selector(shareBtn:) forControlEvents:UIControlEventTouchUpInside];
-    [imageV addSubview:shareBtn];
-    
-    UILabel *shareLbl =[UILabel createLabelWithFrame:CGRectMake(30, 30, 20, 14) Font:8 Text:@"发起聊天"];
-    [imageV addSubview:shareLbl];
-    
-    
-    UIButton *seeBtn = [[UIButton alloc]initWithFrame:CGRectMake(118, 5, 24, 24)];
-    [seeBtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
-    [seeBtn setTitle:@"" forState:UIControlStateNormal];
-    [seeBtn setImage:[UIImage imageNamed:@"查看我的圈子icon48x48"] forState:UIControlStateNormal];
-    [seeBtn setImage:[UIImage imageNamed:@"查看我的圈子(H)icon48x48"] forState:UIControlStateHighlighted];
-    [seeBtn addTarget:self action:@selector(lookBtn:) forControlEvents:UIControlEventTouchUpInside];
-    [imageV addSubview:seeBtn];
-    
-    UILabel *downLbl =[UILabel createLabelWithFrame:CGRectMake(123, 30, 20, 14) Font:8 Text:@"查看圈子"];
-    [imageV addSubview:downLbl];
-    
-    
-    UIButton * saveBtn = [[UIButton alloc]initWithFrame:CGRectMake(212, 5, 24, 24)];
-    [saveBtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
-    [saveBtn setTitle:@"" forState:UIControlStateNormal];
-    [saveBtn setImage:[UIImage imageNamed:@"分享icon48x48"] forState:UIControlStateNormal];
-    [saveBtn setImage:[UIImage imageNamed:@"分享(H)icon48x48"] forState:UIControlStateHighlighted];
-    [imageV addSubview:saveBtn];
-    [saveBtn addTarget:self action:@selector(firendBtn:) forControlEvents:UIControlEventTouchUpInside];
-    
-    UILabel *saveLbl =[UILabel createLabelWithFrame:CGRectMake(217, 30, 20, 14) Font:8 Text:@"分享"];
-    [imageV addSubview:saveLbl];
-    
-    
-    UIButton *reportBtn = [[UIButton alloc]initWithFrame:CGRectMake(305, 5, 24, 24)];
-    [reportBtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
-    [reportBtn setTitle:@"" forState:UIControlStateNormal];
-    [reportBtn setImage:[UIImage imageNamed:@"举报icon48x48"] forState:UIControlStateNormal];
-    [reportBtn setImage:[UIImage imageNamed:@"举报(H)icon48x48"] forState:UIControlStateHighlighted];
-    [imageV addSubview:reportBtn];
-    [reportBtn addTarget:self action:@selector(chatBtn:) forControlEvents:UIControlEventTouchUpInside];
-    
-    UILabel *reportLbl =[UILabel createLabelWithFrame:CGRectMake(310, 30, 20, 14) Font:8 Text:@"举报"];
-    [imageV addSubview:reportLbl];
-    
 }
-- (void)firendBtn:(UIButton*)btn{
-    //分享给好友
-    //    [UMSocialSnsService  presentSnsIconSheetView:self appKey:@"56d4096e67e58ef29300147c" shareText:@"keenteam" shareImage:[UIImage imageNamed:@"11111.png"] shareToSnsNames:[NSArray arrayWithObjects:UMShareToQzone,UMShareToWechatTimeline,UMShareToWechatSession,UMShareToSina,UMShareToQQ,nil] delegate:self];
-//    [CoreUmengShare show:self text:@"为了孩子的未来,这里有你想要的一切,快点点击下载吧！https://itunes.apple.com/cn/app/jie-dian-qian-zhuan-ye-ban/id1112373854?mt=8&v0=WWW-GCCN-ITSTOP100-FREEAPPS&l=&ign-mpt=uo%3D4" image:[UIImage imageNamed:@"猩猩教室.png"]];
-    
-    
+
+//发起聊天
+- (void)chartButtonClick:(UIButton *)button{
+
+    NSLog(@"********发起聊天 *******");
+
 }
-- (void)shareBtn:(UIButton*)btn{
-    
-    
+
+//查看圈子
+- (void)seeButtonClick:(UIButton *)button{
+
+NSLog(@"********查看圈子 *******");
+
 }
-- (void)lookBtn:(UIButton*)btn{
-//    ViewController *viewVC =[[ViewController alloc]init];
-//    [self.navigationController pushViewController:viewVC animated:YES];
+
+//分享
+- (void)shareButtonClick:(UIButton *)button{
+NSLog(@"********分享 *******");
+
 }
+
 //举报
-- (void)chatBtn:(UIButton*)btn{
-    
-//    ReportPicViewController *reportVC =[[ReportPicViewController alloc]init];
-//    [self.navigationController pushViewController:reportVC animated:YES];
+- (void)reportButtonClick:(UIButton *)button{
+
+NSLog(@"********举报 *******");
     
 }
+
+
 - (void)createRightBar{
     
     //设置 navigationBar 右边 收藏 home_logo_uncollection_icon44x44
@@ -426,103 +436,52 @@
 }
 
 //收藏机构
-- (void)collectArticle
-{
-    /*
-     【收藏】通用于各种收藏
-     
-     接口:
-     http://www.xingxingedu.cn/Global/collect
-     
-     传参:
-     collect_id	//收藏id (如果是收藏用户,这里是xid)
-     collect_type	//收藏品种类型	1:商品  2:点评  3:用户  4:课程  5:学校  6:花朵
-     */
-    NSString *urlStr = @"http://www.xingxingedu.cn/Global/collect";
-    AFHTTPRequestOperationManager *mgr = [AFHTTPRequestOperationManager manager];
-    
-    NSDictionary *dict = @{@"appkey":APPKEY,
-                           @"backtype":BACKTYPE,
-                           @"xid":XID,
-                           @"user_id":USER_ID,
-                           @"user_type":USER_TYPE,
-                           @"collect_id":familyXidStr,
-                           @"collect_type":@"3",
-                           
-                           };
-    //    NSLog(@"%@",dict);
-    
-    // 服务器返回的数据格式
-    mgr.responseSerializer = [AFHTTPResponseSerializer serializer]; // 二进制数据
-    [mgr POST:urlStr parameters:dict success:^(AFHTTPRequestOperation *operation, id responseObject)
-     {
-         NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableLeaves error:nil];
-         
-         
-         if([[NSString stringWithFormat:@"%@",dict[@"code"]]isEqualToString:@"1"] )
-         {
-//             [SVProgressHUD showSuccessWithStatus:@"收藏成功"];
-             
-             [rightBtn setBackgroundImage:[UIImage imageNamed:@"commentInfo10"] forState:UIControlStateNormal];
-             
-             _isCollected=!_isCollected;
-             
-         }
-         
-     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-         //         NSLog(@"请求失败:%@",error);
-//         [SVProgressHUD showErrorWithStatus:@"网络不通，请检查网络！"];
-     }];
+- (void)collectArticle{
+
+    XXEGlobalCollectApi *globalCollectApi = [[XXEGlobalCollectApi alloc] initWithXid:parameterXid user_id:parameterUser_Id collect_id:familyXidStr collect_type:@"3"];
+    [globalCollectApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
+        //
+//        NSLog(@"收藏 -- %@", request.responseJSONObject);
+        NSString *codeStr = [NSString stringWithFormat:@"%@", request.responseJSONObject[@"code"]];
+        if ([codeStr isEqualToString:@"1"]) {
+            [self showHudWithString:@"收藏成功!" forSecond:1.5];
+           [rightBtn setBackgroundImage:[UIImage imageNamed:@"home_logo_collection_icon44x44"] forState:UIControlStateNormal];
+            _isCollected=!_isCollected;
+        }else{
+        
+        
+        }
+        
+    } failure:^(__kindof YTKBaseRequest *request) {
+        //
+        [self showHudWithString:@"收藏失败!" forSecond:1.5];
+    }];
+
 }
 
-//取消收藏老师
-- (void)deleteCollectArticle
-{
-    /*
-     【删除/取消收藏】通用于各种收藏
-     
-     接口:
-     http://www.xingxingedu.cn/Global/deleteCollect
-     
-     传参:
-     collect_id	//收藏id (如果是收藏用户,这里是xid)
-     collect_type	//收藏品种类型	1:商品  2:点评  3:用户  4:课程  5:学校  6:花朵 7:图片
-     */
-    NSString *urlStr = @"http://www.xingxingedu.cn/Global/deleteCollect";
-    AFHTTPRequestOperationManager *mgr = [AFHTTPRequestOperationManager manager];
+//取消收藏机构
+- (void)deleteCollectArticle{
     
-    NSDictionary *dict = @{@"appkey":@"U3k8Dgj7e934bh5Y",
-                           @"backtype":@"json",
-                           @"xid":@"18884982",
-                           @"user_id":@"1",
-                           @"user_type":@"1",
-                           @"collect_id":familyXidStr,
-                           @"collect_type":@"3",
-                           
-                           };
-    //    NSLog(@"%@",dict);
+    XXEGlobalDecollectApi *globalDecollectApi = [[XXEGlobalDecollectApi alloc] initWithXid:parameterXid user_id:parameterUser_Id collect_id:familyXidStr collect_type:@"3"];
+    [globalDecollectApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
+        //
+//        NSLog(@"取消收藏 -- %@", request.responseJSONObject);
+        NSString *codeStr = [NSString stringWithFormat:@"%@", request.responseJSONObject[@"code"]];
+        if ([codeStr isEqualToString:@"1"]) {
+            [self showHudWithString:@"取消收藏成功!" forSecond:1.5];
+            
+            [rightBtn setBackgroundImage:[UIImage imageNamed:@"home_logo_uncollection_icon44x44"] forState:UIControlStateNormal];
+            _isCollected=!_isCollected;
+        }else{
+            
+            
+        }
+        
+    } failure:^(__kindof YTKBaseRequest *request) {
+        //
+        [self showHudWithString:@"取消收藏失败!" forSecond:1.5];
+    }];
     
-    // 服务器返回的数据格式
-    mgr.responseSerializer = [AFHTTPResponseSerializer serializer]; // 二进制数据
-    [mgr POST:urlStr parameters:dict success:^(AFHTTPRequestOperation *operation, id responseObject)
-     {
-         NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableLeaves error:nil];
-         
-         if([[NSString stringWithFormat:@"%@",dict[@"code"]]isEqualToString:@"1"] ){
-//             [SVProgressHUD showSuccessWithStatus:@"取消收藏成功"];
-             
-             
-             
-             [rightBtn setBackgroundImage:[UIImage imageNamed:@"commentInfo9"] forState:UIControlStateNormal];
-             
-             _isCollected=!_isCollected;
-         }
-         
-     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-         //         NSLog(@"请求失败:%@",error);
-//         [SVProgressHUD showErrorWithStatus:@"网络不通，请检查网络！"];
-         
-     }];
 }
 
 
@@ -530,6 +489,7 @@
     
     return 150 * kScreenRatioHeight;
 }
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

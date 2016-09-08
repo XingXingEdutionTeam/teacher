@@ -67,8 +67,8 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellId];
     }
     cell.textLabel.text = _familyInfoArray[indexPath.row][@"tname"];
-    cell.detailTextLabel.textColor =UIColorFromRGB(168, 254, 84);
-    cell.detailTextLabel.text = [NSString stringWithFormat:@"等级%@",_familyInfoArray[indexPath.row][@"lv"]];
+//    cell.detailTextLabel.textColor =UIColorFromRGB(168, 254, 84);
+//    cell.detailTextLabel.text = [NSString stringWithFormat:@"等级%@",_familyInfoArray[indexPath.row][@"lv"]];
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     return cell;
     
