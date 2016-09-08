@@ -12,6 +12,8 @@
 #import "XXEChatPageViewController.h"
 #import "XXEFriendCirclePageViewController.h"
 #import "XXEMySelfPageViewController.h"
+#import "XXEAAAViewController.h"
+#import "MainViewController.h"
 
 @interface XXETabBarControllerConfig ()
 
@@ -50,7 +52,6 @@
     [self setupChildVc:[[XXEChatPageViewController alloc] init] title:@"猩课堂" image:@"tabbar_xclassroom" selectedImage:@"tabbar_xclassroom_click"];
     
     [self setupChildVc:[[XXEMySelfPageViewController alloc] init] title:@"我" image:@"tabbar_personal" selectedImage:@"tabbar_personal_click"];
-    
 //    // 更换tabBar
 //    [self setValue:[[XMGTabBar alloc] init] forKeyPath:@"tabBar"];
 }

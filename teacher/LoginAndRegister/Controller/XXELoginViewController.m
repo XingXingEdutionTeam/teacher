@@ -546,9 +546,7 @@
     NSLog(@"------QQ登录------");
     
     UMSocialSnsPlatform *snsPlatform = [UMSocialSnsPlatformManager getSocialPlatformWithName:UMShareToQQ];
-    
     snsPlatform.loginClickHandler(self,[UMSocialControllerService defaultControllerService],YES,^(UMSocialResponseEntity *response){
-        
         //          获取QQ用户名、uid、token等
         if (response.responseCode == UMSResponseCodeSuccess) {
             self.login_type = @"2";
@@ -557,9 +555,8 @@
             self.qqLoginToken = snsAccount.unionId;
             self.thirdNickName = snsAccount.userName;
             self.thirdHeadImage = snsAccount.iconURL;
-            
-            [self getAddInfomationMessage:snsAccount LoginType:self.login_type];
-            
+//            [self getAddInfomationMessage:snsAccount LoginType:self.login_type];
+            [self loginInterFaceApiSnsAccount:snsAccount.usid LoginTYpe:self.login_type];
         }});
 }
 
@@ -597,11 +594,12 @@
             UMSocialAccountEntity *snsAccount = [[UMSocialAccountManager socialAccountDictionary] valueForKey:snsPlatform.platformName];
             NSLog(@"%@",snsAccount);
              NSLog(@"\nusername = %@,\n usid = %@,\n token = %@ iconUrl = %@,\n unionId = %@,\n thirdPlatformUserProfile = %@,\n thirdPlatformResponse = %@ \n, message = %@",snsAccount.userName,snsAccount.usid,snsAccount.accessToken,snsAccount.iconURL, snsAccount.unionId, response.thirdPlatformUserProfile, response.thirdPlatformResponse, response.message);
-            self.sinaLoginToken = snsAccount.usid;
+            self.sinaLoginToken = snsAccount.usid ;
             self.thirdNickName = snsAccount.userName;
             self.thirdHeadImage = snsAccount.iconURL;
-            
-            [self getAddInfomationMessage:snsAccount LoginType:self.login_type];
+//            
+//            [self getAddInfomationMessage:snsAccount LoginType:self.login_type];
+            [self loginInterFaceApiSnsAccount:snsAccount.usid LoginTYpe:self.login_type];
             
         }});
     
@@ -620,7 +618,9 @@
 #pragma mark - 给数据库添加信息
 - (void)getAddInfomationMessage:(UMSocialAccountEntity *)snsAccount LoginType:(NSString *)loginType
 {
-    NSLog(@"\nusername = %@,\n usid = %@,\n token = %@ iconUrl = %@,\n unionId = %@,\n",snsAccount.userName,snsAccount.unionId,snsAccount.accessToken,snsAccount.iconURL, snsAccount.unionId);
+    NSLog(@"\nusername = %@,\n usid = %@,\n token = %@ iconUrl = %@,\n unionId = %@,\n",snsAccount.userName,snsAccount.usid,snsAccount.accessToken,snsAccount.iconURL, snsAccount.unionId);
+//    token = 2.00dhfvICzOGjWE6c1874530acQJx6B
+//            2.00dhfvICzOGjWE6c1874530acQJx6B
     //调用登录接口
     [self loginInterFaceApiSnsAccount:snsAccount.unionId LoginTYpe:loginType];
 }
@@ -649,7 +649,6 @@
                 UIWindow *window = [UIApplication sharedApplication].keyWindow;
                 window.rootViewController = navi;
                 [self.view removeFromSuperview];
-                
             }else{
                 
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3*NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
@@ -661,8 +660,6 @@
                     
                 });
             }
-            
-            
             
         }else{
             //进入注册的第三个

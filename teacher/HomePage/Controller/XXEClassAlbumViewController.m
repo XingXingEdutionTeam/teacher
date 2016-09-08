@@ -65,8 +65,7 @@ static NSString *const IdentifierCell = @"classAlbunCell";
     [super viewWillAppear:animated];
     self.view.backgroundColor = XXEBackgroundColor;
     self.navigationController.navigationBarHidden = NO;
-    //获取数据
-    [self loadClassAlbumMessage];
+    
 }
 -(UIStatusBarStyle)preferredStatusBarStyle
 {
@@ -81,6 +80,8 @@ static NSString *const IdentifierCell = @"classAlbunCell";
      _classAlbumTableView.delegate = self;
     _classAlbumTableView.dataSource = self;
     [self.view addSubview:self.classAlbumTableView];
+    //获取数据
+    [self loadClassAlbumMessage];
 
 }
 
@@ -96,10 +97,10 @@ static NSString *const IdentifierCell = @"classAlbunCell";
         strngXid = XID;
         albumUserId = USER_ID;
     }
-//    [self.imageViewDatasource removeLastObject];
+    [self.headDatasource removeAllObjects];
     XXEClassAlbumApi *classApi = [[XXEClassAlbumApi alloc]initWithClassAlbumSchoolID:self.schoolID classID:self.classID UserXId:strngXid UserID:albumUserId];
     [classApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
-        
+        NSLog(@"%@",request.responseJSONObject);
         NSString *code = [request.responseJSONObject objectForKey:@"code"];
         if ([code intValue]==1) {
             if ([[request.responseJSONObject objectForKey:@"data"] isKindOfClass:[NSString class]]) {
@@ -143,8 +144,11 @@ static NSString *const IdentifierCell = @"classAlbunCell";
     
     return 10;
 }
+
+
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
+    NSLog(@"%lu",(unsigned long)self.headDatasource.count);
     return self.headDatasource.count;
 }
 - (NSString*)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{

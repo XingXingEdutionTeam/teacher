@@ -279,6 +279,8 @@
 		9E10C6981D6DA3C400ACAF50 /* XXEChangeRoleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E10C6971D6DA3C400ACAF50 /* XXEChangeRoleViewController.m */; };
 		9E14098C1D61684C00E43AE4 /* XXEMyselfAblumDeleApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E14098B1D61684C00E43AE4 /* XXEMyselfAblumDeleApi.m */; };
 		9E14098F1D618A0C00E43AE4 /* XXEMyselfAblumUpDataApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E14098E1D618A0C00E43AE4 /* XXEMyselfAblumUpDataApi.m */; };
+		9E1D845C1D815C7E00CC8517 /* XXEAAAViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E1D845B1D815C7E00CC8517 /* XXEAAAViewController.m */; };
+		9E1D845F1D815CE100CC8517 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E1D845E1D815CE100CC8517 /* MainViewController.m */; };
 		9E28FC431D530EAD0003A208 /* XXELoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E28FC421D530EAD0003A208 /* XXELoginViewController.m */; };
 		9E2F7F141D70123F00DD9CD1 /* XXEHomePageCollectionPhotoApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E2F7F131D70123F00DD9CD1 /* XXEHomePageCollectionPhotoApi.m */; };
 		9E2F7F171D7014F400DD9CD1 /* XXEHomeReportListApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E2F7F161D7014F400DD9CD1 /* XXEHomeReportListApi.m */; };
@@ -971,6 +973,10 @@
 		9E14098B1D61684C00E43AE4 /* XXEMyselfAblumDeleApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXEMyselfAblumDeleApi.m; sourceTree = "<group>"; };
 		9E14098D1D618A0C00E43AE4 /* XXEMyselfAblumUpDataApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXEMyselfAblumUpDataApi.h; sourceTree = "<group>"; };
 		9E14098E1D618A0C00E43AE4 /* XXEMyselfAblumUpDataApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXEMyselfAblumUpDataApi.m; sourceTree = "<group>"; };
+		9E1D845A1D815C7E00CC8517 /* XXEAAAViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXEAAAViewController.h; sourceTree = "<group>"; };
+		9E1D845B1D815C7E00CC8517 /* XXEAAAViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXEAAAViewController.m; sourceTree = "<group>"; };
+		9E1D845D1D815CE100CC8517 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
+		9E1D845E1D815CE100CC8517 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
 		9E28FC411D530EAD0003A208 /* XXELoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXELoginViewController.h; sourceTree = "<group>"; };
 		9E28FC421D530EAD0003A208 /* XXELoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXELoginViewController.m; sourceTree = "<group>"; };
 		9E2F7F121D70123F00DD9CD1 /* XXEHomePageCollectionPhotoApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXEHomePageCollectionPhotoApi.h; sourceTree = "<group>"; };
@@ -2439,6 +2445,13 @@
 			path = UMSocial_Sdk_Instructions;
 			sourceTree = "<group>";
 		};
+		9E3D012A1D818195008FCD33 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		9E4813761D504D0900C614AC = {
 			isa = PBXGroup;
 			children = (
@@ -2556,8 +2569,8 @@
 				9ED9AB141D7EBEC700B63B53 /* FriendCircleHeader.h */,
 				9E9B4C771D633C8400983F5E /* FriendCircleApi */,
 				9E4813BB1D50695200C614AC /* Controller */,
+				9E3D012A1D818195008FCD33 /* View */,
 				9E4813BC1D50695200C614AC /* Model */,
-				9E4813BD1D50695200C614AC /* View */,
 			);
 			path = FriendCirclePage;
 			sourceTree = "<group>";
@@ -2565,6 +2578,10 @@
 		9E4813BB1D50695200C614AC /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				9E1D845D1D815CE100CC8517 /* MainViewController.h */,
+				9E1D845E1D815CE100CC8517 /* MainViewController.m */,
+				9E1D845A1D815C7E00CC8517 /* XXEAAAViewController.h */,
+				9E1D845B1D815C7E00CC8517 /* XXEAAAViewController.m */,
 				9E4813DE1D50787100C614AC /* XXEFriendCirclePageViewController.h */,
 				9E4813DF1D50787100C614AC /* XXEFriendCirclePageViewController.m */,
 				9ED9AB0E1D7EB6B400B63B53 /* XXEFriendMyCircleViewController.h */,
@@ -2586,13 +2603,6 @@
 				9E9B4C821D633C9B00983F5E /* XXEGoodUserModel.m */,
 			);
 			path = Model;
-			sourceTree = "<group>";
-		};
-		9E4813BD1D50695200C614AC /* View */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = View;
 			sourceTree = "<group>";
 		};
 		9E4813BE1D50695200C614AC /* HomePage */ = {
@@ -3667,6 +3677,7 @@
 				04F216951D7671BB005C2EBF /* QHUtil.m in Sources */,
 				9E02B4221D782F7B00BE40E3 /* XXEAddIdentityViewController.m in Sources */,
 				04BB3A481D74742B00AA5C5C /* XXERecipeAddViewController.m in Sources */,
+				9E1D845F1D815CE100CC8517 /* MainViewController.m in Sources */,
 				9E4813D71D50722400C614AC /* XXETabBarControllerConfig.m in Sources */,
 				9E94B77C1D75A62D0045D575 /* XXERegisterSearchSchoolApi.m in Sources */,
 				043301291D62BDD000722DE2 /* XXEManagerAndHeadmasterViewController.m in Sources */,
@@ -3732,6 +3743,7 @@
 				04BB3A201D74742B00AA5C5C /* XXESchoolEmailModiyfViewController.m in Sources */,
 				9E7EF21B1D798887003A06E1 /* XXEPerfectInfoViewController.m in Sources */,
 				04C52CDC1D801C5200DB7C4A /* XXEStudentUnsignInListViewController.m in Sources */,
+				9E1D845C1D815C7E00CC8517 /* XXEAAAViewController.m in Sources */,
 				04F216941D7671BB005C2EBF /* UIView+QHUIViewCtg.m in Sources */,
 				048754971D5C0BF200F680C5 /* XXEAccountManagerViewController.m in Sources */,
 				9E9B4C861D633C9B00983F5E /* XXEGoodUserModel.m in Sources */,
