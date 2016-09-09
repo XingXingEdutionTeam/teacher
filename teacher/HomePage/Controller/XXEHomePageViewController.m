@@ -164,7 +164,7 @@
     NSLog(@"身份:%@",self.userPosition);
     
     //*******************  学 校  *************************
-    self.homeSchoolView = [[WJCommboxView alloc] initWithFrame:CGRectMake(60 * kScreenRatioWidth, 45 * kScreenRatioWidth, 120 * kScreenRatioWidth, 30 * kScreenRatioHeight)];
+    self.homeSchoolView = [[WJCommboxView alloc] initWithFrame:CGRectMake(65 * kScreenRatioWidth, 41 * kScreenRatioHeight, 120 * kScreenRatioWidth, 36 * kScreenRatioHeight)];
     if (self.arraySchool.count != 0) {
         self.homeSchoolView.dataArray = self.arraySchool;
     }
@@ -190,7 +190,7 @@
 //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(commboxAction:) name:@"commboxNotice"object:nil];
     
     //***********************  班 级  ***************************
-    self.homeClassView = [[WJCommboxView alloc] initWithFrame:CGRectMake(60 * kScreenRatioWidth+120 * kScreenRatioWidth+5, 45*kScreenRatioWidth, 120 * kScreenRatioWidth, 30 * kScreenRatioHeight)];
+    self.homeClassView = [[WJCommboxView alloc] initWithFrame:CGRectMake(65 * kScreenRatioWidth+120 * kScreenRatioWidth+5, 41*kScreenRatioHeight, 120 * kScreenRatioWidth, 36 * kScreenRatioHeight)];
     NSString *string = @"编辑班级";
     
     if (self.classAllArray.count != 0) {
@@ -322,6 +322,7 @@
                         self.schoolHomeId = model.school_id;
                         self.schoolType = model.school_type;
                         
+                        [_headView changeSchoolLogo:model.school_logo];
                         XXEHomePageClassModel *classModel = [model.class_info firstObject];
                         self.classHomeId = classModel.class_id;
                         self.userPosition = classModel.position;
@@ -508,12 +509,19 @@
         case 1:
         {
             NSLog(@"---相册----");
-            XXEClassAlbumViewController *classAlbumVC = [[XXEClassAlbumViewController alloc]init];
-            classAlbumVC.schoolID = self.schoolHomeId;
-            classAlbumVC.classID = self.classHomeId;
-            NSLog(@"%@ == %@",self.schoolHomeId,self.classHomeId);
-            NSLog(@"%@%@",self.schoolHomeId,self.classHomeId);
-            [self.navigationController pushViewController:classAlbumVC animated:YES];
+            if ([self.classHomeId integerValue]== 0) {
+                XXEClassAddressHeadermasterAndManagerViewController *headMasterVC = [[XXEClassAddressHeadermasterAndManagerViewController alloc]init];
+                headMasterVC.schoolId = self.schoolHomeId;
+                headMasterVC.schoolType = self.schoolType;
+                headMasterVC.headMasterAlbum = @"1";
+                [self.navigationController pushViewController:headMasterVC animated:YES];
+            }else{
+                XXEClassAlbumViewController *classAlbumVC = [[XXEClassAlbumViewController alloc]init];
+                classAlbumVC.schoolID = self.schoolHomeId;
+                classAlbumVC.classID = self.classHomeId;
+                NSLog(@"%@ == %@",self.schoolHomeId,self.classHomeId);
+                [self.navigationController pushViewController:classAlbumVC animated:YES];
+            }
             break;
         }
         case 2:

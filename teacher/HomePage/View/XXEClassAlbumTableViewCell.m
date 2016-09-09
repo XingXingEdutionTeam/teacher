@@ -89,19 +89,47 @@
 
 - (void)getTheImageViewData:(NSArray *)model
 {
-    if (model.count != 0) {
+    
+    if (model.count == 1) {
+        self.titleLabel.text = @"新";
+        [self.LeftImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",kXXEPicURL,model[0]]] placeholderImage:[UIImage imageNamed:@"album_icon"]];
+    }else if(model.count == 2){
         self.titleLabel.text = @"新";
         [self.LeftImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",kXXEPicURL,model[0]]] placeholderImage:[UIImage imageNamed:@"album_icon"]];
 //        [self.MiddleImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",kXXEPicURL,model[1]]] placeholderImage:[UIImage imageNamed:@"album_icon"]];
 //        [self.rightImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",kXXEPicURL,model[2]]] placeholderImage:[UIImage imageNamed:@"album_icon"]];
 //        [self.MiddleImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",kXXEPicURL,model[1]]]];
 //        [self.rightImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",kXXEPicURL,model[2]]]];
+        [self.MiddleImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",kXXEPicURL,model[1]]] placeholderImage:[UIImage imageNamed:@"album_icon"]];
+    }else if(model.count == 3){
+        self.titleLabel.text = @"新";
+        NSLog(@"%lu",(unsigned long)model.count);
+        NSLog(@"%@",model);
+        [self.LeftImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",kXXEPicURL,model[0]]] placeholderImage:[UIImage imageNamed:@"album_icon"]];
+        [self.MiddleImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",kXXEPicURL,model[1]]] placeholderImage:[UIImage imageNamed:@"album_icon"]];
+        [self.rightImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",kXXEPicURL,model[2]]] placeholderImage:[UIImage imageNamed:@"album_icon"]];
+    
     }else{
         self.titleLabel.text = @"";
         self.LeftImageView.image = [UIImage imageNamed:@"album_icon"];
         self.MiddleImageView.image = [UIImage imageNamed:@"album_icon"];
         self.rightImageView.image = [UIImage imageNamed:@"album_icon"];
     }
+    
+    
+//    if (model.count != 0) {
+//        self.titleLabel.text = @"新";
+//        NSLog(@"%lu",(unsigned long)model.count);
+//        NSLog(@"%@",model);
+//        [self.LeftImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",kXXEPicURL,model[0]]] placeholderImage:[UIImage imageNamed:@"album_icon"]];
+//        [self.MiddleImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",kXXEPicURL,model[1]]] placeholderImage:[UIImage imageNamed:@"album_icon"]];
+//        [self.rightImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",kXXEPicURL,model[2]]] placeholderImage:[UIImage imageNamed:@"album_icon"]];
+//    }else{
+//        self.titleLabel.text = @"";
+//        self.LeftImageView.image = [UIImage imageNamed:@"album_icon"];
+//        self.MiddleImageView.image = [UIImage imageNamed:@"album_icon"];
+//        self.rightImageView.image = [UIImage imageNamed:@"album_icon"];
+//    }
 }
 
 

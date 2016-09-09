@@ -334,6 +334,7 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
         }
         case 6:{
                self.teacherCell = [self cellAtIndexRow:6 andAtSection:0 Message:@"平台审核"];
+            self.theEndReviewerId = @"0";
             [self tureOrFalseCellClick:NO Tag:106];
             break;
         }
@@ -430,6 +431,7 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
 {
     NSLog(@"蛇和人的ID %@",self.theEndReviewerId);
     NSLog(@"证件%@",self.fileHeadImageArray);
+    
     
     if ([self.theEndReviewerId isEqualToString:@""]) {
         [self showString:@"请选择审核人" forSecond:1.f];

@@ -21,6 +21,8 @@
 //朋友圈的点赞 和取消点赞接口
 #define XXEFriendCircleGoodUrl @"http://www.xingxingedu.cn/Global/my_circle_good"
 
+//发布朋友圈
+#define XXEPublishFriendCircleUrl @"http://www.xingxingedu.cn/Global/mycircle_publish"
 
 
 

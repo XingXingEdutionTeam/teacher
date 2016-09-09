@@ -48,8 +48,6 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        
-        
         _keyboardAnimationDuration = 0.25;
         _keyboardAnimationCurve = 7;
         
@@ -63,6 +61,7 @@
 {
     [_maskView removeGestureRecognizer:_panGestureRecognizer];
     [_maskView removeGestureRecognizer:_tapGestureRecognizer];
+    [self removeObserver:self forKeyPath:InputViewObserveKeyPath];
 }
 
 
@@ -91,6 +90,7 @@
     
     _inputView = [[UIView alloc] initWithFrame:CGRectMake(x, y, width, height)];
     _inputView.backgroundColor = [UIColor colorWithWhite:250/255.0 alpha:1.0];
+//    _inputView.backgroundColor = [UIColor redColor];
     _inputView.hidden = YES;
     
     [self addSubview:_inputView];
@@ -153,32 +153,35 @@
     
 }
 
-
-
-
-
 #pragma mark - Notification
 
+//添加通知 注册键盘弹出的时候的通知
 -(void) addNotify
 
 {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onKeyboradShow:) name:UIKeyboardWillShowNotification object:nil];
 }
 
-
+//注册键盘消失的时候的通知
 -(void) removeNotify
-
 {
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
-
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
 }
 
 
 
 #pragma mark - Keyboard
 
+//- (void)onKeyboradShow:(NSNotification *)aNotification
+//{
+//    //键盘高度
+//    CGRect keyBoardFrame = [[[aNotification userInfo]objectForKey:UIKeyboardWillChangeFrameNotification]CGRectValue];
+//    [self changeInputViewOffsetY:(keyBoardFrame.origin.y - InputViewHeight) ];
+//}
+
 -(void) onKeyboradShow:(NSNotification *) notify
 {
+    NSLog(@"%@",notify);
     NSDictionary *info = notify.userInfo;
     CGRect frame = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
     _keyboardAnimationDuration = [[info objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
@@ -229,6 +232,7 @@
 
 -(void) changeInputViewOffsetY:(CGFloat) offsetY
 {
+    NSLog(@"%f",offsetY);
     [self setValue: [NSNumber numberWithDouble:offsetY] forKey:InputViewObserveKeyPath];
     
 }
@@ -252,8 +256,6 @@
     
     [UIView commitAnimations];
 }
-
-
 
 -(void) onTableViewPanAndTap:(UIGestureRecognizer *) gesture
 {
@@ -288,8 +290,6 @@
 
 -(void) hideInputView
 {
-    
-    
     self.hidden = YES;
     
     [_inputTextView resignFirstResponder];
@@ -300,12 +300,8 @@
     [self changeInputViewPosition:offsetY];
 }
 
-
-
-
 -(void)show
 {
-    
     _inputView.hidden = NO;
     [_inputTextView becomeFirstResponder];
 }

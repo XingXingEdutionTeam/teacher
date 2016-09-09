@@ -79,6 +79,7 @@
         strngXid = XID;
         homeUserId = USER_ID;
     }
+    [self.idenDatasouces removeAllObjects];
     XXEHomeIdentityApi *identityApi = [[XXEHomeIdentityApi alloc]initWithHomeIdentityUserXid:strngXid UserId:homeUserId];
     [identityApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         NSLog(@"%@",request.responseJSONObject);

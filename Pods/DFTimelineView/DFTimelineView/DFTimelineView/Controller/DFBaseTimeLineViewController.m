@@ -7,6 +7,7 @@
 //
 
 #import "DFBaseTimeLineViewController.h"
+#import "MJRefresh.h"
 
 #define TableHeaderHeight 290*([UIScreen mainScreen].bounds.size.width / 375.0)
 #define CoverHeight 240*([UIScreen mainScreen].bounds.size.width / 375.0)
@@ -16,13 +17,12 @@
 #define AvatarRightMargin 15
 #define AvatarPadding 2
 
+#define KScreenWidth [UIScreen mainScreen].bounds.size.width
+#define KScreenHeight [UIScreen mainScreen].bounds.size.height
 
 #define NickFont [UIFont systemFontOfSize:20]
 
 #define SignFont [UIFont systemFontOfSize:11]
-
-
-
 
 @interface DFBaseTimeLineViewController()
 
@@ -68,16 +68,22 @@
     
     [self initHeader];
     
-    [self initFooter];
+//    [self initFooter];
     
+    self.tableView.header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        [self refresh];
+    }];
+    
+    self.tableView.footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+        [self showFooter];
+    }];
 }
 
 
 
 -(void) initTableView
 {
-    _tableView = [[UITableView alloc] initWithFrame:self.view.frame style:UITableViewStylePlain];
-    //_tableView.backgroundColor = [UIColor darkGrayColor];
+    _tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
     _tableView.delegate = self;
     _tableView.dataSource = self;
     _tableView.separatorInset = UIEdgeInsetsZero;
@@ -155,13 +161,13 @@
         
     }
     
-    //下拉刷新
-    if (_refreshControl == nil) {
-        _refreshControl = [[UIRefreshControl alloc] init];
-        [_refreshControl addTarget:self action:@selector(onPullDown:) forControlEvents:UIControlEventValueChanged];
-        [_tableView addSubview:self.refreshControl];
-    }
-    
+//    //下拉刷新
+//    if (_refreshControl == nil) {
+//        _refreshControl = [[UIRefreshControl alloc] init];
+//        [_refreshControl addTarget:self action:@selector(onPullDown:) forControlEvents:UIControlEventValueChanged];
+//        [_tableView addSubview:self.refreshControl];
+//    }
+//    
     
     
 }
@@ -227,62 +233,62 @@
 
 #pragma mark - PullMoreFooterDelegate
 
-
--(void)scrollViewDidScroll:(UIScrollView *)scrollView
-{
-    //NSLog(@"size: %f  offset:  %f", scrollView.contentSize.height, scrollView.contentOffset.y+self.tableView.frame.size.height);
-    
-    if (_isLoadingMore) {
-        return;
-    }
-    
-    if (scrollView.contentOffset.y+self.tableView.frame.size.height - 30 > scrollView.contentSize.height) {
-        
-        [self showFooter];
-    }
-}
+//-(void)scrollViewDidScroll:(UIScrollView *)scrollView
+//{
+//    //NSLog(@"size: %f  offset:  %f", scrollView.contentSize.height, scrollView.contentOffset.y+self.tableView.frame.size.height);
+//    
+//    if (_isLoadingMore) {
+//        return;
+//    }
+//    
+//    if (scrollView.contentOffset.y+self.tableView.frame.size.height -30 > scrollView.contentSize.height) {
+//        NSLog(@"scrollViewY:%f",scrollView.contentOffset.y);
+//        NSLog(@"height:%f",self.tableView.frame.size.height);
+//        NSLog(@"scrollViewHeight:%f",scrollView.contentSize.height);
+//        
+//        [self showFooter];
+//    }
+//    
+//}
 
 
 -(void) showFooter
 {
     NSLog(@"show footer");
     
-    CGRect frame = _tableView.tableFooterView.frame;
-    CGFloat x,y,width,height;
-    width = frame.size.width;
-    height = 50;
-    x = frame.origin.x;
-    y = frame.origin.y;
-    _footer.frame = CGRectMake(x, y, width, height);
-    _tableView.tableFooterView = _footer;
-    
-    _isLoadingMore = YES;
+//    CGRect frame = _tableView.tableFooterView.frame;
+//    CGFloat x,y,width,height;
+//    width = frame.size.width;
+//    height = 50;
+//    x = frame.origin.x;
+//    y = frame.origin.y;
+//    _footer.frame = CGRectMake(x, y, width, height);
+//    _tableView.tableFooterView = _footer;
+//    
+//    _isLoadingMore = YES;
     [self loadMore];
-    
-    
-    
-    
+    [self.tableView reloadData];
 }
 
 
 -(void) hideFooter
 {
-    NSLog(@"hide footer");
-    
-    [UIView animateWithDuration:0.5 animations:^{
-        
-        CGRect frame = _tableView.tableFooterView.frame;
-        CGFloat x,y,width,height;
-        width = frame.size.width;
-        height = 0.1;
-        x = frame.origin.x;
-        y = frame.origin.y;
-        _footer.frame = CGRectMake(x, y, width, height);
-        _tableView.tableFooterView = _footer;
-        
-        _isLoadingMore = NO;
-        
-    }];
+//    NSLog(@"hide footer");
+//    
+//    [UIView animateWithDuration:0.5 animations:^{
+//        
+//        CGRect frame = _tableView.tableFooterView.frame;
+//        CGFloat x,y,width,height;
+//        width = frame.size.width;
+//        height = 0.1;
+//        x = frame.origin.x;
+//        y = frame.origin.y;
+//        _footer.frame = CGRectMake(x, y, width, height);
+//        _tableView.tableFooterView = _footer;
+//        
+//        _isLoadingMore = NO;
+//        
+//    }];
     
 }
 
@@ -290,6 +296,7 @@
 -(void) onPullDown:(id) sender
 {
     [self refresh];
+    [self.tableView reloadData];
 }
 
 
@@ -310,6 +317,7 @@
 -(void)endRefresh
 {
     [_refreshControl endRefreshing];
+    [self.tableView.header endRefreshing];
 }
 
 
@@ -353,8 +361,6 @@
     _userSignView.frame = CGRectMake(x, y, width, height);
     _userSignView.text = sign;
 }
-
-
 
 
 -(void) onClickUserAvatar:(id) sender

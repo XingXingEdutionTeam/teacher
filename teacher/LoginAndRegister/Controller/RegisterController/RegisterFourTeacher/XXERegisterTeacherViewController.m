@@ -327,6 +327,7 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
     self.theEndInviteCode = @"";
     self.theEndFileImage = @"";
     [self.picker removeFromSuperview];
+    self.teacherCell = [self cellAtIndexRow:2 andAtSection:0 Message:@""];
     self.teacherCell = [self cellAtIndexRow:3 andAtSection:0 Message:@""];
     self.teacherCell = [self cellAtIndexRow:4 andAtSection:0 Message:@""];
     self.teacherCell = [self cellAtIndexRow:6 andAtSection:0 Message:@""];

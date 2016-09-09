@@ -42,7 +42,7 @@
              @"appkey":APPKEY,
              @"backtype":BACKTYPE,
              @"user_id":_userId,
-             @"user_type":@"2"
+             @"user_type":USER_TYPE
              };
 }
 

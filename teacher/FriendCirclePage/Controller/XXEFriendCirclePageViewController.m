@@ -13,12 +13,15 @@
 #import "XXECommentModel.h"
 #import "XXEGoodUserModel.h"
 #import "XXEFriendMyCircleViewController.h"
+#import "XXEPublishFriendCircleApi.h"
 
 @interface XXEFriendCirclePageViewController ()
 /** 朋友圈的头部视图信息 */
 @property (nonatomic, strong)NSMutableArray *headerDatasource;
 /** 朋友圈列表的信息 */
 @property (nonatomic, strong)NSMutableArray *circleListDatasource;
+/** 页数 */
+@property (nonatomic, assign)NSInteger page;
 @end
 
 @implementation XXEFriendCirclePageViewController
@@ -47,6 +50,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     self.view.backgroundColor = XXEBackgroundColor;
+    
 }
 
 - (instancetype)init
@@ -64,15 +68,30 @@
     // Do any additional setup after loading the view.
     NSLog(@"朋友圈控制器");
     self.extendedLayoutIncludesOpaqueBars = YES;
-
-    
+    self.page = 1;
     //获取朋友圈信息
-    [self setupFriendCircleMessagePage:@"1"];
+    [self setupFriendCircleMessagePage:1];
+}
+
+#pragma mark - 下拉刷新 与上拉加载更多
+- (void)refresh
+{
+    self.page = 1;
+    [self setupFriendCircleMessagePage:self.page];
+    [self endRefresh];
+}
+
+- (void)loadMore
+{
+    self.page ++;
+    NSLog(@"宫锁少爷%ld",(long)self.page);
+    [self setupFriendCircleMessagePage:self.page];
+    [self endLoadMore];
 }
 
 
 #pragma mark - 朋友圈网络请求
-- (void)setupFriendCircleMessagePage:(NSString *)page
+- (void)setupFriendCircleMessagePage:(NSInteger )page
 {
     NSString *strngXid;
     NSString *homeUserId;
@@ -84,7 +103,11 @@
         homeUserId = USER_ID;
     }
     
-    XXEFriendCircleApi *friendCircleApi = [[XXEFriendCircleApi alloc]initWithFriendCircleXid:strngXid CircleUserId:homeUserId PageNumber:page];
+    NSString *pageNum = [NSString stringWithFormat:@"%ld",(long)page];
+    if ([pageNum isEqualToString:@"1"]) {
+        [self.circleListDatasource removeAllObjects];
+    }
+    XXEFriendCircleApi *friendCircleApi = [[XXEFriendCircleApi alloc]initWithFriendCircleXid:strngXid CircleUserId:homeUserId PageNumber:pageNum];
     [friendCircleApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         
         NSLog(@"%@",request.responseJSONObject);
@@ -109,18 +132,17 @@
                 XXECircleModel *circleModel = [[XXECircleModel alloc]initWithDictionary:list[i] error:nil];
                 [self.circleListDatasource addObject:circleModel];
             }
-            NSLog(@"朋友圈列表的信息:%@",self.circleListDatasource);
+            [self endLoadMore];
         //朋友圈的信息列表
         [self friendCircleMessage];
         NSLog(@"圈子顶部信息数组信息%@",self.headerDatasource);
-            [self endRefresh];
         }else{
-            [self endRefresh];
             [self hudShowText:@"获取数据错误" second:2.f];
+             [self endRefresh];
+             [self endLoadMore];
         }
-        
     } failure:^(__kindof YTKBaseRequest *request) {
-        [self endRefresh];
+         [self endRefresh];
         [self endLoadMore];
     }];
 }
@@ -133,10 +155,8 @@
     [self setCover:cover];
     [self setUserAvatar:cover];
     [self setUserNick:model.nickname];
-    [self setUserSign:@"哈哈哈"];
+    [self setUserSign:@""];
 }
-
-
 
 /** 朋友圈的信息列表 */
 - (void)friendCircleMessage
@@ -244,7 +264,78 @@
 -(void)onSendTextImage:(NSString *)text images:(NSArray *)images
 {
     NSLog(@"发布的文字%@ 发布的图片%@",text,images);
+    if (images.count ==0) {
+        //往服务器传所有的参数
+        [self publishFriendCircleText:text ImageFile:@""];
+    }else{
+    
+    
+    NSLog(@"%@",images);
+    NSDictionary *dict = @{@"file_type":@"1",
+                           @"page_origin":@"35",
+                           @"upload_format":@"2",
+                           @"appkey":APPKEY,
+                           @"user_type":USER_TYPE,
+                           @"backtype":BACKTYPE
+                           };
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    [manager POST:XXERegisterUpLoadPicUrl parameters:dict constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+        for (int i = 0; i< images.count; i++) {
+            NSData *data = UIImageJPEGRepresentation(images[i], 0.5);
+            NSString *name = [NSString stringWithFormat:@"%d.jpeg",i];
+            NSString *formKey = [NSString stringWithFormat:@"file%d",i];
+            NSString *type = @"image/jpeg";
+            [formData appendPartWithFileData:data name:formKey fileName:name mimeType:type];
+        }
+        
+    } success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
+        
+        NSString *code = [responseObject objectForKey:@"code"];
+        if ([code intValue] == 1) {
+            NSArray *data = [responseObject objectForKey:@"data"];
+            NSMutableString *str = [NSMutableString string];
+            for (int i =0; i< data.count; i++) {
+                NSString *string = data[i];
+                if (i != data.count -1) {
+                    [str appendFormat:@"%@,",string];
+                }else {
+                    [str appendFormat:@"%@",string];
+                }
+            }
+            NSLog(@"图片的网址:%@",str);
+            //往服务器传所有的参数
+            [self publishFriendCircleText:text ImageFile:str];
+        }
+        
+    } failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error) {
+        
+    }];
+    }
 }
+
+#pragma mark - 网服务器上传发布信息
+
+- (void)publishFriendCircleText:(NSString *)text ImageFile:(NSString *)imageFile
+{
+    NSLog(@"图片:%@",imageFile);
+    NSString *strngXid;
+    NSString *homeUserId;
+    if ([XXEUserInfo user].login) {
+        strngXid = [XXEUserInfo user].xid;
+        homeUserId = [XXEUserInfo user].user_id;
+    }else {
+        strngXid = XID;
+        homeUserId = USER_ID;
+    }
+    XXEPublishFriendCircleApi *publishFriendApi = [[XXEPublishFriendCircleApi alloc]initWithPublishFriendCirclePosition:@"上海" FileType:@"1" Words:text File:imageFile UserXid:strngXid UserId:homeUserId];
+    [publishFriendApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
+        NSLog(@"发布内筒%@",request.responseJSONObject);
+        NSLog(@"发布%@",[request.responseJSONObject objectForKey:@"msg"]);
+    } failure:^(__kindof YTKBaseRequest *request) {
+        
+    }];
+}
+
 
 #pragma mark - 评论和点赞
 -(void)onCommentCreate:(long long)commentId text:(NSString *)text itemId:(long long) itemId
@@ -277,7 +368,7 @@
 {
     NSLog(@"%lu",(unsigned long)userId);
     XXEFriendMyCircleViewController *myCircleVC = [[XXEFriendMyCircleViewController alloc]init];
-    myCircleVC.otherXid = 1212;
+    myCircleVC.otherXid = userId;
     [self.navigationController pushViewController:myCircleVC animated:YES];
 }
 
@@ -314,17 +405,6 @@
     
 }
 
-//下拉刷新 上拉加载
-- (void)refresh
-{
-    [self endRefresh];
-}
-
-- (void)loadMore
-{
-    [self setupFriendCircleMessagePage:@"2"];
-    [self endLoadMore];
-}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

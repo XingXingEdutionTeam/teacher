@@ -20,8 +20,16 @@
 #import <AssetsLibrary/AssetsLibrary.h>
 
 #define ImageGridWidth [UIScreen mainScreen].bounds.size.width*0.7
+#define KScreenWidth [UIScreen mainScreen].bounds.size.width
+#define KScreenHeight [UIScreen mainScreen].bounds.size.height
+#define XXEColorFromRGB(r,g,b) [UIColor colorWithRed:r/255.0f green:g/255.0f blue:b/255.0f alpha:1.0f]
 
-@interface DFImagesSendViewController()<DFPlainGridImageViewDelegate,TZImagePickerControllerDelegate, UIImagePickerControllerDelegate,UINavigationControllerDelegate, UITextViewDelegate>
+@interface DFImagesSendViewController()<DFPlainGridImageViewDelegate,TZImagePickerControllerDelegate, UIImagePickerControllerDelegate,UINavigationControllerDelegate, UITextViewDelegate>{
+    UIView *bgView;
+    UIScrollView *bgScrollView;
+    UIView *bgBtnView;
+    UITapGestureRecognizer * _gesture;
+}
 
 @property (nonatomic, strong) NSMutableArray *images;
 
@@ -38,7 +46,15 @@
 @property (strong, nonatomic) UIPanGestureRecognizer *panGestureRecognizer;
 @property (strong, nonatomic) UITapGestureRecognizer *tapGestureRecognizer;
 
+//按钮定位
+@property (nonatomic, strong) UIButton *locationButton;
+//谁可以看
+@property (nonatomic, strong) UIButton *whoButton;
+
+@property (nonatomic, strong) UIView *backView;
+
 @end
+
 
 @implementation DFImagesSendViewController
 
@@ -74,6 +90,20 @@
 {
     
     self.automaticallyAdjustsScrollViewInsets = NO;
+    
+    //背景
+    bgScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, KScreenWidth,KScreenHeight)];
+    bgScrollView.backgroundColor= XXEColorFromRGB(229, 232, 233);
+    bgScrollView.pagingEnabled = NO;
+    bgScrollView.showsHorizontalScrollIndicator = YES;
+    bgScrollView.showsVerticalScrollIndicator  = YES;
+    bgScrollView.alwaysBounceVertical = YES;
+    [self.view addSubview:bgScrollView];
+    
+    bgView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, KScreenWidth, 300)];
+    bgView.backgroundColor = [UIColor whiteColor];
+    [bgScrollView addSubview:bgView];
+    
     
     CGFloat x, y, width, heigh;
     x=10;
@@ -128,6 +158,44 @@
     heigh = [DFPlainGridImageView getHeight:_images maxWidth:width];
     _gridView.frame = CGRectMake(x, y, width, heigh);
     [_gridView updateWithImages:_images];
+    
+    CGFloat bgViewH = CGRectGetMaxY(_gridView.frame)+10;
+    bgView.frame = CGRectMake(0, 0, KScreenWidth, bgViewH);
+    bgBtnView = [[UIView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(bgView.frame)+20, KScreenWidth, 110)];
+    bgBtnView.backgroundColor = [UIColor whiteColor];
+    [bgScrollView  addSubview:bgBtnView];
+    //所在位置
+    self.locationButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.locationButton.frame = CGRectMake(10, 10, KScreenWidth-20, 40);
+    [self.locationButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+    [self.locationButton setTitle:@"所在位置" forState:UIControlStateNormal];
+    [self.locationButton addTarget:self action:@selector(locationButtonAction:) forControlEvents:UIControlEventTouchUpInside];
+    [bgBtnView addSubview:self.locationButton];
+    
+    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(10, CGRectGetMaxY(self.locationButton.frame)+5, KScreenWidth-20, 1)];
+    label.backgroundColor = [UIColor lightGrayColor];
+    [bgBtnView addSubview:label];
+    
+    //有谁可以看
+    self.whoButton = [UIButton buttonWithType:UIButtonTypeCustom];
+//    self.whoButton.backgroundColor = [UIColor redColor];
+    self.whoButton.frame = CGRectMake(10, CGRectGetMaxY(self.locationButton.frame)+10, KScreenWidth-20, 40);
+    [self.whoButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+    [self.whoButton setTitle:@"谁可以看" forState:UIControlStateNormal];
+    [self.whoButton addTarget:self action:@selector(whoButtonAction:) forControlEvents:UIControlEventTouchUpInside];
+    [bgBtnView addSubview:self.whoButton];
+    
+}
+
+#pragma mark - 所在位置的定位
+- (void)locationButtonAction:(UIButton *)sender
+{
+    NSLog(@"定位布标");
+}
+
+- (void)whoButtonAction:(UIButton *)sender
+{
+    NSLog(@"谁可以看");
 }
 
 -(UIBarButtonItem *)leftBarButtonItem

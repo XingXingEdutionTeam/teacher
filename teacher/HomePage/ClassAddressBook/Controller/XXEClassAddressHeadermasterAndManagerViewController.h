@@ -13,5 +13,7 @@
 @property (nonatomic, copy) NSString *schoolId;
 
 @property (nonatomic, copy) NSString *schoolType;
+/** 判断进入到是相册还是班级通讯录 */
+@property (nonatomic, copy)NSString *headMasterAlbum;
 
 @end

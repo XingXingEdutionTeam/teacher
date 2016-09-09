@@ -12,15 +12,17 @@
     NSString *_otherXid;
     NSString *_page;
     NSString *_userId;
+    NSString *_myCircleXid;
 }
 
-- (id)initWithChechFriendCircleOtherXid:(NSString *)otherXid page:(NSString *)page UserId:(NSString *)userId
+- (id)initWithChechFriendCircleOtherXid:(NSString *)otherXid page:(NSString *)page UserId:(NSString *)userId MyCircleXid:(NSString *)myCircleXid
 {
     self = [super init];
     if (self) {
         _otherXid = otherXid;
         _page = page;
         _userId = userId;
+        _myCircleXid = myCircleXid;
     }
     return self;
 }
@@ -38,7 +40,8 @@
 - (id)requestArgument
 {
     return @{@"page":_page,
-             @"xid":_otherXid,
+             @"other_xid":_otherXid,
+             @"xid":_myCircleXid,
              @"appkey":APPKEY,
              @"backtype":BACKTYPE,
              @"user_id":_userId,

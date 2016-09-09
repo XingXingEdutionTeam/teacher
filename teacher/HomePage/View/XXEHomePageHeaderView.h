@@ -58,4 +58,7 @@
 /** 给视图添加数据 */
 - (void)configCellWithInfo:(XXEHomePageModel *)homePageModel;
 
+/** 更换学校的logo */
+- (void)changeSchoolLogo:(NSString *)schoolLogo;
+
 @end

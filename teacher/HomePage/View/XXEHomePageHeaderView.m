@@ -48,9 +48,11 @@
 - (void)configCellWithInfo:(XXEHomePageModel *)homePageModel
 {
     _homePageModel = homePageModel;
-    [self.homePageLeftButton setImage:[UIImage imageNamed:homePageModel.school_logo] forState:UIControlStateNormal];
+    NSString *schoolUrl = [NSString stringWithFormat:@"%@%@",kXXEPicURL,homePageModel.school_logo];
+    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:schoolUrl]];
+    [self.homePageLeftButton setImage:[UIImage imageWithData:data] forState:UIControlStateNormal];
+    
     NSString *stringImage = [NSString stringWithFormat:@"%@%@",kXXEPicURL,homePageModel.head_img];
-    self.homeUserImageView.image = [UIImage imageNamed:stringImage];
     [self.homeUserImageView sd_setImageWithURL:[NSURL URLWithString:stringImage] placeholderImage:[UIImage imageNamed:@"register_user_icon"]];
     self.homeUserLabel.text = homePageModel.tname;
     self.homeUserLVLabel.text = [NSString stringWithFormat:@"LV:%@",homePageModel.lv];
@@ -68,6 +70,13 @@
     [self.homeProgressView setProgress:a/(a+b) animated:YES];
 }
 
+- (void)changeSchoolLogo:(NSString *)schoolLogo
+{
+    NSString *schoolUrl = [NSString stringWithFormat:@"%@%@",kXXEPicURL,schoolLogo];
+    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:schoolUrl]];
+    [self.homePageLeftButton setImage:[UIImage imageWithData:data] forState:UIControlStateNormal];
+}
+
 
 - (void)layoutSubviews
 {
@@ -80,7 +89,7 @@
     [self.homePageLeftButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(weakSelf.mas_left).offset(14);
         make.top.equalTo(weakSelf.mas_top).offset(40*kScreenRatioHeight);
-        make.size.mas_equalTo(CGSizeMake(36*kScreenRatioWidth, 36*kScreenRatioWidth));
+        make.size.mas_equalTo(CGSizeMake(36*kScreenRatioHeight, 36*kScreenRatioHeight));
     }];
     
     self.homeSchoolView = [[UIView alloc]init];
@@ -101,14 +110,17 @@
         make.size.mas_equalTo(CGSizeMake(132*kScreenRatioWidth, 36*kScreenRatioHeight));
     }];
     
-    self.homePageRightButton = [UIButton creatSchoolIconImage:@"home_login_icon" target:self action:@selector(homePageRightButtonClick:) floats:1];
-    [self addSubview:self.homePageRightButton];
-    [self.homePageRightButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.equalTo(weakSelf.mas_right).offset(-14);
-        make.top.equalTo(weakSelf.mas_top).offset(40*kScreenRatioHeight);
-        make.size.mas_equalTo(CGSizeMake(36*kScreenRatioWidth, 36*kScreenRatioWidth));
-    }];
-    
+    if ([XXEUserInfo user].login) {
+        
+    }else{
+        self.homePageRightButton = [UIButton creatSchoolIconImage:@"home_login_icon" target:self action:@selector(homePageRightButtonClick:) floats:1];
+        [self addSubview:self.homePageRightButton];
+        [self.homePageRightButton mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.right.equalTo(weakSelf.mas_right).offset(-14);
+            make.top.equalTo(weakSelf.mas_top).offset(40*kScreenRatioHeight);
+            make.size.mas_equalTo(CGSizeMake(36*kScreenRatioHeight, 36*kScreenRatioHeight));
+        }];
+    }
     //用户信息
     self.homeUserImageView = [[UIImageView alloc]init];
     self.homeUserImageView.layer.masksToBounds = YES;

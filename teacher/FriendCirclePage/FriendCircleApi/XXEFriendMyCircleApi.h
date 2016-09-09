@@ -10,6 +10,6 @@
 
 @interface XXEFriendMyCircleApi : YTKRequest
 
-- (id)initWithChechFriendCircleOtherXid:(NSString *)otherXid page:(NSString *)page UserId:(NSString *)userId;
+- (id)initWithChechFriendCircleOtherXid:(NSString *)otherXid page:(NSString *)page UserId:(NSString *)userId MyCircleXid:(NSString *)myCircleXid;
 
 @end

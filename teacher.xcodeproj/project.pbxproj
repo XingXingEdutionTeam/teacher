@@ -300,6 +300,7 @@
 		9E14098F1D618A0C00E43AE4 /* XXEMyselfAblumUpDataApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E14098E1D618A0C00E43AE4 /* XXEMyselfAblumUpDataApi.m */; };
 		9E1D845C1D815C7E00CC8517 /* XXEAAAViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E1D845B1D815C7E00CC8517 /* XXEAAAViewController.m */; };
 		9E1D845F1D815CE100CC8517 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E1D845E1D815CE100CC8517 /* MainViewController.m */; };
+		9E23F4BE1D82495D00AA2AC2 /* XXEPublishFriendCircleApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E23F4BD1D82495D00AA2AC2 /* XXEPublishFriendCircleApi.m */; };
 		9E28FC431D530EAD0003A208 /* XXELoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E28FC421D530EAD0003A208 /* XXELoginViewController.m */; };
 		9E2F7F141D70123F00DD9CD1 /* XXEHomePageCollectionPhotoApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E2F7F131D70123F00DD9CD1 /* XXEHomePageCollectionPhotoApi.m */; };
 		9E2F7F171D7014F400DD9CD1 /* XXEHomeReportListApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E2F7F161D7014F400DD9CD1 /* XXEHomeReportListApi.m */; };
@@ -1030,6 +1031,8 @@
 		9E1D845B1D815C7E00CC8517 /* XXEAAAViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXEAAAViewController.m; sourceTree = "<group>"; };
 		9E1D845D1D815CE100CC8517 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
 		9E1D845E1D815CE100CC8517 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
+		9E23F4BC1D82495D00AA2AC2 /* XXEPublishFriendCircleApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXEPublishFriendCircleApi.h; sourceTree = "<group>"; };
+		9E23F4BD1D82495D00AA2AC2 /* XXEPublishFriendCircleApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXEPublishFriendCircleApi.m; sourceTree = "<group>"; };
 		9E28FC411D530EAD0003A208 /* XXELoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXELoginViewController.h; sourceTree = "<group>"; };
 		9E28FC421D530EAD0003A208 /* XXELoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXELoginViewController.m; sourceTree = "<group>"; };
 		9E2F7F121D70123F00DD9CD1 /* XXEHomePageCollectionPhotoApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXEHomePageCollectionPhotoApi.h; sourceTree = "<group>"; };
@@ -3178,6 +3181,8 @@
 				9ED9AB161D7EC0A200B63B53 /* XXEFriendCirclegoodApi.m */,
 				9ED9AB181D7EC0B100B63B53 /* XXEFriendCircleCommentApi.h */,
 				9ED9AB191D7EC0B100B63B53 /* XXEFriendCircleCommentApi.m */,
+				9E23F4BC1D82495D00AA2AC2 /* XXEPublishFriendCircleApi.h */,
+				9E23F4BD1D82495D00AA2AC2 /* XXEPublishFriendCircleApi.m */,
 			);
 			path = FriendCircleApi;
 			sourceTree = "<group>";
@@ -3631,6 +3636,7 @@
 				04C52CCD1D7EB94C00DB7C4A /* XXEMyselfInfoCollectionRedFlowerViewController.m in Sources */,
 				9EBA6F4F1D5CADBA001B45C3 /* LMComBoxView.m in Sources */,
 				9E4813D01D506BDE00C614AC /* XXEBaseViewController.m in Sources */,
+				9E23F4BE1D82495D00AA2AC2 /* XXEPublishFriendCircleApi.m in Sources */,
 				9EEA0E391D6ED5E70070C8C3 /* ReportPicViewController.m in Sources */,
 				04A9DDAD1D815A3500544782 /* XXEGlobalPermissionSettingApi.m in Sources */,
 				9E94B7791D75A62D0045D575 /* XXERegisterClassSchoolApi.m in Sources */,

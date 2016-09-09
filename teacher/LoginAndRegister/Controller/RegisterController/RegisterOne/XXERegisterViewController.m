@@ -284,7 +284,7 @@
 //    //测试环境
 //    [self showString:@"测试" forSecond:1.f];
 //    XXERegisterSecondViewController *registerSecondVC = [[XXERegisterSecondViewController alloc]init];
-//    registerSecondVC.userPhoneNum = @"15088888888";
+//    registerSecondVC.userPhoneNum = @"15011111111";
 //    registerSecondVC.login_type = @"1";
 //    [self.navigationController pushViewController:registerSecondVC animated:YES];
 }

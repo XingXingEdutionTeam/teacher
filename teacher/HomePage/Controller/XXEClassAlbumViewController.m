@@ -65,6 +65,8 @@ static NSString *const IdentifierCell = @"classAlbunCell";
     [super viewWillAppear:animated];
     self.view.backgroundColor = XXEBackgroundColor;
     self.navigationController.navigationBarHidden = NO;
+    //获取数据
+    [self loadClassAlbumMessage];
     
 }
 -(UIStatusBarStyle)preferredStatusBarStyle
@@ -80,9 +82,6 @@ static NSString *const IdentifierCell = @"classAlbunCell";
      _classAlbumTableView.delegate = self;
     _classAlbumTableView.dataSource = self;
     [self.view addSubview:self.classAlbumTableView];
-    //获取数据
-    [self loadClassAlbumMessage];
-
 }
 
 #pragma mark - 获取数据

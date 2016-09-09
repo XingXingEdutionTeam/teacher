@@ -14,6 +14,7 @@
 #import "XXEClassAddressHeadermasterAndManagerApi.h"
 #import "XXEClassAddressHeadermasterAndManagerModel.h"
 #import "XXEClassAddressEveryclassInfoViewController.h"
+#import "XXEClassAlbumViewController.h"
 
 
 @interface XXEClassAddressHeadermasterAndManagerViewController ()<UITableViewDataSource, UITableViewDelegate>
@@ -156,13 +157,22 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    XXEClassAddressEveryclassInfoViewController *classAddressEveryclassInfoVC = [[XXEClassAddressEveryclassInfoViewController alloc] init];
+   
     XXEClassAddressHeadermasterAndManagerModel *model = _dataSourceArray[indexPath.row];
-    classAddressEveryclassInfoVC.schoolId = _schoolId;
-    classAddressEveryclassInfoVC.babyClassName = model.class_name;
-    classAddressEveryclassInfoVC.selectedClassId = model.class_id;
-    [self.navigationController pushViewController:classAddressEveryclassInfoVC animated:YES];
-    
+   
+    if ([self.headMasterAlbum isEqualToString:@"1"]) {
+        XXEClassAlbumViewController *classAlbumVC = [[XXEClassAlbumViewController alloc]init];
+        classAlbumVC.schoolID = self.schoolId;
+        classAlbumVC.classID = model.class_id;
+        NSLog(@"%@ == %@",self.schoolId,model.class_id);
+        [self.navigationController pushViewController:classAlbumVC animated:YES];
+    }else{
+         XXEClassAddressEveryclassInfoViewController *classAddressEveryclassInfoVC = [[XXEClassAddressEveryclassInfoViewController alloc] init];
+        classAddressEveryclassInfoVC.schoolId = _schoolId;
+        classAddressEveryclassInfoVC.babyClassName = model.class_name;
+        classAddressEveryclassInfoVC.selectedClassId = model.class_id;
+        [self.navigationController pushViewController:classAddressEveryclassInfoVC animated:YES];
+    }
 }
 
 

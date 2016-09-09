@@ -19,6 +19,7 @@
 #import "SettingPersonInfoViewController.h"
 #import "XXEForgetPassWordViewController.h"
 #import "XXEPerfectInfoViewController.h"
+#import "XXERegisterCheckApi.h"
 
 @interface XXELoginViewController ()<UITextFieldDelegate,UIAlertViewDelegate,CLLocationManagerDelegate>
 /** 登陆的首页头像 */
@@ -428,10 +429,10 @@
         
             XXELoginApi *loginApi = [[XXELoginApi alloc]initLoginWithUserName:self.userNameTextField.text PassWord:self.passWordTextField.text LoginType:self.login_type Lng:self.longitudeString Lat:self.latitudeString];
             [loginApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
-                
+                NSLog(@"%@",request.responseJSONObject);
                 NSDictionary *data = [request.responseJSONObject objectForKey:@"data"];
                 NSString *code = [request.responseJSONObject objectForKey:@"code"];
-                NSLog(@"%@",[request.responseJSONObject objectForKey:@"msg"]);
+                NSLog(@"错误信息是什么%@",[request.responseJSONObject objectForKey:@"msg"]);
                 if ([code intValue]==1) {
                     [self LoginSetupUserInfoDict:data SnsAccessToken:@"" LoginType:self.login_type];
                     NSString *login_times = [data objectForKey:@"login_times"];
@@ -459,7 +460,7 @@
                     }
                 }else if([code intValue]==3)
                 {
-                    [self showString:@"账号或密码错误" forSecond:1.f];
+                    [self showString:@"你的密码错误" forSecond:1.f];
                     [_loginButton ErrorRevertAnimationCompletion:^{
                         NSString *stringMsg = [request.responseJSONObject objectForKey:@"msg"];
                         [self showHudWithString:stringMsg forSecond:2.f];
@@ -512,6 +513,7 @@
 
 - (void)guestButtonClick:(UIButton *)sender
 {
+    self.login_type = @"10";
     XXELoginApi *loginApi = [[XXELoginApi alloc]initLoginWithUserName:@"" PassWord:@"" LoginType:@"10" Lng:@"" Lat:@""];
     [loginApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         NSLog(@"%@",request.responseJSONObject);
@@ -697,19 +699,22 @@
     NSLog(@"登录次数%@ 昵称%@ token%@ 用头像%@ 用户Id%@ 用户类型%@ XID%@ ",login_times,nickname,token,user_head_img, user_id, user_type,xid);
     
     if ([logintype  isEqualToString: @"1"]) {
-
+        [XXEUserInfo user].login = YES;
     }else if ([logintype isEqualToString:@"2"]){
         self.qqLoginToken = accessToken;
+        [XXEUserInfo user].login = YES;
     }else if ([logintype isEqualToString:@"3"]){
         self.weixinLoginToken = accessToken;
+        [XXEUserInfo user].login = YES;
     }else if ([logintype isEqualToString:@"4"]){
         self.sinaLoginToken = accessToken;
+        [XXEUserInfo user].login = YES;
     }else if ([logintype isEqualToString:@"5"]){
         self.aliPayLoginToken = accessToken;
+        [XXEUserInfo user].login = YES;
     }else if ([logintype isEqualToString:@"10"]){
+        [XXEUserInfo user].login = NO;
     }
-    
-    [XXEUserInfo user].login = YES;
     NSDictionary *userInfo = @{
                                @"login_times":login_times,
                                @"nickname":nickname,
@@ -723,7 +728,7 @@
                                @"user_id":user_id,
                                @"user_type":user_type,
                                @"xid":xid,
-                               @"loginStatus":[NSNumber numberWithBool:YES]
+                               @"loginStatus":[NSNumber numberWithBool:[XXEUserInfo user].login]
                                };
     NSLog(@"%@",userInfo);
     [[XXEUserInfo user] setupUserInfoWithUserInfo:userInfo];
@@ -753,6 +758,8 @@
     if (textField == self.userNameTextField) {
         if ([self isChinaMobile:textField.text]) {
             NSLog(@"正确的用户名");
+            //加入判断是不是已经注册的用户
+            [self phoneUsefulPhoneNum:textField.text];
             self.userNameTextField.text = textField.text;
         } else {
             [self showString:@"用户名不正确" forSecond:1.f];
@@ -774,6 +781,27 @@
     }
     
 }
+
+- (void)phoneUsefulPhoneNum:(NSString *)textNum
+{
+    XXERegisterCheckApi *registerCheckApi = [[XXERegisterCheckApi alloc]initWithChechPhoneNumber:textNum];
+    [registerCheckApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
+        NSLog(@"电话可不可以用%@",request.responseJSONObject);
+        NSDictionary *dic = request.responseJSONObject;
+        NSString *string = [dic objectForKey:@"code"];
+        if ([string intValue] == 1) {
+            [self showString:@"此号码没有注册" forSecond:1.f];
+        } else if ([string intValue] == 3) {
+            [self showString:@"手机号可以登录" forSecond:3.f];
+        } else{
+            [self showString:@"请重新注册" forSecond:1.f];
+        }
+    } failure:^(__kindof YTKBaseRequest *request) {
+        [self showString:@"网络不好请重新注册" forSecond:1.f];
+    }];
+    
+}
+
 
 /** 判断用户名 */
 - (BOOL)isChinaMobile:(NSString *)phoneNum{
