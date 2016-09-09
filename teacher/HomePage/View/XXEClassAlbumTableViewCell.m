@@ -92,8 +92,8 @@
     if (model.count != 0) {
         self.titleLabel.text = @"新";
         [self.LeftImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",kXXEPicURL,model[0]]] placeholderImage:[UIImage imageNamed:@"album_icon"]];
-        [self.MiddleImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",kXXEPicURL,model[1]]] placeholderImage:[UIImage imageNamed:@"album_icon"]];
-        [self.rightImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",kXXEPicURL,model[2]]] placeholderImage:[UIImage imageNamed:@"album_icon"]];
+//        [self.MiddleImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",kXXEPicURL,model[1]]] placeholderImage:[UIImage imageNamed:@"album_icon"]];
+//        [self.rightImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",kXXEPicURL,model[2]]] placeholderImage:[UIImage imageNamed:@"album_icon"]];
 //        [self.MiddleImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",kXXEPicURL,model[1]]]];
 //        [self.rightImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",kXXEPicURL,model[2]]]];
     }else{

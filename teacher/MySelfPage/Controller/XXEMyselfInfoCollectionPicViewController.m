@@ -9,8 +9,12 @@
 //
 
 #import "XXEMyselfInfoCollectionPicViewController.h"
+#import "XXEMyselfInfoCollectionPicTableViewCell.h"
+#import "XXEMyselfInfoCollectionPicModel.h"
+#import "XXEMyselfInfoCollectionPicApi.h"
 
-#import "XXERecipeDetailTableViewCell.h"
+
+
 
 @interface XXEMyselfInfoCollectionPicViewController ()<UITableViewDataSource, UITableViewDelegate>
 {
@@ -68,29 +72,29 @@
     
     NSString *pageStr = [NSString stringWithFormat:@"%ld", page];
     
-//    XXEMyselfInfoCollectionCommentApi *myselfInfoCollectionCommentApi = [[XXEMyselfInfoCollectionCommentApi alloc] initWithXid:parameterXid user_id:parameterUser_Id page:pageStr];
-//    [myselfInfoCollectionCommentApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
-//        
-//        //            NSLog(@"111   %@", request.responseJSONObject);
-//        
-//        NSDictionary *dict = request.responseJSONObject;
-//        
-//        NSString *codeStr = [NSString stringWithFormat:@"%@", dict[@"code"]];
-//        
-//        if ([codeStr isEqualToString:@"1"]) {
-//            NSArray *modelArray = [XXEMyselfInfoCollectionCommentModel parseResondsData:dict[@"data"]];
-//            
-//            [_dataSourceArray addObjectsFromArray:modelArray];
-//        }else{
-//            
-//        }
-//        
-//        [self customContent];
-//        
-//    } failure:^(__kindof YTKBaseRequest *request) {
-//        
-//        [self showString:@"请求失败" forSecond:1.f];
-//    }];
+    XXEMyselfInfoCollectionPicApi *myselfInfoCollectionPicApi = [[XXEMyselfInfoCollectionPicApi alloc] initWithXid:parameterXid user_id:parameterUser_Id page:pageStr];
+    [myselfInfoCollectionPicApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
+        
+//                    NSLog(@"111   %@", request.responseJSONObject);
+        
+        NSDictionary *dict = request.responseJSONObject;
+        
+        NSString *codeStr = [NSString stringWithFormat:@"%@", dict[@"code"]];
+        
+        if ([codeStr isEqualToString:@"1"]) {
+            NSArray *modelArray = [XXEMyselfInfoCollectionPicModel parseResondsData:dict[@"data"]];
+            
+            [_dataSourceArray addObjectsFromArray:modelArray];
+        }else{
+            
+        }
+        
+        [self customContent];
+        
+    } failure:^(__kindof YTKBaseRequest *request) {
+        
+        [self showString:@"请求失败" forSecond:1.f];
+    }];
     
 }
 
@@ -121,7 +125,7 @@
 
 
 - (void)createTableView{
-    _myTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, KScreenWidth, KScreenHeight - 50) style:UITableViewStyleGrouped];
+    _myTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, KScreenWidth, KScreenHeight - 49) style:UITableViewStyleGrouped];
     
     _myTableView.dataSource = self;
     _myTableView.delegate = self;
@@ -173,36 +177,23 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
-//    static NSString *identifier = @"cell";
-//    XXEMyselfInfoCollectionUsersTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
-//    
-//    if (cell == nil) {
-//        cell = [[[NSBundle mainBundle] loadNibNamed:@"XXEMyselfInfoCollectionUsersTableViewCell" owner:self options:nil]lastObject];
-//    }
-//    XXEMyselfInfoCollectionCommentModel *model = _dataSourceArray[indexPath.row];
-//    /*
-//     0 :表示 自己 头像 ，需要添加 前缀
-//     1 :表示 第三方 头像 ，不需要 添加 前缀
-//     //判断是否是第三方头像
-//     */
-//    NSString *head_img = [kXXEPicURL stringByAppendingString:model.head_img];
-//    cell.iconImageView.layer.cornerRadius = cell.iconImageView.frame.size.width / 2;
-//    cell.iconImageView.layer.masksToBounds = YES;
-//    
-//    [cell.iconImageView sd_setImageWithURL:[NSURL URLWithString:head_img] placeholderImage:[UIImage imageNamed:@"headplaceholder"]];
-//    cell.nameLabel.text = [NSString stringWithFormat:@"%@  %@",model.tname, model.com_con];
-//    cell.relationLabel.text = [NSString stringWithFormat:@"点评:  %@",model.com_con];
-//    
-//    cell.timeLabel.text = [XXETool dateStringFromNumberTimer:model.com_tm];
-//    
-//    return cell;
-    return nil;
+    static NSString *identifier = @"cell";
+    XXEMyselfInfoCollectionPicTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+    
+    if (cell == nil) {
+        cell = [[[NSBundle mainBundle] loadNibNamed:@"XXEMyselfInfoCollectionPicTableViewCell" owner:self options:nil]lastObject];
+    }
+    XXEMyselfInfoCollectionPicModel *model = _dataSourceArray[indexPath.row];
+    cell.timeLabel.text = [XXETool dateStringFromNumberTimer:model.date_tm];
+    [cell.bgImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", kXXEPicURL, model.pic]] placeholderImage:[UIImage imageNamed:@"placeholder"]];
+    
+    return cell;
 }
 
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    return 95;
+    return 250;
     
 }
 

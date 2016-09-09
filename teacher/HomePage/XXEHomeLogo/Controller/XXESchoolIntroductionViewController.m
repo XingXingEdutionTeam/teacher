@@ -11,7 +11,6 @@
 #import "XXERedFlowerDetialTableViewCell.h"
 #import "XXESchoolNameModifyViewController.h"
 #import "XXESchoolAddressModifyViewController.h"
-
 #import "XXESchoolRegisterTeacherInfoViewController.h"
 #import "XXESchoolPhoneNumModifyViewController.h"
 #import "XXESchoolQQModifyViewController.h"
@@ -225,6 +224,8 @@
     }
     
 }
+
+
 
 
 - (void)didReceiveMemoryWarning {

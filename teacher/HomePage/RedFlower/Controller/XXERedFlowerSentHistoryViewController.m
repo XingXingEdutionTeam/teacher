@@ -116,7 +116,7 @@
     XXERedFlowerSentHistoryApi *redFlowerSentHistoryApi = [[XXERedFlowerSentHistoryApi alloc] initWithXid:parameterXid user_id:parameterUser_Id user_type:USER_TYPE page:pageStr];
     [redFlowerSentHistoryApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         
-//                NSLog(@"2222---   %@", request.responseJSONObject);
+//        NSLog(@"2222---   %@", request.responseJSONObject);
         
         NSString *codeStr = [NSString stringWithFormat:@"%@", request.responseJSONObject[@"code"]];
         
@@ -249,11 +249,15 @@
     [cell.iconImageView sd_setImageWithURL:[NSURL URLWithString:head_img] placeholderImage:[UIImage imageNamed:@"home_flowerbasket_placehoderIcon120x120"]];
     
 //    NSLog(@"课程  %@", model.teach_course);
-    
-    
     cell.titleLabel.text = [NSString stringWithFormat:@"%@ / %@ / %@", model.tname, model.teach_course, model.class_name];
     cell.contentLabel.text = [NSString stringWithFormat:@"赠言:%@", model.con];
     cell.timeLabel.text = [XXETool dateStringFromNumberTimer:model.date_tm];
+    
+    if([model.collect_condit isEqualToString:@"2"]){
+        [cell.collectionButton setBackgroundImage:[UIImage imageNamed:@"home_logo_registerteacher_uncollect_icon36x32"] forState:UIControlStateNormal];
+    }else if([model.collect_condit isEqualToString:@"1"]){
+        [cell.collectionButton setBackgroundImage:[UIImage imageNamed:@"home_logo_registerteacher_collect_icon36x32"] forState:UIControlStateNormal];
+    }
     
     return cell;
 }
@@ -305,6 +309,8 @@
     redFlowerDetialVC.content = model.con;
     redFlowerDetialVC.picWallArray = model.pic_arr;
     redFlowerDetialVC.iconUrl = model.head_img;
+    redFlowerDetialVC.collect_conditStr =model.collect_condit;
+    redFlowerDetialVC.collect_id = model.collectionId;
     [self.navigationController pushViewController:redFlowerDetialVC animated:YES];
 
 }

@@ -15,4 +15,5 @@
 /** 展示的老师ID */
 @property (nonatomic, copy)NSString *showAlbumXid;
 
+
 @end

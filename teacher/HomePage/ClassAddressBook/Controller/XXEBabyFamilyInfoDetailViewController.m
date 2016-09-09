@@ -435,7 +435,7 @@ NSLog(@"********举报 *******");
     
 }
 
-//收藏机构
+//收藏家人
 - (void)collectArticle{
 
     XXEGlobalCollectApi *globalCollectApi = [[XXEGlobalCollectApi alloc] initWithXid:parameterXid user_id:parameterUser_Id collect_id:familyXidStr collect_type:@"3"];
@@ -459,7 +459,7 @@ NSLog(@"********举报 *******");
 
 }
 
-//取消收藏机构
+//取消收藏家人
 - (void)deleteCollectArticle{
     
     XXEGlobalDecollectApi *globalDecollectApi = [[XXEGlobalDecollectApi alloc] initWithXid:parameterXid user_id:parameterUser_Id collect_id:familyXidStr collect_type:@"3"];

@@ -11,6 +11,7 @@
 #import "XXEMySelfInfoApi.h"
 #import "XXEMyselfInfoViewController.h"
 #import "XXEMyselfInfoCollectionViewController.h"
+#import "XXEMyselfBlackListViewController.h"
 
 @interface XXEMySelfPageViewController ()<UITableViewDelegate, UITableViewDataSource>
 {
@@ -291,6 +292,8 @@
     
     }else if (indexPath.row == 6){
        //@"我的黑名单"
+        XXEMyselfBlackListViewController *myselfBlackListVC = [[XXEMyselfBlackListViewController alloc] init];
+        [self.navigationController pushViewController:myselfBlackListVC animated:YES];
     }else if (indexPath.row == 7){
        //@"系统设置"
     

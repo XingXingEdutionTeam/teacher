@@ -12,11 +12,13 @@
 
 
 #import "XXECommentHistoryViewController.h"
-#import "XXECommentRequestTableViewCell.h"
+//#import "XXECommentRequestTableViewCell.h"
+#import "XXERedFlowerSentHistoryTableViewCell.h"
 #import "XXECommentRequestModel.h"
 #import "XXECommentRequestApi.h"
 #import "XXERedFlowerSentHistoryViewController.h"
 #import "XXECommentHistoryDetailInfoViewController.h"
+
 #import "XXEUserInfo.h"
 
 
@@ -205,10 +207,10 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
     static NSString *identifier = @"cell";
-    XXECommentRequestTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+    XXERedFlowerSentHistoryTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
     
     if (cell == nil) {
-        cell = [[[NSBundle mainBundle] loadNibNamed:@"XXECommentRequestTableViewCell" owner:self options:nil]lastObject];
+        cell = [[[NSBundle mainBundle] loadNibNamed:@"XXERedFlowerSentHistoryTableViewCell" owner:self options:nil]lastObject];
     }
     XXECommentRequestModel *model = _dataSourceArray[indexPath.row];
     /*
@@ -220,17 +222,20 @@
     cell.iconImageView.layer.cornerRadius = cell.iconImageView.frame.size.width / 2;
     cell.iconImageView.layer.masksToBounds = YES;
     
-    [cell.iconImageView sd_setImageWithURL:[NSURL URLWithString:head_img] placeholderImage:[UIImage imageNamed:@"home_flowerbasket_placehoderIcon120x120"]];
+    [cell.iconImageView sd_setImageWithURL:[NSURL URLWithString:head_img] placeholderImage:[UIImage imageNamed:@"headplaceholder"]];
     
     //    NSLog(@"课程  %@", model.teach_course);
     
-    cell.nameLabel.text = [NSString stringWithFormat:@"%@  %@", model.baby_tname, model.relation_name];
+    cell.titleLabel.text = model.baby_tname;
     
     cell.contentLabel.text = [NSString stringWithFormat:@"点评内容: %@", model.com_con];
 
     cell.timeLabel.text = [XXETool dateStringFromNumberTimer:model.com_tm];
-    cell.stateImageView.image = [UIImage imageNamed:@"comment_state_commented_icon"];
-
+    if([model.collect_condit isEqualToString:@"2"]){
+        [cell.collectionButton setBackgroundImage:[UIImage imageNamed:@"home_logo_registerteacher_uncollect_icon36x32"] forState:UIControlStateNormal];
+    }else if([model.collect_condit isEqualToString:@"1"]){
+        [cell.collectionButton setBackgroundImage:[UIImage imageNamed:@"home_logo_registerteacher_collect_icon36x32"] forState:UIControlStateNormal];
+    }
     return cell;
 }
 
@@ -257,7 +262,8 @@
         commentHistoryDetailInfoVC.com_con = model.com_con;
         commentHistoryDetailInfoVC.picString = model.com_pic;
         commentHistoryDetailInfoVC.type = model.type;
-    
+    commentHistoryDetailInfoVC.collect_conditStr = model.collect_condit;
+    commentHistoryDetailInfoVC.collect_id = model.commentId;
         [self.navigationController pushViewController:commentHistoryDetailInfoVC animated:YES];
     
 }

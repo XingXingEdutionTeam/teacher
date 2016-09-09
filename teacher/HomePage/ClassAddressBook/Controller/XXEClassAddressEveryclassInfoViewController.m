@@ -252,7 +252,7 @@
         }else if ([model.head_img_type isEqualToString:@"1"]){
             headImageStr = model.head_img;
         }
-        [cell.iconImageView sd_setImageWithURL:[NSURL URLWithString:headImageStr] placeholderImage:[UIImage imageNamed:@"home_flowerbasket_placehoderIcon120x120"]];
+        [cell.iconImageView sd_setImageWithURL:[NSURL URLWithString:headImageStr] placeholderImage:[UIImage imageNamed:@"headplaceholder"]];
         cell.nameLabel.text = model.tname;
         cell.detailLabel.text = model.teach_course;
         cell.lookFamilyInfoButton.hidden = YES;
@@ -266,7 +266,7 @@
         }else if ([model.head_img_type isEqualToString:@"1"]){
             headImageStr = model.head_img;
         }
-        [cell.iconImageView sd_setImageWithURL:[NSURL URLWithString:headImageStr] placeholderImage:[UIImage imageNamed:@"home_flowerbasket_placehoderIcon120x120"]];
+        [cell.iconImageView sd_setImageWithURL:[NSURL URLWithString:headImageStr] placeholderImage:[UIImage imageNamed:@"headplaceholder"]];
         cell.nameLabel.text = model.tname;
         cell.detailLabel.text = model.teach_course;
         cell.lookFamilyInfoButton.hidden = YES;

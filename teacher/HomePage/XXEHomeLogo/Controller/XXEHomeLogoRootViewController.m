@@ -15,6 +15,8 @@
 #import "XXEHeadmasterSpeechViewController.h"
 #import "XXEStarRemarkViewController.h"
 #import "XXEHomeLogoApi.h"
+#import "XXEGlobalDecollectApi.h"
+#import "XXEGlobalCollectApi.h"
 
 
 @interface XXEHomeLogoRootViewController ()<UIScrollViewDelegate>
@@ -34,6 +36,9 @@
     UILabel *collectionLabel;
     NSString *parameterXid;
     NSString *parameterUser_Id;
+    
+    BOOL isCollect;
+    UIButton*rightButton;
 }
 
 
@@ -60,6 +65,9 @@
 //收藏
 @property (nonatomic, copy) NSString *collect_num;
 
+//[cheeck_collect] => 1		//是否收藏过 1:收藏过  2:未收藏过
+@property (nonatomic, copy) NSString *cheeck_collect;
+
 //简介
 @property (nonatomic, copy) NSString *introduction;
 //课程
@@ -79,12 +87,9 @@
 @property (nonatomic) NSMutableArray *school_video_group_timeArray;
 //视频 URL
 @property (nonatomic) NSMutableArray *school_video_group_urlArray;
-//机构 是否 收藏
-@property (nonatomic) BOOL isCollected;
 
 @property (nonatomic, copy) NSString *schoolIdStr;
 
-@property (nonatomic, strong) UIImage *saveImage;
 
 
 
@@ -118,6 +123,7 @@
     }
     [self fetchNetData];
     
+    
 }
 
 - (void)viewDidAppear:(BOOL)animated{
@@ -148,6 +154,8 @@
     [self createImageView];
     
     [self createBottomViewButton];
+    
+   
     
 }
 
@@ -183,15 +191,7 @@
             /*
              [cheeck_collect] => 1		//是否收藏过 1:收藏过  2:未收藏过
              */
-            if ([dic[@"cheeck_collect"] integerValue] == 1) {
-                _isCollected = YES;
-                _saveImage = [UIImage imageNamed:@"收藏(H)icon44x44"];
-                
-            }else if([dic[@"cheeck_collect"] integerValue] == 2){
-                _isCollected = NO;
-                _saveImage = [UIImage imageNamed:@"收藏icon44x44"];
-            }
-            [_saveButton setBackgroundImage:_saveImage forState:UIControlStateNormal];
+            _cheeck_collect = dic[@"cheeck_collect"];
             
             //LOGO 图标
             _logoIconStr = dic[@"logo"];
@@ -301,6 +301,12 @@
     collectionLabel.text = [NSString stringWithFormat:@"收藏:%@", str3];
     
     introductionButton.selected = YES;
+    
+    
+    if (self.navigationItem.rightBarButtonItem == nil) {
+        [self setRightCollectionButton];
+    }
+    
     self.schoolIntroductionVC.contentArray = _contentArray;
     self.schoolIntroductionVC.schoolId = _schoolId;
     [self addChildViewController:self.schoolIntroductionVC];
@@ -423,12 +429,12 @@
     
     if (button == introductionButton) {
         self.navigationItem.title = @"机构简介";
-        
-//        UIButton *collectionBtn =[UIButton createButtonWithFrame:CGRectMake(0, 0, 22, 22) backGruondImageName:@"comment_request_icon" Target:self Action:@selector(collectionBtnClick:) Title:@""];
-//        UIBarButtonItem *requestItem =[[UIBarButtonItem alloc]initWithCustomView:collectionBtn];
-//        self.navigationItem.rightBarButtonItem =requestItem;
+        if (self.navigationItem.rightBarButtonItem == nil) {
+            [self setRightCollectionButton];
+        }
         self.schoolIntroductionVC.contentArray = _contentArray;
         self.schoolIntroductionVC.schoolId = _schoolId;
+        self.schoolIntroductionVC.collect_conditStr = _cheeck_collect;
         [self addChildViewController:self.schoolIntroductionVC];
         [self.myScrollView addSubview:self.schoolIntroductionVC.view];
         self.schoolIntroductionVC.view.frame = CGRectMake(0, 0, KScreenWidth, KScreenHeight - 49 * kScreenRatioHeight - 64 * kScreenRatioHeight);
@@ -436,6 +442,7 @@
     }else if (button == courseButton){
         self.navigationItem.title = @"学校课程";
         self.navigationItem.rightBarButtonItem = nil;
+        
         self.schoolCourseVC.schoolId = _schoolId;
 //        NSLog(@"%@", _course_groupArray);
         self.schoolCourseVC.course_groupArray = _course_groupArray;
@@ -445,7 +452,7 @@
         
     }else if (button == speechButton){
         self.navigationItem.title = @"校长致辞";
-        
+        self.navigationItem.rightBarButtonItem = nil;
 //        UIButton *sentBtn =[UIButton createButtonWithFrame:CGRectMake(0, 0, 22, 22) backGruondImageName:@"home_redflower_sent" Target:self Action:@selector(sent:) Title:@""];
 //        UIBarButtonItem *sentItem =[[UIBarButtonItem alloc]initWithCustomView:sentBtn];
 //        self.navigationItem.rightBarButtonItem =sentItem;
@@ -555,6 +562,116 @@
     }
     return btn;
 }
+
+
+- (void)setRightCollectionButton{
+    
+    rightButton = [[UIButton alloc]initWithFrame:CGRectMake(0,0,22,22)];
+    [rightButton addTarget:self action:@selector(collectbtn:)forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem*rightItem = [[UIBarButtonItem alloc]initWithCustomView:rightButton];
+    self.navigationItem.rightBarButtonItem= rightItem;
+    
+    //[collect_condit] => 1			//1:是收藏过这个商品  2:未收藏过
+    UIImage *saveImage;
+    
+    if ([_cheeck_collect integerValue] == 1) {
+        isCollect = YES;
+        saveImage = [UIImage imageNamed:@"home_logo_collection_icon44x44"];
+        
+    }else if([_cheeck_collect integerValue] == 2){
+        isCollect = NO;
+        saveImage = [UIImage imageNamed:@"home_logo_uncollection_icon44x44"];
+    }
+    [rightButton setBackgroundImage:saveImage forState:UIControlStateNormal];
+    
+}
+
+-(void)collectbtn:(UIButton *)btn{
+    
+    if (isCollect==NO) {
+        [self collectRedFlower];
+        
+    }
+    else  if (isCollect==YES) {
+        
+        [self deleteCollectcollectRedFlower];
+    }
+    
+}
+
+//收藏  小红花
+- (void)collectRedFlower{
+    /*
+     【收藏】通用于各种收藏
+     
+     接口类型:2
+     
+     接口:
+     http://www.xingxingedu.cn/Global/collect
+     
+     传参:
+     collect_id	//收藏id (如果是收藏用户,这里是xid)
+     collect_type	//收藏品种类型	1:商品  2:点评  3:用户  4:课程  5:学校  6:花朵
+     */
+    
+    XXEGlobalCollectApi *globalCollectApi = [[XXEGlobalCollectApi alloc] initWithXid:parameterXid user_id:parameterUser_Id collect_id:_schoolId collect_type:@"5"];
+    
+    [globalCollectApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
+        //
+//        NSLog(@"收藏 -- %@", request.responseJSONObject);
+        NSString *codeStr = [NSString stringWithFormat:@"%@", request.responseJSONObject[@"code"]];
+        if ([codeStr isEqualToString:@"1"]) {
+            [self showHudWithString:@"收藏成功!" forSecond:1.5];
+            [rightButton setBackgroundImage:[UIImage imageNamed:@"home_logo_collection_icon44x44"] forState:UIControlStateNormal];
+            isCollect=!isCollect;
+        }else{
+            
+        }
+        
+    } failure:^(__kindof YTKBaseRequest *request) {
+        //
+        [self showHudWithString:@"收藏失败!" forSecond:1.5];
+    }];
+    
+}
+
+//取消收藏机构
+- (void)deleteCollectcollectRedFlower{
+    /*
+     【删除/取消收藏】通用于各种取消收藏
+     
+     接口类型:2
+     
+     接口:
+     http://www.xingxingedu.cn/Global/deleteCollect
+     
+     传参:
+     collect_id	//收藏id (如果是收藏用户,这里是xid)
+     collect_type	//收藏品种类型	1:商品  2:点评  3:用户  4:课程  5:学校  6:花朵 7:图片
+     */
+    XXEGlobalDecollectApi *globalDecollectApi = [[XXEGlobalDecollectApi alloc] initWithXid:parameterXid user_id:parameterUser_Id collect_id:_schoolId collect_type:@"5"];
+    [globalDecollectApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
+        //
+        //        NSLog(@"取消收藏 -- %@", request.responseJSONObject);
+        NSString *codeStr = [NSString stringWithFormat:@"%@", request.responseJSONObject[@"code"]];
+        if ([codeStr isEqualToString:@"1"]) {
+            [self showHudWithString:@"取消收藏成功!" forSecond:1.5];
+            
+            [rightButton setBackgroundImage:[UIImage imageNamed:@"home_logo_uncollection_icon44x44"] forState:UIControlStateNormal];
+            isCollect=!isCollect;
+        }else{
+            
+            
+        }
+        
+    } failure:^(__kindof YTKBaseRequest *request) {
+        //
+        [self showHudWithString:@"取消收藏失败!" forSecond:1.5];
+    }];
+    
+}
+
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

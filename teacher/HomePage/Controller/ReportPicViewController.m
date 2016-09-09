@@ -98,15 +98,15 @@
     
     XXEHomeReportListApi *reportListApi = [[XXEHomeReportListApi alloc]initWithToReportListUserId:USER_ID XXID:XID];
     [reportListApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
-        NSLog(@"%@",request.responseJSONObject);
-        NSLog(@"%@",[request.responseJSONObject objectForKey:@"msg"]);
+//        NSLog(@"%@",request.responseJSONObject);
+//        NSLog(@"%@",[request.responseJSONObject objectForKey:@"msg"]);
         NSMutableArray *data = [request.responseJSONObject objectForKey:@"data"];
         for (int i =0; i<data.count; i++) {
             XXEReportModel *model = [[XXEReportModel alloc]initWithDictionary:data[i] error:nil];
             [self.reportLiatDatasource addObject:model];
         }
-        NSLog(@"%ld",self.reportLiatDatasource.count);
-        NSLog(@"%@",self.reportLiatDatasource);
+//        NSLog(@"%ld",self.reportLiatDatasource.count);
+//        NSLog(@"%@",self.reportLiatDatasource);
         [self.reportTableView reloadData];
         
     } failure:^(__kindof YTKBaseRequest *request) {
@@ -147,13 +147,13 @@
     
             if (btn.selected) {
                 //由已勾选 变为 未勾选
-                [btn setBackgroundImage:[UIImage imageNamed:@"未勾选34x34"] forState:UIControlStateNormal];
+                [btn setBackgroundImage:[UIImage imageNamed:@"report_unselected_icon"] forState:UIControlStateNormal];
                 btn.selected =NO;
                 [self.datasourceReportId removeObject:model.reportId];
             }
             else{
                 //由未勾选 变为 已勾选
-                [btn setBackgroundImage:[UIImage imageNamed:@"已勾选34x34"] forState:UIControlStateNormal];
+                [btn setBackgroundImage:[UIImage imageNamed:@"report_selected_icon"] forState:UIControlStateNormal];
                btn.selected =YES;
                 [self.datasourceReportId addObject:model.reportId];
             }

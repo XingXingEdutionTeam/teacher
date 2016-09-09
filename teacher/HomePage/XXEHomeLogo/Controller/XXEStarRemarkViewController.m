@@ -10,6 +10,7 @@
 
 #import "XXEStarRemarkViewController.h"
 #import "XXEStarRemarkTableViewCell.h"
+#import "XXEImageBrowsingViewController.h"
 #import "XXEStarRemarkModel.h"
 #import "XXEStarRemarkApi.h"
 
@@ -205,7 +206,7 @@
     cell.iconImageView.layer.cornerRadius = cell.iconImageView.frame.size.width / 2;
     cell.iconImageView.layer.masksToBounds = YES;
     
-    [cell.iconImageView sd_setImageWithURL:[NSURL URLWithString:head_img] placeholderImage:[UIImage imageNamed:@"home_flowerbasket_placehoderIcon120x120"]];
+    [cell.iconImageView sd_setImageWithURL:[NSURL URLWithString:head_img] placeholderImage:[UIImage imageNamed:@"headplaceholder"]];
     cell.nameLabel.text = model.nickname;
     cell.timeLabel.text = [XXETool dateStringFromNumberTimer:model.date_tm];
     cell.contentTextView.text = model.con;
@@ -284,26 +285,24 @@
 
 
 - (void)onClickPicture:(UITapGestureRecognizer *)tap{
+    UITableViewCell *cell = (UITableViewCell *)[[tap.view superview] superview];
+    NSIndexPath *path = [_myTableView indexPathForCell:cell];
+//    NSLog(@"--- 点击了第%ld张图片", tap.view.tag - 20);
     
-    NSLog(@"--- 点击了第%ld张图片", tap.view.tag - 20);
+    XXEStarRemarkModel *model = _dataSourceArray[path.row];
     
-    //    RedFlowerViewController *redFlowerVC =[[RedFlowerViewController alloc]init];
-    //    NSMutableArray *imageArr = picMArr;
-    //    redFlowerVC.index = tap.view.tag - 20;
-    //    redFlowerVC.imageArr = imageArr;
-    //    //举报 来源 7:作业图片
-    //    redFlowerVC.origin_pageStr = @"7";
-    //    redFlowerVC.hidesBottomBarWhenPushed = YES;
-    //    [self.navigationController pushViewController:redFlowerVC animated:YES];
+    XXEImageBrowsingViewController * imageBrowsingVC = [[XXEImageBrowsingViewController alloc] init];
+    
+    imageBrowsingVC.imageUrlArray = model.pic_arr;
+    imageBrowsingVC.currentIndex = tap.view.tag - 20;
+    //举报 来源 8:星级评分图片
+    imageBrowsingVC.origin_pageStr = @"8";
+    
+    [self.navigationController pushViewController:imageBrowsingVC animated:YES];
     
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    
-//    XXEStarRemarkModel *model = _dataSourceArray[indexPath.row];
-//    if (<#condition#>) {
-//        <#statements#>
-//    }
     
     return 120 + picRow * (picHeight + 10);
     
@@ -328,6 +327,9 @@
     //    redFlowerDetialVC.picWallArray = model.pic_arr;
     //    redFlowerDetialVC.iconUrl = model.head_img;
     //    [self.navigationController pushViewController:redFlowerDetialVC animated:YES];
+    
+    
+
     
 }
 

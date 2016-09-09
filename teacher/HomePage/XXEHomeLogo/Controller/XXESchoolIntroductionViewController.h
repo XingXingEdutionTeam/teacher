@@ -18,5 +18,6 @@
 //相册
 @property (nonatomic) NSMutableArray *school_pic_groupArray;
 
+@property (nonatomic, copy) NSString *collect_conditStr;
 
 @end

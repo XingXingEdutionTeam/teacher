@@ -6,9 +6,9 @@
 //  Copyright © 2016年 XingXingEdu. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "XXEBaseViewController.h"
 
-@interface XXERedFlowerDetialViewController : UIViewController
+@interface XXERedFlowerDetialViewController : XXEBaseViewController
 
 @property (nonatomic, copy) NSString *name;
 @property (nonatomic, copy) NSString *time;
@@ -20,6 +20,9 @@
 @property (nonatomic, strong) NSArray *picWallArray;
 //头像
 @property (nonatomic, copy) NSString *iconUrl;
+
+@property (nonatomic, copy) NSString *collect_conditStr;
+@property (nonatomic, copy) NSString *collect_id;
 
 
 @end

@@ -11,6 +11,7 @@
 #import "XXEHomeworkDetailInfoViewController.h"
 #import "XXERedFlowerDetialTableViewCell.h"
 #import "XXEHomeworkDetailInfoApi.h"
+#import "XXEImageBrowsingViewController.h"
 
 @interface XXEHomeworkDetailInfoViewController ()<UITableViewDelegate, UITableViewDataSource>
 {
@@ -185,16 +186,15 @@
 
 - (void)onClickPicture:(UITapGestureRecognizer *)tap{
     
-    NSLog(@"--- 点击了第%ld张图片", tap.view.tag - 20);
+//    NSLog(@"--- 点击了第%ld张图片", tap.view.tag - 20);
+    XXEImageBrowsingViewController * imageBrowsingVC = [[XXEImageBrowsingViewController alloc] init];
     
-    //    RedFlowerViewController *redFlowerVC =[[RedFlowerViewController alloc]init];
-    //    NSMutableArray *imageArr = picMArr;
-    //    redFlowerVC.index = tap.view.tag - 20;
-    //    redFlowerVC.imageArr = imageArr;
-    //    //举报 来源 7:作业图片
-    //    redFlowerVC.origin_pageStr = @"7";
-    //    redFlowerVC.hidesBottomBarWhenPushed = YES;
-    //    [self.navigationController pushViewController:redFlowerVC animated:YES];
+    imageBrowsingVC.imageUrlArray = _picWallArray;
+    imageBrowsingVC.currentIndex = tap.view.tag - 20;
+    //举报 来源 7:作业图片
+    imageBrowsingVC.origin_pageStr = @"7";
+    
+    [self.navigationController pushViewController:imageBrowsingVC animated:YES];
     
 }
 

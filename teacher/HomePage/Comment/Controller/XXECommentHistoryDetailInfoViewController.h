@@ -24,6 +24,8 @@
 //照片墙 照片数组
 @property (nonatomic, strong) NSArray *picWallArray;
 
+@property (nonatomic, copy) NSString *collect_conditStr;
+@property (nonatomic, copy) NSString *collect_id;
 
 
 @end

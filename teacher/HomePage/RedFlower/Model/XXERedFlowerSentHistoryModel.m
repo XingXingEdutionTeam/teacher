@@ -25,6 +25,11 @@
     return modelArray;
 }
 
-
++(JSONKeyMapper*)keyMapper
+{
+    return [[JSONKeyMapper alloc] initWithDictionary:@{
+                                                       @"id": @"collectionId"
+                                                       }];
+}
 
 @end

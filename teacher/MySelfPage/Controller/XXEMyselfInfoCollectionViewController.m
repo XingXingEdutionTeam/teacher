@@ -12,7 +12,10 @@
 #import "XXEMyselfInfoCollectionRedFlowerViewController.h"
 #import "XXEMyselfInfoCollectionUsersViewController.h"
 #import "XXEMyselfInfoCollectionCommentViewController.h"
-
+#import "XXEMyselfInfoCollectionPicViewController.h"
+#import "XXEMyselfInfoCollectionLinkViewController.h"
+#import "XXEMyselfInfoCollectionSchoolViewController.h"
+#import "XXEMyselfInfoCollectionCourseViewController.h"
 
 @interface XXEMyselfInfoCollectionViewController ()<QHNavSliderMenuDelegate, UIScrollViewDelegate, UISearchBarDelegate>
 {
@@ -41,7 +44,7 @@
     self.title = @"我的收藏";
     self.view.backgroundColor = XXEBackgroundColor;
     
-    menuCount =5;
+    menuCount =7;
     [self initView];
     [self createRightBar];
     [self addListVCWithIndex:0];
@@ -125,39 +128,39 @@
         
     }else if (index == 3){
         //@"图片"
-//        KTPicterViewController *classHomeworkVC = [[KTPicterViewController alloc]init];
-//        [self addChildViewController:classHomeworkVC];
-//        classHomeworkVC.view.left =3*screenWidth;
-//        classHomeworkVC.view.top =0;
-//        [contentScrollView addSubview:classHomeworkVC.view];
-//        [listVCQueue setObject:classHomeworkVC forKey:@(3)];
+        XXEMyselfInfoCollectionPicViewController *myselfInfoCollectionPicVC = [[XXEMyselfInfoCollectionPicViewController alloc]init];
+        [self addChildViewController:myselfInfoCollectionPicVC];
+        myselfInfoCollectionPicVC.view.left =3*screenWidth;
+        myselfInfoCollectionPicVC.view.top =0;
+        [contentScrollView addSubview:myselfInfoCollectionPicVC.view];
+        [listVCQueue setObject:myselfInfoCollectionPicVC forKey:@(3)];
         
     }else if (index == 4){
         //@"链接"
-//        KTConnectViewController *SchoolRecipesVC = [[KTConnectViewController alloc]init];
-//        [self addChildViewController:SchoolRecipesVC];
-//        SchoolRecipesVC.view.left =4*screenWidth;
-//        SchoolRecipesVC.view.top =0;
-//        [contentScrollView addSubview:SchoolRecipesVC.view];
-//        [listVCQueue setObject:SchoolRecipesVC forKey:@(4)];
+        XXEMyselfInfoCollectionLinkViewController *myselfInfoCollectionLinkVC = [[XXEMyselfInfoCollectionLinkViewController alloc]init];
+        [self addChildViewController:myselfInfoCollectionLinkVC];
+        myselfInfoCollectionLinkVC.view.left =4*screenWidth;
+        myselfInfoCollectionLinkVC.view.top =0;
+        [contentScrollView addSubview:myselfInfoCollectionLinkVC.view];
+        [listVCQueue setObject:myselfInfoCollectionLinkVC forKey:@(4)];
         
     }else if (index == 5){
         //@"学校"
-//        WZYSchoolCollectionViewController *schoolCollectVC =[[WZYSchoolCollectionViewController alloc]init];
-//        [self addChildViewController:schoolCollectVC];
-//        schoolCollectVC.view.left =5*screenWidth;
-//        schoolCollectVC.view.top =0;
-//        [contentScrollView addSubview:schoolCollectVC.view];
-//        [listVCQueue setObject:schoolCollectVC forKey:@(5)];
+        XXEMyselfInfoCollectionSchoolViewController *myselfInfoCollectionSchoolVC =[[XXEMyselfInfoCollectionSchoolViewController alloc]init];
+        [self addChildViewController:myselfInfoCollectionSchoolVC];
+        myselfInfoCollectionSchoolVC.view.left =5*screenWidth;
+        myselfInfoCollectionSchoolVC.view.top =0;
+        [contentScrollView addSubview:myselfInfoCollectionSchoolVC.view];
+        [listVCQueue setObject:myselfInfoCollectionSchoolVC forKey:@(5)];
         
     }else if (index == 6){
         //@"课程"
-//        WZYCoureseCollectionViewController *WZYCoureseCollectionVC = [[WZYCoureseCollectionViewController alloc]init];
-//        [self addChildViewController:WZYCoureseCollectionVC];
-//        WZYCoureseCollectionVC.view.left =6*screenWidth;
-//        WZYCoureseCollectionVC.view.top =0;
-//        [contentScrollView addSubview:WZYCoureseCollectionVC.view];
-//        [listVCQueue setObject:WZYCoureseCollectionVC forKey:@(6)];
+        XXEMyselfInfoCollectionCourseViewController *myselfInfoCollectionCourseVC = [[XXEMyselfInfoCollectionCourseViewController alloc]init];
+        [self addChildViewController:myselfInfoCollectionCourseVC];
+        myselfInfoCollectionCourseVC.view.left =6*screenWidth;
+        myselfInfoCollectionCourseVC.view.top =0;
+        [contentScrollView addSubview:myselfInfoCollectionCourseVC.view];
+        [listVCQueue setObject:myselfInfoCollectionCourseVC forKey:@(6)];
         
     }
     

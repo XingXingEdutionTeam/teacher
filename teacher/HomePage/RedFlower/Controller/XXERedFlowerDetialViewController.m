@@ -13,6 +13,9 @@
 
 #import "XXERedFlowerDetialViewController.h"
 #import "XXERedFlowerDetialTableViewCell.h"
+#import "XXEImageBrowsingViewController.h"
+#import "XXEGlobalDecollectApi.h"
+#import "XXEGlobalCollectApi.h"
 
 
 @interface XXERedFlowerDetialViewController ()<UITableViewDelegate, UITableViewDataSource>
@@ -33,6 +36,10 @@
     CGFloat picWidth;
     //照片墙 照片 高
     CGFloat picHeight;
+    BOOL isCollect;
+    NSString *parameterXid;
+    NSString *parameterUser_Id;
+    UIButton*rightButton;
     
 }
 
@@ -46,8 +53,130 @@
     titleArray =[[NSMutableArray alloc]initWithObjects:@"姓名:",@"赠送时间:",@"学校:", @"班级:", @"课程:", @"赠言:", @"照片墙:", nil];
     contentArray = [[NSMutableArray alloc] initWithObjects:_name, _time, _schoolName, _className, _course, _content, @"", nil];
     
+    if ([XXEUserInfo user].login){
+        parameterXid = [XXEUserInfo user].xid;
+        parameterUser_Id = [XXEUserInfo user].user_id;
+    }else{
+        parameterXid = XID;
+        parameterUser_Id = USER_ID;
+    }
+    
     [self createTableView];
+    [self setRightCollectionButton];
+    
 }
+
+- (void)setRightCollectionButton{
+    
+    rightButton = [[UIButton alloc]initWithFrame:CGRectMake(0,0,22,22)];
+    [rightButton addTarget:self action:@selector(collectbtn:)forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem*rightItem = [[UIBarButtonItem alloc]initWithCustomView:rightButton];
+    self.navigationItem.rightBarButtonItem= rightItem;
+    
+    //[collect_condit] => 1			//1:是收藏过这个商品  2:未收藏过
+    UIImage *saveImage;
+    
+    if ([_collect_conditStr integerValue] == 1) {
+        isCollect = YES;
+        saveImage = [UIImage imageNamed:@"home_logo_collection_icon44x44"];
+        
+    }else if([_collect_conditStr integerValue] == 2){
+        isCollect = NO;
+        saveImage = [UIImage imageNamed:@"home_logo_uncollection_icon44x44"];
+    }
+    [rightButton setBackgroundImage:saveImage forState:UIControlStateNormal];
+    
+}
+
+-(void)collectbtn:(UIButton *)btn{
+    
+    if (isCollect==NO) {
+        [self collectRedFlower];
+        
+    }
+    else  if (isCollect==YES) {
+        
+        [self deleteCollectcollectRedFlower];
+    }
+    
+}
+
+//收藏  小红花
+- (void)collectRedFlower{
+    /*
+     【收藏】通用于各种收藏
+     
+     接口类型:2
+     
+     接口:
+     http://www.xingxingedu.cn/Global/collect
+     
+     传参:
+     collect_id	//收藏id (如果是收藏用户,这里是xid)
+     collect_type	//收藏品种类型	1:商品  2:点评  3:用户  4:课程  5:学校  6:花朵
+     */
+    
+    XXEGlobalCollectApi *globalCollectApi = [[XXEGlobalCollectApi alloc] initWithXid:parameterXid user_id:parameterUser_Id collect_id:_collect_id collect_type:@"6"];
+    
+    
+    [globalCollectApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
+        //
+//                NSLog(@"收藏 -- %@", request.responseJSONObject);
+        NSString *codeStr = [NSString stringWithFormat:@"%@", request.responseJSONObject[@"code"]];
+        if ([codeStr isEqualToString:@"1"]) {
+            [self showHudWithString:@"收藏成功!" forSecond:1.5];
+            [rightButton setBackgroundImage:[UIImage imageNamed:@"home_logo_collection_icon44x44"] forState:UIControlStateNormal];
+            isCollect=!isCollect;
+        }else if([codeStr isEqualToString:@"5"]){
+            
+            [self showHudWithString:@"" forSecond:1.5];
+        }else{
+        
+        }
+        
+    } failure:^(__kindof YTKBaseRequest *request) {
+        //
+        [self showHudWithString:@"收藏失败!" forSecond:1.5];
+    }];
+    
+}
+
+//取消收藏 小红花
+- (void)deleteCollectcollectRedFlower{
+    /*
+     【删除/取消收藏】通用于各种取消收藏
+     
+     接口类型:2
+     
+     接口:
+     http://www.xingxingedu.cn/Global/deleteCollect
+     
+     传参:
+     collect_id	//收藏id (如果是收藏用户,这里是xid)
+     collect_type	//收藏品种类型	1:商品  2:点评  3:用户  4:课程  5:学校  6:花朵 7:图片
+     */
+    XXEGlobalDecollectApi *globalDecollectApi = [[XXEGlobalDecollectApi alloc] initWithXid:parameterXid user_id:parameterUser_Id collect_id:_collect_id collect_type:@"6"];
+    [globalDecollectApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
+        //        NSLog(@"取消收藏 -- %@", request.responseJSONObject);
+        NSString *codeStr = [NSString stringWithFormat:@"%@", request.responseJSONObject[@"code"]];
+        if ([codeStr isEqualToString:@"1"]) {
+            [self showHudWithString:@"取消收藏成功!" forSecond:1.5];
+            
+            [rightButton setBackgroundImage:[UIImage imageNamed:@"home_logo_uncollection_icon44x44"] forState:UIControlStateNormal];
+            isCollect=!isCollect;
+        }else{
+            
+            
+        }
+        
+    } failure:^(__kindof YTKBaseRequest *request) {
+        //
+        [self showHudWithString:@"取消收藏失败!" forSecond:1.5];
+    }];
+    
+}
+
+
 
 - (void)createTableView{
     _myTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, KScreenWidth, KScreenHeight) style:UITableViewStyleGrouped];
@@ -133,17 +262,16 @@
 
 - (void)onClickPicture:(UITapGestureRecognizer *)tap{
     
-    NSLog(@"--- 点击了第%ld张图片", tap.view.tag - 20);
+//    NSLog(@"--- 点击了第%ld张图片", tap.view.tag - 20);
+
+    XXEImageBrowsingViewController * imageBrowsingVC = [[XXEImageBrowsingViewController alloc] init];
     
-//    RedFlowerViewController *redFlowerVC =[[RedFlowerViewController alloc]init];
-//    NSMutableArray *imageArr = picMArr;
-//    redFlowerVC.index = tap.view.tag - 20;
-//    redFlowerVC.imageArr = imageArr;
-//    //举报 来源 7:作业图片
-//    redFlowerVC.origin_pageStr = @"7";
-//    redFlowerVC.hidesBottomBarWhenPushed = YES;
-//    [self.navigationController pushViewController:redFlowerVC animated:YES];
+    imageBrowsingVC.imageUrlArray = _picWallArray;
+    imageBrowsingVC.currentIndex = tap.view.tag - 20;
+    //举报 来源 1:小红花赠言中的图片
+    imageBrowsingVC.origin_pageStr = @"1";
     
+    [self.navigationController pushViewController:imageBrowsingVC animated:YES];
 }
 
 

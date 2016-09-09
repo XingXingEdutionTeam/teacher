@@ -300,7 +300,7 @@
     cell.iconImageView.layer.cornerRadius = cell.iconImageView.frame.size.width / 2;
     cell.iconImageView.layer.masksToBounds = YES;
     
-    [cell.iconImageView sd_setImageWithURL:[NSURL URLWithString:head_img] placeholderImage:[UIImage imageNamed:@"home_flowerbasket_placehoderIcon120x120"]];
+    [cell.iconImageView sd_setImageWithURL:[NSURL URLWithString:head_img] placeholderImage:[UIImage imageNamed:@"headplaceholder"]];
     
     //    NSLog(@"课程  %@", model.teach_course);
     cell.nameLabel.text = model.tname;

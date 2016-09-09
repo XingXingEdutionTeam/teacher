@@ -265,7 +265,7 @@
     cell.iconImageView.layer.cornerRadius = cell.iconImageView.frame.size.width / 2;
     cell.iconImageView.layer.masksToBounds = YES;
     
-    [cell.iconImageView sd_setImageWithURL:[NSURL URLWithString:head_img] placeholderImage:[UIImage imageNamed:@"home_flowerbasket_placehoderIcon120x120"]];
+    [cell.iconImageView sd_setImageWithURL:[NSURL URLWithString:head_img] placeholderImage:[UIImage imageNamed:@"headplaceholder"]];
 
     cell.nameLabel.text = [NSString stringWithFormat:@"%@  %@", model.baby_tname, model.relation_name];
     cell.contentLabel.text = [NSString stringWithFormat:@"请求内容: %@", model.ask_con];
