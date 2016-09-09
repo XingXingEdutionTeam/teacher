@@ -77,7 +77,7 @@
     
     CGFloat x, y, width, heigh;
     x=10;
-    y=74;
+    y=10;
     width = self.view.frame.size.width -2*x;
     heigh = 100;
     _contentView = [[UITextView alloc] initWithFrame:CGRectMake(x, y, width, heigh)];
