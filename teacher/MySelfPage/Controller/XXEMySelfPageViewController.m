@@ -12,6 +12,9 @@
 #import "XXEMyselfInfoViewController.h"
 #import "XXEMyselfInfoCollectionViewController.h"
 #import "XXEMyselfBlackListViewController.h"
+#import "XXEMyselfSystemSettingViewController.h"
+#import "XXEMyselfPrivacySettingViewController.h"
+
 
 @interface XXEMySelfPageViewController ()<UITableViewDelegate, UITableViewDataSource>
 {
@@ -296,10 +299,14 @@
         [self.navigationController pushViewController:myselfBlackListVC animated:YES];
     }else if (indexPath.row == 7){
        //@"系统设置"
-    
+        XXEMyselfSystemSettingViewController *myselfSystemSettingVC = [[XXEMyselfSystemSettingViewController alloc] init];
+        
+        [self.navigationController pushViewController:myselfSystemSettingVC animated:YES];
     }else if (indexPath.row == 8){
        //@"隐私设置"
-    
+        XXEMyselfPrivacySettingViewController *myselfPrivacySetting = [[XXEMyselfPrivacySettingViewController alloc] init];
+        
+        [self.navigationController pushViewController:myselfPrivacySetting animated:YES];
     }
 
 }

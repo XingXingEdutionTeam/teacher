@@ -32,6 +32,8 @@
 #import "VideoMonitorViewController.h"
 #import "XXEClassAddressHeadermasterAndManagerViewController.h"
 #import "XXESignInViewController.h"
+//猩天地
+#import "XXEXingCommunityViewController.h"
 
 
 
@@ -588,8 +590,16 @@
             NSLog(@"---管理----");
             break;
         case 8:
+        {
             NSLog(@"----星天地----");
+            XXEXingCommunityViewController *xingCommunityVC = [[XXEXingCommunityViewController alloc] init];
+            
+            [self.navigationController pushViewController:xingCommunityVC animated:YES];
             break;
+        
+        }
+            
+            
         case 9:
             NSLog(@"---猩猩商城----");
             break;
