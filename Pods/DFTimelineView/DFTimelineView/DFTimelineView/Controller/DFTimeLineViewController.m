@@ -70,32 +70,20 @@
     return self;
 }
 
-
-
-
-
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     [self initCommentInputView];
-    
 }
-
-
-
-
-
 
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
-    
     [_commentInputView addNotify];
     
     [_commentInputView addObserver];
     
 }
+
 
 -(void)viewWillDisappear:(BOOL)animated
 {
@@ -105,16 +93,6 @@
     
     [_commentInputView removeObserver];
 }
-
-
-
-
-
-
-
-
-
-
 
 -(void) initCommentInputView
 {
@@ -262,6 +240,7 @@
         DFBaseLineCell *cell  = (DFBaseLineCell *)[tableView cellForRowAtIndexPath:indexPath];
         [cell hideLikeCommentToolbar];
     }
+    NSLog(@"第几个单元格%ld",(long)indexPath.row);
 }
 
 
@@ -314,12 +293,9 @@
 {
     DFBaseLineItem *item = [self getItem:itemId];
     [item.likes insertObject:likeItem atIndex:0];
-    
     item.likesStr = nil;
     item.cellHeight = 0;
-    
     [self genLikeAttrString:item];
-    
     [self.tableView reloadData];
 }
 
@@ -329,6 +305,7 @@
 {
     DFBaseLineItem *item = [self getItem:itemId];
     [item.comments addObject:commentItem];
+    NSLog(@"%@",item.comments);
     
     if (replyCommentId > 0) {
         DFLineCommentItem *replyCommentItem = [self getCommentItem:replyCommentId];
@@ -346,10 +323,6 @@
 {
     return [_commentDic objectForKey:[NSNumber numberWithLongLong:commentId]];
 }
-
-
-
-
 
 #pragma mark - DFLineCellDelegate
 

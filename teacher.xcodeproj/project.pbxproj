@@ -2735,8 +2735,8 @@
 				9E4813D11D506C6100C614AC /* LoginAndRegister */,
 				9E4813B51D50695200C614AC /* BasePage */,
 				9E4813BE1D50695200C614AC /* HomePage */,
-				9E4813B61D50695200C614AC /* ChatPage */,
 				9E4813BA1D50695200C614AC /* FriendCirclePage */,
+				9E4813B61D50695200C614AC /* ChatPage */,
 				9E4813C21D50695200C614AC /* MySelfPage */,
 				9E4813C61D50695200C614AC /* ThirdLibrary */,
 				9E4813C71D50695200C614AC /* XXEHelper */,
@@ -3529,7 +3529,7 @@
 				TargetAttributes = {
 					9E48137E1D504D0900C614AC = {
 						CreatedOnToolsVersion = 7.2;
-						DevelopmentTeam = T66J45HUSH;
+						DevelopmentTeam = UC7R7ETD35;
 					};
 					9E4813971D504D0900C614AC = {
 						CreatedOnToolsVersion = 7.2;

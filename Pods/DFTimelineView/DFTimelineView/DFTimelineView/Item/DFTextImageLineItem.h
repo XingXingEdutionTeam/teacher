@@ -18,4 +18,8 @@
 
 @property (nonatomic, strong) NSAttributedString *attrText;
 
+//说说ID
+@property (nonatomic, strong)NSString *speak_Id;
+
+
 @end

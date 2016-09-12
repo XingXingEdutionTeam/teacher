@@ -91,15 +91,15 @@
             [self.headerMyCircleDatasource addObject:Usermodel];
             //设置顶部视图信息
             [self setHeaderMyCircleMessage:Usermodel];
-//            NSLog(@"评论信息的列表的%@",listSS);
-//            NSLog(@"数组为%@",listSS[0]);
-//            for (int i =0; i<listSS.count; i++) {
-//                XXECircleModel *circleModel = [[XXECircleModel alloc]initWithDictionary:listSS[i] error:nil];
-//                [self.circleMyCircleListDatasource addObject:circleModel];
-//            }
-//            [self endLoadMore];
-//            //朋友圈的信息列表
-//            [self myFriendCircleMessage];
+            NSLog(@"评论信息的列表的%@",listSS);
+            NSLog(@"数组为%@",listSS[0]);
+            for (int i =0; i<listSS.count; i++) {
+                XXECircleModel *circleModel = [[XXECircleModel alloc]initWithDictionary:listSS[i] error:nil];
+                [self.circleMyCircleListDatasource addObject:circleModel];
+            }
+            [self endLoadMore];
+            //朋友圈的信息列表
+            [self myFriendCircleMessage];
             NSLog(@"圈子顶部信息数组信息%@",self.headerMyCircleDatasource);
         }else{
             [self hudShowText:@"获取数据错误" second:2.f];

@@ -14,7 +14,6 @@
 
 @property (nonatomic, strong) UIButton *commentButton;
 
-
 @end
 
 

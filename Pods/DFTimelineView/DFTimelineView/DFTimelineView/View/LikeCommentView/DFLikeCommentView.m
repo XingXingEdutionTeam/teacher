@@ -241,7 +241,6 @@
             width = self.frame.size.width - 2*CommentLabelMargin;
             CGSize size = [MLLabel getViewSize:label.attributedText maxWidth:width font:CommentLabelFont lineHeight:CommentLabelLineHeight lines:0];
             
-            
             x = CommentLabelMargin;
             y = sumHeight;
             height = size.height;
@@ -251,9 +250,6 @@
             label.frame = CGRectMake(x, y, width, height);
         }
         
-        
-        
-        
     }else{
         
         for (int i=0; i<_commentLabels.count; i++) {
@@ -262,12 +258,7 @@
             label.frame = CGRectZero;
             label.hidden = YES;
         }
-        
     }
-    
-    
-    
-    
 }
 
 

@@ -25,6 +25,26 @@
     return self;
 }
 
+- (YTKRequestMethod)requestMethod
+{
+    return YTKRequestMethodPost;
+}
+
+- (NSString *)requestUrl
+{
+    return [NSString stringWithFormat:@"%@",XXEFriendCircleGoodUrl];
+}
+
+- (id)requestArgument
+{
+    return @{@"xid":_userXid,
+             @"appkey":APPKEY,
+             @"backtype":BACKTYPE,
+             @"user_id":_userId,
+             @"user_type":USER_TYPE,
+             @"talk_id":_talkId};
+}
+
 
 
 @end

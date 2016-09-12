@@ -310,9 +310,7 @@
         _likeCommentView.frame = CGRectMake(x, y, width, height);
         [_likeCommentView updateWithItem:self.item];
     }
-    
-    
-    
+
 }
 
 -(CGFloat)getReuseableCellHeight:(DFBaseLineItem *)item

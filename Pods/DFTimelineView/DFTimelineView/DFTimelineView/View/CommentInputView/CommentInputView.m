@@ -61,7 +61,6 @@
 {
     [_maskView removeGestureRecognizer:_panGestureRecognizer];
     [_maskView removeGestureRecognizer:_tapGestureRecognizer];
-    [self removeObserver:self forKeyPath:InputViewObserveKeyPath];
 }
 
 
@@ -172,13 +171,6 @@
 
 #pragma mark - Keyboard
 
-//- (void)onKeyboradShow:(NSNotification *)aNotification
-//{
-//    //键盘高度
-//    CGRect keyBoardFrame = [[[aNotification userInfo]objectForKey:UIKeyboardWillChangeFrameNotification]CGRectValue];
-//    [self changeInputViewOffsetY:(keyBoardFrame.origin.y - InputViewHeight) ];
-//}
-
 -(void) onKeyboradShow:(NSNotification *) notify
 {
     NSLog(@"%@",notify);
@@ -203,7 +195,7 @@
 
 -(void) removeObserver
 {
-//    [self removeObserver:self forKeyPath:InputViewObserveKeyPath];
+    [self removeObserver:self forKeyPath:InputViewObserveKeyPath];
 }
 
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context

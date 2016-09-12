@@ -14,6 +14,9 @@
 #import "XXEGoodUserModel.h"
 #import "XXEFriendMyCircleViewController.h"
 #import "XXEPublishFriendCircleApi.h"
+#import "XXEFriendCirclegoodApi.h"
+#import "XXEFriendCircleCommentApi.h"
+#import "SVProgressHUD.h"
 
 @interface XXEFriendCirclePageViewController ()
 /** 朋友圈的头部视图信息 */
@@ -22,6 +25,11 @@
 @property (nonatomic, strong)NSMutableArray *circleListDatasource;
 /** 页数 */
 @property (nonatomic, assign)NSInteger page;
+/** 说说ID */
+@property (nonatomic, copy)NSString *speakId;
+/** 用户昵称 */
+@property (nonatomic, copy)NSString *userNickName;
+
 @end
 
 @implementation XXEFriendCirclePageViewController
@@ -47,12 +55,6 @@
     return UIStatusBarStyleLightContent;
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
-    self.view.backgroundColor = XXEBackgroundColor;
-    
-}
-
 - (instancetype)init
 {
     self = [super init];
@@ -66,6 +68,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    self.speakId = @"";
+    self.view.backgroundColor = XXEBackgroundColor;
     NSLog(@"朋友圈控制器");
     self.extendedLayoutIncludesOpaqueBars = YES;
     self.page = 1;
@@ -84,7 +88,6 @@
 - (void)loadMore
 {
     self.page ++;
-    NSLog(@"宫锁少爷%ld",(long)self.page);
     [self setupFriendCircleMessagePage:self.page];
     [self endLoadMore];
 }
@@ -107,6 +110,7 @@
     if ([pageNum isEqualToString:@"1"]) {
         [self.circleListDatasource removeAllObjects];
     }
+    NSLog(@"数组为数据:%@",self.circleListDatasource);
     XXEFriendCircleApi *friendCircleApi = [[XXEFriendCircleApi alloc]initWithFriendCircleXid:strngXid CircleUserId:homeUserId PageNumber:pageNum];
     [friendCircleApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         
@@ -114,7 +118,7 @@
         NSLog(@"%@",[request.responseJSONObject objectForKey:@"msg"]);
         
         NSString *code = [request.responseJSONObject objectForKey:@"code"];
-        
+        NSLog(@"%@",code);
         if ([code intValue]==1 && [[request.responseJSONObject objectForKey:@"data"] isKindOfClass:[NSDictionary class]]) {
             NSDictionary *data = [request.responseJSONObject objectForKey:@"data"];
             NSArray *list = [data objectForKey:@"list"];
@@ -126,20 +130,17 @@
             [self.headerDatasource addObject:Usermodel];
             //设置顶部视图信息
             [self setHeaderMessage:Usermodel];
-            NSLog(@"评论信息的列表的%@",list);
-            NSLog(@"数组为%@",list[0]);
+            NSLog(@"!!!!!!!评论信息的列表的%@",list);
+             NSLog(@"!!!!!!!评论信息的列表的%@",list[0]);
             for (int i =0; i<list.count; i++) {
                 XXECircleModel *circleModel = [[XXECircleModel alloc]initWithDictionary:list[i] error:nil];
                 [self.circleListDatasource addObject:circleModel];
             }
-            [self endLoadMore];
         //朋友圈的信息列表
         [self friendCircleMessage];
         NSLog(@"圈子顶部信息数组信息%@",self.headerDatasource);
         }else{
             [self hudShowText:@"获取数据错误" second:2.f];
-             [self endRefresh];
-             [self endLoadMore];
         }
     } failure:^(__kindof YTKBaseRequest *request) {
          [self endRefresh];
@@ -152,6 +153,7 @@
 {
     NSLog(@"======%@",model.head_img);
     NSString *cover = [NSString stringWithFormat:@"%@%@",kXXEPicURL,model.head_img];
+    self.userNickName = model.nickname;
     [self setCover:cover];
     [self setUserAvatar:cover];
     [self setUserNick:model.nickname];
@@ -162,12 +164,14 @@
 - (void)friendCircleMessage
 {
     NSLog(@"有多少个单元格:%lu",(unsigned long)self.circleListDatasource.count);
-    
+    int j=1;
     if (self.circleListDatasource.count != 0) {
         for (int i =0; i<self.circleListDatasource.count; i++) {
             XXECircleModel *circleModel = self.circleListDatasource[i];
             DFTextImageLineItem *textImageItem = [[DFTextImageLineItem alloc]init];
-            textImageItem.itemId = 10000;
+            
+            textImageItem.itemId = j;
+            j++;
             textImageItem.userId = [circleModel.xid intValue];
             textImageItem.userAvatar = [NSString stringWithFormat:@"%@%@",kXXEPicURL,circleModel.head_img];
             textImageItem.userNick = circleModel.nickname;
@@ -177,7 +181,7 @@
             NSString *timeString = [XXETool dateAboutStringFromNumberTimer:circleModel.date_tm];
             NSLog(@"时间:%@",timeString);
             textImageItem.ts = [circleModel.date_tm integerValue]*1000;;
-            
+            textImageItem.speak_Id = circleModel.talkId;
             //如果发布的圈子有图片则显示图片
             [self fritnd_circleImageShowTextImageItem:textImageItem CircleModel:circleModel];
         }
@@ -193,7 +197,6 @@
     NSMutableArray *srcSmallImages = [NSMutableArray array];
     NSMutableArray *thumbBigImages = [NSMutableArray array];
     //判断图片的字符串里面有没有逗号
-    
     if ([circleModel.pic_url containsString:@","]) {
         NSLog(@"包含");
         NSArray *array = [circleModel.pic_url componentsSeparatedByString:@","];
@@ -214,10 +217,8 @@
         
         NSLog(@"小图片%@ 大图片%@",srcSmallImages,thumbBigImages);
     }
-    
     //发布的评论和点赞
     [self friend_circleShowCommentAndGoodCircleModel:circleModel TextImageItem:textImageItem];
-    
 }
 
 #pragma mark - 数据点赞和评论的信息
@@ -268,8 +269,6 @@
         //往服务器传所有的参数
         [self publishFriendCircleText:text ImageFile:@""];
     }else{
-    
-    
     NSLog(@"%@",images);
     NSDictionary *dict = @{@"file_type":@"1",
                            @"page_origin":@"35",
@@ -331,6 +330,51 @@
     [publishFriendApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         NSLog(@"发布内筒%@",request.responseJSONObject);
         NSLog(@"发布%@",[request.responseJSONObject objectForKey:@"msg"]);
+        NSString *code = [request.responseJSONObject objectForKey:@"code"];
+        if ([code integerValue]== 1) {
+            
+            NSDictionary *data = [request.responseJSONObject objectForKey:@"data"];
+            NSString *head_image = [data objectForKey:@"head_img"];
+            
+            DFTextImageLineItem *textImageItem = [[DFTextImageLineItem alloc]init];
+            textImageItem.itemId = 10000;
+            textImageItem.userId =[strngXid integerValue];
+            NSString *avatarImage = [NSString stringWithFormat:@"%@%@",kXXEPicURL,head_image];
+            textImageItem.userAvatar = avatarImage;
+            textImageItem.userNick = [XXEUserInfo user].nickname;
+            textImageItem.title = @"发表了";
+            textImageItem.text = text;
+            textImageItem.ts = [[NSDate date] timeIntervalSince1970]*1000;
+            //处理发布圈子的图片问题
+            NSMutableArray *srcSmallImages = [NSMutableArray array];
+            NSMutableArray *thumbBigImages = [NSMutableArray array];
+            //判断图片的字符串里面有没有逗号
+            if ([imageFile containsString:@","]) {
+                NSLog(@"包含");
+                NSArray *array = [imageFile componentsSeparatedByString:@","];
+                for (NSString *image in array) {
+                    [srcSmallImages addObject:[NSString stringWithFormat:@"%@%@",kXXEPicURL,image]];
+                    [thumbBigImages addObject:[NSString stringWithFormat:@"%@%@",kXXEPicURL,image]];
+                    NSLog(@"小图片%@ 大图片%@",srcSmallImages,thumbBigImages);
+                    
+                }
+                textImageItem.srcImages = srcSmallImages;
+                textImageItem.thumbImages = thumbBigImages;
+            }else{
+                NSLog(@"不包含");
+                [srcSmallImages addObject:[NSString stringWithFormat:@"%@%@",kXXEPicURL,imageFile ]];
+                [thumbBigImages addObject:[NSString stringWithFormat:@"%@%@",kXXEPicURL,imageFile ]];
+                textImageItem.srcImages = srcSmallImages;
+                textImageItem.thumbImages = thumbBigImages;
+                
+                NSLog(@"小图片%@ 大图片%@",srcSmallImages,thumbBigImages);
+            }
+            
+            textImageItem.location = @"上海";
+             [self addItemTop:textImageItem];
+
+        }
+        [self refresh];
     } failure:^(__kindof YTKBaseRequest *request) {
         
     }];
@@ -340,27 +384,75 @@
 #pragma mark - 评论和点赞
 -(void)onCommentCreate:(long long)commentId text:(NSString *)text itemId:(long long) itemId
 {
-    NSLog(@"评论%@",text);
+    NSLog(@"-=-=-:%lld",commentId);
+    NSLog(@"%lld",itemId);
+    NSString *strngXid;
+    NSString *homeUserId;
+    if ([XXEUserInfo user].login) {
+        strngXid = [XXEUserInfo user].xid;
+        homeUserId = [XXEUserInfo user].user_id;
+    }else {
+        strngXid = XID;
+        homeUserId = USER_ID;
+    }
+    
     NSInteger myXId = [[XXEUserInfo user].xid integerValue];
     
     DFLineCommentItem *commentItem = [[DFLineCommentItem alloc] init];
     commentItem.commentId = [[NSDate date] timeIntervalSince1970];
     commentItem.userId = myXId;
-    commentItem.userNick = [XXEUserInfo user].nickname;
+    commentItem.userNick = self.userNickName;
     commentItem.text = text;
     [self addCommentItem:commentItem itemId:itemId replyCommentId:commentId];
+    
+//    XXEFriendCircleCommentApi *friendCommentApi = [XXEFriendCircleCommentApi alloc]initWithFriendCircleCommentUerXid:strngXid UserID:homeUserId TalkId:<#(NSString *)#> Com_type:<#(NSString *)#> Con:<#(NSString *)#> To_Who_Xid:<#(NSString *)#>
 }
+
 
 - (void)onLike:(long long)itemId
 {
-    NSLog(@"点赞");
-    NSInteger myXId = [[XXEUserInfo user].xid integerValue];
-    //点赞
-    NSLog(@"onLike: %lld", itemId);
-    DFLineLikeItem *likeItem = [[DFLineLikeItem alloc] init];
-    likeItem.userId = myXId;
-    likeItem.userNick = [XXEUserInfo user].nickname;
-    [self addLikeItem:likeItem itemId:itemId];
+    NSString *strngXid;
+    NSString *homeUserId;
+    if ([XXEUserInfo user].login) {
+        strngXid = [XXEUserInfo user].xid;
+        homeUserId = [XXEUserInfo user].user_id;
+    }else {
+        strngXid = XID;
+        homeUserId = USER_ID;
+    }
+    long indexId = itemId-1;
+    NSLog(@"新的:%ld",indexId);
+    XXECircleModel *circleModel = self.circleListDatasource[indexId];
+    self.speakId = circleModel.talkId;
+    NSLog(@"说说ID%@ XID%@ UserID%@",self.speakId ,strngXid,homeUserId);
+    
+    XXEFriendCirclegoodApi *friendGoodApi = [[XXEFriendCirclegoodApi alloc]initWithFriendCircleGoodOrCancelUerXid:strngXid UserID:homeUserId TalkId:self.speakId];
+    [friendGoodApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
+        NSString *code = [request.responseJSONObject objectForKey:@"code"];
+        NSDictionary *data = [request.responseJSONObject objectForKey:@"data"];
+        NSString *goodXid = [data objectForKey:@"xid"];
+        NSString *goodNickName = [data objectForKey:@"nickname"];
+        
+        if ([code integerValue]==1) {
+            DFLineLikeItem *likeItem = [[DFLineLikeItem alloc] init];
+            likeItem.userId = [goodXid integerValue];
+            likeItem.userNick = goodNickName;
+            NSLog(@"Model%@ ID%lld",likeItem,itemId);
+            [self addLikeItem:likeItem itemId:itemId];
+            [SVProgressHUD showSuccessWithStatus:@"点赞成功"];
+            
+        }else if ([code integerValue]==10){
+            DFLineLikeItem *likeItem = [[DFLineLikeItem alloc] init];
+            likeItem.userId = [goodXid integerValue];
+            likeItem.userNick = goodNickName;
+            NSLog(@"Model%@ ID%lld",likeItem,itemId);
+            [SVProgressHUD showSuccessWithStatus:@"取消点赞"];
+        }
+    } failure:^(__kindof YTKBaseRequest *request) {
+        [SVProgressHUD showErrorWithStatus:@"网络不通，请检查网络！"];
+    }];
+    
+    
 }
 
 //点击左边头像 或者 点击评论和赞的用户昵称
@@ -385,7 +477,7 @@
 -(void)onSendVideo:(NSString *)text videoPath:(NSString *)videoPath screenShot:(UIImage *)screenShot
 {
     DFVideoLineItem *videoItem = [[DFVideoLineItem alloc] init];
-    videoItem.itemId = 10000000; //随便设置一个 待服务器生成
+    videoItem.itemId = 10000; //随便设置一个 待服务器生成
     videoItem.userId = 10018;
     videoItem.userAvatar = @"http://file-cdn.datafans.net/avatar/1.jpeg";
     videoItem.userNick = @"富二代";

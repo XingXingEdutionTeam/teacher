@@ -21,4 +21,6 @@
 
 @property (nonatomic, strong) NSString *text;
 
+@property (nonatomic, strong)NSString *talk_id;
+
 @end
