@@ -141,6 +141,7 @@
         NSLog(@"圈子顶部信息数组信息%@",self.headerDatasource);
         }else{
             [self hudShowText:@"获取数据错误" second:2.f];
+            [self endLoadMore];
         }
     } failure:^(__kindof YTKBaseRequest *request) {
          [self endRefresh];
@@ -372,11 +373,12 @@
             
             textImageItem.location = @"上海";
              [self addItemTop:textImageItem];
-
+        }else{
+            [SVProgressHUD showErrorWithStatus:@"获取数据失败"];
         }
         [self refresh];
     } failure:^(__kindof YTKBaseRequest *request) {
-        
+        [SVProgressHUD showErrorWithStatus:@"获取数据失败"];
     }];
 }
 
@@ -422,8 +424,12 @@
     }
     long indexId = itemId-1;
     NSLog(@"新的:%ld",indexId);
-    XXECircleModel *circleModel = self.circleListDatasource[indexId];
-    self.speakId = circleModel.talkId;
+    if (self.circleListDatasource.count ==0) {
+        [self hudShowText:@"没有数据" second:1.f];
+    }else{
+       XXECircleModel *circleModel = self.circleListDatasource[indexId];
+        self.speakId = circleModel.talkId;
+    
     NSLog(@"说说ID%@ XID%@ UserID%@",self.speakId ,strngXid,homeUserId);
     
     XXEFriendCirclegoodApi *friendGoodApi = [[XXEFriendCirclegoodApi alloc]initWithFriendCircleGoodOrCancelUerXid:strngXid UserID:homeUserId TalkId:self.speakId];
@@ -448,11 +454,12 @@
             NSLog(@"Model%@ ID%lld",likeItem,itemId);
             [SVProgressHUD showSuccessWithStatus:@"取消点赞"];
         }
+    
     } failure:^(__kindof YTKBaseRequest *request) {
         [SVProgressHUD showErrorWithStatus:@"网络不通，请检查网络！"];
     }];
     
-    
+    }
 }
 
 //点击左边头像 或者 点击评论和赞的用户昵称
