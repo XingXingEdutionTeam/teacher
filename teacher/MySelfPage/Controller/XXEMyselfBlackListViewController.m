@@ -37,8 +37,7 @@
 @implementation XXEMyselfBlackListViewController
 
 - (void)viewWillAppear:(BOOL)animated{
-    _dataSourceArray = [[NSMutableArray alloc] init];
-    removeXidArray = [[NSMutableArray alloc] init];
+
     
     page = 0;
     if ([XXEUserInfo user].login){
@@ -145,6 +144,8 @@
     
     XXEBlackListApi *blackListApi = [[XXEBlackListApi alloc] initWithXid:parameterXid user_id:parameterUser_Id];
     [blackListApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
+        _dataSourceArray = [[NSMutableArray alloc] init];
+        removeXidArray = [[NSMutableArray alloc] init];
         
         //        NSLog(@"111   %@", request.responseJSONObject);
         

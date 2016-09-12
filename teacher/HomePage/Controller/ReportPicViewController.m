@@ -138,6 +138,7 @@
     cell.titleLbl.text = model.reportName;
     NSLog(@"%@",model.reportName);
     cell.selectBtn.tag =indexPath.row +100;
+    [cell.selectBtn setBackgroundImage:[UIImage imageNamed:@"report_unselected_icon"] forState:UIControlStateNormal];
     [cell.selectBtn addTarget:self action:@selector(reportChangeButtonClick:) forControlEvents:UIControlEventTouchUpInside];
     return cell;
 }
