@@ -30,6 +30,10 @@
 /** 用户昵称 */
 @property (nonatomic, copy)NSString *userNickName;
 
+/** 回复的内容 */
+@property (nonatomic, copy)NSString *toWhoComment;
+
+
 @end
 
 @implementation XXEFriendCirclePageViewController
@@ -390,6 +394,7 @@
     NSLog(@"%lld",itemId);
     NSString *strngXid;
     NSString *homeUserId;
+    NSString *otherXid;
     if ([XXEUserInfo user].login) {
         strngXid = [XXEUserInfo user].xid;
         homeUserId = [XXEUserInfo user].user_id;
@@ -400,16 +405,84 @@
     
     NSInteger myXId = [[XXEUserInfo user].xid integerValue];
     
-    DFLineCommentItem *commentItem = [[DFLineCommentItem alloc] init];
-    commentItem.commentId = [[NSDate date] timeIntervalSince1970];
-    commentItem.userId = myXId;
-    commentItem.userNick = self.userNickName;
-    commentItem.text = text;
-    [self addCommentItem:commentItem itemId:itemId replyCommentId:commentId];
     
-//    XXEFriendCircleCommentApi *friendCommentApi = [XXEFriendCircleCommentApi alloc]initWithFriendCircleCommentUerXid:strngXid UserID:homeUserId TalkId:<#(NSString *)#> Com_type:<#(NSString *)#> Con:<#(NSString *)#> To_Who_Xid:<#(NSString *)#>
+    long indexId = itemId-1;
+    NSLog(@"新的:%ld",indexId);
+    if (self.circleListDatasource.count ==0) {
+        [self hudShowText:@"没有数据" second:1.f];
+    }else{
+        XXECircleModel *circleModel = self.circleListDatasource[indexId];
+        self.speakId = circleModel.talkId;
+        otherXid = circleModel.xid;
+    }
+    self.toWhoComment = text;
+    if (commentId > 0) {
+        //回复
+        DFLineCommentItem *commentItem = [[DFLineCommentItem alloc] init];
+        commentItem.commentId = [[NSDate date] timeIntervalSince1970];
+        commentItem.userId = myXId;
+        commentItem.userNick = self.userNickName;
+        commentItem.text = text;
+        [self addCommentItem:commentItem itemId:itemId replyCommentId:commentId];
+    }else{
+        //评论
+        //网络请求可以放在这里
+        
+        XXEFriendCircleCommentApi *friendCommentApi = [[XXEFriendCircleCommentApi alloc]initWithFriendCircleCommentUerXid:strngXid UserID:homeUserId TalkId:self.speakId Com_type:@"1" Con:text To_Who_Xid:otherXid];
+        [friendCommentApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
+            NSString *code = [request.responseJSONObject objectForKey:@"code"];
+            if ([code integerValue] == 1) {
+                DFLineCommentItem *commentItem = [[DFLineCommentItem alloc] init];
+                commentItem.commentId = [[NSDate date] timeIntervalSince1970];
+                commentItem.userId = myXId;
+                commentItem.userNick = self.userNickName;
+                commentItem.text = text;
+                [self addCommentItem:commentItem itemId:itemId replyCommentId:commentId];
+                [self hudShowText:@"评论成功" second:1.f];
+            }else{
+                
+                [self hudShowText:@"评论失败" second:1.f];
+            }
+            NSLog(@"%@",request.responseJSONObject);
+            NSLog(@"%@",[request.responseJSONObject objectForKey:@"msg"]);
+            
+        } failure:^(__kindof YTKBaseRequest *request) {
+            [self hudShowText:@"网络失败" second:1.f];
+        }];
+    }
 }
 
+//如果是回复就会执行这个方法所以回复的网络请求就可以放在这里
+- (void)xxe_friendCirclePageCommentToWhoXid:(NSInteger)toWhoXid
+{
+//    NSLog(@"%ld",(long)toWhoXid);
+    NSString *strngXid;
+    NSString *homeUserId;
+    if ([XXEUserInfo user].login) {
+        strngXid = [XXEUserInfo user].xid;
+        homeUserId = [XXEUserInfo user].user_id;
+    }else {
+        strngXid = XID;
+        homeUserId = USER_ID;
+    }
+    NSString *stringToWhoXid = [NSString stringWithFormat:@"%ld",(long)toWhoXid];
+//    NSLog(@"回复人的XID%@,回复人的USERID%@",strngXid,homeUserId);
+//    NSLog(@"回复内容%@ 被回复人的XID%@",self.toWhoComment,stringToWhoXid);
+     XXEFriendCircleCommentApi *friendCommentApi = [[XXEFriendCircleCommentApi alloc]initWithFriendCircleCommentUerXid:strngXid UserID:homeUserId TalkId:self.speakId Com_type:@"2" Con:self.toWhoComment To_Who_Xid:stringToWhoXid];
+    [friendCommentApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
+        NSString *code = [request.responseJSONObject objectForKey:@"code"];
+        if ([code integerValue] == 1) {
+             [self hudShowText:@"回复成功" second:1.f];
+        }else{
+            [self hudShowText:@"回复失败" second:1.f];
+        }
+        NSLog(@"%@",request.responseJSONObject);
+        NSLog(@"%@",[request.responseJSONObject objectForKey:@"msg"]);
+        
+    } failure:^(__kindof YTKBaseRequest *request) {
+        [self hudShowText:@"回复失败" second:1.f];
+    }];
+}
 
 - (void)onLike:(long long)itemId
 {

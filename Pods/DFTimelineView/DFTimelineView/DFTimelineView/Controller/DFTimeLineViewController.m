@@ -39,6 +39,9 @@
 
 @property (nonatomic, strong) UIImagePickerController *pickerController;
 
+//测试获得被评轮人的XID
+@property (nonatomic, assign)NSInteger toWhoXid;
+
 @end
 
 @implementation DFTimeLineViewController
@@ -311,12 +314,14 @@
         DFLineCommentItem *replyCommentItem = [self getCommentItem:replyCommentId];
         commentItem.replyUserId = replyCommentItem.userId;
         commentItem.replyUserNick = replyCommentItem.userNick;
+        //获取回复时的被回复人的XID
+        self.toWhoXid = replyCommentItem.userId;
+        NSLog(@"%ld",(long)self.toWhoXid);
+        [self xxe_friendCirclePageCommentToWhoXid:self.toWhoXid];
     }
-    
     item.cellHeight = 0;
     [self genCommentAttrString:item];
     [self.tableView reloadData];
-    
 }
 
 -(DFLineCommentItem *)getCommentItem:(long long)commentId
@@ -482,16 +487,12 @@
     controller.delegate = self;
     UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:controller];
     [self presentViewController:navController animated:YES completion:nil];
-
-    
 }
 
 -(void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
 {
     [_pickerController dismissViewControllerAnimated:YES completion:nil];
 }
-
-
 
 #pragma mark - DFImagesSendViewControllerDelegate
 

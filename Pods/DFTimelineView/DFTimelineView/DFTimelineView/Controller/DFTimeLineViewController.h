@@ -30,6 +30,8 @@
 //评论
 -(void) addCommentItem:(DFLineCommentItem *) commentItem itemId:(long long) itemId replyCommentId:(long long) replyCommentId;
 
+//回调评论的时候的被评论人的XID
+- (void)xxe_friendCirclePageCommentToWhoXid:(NSInteger)toWhoXid;
 
 //发送图文
 -(void)onSendTextImage:(NSString *)text images:(NSArray *)images;

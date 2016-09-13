@@ -167,8 +167,10 @@
     //所在位置
     self.locationButton = [UIButton buttonWithType:UIButtonTypeCustom];
     self.locationButton.frame = CGRectMake(10, 10, KScreenWidth-20, 40);
-    [self.locationButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+    [self.locationButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [self.locationButton setTitle:@"所在位置" forState:UIControlStateNormal];
+    self.locationButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+    self.locationButton.titleEdgeInsets = UIEdgeInsetsMake(0, 10, 0, 0);
     [self.locationButton addTarget:self action:@selector(locationButtonAction:) forControlEvents:UIControlEventTouchUpInside];
     [bgBtnView addSubview:self.locationButton];
     
@@ -180,8 +182,10 @@
     self.whoButton = [UIButton buttonWithType:UIButtonTypeCustom];
 //    self.whoButton.backgroundColor = [UIColor redColor];
     self.whoButton.frame = CGRectMake(10, CGRectGetMaxY(self.locationButton.frame)+10, KScreenWidth-20, 40);
-    [self.whoButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+    [self.whoButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [self.whoButton setTitle:@"谁可以看" forState:UIControlStateNormal];
+    self.whoButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+    self.whoButton.titleEdgeInsets = UIEdgeInsetsMake(0, 10, 0, 0);
     [self.whoButton addTarget:self action:@selector(whoButtonAction:) forControlEvents:UIControlEventTouchUpInside];
     [bgBtnView addSubview:self.whoButton];
     
