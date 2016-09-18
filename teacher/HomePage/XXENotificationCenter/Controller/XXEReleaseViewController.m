@@ -215,8 +215,13 @@
 
 - (void)getAuditorInfo{
     
+//    NSLog(@"%@ --- %@ ---- %@ ----%@ ---- %@  ", parameterXid, parameterUser_Id, _schoolId, _classId, notice_type);
+    
     XXEAuditorApi *auditorApi = [[XXEAuditorApi alloc] initWithXid:parameterXid user_id:parameterUser_Id school_id:_schoolId class_id:_classId position:@"4" notice_type:notice_type];
     [auditorApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
+        if (auditorModelArray.count != 0) {
+            [auditorModelArray removeAllObjects];
+        }
 //                NSLog(@"2222---   %@", request.responseJSONObject);
         NSDictionary *dic = request.responseJSONObject;
         

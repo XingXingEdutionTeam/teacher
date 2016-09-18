@@ -387,30 +387,36 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-//    switch (a) {
-//        case 0:
-//        {
-//            XXEAuditDetailInfoViewController *auditDetailInfoVC =[[XXEAuditDetailInfoViewController alloc]init];
-//            XXEAuditAndReleaseModel *model = _auditDataSourceArray[indexPath.row];
-//            
-//            auditDetailInfoVC.subjectStr = model.title;
-//            auditDetailInfoVC.contentStr = model.con;
-//            [self.navigationController pushViewController:auditDetailInfoVC animated:YES];
-//        }
-//            break;
-//        case 1:
-//        {
-//            XXEReleaseDetailInfoViewController *releaseDetailInfoVC =[[XXEReleaseDetailInfoViewController alloc]init];
-//            XXEAuditAndReleaseModel *model = _auditDataSourceArray[indexPath.row];
-//            
-//            releaseDetailInfoVC.subjectStr = model.title;
-//            releaseDetailInfoVC.contentStr = model.con;
-//            [self.navigationController pushViewController:releaseDetailInfoVC animated:YES];
-//        }
-//            break;
-//        default:
-//            break;
-//    }
+    switch (a) {
+        case 0:
+        {
+            //审核 详情
+            XXEAuditDetailInfoViewController *auditDetailInfoVC =[[XXEAuditDetailInfoViewController alloc]init];
+            XXEAuditAndReleaseModel *model = _auditDataSourceArray[indexPath.row];
+            
+            auditDetailInfoVC.subjectStr = model.title;
+            auditDetailInfoVC.contentStr = model.con;
+            auditDetailInfoVC.notice_id = model.notice_id;
+            [self.navigationController pushViewController:auditDetailInfoVC animated:YES];
+        }
+            break;
+        case 1:
+        {
+            //发布 详情
+            XXEReleaseDetailInfoViewController *releaseDetailInfoVC =[[XXEReleaseDetailInfoViewController alloc]init];            
+//            if (_auditDataSourceArray.count != 0) {
+                XXEAuditAndReleaseModel *model = _releaseDataSourecArray[indexPath.row];
+                
+                releaseDetailInfoVC.subjectStr = model.title;
+                releaseDetailInfoVC.contentStr = model.con;
+
+//            }
+                [self.navigationController pushViewController:releaseDetailInfoVC animated:YES];
+        }
+            break;
+        default:
+            break;
+    }
     
     
 }

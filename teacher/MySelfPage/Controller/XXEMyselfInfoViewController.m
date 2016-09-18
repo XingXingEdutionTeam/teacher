@@ -20,6 +20,7 @@
 #import "XXEXingCoinViewController.h"
 #import "XXELoginViewController.h"
 #import "XXEForgetPassWordViewController.h"
+#import "XXEMySelfInfoAlbumViewController.h"
 
 
 #define ORIGINAL_MAX_WIDTH 640.0f
@@ -409,6 +410,11 @@
         
         [self.navigationController pushViewController:schoolEmailModifyVC animated:YES];
     }
+    
+    //毕业院校  7
+    
+    //所学专业  8
+    
     //经历
     if (indexPath.row == 9) {
         XXESchoolFeatureModifyViewController *schoolFeatureModifyVC = [[XXESchoolFeatureModifyViewController alloc] init];
@@ -435,11 +441,9 @@
         
         [self.navigationController pushViewController:schoolFeatureModifyVC animated:YES];
     }
-    //毕业院校
+
     
-    //所学专业
     
-    //教学年龄
     
     //个性签名
     if (indexPath.row == 11) {
@@ -455,17 +459,10 @@
         [self.navigationController pushViewController:schoolFeatureModifyVC animated:YES];
     }
     //个人 相册 (不同于 首页 相册, 那个是班级相册,此处 是 个人 相册)
-    if (indexPath.row == 11) {
-//        XXESchoolFeatureModifyViewController *schoolFeatureModifyVC = [[XXESchoolFeatureModifyViewController alloc] init];
-//        schoolFeatureModifyVC.flagStr = @"fromMyselfInfoAlbum";
-//        schoolFeatureModifyVC.schoolfeatureStr = contentArray[11];
-//        [schoolFeatureModifyVC returnStr:^(NSString *str) {
-//            //
-//            contentArray[11] = str;
-//            [_myTableView reloadData];
-//        }];
-//        
-//        [self.navigationController pushViewController:schoolFeatureModifyVC animated:YES];
+    if (indexPath.row == 12) {
+        XXEMySelfInfoAlbumViewController *mySelfInfoAlbumVC = [[XXEMySelfInfoAlbumViewController alloc] init];
+ 
+        [self.navigationController pushViewController:mySelfInfoAlbumVC animated:YES];
     }
     
     

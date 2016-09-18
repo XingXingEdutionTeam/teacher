@@ -13,6 +13,8 @@
 
 @property (nonatomic, copy) NSString *subjectStr;
 @property (nonatomic, copy) NSString *contentStr;
+@property (nonatomic, copy) NSString *notice_id;
+
 
 @property (weak, nonatomic) IBOutlet UILabel *subjectLabel;
 

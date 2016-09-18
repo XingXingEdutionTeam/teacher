@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -13,21 +14,43 @@
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                 <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
                 <subviews>
-                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Yna-8T-pa7">
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Yna-8T-pa7">
                         <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yuA-ta-ZU8">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="yuA-ta-ZU8">
                                 <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="100" id="DeN-2O-UkL"/>
+                                    <constraint firstAttribute="width" secondItem="yuA-ta-ZU8" secondAttribute="height" multiplier="1:1" id="i6p-LY-cjX"/>
+                                </constraints>
                             </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="report_selected_icon" translatesAutoresizingMaskIntoConstraints="NO" id="1OB-kp-rym">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="report_selected_icon" translatesAutoresizingMaskIntoConstraints="NO" id="1OB-kp-rym">
                                 <rect key="frame" x="66" y="66" width="30" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="GZo-Vc-5dm"/>
+                                    <constraint firstAttribute="width" constant="30" id="cqJ-lB-JGt"/>
+                                </constraints>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="100" id="7wE-EO-hRE"/>
+                            <constraint firstAttribute="bottom" secondItem="1OB-kp-rym" secondAttribute="bottom" constant="4" id="gca-C9-rsN"/>
+                            <constraint firstItem="yuA-ta-ZU8" firstAttribute="top" secondItem="Yna-8T-pa7" secondAttribute="top" id="jzv-C0-79h"/>
+                            <constraint firstAttribute="trailing" secondItem="1OB-kp-rym" secondAttribute="trailing" constant="4" id="k1h-zP-h2l"/>
+                            <constraint firstAttribute="trailing" secondItem="yuA-ta-ZU8" secondAttribute="trailing" id="kag-jK-MBy"/>
+                            <constraint firstAttribute="width" secondItem="Yna-8T-pa7" secondAttribute="height" multiplier="1:1" id="qnJ-Ah-Hgr"/>
+                            <constraint firstItem="yuA-ta-ZU8" firstAttribute="leading" secondItem="Yna-8T-pa7" secondAttribute="leading" id="sUd-R2-tiz"/>
+                        </constraints>
                     </view>
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             </view>
+            <constraints>
+                <constraint firstItem="Yna-8T-pa7" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="87D-IM-BOB"/>
+                <constraint firstAttribute="trailing" secondItem="Yna-8T-pa7" secondAttribute="trailing" id="9qi-eR-ekH"/>
+                <constraint firstItem="Yna-8T-pa7" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="Jme-nt-1uq"/>
+            </constraints>
             <size key="customSize" width="117" height="113"/>
             <connections>
                 <outlet property="bgView" destination="Yna-8T-pa7" id="xwa-8l-ZrQ"/>

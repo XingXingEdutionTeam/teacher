@@ -9,7 +9,7 @@
 #import "XXEAuditorApi.h"
 
 
-#define URL @"http://www.xingxingedu.cn/Teacher/school_notice"
+#define URL @"http://www.xingxingedu.cn/Teacher/notice_examiner"
 
 @interface XXEAuditorApi()
 

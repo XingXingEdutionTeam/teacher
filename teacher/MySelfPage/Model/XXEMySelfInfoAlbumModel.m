@@ -1,24 +1,21 @@
 
 //
-//  XXESchoolAlbumModel.m
+//  XXEMySelfInfoAlbumModel.m
 //  teacher
 //
-//  Created by Mac on 16/8/29.
+//  Created by Mac on 16/9/18.
 //  Copyright © 2016年 XingXingEdu. All rights reserved.
 //
 
-#import "XXESchoolAlbumModel.h"
+#import "XXEMySelfInfoAlbumModel.h"
 
-@implementation XXESchoolAlbumModel
+@implementation XXEMySelfInfoAlbumModel
 
 + (NSArray*)parseResondsData:(id)respondObject
 {
     NSMutableArray *modelArray = [NSMutableArray array];
     for (NSDictionary *dic  in respondObject) {
-        XXESchoolAlbumModel *model = [[XXESchoolAlbumModel alloc]initWithDictionary:dic error:nil];
-        
-//        NSLog(@"ppp == %@", model);
-    
+        XXEMySelfInfoAlbumModel *model = [[XXEMySelfInfoAlbumModel alloc]initWithDictionary:dic error:nil];
         [modelArray addObject:model];
     }
     return modelArray;
@@ -27,10 +24,8 @@
 +(JSONKeyMapper*)keyMapper
 {
     return [[JSONKeyMapper alloc] initWithDictionary:@{
-                                                       @"id": @"schoolPicId",
-                                                       @"url":@"pic"
+                                                       @"id": @"myselfPicId",
                                                        }];
 }
-
 
 @end

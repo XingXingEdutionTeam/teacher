@@ -78,6 +78,12 @@
 		0445A3EA1D65E8CA00C3A4CA /* photoBrowser_delete.png in Resources */ = {isa = PBXBuildFile; fileRef = 0445A3DA1D65E8CA00C3A4CA /* photoBrowser_delete.png */; };
 		0445A3EB1D65E8CA00C3A4CA /* photoBrowser_roate.png in Resources */ = {isa = PBXBuildFile; fileRef = 0445A3DB1D65E8CA00C3A4CA /* photoBrowser_roate.png */; };
 		0445A3EC1D65E8CA00C3A4CA /* public_back_white.png in Resources */ = {isa = PBXBuildFile; fileRef = 0445A3DC1D65E8CA00C3A4CA /* public_back_white.png */; };
+		044B3A8A1D8E33730014AB87 /* XXENotificationAgainstOrSupportApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 044B3A891D8E33730014AB87 /* XXENotificationAgainstOrSupportApi.m */; };
+		044B3A8D1D8E9E720014AB87 /* XXEMySelfInfoAlbumViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 044B3A8C1D8E9E720014AB87 /* XXEMySelfInfoAlbumViewController.m */; };
+		044B3A901D8E9FC60014AB87 /* XXEMySelfInfoAlbumModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 044B3A8F1D8E9FC60014AB87 /* XXEMySelfInfoAlbumModel.m */; };
+		044B3A961D8EA3DD0014AB87 /* XXEMyselfInfoAlbumUploadPicApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 044B3A951D8EA3DD0014AB87 /* XXEMyselfInfoAlbumUploadPicApi.m */; };
+		044B3A991D8EA4250014AB87 /* XXEMyselfInfoAlbumDeletePicApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 044B3A981D8EA4250014AB87 /* XXEMyselfInfoAlbumDeletePicApi.m */; };
+		044B3A9C1D8EA6210014AB87 /* XXEMyselfInfoAlbumPicApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 044B3A9B1D8EA6210014AB87 /* XXEMyselfInfoAlbumPicApi.m */; };
 		04530C631D88E7B500620105 /* XXEAuditAndReleaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04530C621D88E7B500620105 /* XXEAuditAndReleaseViewController.m */; };
 		04530C671D891E9D00620105 /* XXEAuditDetailInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04530C651D891E9D00620105 /* XXEAuditDetailInfoViewController.m */; };
 		04530C681D891E9D00620105 /* XXEAuditDetailInfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04530C661D891E9D00620105 /* XXEAuditDetailInfoViewController.xib */; };
@@ -676,6 +682,18 @@
 		0445A3DA1D65E8CA00C3A4CA /* photoBrowser_delete.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = photoBrowser_delete.png; sourceTree = "<group>"; };
 		0445A3DB1D65E8CA00C3A4CA /* photoBrowser_roate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = photoBrowser_roate.png; sourceTree = "<group>"; };
 		0445A3DC1D65E8CA00C3A4CA /* public_back_white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = public_back_white.png; sourceTree = "<group>"; };
+		044B3A881D8E33730014AB87 /* XXENotificationAgainstOrSupportApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXENotificationAgainstOrSupportApi.h; sourceTree = "<group>"; };
+		044B3A891D8E33730014AB87 /* XXENotificationAgainstOrSupportApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXENotificationAgainstOrSupportApi.m; sourceTree = "<group>"; };
+		044B3A8B1D8E9E720014AB87 /* XXEMySelfInfoAlbumViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXEMySelfInfoAlbumViewController.h; sourceTree = "<group>"; };
+		044B3A8C1D8E9E720014AB87 /* XXEMySelfInfoAlbumViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXEMySelfInfoAlbumViewController.m; sourceTree = "<group>"; };
+		044B3A8E1D8E9FC60014AB87 /* XXEMySelfInfoAlbumModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXEMySelfInfoAlbumModel.h; sourceTree = "<group>"; };
+		044B3A8F1D8E9FC60014AB87 /* XXEMySelfInfoAlbumModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXEMySelfInfoAlbumModel.m; sourceTree = "<group>"; };
+		044B3A941D8EA3DD0014AB87 /* XXEMyselfInfoAlbumUploadPicApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXEMyselfInfoAlbumUploadPicApi.h; sourceTree = "<group>"; };
+		044B3A951D8EA3DD0014AB87 /* XXEMyselfInfoAlbumUploadPicApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXEMyselfInfoAlbumUploadPicApi.m; sourceTree = "<group>"; };
+		044B3A971D8EA4250014AB87 /* XXEMyselfInfoAlbumDeletePicApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXEMyselfInfoAlbumDeletePicApi.h; sourceTree = "<group>"; };
+		044B3A981D8EA4250014AB87 /* XXEMyselfInfoAlbumDeletePicApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXEMyselfInfoAlbumDeletePicApi.m; sourceTree = "<group>"; };
+		044B3A9A1D8EA6210014AB87 /* XXEMyselfInfoAlbumPicApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXEMyselfInfoAlbumPicApi.h; sourceTree = "<group>"; };
+		044B3A9B1D8EA6210014AB87 /* XXEMyselfInfoAlbumPicApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXEMyselfInfoAlbumPicApi.m; sourceTree = "<group>"; };
 		04530C611D88E7B500620105 /* XXEAuditAndReleaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXEAuditAndReleaseViewController.h; sourceTree = "<group>"; };
 		04530C621D88E7B500620105 /* XXEAuditAndReleaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXEAuditAndReleaseViewController.m; sourceTree = "<group>"; };
 		04530C641D891E9D00620105 /* XXEAuditDetailInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXEAuditDetailInfoViewController.h; sourceTree = "<group>"; };
@@ -1678,6 +1696,8 @@
 		044349E71D79829000DD8CCE /* Api */ = {
 			isa = PBXGroup;
 			children = (
+				044B3A941D8EA3DD0014AB87 /* XXEMyselfInfoAlbumUploadPicApi.h */,
+				044B3A951D8EA3DD0014AB87 /* XXEMyselfInfoAlbumUploadPicApi.m */,
 				9ED3DCDA1D7FF6C400743B79 /* XXEEditorMySelfInfoApi.h */,
 				9ED3DCDB1D7FF6C400743B79 /* XXEEditorMySelfInfoApi.m */,
 				044349EA1D7982C900DD8CCE /* XXEMySelfInfoApi.h */,
@@ -1716,6 +1736,10 @@
 				043C80A71D868331004F1B85 /* XXEMyselfPrivacyApi.m */,
 				043C80A91D868DB6004F1B85 /* XXEMyselfPrivacySettingApi.h */,
 				043C80AA1D868DB6004F1B85 /* XXEMyselfPrivacySettingApi.m */,
+				044B3A971D8EA4250014AB87 /* XXEMyselfInfoAlbumDeletePicApi.h */,
+				044B3A981D8EA4250014AB87 /* XXEMyselfInfoAlbumDeletePicApi.m */,
+				044B3A9A1D8EA6210014AB87 /* XXEMyselfInfoAlbumPicApi.h */,
+				044B3A9B1D8EA6210014AB87 /* XXEMyselfInfoAlbumPicApi.m */,
 			);
 			path = Api;
 			sourceTree = "<group>";
@@ -1737,6 +1761,8 @@
 				0485FD161D825A830077E10B /* XXEMyselfInfoCollectionCourseModel.m */,
 				0485FD2B1D82C4690077E10B /* XXEMyselfBlackListModel.h */,
 				0485FD2C1D82C4690077E10B /* XXEMyselfBlackListModel.m */,
+				044B3A8E1D8E9FC60014AB87 /* XXEMySelfInfoAlbumModel.h */,
+				044B3A8F1D8E9FC60014AB87 /* XXEMySelfInfoAlbumModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1818,6 +1844,8 @@
 				04530C801D894ADE00620105 /* XXEAuditorApi.m */,
 				04530C821D894C4400620105 /* XXENotificationReleaseApi.h */,
 				04530C831D894C4400620105 /* XXENotificationReleaseApi.m */,
+				044B3A881D8E33730014AB87 /* XXENotificationAgainstOrSupportApi.h */,
+				044B3A891D8E33730014AB87 /* XXENotificationAgainstOrSupportApi.m */,
 			);
 			path = Api;
 			sourceTree = "<group>";
@@ -3157,6 +3185,8 @@
 				043C80901D864872004F1B85 /* XXEProblemFeedbackViewController.xib */,
 				043C80961D865A25004F1B85 /* XXEWhoCanSeeMyNameViewController.h */,
 				043C80971D865A25004F1B85 /* XXEWhoCanSeeMyNameViewController.m */,
+				044B3A8B1D8E9E720014AB87 /* XXEMySelfInfoAlbumViewController.h */,
+				044B3A8C1D8E9E720014AB87 /* XXEMySelfInfoAlbumViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -4040,6 +4070,7 @@
 				9EBA6F7A1D5D7781001B45C3 /* XXEMyClassAlbumTableViewCell.m in Sources */,
 				04C52CCA1D7EB3A500DB7C4A /* XXEMyselfInfoCollectionViewController.m in Sources */,
 				9EEA0E3D1D6ED6220070C8C3 /* ReportCell.m in Sources */,
+				044B3A8D1D8E9E720014AB87 /* XXEMySelfInfoAlbumViewController.m in Sources */,
 				04BB3A971D74743300AA5C5C /* XXEClassAddressEveryclassInfoApi.m in Sources */,
 				9E66939F1D6404DD00FFA0A7 /* XXEVertifyTimesApi.m in Sources */,
 				04BB3A501D74742B00AA5C5C /* XXEMealPicModel.m in Sources */,
@@ -4123,6 +4154,7 @@
 				9EFDC8551D549DE1005556AF /* SpinerLayer.m in Sources */,
 				04F216931D7671BB005C2EBF /* UILabel+QHLabelCtg.m in Sources */,
 				048F58871D5C7A76002E4855 /* XXEXingCoinHistoryTableViewCell.m in Sources */,
+				044B3A991D8EA4250014AB87 /* XXEMyselfInfoAlbumDeletePicApi.m in Sources */,
 				043301321D62BDD000722DE2 /* XXERedFlowerDetialTableViewCell.m in Sources */,
 				04F216901D7671BB005C2EBF /* NSString+QHNSStringCtg.m in Sources */,
 				04BB3A271D74742B00AA5C5C /* XXESchoolNameModifyViewController.m in Sources */,
@@ -4200,6 +4232,7 @@
 				0430B1641D7D79CC001F463F /* XXEMyselfInfoNameModifyViewController.m in Sources */,
 				04BB3A2F1D74742B00AA5C5C /* XXESchoolVideoViewController.m in Sources */,
 				043C80951D864E27004F1B85 /* XXEFeedbackProblemApi.m in Sources */,
+				044B3A8A1D8E33730014AB87 /* XXENotificationAgainstOrSupportApi.m in Sources */,
 				9E6912F51D54341F0000E566 /* XXEStarImageViewController.m in Sources */,
 				0485FD2D1D82C4690077E10B /* XXEMyselfBlackListModel.m in Sources */,
 				043C80911D864872004F1B85 /* XXEProblemFeedbackViewController.m in Sources */,
@@ -4240,6 +4273,7 @@
 				04BB3AB81D75672400AA5C5C /* XXEBabyInfoApi.m in Sources */,
 				9E9B4BFC1D633B6000983F5E /* XXERegisterCheckApi.m in Sources */,
 				9E9B4C851D633C9B00983F5E /* XXECommentModel.m in Sources */,
+				044B3A9C1D8EA6210014AB87 /* XXEMyselfInfoAlbumPicApi.m in Sources */,
 				04BB3A381D74742B00AA5C5C /* XXEHomeworkIssueTextAndPicInfoApi.m in Sources */,
 				04BB3A9C1D74743300AA5C5C /* XXEClassAddressHeadermasterAndManagerViewController.m in Sources */,
 				0480A08B1D87DC5800D7589B /* XXESystemNotificationApi.m in Sources */,
@@ -4276,7 +4310,9 @@
 				9ED146FC1D597D420049D2AA /* WJCommboxView.m in Sources */,
 				04BB3A511D74742B00AA5C5C /* XXERecipeBreAndLunAndDinModel.m in Sources */,
 				04A9DDC01D816BAE00544782 /* XXEMyselfInfoCollectionUsersApi.m in Sources */,
+				044B3A961D8EA3DD0014AB87 /* XXEMyselfInfoAlbumUploadPicApi.m in Sources */,
 				043C808C1D8642B3004F1B85 /* XXEAboutMyselfInfoViewController.m in Sources */,
+				044B3A901D8E9FC60014AB87 /* XXEMySelfInfoAlbumModel.m in Sources */,
 				04BB3A471D74742B00AA5C5C /* XXERecipePicModify.m in Sources */,
 				9EDA725E1D8E9841006E5FB8 /* XXEDeleteCommentApi.m in Sources */,
 				04BB3A2E1D74742B00AA5C5C /* XXESchoolUpPicViewController.m in Sources */,

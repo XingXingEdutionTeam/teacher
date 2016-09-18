@@ -16,8 +16,8 @@
 @property (nonatomic, assign)NSInteger t;
 
 @property (nonatomic, strong) UIActionSheet *actionSheet;
-@property (nonatomic, copy) NSString *albumName;
-@property (nonatomic, copy) NSString *vedioName;
+//判断 来源 (即判断 上传 的是 什么照片 或者 视频)
+@property (nonatomic, copy) NSString *flagStr;
 
 
 @end

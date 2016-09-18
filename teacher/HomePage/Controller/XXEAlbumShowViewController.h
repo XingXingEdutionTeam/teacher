@@ -15,5 +15,11 @@
 /** 展示的老师ID */
 @property (nonatomic, copy)NSString *showAlbumXid;
 
+//当前 图片 是 第几张图片
+@property (nonatomic, assign) NSInteger currentIndex;
+
+//判断 来源
+@property (nonatomic, copy) NSString *flagStr;
+
 
 @end

@@ -20,7 +20,7 @@
 
 @property (nonatomic, copy) NSString *good_num;
 @property (nonatomic, copy) NSString *schoolPicId;
-@property (nonatomic, copy) NSString *url;
+@property (nonatomic, copy) NSString *pic;
 
 + (NSArray*)parseResondsData:(id)respondObject;
 

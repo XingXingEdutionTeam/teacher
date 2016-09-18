@@ -16,7 +16,7 @@
  接口类型:1
  
  接口:
- http://www.xingxingedu.cn/Teacher/school_notice
+ http://www.xingxingedu.cn/Teacher/notice_examiner
  
  传参:
 	school_id	//学校id

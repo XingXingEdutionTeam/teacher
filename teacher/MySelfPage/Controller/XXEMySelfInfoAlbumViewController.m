@@ -1,22 +1,23 @@
 
-
 //
-//  XXESchoolAlbumViewController.m
+//  XXEMySelfInfoAlbumViewController.m
 //  teacher
 //
-//  Created by Mac on 16/8/24.
+//  Created by Mac on 16/9/18.
 //  Copyright © 2016年 XingXingEdu. All rights reserved.
 //
 
-#import "XXESchoolAlbumViewController.h"
+#import "XXEMySelfInfoAlbumViewController.h"
 #import "XXESchoolAlbumCollectionViewCell.h"
 #import "XXESchoolUpPicViewController.h"
-#import "XXESchoolPicApi.h"
-#import "XXESchoolAlbumModel.h"
-#import "XXEDeleteSchoolPicApi.h"
-#import "XXEAlbumShowViewController.h"
+#import "XXEMySelfInfoAlbumModel.h"
+#import "XXEImageBrowsingViewController.h"
 
-@interface XXESchoolAlbumViewController ()<UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout>
+#import "XXEMyselfInfoAlbumDeletePicApi.h"
+#import "XXEMyselfInfoAlbumPicApi.h"
+
+
+@interface XXEMySelfInfoAlbumViewController ()<UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout>
 {
     NSString *parameterXid;
     NSString *parameterUser_Id;
@@ -32,6 +33,9 @@
     UIButton *deleteButton;
     //上传
     UIButton *upButton;
+    //图片 url 数组
+    NSMutableArray *picWallArray;
+    
 }
 //    数据源数组
 @property (nonatomic) NSMutableArray *dataSourceArray;
@@ -44,7 +48,7 @@
 
 @end
 
-@implementation XXESchoolAlbumViewController
+@implementation XXEMySelfInfoAlbumViewController
 
 - (void)viewWillAppear:(BOOL)animated{
     
@@ -94,24 +98,18 @@
 }
 
 - (void)settingNavgiationBar{
-
-    //    NSString * name =[[NSUserDefaults standardUserDefaults] objectForKey:@"KEENTEAM"];
-    //    //教师 91 只有教师不能改
-    //    if ([name integerValue] == 91) {
-    //        self.navigationItem.rightBarButtonItem = nil;
-    //    }else{
-//    设置 navigationBar 右边 赠送
-        editButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        editButton.frame = CGRectMake(330, 5, 40, 22);
-        [editButton setTitle:@"编辑" forState:UIControlStateNormal];
-        [editButton addTarget:self action:@selector(editButtonCick:) forControlEvents:UIControlEventTouchUpInside];
-        UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:editButton];
-        self.navigationItem.rightBarButtonItem =rightItem;
-
+    //    设置 navigationBar 右边 编辑
+    editButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    editButton.frame = CGRectMake(330, 5, 40, 22);
+    [editButton setTitle:@"编辑" forState:UIControlStateNormal];
+    [editButton addTarget:self action:@selector(editButtonCick:) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:editButton];
+    self.navigationItem.rightBarButtonItem =rightItem;
+    
 }
 
 - (void)editButtonCick:(UIButton *)button{
-//    NSLog(@"-----  editButtonCick ----");
+    //    NSLog(@"-----  editButtonCick ----");
     button.selected = !button.selected;
     bottomView.hidden = !editButton.selected;
     if (editButton.selected == YES) {
@@ -135,7 +133,7 @@
     
     CGFloat buttonWidth = itemWidth;
     CGFloat buttonHeight = itemHeight;
-
+    
     //---------------------------- 全选 -----------
     allSeletedButton = [UIButton createButtonWithFrame:CGRectMake(buttonWidth / 2 * 0, 2 * kScreenRatioHeight, buttonWidth, buttonHeight) backGruondImageName:nil Target:self Action:@selector(allSeletedButtonClick:) Title:@"全选"];
     [allSeletedButton setImage:[UIImage imageNamed:@"home_logo_allselete_unseleted_icon"] forState:UIControlStateNormal];
@@ -168,38 +166,36 @@
     //设置title在button上的位置（上top，左left，下bottom，右right）
     upButton.titleEdgeInsets = UIEdgeInsetsMake(30 * kScreenRatioHeight, -upButton.titleLabel.bounds.size.width-20, 0, 0);
     [bottomView addSubview:upButton];
-
+    
 }
 
 #pragma mark ----------------全选 -------------------
 - (void)allSeletedButtonClick:(UIButton *)button{
     
     if (_dataSourceArray.count != 0) {
+        if (_seletedModelArray.count != 0) {
+            [_seletedModelArray removeAllObjects];
+        }
         
-    
-      if (_seletedModelArray.count != 0) {
-           [_seletedModelArray removeAllObjects];
-       }
-
-       for (int i = 0; i < _dataSourceArray.count; i++) {
-               NSIndexPath *indexPath = [NSIndexPath indexPathForItem:i inSection:0];
-           
-           [self collectionView:_myCollcetionView didSelectItemAtIndexPath:indexPath];
-           
-           XXESchoolAlbumCollectionViewCell *cell = (XXESchoolAlbumCollectionViewCell *)[_myCollcetionView cellForItemAtIndexPath:indexPath];
-           if (editButton.selected == NO) {
-               cell.checkImageView.hidden = YES;
-           }else{
-               cell.checkImageView.hidden = NO;
-           }
-       }
+        for (int i = 0; i < _dataSourceArray.count; i++) {
+            NSIndexPath *indexPath = [NSIndexPath indexPathForItem:i inSection:0];
+            
+            [self collectionView:_myCollcetionView didSelectItemAtIndexPath:indexPath];
+            
+            XXESchoolAlbumCollectionViewCell *cell = (XXESchoolAlbumCollectionViewCell *)[_myCollcetionView cellForItemAtIndexPath:indexPath];
+            if (editButton.selected == NO) {
+                cell.checkImageView.hidden = YES;
+            }else{
+                cell.checkImageView.hidden = NO;
+            }
+        }
         
     }
 }
 
 #pragma mark ----------------删除 -------------------
 - (void)deleteButtonClick:(UIButton *)button{
-//    NSLog(@"=====  deleteButtonClick =====");
+    //    NSLog(@"=====  deleteButtonClick =====");
     button.selected = !button.selected;
     if (button.selected == YES) {
         if (_seletedModelArray.count == 0) {
@@ -214,8 +210,8 @@
 
 - (void)deleteShoolPic{
     if (_seletedModelArray.count == 1) {
-        XXESchoolAlbumModel *picModel = _seletedModelArray[0];
-        pic_id_str = picModel.schoolPicId;
+        XXEMySelfInfoAlbumModel *picModel = _seletedModelArray[0];
+        pic_id_str = picModel.myselfPicId;
         
     }else if (_seletedModelArray.count > 1){
         
@@ -223,9 +219,9 @@
         
         for (int j = 0; j < _seletedModelArray.count; j ++) {
             
-            XXESchoolAlbumModel *picModel = _seletedModelArray[j];
+            XXEMySelfInfoAlbumModel *picModel = _seletedModelArray[j];
             
-            NSString *str = picModel.schoolPicId;
+            NSString *str = picModel.myselfPicId;
             
             if (j != _seletedModelArray.count - 1) {
                 [tidStr appendFormat:@"%@,", str];
@@ -236,11 +232,11 @@
         pic_id_str = tidStr;
     }
     
-//    NSLog(@"bbb %@", pic_id_str);
+        NSLog(@"bbb %@", pic_id_str);
     
-    XXEDeleteSchoolPicApi *deleteSchoolPicApi = [[XXEDeleteSchoolPicApi alloc] initWithXid:parameterXid user_id:parameterUser_Id school_id:_schoolId position:@"4" pic_id_str:pic_id_str];
-    [deleteSchoolPicApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
-//                NSLog(@"2222---   %@", request.responseJSONObject);
+    XXEMyselfInfoAlbumDeletePicApi *myselfInfoAlbumDeletePicApi = [[XXEMyselfInfoAlbumDeletePicApi alloc] initWithXid:parameterXid user_id:parameterUser_Id pic_id:pic_id_str];
+    [myselfInfoAlbumDeletePicApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
+                        NSLog(@"2222---   %@", request.responseJSONObject);
         NSString *codeStr = [NSString stringWithFormat:@"%@", request.responseJSONObject[@"code"]];
         
         if ([codeStr isEqualToString:@"1"]) {
@@ -254,7 +250,7 @@
         }else{
             [self showHudWithString:@"删除失败!" forSecond:1.5];
         }
-
+        
     } failure:^(__kindof YTKBaseRequest *request) {
         
         [self showString:@"数据请求失败" forSecond:1.f];
@@ -264,40 +260,36 @@
 #pragma mark - ---------------------上传 照片----------------
 - (void)upButtonClick:(UIButton *)upBtn{
     NSLog(@"上传图片");
-    int i=1;
-    XXESchoolUpPicViewController *schoolUpPicVC =[[XXESchoolUpPicViewController alloc]init];
-    schoolUpPicVC.t =i;
-//    schoolUpPicVC.albumName =@"上传图片";
-//    schoolUpPicVC.vedioName =@"请为您发布的相册命名";
-    
-    schoolUpPicVC.schoolId = _schoolId;
-    
-    [self.navigationController pushViewController:schoolUpPicVC animated:YES];
+//    int i=1;
+//    XXESchoolUpPicViewController *schoolUpPicVC =[[XXESchoolUpPicViewController alloc]init];
+//    schoolUpPicVC.t =i;
+//    
+////    schoolUpPicVC.schoolId = _schoolId;
+//    
+//    [self.navigationController pushViewController:schoolUpPicVC animated:YES];
 }
 
 //
 - (void)fetchNetData{
     
-    if ([_flagStr isEqualToString:@"formSchoolInfo"]) {
-        //修改 学校 相册
-        [self modifySchoolPic];
-    }
-}
-
-- (void)modifySchoolPic{
-
-    XXESchoolPicApi *schoolPicApi = [[XXESchoolPicApi alloc] initWithXid:parameterXid user_id:parameterUser_Id user_type:USER_TYPE school_id:_schoolId];
-    [schoolPicApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
+    XXEMyselfInfoAlbumPicApi *myselfInfoAlbumPicApi = [[XXEMyselfInfoAlbumPicApi alloc] initWithXid:parameterXid user_id:parameterUser_Id];
+    [myselfInfoAlbumPicApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         _dataSourceArray = [[NSMutableArray alloc] init];
+        picWallArray = [[NSMutableArray alloc] init];
         //        NSLog(@"2222---   %@", request.responseJSONObject);
-
+        
         NSString *codeStr = [NSString stringWithFormat:@"%@", request.responseJSONObject[@"code"]];
         
         if ([codeStr isEqualToString:@"1"]) {
             
-            NSArray *modelArray = [XXESchoolAlbumModel parseResondsData:request.responseJSONObject[@"data"]];
+            NSArray *modelArray = [XXEMySelfInfoAlbumModel parseResondsData:request.responseJSONObject[@"data"]];
             
             [_dataSourceArray addObjectsFromArray:modelArray];
+            
+            for (int i = 0; i < _dataSourceArray.count; i++) {
+                XXEMySelfInfoAlbumModel *model = _dataSourceArray[i];
+                [picWallArray addObject:model.pic];
+            }
             
         }else{
             
@@ -315,9 +307,11 @@
 
 
 
+
+
 //相册 有数据 和 无数据 进行判断
 - (void)customContent{
-        // 1、无数据的时候
+    // 1、无数据的时候
     if (_dataSourceArray.count == 0) {
         UIImage *myImage = [UIImage imageNamed:@"all_placeholder"];
         CGFloat myImageWidth = myImage.size.width;
@@ -359,7 +353,7 @@
     
     //    提前告诉_collectionView用什么视图作为显示的复用视图，并且设置复用标识
     //    一定要实现，否则会崩溃 有xib的时候 用nib,纯代码 用 class
-//    [self.myCollcetionView registerClass:[XXESchoolAlbumCollectionViewCell class] forCellWithReuseIdentifier:@"XXESchoolAlbumCollectionViewCell"];
+    //    [self.myCollcetionView registerClass:[XXESchoolAlbumCollectionViewCell class] forCellWithReuseIdentifier:@"XXESchoolAlbumCollectionViewCell"];
     [self.myCollcetionView registerNib:[UINib nibWithNibName:@"XXESchoolAlbumCollectionViewCell" bundle:nil] forCellWithReuseIdentifier:@"XXESchoolAlbumCollectionViewCell"];
 }
 #pragma mark -
@@ -374,8 +368,8 @@
 -(UICollectionViewCell*)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     static NSString *identifier = @"XXESchoolAlbumCollectionViewCell";
     XXESchoolAlbumCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:identifier forIndexPath:indexPath];
-
-        XXESchoolAlbumModel *model = _dataSourceArray[indexPath.item];
+    
+    XXESchoolAlbumModel *model = _dataSourceArray[indexPath.item];
     [cell.schoolImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",kXXEPicURL,model.pic]] placeholderImage:[UIImage imageNamed:@""]];
     if (editButton.selected == NO) {
         cell.checkImageView.hidden = YES;
@@ -389,15 +383,15 @@
 }
 
 #pragma mark PickerViewDelegate
-- (BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-
-    if (editButton.selected == YES) {
-        XXESchoolAlbumModel *picModel = _dataSourceArray[indexPath.item];
-        [_seletedModelArray addObject:picModel];
-        [self updateButtonTitle];
-    }
-    return YES;
-}
+//- (BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+//    
+//    if (editButton.selected == YES) {
+//        XXESchoolAlbumModel *picModel = _dataSourceArray[indexPath.item];
+//        [_seletedModelArray addObject:picModel];
+//        [self updateButtonTitle];
+//    }
+//    return YES;
+//}
 
 //- (BOOL)collectionView:(UICollectionView *)collectionView shouldDeselectItemAtIndexPath:(NSIndexPath *)indexPath {
 //    if ([self.disabledContactIds count]) {
@@ -411,29 +405,36 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     if (editButton.selected == YES) {
-        XXESchoolAlbumModel *picModel = _dataSourceArray[indexPath.item];
+        XXEMySelfInfoAlbumModel *picModel = _dataSourceArray[indexPath.item];
         [_seletedModelArray addObject:picModel];
         [self updateButtonTitle];
     }else{
-    
-        XXEAlbumShowViewController *showVC = [[XXEAlbumShowViewController alloc]init];        
-        showVC.showDatasource = _dataSourceArray;
-//        showVC.showAlbumXid = self.albumTeacherXID;
-        showVC.flagStr = @"fromSchoolAlbum";
-        showVC.currentIndex = indexPath.item;
-        [self.navigationController pushViewController:showVC animated:YES];
+        XXEImageBrowsingViewController * imageBrowsingVC = [[XXEImageBrowsingViewController alloc] init];
+        
+        imageBrowsingVC.imageUrlArray = picWallArray;
+        imageBrowsingVC.currentIndex = indexPath.item;
+        //举报 来源 6:老师点评
+//        imageBrowsingVC.origin_pageStr = @"6";
+        
+        [self.navigationController pushViewController:imageBrowsingVC animated:YES];
+//        XXEAlbumShowViewController *showVC = [[XXEAlbumShowViewController alloc]init];
+//        showVC.showDatasource = _dataSourceArray;
+//        //        showVC.showAlbumXid = self.albumTeacherXID;
+//        showVC.flagStr = @"fromSchoolAlbum";
+//        showVC.currentIndex = indexPath.item;
+//        [self.navigationController pushViewController:showVC animated:YES];
     }
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath {
-
-    XXESchoolAlbumModel *picModel = _dataSourceArray[indexPath.item];
+    
+    XXEMySelfInfoAlbumModel *picModel = _dataSourceArray[indexPath.item];
     [_seletedModelArray removeObject:picModel];
     [self updateButtonTitle];
 }
 
 - (void)updateButtonTitle{
-
+    
     if (editButton.selected == NO) {
         
         [editButton setTitle:@"编辑" forState:UIControlStateNormal];
@@ -448,7 +449,6 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
 
 
 @end

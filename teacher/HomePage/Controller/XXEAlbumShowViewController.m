@@ -8,6 +8,7 @@
 
 #import "XXEAlbumShowViewController.h"
 #import "XXEAlbumDetailsModel.h"
+#import "XXESchoolAlbumModel.h"
 #import "SDCycleScrollView.h"
 #import "XXEVerticalButton.h"
 #import "KTActionSheet.h"
@@ -58,11 +59,21 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    for (XXEAlbumDetailsModel *model in self.showDatasource) {
-        NSLog(@"%@",model.pic);
-        NSString *albumUrl = [NSString stringWithFormat:@"%@%@",kXXEPicURL,model.pic];
-        [self.albumNameDatasource addObject:albumUrl];
+    if ([_flagStr isEqualToString:@"fromSchoolAlbum"]) {
+        for (XXESchoolAlbumModel *model in self.showDatasource) {
+            //            NSLog(@"%@",model.pic);
+            NSString *albumUrl = [NSString stringWithFormat:@"%@%@",kXXEPicURL,model.pic];
+            [self.albumNameDatasource addObject:albumUrl];
+        }
+    }else{
+        for (XXEAlbumDetailsModel *model in self.showDatasource) {
+//            NSLog(@"%@",model.pic);
+            NSString *albumUrl = [NSString stringWithFormat:@"%@%@",kXXEPicURL,model.pic];
+            [self.albumNameDatasource addObject:albumUrl];
+        }
     }
+    
+    
     [self creatSDCycleScrollView];
     //创建点击按钮
     [self creatButtonView];
@@ -76,7 +87,15 @@
     cycleScrollView.currentPageDotColor = [UIColor whiteColor];
     cycleScrollView.imageURLStringsGroup = self.albumNameDatasource;
     [self.view addSubview:cycleScrollView];
+    
+    
+    //判断 进入 图片 浏览 模式 时,应该 从 什么位置 开始
+//    CGPoint contentOffset = cycleScrollView.;
+//    contentOffset.x = _currentIndex * KScreenWidth;
+//    [cycleScrollView setContentOffset:contentOffset animated:YES];
+//    [self cycleScrollView:cycleScrollView didSelectItemAtIndex:_currentIndex];
 }
+
 
 - (void)creatButtonView
 {
