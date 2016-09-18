@@ -568,7 +568,7 @@
             likeItem.userNick = goodNickName;
             NSLog(@"Model%@ ID%lld",likeItem,itemId);
             [self addLikeItem:likeItem itemId:itemId];
-            [SVProgressHUD showSuccessWithStatus:@"点赞成功"];
+            [self hudShowText:@"点赞成功" second:1.f];
             
         }else if ([code integerValue]==10){
             DFLineLikeItem *likeItem = [[DFLineLikeItem alloc] init];
@@ -576,11 +576,11 @@
             likeItem.userNick = goodNickName;
             NSLog(@"Model%@ ID%lld",likeItem,itemId);
             [self cancelLikeItem:likeItem itemId:itemId];
-            [SVProgressHUD showSuccessWithStatus:@"取消点赞"];
+            [self hudShowText:@"取消成功" second:1.f];
         }
     
     } failure:^(__kindof YTKBaseRequest *request) {
-        [SVProgressHUD showErrorWithStatus:@"网络不通，请检查网络！"];
+        [self hudShowText:@"网络不通，请检查网络！" second:1.f];
     }];
     
     }
