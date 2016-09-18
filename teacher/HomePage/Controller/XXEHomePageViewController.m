@@ -34,8 +34,8 @@
 #import "XXESignInViewController.h"
 //猩天地
 #import "XXEXingCommunityViewController.h"
-
-
+//通知
+#import "XXENotificationViewController.h"
 
 
 @interface XXEHomePageViewController ()<XXEHomePageHeaderViewDelegate,XXEHomePageMiddleViewDelegate,XXEHomePageBottomViewDelegate>
@@ -416,6 +416,15 @@
     //    NSLog(@"%@%@",self.schoolHomeId,self.classHomeId);
     
     [self.navigationController pushViewController:redFlowerSentHistoryVC animated:YES];
+}
+
+- (void)homeMiddleFourButtonClick{
+    NSLog(@"-----  通知 ---- ");
+    XXENotificationViewController *notificationVC = [[XXENotificationViewController alloc] init];
+    notificationVC.schoolId = self.schoolHomeId;
+    notificationVC.classId = self.classHomeId;
+    
+    [self.navigationController pushViewController:notificationVC animated:YES];
 }
 
 

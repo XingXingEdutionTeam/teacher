@@ -23,7 +23,6 @@
 @property (nonatomic, copy) NSString *school_id;
 @property (nonatomic, copy) NSString *date_tm;
 
-
 @end
 
 @implementation XXEStudentSignInApi

@@ -101,7 +101,10 @@
 
 - (void)homeMiddleFourButtonClick:(UIButton *)sender
 {
-    NSLog(@"----通知点击相应通知------");
+//    NSLog(@"----通知点击相应通知------");
+    if ([self.delegate respondsToSelector:@selector(homeMiddleFourButtonClick)]) {
+        [self.delegate homeMiddleFourButtonClick];
+    }
 }
 
 @end

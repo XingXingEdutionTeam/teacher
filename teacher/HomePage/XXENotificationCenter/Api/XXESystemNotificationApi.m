@@ -1,39 +1,36 @@
 
 
-
 //
-//  XXEStarRemarkApi.m
+//  XXESystemNotificationApi.m
 //  teacher
 //
-//  Created by Mac on 16/8/31.
+//  Created by Mac on 16/9/13.
 //  Copyright © 2016年 XingXingEdu. All rights reserved.
 //
 
-#import "XXEStarRemarkApi.h"
+#import "XXESystemNotificationApi.h"
 
-#define URL @"http://www.xingxingedu.cn/Global/sch_course_comment"
+#define URL @"http://www.xingxingedu.cn/Global/official_notice"
 
-
-@interface XXEStarRemarkApi()
+@interface XXESystemNotificationApi()
 
 @property (nonatomic, copy) NSString *xid;
 @property (nonatomic, copy) NSString *user_id;
-@property (nonatomic, copy) NSString *user_type;
 
-@property (nonatomic, copy) NSString *school_id;
+@property (nonatomic, copy) NSString *app_type;
 @property (nonatomic, copy) NSString *page;
 
 @end
 
-@implementation XXEStarRemarkApi
 
-- (instancetype)initWithXid:(NSString *)xid user_id:(NSString *)user_id user_type:(NSString *)user_type school_id:(NSString *)school_id page:(NSString *)page{
+@implementation XXESystemNotificationApi
+
+- (instancetype)initWithXid:(NSString *)xid user_id:(NSString *)user_id app_type:(NSString *)app_type page:(NSString *)page{
     
     if (self = [super init]) {
         _xid = xid;
         _user_id = user_id;
-        _user_type = user_type;
-        _school_id = school_id;
+        _app_type = app_type;
         _page = page;
     }
     return self;
@@ -41,9 +38,7 @@
 
 
 - (NSString *)requestUrl{
-    
     return URL;
-    
 }
 
 - (YTKRequestMethod)requestMethod{
@@ -51,19 +46,18 @@
     
 }
 
-
 - (id)requestArgument{
     
-    return @{@"url":URL,
+    return @{
              @"appkey":APPKEY,
              @"backtype":BACKTYPE,
              @"xid":_xid,
              @"user_id":_user_id,
-             @"user_type":_user_type,
-             @"school_id":_school_id,
+             @"user_type":USER_TYPE,
+             @"app_type":_app_type,
              @"page":_page
              };
-    
 }
+
 
 @end

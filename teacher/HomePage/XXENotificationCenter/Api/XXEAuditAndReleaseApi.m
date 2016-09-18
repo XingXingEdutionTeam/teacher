@@ -1,39 +1,39 @@
 
 
-
 //
-//  XXEStarRemarkApi.m
+//  XXEAuditAndReleaseApi.m
 //  teacher
 //
-//  Created by Mac on 16/8/31.
+//  Created by Mac on 16/9/14.
 //  Copyright © 2016年 XingXingEdu. All rights reserved.
 //
 
-#import "XXEStarRemarkApi.h"
+#import "XXEAuditAndReleaseApi.h"
 
-#define URL @"http://www.xingxingedu.cn/Global/sch_course_comment"
+#define URL @"http://www.xingxingedu.cn/Teacher/school_notice_me"
 
-
-@interface XXEStarRemarkApi()
+@interface XXEAuditAndReleaseApi()
 
 @property (nonatomic, copy) NSString *xid;
 @property (nonatomic, copy) NSString *user_id;
-@property (nonatomic, copy) NSString *user_type;
 
 @property (nonatomic, copy) NSString *school_id;
+@property (nonatomic, copy) NSString *class_id;
+@property (nonatomic, copy) NSString *request_type;
 @property (nonatomic, copy) NSString *page;
 
 @end
 
-@implementation XXEStarRemarkApi
+@implementation XXEAuditAndReleaseApi
 
-- (instancetype)initWithXid:(NSString *)xid user_id:(NSString *)user_id user_type:(NSString *)user_type school_id:(NSString *)school_id page:(NSString *)page{
+- (instancetype)initWithXid:(NSString *)xid user_id:(NSString *)user_id school_id:(NSString *)school_id class_id:(NSString *)class_id request_type:(NSString *)request_type page:(NSString *)page{
     
     if (self = [super init]) {
         _xid = xid;
         _user_id = user_id;
-        _user_type = user_type;
         _school_id = school_id;
+        _class_id = class_id;
+        _request_type = request_type;
         _page = page;
     }
     return self;
@@ -41,9 +41,7 @@
 
 
 - (NSString *)requestUrl{
-    
     return URL;
-    
 }
 
 - (YTKRequestMethod)requestMethod{
@@ -51,19 +49,20 @@
     
 }
 
-
 - (id)requestArgument{
     
-    return @{@"url":URL,
+    return @{
              @"appkey":APPKEY,
              @"backtype":BACKTYPE,
              @"xid":_xid,
              @"user_id":_user_id,
-             @"user_type":_user_type,
+             @"user_type":USER_TYPE,
              @"school_id":_school_id,
+             @"class_id":_class_id,
+             @"request_type":_request_type,
              @"page":_page
              };
-    
 }
+
 
 @end

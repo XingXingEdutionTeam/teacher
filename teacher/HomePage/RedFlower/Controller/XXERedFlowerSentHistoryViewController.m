@@ -250,7 +250,9 @@
     
 //    NSLog(@"课程  %@", model.teach_course);
     cell.titleLabel.text = [NSString stringWithFormat:@"%@ / %@ / %@", model.tname, model.teach_course, model.class_name];
+    cell.titleLabel.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
     cell.contentLabel.text = [NSString stringWithFormat:@"赠言:%@", model.con];
+    cell.contentLabel.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
     cell.timeLabel.text = [XXETool dateStringFromNumberTimer:model.date_tm];
     
     if([model.collect_condit isEqualToString:@"2"]){

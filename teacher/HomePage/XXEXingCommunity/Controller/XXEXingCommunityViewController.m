@@ -108,7 +108,7 @@
     model.sliderMenuTextColorForNormal = QHRGB(120, 120, 120);
     model.sliderMenuTextColorForSelect = QHRGB(0, 170, 42);
     model.titleLableFont               = defaultFont(16);
-    navSliderMenu = [[QHNavSliderMenu alloc] initWithFrame:(CGRect){0,160,screenWidth,50} andStyleModel:model andDelegate:self showType:menuType];
+    navSliderMenu = [[QHNavSliderMenu alloc] initWithFrame:(CGRect){0,160 * kScreenRatioHeight,screenWidth,50 * kScreenRatioHeight} andStyleModel:model andDelegate:self showType:menuType];
     navSliderMenu.backgroundColor = [UIColor groupTableViewBackgroundColor];
     [self.view addSubview:navSliderMenu];
     
@@ -191,29 +191,29 @@
 {
 //    UIImageView *img=[UIImageView createImageViewWithFrame: ImageName:@"community4.png"];
     UIImageView *img = [[UIImageView alloc] init];
-    img.frame = CGRectMake(0, 0, WinWidth,160 );
+    img.frame = CGRectMake(0, 0, WinWidth,160 * kScreenRatioHeight);
     img.image = [UIImage imageNamed:@"community4"];
     
     [self.view addSubview:img];
     //育儿库
-    libraryButton = [UIButton createButtonWithFrame:CGRectMake(0, 88, WinWidth/2, 65) backGruondImageName:@"community10" Target:self Action:@selector(onClickbabycontentBtn:) Title:nil];
+    libraryButton = [UIButton createButtonWithFrame:CGRectMake(0, 88 * kScreenRatioHeight, WinWidth/2, 65 * kScreenRatioHeight) backGruondImageName:@"community10" Target:self Action:@selector(onClickbabycontentBtn:) Title:nil];
     [self.view addSubview:libraryButton];
     //社区
-    communityButton = [UIButton createButtonWithFrame:CGRectMake(WinWidth/2+1, 88, WinWidth/2, 65) backGruondImageName:@"community11" Target:self Action:@selector(onClickcommunityBtn:) Title:nil];
+    communityButton = [UIButton createButtonWithFrame:CGRectMake(WinWidth/2+1, 88 * kScreenRatioHeight, WinWidth/2, 65 * kScreenRatioHeight) backGruondImageName:@"community11" Target:self Action:@selector(onClickcommunityBtn:) Title:nil];
     [self.view addSubview:communityButton];
     
     
     //今日话题
-    topicButton = [UIButton createButtonWithFrame:CGRectMake(0, 10,WinWidth, 71) backGruondImageName:@"community9" Target:self Action:@selector(onClicktopicBtn:) Title:nil];
+    topicButton = [UIButton createButtonWithFrame:CGRectMake(0, 10 * kScreenRatioHeight,WinWidth, 71 * kScreenRatioHeight) backGruondImageName:@"community9" Target:self Action:@selector(onClicktopicBtn:) Title:nil];
     [self.view addSubview:topicButton];
     
-    topicLabel=[UILabel createLabelWithFrame:CGRectMake(80, 51,WinWidth-100, 21) Font:12 Text:@"孩子牛奶喝的多好不好,会影响什么？"];
+    topicLabel=[UILabel createLabelWithFrame:CGRectMake(80 * kScreenRatioWidth, 51 * kScreenRatioHeight ,WinWidth-100 * kScreenRatioWidth, 21 * kScreenRatioHeight) Font:12 Text:@"孩子牛奶喝的多好不好,会影响什么？"];
     [self.view addSubview:topicLabel];
     
-    supportBtn=[UIButton createButtonWithFrame:CGRectMake(300, 56,13, 11) backGruondImageName:@"community13" Target:self Action:@selector(supportBtnClick:) Title:nil];
+    supportBtn=[UIButton createButtonWithFrame:CGRectMake(310 * kScreenRatioWidth , 56 * kScreenRatioHeight,13 * kScreenRatioWidth, 11 * kScreenRatioHeight) backGruondImageName:@"community13" Target:self Action:@selector(supportBtnClick:) Title:nil];
     [self.view addSubview:supportBtn];
     
-    unSupportBtn=[UIButton createButtonWithFrame:CGRectMake(330, 56,13, 11) backGruondImageName:@"community15" Target:self Action:@selector(unSupportBtnClick:) Title:nil];
+    unSupportBtn=[UIButton createButtonWithFrame:CGRectMake(340 * kScreenRatioWidth, 56 * kScreenRatioHeight,13 * kScreenRatioWidth, 11 * kScreenRatioHeight) backGruondImageName:@"community15" Target:self Action:@selector(unSupportBtnClick:) Title:nil];
     [self.view addSubview:unSupportBtn];
     
     

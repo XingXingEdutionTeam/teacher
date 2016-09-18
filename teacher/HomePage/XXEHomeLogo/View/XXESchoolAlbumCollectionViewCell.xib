@@ -12,10 +12,32 @@
             <autoresizingMask key="autoresizingMask"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                 <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
+                <subviews>
+                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Yna-8T-pa7">
+                        <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yuA-ta-ZU8">
+                                <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="report_selected_icon" translatesAutoresizingMaskIntoConstraints="NO" id="1OB-kp-rym">
+                                <rect key="frame" x="66" y="66" width="30" height="30"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             </view>
             <size key="customSize" width="117" height="113"/>
+            <connections>
+                <outlet property="bgView" destination="Yna-8T-pa7" id="xwa-8l-ZrQ"/>
+                <outlet property="checkImageView" destination="1OB-kp-rym" id="sOb-G2-51O"/>
+                <outlet property="schoolImageView" destination="yuA-ta-ZU8" id="rYn-Bk-FfQ"/>
+            </connections>
             <point key="canvasLocation" x="356" y="290"/>
         </collectionViewCell>
     </objects>
+    <resources>
+        <image name="report_selected_icon" width="17" height="17"/>
+    </resources>
 </document>

@@ -18,6 +18,8 @@
 - (void)homeMiddleTwoButtonClick;
 /** 猩币点击事件 */
 - (void)homeMiddleThreeButtonClick;
+/** 通知 */
+- (void)homeMiddleFourButtonClick;
 
 @end
 
