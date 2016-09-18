@@ -24,6 +24,8 @@
 //发布朋友圈
 #define XXEPublishFriendCircleUrl @"http://www.xingxingedu.cn/Global/mycircle_publish"
 
+//删除评论
+#define XXEDeleteCommenturl @"http://www.xingxingedu.cn/Global/my_circle_delete"
 
 
 

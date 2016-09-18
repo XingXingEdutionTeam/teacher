@@ -294,8 +294,43 @@
 
 -(void)addLikeItem:(DFLineLikeItem *)likeItem itemId:(long long)itemId
 {
+    NSLog(@"点赞人的Model:%@",likeItem);
+    NSLog(@"%lu",(unsigned long)likeItem.userId);
+    
     DFBaseLineItem *item = [self getItem:itemId];
+    
+    NSLog(@"点的赞的数组%@",item.likes);
+    
     [item.likes insertObject:likeItem atIndex:0];
+    NSLog(@"所有点赞的数组信息%@",item.likes);
+    item.likesStr = nil;
+    item.cellHeight = 0;
+    [self genLikeAttrString:item];
+    [self.tableView reloadData];
+}
+
+//取消点赞
+- (void)cancelLikeItem:(DFLineLikeItem *)likeItem itemId:(long long)itemId
+{
+    DFBaseLineItem *item = [self getItem:itemId];
+    NSLog(@"%lu",(unsigned long)item.userId);
+    int index = 1;
+    int indexPath = 0;
+    if (item.likes.count >0) {
+        for (DFLineLikeItem *itemA in item.likes) {
+            if (itemA.userId == item.userId) {
+                indexPath = index-1;
+                NSLog(@"indexPath:%d",indexPath);
+            }
+            index++;
+            NSLog(@"index:%d",index);
+        }
+
+    }else{
+        indexPath = 0;
+    }
+    
+    [item.likes removeObjectAtIndex:indexPath];
     item.likesStr = nil;
     item.cellHeight = 0;
     [self genLikeAttrString:item];
@@ -318,6 +353,44 @@
         self.toWhoXid = replyCommentItem.userId;
         NSLog(@"%ld",(long)self.toWhoXid);
         [self xxe_friendCirclePageCommentToWhoXid:self.toWhoXid];
+    }
+    item.cellHeight = 0;
+    [self genCommentAttrString:item];
+    [self.tableView reloadData];
+}
+
+//取消评论
+-(void)cancelCommentItem:(DFLineCommentItem *)commentItem itemId:(long long)itemId replyCommentId:(long long)replyCommentId
+{
+    DFBaseLineItem *item = [self getItem:itemId];
+    
+    NSLog(@"%@",item.comments);
+//    NSLog(@"%@",item.comments[0]);
+    
+    int index = 1;
+    int indexPath = 0;
+    if (item.comments.count >0) {
+        for (DFLineCommentItem *itemA in item.comments) {
+            if (itemA.userId == item.userId) {
+                indexPath = index-1;
+                NSLog(@"indexPath:%d",indexPath);
+            }
+            index++;
+            NSLog(@"index:%d",index);
+        }
+         [item.comments removeObjectAtIndex:indexPath];
+        
+    }else{
+        indexPath = 0;
+         [item.comments removeAllObjects];
+    }
+    if (replyCommentId > 0) {
+        DFLineCommentItem *replyCommentItem = [self getCommentItem:replyCommentId];
+        commentItem.replyUserId = replyCommentItem.userId;
+        commentItem.replyUserNick = replyCommentItem.userNick;
+        //获取回复时的被回复人的XID
+        self.toWhoXid = replyCommentItem.userId;
+        NSLog(@"%ld",(long)self.toWhoXid);
     }
     item.cellHeight = 0;
     [self genCommentAttrString:item];
@@ -370,19 +443,20 @@
     
 }
 
-
 -(void)onCommentCreate:(long long)commentId text:(NSString *)text
 {
     [self onCommentCreate:commentId text:text itemId:_currentItemId];
 }
-
 
 -(void)onCommentCreate:(long long)commentId text:(NSString *)text itemId:(long long) itemId
 {
     
 }
 
-
+//删除评论
+-(void) deleteClickComment:(long long) commentId itemId:(long long) itemId
+{
+}
 
 
 
@@ -412,7 +486,6 @@
             [attrStr addAttribute:NSLinkAttributeName value:[NSString stringWithFormat:@"%lu", (unsigned long)like.userId] range:NSMakeRange(position, like.userNick.length)];
             position += like.userNick.length+2;
         }
-        
         item.likesStr = attrStr;
     }
     

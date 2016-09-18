@@ -17,6 +17,7 @@
 #import "XXEFriendCirclegoodApi.h"
 #import "XXEFriendCircleCommentApi.h"
 #import "SVProgressHUD.h"
+#import "XXEDeleteCommentApi.h"
 
 @interface XXEFriendCirclePageViewController ()
 /** 朋友圈的头部视图信息 */
@@ -405,7 +406,6 @@
     
     NSInteger myXId = [[XXEUserInfo user].xid integerValue];
     
-    
     long indexId = itemId-1;
     NSLog(@"新的:%ld",indexId);
     if (self.circleListDatasource.count ==0) {
@@ -484,6 +484,58 @@
     }];
 }
 
+//删除评论 网络请求
+#pragma mark - 删除评论 的网络请求
+-(void) deleteClickComment:(long long) commentId itemId:(long long) itemId
+{
+    NSLog(@"长按删除评论");
+    NSString *strngXid;
+    NSString *homeUserId;
+    if ([XXEUserInfo user].login) {
+        strngXid = [XXEUserInfo user].xid;
+        homeUserId = [XXEUserInfo user].user_id;
+    }else {
+        strngXid = XID;
+        homeUserId = USER_ID;
+    }
+    
+    long indexId = itemId-1;
+    NSLog(@"新的:%ld",indexId);
+    if (self.circleListDatasource.count ==0) {
+        [self hudShowText:@"没有数据" second:1.f];
+    }else{
+        XXECircleModel *circleModel = self.circleListDatasource[indexId];
+        self.speakId = circleModel.talkId;
+    }
+    
+    NSLog(@"commentId%lld itemI%lld",commentId, itemId);
+    NSLog(@"说说ID%@",self.speakId);
+    NSLog(@"CommentId%lld",commentId);
+    NSString *commentID = [NSString stringWithFormat:@"%lld",commentId];
+    XXEDeleteCommentApi *commentApi = [[XXEDeleteCommentApi alloc]initWithDeleteCommentEventType:@"3" TalkId:self.speakId CommentId:commentID UserXid:strngXid UserId:homeUserId];
+    [commentApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
+        NSLog(@"%@",request.responseJSONObject);
+        NSString *code = [request.responseJSONObject objectForKey:@"code"];
+        NSString *data = [request.responseJSONObject objectForKey:@"data"];
+        NSLog(@":data%@",data);
+        if ([code integerValue]==1) {
+            NSLog(@"%@",[request.responseJSONObject objectForKey:@"msg"]);
+            NSLog(@"%@",[request.responseJSONObject objectForKey:@"data"]);
+            DFLineCommentItem *commentItem = [[DFLineCommentItem alloc] init];
+            commentItem.commentId = [[NSDate date] timeIntervalSince1970];
+            commentItem.userId = [strngXid integerValue];
+            commentItem.userNick = @"";
+            commentItem.text = @"";
+            [self cancelCommentItem:commentItem itemId:itemId replyCommentId:commentId];
+            [self hudShowText:@"删除成功" second:1.f];
+        }else{
+            [self hudShowText:@"删除失败" second:1.f];
+        }
+    } failure:^(__kindof YTKBaseRequest *request) {
+        [self hudShowText:@"网络请求失败" second:1.f];
+    }];
+}
+
 - (void)onLike:(long long)itemId
 {
     NSString *strngXid;
@@ -502,9 +554,7 @@
     }else{
        XXECircleModel *circleModel = self.circleListDatasource[indexId];
         self.speakId = circleModel.talkId;
-    
     NSLog(@"说说ID%@ XID%@ UserID%@",self.speakId ,strngXid,homeUserId);
-    
     XXEFriendCirclegoodApi *friendGoodApi = [[XXEFriendCirclegoodApi alloc]initWithFriendCircleGoodOrCancelUerXid:strngXid UserID:homeUserId TalkId:self.speakId];
     [friendGoodApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         NSString *code = [request.responseJSONObject objectForKey:@"code"];
@@ -525,6 +575,7 @@
             likeItem.userId = [goodXid integerValue];
             likeItem.userNick = goodNickName;
             NSLog(@"Model%@ ID%lld",likeItem,itemId);
+            [self cancelLikeItem:likeItem itemId:itemId];
             [SVProgressHUD showSuccessWithStatus:@"取消点赞"];
         }
     

@@ -14,6 +14,11 @@
 
 -(void) onSendTextImage:(NSString *) text images:(NSArray *)images;
 
+//定位的地点
+- (void)locationMessageText:(NSString *)text;
+//给谁看
+- (void)xxe_whoCanLookMessage:(NSString *)personLook;
+
 
 @end
 @interface DFImagesSendViewController : DFBaseViewController

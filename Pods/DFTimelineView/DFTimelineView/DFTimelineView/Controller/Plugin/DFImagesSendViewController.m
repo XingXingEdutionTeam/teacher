@@ -188,7 +188,6 @@
     self.whoButton.titleEdgeInsets = UIEdgeInsetsMake(0, 10, 0, 0);
     [self.whoButton addTarget:self action:@selector(whoButtonAction:) forControlEvents:UIControlEventTouchUpInside];
     [bgBtnView addSubview:self.whoButton];
-    
 }
 
 #pragma mark - 所在位置的定位

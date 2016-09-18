@@ -20,9 +20,6 @@
 
 #define  BodyMaxWidth [UIScreen mainScreen].bounds.size.width - UserAvatarSize - 3*Margin
 
-
-
-
 @protocol DFLineCellDelegate <NSObject>
 
 @optional
@@ -33,6 +30,8 @@
 -(void) onClickUser:(NSUInteger) userId;
 
 -(void) onClickComment:(long long) commentId itemId:(long long) itemId;
+//删除评论
+-(void) deleteClickComment:(long long) commentId itemId:(long long) itemId;
 
 
 @end

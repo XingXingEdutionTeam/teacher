@@ -586,7 +586,6 @@
 {
     NSLog(@"------新浪登录------");
     UMSocialSnsPlatform *snsPlatform = [UMSocialSnsPlatformManager getSocialPlatformWithName:UMShareToSina];
-    
     snsPlatform.loginClickHandler(self,[UMSocialControllerService defaultControllerService],YES,^(UMSocialResponseEntity *response){
         
         //          获取微博用户名、uid、token等

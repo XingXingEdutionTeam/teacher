@@ -13,7 +13,8 @@
 @required
 -(void) onClickUser:(NSUInteger) userId;
 -(void) onClickComment:(long long) commentId;
-
+//删除评论或者回复
+- (void)deleteClickComment:(long long) commentId;
 @end
 
 

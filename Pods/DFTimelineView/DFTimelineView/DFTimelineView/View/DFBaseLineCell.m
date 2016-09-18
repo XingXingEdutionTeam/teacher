@@ -394,7 +394,6 @@
 
 -(void)onLike
 {
-   
     [self hideLikeCommentToolbar];
     
     if (_delegate != nil && [_delegate respondsToSelector:@selector(onLike:)]) {
@@ -431,4 +430,13 @@
         [_delegate onClickComment:commentId itemId:self.item.itemId];
     }
 }
+//删除评论
+- (void)deleteClickComment:(long long) commentId
+{
+    if (_delegate != nil && [_delegate respondsToSelector:@selector(deleteClickComment:itemId:)]) {
+        [_delegate deleteClickComment:commentId itemId:self.item.itemId];
+    }
+}
+
+
 @end

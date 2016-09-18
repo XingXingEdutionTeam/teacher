@@ -45,8 +45,10 @@
 #define LinkLabelTag 100
 
 
-@interface DFLikeCommentView()<MLLinkClickLabelDelegate>
-
+@interface DFLikeCommentView()<MLLinkClickLabelDelegate,UIAlertViewDelegate>
+{
+    long keenteam;
+}
 
 @property (nonatomic, strong) UIImageView *likeCmtBg;
 
@@ -268,7 +270,6 @@
     
     MLClickColorLinkLabel *lable = [[MLClickColorLinkLabel alloc] initWithFrame:CGRectZero];
     lable.clickDelegate = self;
-    
     UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPress:)];
     [lable addGestureRecognizer:longPress];
     
@@ -306,7 +307,42 @@
 -(void)longPress:(UITapGestureRecognizer*)recognizer
 {
     NSLog(@"长按了Label");
+    keenteam  = recognizer.view.tag;
+    //解决响应两次的问题
+    if (recognizer.state == UIGestureRecognizerStateEnded) {
+        return;
+        
+    } else if (recognizer.state == UIGestureRecognizerStateBegan) {
+        UIActionSheet *actionSheet =[[UIActionSheet alloc]initWithTitle:@"删除评论?" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        [actionSheet showInView:self];
+    }
 }
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
+    
+    if (buttonIndex==1) {
+        NSLog(@"取消删除");
+    }
+    else{
+        NSLog(@"确定删除");
+        
+        [self my_circle_deleteCommment];
+    }
+    
+}
+
+//删除评论
+- (void)my_circle_deleteCommment
+{
+    NSLog(@"删除评论");
+    
+    MLClickColorLinkLabel *label = (MLClickColorLinkLabel*)[self viewWithTag:keenteam];
+        if (_delegate && [_delegate respondsToSelector:@selector(deleteClickComment:)]) {
+            [_delegate deleteClickComment:label.uniqueId];
+        }
+}
+
+
 
 -(void)onClickOutsideLink:(long long)uniqueId
 {

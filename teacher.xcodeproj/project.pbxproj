@@ -504,6 +504,7 @@
 		9ED9AB131D7EB7DD00B63B53 /* XXEFriendMyCircleApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 9ED9AB121D7EB7DD00B63B53 /* XXEFriendMyCircleApi.m */; };
 		9ED9AB171D7EC0A200B63B53 /* XXEFriendCirclegoodApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 9ED9AB161D7EC0A200B63B53 /* XXEFriendCirclegoodApi.m */; };
 		9ED9AB1A1D7EC0B100B63B53 /* XXEFriendCircleCommentApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 9ED9AB191D7EC0B100B63B53 /* XXEFriendCircleCommentApi.m */; };
+		9EDA725E1D8E9841006E5FB8 /* XXEDeleteCommentApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EDA725D1D8E9841006E5FB8 /* XXEDeleteCommentApi.m */; };
 		9EE498EF1D658B5C00FC5472 /* XXETeacherTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EE498ED1D658B5C00FC5472 /* XXETeacherTableViewCell.m */; };
 		9EE498F01D658B5C00FC5472 /* XXETeacherTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9EE498EE1D658B5C00FC5472 /* XXETeacherTableViewCell.xib */; };
 		9EE498F41D6590EB00FC5472 /* XXETeacherMessTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EE498F21D6590EB00FC5472 /* XXETeacherMessTableViewCell.m */; };
@@ -1453,6 +1454,8 @@
 		9ED9AB161D7EC0A200B63B53 /* XXEFriendCirclegoodApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXEFriendCirclegoodApi.m; sourceTree = "<group>"; };
 		9ED9AB181D7EC0B100B63B53 /* XXEFriendCircleCommentApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXEFriendCircleCommentApi.h; sourceTree = "<group>"; };
 		9ED9AB191D7EC0B100B63B53 /* XXEFriendCircleCommentApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXEFriendCircleCommentApi.m; sourceTree = "<group>"; };
+		9EDA725C1D8E9841006E5FB8 /* XXEDeleteCommentApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXEDeleteCommentApi.h; sourceTree = "<group>"; };
+		9EDA725D1D8E9841006E5FB8 /* XXEDeleteCommentApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXEDeleteCommentApi.m; sourceTree = "<group>"; };
 		9EE498EC1D658B5C00FC5472 /* XXETeacherTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXETeacherTableViewCell.h; sourceTree = "<group>"; };
 		9EE498ED1D658B5C00FC5472 /* XXETeacherTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXETeacherTableViewCell.m; sourceTree = "<group>"; };
 		9EE498EE1D658B5C00FC5472 /* XXETeacherTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XXETeacherTableViewCell.xib; sourceTree = "<group>"; };
@@ -3460,6 +3463,8 @@
 				9ED9AB191D7EC0B100B63B53 /* XXEFriendCircleCommentApi.m */,
 				9E23F4BC1D82495D00AA2AC2 /* XXEPublishFriendCircleApi.h */,
 				9E23F4BD1D82495D00AA2AC2 /* XXEPublishFriendCircleApi.m */,
+				9EDA725C1D8E9841006E5FB8 /* XXEDeleteCommentApi.h */,
+				9EDA725D1D8E9841006E5FB8 /* XXEDeleteCommentApi.m */,
 			);
 			path = FriendCircleApi;
 			sourceTree = "<group>";
@@ -3669,7 +3674,7 @@
 				TargetAttributes = {
 					9E48137E1D504D0900C614AC = {
 						CreatedOnToolsVersion = 7.2;
-						DevelopmentTeam = 6XY86P6N2E;
+						DevelopmentTeam = T66J45HUSH;
 					};
 					9E4813971D504D0900C614AC = {
 						CreatedOnToolsVersion = 7.2;
@@ -4273,6 +4278,7 @@
 				04A9DDC01D816BAE00544782 /* XXEMyselfInfoCollectionUsersApi.m in Sources */,
 				043C808C1D8642B3004F1B85 /* XXEAboutMyselfInfoViewController.m in Sources */,
 				04BB3A471D74742B00AA5C5C /* XXERecipePicModify.m in Sources */,
+				9EDA725E1D8E9841006E5FB8 /* XXEDeleteCommentApi.m in Sources */,
 				04BB3A2E1D74742B00AA5C5C /* XXESchoolUpPicViewController.m in Sources */,
 				04FB826E1D7E906F003110B5 /* XXEMyselfInfoTeachingExpericenceApi.m in Sources */,
 				048754A51D5C0BF200F680C5 /* XXEAccountManagerTableViewCell.m in Sources */,

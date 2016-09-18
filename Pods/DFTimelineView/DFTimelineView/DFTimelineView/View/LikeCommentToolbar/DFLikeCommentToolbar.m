@@ -48,6 +48,7 @@
     height = self.frame.size.height;
     
     _likeButton = [self getButton:CGRectMake(x, y, width, height) title:@"赞" image:@"AlbumLike"];
+    _likeButton.selected = NO;
     [_likeButton addTarget:self action:@selector(onLike:) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:_likeButton];
     
@@ -80,12 +81,30 @@
 
 
 
--(void) onLike:(id) sender
+-(void) onLike:(UIButton *) sender
 {
-    if (_delegate != nil && [_delegate respondsToSelector:@selector(onLike)]) {
-        [_delegate onLike];
-    }
+//    if (_delegate != nil && [_delegate respondsToSelector:@selector(onLike)]) {
+//        [_delegate onLike];
+//    }
     
+    if (_likeButton.selected == NO) {
+        sender.selected = YES;
+        _likeButton = sender;
+        [_likeButton setTitle:@"取消" forState:UIControlStateSelected];
+        if (_delegate != nil && [_delegate respondsToSelector:@selector(onLike)]) {
+            
+            [_delegate onLike];
+        }
+    }
+    else{
+        sender.selected=NO;
+        _likeButton=sender;
+        [_likeButton setTitle:@"赞" forState:UIControlStateNormal];
+        
+        if (_delegate != nil && [_delegate respondsToSelector:@selector(onLike)]) {
+            [_delegate onLike];
+        }
+    }
 }
 
 

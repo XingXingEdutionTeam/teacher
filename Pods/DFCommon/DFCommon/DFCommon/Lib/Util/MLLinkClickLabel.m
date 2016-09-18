@@ -8,6 +8,10 @@
 
 #import "MLLinkClickLabel.h"
 
+@interface MLLinkClickLabel ()<UIAlertViewDelegate>
+
+@end
+
 @implementation MLLinkClickLabel
 
 
@@ -35,6 +39,7 @@
         if (_clickDelegate && [_clickDelegate respondsToSelector:@selector(onClickOutsideLink:)]) {
             [_clickDelegate onClickOutsideLink:_uniqueId];
         }
+        
     }
     
 }
