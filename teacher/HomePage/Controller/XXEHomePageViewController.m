@@ -36,6 +36,12 @@
 #import "XXEXingCommunityViewController.h"
 //通知
 #import "XXENotificationViewController.h"
+//管理
+#import "XXEManagerTeacherViewController.h"
+#import "XXEManagerManagerPrivateViewController.h"
+#import "XXEManagerManagerPublicViewController.h"
+#import "XXEManagerHeadmasterPrivateViewController.h"
+#import "XXEManagerHeadmasterPublicViewController.h"
 
 
 @interface XXEHomePageViewController ()<XXEHomePageHeaderViewDelegate,XXEHomePageMiddleViewDelegate,XXEHomePageBottomViewDelegate>
@@ -596,8 +602,39 @@
         }
 
         case 7:
+        {
             NSLog(@"---管理----");
+            //不同 身份
+//            教师
+            XXEManagerTeacherViewController *managerTeacherVC = [[XXEManagerTeacherViewController alloc] init];
+            managerTeacherVC.schoolId = self.schoolHomeId;
+            managerTeacherVC.classId = self.classHomeId;
+            managerTeacherVC.schoolType = self.schoolType;
+            [self.navigationController pushViewController:managerTeacherVC animated:YES];
+            
+//            //管理员(私立)
+//            XXEManagerManagerPrivateViewController *managerPrivateVC = [[XXEManagerManagerPrivateViewController alloc] init];
+//            
+//            [self.navigationController pushViewController:managerPrivateVC animated:YES];
+            
+//            //管理员(公立)
+//            XXEManagerManagerPublicViewController *managerPublicVC = [[XXEManagerManagerPublicViewController alloc] init];
+//            
+//            [self.navigationController pushViewController:managerPublicVC animated:YES];
+            
+//            //校长(私立)
+//            XXEManagerHeadmasterPrivateViewController *managerHeadmasterPrivateVC = [[XXEManagerHeadmasterPrivateViewController alloc] init];
+//            
+//            [self.navigationController pushViewController:managerHeadmasterPrivateVC animated:YES];
+            
+            //校长(公立)
+//            XXEManagerHeadmasterPublicViewController *managerHeadmasterPublicVC = [[XXEManagerHeadmasterPublicViewController alloc] init];
+//            
+//            [self.navigationController pushViewController:managerHeadmasterPublicVC animated:YES];
+            
             break;
+        }
+
         case 8:
         {
             NSLog(@"----星天地----");

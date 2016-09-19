@@ -45,18 +45,12 @@
     ///第一个子视图为scrollView或者其子类的时候 会自动设置 inset为64 这样navSliderMenu会被下移 所以最好设置automaticallyAdjustsScrollViewInsets为no 或者[self.view addSubview:[UIView new]];
     self.automaticallyAdjustsScrollViewInsets = NO;
     QHNavSliderMenuStyleModel *model = [QHNavSliderMenuStyleModel new];
-    NSMutableArray *normalImages = [[NSMutableArray alloc] initWithCapacity:1];
-    NSMutableArray *selectImages = [[NSMutableArray alloc] initWithCapacity:1];
-    [normalImages addObject:[UIImage imageNamed:@"ws_leimu_gray"]];
-    [selectImages addObject:[UIImage imageNamed:@"ws_leimu_pink"]];
+
     NSMutableArray *titles = [[NSMutableArray alloc] initWithObjects:@"学生签到", nil];
     model.menuTitles = [titles copy];
     model.menuWidth=screenWidth /1.f;
     //>>>>>>>>>>>如果是image和title类型的 则传入对应的图片数组
-    if (self.menuType==QHNavSliderMenuTypeTitleAndImage) {
-        model.menuImagesNormal             = [normalImages copy];
-        model.menuImagesSelect             = [selectImages copy];
-    }
+
     model.sliderMenuTextColorForNormal = QHRGB(120, 120, 120);
     model.sliderMenuTextColorForSelect = QHRGB(0, 170, 42);
     model.titleLableFont               = defaultFont(16);

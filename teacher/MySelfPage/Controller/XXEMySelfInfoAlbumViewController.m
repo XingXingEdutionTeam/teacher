@@ -232,11 +232,11 @@
         pic_id_str = tidStr;
     }
     
-        NSLog(@"bbb %@", pic_id_str);
+//        NSLog(@"bbb %@", pic_id_str);
     
     XXEMyselfInfoAlbumDeletePicApi *myselfInfoAlbumDeletePicApi = [[XXEMyselfInfoAlbumDeletePicApi alloc] initWithXid:parameterXid user_id:parameterUser_Id pic_id:pic_id_str];
     [myselfInfoAlbumDeletePicApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
-                        NSLog(@"2222---   %@", request.responseJSONObject);
+//        NSLog(@"2222---   %@", request.responseJSONObject);
         NSString *codeStr = [NSString stringWithFormat:@"%@", request.responseJSONObject[@"code"]];
         
         if ([codeStr isEqualToString:@"1"]) {
@@ -260,13 +260,13 @@
 #pragma mark - ---------------------上传 照片----------------
 - (void)upButtonClick:(UIButton *)upBtn{
     NSLog(@"上传图片");
-//    int i=1;
-//    XXESchoolUpPicViewController *schoolUpPicVC =[[XXESchoolUpPicViewController alloc]init];
-//    schoolUpPicVC.t =i;
-//    
-////    schoolUpPicVC.schoolId = _schoolId;
-//    
-//    [self.navigationController pushViewController:schoolUpPicVC animated:YES];
+    int i=1;
+    XXESchoolUpPicViewController *schoolUpPicVC =[[XXESchoolUpPicViewController alloc]init];
+    schoolUpPicVC.t =i;
+    schoolUpPicVC.flagStr = @"formMyselfAlbum";
+//    schoolUpPicVC.schoolId = _schoolId;
+    
+    [self.navigationController pushViewController:schoolUpPicVC animated:YES];
 }
 
 //
@@ -276,7 +276,7 @@
     [myselfInfoAlbumPicApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         _dataSourceArray = [[NSMutableArray alloc] init];
         picWallArray = [[NSMutableArray alloc] init];
-        //        NSLog(@"2222---   %@", request.responseJSONObject);
+//                NSLog(@"2222---   %@", request.responseJSONObject);
         
         NSString *codeStr = [NSString stringWithFormat:@"%@", request.responseJSONObject[@"code"]];
         
@@ -303,10 +303,6 @@
     }];
 
 }
-
-
-
-
 
 
 //相册 有数据 和 无数据 进行判断
@@ -383,15 +379,14 @@
 }
 
 #pragma mark PickerViewDelegate
-//- (BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-//    
-//    if (editButton.selected == YES) {
-//        XXESchoolAlbumModel *picModel = _dataSourceArray[indexPath.item];
-//        [_seletedModelArray addObject:picModel];
-//        [self updateButtonTitle];
-//    }
-//    return YES;
-//}
+- (BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    
+    if (editButton.selected == YES) {
+        return YES;
+    }else{
+        return NO;
+    }
+}
 
 //- (BOOL)collectionView:(UICollectionView *)collectionView shouldDeselectItemAtIndexPath:(NSIndexPath *)indexPath {
 //    if ([self.disabledContactIds count]) {
@@ -436,11 +431,8 @@
 - (void)updateButtonTitle{
     
     if (editButton.selected == NO) {
-        
-        [editButton setTitle:@"编辑" forState:UIControlStateNormal];
         _myCollcetionView.allowsMultipleSelection = NO;
     }else if (editButton.selected == YES){
-        [editButton setTitle:@"删除" forState:UIControlStateNormal];
         _myCollcetionView.allowsMultipleSelection = YES;
     }
 }

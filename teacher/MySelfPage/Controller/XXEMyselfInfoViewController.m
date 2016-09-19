@@ -21,6 +21,7 @@
 #import "XXELoginViewController.h"
 #import "XXEForgetPassWordViewController.h"
 #import "XXEMySelfInfoAlbumViewController.h"
+#import "XXEMyselfInfoGraduateInstitutionsViewController.h"
 
 
 #define ORIGINAL_MAX_WIDTH 640.0f
@@ -412,8 +413,24 @@
     }
     
     //毕业院校  7
+    if (indexPath.row == 7) {
+        XXEMyselfInfoGraduateInstitutionsViewController *myselfInfoGraduateInstitutionsVC = [[XXEMyselfInfoGraduateInstitutionsViewController alloc] init];
+        [myselfInfoGraduateInstitutionsVC returnStr:^(NSString *str) {
+            //
+            contentArray[7] = str;
+            [_myTableView reloadData];
+        }];
+        [self.navigationController pushViewController:myselfInfoGraduateInstitutionsVC animated:YES];
+    }
+    
     
     //所学专业  8
+    if (indexPath.row == 8) {
+        
+        
+        
+    }
+    
     
     //经历
     if (indexPath.row == 9) {

@@ -14,6 +14,8 @@
 #import "WJCommboxView.h"
 #import "YTKBatchRequest.h"
 #import "XXESchoolUpPicApi.h"
+#import "XXEMyselfInfoAlbumUploadPicApi.h"
+
 
 @interface XXESchoolUpPicViewController ()<ZYQAssetPickerControllerDelegate,UINavigationControllerDelegate,UIScrollViewDelegate>
 {
@@ -66,14 +68,20 @@
     
 }
 - (void)btnClick:(UIButton*)btn{
-
     [self showHudWithString:@"正在上传......"];
     NSMutableArray *arr = [NSMutableArray array];
     for (int i =0; i < _upPicArray.count; i++) {
-        XXESchoolUpPicApi *schoolUpPicApi = [[XXESchoolUpPicApi alloc] initWithXid:parameterXid user_id:parameterUser_Id user_type:USER_TYPE school_id:_schoolId position:@"4" upImage:_upPicArray[i]];
-        [arr addObject:schoolUpPicApi];
+        
+        if ([_flagStr isEqualToString:@"fromSchoolAlbum"]) {
+            XXESchoolUpPicApi *schoolUpPicApi = [[XXESchoolUpPicApi alloc] initWithXid:parameterXid user_id:parameterUser_Id user_type:USER_TYPE school_id:_schoolId position:@"4" upImage:_upPicArray[i]];
+            [arr addObject:schoolUpPicApi];
+        
+        }else if ([_flagStr isEqualToString:@"formMyselfAlbum"]){
+            XXEMyselfInfoAlbumUploadPicApi *myselfInfoAlbumUploadPicApi = [[XXEMyselfInfoAlbumUploadPicApi alloc] initWithXid:parameterXid user_id:parameterUser_Id upImage:_upPicArray[i]];
+            [arr addObject:myselfInfoAlbumUploadPicApi];
+            
+        }
     }
-    
     
     YTKBatchRequest *bathRequest = [[YTKBatchRequest alloc]initWithRequestArray:arr];
     [bathRequest startWithCompletionBlockWithSuccess:^(YTKBatchRequest *batchRequest) {
@@ -88,6 +96,7 @@
     }];
     
 }
+
 
 
 - (void)createRightBar{

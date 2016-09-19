@@ -12,14 +12,7 @@
 
 @interface XXESchoolAlbumCollectionViewCell : UICollectionViewCell
 
-////学校 图片 名字
-//@property (nonatomic,copy) NSString *schoolPicName;
-//
-////是否 选中 图标 名字
-//@property (nonatomic, copy) NSString *checkImageName;
-//
-//@property (nonatomic, strong) UIImageView *checkImageView;
-//
+
 @property (nonatomic, strong) XXESchoolAlbumModel *model;
 
 @property (weak, nonatomic) IBOutlet UIView *bgView;

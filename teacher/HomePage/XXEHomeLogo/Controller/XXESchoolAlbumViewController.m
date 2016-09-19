@@ -186,12 +186,8 @@
            
            [self collectionView:_myCollcetionView didSelectItemAtIndexPath:indexPath];
            
-           XXESchoolAlbumCollectionViewCell *cell = (XXESchoolAlbumCollectionViewCell *)[_myCollcetionView cellForItemAtIndexPath:indexPath];
-           if (editButton.selected == NO) {
-               cell.checkImageView.hidden = YES;
-           }else{
-               cell.checkImageView.hidden = NO;
-           }
+           UICollectionViewCell *cell = (XXESchoolAlbumCollectionViewCell *)[_myCollcetionView cellForItemAtIndexPath:indexPath];
+           cell.selected = YES;
        }
         
     }
@@ -271,7 +267,7 @@
 //    schoolUpPicVC.vedioName =@"请为您发布的相册命名";
     
     schoolUpPicVC.schoolId = _schoolId;
-    
+    schoolUpPicVC.flagStr = @"fromSchoolAlbum";
     [self.navigationController pushViewController:schoolUpPicVC animated:YES];
 }
 
@@ -377,9 +373,6 @@
 
         XXESchoolAlbumModel *model = _dataSourceArray[indexPath.item];
     [cell.schoolImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",kXXEPicURL,model.pic]] placeholderImage:[UIImage imageNamed:@""]];
-    if (editButton.selected == NO) {
-        cell.checkImageView.hidden = YES;
-    }
     return cell;
 }
 
@@ -389,26 +382,6 @@
 }
 
 #pragma mark PickerViewDelegate
-- (BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-
-    if (editButton.selected == YES) {
-        XXESchoolAlbumModel *picModel = _dataSourceArray[indexPath.item];
-        [_seletedModelArray addObject:picModel];
-        [self updateButtonTitle];
-    }
-    return YES;
-}
-
-//- (BOOL)collectionView:(UICollectionView *)collectionView shouldDeselectItemAtIndexPath:(NSIndexPath *)indexPath {
-//    if ([self.disabledContactIds count]) {
-//        NSInteger item = indexPath.item;
-//        User *contact = _contacts[item];
-//        return ![self.disabledContactIds containsObject:contact.userId];
-//    }
-//    return YES;
-//}
-
-
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     if (editButton.selected == YES) {
         XXESchoolAlbumModel *picModel = _dataSourceArray[indexPath.item];
@@ -425,6 +398,15 @@
     }
 }
 
+- (BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath{
+
+    if (editButton.selected == YES) {
+        return YES;
+    }else {
+        return NO;
+    }
+}
+
 - (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath {
 
     XXESchoolAlbumModel *picModel = _dataSourceArray[indexPath.item];
@@ -435,11 +417,8 @@
 - (void)updateButtonTitle{
 
     if (editButton.selected == NO) {
-        
-        [editButton setTitle:@"编辑" forState:UIControlStateNormal];
         _myCollcetionView.allowsMultipleSelection = NO;
     }else if (editButton.selected == YES){
-        [editButton setTitle:@"删除" forState:UIControlStateNormal];
         _myCollcetionView.allowsMultipleSelection = YES;
     }
 }
