@@ -12,8 +12,6 @@
 #import "XXEChatPageViewController.h"
 #import "XXEFriendCirclePageViewController.h"
 #import "XXEMySelfPageViewController.h"
-#import "XXEAAAViewController.h"
-#import "MainViewController.h"
 
 @interface XXETabBarControllerConfig ()
 

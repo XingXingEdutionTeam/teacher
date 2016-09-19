@@ -574,6 +574,16 @@
     
 }
 
+- (void)xxe_whoCanLookMessage:(NSString *)personLook
+{
+    
+}
+
+- (void)locationMessageText:(NSString *)text
+{
+    
+}
+
 #pragma mark - DFVideoCaptureControllerDelegate
 -(void)onCaptureVideo:(NSString *)filePath screenShot:(UIImage *)screenShot
 {

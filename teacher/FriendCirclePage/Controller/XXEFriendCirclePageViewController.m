@@ -18,6 +18,9 @@
 #import "XXEFriendCircleCommentApi.h"
 #import "SVProgressHUD.h"
 #import "XXEDeleteCommentApi.h"
+#import "XXEWhoCanLookController.h"
+#import "XXELocationAddController.h"
+#import <AVFoundation/AVFoundation.h>
 
 @interface XXEFriendCirclePageViewController ()
 /** 朋友圈的头部视图信息 */
@@ -64,7 +67,7 @@
 {
     self = [super init];
     if (self) {
-
+        
     }
     return self;
 }
@@ -80,6 +83,7 @@
     self.page = 1;
     //获取朋友圈信息
     [self setupFriendCircleMessagePage:1];
+//    [self wwwqqqqqq];
 }
 
 #pragma mark - 下拉刷新 与上拉加载更多
@@ -87,14 +91,12 @@
 {
     self.page = 1;
     [self setupFriendCircleMessagePage:self.page];
-    [self endRefresh];
 }
 
 - (void)loadMore
 {
     self.page ++;
     [self setupFriendCircleMessagePage:self.page];
-    [self endLoadMore];
 }
 
 
@@ -141,8 +143,10 @@
                 XXECircleModel *circleModel = [[XXECircleModel alloc]initWithDictionary:list[i] error:nil];
                 [self.circleListDatasource addObject:circleModel];
             }
-        //朋友圈的信息列表
-        [self friendCircleMessage];
+            NSLog(@"%lu",(unsigned long)self.circleListDatasource.count);
+            //朋友圈的信息列表
+            [self friendCircleMessage];
+            [self endRefresh];
         NSLog(@"圈子顶部信息数组信息%@",self.headerDatasource);
         }else{
             [self hudShowText:@"获取数据错误" second:2.f];
@@ -177,6 +181,7 @@
             DFTextImageLineItem *textImageItem = [[DFTextImageLineItem alloc]init];
             
             textImageItem.itemId = j;
+            NSLog(@"时间轴:%lld",textImageItem.itemId);
             j++;
             textImageItem.userId = [circleModel.xid intValue];
             textImageItem.userAvatar = [NSString stringWithFormat:@"%@%@",kXXEPicURL,circleModel.head_img];
@@ -268,12 +273,73 @@
 
 
 #pragma mark - DFImagesSendViewControllerDelegate 发布圈子的代理
+- (void)xxe_whoCanLookMessage:(NSString *)personLook
+{
+    NSLog(@"谁可以看");
+    XXEWhoCanLookController *whoVC = [[XXEWhoCanLookController alloc]init];
+    [self.navigationController pushViewController:whoVC animated:YES];
+}
+
+- (void)locationMessageText:(NSString *)text
+{
+    NSLog(@"定位");
+    XXELocationAddController *locaVC = [[XXELocationAddController alloc]init];
+    [self presentViewController:locaVC animated:YES completion:^{
+        NSLog(@"4567890-");
+    }];
+}
+
+
 -(void)onSendTextImage:(NSString *)text images:(NSArray *)images
 {
     NSLog(@"发布的文字%@ 发布的图片%@",text,images);
     if (images.count ==0) {
         //往服务器传所有的参数
         [self publishFriendCircleText:text ImageFile:@""];
+    }else if(images.count == 1) {
+        
+        NSDictionary *dict = @{@"file_type":@"1",
+                               @"page_origin":@"35",
+                               @"upload_format":@"1",
+                               @"appkey":APPKEY,
+                               @"user_type":USER_TYPE,
+                               @"backtype":BACKTYPE
+                               };
+        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+        [manager POST:XXERegisterUpLoadPicUrl parameters:dict constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+            for (int i = 0; i< images.count; i++) {
+                NSData *data = UIImageJPEGRepresentation(images[i], 0.5);
+                NSString *name = [NSString stringWithFormat:@"%d.jpeg",i];
+                NSString *formKey = [NSString stringWithFormat:@"file%d",i];
+                NSString *type = @"image/jpeg";
+                [formData appendPartWithFileData:data name:formKey fileName:name mimeType:type];
+            }
+            
+        } success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
+            
+            NSLog(@"%@",responseObject);
+            NSLog(@"%@",[responseObject objectForKey:@"msg"]);
+            NSString *code = [responseObject objectForKey:@"code"];
+            if ([code intValue] == 1) {
+                NSArray *data = [responseObject objectForKey:@"data"];
+                NSMutableString *str = [NSMutableString string];
+                for (int i =0; i< data.count; i++) {
+                    NSString *string = data[i];
+                    if (i != data.count -1) {
+                        [str appendFormat:@"%@,",string];
+                    }else {
+                        [str appendFormat:@"%@",string];
+                    }
+                }
+                NSLog(@"图片的网址:%@",str);
+                //往服务器传所有的参数
+                [self publishFriendCircleText:text ImageFile:str];
+            }
+            
+        } failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error) {
+            
+        }];
+        
     }else{
     NSLog(@"%@",images);
     NSDictionary *dict = @{@"file_type":@"1",
@@ -332,7 +398,9 @@
         strngXid = XID;
         homeUserId = USER_ID;
     }
-    XXEPublishFriendCircleApi *publishFriendApi = [[XXEPublishFriendCircleApi alloc]initWithPublishFriendCirclePosition:@"上海" FileType:@"1" Words:text File:imageFile UserXid:strngXid UserId:homeUserId];
+    
+    XXEPublishFriendCircleApi *publishFriendApi = [[XXEPublishFriendCircleApi alloc]initWithPublishFriendCirclePosition:@"上海" FileType:@"1" Words:text PicGroup:imageFile VideoUrl:@"" CircleSet:@"0" UserXid:strngXid UserId:homeUserId];
+    
     [publishFriendApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         NSLog(@"发布内筒%@",request.responseJSONObject);
         NSLog(@"发布%@",[request.responseJSONObject objectForKey:@"msg"]);
@@ -343,11 +411,11 @@
             NSString *head_image = [data objectForKey:@"head_img"];
             
             DFTextImageLineItem *textImageItem = [[DFTextImageLineItem alloc]init];
-            textImageItem.itemId = 10000;
+            textImageItem.itemId = 1;
             textImageItem.userId =[strngXid integerValue];
             NSString *avatarImage = [NSString stringWithFormat:@"%@%@",kXXEPicURL,head_image];
             textImageItem.userAvatar = avatarImage;
-            textImageItem.userNick = [XXEUserInfo user].nickname;
+            textImageItem.userNick = [data objectForKey:@"nickname"];
             textImageItem.title = @"发表了";
             textImageItem.text = text;
             textImageItem.ts = [[NSDate date] timeIntervalSince1970]*1000;
@@ -378,15 +446,19 @@
             
             textImageItem.location = @"上海";
              [self addItemTop:textImageItem];
+            //获取朋友圈信息
+//            [self setupFriendCircleMessagePage:1];
         }else{
             [SVProgressHUD showErrorWithStatus:@"获取数据失败"];
+            [self endRefresh];
+            [self endLoadMore];
         }
-        [self refresh];
     } failure:^(__kindof YTKBaseRequest *request) {
         [SVProgressHUD showErrorWithStatus:@"获取数据失败"];
+        [self endRefresh];
+        [self endLoadMore];
     }];
 }
-
 
 #pragma mark - 评论和点赞
 -(void)onCommentCreate:(long long)commentId text:(NSString *)text itemId:(long long) itemId
@@ -403,7 +475,6 @@
         strngXid = XID;
         homeUserId = USER_ID;
     }
-    
     NSInteger myXId = [[XXEUserInfo user].xid integerValue];
     
     long indexId = itemId-1;
@@ -424,10 +495,10 @@
         commentItem.userNick = self.userNickName;
         commentItem.text = text;
         [self addCommentItem:commentItem itemId:itemId replyCommentId:commentId];
+//        [self setupFriendCircleMessagePage:1];
     }else{
         //评论
         //网络请求可以放在这里
-        
         XXEFriendCircleCommentApi *friendCommentApi = [[XXEFriendCircleCommentApi alloc]initWithFriendCircleCommentUerXid:strngXid UserID:homeUserId TalkId:self.speakId Com_type:@"1" Con:text To_Who_Xid:otherXid];
         [friendCommentApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
             NSString *code = [request.responseJSONObject objectForKey:@"code"];
@@ -439,6 +510,7 @@
                 commentItem.text = text;
                 [self addCommentItem:commentItem itemId:itemId replyCommentId:commentId];
                 [self hudShowText:@"评论成功" second:1.f];
+//                [self setupFriendCircleMessagePage:1];
             }else{
                 
                 [self hudShowText:@"评论失败" second:1.f];
@@ -473,6 +545,7 @@
         NSString *code = [request.responseJSONObject objectForKey:@"code"];
         if ([code integerValue] == 1) {
              [self hudShowText:@"回复成功" second:1.f];
+//            [self setupFriendCircleMessagePage:1];
         }else{
             [self hudShowText:@"回复失败" second:1.f];
         }
@@ -518,7 +591,7 @@
         NSString *code = [request.responseJSONObject objectForKey:@"code"];
         NSString *data = [request.responseJSONObject objectForKey:@"data"];
         NSLog(@":data%@",data);
-        if ([code integerValue]==1) {
+        if ([code integerValue]==1 || [code integerValue]==5 ) {
             NSLog(@"%@",[request.responseJSONObject objectForKey:@"msg"]);
             NSLog(@"%@",[request.responseJSONObject objectForKey:@"data"]);
             DFLineCommentItem *commentItem = [[DFLineCommentItem alloc] init];
@@ -528,6 +601,7 @@
             commentItem.text = @"";
             [self cancelCommentItem:commentItem itemId:itemId replyCommentId:commentId];
             [self hudShowText:@"删除成功" second:1.f];
+//            [self setupFriendCircleMessagePage:1];
         }else{
             [self hudShowText:@"删除失败" second:1.f];
         }
@@ -538,6 +612,7 @@
 
 - (void)onLike:(long long)itemId
 {
+    NSLog(@"%lld",itemId);
     NSString *strngXid;
     NSString *homeUserId;
     if ([XXEUserInfo user].login) {
@@ -569,7 +644,7 @@
             NSLog(@"Model%@ ID%lld",likeItem,itemId);
             [self addLikeItem:likeItem itemId:itemId];
             [self hudShowText:@"点赞成功" second:1.f];
-            
+//            [self setupFriendCircleMessagePage:1];
         }else if ([code integerValue]==10){
             DFLineLikeItem *likeItem = [[DFLineLikeItem alloc] init];
             likeItem.userId = [goodXid integerValue];
@@ -577,6 +652,7 @@
             NSLog(@"Model%@ ID%lld",likeItem,itemId);
             [self cancelLikeItem:likeItem itemId:itemId];
             [self hudShowText:@"取消成功" second:1.f];
+//            [self setupFriendCircleMessagePage:1];
         }
     
     } failure:^(__kindof YTKBaseRequest *request) {
@@ -607,27 +683,149 @@
 //发送视频 目前没有实现填写文字
 -(void)onSendVideo:(NSString *)text videoPath:(NSString *)videoPath screenShot:(UIImage *)screenShot
 {
-    DFVideoLineItem *videoItem = [[DFVideoLineItem alloc] init];
-    videoItem.itemId = 10000; //随便设置一个 待服务器生成
-    videoItem.userId = 10018;
-    videoItem.userAvatar = @"http://file-cdn.datafans.net/avatar/1.jpeg";
-    videoItem.userNick = @"富二代";
-    videoItem.title = @"发表了";
-    videoItem.text = @"新年过节 哈哈"; //这里需要present一个界面 用户填入文字后再发送 场景和发图片一样
-    videoItem.location = @"广州";
+    NSData *data = [NSData dataWithContentsOfFile:videoPath];
+//    NSURL *sourceUrl = [NSURL URLWithString:videoPath];
+//    AVURLAsset *avAsset = [AVURLAsset URLAssetWithURL:sourceUrl options:nil];
+//    
+//    NSArray *compatiblePresets = [AVAssetExportSession exportPresetsCompatibleWithAsset:avAsset];
+//    
+//    NSLog(@"%@",compatiblePresets);
+//    
+//    if ([compatiblePresets containsObject:AVAssetExportPresetHighestQuality]) {
+//        
+//        AVAssetExportSession *exportSession = [[AVAssetExportSession alloc] initWithAsset:avAsset presetName:AVAssetExportPresetMediumQuality];
+//        
+//        NSDateFormatter *formater = [[NSDateFormatter alloc] init];//用时间给文件全名，以免重复
+//        [formater setDateFormat:@"yyyy-MM-dd-HH:mm:ss"];
+//        
+//        NSString * resultPath = [NSHomeDirectory() stringByAppendingFormat:@"/Documents/output-%@.mp4", [formater stringFromDate:[NSDate date]]];
+//        
+//        NSLog(@"resultPath = %@",resultPath);
+//        
+//        exportSession.outputURL = [NSURL fileURLWithPath:resultPath];
+//        
+//        exportSession.outputFileType = AVFileTypeMPEG4;
+//        
+//        exportSession.shouldOptimizeForNetworkUse = YES;
+//        
+//        [exportSession exportAsynchronouslyWithCompletionHandler:^(void)
+//         
+//         {
+//             
+//             switch (exportSession.status) {
+//                     
+//                 case AVAssetExportSessionStatusUnknown:
+//                     
+//                     NSLog(@"AVAssetExportSessionStatusUnknown");
+//                     
+//                     break;
+//                     
+//                 case AVAssetExportSessionStatusWaiting:
+//                     
+//                     NSLog(@"AVAssetExportSessionStatusWaiting");
+//                     
+//                     break;
+//                     
+//                 case AVAssetExportSessionStatusExporting:
+//                     
+//                     NSLog(@"AVAssetExportSessionStatusExporting");
+//                     
+//                     break;
+//                     
+//                 case AVAssetExportSessionStatusCompleted:
+//                     
+//                     NSLog(@"AVAssetExportSessionStatusCompleted");
+//                     
+//                     break;  
+//                     
+//                 case AVAssetExportSessionStatusFailed:  
+//                     
+//                     NSLog(@"AVAssetExportSessionStatusFailed");  
+//                     
+//                     break;  
+//                     
+//             }  
+//             
+//         }];  
+//        
+//    }
     
-    videoItem.localVideoPath = videoPath;
-    videoItem.videoUrl = @""; //网络路径
-    videoItem.thumbUrl = @"";
-    videoItem.thumbImage = screenShot; //如果thumbImage存在 优先使用thumbImage
+        
+//
+//    DFVideoLineItem *videoItem = [[DFVideoLineItem alloc] init];
+//    videoItem.itemId = 1; //随便设置一个 待服务器生成
+//    videoItem.userId = 10018;
+//    videoItem.userAvatar = @"http://file-cdn.datafans.net/avatar/1.jpeg";
+//    videoItem.userNick = @"富二代";
+//    videoItem.title = @"发表了";
+//    videoItem.text = @"新年过节 哈哈"; //这里需要present一个界面 用户填入文字后再发送 场景和发图片一样
+//    XXEWhoCanLookController *whoVC = [[XXEWhoCanLookController alloc]init];
+//    [self presentViewController:whoVC animated:YES completion:nil];
     
-    [self addItemTop:videoItem];
+//    videoItem.location = @"广州";
+//    
+//    videoItem.localVideoPath = videoPath;
+//    videoItem.videoUrl = @""; //网络路径
+//    videoItem.thumbUrl = @"";
+//    videoItem.thumbImage = screenShot; //如果thumbImage存在 优先使用thumbImage
+    
+//    [self addItemTop:videoItem];
     
     //接着上传图片 和 请求服务器接口
     //请求完成之后 刷新整个界面
     
+    NSDictionary *dict = @{@"file_type":@"2",
+                           @"page_origin":@"35",
+                           @"upload_format":@"1",
+                           @"appkey":APPKEY,
+                           @"user_type":USER_TYPE,
+                           @"backtype":BACKTYPE
+                           };
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    [manager POST:XXERegisterUpLoadPicUrl parameters:dict constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+        [formData appendPartWithFileData:data name:@"video" fileName:@"video.mov" mimeType:@"video/quicktime"];
+        
+    } success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
+        
+        NSLog(@"%@",responseObject);
+        NSLog(@"%@",[responseObject objectForKey:@"msg"]);
+        
+    } failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error) {
+        NSLog(@"%@",error);
+    }];
 }
 
+
+//测试传视频
+- (void)wwwqqqqqq
+{
+    NSString *videoPath1 = [[NSBundle mainBundle] pathForResource:@"1122" ofType:@"mp4"];
+    NSLog(@"videoPath1:%@",videoPath1);
+    NSData *data1=[NSData dataWithContentsOfFile:videoPath1];
+    NSDictionary *dict = @{@"file_type":@"2",
+                           @"page_origin":@"35",
+                           @"upload_format":@"1",
+                           @"appkey":APPKEY,
+                           @"user_type":USER_TYPE,
+                           @"backtype":BACKTYPE
+                           };
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    [manager POST:XXERegisterUpLoadPicUrl parameters:dict constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+        NSString *name = [NSString stringWithFormat:@"video"];
+        NSString *formKey = [NSString stringWithFormat:@"video.mp4"];
+        NSString *type = @"video/mp4";
+        [formData appendPartWithFileData:data1 name:formKey fileName:name mimeType:type];
+        
+    } success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
+        
+        NSLog(@"%@",responseObject);
+        NSLog(@"%@",[responseObject objectForKey:@"msg"]);
+        
+    } failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error) {
+        NSLog(@"%@",error);
+    }];
+
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

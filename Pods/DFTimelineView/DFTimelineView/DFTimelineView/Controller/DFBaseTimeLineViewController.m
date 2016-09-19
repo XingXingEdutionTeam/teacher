@@ -67,14 +67,15 @@
     [self initTableView];
     
     [self initHeader];
-    
+//
 //    [self initFooter];
     
     self.tableView.header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
-        [self refresh];
+        [self showHeader];
     }];
     
     self.tableView.footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+        [self.tableView.footer beginRefreshing];
         [self showFooter];
     }];
 }
@@ -161,7 +162,7 @@
         
     }
     
-//    //下拉刷新
+//    下拉刷新
 //    if (_refreshControl == nil) {
 //        _refreshControl = [[UIRefreshControl alloc] init];
 //        [_refreshControl addTarget:self action:@selector(onPullDown:) forControlEvents:UIControlEventValueChanged];
@@ -270,6 +271,11 @@
     [self.tableView reloadData];
 }
 
+- (void)showHeader
+{
+    [self refresh];
+    [self.tableView reloadData];
+}
 
 -(void) hideFooter
 {
@@ -293,11 +299,11 @@
 }
 
 
--(void) onPullDown:(id) sender
-{
-    [self refresh];
-    [self.tableView reloadData];
-}
+//-(void) onPullDown:(id) sender
+//{
+//    [self refresh];
+//    [self.tableView reloadData];
+//}
 
 
 -(void) refresh
@@ -311,12 +317,13 @@
 
 -(void)endLoadMore
 {
-    [self hideFooter];
+//    [self hideFooter];
+    [self.tableView.footer endRefreshingWithNoMoreData];
 }
 
 -(void)endRefresh
 {
-    [_refreshControl endRefreshing];
+//    [_refreshControl endRefreshing];
     [self.tableView.header endRefreshing];
 }
 

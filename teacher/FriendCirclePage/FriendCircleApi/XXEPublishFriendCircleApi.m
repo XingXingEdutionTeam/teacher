@@ -13,21 +13,25 @@
     NSString *_position;
     NSString *_file_type;
     NSString *_words;
-    NSString *_file;
+    NSString *_pic_group;
+    NSString *_video_url;
     NSString *_userXid;
     NSString *_userId;
+    NSString *_circle_set;
 }
 
-- (id)initWithPublishFriendCirclePosition:(NSString *)position FileType:(NSString *)fileType Words:(NSString *)words File:(NSString *)file UserXid:(NSString *)userXid UserId:(NSString *)userId
+- (id)initWithPublishFriendCirclePosition:(NSString *)position FileType:(NSString *)fileType Words:(NSString *)words PicGroup:(NSString *)picGroup VideoUrl:(NSString *)video_url CircleSet:(NSString *)circle_set UserXid:(NSString *)userXid UserId:(NSString *)userId
 {
     self = [super init];
     if (self) {
         _position = position;
         _file_type = fileType;
-        _file = file;
+        _pic_group = picGroup;
+        _video_url = video_url;
         _userXid = userXid;
         _userId = userId;
         _words = words;
+        _circle_set = circle_set;
     }
     return self;
 }
@@ -52,7 +56,9 @@
              @"position":_position,
              @"file_type":_file_type,
              @"words":_words,
-             @"file":_file
+             @"pic_group":_pic_group,
+             @"circle_set":_circle_set,
+             @"video_url":_video_url
              };
 }
 

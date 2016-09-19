@@ -10,6 +10,6 @@
 
 @interface XXEPublishFriendCircleApi : YTKRequest
 
-- (id)initWithPublishFriendCirclePosition:(NSString *)position FileType:(NSString *)fileType Words:(NSString *)words File:(NSString *)file UserXid:(NSString *)userXid UserId:(NSString *)userId;
+- (id)initWithPublishFriendCirclePosition:(NSString *)position FileType:(NSString *)fileType Words:(NSString *)words PicGroup:(NSString *)picGroup VideoUrl:(NSString *)video_url CircleSet:(NSString *)circle_set UserXid:(NSString *)userXid UserId:(NSString *)userId;
 
 @end

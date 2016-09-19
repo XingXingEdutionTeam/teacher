@@ -41,6 +41,11 @@
 //发送图文
 -(void)onSendTextImage:(NSString *)text images:(NSArray *)images;
 
+//选择地点
+- (void)locationMessageText:(NSString *)text;
+//选择给谁看
+- (void)xxe_whoCanLookMessage:(NSString *)personLook;
+
 //发送视频消息
 -(void)onSendVideo:(NSString *)text videoPath:(NSString *)videoPath screenShot:(UIImage *) screenShot;
 

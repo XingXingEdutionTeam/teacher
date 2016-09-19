@@ -194,11 +194,17 @@
 - (void)locationButtonAction:(UIButton *)sender
 {
     NSLog(@"定位布标");
+    if (_delegate &&[_delegate respondsToSelector:@selector(locationMessageText:)]) {
+        [_delegate locationMessageText:sender.titleLabel.text];
+    }
 }
 
 - (void)whoButtonAction:(UIButton *)sender
 {
     NSLog(@"谁可以看");
+    if (_delegate &&[_delegate respondsToSelector:@selector(xxe_whoCanLookMessage:)]) {
+        [_delegate xxe_whoCanLookMessage:sender.titleLabel.text];
+    }
 }
 
 -(UIBarButtonItem *)leftBarButtonItem
@@ -232,6 +238,7 @@
 -(void) onPanAndTap:(UIGestureRecognizer *) gesture
 {
     _mask.hidden = YES;
+    _placeholder.hidden = YES;
     [_contentView resignFirstResponder];
 }
 
@@ -243,7 +250,7 @@
 {
     if (![text isEqualToString:@""])
     {
-        _placeholder.hidden = YES;
+        
     }else if ([text isEqualToString:@""] && range.location == 0 && range.length == 1)
     {
         _placeholder.hidden = NO;
@@ -252,6 +259,7 @@
 //    if ([text isEqualToString:@"\n"]){
 //        _mask.hidden = YES;
 //        [_contentView resignFirstResponder];
+//        _placeholder.hidden = YES;
 //        if (range.location == 0)
 //        {
 //            _placeholder.hidden = NO;
@@ -265,6 +273,7 @@
 -(void)textViewDidBeginEditing:(UITextView *)textView
 {
     _mask.hidden = NO;
+    _placeholder.text = @"";
 }
 
 -(void)textViewDidEndEditing:(UITextView *)textView
@@ -330,8 +339,6 @@
 
 -(void) chooseImage
 {
-    
-    
     MMPopupItemHandler block = ^(NSInteger index){
         switch (index) {
             case 0:
@@ -349,12 +356,8 @@
                        MMItemMake(@"从相册选取", MMItemTypeNormal, block)];
     
     MMSheetView *sheetView = [[MMSheetView alloc] initWithTitle:@"" items:items];
-    
     [sheetView show];
-    
-    
 }
-
 
 -(void) takePhoto
 {
@@ -373,7 +376,6 @@
 
 
 #pragma mark - TZImagePickerControllerDelegate
-
 
 - (void)imagePickerController:(TZImagePickerController *)picker didFinishPickingPhotos:(NSArray<UIImage *> *) photos sourceAssets:(NSArray *)assets
 {
