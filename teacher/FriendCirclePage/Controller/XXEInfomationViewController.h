@@ -8,6 +8,8 @@
 
 #import "XXEBaseViewController.h"
 
+@class XXECircleModel;
+
 @protocol  XXEInfomationViewControllerDelegate<NSObject>
 
 - (void)onLike;
@@ -22,5 +24,9 @@
 @property (nonatomic, copy) NSString *imagesArr;
 @property (nonatomic, strong) NSArray *goodArr;
 @property (nonatomic, weak) id<XXEInfomationViewControllerDelegate> delegate;
+
+
+/** 直接传每一个说说的Model */
+@property (nonatomic, strong)XXECircleModel *infoCircleModel;
 
 @end

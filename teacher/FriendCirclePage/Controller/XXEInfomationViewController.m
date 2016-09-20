@@ -10,16 +10,22 @@
 #import "AFNetworking.h"
 #import "CommentInputViewController.h"
 #import "MessageListDetailController.h"
+#import "UMSocial.h"
+#import "XXECircleModel.h"
+#import "XXEFriendCirclegoodApi.h"
+#import "XXEDeleteCommentApi.h"
 
-@interface XXEInfomationViewController ()<UIActionSheetDelegate,UIScrollViewDelegate>
+@interface XXEInfomationViewController ()<UIActionSheetDelegate,UIScrollViewDelegate,UMSocialUIDelegate>
 {
     UIImageView *imageView;
-    UIScrollView *_scrollView;
+//    UIScrollView *_scrollView;
     UIButton *_detaileBtn;
     BOOL isGood;
 }
 
-@property (nonatomic, strong) UIView *panelView;
+//@property (nonatomic, strong) UIView *panelView;
+
+@property (nonatomic, strong)UIScrollView *scrollView;
 
 /**
  *  加载视图
@@ -31,6 +37,9 @@
 
 @property (nonatomic, strong) UIButton *commentButton;
 
+/** 图片的下标 */
+@property (nonatomic, assign)NSInteger indexImage;
+
 @end
 
 @implementation XXEInfomationViewController
@@ -38,6 +47,24 @@
 {
     [super viewWillAppear:animated];
     self.view.backgroundColor = XXEBackgroundColor;
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    [button setTitle:@"" forState:UIControlStateNormal];
+    [button setImage:[UIImage imageNamed:@"dian"] forState:UIControlStateNormal];
+    [button setImage:[UIImage imageNamed:@"dian"] forState:UIControlStateHighlighted];
+    button.size = CGSizeMake(70, 30);
+    // 让按钮内部的所有内容左对齐
+    button.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+    //        [button sizeToFit];
+    // 让按钮的内容往左边偏移10
+    button.contentEdgeInsets = UIEdgeInsetsMake(0, 50, 0, 0);
+    button.titleEdgeInsets = UIEdgeInsetsMake(0, 5, 0, 0);
+    
+    [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [button addTarget:self action:@selector(delete:) forControlEvents:UIControlEventTouchUpInside];
+    
+    // 修改导航栏左边的item
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:button];
+    
 }
 /** 这两个方法都可以,改变当前控制器的电池条颜色 */
 -(UIStatusBarStyle)preferredStatusBarStyle
@@ -46,21 +73,18 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    self.indexImage = 0;
     NSLog(@"图片的数组%@",self.imagesArr);
     
-    //时间戳转时间
-    NSDateFormatter *fomatter =[[NSDateFormatter alloc]init];
-    [fomatter setDateStyle:NSDateFormatterMediumStyle];
-    [fomatter setTimeStyle:NSDateFormatterShortStyle];
-    [fomatter setDateFormat:@"yyyy年MM月dd日 HH:MM:ss"];
-    NSString *str =[NSString stringWithFormat:@"%ld",self.ts];
-    str =[str substringToIndex:10];
-    NSInteger i =str.integerValue;
-    //时间戳转时间
-    NSDate *confromTimesp = [NSDate dateWithTimeIntervalSince1970:i];
-    NSString *confromTimespStr = [fomatter stringFromDate:confromTimesp];
-    self.title =[NSString stringWithFormat:@"%@",confromTimespStr];
+//    NSLog(@"click item: %@",_itemId);
+//    NSLog(@"时间%@",_infoCircleModel.date_tm);
+//    NSLog(@"发布的照片%@",_infoCircleModel.pic_url);
+//    NSLog(@"次图片的评论ID%@",_infoCircleModel.talkId);
+//    NSLog(@"评论的%@",_infoCircleModel.comment_group);
+//    NSLog(@"点赞的%@",_infoCircleModel.good_user);
+//    NSLog(@"发布内容%@",_infoCircleModel.words);
+    NSString *timeFomatter = [XXETool dateAboutStringFromNumberTimer:_infoCircleModel.date_tm];
+    self.title = timeFomatter;
     
     [self createscrollView];
     [self createToolbtn];
@@ -68,85 +92,52 @@
 
 -(void)createscrollView{
     
-    _scrollView =  [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, KScreenWidth, KScreenHeight - 113)];
-//    _scrollView.backgroundColor = [UIColor redColor];
-    _scrollView.pagingEnabled =YES;
-    _scrollView.showsHorizontalScrollIndicator =NO;
-    [self.view addSubview:_scrollView];
-    //
-    //加载等待视图
-    self.panelView = [[UIView alloc] initWithFrame:self.view.bounds];
-//    self.panelView.backgroundColor = [UIColor blackColor];
-    self.panelView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
-    self.panelView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.3];
-    
-    self.loadingView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
-//    self.loadingView.backgroundColor = [UIColor yellowColor];
-    self.loadingView.frame = CGRectMake((self.view.frame.size.width - self.loadingView.frame.size.width) / 2, (self.view.frame.size.height - self.loadingView.frame.size.height) / 2, self.loadingView.frame.size.width, self.loadingView.frame.size.height);
-    self.loadingView.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin;
-    [self.panelView addSubview:self.loadingView];
+    self.scrollView =  [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, KScreenWidth, KScreenHeight - 113)];
+    self.scrollView.pagingEnabled =YES;
+    self.scrollView.bounces = NO;
+    self.scrollView.showsHorizontalScrollIndicator = YES;
+    self.scrollView.delegate = self;
+    [self.view addSubview:self.scrollView];
+    self.automaticallyAdjustsScrollViewInsets = NO;
     
     NSArray *arrayImage;
+    arrayImage = nil;
     if ([_imagesArr containsString:@","]) {
         arrayImage = [_imagesArr componentsSeparatedByString:@","];
         //  加载图片
+        NSLog(@"图片个数%lu",(unsigned long)arrayImage.count);
+        NSLog(@"图片数组%@",arrayImage);
         for (int i=0; i< arrayImage.count; i++) {
-            UIImageView *imV = [[UIImageView alloc]initWithFrame:CGRectMake(KScreenWidth*i, 0, KScreenWidth, KScreenHeight)];
+            UIImageView *imV = [[UIImageView alloc]initWithFrame:CGRectMake(KScreenWidth*i, 0, KScreenWidth, KScreenHeight-113)];
             NSString *imageUrl = [NSString stringWithFormat:@"%@%@",kXXEPicURL,arrayImage[i]];
             NSURL *url =[NSURL URLWithString:imageUrl];
-            [imV sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"11111"] options:SDWebImageRefreshCached progress:^(NSInteger receivedSize, NSInteger expectedSize) {
-                
-            } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-                [_scrollView addSubview:imV];
-                
-            }];
-            dispatch_queue_t queue  = dispatch_queue_create("loadImage", NULL);
             
-            dispatch_async(queue, ^{
-                NSData *reslut =[NSData dataWithContentsOfURL:url];
-                UIImage *imag =[UIImage imageWithData:reslut];
-                dispatch_sync(dispatch_get_main_queue(), ^{
-                    imV.image =imag;
-                    [_scrollView addSubview:imV];
-                });
-            });
+            [imV sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@""]];
+            [self.scrollView addSubview:imV];
         }
-        CGPoint contentOffset = _scrollView.contentOffset;
-        [_scrollView setContentOffset:contentOffset animated:YES];
-        [self createToolBarItems];
-        _scrollView.contentSize =CGSizeMake(arrayImage.count*kWidth, kHeight-64);
-        _scrollView.delegate =self;
+        CGPoint contentOffset = self.scrollView.contentOffset;
+        [self.scrollView setContentOffset:contentOffset animated:YES];
+        self.scrollView.contentSize =CGSizeMake(arrayImage.count*kWidth, kHeight-64);
+//        _scrollView.delegate =self;
 
     }else{
-        UIImageView *imV = [[UIImageView alloc]initWithFrame:CGRectMake(KScreenWidth, 0, KScreenWidth, KScreenHeight)];
+        NSLog(@"图片数组%@",_imagesArr);
+        UIImageView *imV = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, KScreenWidth, KScreenHeight-113)];
         NSString *imageUrl = [NSString stringWithFormat:@"%@%@",kXXEPicURL,_imagesArr];
-            NSURL *url =[NSURL URLWithString:imageUrl];
-            [imV sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"11111"] options:SDWebImageRefreshCached progress:^(NSInteger receivedSize, NSInteger expectedSize) {
-                
-            } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-                [_scrollView addSubview:imV];
-            }];
-            dispatch_queue_t queue  = dispatch_queue_create("loadImage", NULL);
-            dispatch_async(queue, ^{
-                NSData *reslut =[NSData dataWithContentsOfURL:url];
-                UIImage *imag =[UIImage imageWithData:reslut];
-                dispatch_sync(dispatch_get_main_queue(), ^{
-                    imV.image =imag;
-                    [_scrollView addSubview:imV];
-                });
-            });
-        
-        CGPoint contentOffset = _scrollView.contentOffset;
-        [_scrollView setContentOffset:contentOffset animated:YES];
-        [self createToolBarItems];
-        _scrollView.contentSize =CGSizeMake(kWidth, kHeight-64);
-        _scrollView.delegate =self;
+        NSLog(@"图片地址%@",imageUrl);
+        NSURL *url =[NSURL URLWithString:imageUrl];
+        [imV sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@""]];
+        [self.scrollView addSubview:imV];
+        CGPoint contentOffset = self.scrollView.contentOffset;
+        [self.scrollView setContentOffset:contentOffset animated:YES];
+        self.scrollView.contentSize =CGSizeMake(kWidth, kHeight-64);
+//        _scrollView.delegate =self;
     }
 }
 - (void)createToolbtn{
     
     //UILabel 加白字
-    UILabel *textLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, KScreenHeight-153, kWidth, 50)];
+    UILabel *textLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, KScreenHeight-153, KScreenWidth, 50)];
     textLabel.backgroundColor =UIColorFromRGB(125, 130, 147);
     [self.view addSubview:textLabel];
     textLabel.numberOfLines =0;
@@ -171,7 +162,7 @@
         _likeButton.selected = YES;
     }
 
-    _commentButton = [self getButton:CGRectMake(70, 2, 60, 40) title:@"评" image:@"AlbumComment"];
+    _commentButton = [self getButton:CGRectMake(70, 2, 60, 40) title:@"评论" image:@"AlbumComment"];
     [_commentButton addTarget:self action:@selector(commentButton:) forControlEvents:UIControlEventTouchUpInside];
     [imageV addSubview:_commentButton];
     
@@ -179,12 +170,9 @@
     [_detaileBtn addTarget:self action:@selector(detaileButton:) forControlEvents:UIControlEventTouchUpInside];
     [imageV addSubview:_detaileBtn];
 }
-- (void)createToolBarItems{
-    UIBarButtonItem *deletBar =[[UIBarButtonItem alloc]initWithTitle:@"..." style:UIBarButtonItemStylePlain target:self action:@selector(delete:)];
-    self.navigationItem.rightBarButtonItem = deletBar;
-}
+
 - (void)delete:(UINavigationItem*)sender{
-    UIActionSheet *actionSheet =[[UIActionSheet alloc]initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:@"发送给QQ好友" otherButtonTitles:@"发送给微信好友",@"保存图片",@"删除", nil];
+    UIActionSheet *actionSheet =[[UIActionSheet alloc]initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:@"分享" otherButtonTitles:@"保存图片",@"删除", nil];
     actionSheet.delegate = self;
     [actionSheet showInView:self.view];
     actionSheet.tag=100;
@@ -194,71 +182,133 @@
     
     if (actionSheet.tag==100) {
         if (buttonIndex ==0) {
-            NSLog(@"发送给QQ好友");
-            [self performSelector:@selector(delayView) withObject:nil afterDelay:0.6];
-            
+            NSLog(@"分享");
+            [self performSelector:@selector(sendQQFriend) withObject:nil afterDelay:0.6];
         }
         else if (buttonIndex==1){
-            NSLog(@"发送给微信好友");
-            
-            [self performSelector:@selector(delayWX) withObject:nil afterDelay:0.6];
+            NSLog(@"保存图片");
+            [self performSelector:@selector(savePic) withObject:nil afterDelay:0.6];
         }
         else  if (buttonIndex==2){
-            NSLog(@"保存图片");
-            [self performSelector:@selector(delaySavePic) withObject:nil afterDelay:0.6];
-            
-        } else  if (buttonIndex==3){
             NSLog(@"删除");
             [self performSelector:@selector(delayDelete) withObject:nil afterDelay:0.6];
-        }
-        else{
+            
+        }else{
             NSLog(@"cancel");
         }
+   }
+}
+
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+{
+     NSInteger index = scrollView.contentOffset.x/CGRectGetWidth(scrollView.bounds);
+    self.indexImage = index;
+    NSLog(@"%ld",(long)index);
+}
+
+- (void)savePic{
+    
+    NSArray *arrayImage;
+    NSString *imageStringUrl;
+    arrayImage = nil;
+    if ([_imagesArr containsString:@","]) {
+        arrayImage = [_imagesArr componentsSeparatedByString:@","];
+        imageStringUrl = [NSString stringWithFormat:@"%@%@",kXXEPicURL,arrayImage[self.indexImage]];
     }else{
-        
+        imageStringUrl = [NSString stringWithFormat:@"%@%@",kXXEPicURL,self.imagesArr];
     }
+    NSURL *url = [NSURL URLWithString:imageStringUrl];
+    NSData *data = [NSData dataWithContentsOfURL:url];
+    UIImage *image = [UIImage imageWithData:data];
+    NSLog(@"%@",image);
+    
+    [self saveImageToPgoto:image];
 }
 
-- (void)delaySavePic{
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        UIImageWriteToSavedPhotosAlbum(nil, self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
-    });
-}
-
-- (void)delayDelete{
-    [self showString:@"删除成功" forSecond:1.f];
-}
-- (void)delayWX{
-//    [[UMSocialControllerService defaultControllerService] setShareText:@"猩猩教室" shareImage:[UIImage imageNamed:@"11111.png"]socialUIDelegate:self];
-//    [UMSocialSnsPlatformManager getSocialPlatformWithName:UMShareToWechatSession].snsClickHandler([UIApplication sharedApplication].keyWindow.rootViewController,[UMSocialControllerService defaultControllerService],YES);
+#pragma mark - 保存图片
+- (void)saveImageToPgoto:(UIImage *)image
+{
     
-}
-- (void)delayView{
-//    [[UMSocialControllerService defaultControllerService] setShareText:@"猩猩教室" shareImage:[UIImage imageNamed:@"11111.png"]socialUIDelegate:self];
-//    [UMSocialSnsPlatformManager getSocialPlatformWithName:UMShareToQQ].snsClickHandler([UIApplication sharedApplication].keyWindow.rootViewController,[UMSocialControllerService defaultControllerService],YES);
-    
+    UIImageWriteToSavedPhotosAlbum(image, self, @selector(image:didFinishSavingWithError:contextInfo:), NULL);
 }
 
 - (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo
 {
-    if (error) {
+    if (error != NULL) {
         [self showString:@"保存失败" forSecond:1.f];
-    } else {
-        [self showString:@"成功保存到相册" forSecond:1.f];
+    }else {
+        [self showString:@"保存成功" forSecond:1.f];
+    }
+}
+
+
+- (void)delayDelete{
+    
+    NSString *strngXid;
+    NSString *homeUserId;
+    if ([XXEUserInfo user].login) {
+        strngXid = [XXEUserInfo user].xid;
+        homeUserId = [XXEUserInfo user].user_id;
+    }else {
+        strngXid = XID;
+        homeUserId = USER_ID;
+    }
+    XXEDeleteCommentApi *commentApi = [[XXEDeleteCommentApi alloc]initWithDeleteCommentEventType:@"1" TalkId:_infoCircleModel.talkId CommentId:@"" UserXid:strngXid UserId:homeUserId];
+    [commentApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
+        NSLog(@"%@",request.responseJSONObject);
+        NSString *code = [request.responseJSONObject objectForKey:@"code"];
+        if ([code integerValue]==1) {
+            NSLog(@"%@",[request.responseJSONObject objectForKey:@"msg"]);
+            NSLog(@"%@",[request.responseJSONObject objectForKey:@"data"]);
+            [self showString:@"删除成功" forSecond:1.f];
+            [self.navigationController popViewControllerAnimated:YES];
+        }else{
+            [self showString:@"删除失败" forSecond:1.f];
+        }
+    } failure:^(__kindof YTKBaseRequest *request) {
+        [self showString:@"网络请求失败" forSecond:1.f];
+    }];
+}
+    
+- (void)sendQQFriend{
+    NSString *shareText = @"来自猩猩教室";
+    NSString *image = @"http://qzapp.qlogo.cn/qzapp/1105651422/9FFBD19645379A28C1F98EE2C2526DC4/100";
+    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:image]];
+    UIImage *imageA = [UIImage imageWithData:data];
+    //调用快速分享接口
+    [UMSocialSnsService presentSnsIconSheetView:self appKey:UMSocialAppKey shareText:shareText shareImage:imageA shareToSnsNames:[NSArray arrayWithObjects:UMShareToSina,UMShareToQzone,UMShareToQQ,UMShareToWechatSession,UMShareToWechatTimeline,nil] delegate:self];
+}
+
+//分享的代理方法
+#pragma mark - 分享的代理方法
+- (void)didCloseUIViewController:(UMSViewControllerType)fromViewControllerType
+{
+    NSLog(@"关闭的是%u",fromViewControllerType);
+}
+
+//分享完成后的回调
+- (void)didFinishGetUMSocialDataInViewController:(UMSocialResponseEntity *)response
+{
+    NSLog(@"信息是什么%@",response);
+    //根据responseCode得到发送结果,如果分享成功
+    if (response.responseCode == UMSResponseCodeSuccess) {
+        //得到分享的微博平台名
+        NSLog(@"share to sns name is%@",[[response.data allKeys]objectAtIndex:0]);
     }
 }
 
 - (void)commentButton:(UIButton*)shareBtn{
     CommentInputViewController *commentInputVC = [[CommentInputViewController alloc] init];
-    commentInputVC.itemId = _itemId;
+    commentInputVC.itemId = _infoCircleModel.talkId;
     [self.navigationController pushViewController:commentInputVC animated:YES];
     
 }
+
 - (void)detaileButton:(UIButton*)btn{
     MessageListDetailController *messageListDetailVC = [[MessageListDetailController alloc] init];
-    messageListDetailVC.talkId = _itemId;
+    messageListDetailVC.talkId = _infoCircleModel.talkId;
     [self.navigationController pushViewController:messageListDetailVC animated:YES];
-    
 }
 
 //点赞
@@ -274,6 +324,7 @@
     }
 }
 -(void)onClickLikeButton{
+    
     NSString *strngXid;
     NSString *homeUserId;
     if ([XXEUserInfo user].login) {
@@ -283,37 +334,24 @@
         strngXid = XID;
         homeUserId = USER_ID;
     }
-    //点赞网络请求
-    NSString *urlStr = @"http://www.xingxingedu.cn/Global/my_circle_good";
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    
-    NSDictionary *dict = @{@"appkey":APPKEY,
-                           @"backtype":BACKTYPE,
-                           @"xid":strngXid,
-                           @"user_id":homeUserId,
-                           @"user_type":USER_TYPE,
-                           @"talk_id":_itemId,
-                           };
-    // 服务器返回的数据格式
-    manager.responseSerializer = [AFHTTPResponseSerializer serializer]; // 二进制数据
-    [manager POST:urlStr parameters:dict success:^(AFHTTPRequestOperation *operation, id responseObject){
-        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableLeaves error:nil];
-        if([[NSString stringWithFormat:@"%@",dict[@"code"]] isEqualToString:@"1"] ){
+        NSLog(@"说说ID%@ XID%@ UserID%@",_infoCircleModel.talkId ,strngXid,homeUserId);
+        XXEFriendCirclegoodApi *friendGoodApi = [[XXEFriendCirclegoodApi alloc]initWithFriendCircleGoodOrCancelUerXid:strngXid UserID:homeUserId TalkId:_infoCircleModel.talkId];
+        [friendGoodApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
+            NSString *code = [request.responseJSONObject objectForKey:@"code"];
+            NSLog(@"%@",request.responseJSONObject);
+            if ([code integerValue]==1) {
+                [self showString:@"点赞成功" forSecond:1.f];
+                [_likeButton setTitle:@"取消" forState:UIControlStateSelected];
+                _likeButton.selected = !_likeButton.selected;
+            }else if ([code integerValue]==10){
+                [self showString:@"取消点赞" forSecond:1.f];
+                [_likeButton setTitle:@"赞" forState:UIControlStateNormal];
+                _likeButton.selected = !_likeButton.selected;
+            }
             
-            [self showString:@"点赞成功" forSecond:1.f];
-            [_likeButton setTitle:@"取消" forState:UIControlStateSelected];
-            _likeButton.selected = !_likeButton.selected;
-        }else{
-            
-            [self showString:@"取消点赞" forSecond:1.f];
-            
-            [_likeButton setTitle:@"赞" forState:UIControlStateNormal];
-            _likeButton.selected = !_likeButton.selected;
-        }
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        [self showString:@"网络不通，请检查网络！" forSecond:1.f];
-        
-    }];
+        } failure:^(__kindof YTKBaseRequest *request) {
+            [self showString:@"网络不通，请检查网络！" forSecond:1.f];
+        }];
 }
 
 
@@ -331,7 +369,6 @@
     [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     return btn;
 }
-
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

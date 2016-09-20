@@ -57,7 +57,7 @@
         button.titleEdgeInsets = UIEdgeInsetsMake(0, 5, 0, 0);
         
         [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        [button setTitleColor:[UIColor redColor] forState:UIControlStateHighlighted];
+        [button setTitleColor:[UIColor lightGrayColor] forState:UIControlStateHighlighted];
         [button addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
         
         // 修改导航栏左边的item

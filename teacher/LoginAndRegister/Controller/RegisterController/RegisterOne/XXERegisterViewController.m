@@ -271,7 +271,7 @@
 - (void)setupVerificationNumber:(UIButton *)sender
 {
     NSLog(@"----获取验证码----");
-    [sender startWithTime:5 title:@"获取验证码" countDownTile:@"s后重新获取" mColor:XXEColorFromRGB(189, 210, 38) countColor:XXEColorFromRGB(204, 204, 204)];
+    [sender startWithTime:59 title:@"获取验证码" countDownTile:@"s后重新获取" mColor:XXEColorFromRGB(189, 210, 38) countColor:XXEColorFromRGB(204, 204, 204)];
     [self showString:@"验证码已发送" forSecond:1.f];
     [self getVerificationNumber];
 }

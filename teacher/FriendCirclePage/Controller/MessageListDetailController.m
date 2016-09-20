@@ -197,14 +197,23 @@ typedef NS_OPTIONS(NSInteger, Comments){
     _com_typeArr = [NSMutableArray array];
     _xidArr = [NSMutableArray array];
     _idArr = [NSMutableArray array];
+    NSString *strngXid;
+    NSString *homeUserId;
+    if ([XXEUserInfo user].login) {
+        strngXid = [XXEUserInfo user].xid;
+        homeUserId = [XXEUserInfo user].user_id;
+    }else {
+        strngXid = XID;
+        homeUserId = USER_ID;
+    }
     
 //    NSLog(@"==============_talkId_talkId_talkId================%@",_talkId);
     NSString *urlStr = @"http://www.xingxingedu.cn/Global/one_shuoshuo";
     AFHTTPRequestOperationManager *mgr = [AFHTTPRequestOperationManager manager];
     NSDictionary *dict = @{@"appkey":APPKEY,
                            @"backtype":BACKTYPE,
-                           @"xid":XID,
-                           @"user_id":USER_ID,
+                           @"xid":strngXid,
+                           @"user_id":homeUserId,
                            @"user_type":USER_TYPE,
                            @"talk_id":_talkId,
                            };
@@ -383,14 +392,24 @@ typedef NS_OPTIONS(NSInteger, Comments){
 #pragma mark - YDCommentInputViewDelegate
 - (void)commentInputView:(YDCommentInputView *)anInputView onSendText:(NSString *)aText
 {
+    NSString *strngXid;
+    NSString *homeUserId;
+    if ([XXEUserInfo user].login) {
+        strngXid = [XXEUserInfo user].xid;
+        homeUserId = [XXEUserInfo user].user_id;
+    }else {
+        strngXid = XID;
+        homeUserId = USER_ID;
+    }
+    
     if (self.message == CommentsMessage) {
         NSString *urlStr = @"http://www.xingxingedu.cn/Global/my_circle_comment";
         AFHTTPRequestOperationManager *mgr = [AFHTTPRequestOperationManager manager];
         
         NSDictionary *dict = @{@"appkey":APPKEY,
                                @"backtype":BACKTYPE,
-                               @"xid":XID,
-                               @"user_id":USER_ID,
+                               @"xid":strngXid,
+                               @"user_id":homeUserId,
                                @"user_type":USER_TYPE,
                                @"com_type":@"1",
                                @"talk_id":_talkId,
@@ -424,14 +443,13 @@ typedef NS_OPTIONS(NSInteger, Comments){
          }];
         
     } else {
-        
         NSString *urlStr = @"http://www.xingxingedu.cn/Global/my_circle_comment";
         AFHTTPRequestOperationManager *mgr = [AFHTTPRequestOperationManager manager];
         
         NSDictionary *dict = @{@"appkey":APPKEY,
                                @"backtype":BACKTYPE,
-                               @"xid":XID,
-                               @"user_id":USER_ID,
+                               @"xid":strngXid,
+                               @"user_id":homeUserId,
                                @"user_type":USER_TYPE,
                                @"com_type":@"2",
                                @"talk_id":_talkId,

@@ -50,10 +50,6 @@
     
 }
 
-
-
-
-
 #pragma mark - TableView DataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -85,8 +81,6 @@
     }else{
         NSLog(@"重用Cell: %@", reuseIdentifier);
     }
-
-    
     cell.delegate = self;
     [cell updateWithItem:item];
     
@@ -138,7 +132,10 @@
 {
     
 }
-
+- (void)xxe_userRefreshTableView
+{
+    [self.tableView reloadData];
+}
 
 
 @end

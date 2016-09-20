@@ -522,6 +522,7 @@
 		9E5E23F91D90CD17008B1AAF /* XXECommentModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E5E23F21D90CD17008B1AAF /* XXECommentModel.m */; };
 		9E5E23FA1D90CD17008B1AAF /* XXEGoodUserModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E5E23F41D90CD17008B1AAF /* XXEGoodUserModel.m */; };
 		9E5E23FB1D90CD17008B1AAF /* XXELocationModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E5E23F61D90CD17008B1AAF /* XXELocationModel.m */; };
+		9E5E23FD1D90E5BE008B1AAF /* dian@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9E5E23FC1D90E5BE008B1AAF /* dian@2x.png */; };
 		9E66939F1D6404DD00FFA0A7 /* XXEVertifyTimesApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E66939E1D6404DD00FFA0A7 /* XXEVertifyTimesApi.m */; };
 		9E6693A81D6413B100FFA0A7 /* XXERegisterSecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E6693A51D6413B100FFA0A7 /* XXERegisterSecondViewController.m */; };
 		9E6693A91D6413B100FFA0A7 /* XXERegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E6693A71D6413B100FFA0A7 /* XXERegisterViewController.m */; };
@@ -1581,6 +1582,7 @@
 		9E5E23F41D90CD17008B1AAF /* XXEGoodUserModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXEGoodUserModel.m; sourceTree = "<group>"; };
 		9E5E23F51D90CD17008B1AAF /* XXELocationModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXELocationModel.h; sourceTree = "<group>"; };
 		9E5E23F61D90CD17008B1AAF /* XXELocationModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXELocationModel.m; sourceTree = "<group>"; };
+		9E5E23FC1D90E5BE008B1AAF /* dian@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dian@2x.png"; sourceTree = "<group>"; };
 		9E66939D1D6404DD00FFA0A7 /* XXEVertifyTimesApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXEVertifyTimesApi.h; sourceTree = "<group>"; };
 		9E66939E1D6404DD00FFA0A7 /* XXEVertifyTimesApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXEVertifyTimesApi.m; sourceTree = "<group>"; };
 		9E6693A41D6413B100FFA0A7 /* XXERegisterSecondViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXERegisterSecondViewController.h; sourceTree = "<group>"; };
@@ -3399,6 +3401,7 @@
 		9E4813BB1D50695200C614AC /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				9E5E23FC1D90E5BE008B1AAF /* dian@2x.png */,
 				9E5E23BA1D90CCD8008B1AAF /* 已选择icon28x28@2x.png */,
 				9E5E23BB1D90CCD8008B1AAF /* 已选择icon28x28@3x.png */,
 				9E5E23BC1D90CCD8008B1AAF /* XXEFriendCirclePageViewController.h */,
@@ -4497,6 +4500,7 @@
 				9EBA6F531D5CADBA001B45C3 /* SSVideoPlayer.bundle in Resources */,
 				04BB3AB21D74743300AA5C5C /* XXECommentRequestTableViewCell.xib in Resources */,
 				9E2F7F7E1D73D24B00DD9CD1 /* iOS-social-analytics-releasenote.html in Resources */,
+				9E5E23FD1D90E5BE008B1AAF /* dian@2x.png in Resources */,
 				048F58881D5C7A76002E4855 /* XXEXingCoinHistoryTableViewCell.xib in Resources */,
 				9E5E239E1D90CC04008B1AAF /* AlbumOperateMore@3x.png in Resources */,
 				9E2F7F841D73D24B00DD9CD1 /* ios-social-sdk-login-quick.html in Resources */,

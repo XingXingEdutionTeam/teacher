@@ -84,14 +84,14 @@
 
 -(void) initTableView
 {
-    _tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
-    _tableView.delegate = self;
-    _tableView.dataSource = self;
-    _tableView.separatorInset = UIEdgeInsetsZero;
+    self.tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
+    self.tableView.delegate = self;
+    self.tableView.dataSource = self;
+    self.tableView.separatorInset = UIEdgeInsetsZero;
     if ([_tableView respondsToSelector:@selector(setLayoutMargins:)]) {
         _tableView.layoutMargins = UIEdgeInsetsZero;
     }
-    [self.view addSubview:_tableView];
+    [self.view addSubview:self.tableView];
 }
 
 -(void) initHeader
@@ -197,9 +197,6 @@
     
 }
 
-
-
-
 #pragma mark - TableView DataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -226,6 +223,7 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    
 }
 
 
@@ -327,10 +325,7 @@
     [self.tableView.header endRefreshing];
 }
 
-
-
 #pragma mark - Method
-
 
 -(void)setCover:(NSString *)url
 {

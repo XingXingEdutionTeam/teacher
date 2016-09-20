@@ -61,15 +61,19 @@
     [self FriendMyCircleMessagePage:self.page];
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    //获取数据
+//    [self refresh];
+}
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
      self.view.backgroundColor = XXEBackgroundColor;
     // Do any additional setup after loading the view.
-    //获取数据
-    self.page = 1;
-    //获取朋友圈信息
-    [self FriendMyCircleMessagePage:1];
+    [self refresh];
 }
 
 #pragma mark - 获取数据
@@ -88,6 +92,10 @@
     NSString *page1 = [NSString stringWithFormat:@"%ld",(long)page];
     XXEFriendMyCircleApi *friendMyApi = [[XXEFriendMyCircleApi alloc]initWithChechFriendCircleOtherXid:otherXid page:page1 UserId:homeUserId MyCircleXid:strngXid];
     [friendMyApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
+        
+        if (page ==1) {
+            [self.circleMyCircleListDatasource removeAllObjects];
+        }
         
         NSLog(@"%@",request.responseJSONObject);
         NSLog(@"%@",[request.responseJSONObject objectForKey:@"msg"]);
@@ -114,6 +122,7 @@
             //朋友圈的信息列表
             [self myFriendCircleMessage];
             NSLog(@"圈子顶部信息数组信息%@",self.headerMyCircleDatasource);
+//            [self xxe_userRefreshTableView];
         }else{
             [self hudShowText:@"获取数据错误" second:2.f];
             [self endRefresh];
@@ -138,6 +147,8 @@
 /** 个人圈子的信息 */
 - (void)myFriendCircleMessage
 {
+    XXECircleModel *circleModel = self.circleMyCircleListDatasource[0];
+    NSLog(@"%@",circleModel.words);
     
     if (self.circleMyCircleListDatasource.count != 0) {
         for (int i =0; i<self.circleMyCircleListDatasource.count; i++) {
@@ -150,6 +161,7 @@
             //如果发布的圈子有图片则显示图片
             [self myFritnd_CircleImageShowTextImageItem:textItem CircleModel:circleModel];
         }
+//        [self xxe_baseRefreshTableView];
     }else{
         NSLog(@"没有数据");
     }
@@ -184,23 +196,54 @@
         NSLog(@"小图片%@ 大图片%@",srcSmallImages,thumbBigImages);
     }
     [self addItem:textItem];
-    
 }
 
--(void)onClickItem:(DFTextImageUserLineItem *)item
+-(void)onClickItem:(DFBaseUserLineItem *)item
 {
     XXECircleModel *circleModel = self.circleMyCircleListDatasource[item.itemId];
     NSLog(@"click item: %lld", item.itemId);
+    NSLog(@"时间%@",circleModel.date_tm);
+    NSLog(@"发布的照片%@",circleModel.pic_url);
+    NSLog(@"次图片的评论ID%@",circleModel.talkId);
+    NSLog(@"评论的%@",circleModel.comment_group);
+    NSLog(@"点赞的%@",circleModel.good_user);
+    NSLog(@"发布内容%@",circleModel.words);
+    
     XXEInfomationViewController *infomationVC = [[XXEInfomationViewController alloc]init];
+    infomationVC.infoCircleModel = circleModel;
     infomationVC.ts = item.ts;
     infomationVC.itemId = [NSString stringWithFormat:@"%lld",item.itemId];
-    infomationVC.conText = item.text;
+    infomationVC.conText = circleModel.words;
     infomationVC.imagesArr = circleModel.pic_url;
     
     infomationVC.goodArr = circleModel.good_user;
     infomationVC.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:infomationVC animated:YES];
 }
+
+//-(void)onClickItem:(DFTextImageUserLineItem *)item
+//{
+//    XXECircleModel *circleModel = self.circleMyCircleListDatasource[item.itemId];
+//    NSLog(@"click item: %lld", item.itemId);
+//    NSLog(@"时间%@",circleModel.date_tm);
+//    NSLog(@"发布的照片%@",circleModel.pic_url);
+//    NSLog(@"次图片的评论ID%@",circleModel.talkId);
+//    NSLog(@"评论的%@",circleModel.comment_group);
+//    NSLog(@"点赞的%@",circleModel.good_user);
+//    NSLog(@"发布内容%@",circleModel.words);
+//    
+//    XXEInfomationViewController *infomationVC = [[XXEInfomationViewController alloc]init];
+//    infomationVC.infoCircleModel = circleModel;
+//    infomationVC.ts = item.ts;
+//    infomationVC.itemId = [NSString stringWithFormat:@"%lld",item.itemId];
+//    infomationVC.conText = item.text;
+//    infomationVC.imagesArr = circleModel.pic_url;
+//    
+//    infomationVC.goodArr = circleModel.good_user;
+//    infomationVC.hidesBottomBarWhenPushed = YES;
+//    [self.navigationController pushViewController:infomationVC animated:YES];
+//}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

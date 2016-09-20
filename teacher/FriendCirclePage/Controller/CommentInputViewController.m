@@ -42,7 +42,7 @@
     _contentView.editable =YES;
     _contentView.font = [UIFont systemFontOfSize:15];
     _contentView.delegate =self;
-    _contentView.textColor = [UIColor lightGrayColor];
+    _contentView.textColor = [UIColor blackColor];
     [self.view addSubview:_contentView];
 }
 -(void)rightItemButton{
@@ -78,13 +78,23 @@
 }
 -(void)commentInputTextView{
     
+    NSString *strngXid;
+    NSString *homeUserId;
+    if ([XXEUserInfo user].login) {
+        strngXid = [XXEUserInfo user].xid;
+        homeUserId = [XXEUserInfo user].user_id;
+    }else {
+        strngXid = XID;
+        homeUserId = USER_ID;
+    }
+    
     NSString *urlStr = @"http://www.xingxingedu.cn/Global/my_circle_comment";
     AFHTTPRequestOperationManager *mgr = [AFHTTPRequestOperationManager manager];
     
     NSDictionary *dict = @{@"appkey":APPKEY,
                            @"backtype":BACKTYPE,
-                           @"xid":XID,
-                           @"user_id":USER_ID,
+                           @"xid":strngXid,
+                           @"user_id":homeUserId,
                            @"user_type":USER_TYPE,
                            @"com_type":@"1",
                            @"talk_id":_itemId,
