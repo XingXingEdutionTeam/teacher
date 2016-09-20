@@ -83,7 +83,6 @@
     self.page = 1;
     //获取朋友圈信息
     [self setupFriendCircleMessagePage:1];
-//    [self wwwqqqqqq];
 }
 
 #pragma mark - 下拉刷新 与上拉加载更多
@@ -137,8 +136,8 @@
             [self.headerDatasource addObject:Usermodel];
             //设置顶部视图信息
             [self setHeaderMessage:Usermodel];
-            NSLog(@"!!!!!!!评论信息的列表的%@",list);
-             NSLog(@"!!!!!!!评论信息的列表的%@",list[0]);
+//            NSLog(@"!!!!!!!评论信息的列表的%@",list);
+//             NSLog(@"!!!!!!!评论信息的列表的%@",list[0]);
             for (int i =0; i<list.count; i++) {
                 XXECircleModel *circleModel = [[XXECircleModel alloc]initWithDictionary:list[i] error:nil];
                 [self.circleListDatasource addObject:circleModel];
@@ -222,7 +221,10 @@
     }else{
         NSLog(@"不包含");
         [srcSmallImages addObject:[NSString stringWithFormat:@"%@%@",kXXEPicURL,circleModel.pic_url ]];
+        [srcSmallImages addObject:@"哈哈.png"];
+        
         [thumbBigImages addObject:[NSString stringWithFormat:@"%@%@",kXXEPicURL,circleModel.pic_url ]];
+        [thumbBigImages addObject:@"哈哈.png"];
         textImageItem.srcImages = srcSmallImages;
         textImageItem.thumbImages = thumbBigImages;
         
@@ -273,29 +275,12 @@
 
 
 #pragma mark - DFImagesSendViewControllerDelegate 发布圈子的代理
-- (void)xxe_whoCanLookMessage:(NSString *)personLook
-{
-    NSLog(@"谁可以看");
-    XXEWhoCanLookController *whoVC = [[XXEWhoCanLookController alloc]init];
-    [self.navigationController pushViewController:whoVC animated:YES];
-}
-
-- (void)locationMessageText:(NSString *)text
-{
-    NSLog(@"定位");
-    XXELocationAddController *locaVC = [[XXELocationAddController alloc]init];
-    [self presentViewController:locaVC animated:YES completion:^{
-        NSLog(@"4567890-");
-    }];
-}
-
-
--(void)onSendTextImage:(NSString *)text images:(NSArray *)images
+-(void)onSendTextImage:(NSString *)text images:(NSArray *)images Location:(NSString *)location PersonSee:(NSString *)personSee
 {
     NSLog(@"发布的文字%@ 发布的图片%@",text,images);
     if (images.count ==0) {
         //往服务器传所有的参数
-        [self publishFriendCircleText:text ImageFile:@""];
+        [self publishFriendCircleText:text ImageFile:@"" Location:location PersonSee:personSee];
     }else if(images.count == 1) {
         
         NSDictionary *dict = @{@"file_type":@"1",
@@ -307,13 +292,12 @@
                                };
         AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
         [manager POST:XXERegisterUpLoadPicUrl parameters:dict constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
-            for (int i = 0; i< images.count; i++) {
-                NSData *data = UIImageJPEGRepresentation(images[i], 0.5);
-                NSString *name = [NSString stringWithFormat:@"%d.jpeg",i];
-                NSString *formKey = [NSString stringWithFormat:@"file%d",i];
+            
+                NSData *data = UIImageJPEGRepresentation(images[0], 0.5);
+                NSString *name = [NSString stringWithFormat:@"1.jpeg"];
+                NSString *formKey = [NSString stringWithFormat:@"file"];
                 NSString *type = @"image/jpeg";
                 [formData appendPartWithFileData:data name:formKey fileName:name mimeType:type];
-            }
             
         } success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
             
@@ -321,19 +305,11 @@
             NSLog(@"%@",[responseObject objectForKey:@"msg"]);
             NSString *code = [responseObject objectForKey:@"code"];
             if ([code intValue] == 1) {
-                NSArray *data = [responseObject objectForKey:@"data"];
-                NSMutableString *str = [NSMutableString string];
-                for (int i =0; i< data.count; i++) {
-                    NSString *string = data[i];
-                    if (i != data.count -1) {
-                        [str appendFormat:@"%@,",string];
-                    }else {
-                        [str appendFormat:@"%@",string];
-                    }
-                }
-                NSLog(@"图片的网址:%@",str);
+                NSString *data = [responseObject objectForKey:@"data"];
+                
+                NSLog(@"图片的网址:%@",data);
                 //往服务器传所有的参数
-                [self publishFriendCircleText:text ImageFile:str];
+                [self publishFriendCircleText:text ImageFile:data Location:location PersonSee:personSee];
             }
             
         } failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error) {
@@ -375,7 +351,7 @@
             }
             NSLog(@"图片的网址:%@",str);
             //往服务器传所有的参数
-            [self publishFriendCircleText:text ImageFile:str];
+            [self publishFriendCircleText:text ImageFile:str Location:location PersonSee:personSee];
         }
         
     } failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error) {
@@ -386,9 +362,13 @@
 
 #pragma mark - 网服务器上传发布信息
 
-- (void)publishFriendCircleText:(NSString *)text ImageFile:(NSString *)imageFile
+- (void)publishFriendCircleText:(NSString *)text ImageFile:(NSString *)imageFile Location:(NSString *)location PersonSee:(NSString *)personSee
 {
-    NSLog(@"图片:%@",imageFile);
+//    NSLog(@"图片:%@",imageFile);
+//    NSLog(@"内容:%@",text);
+//    NSLog(@"地点:%@",location);
+//    NSLog(@"谁可见:%@",personSee);
+    
     NSString *strngXid;
     NSString *homeUserId;
     if ([XXEUserInfo user].login) {
@@ -399,7 +379,20 @@
         homeUserId = USER_ID;
     }
     
-    XXEPublishFriendCircleApi *publishFriendApi = [[XXEPublishFriendCircleApi alloc]initWithPublishFriendCirclePosition:@"上海" FileType:@"1" Words:text PicGroup:imageFile VideoUrl:@"" CircleSet:@"0" UserXid:strngXid UserId:homeUserId];
+    if ([personSee isEqualToString:@""]) {
+        personSee = @"0";
+    }else if ([personSee isEqualToString:@"仅自己可见"]){
+        personSee = @"1";
+    }else if ([personSee isEqualToString:@"好友可见"]){
+        personSee = @"2";
+    }else if ([personSee isEqualToString:@"班级通讯录可见"]){
+        personSee = @"3";
+    }else{
+        personSee = @"0";
+    }
+    
+    
+    XXEPublishFriendCircleApi *publishFriendApi = [[XXEPublishFriendCircleApi alloc]initWithPublishFriendCirclePosition:location FileType:@"1" Words:text PicGroup:imageFile VideoUrl:@"" CircleSet:personSee UserXid:strngXid UserId:homeUserId];
     
     [publishFriendApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         NSLog(@"发布内筒%@",request.responseJSONObject);
@@ -434,17 +427,20 @@
                 }
                 textImageItem.srcImages = srcSmallImages;
                 textImageItem.thumbImages = thumbBigImages;
+                 NSLog(@"小%@ 大%@",textImageItem.srcImages,textImageItem.thumbImages);
             }else{
                 NSLog(@"不包含");
                 [srcSmallImages addObject:[NSString stringWithFormat:@"%@%@",kXXEPicURL,imageFile ]];
+                [srcSmallImages addObject:@"哈哈.png"];
                 [thumbBigImages addObject:[NSString stringWithFormat:@"%@%@",kXXEPicURL,imageFile ]];
+                [thumbBigImages addObject:@"哈哈.png"];
                 textImageItem.srcImages = srcSmallImages;
                 textImageItem.thumbImages = thumbBigImages;
                 
                 NSLog(@"小图片%@ 大图片%@",srcSmallImages,thumbBigImages);
+                NSLog(@"小%@ 大%@",textImageItem.srcImages,textImageItem.thumbImages);
             }
-            
-            textImageItem.location = @"上海";
+            textImageItem.location = location;
              [self addItemTop:textImageItem];
             //获取朋友圈信息
 //            [self setupFriendCircleMessagePage:1];

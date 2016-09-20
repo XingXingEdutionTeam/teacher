@@ -12,6 +12,7 @@
 #import "XXECircleModel.h"
 #import "XXECommentModel.h"
 #import "XXEGoodUserModel.h"
+#import "XXEInfomationViewController.h"
 
 @interface XXEFriendMyCircleViewController ()
 
@@ -47,21 +48,32 @@
     return UIStatusBarStyleLightContent;
 }
 
-- (void)viewWillAppear:(BOOL)animated
+#pragma mark - 下拉刷新 与上拉加载更多
+- (void)refresh
 {
-    self.view.backgroundColor = XXEBackgroundColor;
-    
+    self.page = 1;
+    [self FriendMyCircleMessagePage:self.page];
 }
+
+- (void)loadMore
+{
+    self.page ++;
+    [self FriendMyCircleMessagePage:self.page];
+}
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+     self.view.backgroundColor = XXEBackgroundColor;
     // Do any additional setup after loading the view.
     //获取数据
-    [self FriendMyCircleMessage];
+    self.page = 1;
+    //获取朋友圈信息
+    [self FriendMyCircleMessagePage:1];
 }
 
 #pragma mark - 获取数据
-- (void)FriendMyCircleMessage
+- (void)FriendMyCircleMessagePage:(NSInteger )page
 {
     NSString *strngXid;
     NSString *homeUserId;
@@ -73,7 +85,8 @@
         homeUserId = USER_ID;
     }
     NSString *otherXid = [NSString stringWithFormat:@"%ld",(long)self.otherXid];
-    XXEFriendMyCircleApi *friendMyApi = [[XXEFriendMyCircleApi alloc]initWithChechFriendCircleOtherXid:otherXid page:@"1" UserId:homeUserId MyCircleXid:strngXid];
+    NSString *page1 = [NSString stringWithFormat:@"%ld",(long)page];
+    XXEFriendMyCircleApi *friendMyApi = [[XXEFriendMyCircleApi alloc]initWithChechFriendCircleOtherXid:otherXid page:page1 UserId:homeUserId MyCircleXid:strngXid];
     [friendMyApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         
         NSLog(@"%@",request.responseJSONObject);
@@ -97,7 +110,7 @@
                 XXECircleModel *circleModel = [[XXECircleModel alloc]initWithDictionary:listSS[i] error:nil];
                 [self.circleMyCircleListDatasource addObject:circleModel];
             }
-            [self endLoadMore];
+            [self endRefresh];
             //朋友圈的信息列表
             [self myFriendCircleMessage];
             NSLog(@"圈子顶部信息数组信息%@",self.headerMyCircleDatasource);
@@ -106,9 +119,6 @@
             [self endRefresh];
             [self endLoadMore];
         }
-
-        
-        
     } failure:^(__kindof YTKBaseRequest *request) {
         
     }];
@@ -128,14 +138,14 @@
 /** 个人圈子的信息 */
 - (void)myFriendCircleMessage
 {
+    
     if (self.circleMyCircleListDatasource.count != 0) {
         for (int i =0; i<self.circleMyCircleListDatasource.count; i++) {
             XXECircleModel *circleModel = self.circleMyCircleListDatasource[i];
             DFTextImageUserLineItem *textItem = [[DFTextImageUserLineItem alloc]init];
-            textItem.itemId = 10000;
+            textItem.itemId = i;
             textItem.ts = [circleModel.date_tm integerValue];
             textItem.cover = circleModel.pic_url;
-            
             textItem.text = circleModel.words;
             //如果发布的圈子有图片则显示图片
             [self myFritnd_CircleImageShowTextImageItem:textItem CircleModel:circleModel];
@@ -162,6 +172,7 @@
             [thumbBigImages addObject:[NSString stringWithFormat:@"%@%@",kXXEPicURL,image]];
             NSLog(@"小图片%@ 大图片%@",srcSmallImages,thumbBigImages);
             textItem.photoCount = srcSmallImages.count;
+            textItem.cover = srcSmallImages[0];
             
         }
     }else{
@@ -169,16 +180,27 @@
         [srcSmallImages addObject:[NSString stringWithFormat:@"%@%@",kXXEPicURL,circleModel.pic_url ]];
         [thumbBigImages addObject:[NSString stringWithFormat:@"%@%@",kXXEPicURL,circleModel.pic_url ]];
         textItem.photoCount = srcSmallImages.count;
+        textItem.cover = srcSmallImages[0];
         NSLog(@"小图片%@ 大图片%@",srcSmallImages,thumbBigImages);
     }
     [self addItem:textItem];
     
-    //发布的评论和点赞
-//    [self friend_circleShowCommentAndGoodCircleModel:circleModel TextImageItem:textImageItem];
-    
 }
 
-
+-(void)onClickItem:(DFTextImageUserLineItem *)item
+{
+    XXECircleModel *circleModel = self.circleMyCircleListDatasource[item.itemId];
+    NSLog(@"click item: %lld", item.itemId);
+    XXEInfomationViewController *infomationVC = [[XXEInfomationViewController alloc]init];
+    infomationVC.ts = item.ts;
+    infomationVC.itemId = [NSString stringWithFormat:@"%lld",item.itemId];
+    infomationVC.conText = item.text;
+    infomationVC.imagesArr = circleModel.pic_url;
+    
+    infomationVC.goodArr = circleModel.good_user;
+    infomationVC.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:infomationVC animated:YES];
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

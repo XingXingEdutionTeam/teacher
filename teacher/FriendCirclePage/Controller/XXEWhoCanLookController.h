@@ -7,7 +7,12 @@
 //
 
 #import "DFBaseViewController.h"
+#import <UIKit/UIKit.h>
+
+typedef void (^ReturnTextBlock)(NSString *showText);
 
 @interface XXEWhoCanLookController : DFBaseViewController
 
+@property (nonatomic, copy)ReturnTextBlock returnTextBlock;
+- (void)returnText:(ReturnTextBlock)block;
 @end

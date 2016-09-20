@@ -21,7 +21,6 @@ pod 'ODRefreshControl', '~> 1.2'
 pod 'SVProgressHUD', '~> 2.0.2'
 pod 'TZImagePickerController', '~> 1.1.3'
 pod 'YLGIFImage', '~> 0.11'
-pod 'DFTimelineView'
 end
 
 

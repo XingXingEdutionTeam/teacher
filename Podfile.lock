@@ -33,18 +33,6 @@ PODS:
     - ODRefreshControl (~> 1.2)
     - SDWebImage (~> 3.7.3)
     - TZImagePickerController
-  - DFTimelineView (1.3.3):
-    - AFNetworking (~> 2.6.0)
-    - DFCommon (~> 1.3.7)
-    - FMDB (~> 2.5)
-    - MBProgressHUD (~> 0.9.1)
-    - MJPhotoBrowser (~> 1.0.2)
-    - MJRefresh (~> 2.4.11)
-    - MLLabel (~> 1.7)
-    - MMPopupView
-    - ODRefreshControl (~> 1.2)
-    - SDWebImage (~> 3.7.3)
-    - TZImagePickerController
   - FMDB (2.6.2):
     - FMDB/standard (= 2.6.2)
   - FMDB/standard (2.6.2)
@@ -85,7 +73,6 @@ PODS:
 
 DEPENDENCIES:
   - DFCommon (~> 1.3.9)
-  - DFTimelineView
   - JSONModel
   - Masonry
   - MBProgressHUD (~> 0.9.1)
@@ -110,7 +97,6 @@ SPEC CHECKSUMS:
   AFDownloadRequestOperation: 748a1643423e1ddb23f2178f778087d4f0ae8ac7
   AFNetworking: cb8d14a848e831097108418f5d49217339d4eb60
   DFCommon: 4ed8395c63a40852bd071d33cb4a298e86399b66
-  DFTimelineView: 7af16c6a9148ff0ac9c968f36eb366007a99637b
   FMDB: 854a0341b4726e53276f2a8996f06f1b80f9259a
   JSONModel: 12523685c4b623553ccf844bbbf7007624317b2c
   Masonry: b529bb169217897b6354d4b56b1fada6d475b13d
@@ -132,6 +118,6 @@ SPEC CHECKSUMS:
   YTKNetwork: 988660d5fab310a55895239751ecfa74c3224a77
   ZYQAssetPickerController: e5cf51ee6c05fa06746830026c247cb9f6699e84
 
-PODFILE CHECKSUM: b9bb5b20f53ec2030c5740feea226026e79cc40c
+PODFILE CHECKSUM: 3dc121696313db3b007495897e78a103c44222ff
 
 COCOAPODS: 1.0.1

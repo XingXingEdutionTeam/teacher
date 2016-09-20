@@ -7,7 +7,13 @@
 //
 
 #import "DFBaseViewController.h"
+#import <UIKit/UIKit.h>
+
+typedef void (^ReturnTextBlock)(NSString *showText);
 
 @interface XXELocationAddController : DFBaseViewController
+
+@property (nonatomic, copy)ReturnTextBlock returnTextBlock;
+- (void)returnText:(ReturnTextBlock)block;
 
 @end
