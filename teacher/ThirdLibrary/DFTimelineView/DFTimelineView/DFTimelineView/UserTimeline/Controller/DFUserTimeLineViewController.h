@@ -15,6 +15,6 @@
 -(void)addItem:(DFBaseUserLineItem *)item;
 
 //刷新单元格
-- (void)xxe_userRefreshTableView;
+- (void)xxe_userRefreshTableViewWithItem:(NSString *)item;
 
 @end

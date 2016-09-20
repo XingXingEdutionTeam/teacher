@@ -218,6 +218,16 @@
     
     infomationVC.goodArr = circleModel.good_user;
     infomationVC.hidesBottomBarWhenPushed = YES;
+    
+    infomationVC.deteleModelBlock = ^ (XXECircleModel *model, NSString *item){
+        [self.circleMyCircleListDatasource enumerateObjectsUsingBlock:^(XXECircleModel  *_Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            if (obj == model) {
+                [self.circleMyCircleListDatasource removeObject:obj];
+                *stop = YES;
+                [self xxe_userRefreshTableViewWithItem:item];
+            }
+        }];
+    };
     [self.navigationController pushViewController:infomationVC animated:YES];
 }
 

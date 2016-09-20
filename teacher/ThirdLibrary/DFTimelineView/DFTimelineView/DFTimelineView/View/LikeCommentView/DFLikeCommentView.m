@@ -47,7 +47,7 @@
 
 @interface DFLikeCommentView()<MLLinkClickLabelDelegate,UIAlertViewDelegate>
 {
-    long keenteam;
+    UILabel *keenteamLabel;
 }
 
 @property (nonatomic, strong) UIImageView *likeCmtBg;
@@ -307,7 +307,7 @@
 -(void)longPress:(UITapGestureRecognizer*)recognizer
 {
     NSLog(@"长按了Label");
-    keenteam  = recognizer.view.tag;
+    keenteamLabel  = (UILabel *)recognizer.view;
     //解决响应两次的问题
     if (recognizer.state == UIGestureRecognizerStateEnded) {
         return;
@@ -335,11 +335,13 @@
 - (void)my_circle_deleteCommment
 {
     NSLog(@"删除评论");
-    
-    MLClickColorLinkLabel *label = (MLClickColorLinkLabel*)[self viewWithTag:keenteam];
+//    MLClickColorLinkLabel *label = (MLClickColorLinkLabel*)[self viewWithTag:keenteam];
         if (_delegate && [_delegate respondsToSelector:@selector(deleteClickComment:)]) {
-            [_delegate deleteClickComment:label.uniqueId];
+            [_delegate deleteClickComment:((MLClickColorLinkLabel *)keenteamLabel).uniqueId];
         }
+//    NSLog(@"%ld",keenteam);
+    NSLog(@"%lld",((MLClickColorLinkLabel *)keenteamLabel).uniqueId);
+    
 }
 
 

@@ -364,24 +364,20 @@
 {
     DFBaseLineItem *item = [self getItem:itemId];
     
-    NSLog(@"%@",item.comments);
+    NSLog(@"%ld---%@----%@---%p",commentItem.userId,commentItem.userNick,commentItem.text,commentItem);
 //    NSLog(@"%@",item.comments[0]);
     
-    int index = 1;
-    int indexPath = 0;
+//    int index = 1;
+//    int indexPath = 0;
     if (item.comments.count >0) {
-        for (DFLineCommentItem *itemA in item.comments) {
-            if (itemA.userId == item.userId) {
-                indexPath = index-1;
-                NSLog(@"indexPath:%d",indexPath);
-            }
-            index++;
-            NSLog(@"index:%d",index);
-        }
-         [item.comments removeObjectAtIndex:indexPath];
-        
+       [item.comments enumerateObjectsUsingBlock:^(DFLineCommentItem  *_Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+           if (obj.commentId == commentItem.commentId) {
+               [item.comments removeObject:obj];
+               *stop = YES;
+           }
+       }];
     }else{
-        indexPath = 0;
+//        indexPath = 0;
          [item.comments removeAllObjects];
     }
     if (replyCommentId > 0) {
@@ -400,6 +396,12 @@
 -(DFLineCommentItem *)getCommentItem:(long long)commentId
 {
     return [_commentDic objectForKey:[NSNumber numberWithLongLong:commentId]];
+}
+
+- (void)detelAllSource{
+    [_items removeAllObjects];
+    [_itemDic removeAllObjects];
+    [_commentDic removeAllObjects];
 }
 
 #pragma mark - DFLineCellDelegate

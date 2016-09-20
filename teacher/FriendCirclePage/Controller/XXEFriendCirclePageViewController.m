@@ -126,6 +126,7 @@
         
         NSString *code = [request.responseJSONObject objectForKey:@"code"];
         NSLog(@"%@",code);
+        [self detelAllSource];
         if ([code intValue]==1 && [[request.responseJSONObject objectForKey:@"data"] isKindOfClass:[NSDictionary class]]) {
             NSDictionary *data = [request.responseJSONObject objectForKey:@"data"];
 //            NSLog(@"%@",[[data objectForKey:@"list"] class]);
@@ -150,6 +151,7 @@
             }
             [self endRefresh];
         NSLog(@"圈子顶部信息数组信息%@",self.headerDatasource);
+//            [self detelAllSource];
         }else{
             [self hudShowText:@"获取数据错误" second:2.f];
             [self endLoadMore];
@@ -394,7 +396,6 @@
         personSee = @"0";
     }
     
-    
     XXEPublishFriendCircleApi *publishFriendApi = [[XXEPublishFriendCircleApi alloc]initWithPublishFriendCirclePosition:location FileType:@"1" Words:text PicGroup:imageFile VideoUrl:@"" CircleSet:personSee UserXid:strngXid UserId:homeUserId];
     
     [publishFriendApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
@@ -446,7 +447,7 @@
             textImageItem.location = location;
              [self addItemTop:textImageItem];
             //获取朋友圈信息
-//            [self setupFriendCircleMessagePage:1];
+            [self setupFriendCircleMessagePage:1];
         }else{
             [SVProgressHUD showErrorWithStatus:@"获取数据失败"];
             [self endRefresh];
@@ -571,6 +572,14 @@
         homeUserId = USER_ID;
     }
     
+//    long indexId;
+//    if (itemId == 0) {
+//        indexId = itemId;
+//    }else if (itemId == 1){
+//        indexId = itemId;
+//    }else{
+//        indexId = itemId-1;
+//    }
     long indexId = itemId-1;
     NSLog(@"新的:%ld",indexId);
     if (self.circleListDatasource.count ==0) {
@@ -594,7 +603,7 @@
             NSLog(@"%@",[request.responseJSONObject objectForKey:@"msg"]);
             NSLog(@"%@",[request.responseJSONObject objectForKey:@"data"]);
             DFLineCommentItem *commentItem = [[DFLineCommentItem alloc] init];
-            commentItem.commentId = [[NSDate date] timeIntervalSince1970];
+            commentItem.commentId = commentId;
             commentItem.userId = [strngXid integerValue];
             commentItem.userNick = @"";
             commentItem.text = @"";
@@ -621,6 +630,14 @@
         strngXid = XID;
         homeUserId = USER_ID;
     }
+//    long indexId;
+//    if (itemId == 0) {
+//       indexId = itemId;
+//    }else if (itemId == 1){
+//        indexId = itemId;
+//    }else{
+//        indexId = itemId-1;
+//    }
     long indexId = itemId-1;
     NSLog(@"新的:%ld",indexId);
     if (self.circleListDatasource.count ==0) {

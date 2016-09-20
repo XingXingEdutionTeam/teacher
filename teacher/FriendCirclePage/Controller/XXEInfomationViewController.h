@@ -7,6 +7,9 @@
 //
 
 #import "XXEBaseViewController.h"
+@class XXECircleModel;
+
+typedef void(^XXEInfomationViewControllerDeteleModel)(XXECircleModel *, NSString *);
 
 @class XXECircleModel;
 
@@ -25,7 +28,7 @@
 @property (nonatomic, strong) NSArray *goodArr;
 @property (nonatomic, weak) id<XXEInfomationViewControllerDelegate> delegate;
 
-
+@property (nonatomic, copy) XXEInfomationViewControllerDeteleModel deteleModelBlock;
 /** 直接传每一个说说的Model */
 @property (nonatomic, strong)XXECircleModel *infoCircleModel;
 

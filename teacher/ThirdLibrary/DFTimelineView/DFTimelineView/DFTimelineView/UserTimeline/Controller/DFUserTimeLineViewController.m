@@ -132,9 +132,14 @@
 {
     
 }
-- (void)xxe_userRefreshTableView
-{
-    [self.tableView reloadData];
+- (void)xxe_userRefreshTableViewWithItem:(NSString *)item{
+    [_items enumerateObjectsUsingBlock:^(DFBaseUserLineItem  *_Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if ([[NSString stringWithFormat:@"%lld",obj.itemId] isEqualToString:item]) {
+            [_items removeObject:obj];
+            *stop = YES;
+            [self.tableView reloadData];
+        }
+    }];
 }
 
 

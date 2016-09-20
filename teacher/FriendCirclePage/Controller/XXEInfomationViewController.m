@@ -262,6 +262,7 @@
             NSLog(@"%@",[request.responseJSONObject objectForKey:@"msg"]);
             NSLog(@"%@",[request.responseJSONObject objectForKey:@"data"]);
             [self showString:@"删除成功" forSecond:1.f];
+            self.deteleModelBlock ? self.deteleModelBlock(self.infoCircleModel,self.itemId) : nil;
             [self.navigationController popViewControllerAnimated:YES];
         }else{
             [self showString:@"删除失败" forSecond:1.f];
