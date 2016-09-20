@@ -7,8 +7,8 @@
 //
 
 #import "XXEManagerTeacherViewController.h"
-#import "XXEStudentManagerViewController2.h"
-#import "XXEFamilyManagerViewController.h"
+#import "XXEStudentManagerViewController1.h"
+#import "XXEFamilyManagerViewController1.h"
 
 @interface XXEManagerTeacherViewController ()<QHNavSliderMenuDelegate, UIScrollViewDelegate, UISearchBarDelegate>
 {
@@ -91,21 +91,28 @@
     //@"学生管理"
     if (index == 0) {
         
-        XXEStudentManagerViewController2 *studentManagerVC =[[XXEStudentManagerViewController2 alloc]init];
-        [self addChildViewController:studentManagerVC];
+        XXEStudentManagerViewController1 *studentManagerVC =[[XXEStudentManagerViewController1 alloc]init];
+        
         studentManagerVC.view.left = 0* screenWidth;
         studentManagerVC.view.top=0;
         studentManagerVC.schoolId = _schoolId;
         studentManagerVC.schoolType = _schoolType;
         studentManagerVC.classId = _classId;
+        
+        [self addChildViewController:studentManagerVC];
+
         [contentScrollView addSubview:studentManagerVC.view];
         [listVCQueue setObject:studentManagerVC forKey:@(0)];
     }else if (index == 1){
         //@"家长管理"
-        XXEFamilyManagerViewController *familyManagerVC = [[XXEFamilyManagerViewController alloc]init];
-        [self addChildViewController:familyManagerVC];
+        XXEFamilyManagerViewController1 *familyManagerVC = [[XXEFamilyManagerViewController1 alloc]init];
         familyManagerVC.view.left =1*screenWidth;
         familyManagerVC.view.top=0;
+        familyManagerVC.schoolId = _schoolId;
+        familyManagerVC.schoolType = _schoolType;
+        familyManagerVC.classId = _classId;
+        [self addChildViewController:familyManagerVC];
+
         [contentScrollView addSubview:familyManagerVC.view];
         [listVCQueue setObject:familyManagerVC forKey:@(1)];
         

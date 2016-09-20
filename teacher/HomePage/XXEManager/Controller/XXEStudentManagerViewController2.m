@@ -21,8 +21,6 @@
 {
     UITableView *_myTableView;
     
-    //    NSMutableArray *_dataSourceArray;
-    //    NSArray *title_nameArray;
     //班级 model 数组
     NSMutableArray *classModelArray;
     //学生 model 数组
@@ -67,7 +65,6 @@
         parameterUser_Id = USER_ID;
     }
     
-    
     [self createTableView];
 }
 
@@ -78,7 +75,7 @@
     [studentManagerApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         classModelArray = [[NSMutableArray alloc] init];
         _flagArray = [[NSMutableArray alloc] init];
-        //                NSLog(@"111   %@", request.responseJSONObject);
+//            NSLog(@"111   %@", request.responseJSONObject);
         
         NSString *codeStr = [NSString stringWithFormat:@"%@", request.responseJSONObject[@"code"]];
         
@@ -352,7 +349,7 @@
 
 
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
-    UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 60)];
+    UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 40)];
     view.backgroundColor = [UIColor whiteColor];
     view.userInteractionEnabled = YES;
     
@@ -361,7 +358,7 @@
     UITapGestureRecognizer *viewPress = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(viewPressClick:)];
     [view addGestureRecognizer:viewPress];
     
-    arrowButton = [[UIButton alloc]initWithFrame:CGRectMake(10, (44-24)/2, 17.5, 20)];
+    arrowButton = [[UIButton alloc]initWithFrame:CGRectMake(10, (40-20)/2, 17.5, 20)];
     NSNumber *flagN = self.flagArray[section];
     
     if ([flagN boolValue]) {
@@ -378,7 +375,7 @@
     arrowButton.tag = 300+section;
     [view addSubview:arrowButton];
     
-    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(40, 5, 200, 30)];
+    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(40, 5, KScreenWidth - 40, 30)];
     
     XXEClassInfoModel *model = classModelArray[section];
     NSString *classNameStr ;
@@ -397,7 +394,7 @@
     
     label.text = [NSString stringWithFormat:@"%@(%@人)",classNameStr, numStr];
     label.textColor = [UIColor lightGrayColor];
-    label.font = [UIFont boldSystemFontOfSize:20];
+    label.font = [UIFont boldSystemFontOfSize:14];
     [view addSubview:label];
     
     return view;

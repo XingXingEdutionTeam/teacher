@@ -1,14 +1,14 @@
 //
-//  XXEStudentManagerViewController.h
+//  XXEFamilyManagerViewController2.h
 //  teacher
 //
-//  Created by Mac on 16/9/19.
+//  Created by Mac on 16/9/20.
 //  Copyright © 2016年 XingXingEdu. All rights reserved.
 //
 
 #import "XXEBaseViewController.h"
 
-@interface XXEStudentManagerViewController : XXEBaseViewController
+@interface XXEFamilyManagerViewController2 : XXEBaseViewController
 
 @property (nonatomic, strong) NSString *schoolId;
 

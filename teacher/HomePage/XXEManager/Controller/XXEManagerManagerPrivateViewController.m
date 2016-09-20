@@ -9,7 +9,7 @@
 
 #import "XXEManagerManagerPrivateViewController.h"
 #import "XXEStudentManagerViewController2.h"
-#import "XXEFamilyManagerViewController.h"
+#import "XXEFamilyManagerViewController2.h"
 #import "XXETeacherManagerViewController.h"
 #import "XXECourseManagerViewController.h"
 
@@ -95,36 +95,57 @@
     //@"学生管理"
     if (index == 0) {
         XXEStudentManagerViewController2 *studentManagerVC =[[XXEStudentManagerViewController2 alloc]init];
-        [self addChildViewController:studentManagerVC];
+        
         studentManagerVC.view.left = 0* screenWidth;
         studentManagerVC.view.top=0;
+        studentManagerVC.schoolId = _schoolId;
+        studentManagerVC.schoolType = _schoolType;
+        studentManagerVC.classId = _classId;
         
+        [self addChildViewController:studentManagerVC];
         [contentScrollView addSubview:studentManagerVC.view];
         [listVCQueue setObject:studentManagerVC forKey:@(0)];
     }else if (index == 1){
         //@"家长管理"
-        XXEFamilyManagerViewController *familyManagerVC = [[XXEFamilyManagerViewController alloc]init];
-        [self addChildViewController:familyManagerVC];
+        XXEFamilyManagerViewController2 *familyManagerVC = [[XXEFamilyManagerViewController2 alloc]init];
+        
         familyManagerVC.view.left =1*screenWidth;
         familyManagerVC.view.top=0;
+        familyManagerVC.schoolId = _schoolId;
+        familyManagerVC.schoolType = _schoolType;
+        familyManagerVC.classId = _classId;
+        
+        [self addChildViewController:familyManagerVC];
         [contentScrollView addSubview:familyManagerVC.view];
         [listVCQueue setObject:familyManagerVC forKey:@(1)];
         
     }else if (index == 2){
         //@"教师管理"
         XXETeacherManagerViewController *teacherManagerVC = [[XXETeacherManagerViewController alloc]init];
-        [self addChildViewController:teacherManagerVC];
+        
         teacherManagerVC.view.left =2*screenWidth;
         teacherManagerVC.view.top=0;
+        teacherManagerVC.schoolId = _schoolId;
+        teacherManagerVC.schoolType = _schoolType;
+        teacherManagerVC.classId = _classId;
+        
+        [self addChildViewController:teacherManagerVC];
+
         [contentScrollView addSubview:teacherManagerVC.view];
         [listVCQueue setObject:teacherManagerVC forKey:@(2)];
         
     }else if (index == 3){
         //@"课程管理"
         XXECourseManagerViewController *courseManagerVC = [[XXECourseManagerViewController alloc]init];
-        [self addChildViewController:courseManagerVC];
+        
         courseManagerVC.view.left =3*screenWidth;
         courseManagerVC.view.top=0;
+        courseManagerVC.schoolId = _schoolId;
+        courseManagerVC.schoolType = _schoolType;
+        courseManagerVC.classId = _classId;
+        
+        [self addChildViewController:courseManagerVC];
+
         [contentScrollView addSubview:courseManagerVC.view];
         [listVCQueue setObject:courseManagerVC forKey:@(3)];
         

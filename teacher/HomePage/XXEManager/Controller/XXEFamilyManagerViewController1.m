@@ -1,36 +1,32 @@
 //
-//  XXETeacherManagerViewController.m
+//  XXEFamilyManagerViewController1.m
 //  teacher
 //
 //  Created by Mac on 16/9/20.
 //  Copyright © 2016年 XingXingEdu. All rights reserved.
 //
 
-#import "XXETeacherManagerViewController.h"
+#import "XXEFamilyManagerViewController1.h"
+#import "XXEFamilyManagerPersonInfoModel.h"
+#import "XXEFamilyManagerClassInfoModel.h"
 #import "XXERedFlowerSentHistoryTableViewCell.h"
-#import "XXETeacherManagerPersonInfoModel.h"
-#import "XXETeacherManagerClassInfoModel.h"
-#import "XXETeacherManagerRefuseApi.h"
-#import "XXETeacherManagerAgreeApi.h"
-#import "XXETeacherManagerApi.h"
+#import "XXEBabyFamilyInfoDetailViewController.h"
+#import "XXEFamilyManagerRefuseApi.h"
+#import "XXEFamilyManagerAgreeApi.h"
+#import "XXEFamilyManagerApi.h"
 
-@interface XXETeacherManagerViewController ()<UITableViewDelegate, UITableViewDataSource>
+@interface XXEFamilyManagerViewController1 ()<UITableViewDelegate, UITableViewDataSource>
 {
     UITableView *_myTableView;
     
     //班级 model 数组
     NSMutableArray *classModelArray;
-    //学生家人 model 数组
-    NSMutableArray *familyModelArray;
+    //学生 model 数组
+    NSMutableArray *studentModelArray;
     
-    UIButton *arrowButton;
     NSString *parameterXid;
     NSString *parameterUser_Id;
 }
-//展开 收缩 判断 值
-@property (nonatomic,strong) NSMutableArray *flagArray;
-@property (nonatomic , strong) NSMutableArray *selectedBabyInfoArr;
-
 //同意 按钮
 @property (nonatomic, strong) UIButton *agreeBtn;
 //拒绝 按钮
@@ -41,7 +37,7 @@
 
 @end
 
-@implementation XXETeacherManagerViewController
+@implementation XXEFamilyManagerViewController1
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
@@ -66,36 +62,34 @@
         parameterXid = XID;
         parameterUser_Id = USER_ID;
     }
+    //    NSLog(@"%@ ---- %@ ----- %@ ---- %@ --- %@", parameterXid, parameterUser_Id, _schoolId, _schoolType, _classId);
+    self.title = @"管理";
+    
+    //    [self fetchNetData];
     
     [self createTableView];
+    
 }
 
 
 - (void)fetchNetData{
-    XXETeacherManagerApi *teacherManagerApi = [[XXETeacherManagerApi alloc] initWithXid:parameterXid user_id:parameterUser_Id school_id:_schoolId school_type:_schoolType class_id:_classId position:@"4"];
     
-    [teacherManagerApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
+    XXEFamilyManagerApi *familyManagerApi = [[XXEFamilyManagerApi alloc] initWithXid:parameterXid user_id:parameterUser_Id school_id:_schoolId school_type:_schoolType class_id:_classId position:@"1"];
+    
+    [familyManagerApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         classModelArray = [[NSMutableArray alloc] init];
-        _flagArray = [[NSMutableArray alloc] init];
-//        NSLog(@"111   %@", request.responseJSONObject);
+//                NSLog(@"111   %@", request.responseJSONObject);
         
         NSString *codeStr = [NSString stringWithFormat:@"%@", request.responseJSONObject[@"code"]];
         
         if ([codeStr isEqualToString:@"1"]) {
             NSArray *classModelArr = [[NSArray alloc] init];
-            classModelArr = [XXETeacherManagerClassInfoModel parseResondsData:request.responseJSONObject[@"data"]];
+            classModelArr = [XXEFamilyManagerClassInfoModel parseResondsData:request.responseJSONObject[@"data"]];
             [classModelArray addObjectsFromArray:classModelArr];
-            
-            for (int i = 0; i < classModelArray.count; i ++) {
-                //最初 设置 为关闭
-                NSNumber *flagN = [NSNumber numberWithBool:NO];
-                [_flagArray addObject:flagN];
-            }
             
         }else{
             
         }
-        //        NSLog(@"%@  ---  %@", classModelArray, _flagArray);
         [self customContent];
         
     } failure:^(__kindof YTKBaseRequest *request) {
@@ -137,7 +131,6 @@
     _myTableView.delegate = self;
     
     [self.view addSubview:_myTableView];
-    
     _myTableView.header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadNewData)];
     
     _myTableView.footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadFooterNewData)];
@@ -164,24 +157,15 @@
 
 #pragma mark
 #pragma mark - dataSource
-//返回多少组
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return classModelArray.count;
+    return 1;
 }
 
-//每组 返回 多少 个
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     
-    //        NSLog(@"%@ -- %@", _flagArray, classModelArray);
-    
-    if ([self.flagArray[section] boolValue] == YES) {
-        XXETeacherManagerClassInfoModel *model = classModelArray[section];
-        
-        return model.teacher_list.count;
-    }else{
-        return 0;
-    }
-    
+    XXEFamilyManagerClassInfoModel *model = classModelArray[section];
+    return model.parent_list.count;
 }
 
 
@@ -193,17 +177,19 @@
     if (cell == nil) {
         cell = [[[NSBundle mainBundle] loadNibNamed:@"XXERedFlowerSentHistoryTableViewCell" owner:self options:nil]lastObject];
     }
-    
+
     //宝贝 信息
-    XXETeacherManagerClassInfoModel *classModel = classModelArray[indexPath.section];
-    XXETeacherManagerPersonInfoModel *studentModel = classModel.teacher_list[indexPath.row];
+    XXEFamilyManagerClassInfoModel *classModel = classModelArray[indexPath.section];
+    XXEFamilyManagerPersonInfoModel *studentModel = classModel.parent_list[indexPath.row];
     
     //宝贝 头像 全部 是拼接 的
     [cell.iconImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", kXXEPicURL, studentModel.head_img]] placeholderImage:[UIImage imageNamed:@"headplaceholder"]];
     cell.iconImageView.layer.cornerRadius = cell.iconImageView.frame.size.width / 2;
     cell.iconImageView.layer.masksToBounds = YES;
     cell.titleLabel.text = studentModel.tname;
-    cell.contentLabel.text = studentModel.teach_course;
+    if (![studentModel.relation_name isEqualToString:@""]) {
+        cell.contentLabel.text = [NSString stringWithFormat:@"%@的%@", studentModel.baby_tname, studentModel.relation_name];
+    }
     cell.timeLabel.text = [XXETool dateStringFromNumberTimer:studentModel.date_tm];
     
     //点击 头像 进入 宝贝详情 界面
@@ -221,7 +207,7 @@
      
      [condit] => 0 	 //0:待审核 1:审核通过
      */
-    
+#warning position 1:教师  2:主任  3:管理员  4:校长  === XXEStudentManagerViewController1控制器针对 1/2 ,但是1没有  "移动"/"删除" 学生的操作,故当1时,隐藏 "移动"/"删除" 按钮
     if ([studentModel.condit isEqualToString:@"0"]) {
         _agreeBtn = [UIButton createButtonWithFrame:CGRectMake(245 * kScreenRatioWidth, 27, 50, 25) backGruondImageName:nil Target:self Action:@selector(onClickagreeBtn:) Title:@"同意"];
         [_agreeBtn setTitleColor:UIColorFromRGB(0, 170, 42) forState:UIControlStateNormal];
@@ -258,14 +244,30 @@
     return cell;
 }
 
+- (void)iconTap:(UITapGestureRecognizer*)tap{
+    XXERedFlowerSentHistoryTableViewCell *cell = (XXERedFlowerSentHistoryTableViewCell *)[[tap.view superview] superview];
+    NSIndexPath *path = [_myTableView indexPathForCell:cell];
+    XXEFamilyManagerClassInfoModel *classModel = classModelArray[path.section];
+    XXEFamilyManagerPersonInfoModel *stuModel = classModel.parent_list[tap.view.tag - 100];
+    //    if ([XXEUserInfo user].login){
+    XXEBabyFamilyInfoDetailViewController *babyFamilyInfoDetailVC = [[XXEBabyFamilyInfoDetailViewController alloc] init];
+    babyFamilyInfoDetailVC.baby_id = stuModel.baby_id;
+    babyFamilyInfoDetailVC.parent_id = stuModel.examine_id;
+    [self.navigationController pushViewController:babyFamilyInfoDetailVC animated:YES];
+    //    }else{
+    //        [SVProgressHUD showInfoWithStatus:@"请用账号登录后查看"];
+    //    }
+    
+}
+
 -(void)onClickagreeBtn:(UIButton *)btn{
     
     XXERedFlowerSentHistoryTableViewCell *cell = (XXERedFlowerSentHistoryTableViewCell *)[[btn superview] superview];
     
     NSIndexPath *path = [_myTableView indexPathForCell:cell];
     
-    XXETeacherManagerClassInfoModel *classModel = classModelArray[path.section];
-    XXETeacherManagerPersonInfoModel *stuModel = classModel.teacher_list[path.row];
+    XXEFamilyManagerClassInfoModel *classModel = classModelArray[path.section];
+    XXEFamilyManagerPersonInfoModel *stuModel = classModel.parent_list[path.row];
     
     //当前 所要删除 学生 的 babyid 及 所在 的classid
     //    NSString *currentClassId = classModel.class_id;
@@ -284,11 +286,11 @@
 }
 
 - (void)agreeFamilyInfo:(NSString *)currentparentId{
-    XXETeacherManagerAgreeApi *teacherManagerAgreeApi = [[XXETeacherManagerAgreeApi alloc] initWithXid:parameterXid user_id:parameterUser_Id examine_id:currentparentId];
+    XXEFamilyManagerAgreeApi *familyManagerAgreeApi = [[XXEFamilyManagerAgreeApi alloc] initWithXid:parameterXid user_id:parameterUser_Id examine_id:currentparentId];
     
-    [teacherManagerAgreeApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
+    [familyManagerAgreeApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         
-//        NSLog(@"同意 2222---   %@", request.responseJSONObject);
+        //        NSLog(@"同意 2222---   %@", request.responseJSONObject);
         
         NSString *codeStr = [NSString stringWithFormat:@"%@", request.responseJSONObject[@"code"]];
         
@@ -318,8 +320,8 @@
     
     NSIndexPath *path = [_myTableView indexPathForCell:cell];
     
-    XXETeacherManagerClassInfoModel *classModel = classModelArray[path.section];
-    XXETeacherManagerPersonInfoModel *stuModel = classModel.teacher_list[path.row];
+    XXEFamilyManagerClassInfoModel *classModel = classModelArray[path.section];
+    XXEFamilyManagerPersonInfoModel *stuModel = classModel.parent_list[path.row];
     
     //当前 所要删除 学生 的 babyid 及 所在 的classid
     //    NSString *currentClassId = classModel.class_id;
@@ -339,19 +341,19 @@
 
 - (void)refuseFamilyInfo:(NSString *)currentparentId andIndexPath:(NSIndexPath *)path{
     
-    XXETeacherManagerRefuseApi *teacherManagerRefuseApi = [[XXETeacherManagerRefuseApi alloc] initWithXid:parameterXid user_id:parameterUser_Id examine_id:currentparentId];
+    XXEFamilyManagerRefuseApi *familyManagerRefuseApi = [[XXEFamilyManagerRefuseApi alloc] initWithXid:parameterXid user_id:parameterUser_Id examine_id:currentparentId];
     
-    [teacherManagerRefuseApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
+    [familyManagerRefuseApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         
-//        NSLog(@"拒绝 2222---   %@", request.responseJSONObject);
+        //    NSLog(@"拒绝 2222---   %@", request.responseJSONObject);
         
         NSString *codeStr = [NSString stringWithFormat:@"%@", request.responseJSONObject[@"code"]];
         
         if ([codeStr isEqualToString:@"1"]) {
             
             //从 数据源中 删除
-            XXETeacherManagerClassInfoModel *classModel = classModelArray[path.section];
-            [classModel.teacher_list removeObjectAtIndex:path.row];
+            XXEFamilyManagerClassInfoModel *classModel = classModelArray[path.section];
+            [classModel.parent_list removeObjectAtIndex:path.row];
             //从 列表 中 删除
             [_myTableView deleteRowsAtIndexPaths:@[path] withRowAnimation:UITableViewRowAnimationAutomatic];
         }else{
@@ -372,8 +374,8 @@
 -(void)onClickDeleteBtn:(UIButton *)button{
     XXERedFlowerSentHistoryTableViewCell *cell = (XXERedFlowerSentHistoryTableViewCell *)[[button superview] superview];
     NSIndexPath *path = [_myTableView indexPathForCell:cell];
-    XXETeacherManagerClassInfoModel *classModel = classModelArray[path.section];
-    XXETeacherManagerPersonInfoModel *stuModel = classModel.teacher_list[path.row];
+    XXEFamilyManagerClassInfoModel *classModel = classModelArray[path.section];
+    XXEFamilyManagerPersonInfoModel *stuModel = classModel.parent_list[path.row];
     
     //当前 所要删除 学生 的 babyid 及 所在 的classid
     NSString *currentClassId = classModel.class_id;
@@ -392,33 +394,34 @@
 }
 
 
+
 - (void)deleteStudentInfo:(NSString *)currentClassId andWithBabyId:(NSString *)currentBabyId andIndexPath:(NSIndexPath *)path{
-    
-    //    XXEStudentManagerDeleteApi *studentManagerDeleteApi = [[XXEStudentManagerDeleteApi alloc] initWithXid:parameterXid user_id:parameterUser_Id school_id:_schoolId class_id:currentClassId baby_id:currentBabyId];
-    //
-    //    [studentManagerDeleteApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
-    //
-    //        //              NSLog(@"2222---   %@", request.responseJSONObject);
-    //
-    //        NSString *codeStr = [NSString stringWithFormat:@"%@", request.responseJSONObject[@"code"]];
-    //
-    //        if ([codeStr isEqualToString:@"1"]) {
-    //
-    //            [self showHudWithString:@"删除成功!" forSecond:1.5];
-    //            //从 数据源中 删除
-    //            XXEClassInfoModel *classModel = classModelArray[path.section];
-    //            [classModel.baby_list removeObjectAtIndex:path.row];
-    //            //从 列表 中 删除
-    //            [_myTableView deleteRowsAtIndexPaths:@[path] withRowAnimation:UITableViewRowAnimationAutomatic];
-    //        }else{
-    //
-    //        }
-    //        [_myTableView reloadData];
-    //
-    //    } failure:^(__kindof YTKBaseRequest *request) {
-    //
-    //        [self showHudWithString:@"提交失败!" forSecond:1.5];
-    //    }];
+//
+//    XXEStudentManagerDeleteApi *studentManagerDeleteApi = [[XXEStudentManagerDeleteApi alloc] initWithXid:parameterXid user_id:parameterUser_Id school_id:_schoolId class_id:currentClassId baby_id:currentBabyId];
+//    
+//    [studentManagerDeleteApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
+//        
+//        //              NSLog(@"2222---   %@", request.responseJSONObject);
+//        
+//        NSString *codeStr = [NSString stringWithFormat:@"%@", request.responseJSONObject[@"code"]];
+//        
+//        if ([codeStr isEqualToString:@"1"]) {
+//            
+//            [self showHudWithString:@"删除成功!" forSecond:1.5];
+//            //从 数据源中 删除
+//            XXEClassModel *classModel = classModelArray[path.section];
+//            [classModel.baby_list removeObjectAtIndex:path.row];
+//            //从 列表 中 删除
+//            [_myTableView deleteRowsAtIndexPaths:@[path] withRowAnimation:UITableViewRowAnimationAutomatic];
+//        }else{
+//            
+//        }
+//        [_myTableView reloadData];
+//        
+//    } failure:^(__kindof YTKBaseRequest *request) {
+//        
+//        [self showHudWithString:@"提交失败!" forSecond:1.5];
+//    }];
 }
 
 
@@ -428,73 +431,13 @@
     
 }
 
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
+    XXEFamilyManagerClassInfoModel *model = classModelArray[section];
     
-    //    if (indexPath.section == 0) {
-    //        //点击 宝贝 cell 先进入到 宝贝家人 列表
-    //        XXEBabyFamilyInfoViewController *babyFamilyInfoVC = [[XXEBabyFamilyInfoViewController alloc] init];
-    //        XXEClassAddressStudentInfoModel *model = _dataSourceArray[indexPath.section][indexPath.row];
-    //        //        NSLog(@"%@", model);
-    //        babyFamilyInfoVC.baby_id = model.baby_id;
-    //        babyFamilyInfoVC.familyInfoArray = model.parent_list;
-    //        [self.navigationController pushViewController:babyFamilyInfoVC animated:YES];
-    //
-    //    }else if (indexPath.section == 1){
-    //
-    //    }else if (indexPath.section == 2){
-    //
-    //    }
-    
-}
-
-
-- (void)iconTap:(UITapGestureRecognizer*)tap{
-    XXERedFlowerSentHistoryTableViewCell *cell = (XXERedFlowerSentHistoryTableViewCell *)[[tap.view superview] superview];
-    NSIndexPath *path = [_myTableView indexPathForCell:cell];
-    XXETeacherManagerClassInfoModel *classModel = classModelArray[path.section];
-    XXETeacherManagerPersonInfoModel *stuModel = classModel.teacher_list[tap.view.tag - 100];
-    //    if ([XXEUserInfo user].login){
-//    XXEBabyFamilyInfoDetailViewController *babyFamilyInfoDetailVC = [[XXEBabyFamilyInfoDetailViewController alloc] init];
-//    babyFamilyInfoDetailVC.baby_id = stuModel.baby_id;
-//    babyFamilyInfoDetailVC.parent_id = stuModel.examine_id;
-//    [self.navigationController pushViewController:babyFamilyInfoDetailVC animated:YES];
-    //    }else{
-    //        [SVProgressHUD showInfoWithStatus:@"请用账号登录后查看"];
-    //    }
-    
-}
-
-
--(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
-    UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 40)];
-    view.backgroundColor = [UIColor whiteColor];
-    view.userInteractionEnabled = YES;
-    
-    view.tag = 100 + section;
-    
-    UITapGestureRecognizer *viewPress = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(viewPressClick:)];
-    [view addGestureRecognizer:viewPress];
-    
-    arrowButton = [[UIButton alloc]initWithFrame:CGRectMake(10, (40-20)/2, 17.5, 20)];
-    NSNumber *flagN = self.flagArray[section];
-    
-    if ([flagN boolValue]) {
-        [arrowButton setBackgroundImage:[UIImage imageNamed:@"triangle"] forState:UIControlStateNormal];
-        CGAffineTransform currentTransform =arrowButton.transform;
-        CGAffineTransform newTransform =CGAffineTransformRotate(currentTransform, M_PI/2);
-        arrowButton.transform =newTransform;
-        
-    }else
-    {
-        [arrowButton setBackgroundImage:[UIImage imageNamed:@"triangle"] forState:UIControlStateNormal ];
-        
-    }
-    arrowButton.tag = 300+section;
-    [view addSubview:arrowButton];
+    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, KScreenWidth, 40)];
+    headerView.backgroundColor = [UIColor whiteColor];
     
     
-    XXETeacherManagerClassInfoModel *model = classModelArray[section];
     NSString *classNameStr ;
     NSString *numStr;
     NSString *wait_numStr;
@@ -504,13 +447,13 @@
     }else{
         classNameStr = model.class_name;
     }
-    //已审核的老师数
+    //已审核的家人数
     if (model.num == nil) {
         numStr = @"";
     }else{
         numStr = model.num;
     }
-    //待审核老师数
+    //待审核的家人数
     if (model.wait_num == nil) {
         wait_numStr = @"";
     }else{
@@ -522,51 +465,47 @@
     nameLabel.text = [NSString stringWithFormat:@"%@",classNameStr];
     nameLabel.textColor = [UIColor lightGrayColor];
     nameLabel.font = [UIFont boldSystemFontOfSize:14 * kScreenRatioWidth];
-    [view addSubview:nameLabel];
+    [headerView addSubview:nameLabel];
     
-    //已审核的老师数
+    //已审核的家人数
     UILabel *auditedLabel = [[UILabel alloc]initWithFrame:CGRectMake(230, 5, 70 * kScreenRatioWidth, 30)];
     auditedLabel.text = [NSString stringWithFormat:@"已审核:%@",numStr];
     auditedLabel.textColor = [UIColor lightGrayColor];
     auditedLabel.font = [UIFont boldSystemFontOfSize:14 * kScreenRatioWidth];
-    [view addSubview:auditedLabel];
+    [headerView addSubview:auditedLabel];
     
-    //待审核的老师数
+    //待审核的家人数
     UILabel *unauditLabel = [[UILabel alloc]initWithFrame:CGRectMake(300, 5, 70 * kScreenRatioWidth, 30)];
     unauditLabel.text = [NSString stringWithFormat:@"待审核:%@",wait_numStr];
     unauditLabel.textColor = [UIColor lightGrayColor];
     unauditLabel.font = [UIFont boldSystemFontOfSize:14 * kScreenRatioWidth];
-    [view addSubview:unauditLabel];
+    [headerView addSubview:unauditLabel];
+
     
-    return view;
+    return headerView;
 }
 
-- (void)viewPressClick:(UITapGestureRecognizer *)press{
-    //    NSLog(@" 头视图  tag  %ld", press.view.tag - 100);
-    
-    if ([self.flagArray[press.view.tag - 100] boolValue]) {
-        [self.flagArray replaceObjectAtIndex:(press.view.tag - 100) withObject:[NSNumber  numberWithBool:NO]];
-        
-    }else{
-        [self.flagArray replaceObjectAtIndex:(press.view.tag - 100) withObject:[NSNumber numberWithBool:YES]];
-    }
-    [_myTableView reloadData ];
-    
-    
-}
-//返回每个分组的表头视图的高度
--(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     return 40;
 }
-- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
-    return 0.0000001;
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    //    XXERedFlowerDetialViewController *redFlowerDetialVC = [[XXERedFlowerDetialViewController alloc] init];
+    //
+    //    XXERedFlowerSentHistoryModel *model = _dataSourceArray[indexPath.row];
+    //    redFlowerDetialVC.name = model.tname;
+    //    redFlowerDetialVC.time = [XXETool dateStringFromNumberTimer:model.date_tm];
+    //    redFlowerDetialVC.schoolName = model.school_name;
+    //    redFlowerDetialVC.className = model.class_name;
+    //    redFlowerDetialVC.course = model.teach_course;
+    //    redFlowerDetialVC.content = model.con;
+    //    redFlowerDetialVC.picWallArray = model.pic_arr;
+    //    redFlowerDetialVC.iconUrl = model.head_img;
+    //    redFlowerDetialVC.collect_conditStr =model.collect_condit;
+    //    redFlowerDetialVC.collect_id = model.collectionId;
+    //    [self.navigationController pushViewController:redFlowerDetialVC animated:YES];
+    
 }
-
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
 
 @end

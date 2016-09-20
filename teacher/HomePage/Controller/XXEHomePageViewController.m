@@ -606,16 +606,18 @@
             NSLog(@"---管理----");
             //不同 身份
 //            教师
-            XXEManagerTeacherViewController *managerTeacherVC = [[XXEManagerTeacherViewController alloc] init];
-            managerTeacherVC.schoolId = self.schoolHomeId;
-            managerTeacherVC.classId = self.classHomeId;
-            managerTeacherVC.schoolType = self.schoolType;
-            [self.navigationController pushViewController:managerTeacherVC animated:YES];
+//            XXEManagerTeacherViewController *managerTeacherVC = [[XXEManagerTeacherViewController alloc] init];
+//            managerTeacherVC.schoolId = self.schoolHomeId;
+//            managerTeacherVC.classId = self.classHomeId;
+//            managerTeacherVC.schoolType = self.schoolType;
+//            [self.navigationController pushViewController:managerTeacherVC animated:YES];
             
 //            //管理员(私立)
-//            XXEManagerManagerPrivateViewController *managerPrivateVC = [[XXEManagerManagerPrivateViewController alloc] init];
-//            
-//            [self.navigationController pushViewController:managerPrivateVC animated:YES];
+            XXEManagerManagerPrivateViewController *managerPrivateVC = [[XXEManagerManagerPrivateViewController alloc] init];
+                managerPrivateVC.schoolId = self.schoolHomeId;
+                managerPrivateVC.classId = self.classHomeId;
+                managerPrivateVC.schoolType = self.schoolType;
+            [self.navigationController pushViewController:managerPrivateVC animated:YES];
             
 //            //管理员(公立)
 //            XXEManagerManagerPublicViewController *managerPublicVC = [[XXEManagerManagerPublicViewController alloc] init];
