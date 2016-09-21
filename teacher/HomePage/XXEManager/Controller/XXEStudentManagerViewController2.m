@@ -375,8 +375,6 @@
     arrowButton.tag = 300+section;
     [view addSubview:arrowButton];
     
-    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(40, 5, KScreenWidth - 40, 30)];
-    
     XXEClassInfoModel *model = classModelArray[section];
     NSString *classNameStr ;
     NSString *numStr;
@@ -392,6 +390,7 @@
         numStr = model.num;
     }
     
+    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(40, 5, KScreenWidth - 40, 30)];
     label.text = [NSString stringWithFormat:@"%@(%@人)",classNameStr, numStr];
     label.textColor = [UIColor lightGrayColor];
     label.font = [UIFont boldSystemFontOfSize:14];

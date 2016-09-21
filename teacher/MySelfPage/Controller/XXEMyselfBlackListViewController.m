@@ -65,7 +65,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = @"用户";
+    self.title = @"我的黑名单";
     
     [self createTableView];
     [self createRightBar];

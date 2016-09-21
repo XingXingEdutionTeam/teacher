@@ -63,9 +63,15 @@
 {
     [super viewWillAppear:animated];
     self.view.backgroundColor = XXEBackgroundColor;
-    pictureArray = [[NSMutableArray alloc] initWithObjects:@"myself_info_icon40x40", @"myself_order_icon40x48", @"myself_friend_icon40x44", @"myself_chat_icon40x40", @"myself_collection_icon40x40", @"myself_friend_circle_icon40x40", @"myself_blackorder_icon40x40", @"myself_system_setting_icon40x40", @"myself_privacy_setting_icon40x40", nil];
-    titleArray = [[NSMutableArray alloc] initWithObjects:@"我的资料",@"我的订单",@"我的好友",@"我的聊天",@"我的收藏" , @"我的圈子", @"我的黑名单", @"系统设置", @"隐私设置", nil];
     
+#warning  如果是私立校长身份 (在头视图上出现 "我的订单"  "我的钱包", 下面的列表中没有 "我的订单")
+    //    if (<#condition#>) {
+    pictureArray = [[NSMutableArray alloc] initWithObjects:@"myself_info_icon40x40", @"myself_friend_icon40x44", @"myself_chat_icon40x40", @"myself_collection_icon40x40", @"myself_friend_circle_icon40x40", @"myself_blackorder_icon40x40", @"myself_system_setting_icon40x40", @"myself_privacy_setting_icon40x40", nil];
+    titleArray = [[NSMutableArray alloc] initWithObjects:@"我的资料",@"我的好友",@"我的聊天",@"我的收藏" , @"我的圈子", @"我的黑名单", @"系统设置", @"隐私设置", nil];
+//}else {
+//    pictureArray = [[NSMutableArray alloc] initWithObjects:@"myself_info_icon40x40", @"myself_order_icon40x48", @"myself_friend_icon40x44", @"myself_chat_icon40x40", @"myself_collection_icon40x40", @"myself_friend_circle_icon40x40", @"myself_blackorder_icon40x40", @"myself_system_setting_icon40x40", @"myself_privacy_setting_icon40x40", nil];
+//    titleArray = [[NSMutableArray alloc] initWithObjects:@"我的资料",@"我的订单",@"我的好友",@"我的聊天",@"我的收藏" , @"我的圈子", @"我的黑名单", @"系统设置", @"隐私设置", nil];
+//}
     if ([XXEUserInfo user].login){
         parameterXid = [XXEUserInfo user].xid;
         parameterUser_Id = [XXEUserInfo user].user_id;
@@ -223,10 +229,59 @@
     progressView.progress = [coin_totalStr floatValue] / [next_grade_coinStr floatValue] ;
     [headerView addSubview:progressView];
 
+#warning  如果是私立校长身份 (在头视图上出现 "我的订单"  "我的钱包", 下面的列表中没有 "我的订单")
+//    if (<#condition#>) {
+    headerView.height = 200 * kScreenRatioHeight;
+    
+    //zichan
+    UIView *bgview=[[UIView alloc]initWithFrame:CGRectMake(0, 150, kWidth, 50)];
+    bgview.backgroundColor =UIColorFromRGB(255, 255, 255);
+    [headerView addSubview:bgview];
+    //我的订单
+    UIImageView *menuImgV = [[UIImageView alloc] initWithFrame:CGRectMake(20, 7, 30, 30)];
+    menuImgV.image = [UIImage imageNamed:@"myself_menu_icon60x60"];
+    [bgview addSubview:menuImgV];
+    UIButton *menuBtn =[UIButton createButtonWithFrame:CGRectMake(55, 12, 80, 20) backGruondImageName:nil Target:self Action:@selector(menuBtnClick:) Title:@"我的订单"];
+    [menuBtn.titleLabel setFont:[UIFont systemFontOfSize:15]];
+    [bgview addSubview:menuBtn];
+    
+    //我的钱包
+    UIImageView *payImgV =[[UIImageView alloc] initWithFrame:CGRectMake(180, 7, 30, 30)];
+    payImgV.image = [UIImage imageNamed:@"myself_wallet_icon60x60"];
+    [bgview addSubview:payImgV];
+    UIButton *payBtn =[UIButton createButtonWithFrame:CGRectMake(215, 12, 80, 20) backGruondImageName:nil Target:self Action:@selector(payBtnClick:) Title:@"我的钱包"];
+    [payBtn.titleLabel setFont:[UIFont systemFontOfSize:15]];
+    [bgview addSubview:payBtn];
+    
+//    }
+    
+
+}
+// 当私立校长 身份 时      "我的订单"
+- (void)menuBtnClick:(UIButton *)button{
+
+    
+    
 }
 
+// 当私立校长 身份 时      "我的资产"
+- (void)payBtnClick:(UIButton *)button{
+
+    
+}
+
+
 - (void)createTableView{
-    _myTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 150 * kScreenRatioHeight, KScreenWidth, KScreenHeight - 150 * kScreenRatioHeight - 49 - 64) style:UITableViewStyleGrouped];
+    
+#warning  如果是私立校长身份 (在头视图上出现 "我的订单"  "我的钱包", 下面的列表中没有 "我的订单")
+    CGFloat tableViewY;
+    //    if (<#condition#>) {
+    tableViewY = 200 * kScreenRatioHeight;
+//}else {
+//    tableViewY = 150 * kScreenRatioHeight;
+//}
+
+    _myTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, tableViewY, KScreenWidth, KScreenHeight - 150 * kScreenRatioHeight - 49 - 64) style:UITableViewStyleGrouped];
     
     _myTableView.dataSource = self;
     _myTableView.delegate = self;
@@ -269,51 +324,94 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    //如果 不是 校长 身份
+#warning  如果是私立校长身份 (在头视图上出现 "我的订单"  "我的钱包", 下面的列表中没有 "我的订单")
+//    if (<#condition#>) {
+    
+    //如果 是 校长 身份
     if (indexPath.row == 0) {
-      //@"我的资料"
+        //@"我的资料"
         XXEMyselfInfoViewController *myselfInfoVC = [[XXEMyselfInfoViewController alloc] init];
         [self.navigationController pushViewController:myselfInfoVC animated:YES];
     }else if (indexPath.row == 1){
-      //@"我的订单"
+        //@"我的好友"
+        
         
     }else if (indexPath.row == 2){
-      //@"我的好友"
-        
+        //@"我的聊天"
         
     }else if (indexPath.row == 3){
-       //@"我的聊天"
-        
-    }else if (indexPath.row == 4){
-       //@"我的收藏"
+        //@"我的收藏"
         XXEMyselfInfoCollectionViewController *myselfInfoCollectionVC = [[XXEMyselfInfoCollectionViewController alloc] init];
         
         [self.navigationController pushViewController:myselfInfoCollectionVC animated:YES];
         
+    }else if (indexPath.row == 4){
+        //@"我的圈子"
+        
     }else if (indexPath.row == 5){
-       //@"我的圈子"
-    
-    }else if (indexPath.row == 6){
-       //@"我的黑名单"
+        //@"我的黑名单"
         XXEMyselfBlackListViewController *myselfBlackListVC = [[XXEMyselfBlackListViewController alloc] init];
         [self.navigationController pushViewController:myselfBlackListVC animated:YES];
-    }else if (indexPath.row == 7){
-       //@"系统设置"
+    }else if (indexPath.row == 6){
+        //@"系统设置"
         XXEMyselfSystemSettingViewController *myselfSystemSettingVC = [[XXEMyselfSystemSettingViewController alloc] init];
         
         [self.navigationController pushViewController:myselfSystemSettingVC animated:YES];
-    }else if (indexPath.row == 8){
-       //@"隐私设置"
+    }else if (indexPath.row == 7){
+        //@"隐私设置"
         XXEMyselfPrivacySettingViewController *myselfPrivacySetting = [[XXEMyselfPrivacySettingViewController alloc] init];
         
         [self.navigationController pushViewController:myselfPrivacySetting animated:YES];
     }
 
+//    }else{
+//    //如果 不是 校长 身份
+//    if (indexPath.row == 0) {
+//        //@"我的资料"
+//        XXEMyselfInfoViewController *myselfInfoVC = [[XXEMyselfInfoViewController alloc] init];
+//        [self.navigationController pushViewController:myselfInfoVC animated:YES];
+//    }else if (indexPath.row == 1){
+//        //@"我的订单"
+//        
+//    }else if (indexPath.row == 2){
+//        //@"我的好友"
+//        
+//        
+//    }else if (indexPath.row == 3){
+//        //@"我的聊天"
+//        
+//    }else if (indexPath.row == 4){
+//        //@"我的收藏"
+//        XXEMyselfInfoCollectionViewController *myselfInfoCollectionVC = [[XXEMyselfInfoCollectionViewController alloc] init];
+//        
+//        [self.navigationController pushViewController:myselfInfoCollectionVC animated:YES];
+//        
+//    }else if (indexPath.row == 5){
+//        //@"我的圈子"
+//        
+//    }else if (indexPath.row == 6){
+//        //@"我的黑名单"
+//        XXEMyselfBlackListViewController *myselfBlackListVC = [[XXEMyselfBlackListViewController alloc] init];
+//        [self.navigationController pushViewController:myselfBlackListVC animated:YES];
+//    }else if (indexPath.row == 7){
+//        //@"系统设置"
+//        XXEMyselfSystemSettingViewController *myselfSystemSettingVC = [[XXEMyselfSystemSettingViewController alloc] init];
+//        
+//        [self.navigationController pushViewController:myselfSystemSettingVC animated:YES];
+//    }else if (indexPath.row == 8){
+//        //@"隐私设置"
+//        XXEMyselfPrivacySettingViewController *myselfPrivacySetting = [[XXEMyselfPrivacySettingViewController alloc] init];
+//        
+//        [self.navigationController pushViewController:myselfPrivacySetting animated:YES];
+//    }
+
+    
+//    }
+    
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     return 0.000001;
-//    return 150 * kScreenRatioHeight;
 }
 
 
