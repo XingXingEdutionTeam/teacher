@@ -240,7 +240,7 @@
     cell.iconImageView.layer.cornerRadius = cell.iconImageView.frame.size.width / 2;
     cell.iconImageView.layer.masksToBounds = YES;
     
-    [cell.iconImageView sd_setImageWithURL:[NSURL URLWithString:head_img] placeholderImage:[UIImage imageNamed:@"home_flowerbasket_placehoderIcon120x120"]];
+    [cell.iconImageView sd_setImageWithURL:[NSURL URLWithString:head_img] placeholderImage:[UIImage imageNamed:@"headplaceholder"]];
     cell.nameLabel.text = model.tname;
     
     return cell;
@@ -273,7 +273,7 @@
 
 
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
-    UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 60)];
+    UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 40)];
     view.backgroundColor = [UIColor whiteColor];
     view.userInteractionEnabled = YES;
     
@@ -282,29 +282,34 @@
     UITapGestureRecognizer *viewPress = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(viewPressClick:)];
     [view addGestureRecognizer:viewPress];
     
-    arrowButton = [[UIButton alloc]initWithFrame:CGRectMake(10, (44-24)/2, 17.5, 20)];
+    arrowButton = [[UIButton alloc]initWithFrame:CGRectMake(10, (40-12)/2, 12, 12)];
     NSNumber *flagN = self.flagArray[section];
     
     if ([flagN boolValue]) {
-        [arrowButton setBackgroundImage:[UIImage imageNamed:@"triangle"] forState:UIControlStateNormal];
+        [arrowButton setBackgroundImage:[UIImage imageNamed:@"narrow_icon"] forState:UIControlStateNormal];
         CGAffineTransform currentTransform =arrowButton.transform;
         CGAffineTransform newTransform =CGAffineTransformRotate(currentTransform, M_PI/2);
         arrowButton.transform =newTransform;
         
     }else
     {
-        [arrowButton setBackgroundImage:[UIImage imageNamed:@"triangle"] forState:UIControlStateNormal ];
+        [arrowButton setBackgroundImage:[UIImage imageNamed:@"narrow_icon"] forState:UIControlStateNormal ];
         
     }
     arrowButton.tag = 300+section;
     //    [arrowButton addTarget:self action:@selector(onClick:) forControlEvents:UIControlEventTouchUpInside];
     [view addSubview:arrowButton];
     
-    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(40, 5, 200, 30)];
+    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(30, 5, 200 * kScreenRatioWidth, 30)];
     label.text = [NSString stringWithFormat:@"%@",class_nameArray[section]];
-    label.textColor = [UIColor lightGrayColor];
-    label.font = [UIFont boldSystemFontOfSize:20];
+    label.textColor = [UIColor blackColor];
+    label.font = [UIFont boldSystemFontOfSize:16 * kScreenRatioWidth];
     [view addSubview:label];
+    
+    //线
+    UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, 39, KScreenWidth, 1)];
+    lineView.backgroundColor = UIColorFromRGB(229, 232, 233);
+    [view addSubview:lineView];
     
     return view;
 }

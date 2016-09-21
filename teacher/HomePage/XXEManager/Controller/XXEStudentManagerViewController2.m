@@ -358,18 +358,18 @@
     UITapGestureRecognizer *viewPress = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(viewPressClick:)];
     [view addGestureRecognizer:viewPress];
     
-    arrowButton = [[UIButton alloc]initWithFrame:CGRectMake(10, (40-20)/2, 17.5, 20)];
+    arrowButton = [[UIButton alloc]initWithFrame:CGRectMake(10, (40-12)/2, 12 , 12)];
     NSNumber *flagN = self.flagArray[section];
     
     if ([flagN boolValue]) {
-        [arrowButton setBackgroundImage:[UIImage imageNamed:@"triangle"] forState:UIControlStateNormal];
+        [arrowButton setBackgroundImage:[UIImage imageNamed:@"narrow_icon"] forState:UIControlStateNormal];
         CGAffineTransform currentTransform =arrowButton.transform;
         CGAffineTransform newTransform =CGAffineTransformRotate(currentTransform, M_PI/2);
         arrowButton.transform =newTransform;
         
     }else
     {
-        [arrowButton setBackgroundImage:[UIImage imageNamed:@"triangle"] forState:UIControlStateNormal ];
+        [arrowButton setBackgroundImage:[UIImage imageNamed:@"narrow_icon"] forState:UIControlStateNormal ];
         
     }
     arrowButton.tag = 300+section;
@@ -390,11 +390,17 @@
         numStr = model.num;
     }
     
-    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(40, 5, KScreenWidth - 40, 30)];
+    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(30, 5, KScreenWidth - 30, 30)];
     label.text = [NSString stringWithFormat:@"%@(%@人)",classNameStr, numStr];
-    label.textColor = [UIColor lightGrayColor];
-    label.font = [UIFont boldSystemFontOfSize:14];
+    label.textColor = [UIColor blackColor];
+    label.font = [UIFont boldSystemFontOfSize:16 * kScreenRatioWidth];
     [view addSubview:label];
+    
+    
+    //线
+    UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, 39, KScreenWidth, 1)];
+    lineView.backgroundColor = UIColorFromRGB(229, 232, 233);
+    [view addSubview:lineView];
     
     return view;
 }

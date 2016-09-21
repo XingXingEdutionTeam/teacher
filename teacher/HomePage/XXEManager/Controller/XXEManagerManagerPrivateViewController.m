@@ -11,7 +11,7 @@
 #import "XXEStudentManagerViewController2.h"
 #import "XXEFamilyManagerViewController2.h"
 #import "XXETeacherManagerViewController.h"
-#import "XXECourseManagerViewController.h"
+#import "XXECourseManagerViewController1.h"
 
 @interface XXEManagerManagerPrivateViewController ()<QHNavSliderMenuDelegate, UIScrollViewDelegate, UISearchBarDelegate>
 {
@@ -136,7 +136,7 @@
         
     }else if (index == 3){
         //@"课程管理"
-        XXECourseManagerViewController *courseManagerVC = [[XXECourseManagerViewController alloc]init];
+        XXECourseManagerViewController1 *courseManagerVC = [[XXECourseManagerViewController1 alloc]init];
         
         courseManagerVC.view.left =3*screenWidth;
         courseManagerVC.view.top=0;

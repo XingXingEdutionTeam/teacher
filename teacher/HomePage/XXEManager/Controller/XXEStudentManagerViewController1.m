@@ -337,19 +337,12 @@
     }
 
     
-    CGFloat labelWidth = 250 * kScreenRatioWidth ;
+    CGFloat labelWidth = KScreenWidth ;
     UILabel *titleLabel1 = [UILabel createLabelWithFrame:CGRectMake(0, 10, labelWidth, 20) Font:14 Text:@""];
     
-    titleLabel1.text = [NSString stringWithFormat:@"%@",classNameStr];
+    titleLabel1.text = [NSString stringWithFormat:@"%@(%@人)",classNameStr, numStr];
     titleLabel1.textAlignment = NSTextAlignmentCenter;
     [headerView addSubview:titleLabel1];
-    
-    UILabel *numLabel2 = [[UILabel alloc]initWithFrame:CGRectMake(300, 5, 70 * kScreenRatioWidth, 30)];
-    numLabel2.text = [NSString stringWithFormat:@"%@",numStr];
-    numLabel2.textColor = [UIColor lightGrayColor];
-    numLabel2.font = [UIFont boldSystemFontOfSize:14 * kScreenRatioWidth];
-    [headerView addSubview:numLabel2];
-    
 
     return headerView;
 }

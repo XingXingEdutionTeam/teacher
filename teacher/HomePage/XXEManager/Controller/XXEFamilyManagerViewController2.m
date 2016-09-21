@@ -483,18 +483,18 @@
     UITapGestureRecognizer *viewPress = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(viewPressClick:)];
     [view addGestureRecognizer:viewPress];
     
-    arrowButton = [[UIButton alloc]initWithFrame:CGRectMake(10, (40-20)/2, 17.5, 20)];
+    arrowButton = [[UIButton alloc]initWithFrame:CGRectMake(10, (40-12)/2, 12, 12)];
     NSNumber *flagN = self.flagArray[section];
     
     if ([flagN boolValue]) {
-        [arrowButton setBackgroundImage:[UIImage imageNamed:@"triangle"] forState:UIControlStateNormal];
+        [arrowButton setBackgroundImage:[UIImage imageNamed:@"narrow_icon"] forState:UIControlStateNormal];
         CGAffineTransform currentTransform =arrowButton.transform;
         CGAffineTransform newTransform =CGAffineTransformRotate(currentTransform, M_PI/2);
         arrowButton.transform =newTransform;
         
     }else
     {
-        [arrowButton setBackgroundImage:[UIImage imageNamed:@"triangle"] forState:UIControlStateNormal ];
+        [arrowButton setBackgroundImage:[UIImage imageNamed:@"narrow_icon"] forState:UIControlStateNormal ];
         
     }
     arrowButton.tag = 300+section;
@@ -527,23 +527,29 @@
     //班级名称
     UILabel *nameLabel = [[UILabel alloc]initWithFrame:CGRectMake(30, 5, 200 * kScreenRatioWidth, 30)];
     nameLabel.text = [NSString stringWithFormat:@"%@",classNameStr];
-    nameLabel.textColor = [UIColor lightGrayColor];
-    nameLabel.font = [UIFont boldSystemFontOfSize:14 * kScreenRatioWidth];
+    nameLabel.textColor = [UIColor blackColor];
+    nameLabel.font = [UIFont boldSystemFontOfSize:16 * kScreenRatioWidth];
     [view addSubview:nameLabel];
     
     //已审核的家人数
     UILabel *auditedLabel = [[UILabel alloc]initWithFrame:CGRectMake(230, 5, 70 * kScreenRatioWidth, 30)];
     auditedLabel.text = [NSString stringWithFormat:@"已审核:%@",numStr];
-    auditedLabel.textColor = [UIColor lightGrayColor];
+    auditedLabel.textColor = [UIColor blackColor];
     auditedLabel.font = [UIFont boldSystemFontOfSize:14 * kScreenRatioWidth];
     [view addSubview:auditedLabel];
     
     //待审核的家人数
     UILabel *unauditLabel = [[UILabel alloc]initWithFrame:CGRectMake(300, 5, 70 * kScreenRatioWidth, 30)];
     unauditLabel.text = [NSString stringWithFormat:@"待审核:%@",wait_numStr];
-    unauditLabel.textColor = [UIColor lightGrayColor];
+    unauditLabel.textColor = [UIColor blackColor];
     unauditLabel.font = [UIFont boldSystemFontOfSize:14 * kScreenRatioWidth];
     [view addSubview:unauditLabel];
+    
+    //线
+    UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, 39, KScreenWidth, 1)];
+    lineView.backgroundColor = UIColorFromRGB(229, 232, 233);
+    [view addSubview:lineView];
+
     
     return view;
 }

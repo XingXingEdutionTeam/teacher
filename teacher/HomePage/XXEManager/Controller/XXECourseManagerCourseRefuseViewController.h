@@ -1,14 +1,16 @@
 //
-//  XXECourseManagerViewController.h
+//  XXECourseManagerCourseRefuseViewController.h
 //  teacher
 //
-//  Created by Mac on 16/9/19.
+//  Created by Mac on 16/9/21.
 //  Copyright © 2016年 XingXingEdu. All rights reserved.
 //
 
 #import "XXEBaseViewController.h"
+#import "QHNavSliderMenu.h"
 
-@interface XXECourseManagerViewController : XXEBaseViewController
+
+@interface XXECourseManagerCourseRefuseViewController : XXEBaseViewController
 
 @property (nonatomic, strong) NSString *schoolId;
 
@@ -16,6 +18,6 @@
 
 @property (nonatomic, copy) NSString *schoolType;
 
-@property (nonatomic, copy) NSString *condit;
+@property (nonatomic)QHNavSliderMenuType menuType;
 
 @end

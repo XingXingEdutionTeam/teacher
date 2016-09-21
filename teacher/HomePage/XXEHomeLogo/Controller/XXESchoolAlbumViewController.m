@@ -383,11 +383,13 @@
 
 #pragma mark PickerViewDelegate
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+//    NSLog(@"%@",editButton.selected ? @"YES":@"NO");
+    
     if (editButton.selected == YES) {
         XXESchoolAlbumModel *picModel = _dataSourceArray[indexPath.item];
         [_seletedModelArray addObject:picModel];
         [self updateButtonTitle];
-    }else{
+    }else if(editButton.selected == NO){
     
         XXEAlbumShowViewController *showVC = [[XXEAlbumShowViewController alloc]init];        
         showVC.showDatasource = _dataSourceArray;
@@ -398,14 +400,6 @@
     }
 }
 
-- (BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath{
-
-    if (editButton.selected == YES) {
-        return YES;
-    }else {
-        return NO;
-    }
-}
 
 - (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath {
 
