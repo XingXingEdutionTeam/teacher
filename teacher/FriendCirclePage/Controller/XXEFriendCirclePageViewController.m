@@ -129,16 +129,16 @@
         [self detelAllSource];
         if ([code intValue]==1 && [[request.responseJSONObject objectForKey:@"data"] isKindOfClass:[NSDictionary class]]) {
             NSDictionary *data = [request.responseJSONObject objectForKey:@"data"];
-//            NSLog(@"%@",[[data objectForKey:@"list"] class]);
-//            NSLog(@"用户信息%@",[data objectForKey:@"user_info"]);
             NSDictionary *userInfo = [data objectForKey:@"user_info"];
-            
             XXECircleUserModel *Usermodel = [[XXECircleUserModel alloc]initWithDictionary:userInfo error:nil];
             [self.headerDatasource addObject:Usermodel];
             //设置顶部视图信息
             [self setHeaderMessage:Usermodel];
-//            NSLog(@"!!!!!!!评论信息的列表的%@",list);
-//             NSLog(@"!!!!!!!评论信息的列表的%@",list[0]);
+            //判断是否有信息
+            if ([Usermodel.circle_noread isEqualToString:@"1"]) {
+                [self creatNewMessageRemindcircleNoread:Usermodel.circle_noread];
+            }
+            
             if ([[data objectForKey:@"list"]isKindOfClass:[NSArray class]] ) {
                 NSArray *list = [data objectForKey:@"list"];
                 for (int i =0; i<list.count; i++) {
@@ -572,14 +572,6 @@
         homeUserId = USER_ID;
     }
     
-//    long indexId;
-//    if (itemId == 0) {
-//        indexId = itemId;
-//    }else if (itemId == 1){
-//        indexId = itemId;
-//    }else{
-//        indexId = itemId-1;
-//    }
     long indexId = itemId-1;
     NSLog(@"新的:%ld",indexId);
     if (self.circleListDatasource.count ==0) {
@@ -630,14 +622,6 @@
         strngXid = XID;
         homeUserId = USER_ID;
     }
-//    long indexId;
-//    if (itemId == 0) {
-//       indexId = itemId;
-//    }else if (itemId == 1){
-//        indexId = itemId;
-//    }else{
-//        indexId = itemId-1;
-//    }
     long indexId = itemId-1;
     NSLog(@"新的:%ld",indexId);
     if (self.circleListDatasource.count ==0) {
@@ -684,9 +668,11 @@
     NSLog(@"%lu",(unsigned long)userId);
     XXEFriendMyCircleViewController *myCircleVC = [[XXEFriendMyCircleViewController alloc]init];
     myCircleVC.otherXid = userId;
+    myCircleVC.friendCirccleRefreshBlock = ^(){
+        [self refresh];
+    };
     [self.navigationController pushViewController:myCircleVC animated:YES];
 }
-
 
 -(void)onClickHeaderUserAvatar
 {

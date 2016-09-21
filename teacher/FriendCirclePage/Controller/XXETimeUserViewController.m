@@ -1,12 +1,12 @@
 //
-//  DFTimeLineViewController.m
-//  DFTimelineView
+//  XXETimeUserViewController.m
+//  teacher
 //
-//  Created by Allen Zhong on 15/9/27.
-//  Copyright (c) 2015年 Datafans, Inc. All rights reserved.
+//  Created by codeDing on 16/9/21.
+//  Copyright © 2016年 XingXingEdu. All rights reserved.
 //
 
-#import "DFTimeLineViewController.h"
+#import "XXETimeUserViewController.h"
 #import "DFLineCellManager.h"
 
 #import "DFBaseLineCell.h"
@@ -23,7 +23,7 @@
 #import "DFImagesSendViewController.h"
 #import "DFVideoCaptureController.h"
 
-@interface DFTimeLineViewController ()<DFLineCellDelegate, CommentInputViewDelegate, TZImagePickerControllerDelegate, UIImagePickerControllerDelegate,UINavigationControllerDelegate, DFImagesSendViewControllerDelegate,DFVideoCaptureControllerDelegate>
+@interface XXETimeUserViewController ()<DFLineCellDelegate, CommentInputViewDelegate, TZImagePickerControllerDelegate, UIImagePickerControllerDelegate,UINavigationControllerDelegate, DFImagesSendViewControllerDelegate,DFVideoCaptureControllerDelegate>
 
 @property (nonatomic, strong) NSMutableArray *items;
 
@@ -44,31 +44,15 @@
 
 @end
 
-@implementation DFTimeLineViewController
-
-
-#pragma mark - Lifecycle
+@implementation XXETimeUserViewController
 
 - (instancetype)init
 {
     self = [super init];
     if (self) {
-        
-        
-        [[MMPopupWindow sharedWindow] cacheWindow];
-        [MMPopupWindow sharedWindow].touchWildToHide = YES;
-        
-        MMSheetViewConfig *sheetConfig = [MMSheetViewConfig globalConfig];
-        sheetConfig.defaultTextCancel = @"取消";
-
-        
-        
         _items = [NSMutableArray array];
-        
         _itemDic = [NSMutableDictionary dictionary];
-        
         _commentDic = [NSMutableDictionary dictionary];
-        
     }
     return self;
 }
@@ -77,7 +61,6 @@
     [super viewDidLoad];
     [self initCommentInputView];
 }
-
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
@@ -86,8 +69,6 @@
     [_commentInputView addObserver];
     
 }
-
-
 -(void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
@@ -96,7 +77,6 @@
     
     [_commentInputView removeObserver];
 }
-
 -(void) initCommentInputView
 {
     if (_commentInputView == nil) {
@@ -105,87 +85,7 @@
         _commentInputView.delegate = self;
         [self.view addSubview:_commentInputView];
     }
-        
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
     
-}
-
-
-#pragma mark - BarButtonItem
-
--(UIBarButtonItem *)rightBarButtonItem
-{
-    UIBarButtonItem *item = [UIBarButtonItem icon:@"Camera" selector:@selector(onClickCamera:) target:self];
-    UILongPressGestureRecognizer *recognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(onLongPressCamera:)];
-    [item.customView addGestureRecognizer:recognizer];
-    return item;
-}
-
--(void) onLongPressCamera:(UIGestureRecognizer *) gesture
-{
-    DFImagesSendViewController *controller = [[DFImagesSendViewController alloc] initWithImages:nil];
-    controller.delegate = self;
-    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:controller];
-    [self presentViewController:navController animated:YES completion:nil];
-}
-
-
-
--(void) onClickCamera:(id) sender
-{
-    MMPopupItemHandler block = ^(NSInteger index){
-        switch (index) {
-            case 0:
-                [self captureViedo];
-                break;
-            case 1:
-                [self takePhoto];
-                break;
-            case 2:
-                [self pickFromAlbum];
-                break;
-            default:
-                break;
-        }
-    };
-    
-    NSArray *items = @[MMItemMake(@"小视频", MMItemTypeNormal, block),
-      MMItemMake(@"拍照", MMItemTypeNormal, block),
-      MMItemMake(@"从相册选取", MMItemTypeNormal, block)];
-    
-    MMSheetView *sheetView = [[MMSheetView alloc] initWithTitle:@"" items:items];
-    
-    [sheetView show];
-}
-
-
--(void) captureViedo
-{
-    DFVideoCaptureController *controller = [[DFVideoCaptureController alloc] init];
-    controller.delegate = self;
-    [self presentViewController:controller animated:YES completion:^{
-        
-    }];
-
-}
-
-
--(void) takePhoto
-{
-    _pickerController = [[UIImagePickerController alloc] init];
-    _pickerController.delegate = self;
-    _pickerController.sourceType = UIImagePickerControllerSourceTypeCamera;
-    [self presentViewController:_pickerController animated:YES completion:nil];
-}
-
--(void) pickFromAlbum
-{
-    TZImagePickerController *imagePickerVc = [[TZImagePickerController alloc] initWithMaxImagesCount:9 delegate:self];
-    imagePickerVc.allowPickingVideo = NO;
-    [self presentViewController:imagePickerVc animated:YES completion:nil];
 }
 
 #pragma mark - TableView DataSource
@@ -218,7 +118,7 @@
     }else{
         NSLog(@"重用Cell: %@", reuseIdentifier);
     }
-
+    
     cell.delegate = self;
     
     cell.separatorInset = UIEdgeInsetsZero;
@@ -229,8 +129,6 @@
     
     return cell;
 }
-
-
 #pragma mark - TabelViewDelegate
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -244,7 +142,6 @@
     }
     NSLog(@"第几个单元格%ld",(long)indexPath.row);
 }
-
 
 #pragma mark - Method
 
@@ -324,7 +221,7 @@
             index++;
             NSLog(@"index:%d",index);
         }
-
+        
     }else{
         indexPath = 0;
     }
@@ -364,18 +261,18 @@
     DFBaseLineItem *item = [self getItem:itemId];
     
     NSLog(@"%ld---%@----%@---%p",commentItem.userId,commentItem.userNick,commentItem.text,commentItem);
-//    int index = 1;
-//    int indexPath = 0;
+    //    int index = 1;
+    //    int indexPath = 0;
     if (item.comments.count >0) {
-       [item.comments enumerateObjectsUsingBlock:^(DFLineCommentItem  *_Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-           if (obj.commentId == commentItem.commentId) {
-               [item.comments removeObject:obj];
-               *stop = YES;
-           }
-       }];
+        [item.comments enumerateObjectsUsingBlock:^(DFLineCommentItem  *_Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            if (obj.commentId == commentItem.commentId) {
+                [item.comments removeObject:obj];
+                *stop = YES;
+            }
+        }];
     }else{
-//        indexPath = 0;
-         [item.comments removeAllObjects];
+        //        indexPath = 0;
+        [item.comments removeAllObjects];
     }
     if (replyCommentId > 0) {
         DFLineCommentItem *replyCommentItem = [self getCommentItem:replyCommentId];
@@ -524,76 +421,20 @@
 }
 
 
-#pragma mark - TZImagePickerControllerDelegate
 
-
-- (void)imagePickerController:(TZImagePickerController *)picker didFinishPickingPhotos:(NSArray<UIImage *> *) photos sourceAssets:(NSArray *)assets
-{
-    NSLog(@"%@", photos);
-    
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        
-        DFImagesSendViewController *controller = [[DFImagesSendViewController alloc] initWithImages:photos];
-        controller.delegate = self;
-        UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:controller];
-        [self presentViewController:navController animated:YES completion:nil];
-    });
-   
-    
-}
-- (void)imagePickerController:(TZImagePickerController *)picker didFinishPickingPhotos:(NSArray<UIImage *> *) photos sourceAssets:(NSArray *)assets infos:(NSArray<NSDictionary *> *)infos
-{
-
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
 }
 
+/*
+#pragma mark - Navigation
 
-#pragma mark - UIImagePickerControllerDelegate
-
--(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
-{
-    [_pickerController dismissViewControllerAnimated:YES completion:nil];
-    
-    UIImage *image = [info valueForKey:UIImagePickerControllerOriginalImage];
-    
-    DFImagesSendViewController *controller = [[DFImagesSendViewController alloc] initWithImages:@[image]];
-    controller.delegate = self;
-    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:controller];
-    [self presentViewController:navController animated:YES completion:nil];
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
 }
-
--(void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
-{
-    [_pickerController dismissViewControllerAnimated:YES completion:nil];
-}
-
-#pragma mark - DFImagesSendViewControllerDelegate
-
--(void)onSendTextImage:(NSString *)text images:(NSArray *)images Location:(NSString *)location PersonSee:(NSString *)personSee
-{
-    
-}
-
-- (void)xxe_whoCanLookMessage:(NSString *)personLook
-{
-    
-}
-
-- (void)locationMessageText:(NSString *)text
-{
-    
-}
-
-#pragma mark - DFVideoCaptureControllerDelegate
--(void)onCaptureVideo:(NSString *)filePath screenShot:(UIImage *)screenShot
-{
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [self onSendVideo:@"" videoPath:filePath screenShot:screenShot];
-    });
-}
-
--(void)onSendVideo:(NSString *)text videoPath:(NSString *)videoPath screenShot:(UIImage *)screenShot
-{
-    
-}
+*/
 
 @end

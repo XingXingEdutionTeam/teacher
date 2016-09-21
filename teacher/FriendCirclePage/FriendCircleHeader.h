@@ -27,6 +27,10 @@
 //删除说说
 #define XXEDeleteCommenturl @"http://www.xingxingedu.cn/Global/my_circle_delete"
 
+//消息历史
+#define XXEMessageHistoryUrl @"http://www.xingxingedu.cn/Global/circle_history_msg"
 
+//新消息
+#define XXECircleNewMessageUrl @"http://www.xingxingedu.cn/Global/circle_new_msg"
 
 #endif /* FriendCircleHeader_h */

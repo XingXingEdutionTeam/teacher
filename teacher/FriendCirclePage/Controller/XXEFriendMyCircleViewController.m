@@ -13,6 +13,7 @@
 #import "XXECommentModel.h"
 #import "XXEGoodUserModel.h"
 #import "XXEInfomationViewController.h"
+#import "XXEMessageHistoryController.h"
 
 @interface XXEFriendMyCircleViewController ()
 
@@ -20,6 +21,10 @@
 @property (nonatomic, strong)NSMutableArray *headerMyCircleDatasource;
 /** 朋友圈列表的信息 */
 @property (nonatomic, strong)NSMutableArray *circleMyCircleListDatasource;
+
+/** 保存数据源数据 */
+@property (nonatomic, strong)NSMutableArray *circleDatasource;
+
 /** 页数 */
 @property (nonatomic, assign)NSInteger page;
 
@@ -42,6 +47,14 @@
     return _circleMyCircleListDatasource;
 }
 
+- (NSMutableArray *)circleDatasource
+{
+    if (!_circleDatasource) {
+        _circleDatasource = [NSMutableArray array];
+    }
+    return _circleDatasource;
+}
+
 /** 这两个方法都可以,改变当前控制器的电池条颜色 */
 -(UIStatusBarStyle)preferredStatusBarStyle
 {
@@ -58,23 +71,40 @@
 - (void)loadMore
 {
     self.page ++;
+    NSLog(@"%ld",(long)self.page);
     [self FriendMyCircleMessagePage:self.page];
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    //获取数据
-//    [self refresh];
-}
+//- (void)viewWillAppear:(BOOL)animated
+//{
+//    [super viewWillAppear:animated];
+//    //获取数据
+////    [self refresh];
+//}
 
 
 - (void)viewDidLoad {
     [super viewDidLoad];
      self.view.backgroundColor = XXEBackgroundColor;
-    // Do any additional setup after loading the view.
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    button.frame = CGRectMake(0, -64, 70, 64);
+    button.backgroundColor = [UIColor redColor];
+    [self.view addSubview:button];
     [self refresh];
 }
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    self.friendCirccleRefreshBlock();
+    UIButton*rightButton = [[UIButton alloc]initWithFrame:CGRectMake(-10,0,22,22)];
+    [rightButton setImage:[UIImage imageNamed:@"查看历史44x44"]  forState:UIControlStateNormal];
+    [rightButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [rightButton addTarget:self action:@selector(messageHistory) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem*rightItem = [[UIBarButtonItem alloc]initWithCustomView:rightButton];
+    self.navigationItem.rightBarButtonItem= rightItem;
+}
+
 
 #pragma mark - 获取数据
 - (void)FriendMyCircleMessagePage:(NSInteger )page
@@ -95,12 +125,13 @@
         
         if (page ==1) {
             [self.circleMyCircleListDatasource removeAllObjects];
+            [self xxe_userRefreshTableViewWithItem:@""];
         }
+        [self.circleDatasource removeAllObjects];
         
         NSLog(@"%@",request.responseJSONObject);
         NSLog(@"%@",[request.responseJSONObject objectForKey:@"msg"]);
         NSString *code = [request.responseJSONObject objectForKey:@"code"];
-        
         if ([code intValue]==1 && [[request.responseJSONObject objectForKey:@"data"] isKindOfClass:[NSDictionary class]]) {
             NSDictionary *data = [request.responseJSONObject objectForKey:@"data"];
             NSArray *listSS = [data objectForKey:@"ss"];
@@ -113,16 +144,15 @@
             //设置顶部视图信息
             [self setHeaderMyCircleMessage:Usermodel];
             NSLog(@"评论信息的列表的%@",listSS);
-            NSLog(@"数组为%@",listSS[0]);
             for (int i =0; i<listSS.count; i++) {
                 XXECircleModel *circleModel = [[XXECircleModel alloc]initWithDictionary:listSS[i] error:nil];
                 [self.circleMyCircleListDatasource addObject:circleModel];
+                [self.circleDatasource addObject:circleModel];
             }
             [self endRefresh];
             //朋友圈的信息列表
             [self myFriendCircleMessage];
             NSLog(@"圈子顶部信息数组信息%@",self.headerMyCircleDatasource);
-//            [self xxe_userRefreshTableView];
         }else{
             [self hudShowText:@"获取数据错误" second:2.f];
             [self endRefresh];
@@ -147,25 +177,25 @@
 /** 个人圈子的信息 */
 - (void)myFriendCircleMessage
 {
-    XXECircleModel *circleModel = self.circleMyCircleListDatasource[0];
-    NSLog(@"%@",circleModel.words);
+//    XXECircleModel *circleModel = self.circleMyCircleListDatasource[0];
+//    NSLog(@"%@",circleModel.words);
     
-    if (self.circleMyCircleListDatasource.count != 0) {
-        for (int i =0; i<self.circleMyCircleListDatasource.count; i++) {
-            XXECircleModel *circleModel = self.circleMyCircleListDatasource[i];
+    if (self.circleDatasource.count != 0) {
+        for (int i =0; i<self.circleDatasource.count; i++) {
+            XXECircleModel *circleModel = self.circleDatasource[i];
             DFTextImageUserLineItem *textItem = [[DFTextImageUserLineItem alloc]init];
             textItem.itemId = i;
+            NSLog(@"%@",circleModel.date_tm);
             textItem.ts = [circleModel.date_tm integerValue];
             textItem.cover = circleModel.pic_url;
             textItem.text = circleModel.words;
             //如果发布的圈子有图片则显示图片
             [self myFritnd_CircleImageShowTextImageItem:textItem CircleModel:circleModel];
         }
-//        [self xxe_baseRefreshTableView];
     }else{
         NSLog(@"没有数据");
+        [self hudShowText:@"没有数据" second:1.f];
     }
-
 }
 
 #pragma mark - 显示图片
@@ -198,6 +228,8 @@
     [self addItem:textItem];
 }
 
+
+
 -(void)onClickItem:(DFBaseUserLineItem *)item
 {
     XXECircleModel *circleModel = self.circleMyCircleListDatasource[item.itemId];
@@ -215,9 +247,9 @@
     infomationVC.itemId = [NSString stringWithFormat:@"%lld",item.itemId];
     infomationVC.conText = circleModel.words;
     infomationVC.imagesArr = circleModel.pic_url;
-    
     infomationVC.goodArr = circleModel.good_user;
     infomationVC.hidesBottomBarWhenPushed = YES;
+    infomationVC.deleteOtherXid = self.otherXid;
     
     infomationVC.deteleModelBlock = ^ (XXECircleModel *model, NSString *item){
         [self.circleMyCircleListDatasource enumerateObjectsUsingBlock:^(XXECircleModel  *_Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
@@ -231,28 +263,13 @@
     [self.navigationController pushViewController:infomationVC animated:YES];
 }
 
-//-(void)onClickItem:(DFTextImageUserLineItem *)item
-//{
-//    XXECircleModel *circleModel = self.circleMyCircleListDatasource[item.itemId];
-//    NSLog(@"click item: %lld", item.itemId);
-//    NSLog(@"时间%@",circleModel.date_tm);
-//    NSLog(@"发布的照片%@",circleModel.pic_url);
-//    NSLog(@"次图片的评论ID%@",circleModel.talkId);
-//    NSLog(@"评论的%@",circleModel.comment_group);
-//    NSLog(@"点赞的%@",circleModel.good_user);
-//    NSLog(@"发布内容%@",circleModel.words);
-//    
-//    XXEInfomationViewController *infomationVC = [[XXEInfomationViewController alloc]init];
-//    infomationVC.infoCircleModel = circleModel;
-//    infomationVC.ts = item.ts;
-//    infomationVC.itemId = [NSString stringWithFormat:@"%lld",item.itemId];
-//    infomationVC.conText = item.text;
-//    infomationVC.imagesArr = circleModel.pic_url;
-//    
-//    infomationVC.goodArr = circleModel.good_user;
-//    infomationVC.hidesBottomBarWhenPushed = YES;
-//    [self.navigationController pushViewController:infomationVC animated:YES];
-//}
+
+#pragma mark - 导航栏中信息列表
+- (void)messageHistory
+{
+    XXEMessageHistoryController *messageHistoryVC = [[XXEMessageHistoryController alloc]init];
+    [self.navigationController pushViewController:messageHistoryVC animated:YES];
+}
 
 
 - (void)didReceiveMemoryWarning {

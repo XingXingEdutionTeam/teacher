@@ -388,6 +388,16 @@
 		9E02B42B1D78399200BE40E3 /* XXEIdentityListViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E02B4291D78399200BE40E3 /* XXEIdentityListViewCell.m */; };
 		9E02B42C1D78399200BE40E3 /* XXEIdentityListViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9E02B42A1D78399200BE40E3 /* XXEIdentityListViewCell.xib */; };
 		9E02B42F1D7846DD00BE40E3 /* XXEIdentityListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E02B42E1D7846DD00BE40E3 /* XXEIdentityListModel.m */; };
+		9E03CFD81D9261890083308C /* 查看历史44x44@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9E03CFD61D9261890083308C /* 查看历史44x44@2x.png */; };
+		9E03CFD91D9261890083308C /* 查看历史44x44@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9E03CFD71D9261890083308C /* 查看历史44x44@3x.png */; };
+		9E03CFDC1D92655B0083308C /* XXEMessageHistoryApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E03CFDB1D92655B0083308C /* XXEMessageHistoryApi.m */; };
+		9E03CFDF1D92664D0083308C /* XXEMessageHistoryController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E03CFDE1D92664D0083308C /* XXEMessageHistoryController.m */; };
+		9E03CFE21D9267080083308C /* XXEMessageHistoryModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E03CFE11D9267080083308C /* XXEMessageHistoryModel.m */; };
+		9E03CFE61D9268E50083308C /* XXEMessageHistoryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E03CFE41D9268E50083308C /* XXEMessageHistoryCell.m */; };
+		9E03CFE71D9268E50083308C /* XXEMessageHistoryCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9E03CFE51D9268E50083308C /* XXEMessageHistoryCell.xib */; };
+		9E03CFEA1D9296E90083308C /* XXENewMessageApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E03CFE91D9296E90083308C /* XXENewMessageApi.m */; };
+		9E03CFEE1D92A65D0083308C /* XXETimeUserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E03CFED1D92A65D0083308C /* XXETimeUserViewController.m */; };
+		9E03CFF11D92A8930083308C /* XXEMessageListNewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E03CFF01D92A8930083308C /* XXEMessageListNewController.m */; };
 		9E10C68F1D6D422E00ACAF50 /* XXETeacherClassModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E10C68E1D6D422E00ACAF50 /* XXETeacherClassModel.m */; };
 		9E10C6951D6D837C00ACAF50 /* XXEAlbumDetailsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E10C6941D6D837C00ACAF50 /* XXEAlbumDetailsModel.m */; };
 		9E10C6981D6DA3C400ACAF50 /* XXEChangeRoleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E10C6971D6DA3C400ACAF50 /* XXEChangeRoleViewController.m */; };
@@ -1353,6 +1363,23 @@
 		9E02B42A1D78399200BE40E3 /* XXEIdentityListViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XXEIdentityListViewCell.xib; sourceTree = "<group>"; };
 		9E02B42D1D7846DD00BE40E3 /* XXEIdentityListModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXEIdentityListModel.h; sourceTree = "<group>"; };
 		9E02B42E1D7846DD00BE40E3 /* XXEIdentityListModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXEIdentityListModel.m; sourceTree = "<group>"; };
+		9E03CFD61D9261890083308C /* 查看历史44x44@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "查看历史44x44@2x.png"; sourceTree = "<group>"; };
+		9E03CFD71D9261890083308C /* 查看历史44x44@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "查看历史44x44@3x.png"; sourceTree = "<group>"; };
+		9E03CFDA1D92655B0083308C /* XXEMessageHistoryApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXEMessageHistoryApi.h; sourceTree = "<group>"; };
+		9E03CFDB1D92655B0083308C /* XXEMessageHistoryApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXEMessageHistoryApi.m; sourceTree = "<group>"; };
+		9E03CFDD1D92664D0083308C /* XXEMessageHistoryController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXEMessageHistoryController.h; sourceTree = "<group>"; };
+		9E03CFDE1D92664D0083308C /* XXEMessageHistoryController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXEMessageHistoryController.m; sourceTree = "<group>"; };
+		9E03CFE01D9267080083308C /* XXEMessageHistoryModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXEMessageHistoryModel.h; sourceTree = "<group>"; };
+		9E03CFE11D9267080083308C /* XXEMessageHistoryModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXEMessageHistoryModel.m; sourceTree = "<group>"; };
+		9E03CFE31D9268E50083308C /* XXEMessageHistoryCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXEMessageHistoryCell.h; sourceTree = "<group>"; };
+		9E03CFE41D9268E50083308C /* XXEMessageHistoryCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXEMessageHistoryCell.m; sourceTree = "<group>"; };
+		9E03CFE51D9268E50083308C /* XXEMessageHistoryCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XXEMessageHistoryCell.xib; sourceTree = "<group>"; };
+		9E03CFE81D9296E90083308C /* XXENewMessageApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXENewMessageApi.h; sourceTree = "<group>"; };
+		9E03CFE91D9296E90083308C /* XXENewMessageApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXENewMessageApi.m; sourceTree = "<group>"; };
+		9E03CFEC1D92A65D0083308C /* XXETimeUserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXETimeUserViewController.h; sourceTree = "<group>"; };
+		9E03CFED1D92A65D0083308C /* XXETimeUserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXETimeUserViewController.m; sourceTree = "<group>"; };
+		9E03CFEF1D92A8930083308C /* XXEMessageListNewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXEMessageListNewController.h; sourceTree = "<group>"; };
+		9E03CFF01D92A8930083308C /* XXEMessageListNewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXEMessageListNewController.m; sourceTree = "<group>"; };
 		9E10C68D1D6D422E00ACAF50 /* XXETeacherClassModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXETeacherClassModel.h; sourceTree = "<group>"; };
 		9E10C68E1D6D422E00ACAF50 /* XXETeacherClassModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXETeacherClassModel.m; sourceTree = "<group>"; };
 		9E10C6931D6D837C00ACAF50 /* XXEAlbumDetailsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXEAlbumDetailsModel.h; sourceTree = "<group>"; };
@@ -3152,6 +3179,17 @@
 			path = EditorIdentity;
 			sourceTree = "<group>";
 		};
+		9E03CFEB1D92A6160083308C /* 详情信息的控制器 */ = {
+			isa = PBXGroup;
+			children = (
+				9E03CFEC1D92A65D0083308C /* XXETimeUserViewController.h */,
+				9E03CFED1D92A65D0083308C /* XXETimeUserViewController.m */,
+				9E03CFEF1D92A8930083308C /* XXEMessageListNewController.h */,
+				9E03CFF01D92A8930083308C /* XXEMessageListNewController.m */,
+			);
+			name = "详情信息的控制器";
+			sourceTree = "<group>";
+		};
 		9E2F7F221D73CF1F00DD9CD1 /* UMengSocialCOM */ = {
 			isa = PBXGroup;
 			children = (
@@ -3309,6 +3347,9 @@
 				9E5E23E11D90CD04008B1AAF /* WhoSeeCell.h */,
 				9E5E23E21D90CD04008B1AAF /* WhoSeeCell.m */,
 				9E5E23E31D90CD04008B1AAF /* WhoSeeCell.xib */,
+				9E03CFE31D9268E50083308C /* XXEMessageHistoryCell.h */,
+				9E03CFE41D9268E50083308C /* XXEMessageHistoryCell.m */,
+				9E03CFE51D9268E50083308C /* XXEMessageHistoryCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -3439,9 +3480,12 @@
 		9E4813BB1D50695200C614AC /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				9E03CFEB1D92A6160083308C /* 详情信息的控制器 */,
 				9E5E23FC1D90E5BE008B1AAF /* dian@2x.png */,
 				9E5E23BA1D90CCD8008B1AAF /* 已选择icon28x28@2x.png */,
 				9E5E23BB1D90CCD8008B1AAF /* 已选择icon28x28@3x.png */,
+				9E03CFD61D9261890083308C /* 查看历史44x44@2x.png */,
+				9E03CFD71D9261890083308C /* 查看历史44x44@3x.png */,
 				9E5E23BC1D90CCD8008B1AAF /* XXEFriendCirclePageViewController.h */,
 				9E5E23BD1D90CCD8008B1AAF /* XXEFriendCirclePageViewController.m */,
 				9E5E23BE1D90CCD8008B1AAF /* 哈哈.png */,
@@ -3457,6 +3501,8 @@
 				9E5E23C81D90CCD8008B1AAF /* XXEWhoCanLookController.m */,
 				9E5E23C91D90CCD8008B1AAF /* XXELocationAddController.h */,
 				9E5E23CA1D90CCD8008B1AAF /* XXELocationAddController.m */,
+				9E03CFDD1D92664D0083308C /* XXEMessageHistoryController.h */,
+				9E03CFDE1D92664D0083308C /* XXEMessageHistoryController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -3474,6 +3520,8 @@
 				9E5E23F41D90CD17008B1AAF /* XXEGoodUserModel.m */,
 				9E5E23F51D90CD17008B1AAF /* XXELocationModel.h */,
 				9E5E23F61D90CD17008B1AAF /* XXELocationModel.m */,
+				9E03CFE01D9267080083308C /* XXEMessageHistoryModel.h */,
+				9E03CFE11D9267080083308C /* XXEMessageHistoryModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -4172,6 +4220,10 @@
 				9E23F4BD1D82495D00AA2AC2 /* XXEPublishFriendCircleApi.m */,
 				9EDA725C1D8E9841006E5FB8 /* XXEDeleteCommentApi.h */,
 				9EDA725D1D8E9841006E5FB8 /* XXEDeleteCommentApi.m */,
+				9E03CFDA1D92655B0083308C /* XXEMessageHistoryApi.h */,
+				9E03CFDB1D92655B0083308C /* XXEMessageHistoryApi.m */,
+				9E03CFE81D9296E90083308C /* XXENewMessageApi.h */,
+				9E03CFE91D9296E90083308C /* XXENewMessageApi.m */,
 			);
 			path = FriendCircleApi;
 			sourceTree = "<group>";
@@ -4481,12 +4533,14 @@
 				0445A3EB1D65E8CA00C3A4CA /* photoBrowser_roate.png in Resources */,
 				0487549B1D5C0BF200F680C5 /* XXEFlowerbasketWithdrawCashViewController.xib in Resources */,
 				9E5E23991D90CC04008B1AAF /* AlbumComment@2x.png in Resources */,
+				9E03CFD81D9261890083308C /* 查看历史44x44@2x.png in Resources */,
 				04F216A91D7671BB005C2EBF /* 未标题-1(1).png in Resources */,
 				9E5E23CE1D90CCD8008B1AAF /* 哈哈.png in Resources */,
 				9E5E23CB1D90CCD8008B1AAF /* 已选择icon28x28@2x.png in Resources */,
 				9E6693C91D6434C700FFA0A7 /* down_dark0.png in Resources */,
 				9E5E23E71D90CD04008B1AAF /* YDEmojiCell.xib in Resources */,
 				04530C701D891ED000620105 /* XXEReleaseDetailInfoViewController.xib in Resources */,
+				9E03CFE71D9268E50083308C /* XXEMessageHistoryCell.xib in Resources */,
 				9E5E23A71D90CC04008B1AAF /* LikeCmtBg@3x.png in Resources */,
 				9EEA0E3E1D6ED6220070C8C3 /* ReportCell.xib in Resources */,
 				9E6693ED1D646C0900FFA0A7 /* HZQDatePickerView.xib in Resources */,
@@ -4549,6 +4603,7 @@
 				9ED3DCE11D7FFFA200743B79 /* XXEPerfectInfoViewCell.xib in Resources */,
 				0445A3E71D65E8CA00C3A4CA /* information_delete_icon.png in Resources */,
 				048754A81D5C0BF200F680C5 /* XXEFlowerbasketSentHistoryTableViewCell.xib in Resources */,
+				9E03CFD91D9261890083308C /* 查看历史44x44@3x.png in Resources */,
 				0445A3E81D65E8CA00C3A4CA /* photo_selected.png in Resources */,
 				9E2F7F711D73D24B00DD9CD1 /* UMSLoginViewController.xib in Resources */,
 				9E2F7F851D73D24B00DD9CD1 /* ios-social-sdk-shake.html in Resources */,
@@ -4749,6 +4804,7 @@
 				0485FD391D82D0640077E10B /* XXEBatchRemoveFromBlackListApi.m in Sources */,
 				9E4813DD1D50784900C614AC /* XXEChatPageViewController.m in Sources */,
 				9E5E238F1D90CC04008B1AAF /* DFTimeLineViewController.m in Sources */,
+				9E03CFEA1D9296E90083308C /* XXENewMessageApi.m in Sources */,
 				04C52CE21D801CC500DB7C4A /* XXEStudentSignInListApi.m in Sources */,
 				9E5E23921D90CC04008B1AAF /* DFBaseLineItem.m in Sources */,
 				044DEC451D923CFC00DE101A /* XXECourseManagerApi.m in Sources */,
@@ -4848,6 +4904,7 @@
 				04BB3A151D74742A00AA5C5C /* XXESchoolAddressApi.m in Sources */,
 				04BB3A0E1D74742A00AA5C5C /* XXEModifyCertificateApi.m in Sources */,
 				04BB3A3A1D74742B00AA5C5C /* XXEHomeworkDetailInfoViewController.m in Sources */,
+				9E03CFEE1D92A65D0083308C /* XXETimeUserViewController.m in Sources */,
 				04F216621D766E86005C2EBF /* XXESignInViewController.m in Sources */,
 				048754931D5C0BF200F680C5 /* XXEFlowerbasketSentHistoryApi.m in Sources */,
 				04BB3A191D74742B00AA5C5C /* XXEHomeLogoRootViewController.m in Sources */,
@@ -4864,6 +4921,7 @@
 				04C52CD31D7EC1F300DB7C4A /* XXEMyselfInfoCollectionRedFlowerModel.m in Sources */,
 				04BB3A261D74742B00AA5C5C /* XXESchoolIntroductionViewController.m in Sources */,
 				044DEC291D91367200DE101A /* XXETeacherManagerAgreeApi.m in Sources */,
+				9E03CFF11D92A8930083308C /* XXEMessageListNewController.m in Sources */,
 				044DEC231D91360400DE101A /* XXETeacherManagerViewController.m in Sources */,
 				048754A21D5C0BF200F680C5 /* XXEAccountManagerModel.m in Sources */,
 				9E5E23A91D90CC04008B1AAF /* DFBaseUserLineItem.m in Sources */,
@@ -4878,6 +4936,7 @@
 				0430B16E1D7D8675001F463F /* XXEMyselfInfoModifyPhoneNumApi.m in Sources */,
 				04BB3A451D74742B00AA5C5C /* XXERecipeDeleteApi.m in Sources */,
 				9E2F7F211D703F7400DD9CD1 /* XXEReportSubmitMessageApi.m in Sources */,
+				9E03CFE61D9268E50083308C /* XXEMessageHistoryCell.m in Sources */,
 				04F216C01D76C086005C2EBF /* XXEStarRemarkModel.m in Sources */,
 				0445A3DF1D65E8CA00C3A4CA /* FSImageCell.m in Sources */,
 				9E14098C1D61684C00E43AE4 /* XXEMyselfAblumDeleApi.m in Sources */,
@@ -4925,6 +4984,7 @@
 				04F216951D7671BB005C2EBF /* QHUtil.m in Sources */,
 				9E5E23911D90CC04008B1AAF /* DFPlainGridImageView.m in Sources */,
 				9E02B4221D782F7B00BE40E3 /* XXEAddIdentityViewController.m in Sources */,
+				9E03CFDC1D92655B0083308C /* XXEMessageHistoryApi.m in Sources */,
 				04BB3A481D74742B00AA5C5C /* XXERecipeAddViewController.m in Sources */,
 				9E5E23FB1D90CD17008B1AAF /* XXELocationModel.m in Sources */,
 				9E4813D71D50722400C614AC /* XXETabBarControllerConfig.m in Sources */,
@@ -5048,6 +5108,7 @@
 				04BB3AA51D74743300AA5C5C /* XXECommentTextInfoApi.m in Sources */,
 				044DEBC71D8FD1FB00DE101A /* XXEManagerManagerPrivateViewController.m in Sources */,
 				044DEC111D910F2E00DE101A /* XXEFamilyManagerAgreeApi.m in Sources */,
+				9E03CFE21D9267080083308C /* XXEMessageHistoryModel.m in Sources */,
 				04BB3A111D74742A00AA5C5C /* XXEModifyPhoneNumApi.m in Sources */,
 				04BB3AB81D75672400AA5C5C /* XXEBabyInfoApi.m in Sources */,
 				9E9B4BFC1D633B6000983F5E /* XXERegisterCheckApi.m in Sources */,
@@ -5083,6 +5144,7 @@
 				9E9B4BFD1D633B6000983F5E /* XXEVerificationApi.m in Sources */,
 				04530C741D891EE800620105 /* XXEReleaseViewController.m in Sources */,
 				9E9B4C7A1D633C8400983F5E /* XXEFriendCircleApi.m in Sources */,
+				9E03CFDF1D92664D0083308C /* XXEMessageHistoryController.m in Sources */,
 				04D5B1F21D6B262500ABA89A /* XXETeachOfTypeModel.m in Sources */,
 				048754A31D5C0BF200F680C5 /* XXEFlowerbasketModel.m in Sources */,
 				9E2F7F1A1D70298000DD9CD1 /* XXEReportModel.m in Sources */,

@@ -32,4 +32,7 @@ typedef void(^XXEInfomationViewControllerDeteleModel)(XXECircleModel *, NSString
 /** 直接传每一个说说的Model */
 @property (nonatomic, strong)XXECircleModel *infoCircleModel;
 
+/** 删除需要判断XID是否一样 */
+@property (nonatomic, assign)NSInteger deleteOtherXid;
+
 @end

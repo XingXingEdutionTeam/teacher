@@ -8,6 +8,7 @@
 
 #import "DFBaseTimeLineViewController.h"
 #import "MJRefresh.h"
+#import "XXEMessageHistoryController.h"
 
 #define TableHeaderHeight 290*([UIScreen mainScreen].bounds.size.width / 375.0)
 #define CoverHeight 240*([UIScreen mainScreen].bounds.size.width / 375.0)
@@ -24,7 +25,9 @@
 
 #define SignFont [UIFont systemFontOfSize:11]
 
-@interface DFBaseTimeLineViewController()
+@interface DFBaseTimeLineViewController(){
+    UIButton *_messageButton;
+}
 
 @property (nonatomic, strong) UIImageView *coverView;
 
@@ -40,7 +43,11 @@
 
 @property (nonatomic, assign) BOOL isLoadingMore;
 
+//
+@property (nonatomic, strong)UIView *header;
 
+/** 判断是否有值 有值为新消息*/
+@property (nonatomic, copy)NSString *isNumber;
 
 @end
 
@@ -102,9 +109,9 @@
     width = self.view.frame.size.width;
     height = TableHeaderHeight;
     UIView *header = [[UIView alloc] initWithFrame:CGRectMake(x, y, width, height)];
+    self.header = header;
     header.backgroundColor = [UIColor whiteColor];
     _tableView.tableHeaderView = header;
-    
     
     //封面
     height = CoverHeight;
@@ -374,6 +381,34 @@
 -(void)onClickHeaderUserAvatar
 {
     
+}
+
+- (void)creatNewMessageRemindcircleNoread:(NSString *)Number
+{
+    self.isNumber = Number;
+    UIButton *messageButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    _messageButton = messageButton;
+    messageButton.frame = CGRectMake(127, TableHeaderHeight-30, 120, 30);
+    [messageButton setTitle:@"你有新信息" forState:UIControlStateNormal];
+    [messageButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [messageButton addTarget:self action:@selector(messageButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+    messageButton.layer.cornerRadius = 8;
+    messageButton.backgroundColor = XXEColorFromRGB(229, 233, 232);
+    messageButton.tag = 1000;
+    messageButton.userInteractionEnabled = YES;
+    messageButton.layer.masksToBounds = YES;
+    messageButton.titleLabel.font = [UIFont systemFontOfSize:14];
+    [self.header addSubview:messageButton];
+}
+
+- (void)messageButtonClick:(UIButton *)sender
+{
+    UIButton *button = [self.header viewWithTag:1000];
+    XXEMessageHistoryController *message = [[XXEMessageHistoryController alloc]init];
+    [button removeFromSuperview];
+    [_messageButton removeFromSuperview];
+    message.messageNumber = self.isNumber;
+    [self.navigationController pushViewController:message animated:YES];
 }
 
 

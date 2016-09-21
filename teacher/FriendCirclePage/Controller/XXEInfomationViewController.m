@@ -254,6 +254,17 @@
         strngXid = XID;
         homeUserId = USER_ID;
     }
+    
+    if ([strngXid integerValue] != self.deleteOtherXid) {
+        [self showString:@"没权利删除" forSecond:1.f];
+    }else{
+        [self xxe_infomationDeleteCircleMessageStringXid:strngXid HomeUserId:homeUserId];
+    }
+}
+
+#pragma mark - 删除的网络请求
+- (void)xxe_infomationDeleteCircleMessageStringXid:(NSString *)strngXid HomeUserId:(NSString *)homeUserId
+{
     XXEDeleteCommentApi *commentApi = [[XXEDeleteCommentApi alloc]initWithDeleteCommentEventType:@"1" TalkId:_infoCircleModel.talkId CommentId:@"" UserXid:strngXid UserId:homeUserId];
     [commentApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         NSLog(@"%@",request.responseJSONObject);

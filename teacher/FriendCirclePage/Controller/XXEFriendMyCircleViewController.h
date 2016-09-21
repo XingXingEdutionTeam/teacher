@@ -8,8 +8,11 @@
 
 #import "DFTimelineView.h"
 
+typedef void(^XXEFriendMyCircleViewControllerBlock)();
+
 @interface XXEFriendMyCircleViewController : DFUserTimeLineViewController
 
 @property (nonatomic, assign)NSInteger otherXid;
+@property (nonatomic, copy) XXEFriendMyCircleViewControllerBlock friendCirccleRefreshBlock;
 
 @end

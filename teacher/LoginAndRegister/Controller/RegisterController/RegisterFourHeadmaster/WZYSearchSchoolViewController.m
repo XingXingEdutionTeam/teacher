@@ -159,8 +159,6 @@ static NSString *CellIdentifier = @"Cell";
     if ([self.delegate respondsToSelector:@selector(searchSchoolMessage:)]) {
         [self.delegate searchSchoolMessage:model];
     }
-    
-    
     [self.navigationController popViewControllerAnimated:YES];
 }
 

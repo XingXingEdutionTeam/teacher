@@ -55,7 +55,7 @@
     NSString *stringImage = [NSString stringWithFormat:@"%@%@",kXXEPicURL,homePageModel.head_img];
     [self.homeUserImageView sd_setImageWithURL:[NSURL URLWithString:stringImage] placeholderImage:[UIImage imageNamed:@"register_user_icon"]];
     self.homeUserLabel.text = homePageModel.tname;
-    self.homeUserLVLabel.text = [NSString stringWithFormat:@"LV:%@",homePageModel.lv];
+    self.homeUserLVLabel.text = [NSString stringWithFormat:@"LV%@",homePageModel.lv];
     self.homeUserAgeLabel.text = [NSString stringWithFormat:@"年龄:%@",homePageModel.age];
     self.homeUserSignatureLabel.text = [NSString stringWithFormat:@"个性签名:%@",homePageModel.personal_sign];
     if ([homePageModel.sex isEqualToString:@"女"]) {

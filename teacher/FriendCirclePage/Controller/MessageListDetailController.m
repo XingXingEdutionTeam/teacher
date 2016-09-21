@@ -12,8 +12,9 @@
 #import "MessageListDetailViewCell.h"
 #import "DFLineCommentItem.h"
 #import "WZYTool.h"
-#import "HHControl.h"
+#import "XXEUserInfo.h"
 #import "AFNetworking.h"
+#import "HHControl.h"
 #import "SVProgressHUD.h"
 #define Kmarg 10.0f
 #define KLabelH 25.0f
@@ -80,7 +81,7 @@ typedef NS_OPTIONS(NSInteger, Comments){
     self.view.backgroundColor=[UIColor whiteColor];
     [self.navigationController.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor],NSForegroundColorAttributeName,nil]];
     
-   self.title = @"消息详情";
+    self.title = @"消息详情";
     
     [self createDetailMessageNetRequest];
     
@@ -120,7 +121,7 @@ typedef NS_OPTIONS(NSInteger, Comments){
     _bgScrollView.alwaysBounceVertical = YES;
     
     [self.view addSubview:_bgScrollView];
-//
+    //
     //详情背景
     _detailView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kWidth, 150)];
     _detailView.backgroundColor = [UIColor whiteColor];
@@ -133,7 +134,7 @@ typedef NS_OPTIONS(NSInteger, Comments){
     
     //名字
     _nameLabel = [HHControl createLabelWithFrame:CGRectMake(CGRectGetMaxX(_headImage.frame) + Kmarg, Kmarg, kWidth - 20, KLabelH) Font:16 Text:_baseInfo[9]];
-     _nameLabel.textColor = UIColorFromRGB(74, 160, 239);
+    _nameLabel.textColor = UIColorFromRGB(74, 160, 239);
     [_detailView addSubview:_nameLabel];
     
     //内容
@@ -158,14 +159,14 @@ typedef NS_OPTIONS(NSInteger, Comments){
     [_detailView addSubview:_detailSayView];
     
     //图片 待完善
-//    for (int i = 0; i < 9; i ++) {
+    //    for (int i = 0; i < 9; i ++) {
     
-        _picView = [[UIImageView alloc] initWithFrame:CGRectMake( CGRectGetMaxX(_headImage.frame) + Kmarg, CGRectGetMaxY(_detailSayView.frame), kWidth - 100, 120)];
-        [_picView sd_setImageWithURL:[NSURL URLWithString:_baseInfo[3]] placeholderImage:nil];
-        [_detailView addSubview:_picView];
-        
-//    }
-
+    _picView = [[UIImageView alloc] initWithFrame:CGRectMake( CGRectGetMaxX(_headImage.frame) + Kmarg, CGRectGetMaxY(_detailSayView.frame), kWidth - 100, 120)];
+    [_picView sd_setImageWithURL:[NSURL URLWithString:_baseInfo[3]] placeholderImage:nil];
+    [_detailView addSubview:_picView];
+    
+    //    }
+    
     //时间戳
     NSString *timeStr = [WZYTool dateStringFromNumberTimer:_baseInfo[6]];
     _timeLabel = [HHControl createLabelWithFrame:CGRectMake(CGRectGetMaxX(_headImage.frame) + Kmarg,CGRectGetMaxY(_detailSayView.frame) + Kmarg, 120, KLabelH) Font:14 Text:timeStr];
@@ -197,6 +198,7 @@ typedef NS_OPTIONS(NSInteger, Comments){
     _com_typeArr = [NSMutableArray array];
     _xidArr = [NSMutableArray array];
     _idArr = [NSMutableArray array];
+    
     NSString *strngXid;
     NSString *homeUserId;
     if ([XXEUserInfo user].login) {
@@ -207,7 +209,7 @@ typedef NS_OPTIONS(NSInteger, Comments){
         homeUserId = USER_ID;
     }
     
-//    NSLog(@"==============_talkId_talkId_talkId================%@",_talkId);
+    //    NSLog(@"==============_talkId_talkId_talkId================%@",_talkId);
     NSString *urlStr = @"http://www.xingxingedu.cn/Global/one_shuoshuo";
     AFHTTPRequestOperationManager *mgr = [AFHTTPRequestOperationManager manager];
     NSDictionary *dict = @{@"appkey":APPKEY,
@@ -217,60 +219,115 @@ typedef NS_OPTIONS(NSInteger, Comments){
                            @"user_type":USER_TYPE,
                            @"talk_id":_talkId,
                            };
-    mgr.responseSerializer = [AFHTTPResponseSerializer serializer]; // 二进制数据
-    [mgr POST:urlStr parameters:dict success:^(AFHTTPRequestOperation *operation, id responseObject)
-     {
-         NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableLeaves error:nil];
-//         NSLog(@"===============createNewMessageNetRequest=====================%@",dict);
-         
-         if([[NSString stringWithFormat:@"%@",dict[@"code"]] isEqualToString:@"1"] ){
-             
-             NSString *commentPosition = [NSString stringWithFormat:@"%@",dict[@"data"][@"position"]];
-             NSString *commentId =[NSString stringWithFormat:@"%@",dict[@"data"][@"id"]];
-             NSString *commentFile_type = [NSString stringWithFormat:@"%@",dict[@"data"][@"file_type"]];
-             NSString *commentPic_url =[NSString stringWithFormat:@"%@",dict[@"data"][@"pic_url"]];
-             NSString *commentXid =[NSString stringWithFormat:@"%@",dict[@"data"][@"xid"]];
-             NSString *commentDate_tm = [NSString stringWithFormat:@"%@",dict[@"data"][@"date_tm"]];
-             NSString *commentWords =[NSString stringWithFormat:@"%@",dict[@"data"][@"words"]];
-             
-             
-             if ([dict[@"data"][@"head_img_type"] isEqualToString:@"1"]) {
-                 _commentHead_img =[NSString stringWithFormat:@"%@",dict[@"data"][@"head_img"]];
-             }else{
-                 _commentHead_img =[NSString stringWithFormat:@"%@%@",kXXEPicURL,dict[@"data"][@"head_img"]];
-             }
-             
-             NSString *commentNickname =[NSString stringWithFormat:@"%@",dict[@"data"][@"nickname"]];
-             
-             _baseInfo = [[NSMutableArray alloc] initWithObjects:commentPosition,commentId,commentFile_type,commentPic_url,commentXid,commentXid,commentDate_tm,commentWords,_commentHead_img,commentNickname, nil];
-             
-             _commentListArr = dict[@"data"][@"comment_group"];
-             if (_commentListArr.count > 0) {
-                 for (int i=0; i<_commentListArr.count; i++) {
-                     
-                     [_talk_idArr addObject:[_commentListArr[i] objectForKey:@"talk_id"]];
-                     [_nicknameArr addObject:[_commentListArr[i] objectForKey:@"nickname"]];
-                     [_conArr addObject:[_commentListArr[i] objectForKey:@"con"]];
-                     [_com_typeArr addObject:[_commentListArr[i] objectForKey:@"com_type"]];
-                     [_xidArr addObject:[_commentListArr[i] objectForKey:@"xid"]];
-                     [_idArr addObject:[_commentListArr[i] objectForKey:@"id"]];
-                     [_to_who_xidArr addObject:[_commentListArr[i] objectForKey:@"to_who_xid"]];
-                     [_to_who_nicknameArr  addObject:[_commentListArr[i] objectForKey:@"to_who_nickname"]];
-                 }
-             }
-             [self createDetailMessage];
-             
-             [self initTableView];
-             
-             CGFloat bgScrollMaxH =  CGRectGetMaxY(_tableView.frame) + 800;
-             _bgScrollView.contentSize = CGSizeMake(0, bgScrollMaxH);
-         }
-         [_tableView reloadData];
-     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-         NSLog(@"请求失败:%@",error);
-         [SVProgressHUD showErrorWithStatus:@"网络不通，请检查网络！"];
-         
-     }];
+    
+    [mgr POST:urlStr parameters:dict success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
+        NSLog(@"%@",responseObject);
+        
+        if([[NSString stringWithFormat:@"%@",dict[@"code"]] isEqualToString:@"1"] ){
+            
+            NSString *commentPosition = [NSString stringWithFormat:@"%@",dict[@"data"][@"position"]];
+            NSString *commentId =[NSString stringWithFormat:@"%@",dict[@"data"][@"id"]];
+            NSString *commentFile_type = [NSString stringWithFormat:@"%@",dict[@"data"][@"file_type"]];
+            NSString *commentPic_url =[NSString stringWithFormat:@"%@",dict[@"data"][@"pic_url"]];
+            NSString *commentXid =[NSString stringWithFormat:@"%@",dict[@"data"][@"xid"]];
+            NSString *commentDate_tm = [NSString stringWithFormat:@"%@",dict[@"data"][@"date_tm"]];
+            NSString *commentWords =[NSString stringWithFormat:@"%@",dict[@"data"][@"words"]];
+            
+            
+            if ([dict[@"data"][@"head_img_type"] isEqualToString:@"1"]) {
+                _commentHead_img =[NSString stringWithFormat:@"%@",dict[@"data"][@"head_img"]];
+            }else{
+                _commentHead_img =[NSString stringWithFormat:@"%@%@",kXXEPicURL,dict[@"data"][@"head_img"]];
+            }
+            
+            NSString *commentNickname =[NSString stringWithFormat:@"%@",dict[@"data"][@"nickname"]];
+            
+            _baseInfo = [[NSMutableArray alloc] initWithObjects:commentPosition,commentId,commentFile_type,commentPic_url,commentXid,commentXid,commentDate_tm,commentWords,_commentHead_img,commentNickname, nil];
+            
+            _commentListArr = dict[@"data"][@"comment_group"];
+            if (_commentListArr.count > 0) {
+                for (int i=0; i<_commentListArr.count; i++) {
+                    
+                    [_talk_idArr addObject:[_commentListArr[i] objectForKey:@"talk_id"]];
+                    [_nicknameArr addObject:[_commentListArr[i] objectForKey:@"nickname"]];
+                    [_conArr addObject:[_commentListArr[i] objectForKey:@"con"]];
+                    [_com_typeArr addObject:[_commentListArr[i] objectForKey:@"com_type"]];
+                    [_xidArr addObject:[_commentListArr[i] objectForKey:@"xid"]];
+                    [_idArr addObject:[_commentListArr[i] objectForKey:@"id"]];
+                    [_to_who_xidArr addObject:[_commentListArr[i] objectForKey:@"to_who_xid"]];
+                    [_to_who_nicknameArr  addObject:[_commentListArr[i] objectForKey:@"to_who_nickname"]];
+                }
+            }
+            [self createDetailMessage];
+            
+            [self initTableView];
+            
+            CGFloat bgScrollMaxH =  CGRectGetMaxY(_tableView.frame) + 800;
+            _bgScrollView.contentSize = CGSizeMake(0, bgScrollMaxH);
+        }
+        [_tableView reloadData];
+        
+    } failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error) {
+        NSLog(@"请求失败:%@",error);
+        [SVProgressHUD showErrorWithStatus:@"网络不通，请检查网络！"];
+    }];
+    
+//    mgr.responseSerializer = [AFHTTPResponseSerializer serializer]; // 二进制数据
+//    [mgr POST:urlStr parameters:dict success:^(AFHTTPRequestOperation *operation, id responseObject)
+//     {
+//         NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableLeaves error:nil];
+//         //         NSLog(@"===============createNewMessageNetRequest=====================%@",dict);
+//         
+//         
+//         
+//         
+//         if([[NSString stringWithFormat:@"%@",dict[@"code"]] isEqualToString:@"1"] ){
+//             
+//             NSString *commentPosition = [NSString stringWithFormat:@"%@",dict[@"data"][@"position"]];
+//             NSString *commentId =[NSString stringWithFormat:@"%@",dict[@"data"][@"id"]];
+//             NSString *commentFile_type = [NSString stringWithFormat:@"%@",dict[@"data"][@"file_type"]];
+//             NSString *commentPic_url =[NSString stringWithFormat:@"%@",dict[@"data"][@"pic_url"]];
+//             NSString *commentXid =[NSString stringWithFormat:@"%@",dict[@"data"][@"xid"]];
+//             NSString *commentDate_tm = [NSString stringWithFormat:@"%@",dict[@"data"][@"date_tm"]];
+//             NSString *commentWords =[NSString stringWithFormat:@"%@",dict[@"data"][@"words"]];
+//             
+//             
+//             if ([dict[@"data"][@"head_img_type"] isEqualToString:@"1"]) {
+//                 _commentHead_img =[NSString stringWithFormat:@"%@",dict[@"data"][@"head_img"]];
+//             }else{
+//                 _commentHead_img =[NSString stringWithFormat:@"%@%@",kXXEPicURL,dict[@"data"][@"head_img"]];
+//             }
+//             
+//             NSString *commentNickname =[NSString stringWithFormat:@"%@",dict[@"data"][@"nickname"]];
+//             
+//             _baseInfo = [[NSMutableArray alloc] initWithObjects:commentPosition,commentId,commentFile_type,commentPic_url,commentXid,commentXid,commentDate_tm,commentWords,_commentHead_img,commentNickname, nil];
+//             
+//             _commentListArr = dict[@"data"][@"comment_group"];
+//             if (_commentListArr.count > 0) {
+//                 for (int i=0; i<_commentListArr.count; i++) {
+//                     
+//                     [_talk_idArr addObject:[_commentListArr[i] objectForKey:@"talk_id"]];
+//                     [_nicknameArr addObject:[_commentListArr[i] objectForKey:@"nickname"]];
+//                     [_conArr addObject:[_commentListArr[i] objectForKey:@"con"]];
+//                     [_com_typeArr addObject:[_commentListArr[i] objectForKey:@"com_type"]];
+//                     [_xidArr addObject:[_commentListArr[i] objectForKey:@"xid"]];
+//                     [_idArr addObject:[_commentListArr[i] objectForKey:@"id"]];
+//                     [_to_who_xidArr addObject:[_commentListArr[i] objectForKey:@"to_who_xid"]];
+//                     [_to_who_nicknameArr  addObject:[_commentListArr[i] objectForKey:@"to_who_nickname"]];
+//                 }
+//             }
+//             [self createDetailMessage];
+//             
+//             [self initTableView];
+//             
+//             CGFloat bgScrollMaxH =  CGRectGetMaxY(_tableView.frame) + 800;
+//             _bgScrollView.contentSize = CGSizeMake(0, bgScrollMaxH);
+//         }
+//         [_tableView reloadData];
+//     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+//         NSLog(@"请求失败:%@",error);
+//         [SVProgressHUD showErrorWithStatus:@"网络不通，请检查网络！"];
+//     }];
 }
 
 
@@ -314,11 +371,11 @@ typedef NS_OPTIONS(NSInteger, Comments){
         
         UILabel *nickName = [HHControl createLabelWithFrame:CGRectMake(CGRectGetMaxX(commentView.frame) + Kmarg, 5, 280, 25) Font:14 Text:[NSString stringWithFormat:@"%@:",nicknameArr[indexPath.row]]];
         nickName.tag = 10000;
-         [cell.contentView addSubview:nickName];
+        [cell.contentView addSubview:nickName];
         
         UITextView *conTextView = [[UITextView alloc] initWithFrame:CGRectMake(CGRectGetMaxX(commentView.frame) + Kmarg, CGRectGetMaxY(nickName.frame), 280, 40)];
         conTextView.text = conArr[indexPath.row];
-         conTextView.backgroundColor = [UIColor clearColor];
+        conTextView.backgroundColor = [UIColor clearColor];
         conTextView.userInteractionEnabled = NO;
         conTextView.scrollEnabled = NO;
         conTextView.font = [UIFont systemFontOfSize:12];
@@ -378,11 +435,9 @@ typedef NS_OPTIONS(NSInteger, Comments){
     self.commentInputView.commentInputTextField.placeholder = [NSString stringWithFormat:@"回复%@",replyUserNick.text];
     [self.commentInputView showInputView];
     
-    NSLog(@"indexPath.section %ld,indexPath.row %ld",indexPath.section,indexPath.row);
-    
 }
 
-//评论
+//(long)评论
 -(void)onComment{
     self.message = CommentsMessage;
     [self.commentInputView showInputView];
@@ -419,7 +474,10 @@ typedef NS_OPTIONS(NSInteger, Comments){
         mgr.responseSerializer = [AFHTTPResponseSerializer serializer]; // 二进制数据
         [mgr POST:urlStr parameters:dict success:^(AFHTTPRequestOperation *operation, id responseObject)
          {
+             
+             
              NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableLeaves error:nil];
+             //               NSLog(@"======commentInputTextViewcommentInputTextView=============%@",dict);
              if([[NSString stringWithFormat:@"%@",dict[@"code"]] isEqualToString:@"1"] ){
                  NSDictionary *dictK =dict[@"data"];
                  NSString *commentXid = [NSString stringWithFormat:@"%@",dictK[@"xid"]];
@@ -443,6 +501,7 @@ typedef NS_OPTIONS(NSInteger, Comments){
          }];
         
     } else {
+        
         NSString *urlStr = @"http://www.xingxingedu.cn/Global/my_circle_comment";
         AFHTTPRequestOperationManager *mgr = [AFHTTPRequestOperationManager manager];
         
@@ -477,7 +536,7 @@ typedef NS_OPTIONS(NSInteger, Comments){
                  commentItem.text = aText;
                  commentItem.replyUserId = [commentTo_who_xid integerValue];
                  commentItem.replyUserNick = commentTo_who_nickname;
-    
+                 
              }
              [SVProgressHUD showSuccessWithStatus:@"回复成功"];
              
@@ -488,7 +547,7 @@ typedef NS_OPTIONS(NSInteger, Comments){
              [SVProgressHUD showErrorWithStatus:@"网络不通，请检查网络！"];
              
          }];
-
+        
     }
 }
 
@@ -500,13 +559,13 @@ typedef NS_OPTIONS(NSInteger, Comments){
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

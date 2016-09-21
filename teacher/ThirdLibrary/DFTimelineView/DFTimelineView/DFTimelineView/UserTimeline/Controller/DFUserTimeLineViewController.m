@@ -99,7 +99,7 @@
 -(void)addItem:(DFBaseUserLineItem *)item
 {
     
-    NSDate *date = [NSDate dateWithTimeIntervalSince1970:(item.ts/1000)];
+    NSDate *date = [NSDate dateWithTimeIntervalSince1970:(item.ts)];
     NSCalendar* calendar = [NSCalendar currentCalendar];
     NSDateComponents* components = [calendar components:NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit fromDate:date];
     NSInteger month = [components month];
@@ -133,6 +133,11 @@
     
 }
 - (void)xxe_userRefreshTableViewWithItem:(NSString *)item{
+    
+    if ([item isEqualToString:@""]) {
+        [_items removeAllObjects];
+        [self.tableView reloadData];
+    }else{
     [_items enumerateObjectsUsingBlock:^(DFBaseUserLineItem  *_Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         if ([[NSString stringWithFormat:@"%lld",obj.itemId] isEqualToString:item]) {
             [_items removeObject:obj];
@@ -140,6 +145,7 @@
             [self.tableView reloadData];
         }
     }];
+    }
 }
 
 

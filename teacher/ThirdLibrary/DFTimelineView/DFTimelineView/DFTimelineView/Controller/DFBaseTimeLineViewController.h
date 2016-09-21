@@ -41,5 +41,8 @@
 //设置用户签名
 -(void) setUserSign:(NSString *)sign;
 
+//设置有信息提示信息
+- (void)creatNewMessageRemindcircleNoread:(NSString *)Number;
+
 
 @end

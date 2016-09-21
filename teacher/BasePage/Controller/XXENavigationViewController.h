@@ -10,4 +10,6 @@
 
 @interface XXENavigationViewController : UINavigationController
 
+- (void)back;
+
 @end
