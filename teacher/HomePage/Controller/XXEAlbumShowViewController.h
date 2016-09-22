@@ -21,5 +21,9 @@
 //判断 来源
 @property (nonatomic, copy) NSString *flagStr;
 
+@property (nonatomic, copy) NSString *origin_pageStr;
+
+@property (nonatomic, copy) NSString *picUrlStr;
+
 
 @end

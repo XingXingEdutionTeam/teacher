@@ -382,9 +382,9 @@
 #pragma mark PickerViewDelegate
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
 //    NSLog(@"%@",editButton.selected ? @"YES":@"NO");
-    
+    XXESchoolAlbumModel *picModel = _dataSourceArray[indexPath.item];
     if (editButton.selected == YES) {
-        XXESchoolAlbumModel *picModel = _dataSourceArray[indexPath.item];
+        
         [_seletedModelArray addObject:picModel];
         [self updateButtonTitle];
     }else if(editButton.selected == NO){
@@ -392,7 +392,12 @@
         XXEAlbumShowViewController *showVC = [[XXEAlbumShowViewController alloc]init];        
         showVC.showDatasource = _dataSourceArray;
 //        showVC.showAlbumXid = self.albumTeacherXID;
+        
+        //举报来源
         showVC.flagStr = @"fromSchoolAlbum";
+        //4:学校相册图片
+        showVC.origin_pageStr = @"4";
+        showVC.picUrlStr = picModel.pic;
         showVC.currentIndex = indexPath.item;
         [self.navigationController pushViewController:showVC animated:YES];
     }

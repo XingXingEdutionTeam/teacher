@@ -254,9 +254,16 @@
                 XXEAlbumDetailsModel *model = self.showDatasource[self.albumIndexPaths];
                 
                 ReportPicViewController *reportVC = [[ReportPicViewController alloc]init];
-                reportVC.other_xidStr = self.showAlbumXid;
-                reportVC.picUrlStr = model.pic;
-                reportVC.origin_pageStr = @"5";
+                
+                if ([_origin_pageStr isEqualToString:@"fromSchoolAlbum"]) {
+                    reportVC.origin_pageStr = _origin_pageStr;
+                    reportVC.picUrlStr = _picUrlStr;
+                }else{
+                    reportVC.other_xidStr = self.showAlbumXid;
+                    reportVC.picUrlStr = model.pic;
+                    reportVC.origin_pageStr = @"5";
+                    
+                }
                 reportVC.report_type = @"2";
                 [self.navigationController pushViewController:reportVC animated:YES];
             }

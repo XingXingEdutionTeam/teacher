@@ -87,6 +87,9 @@
     [super viewDidLoad];
     self.title =@"举报";
     [self fetchNetData];
+    
+    _other_xidStr = @"";
+    
     seletedIdArray = [[NSMutableArray alloc] init];
     self.reportTableView.delegate = self;
     self.reportTableView.dataSource = self;
