@@ -16,6 +16,7 @@
 #import "XXEHomePageCollectionPhotoApi.h"
 #import "AppDelegate.h"
 #import "UMSocial.h"
+#import "XXEClassAlbumGoodApi.h"
 
 @interface XXEAlbumShowViewController ()<SDCycleScrollViewDelegate,KTActionSheetDelegate,UMSocialUIDelegate>
 
@@ -200,6 +201,32 @@
 - (void)goodButtonClick:(XXEVerticalButton *)sender
 {
     NSLog(@"点赞");
+    
+    XXEAlbumDetailsModel *model = self.showDatasource[self.albumIndexPaths];
+    NSLog(@"%@",model.photoId);
+    NSString *strngXid;
+    NSString *homeUserId;
+    if ([XXEUserInfo user].login) {
+        strngXid = [XXEUserInfo user].xid;
+        homeUserId = [XXEUserInfo user].user_id;
+    }else {
+        strngXid = XID;
+        homeUserId = USER_ID;
+    }
+    
+    XXEClassAlbumGoodApi *classAlbumApi = [[XXEClassAlbumGoodApi alloc]initWithHomePageClassAblumGoodUserXid:strngXid UserId:homeUserId PicId:model.photoId];
+    [classAlbumApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
+        NSString *code = [request.responseJSONObject objectForKey:@"code"];
+        NSLog(@"%@",request.responseJSONObject);
+        NSLog(@"%@",[request.responseJSONObject objectForKey:@"msg"]);
+        if ([code integerValue] == 1) {
+            [self showString:@"点赞成功" forSecond:1.f];
+        }else if ([code integerValue] ==3){
+            [self showString:@"已点过赞" forSecond:1.f];
+        }
+    } failure:^(__kindof YTKBaseRequest *request) {
+        [self showString:@"网络获取数据失败" forSecond:1.f];
+    }];
 }
 
 

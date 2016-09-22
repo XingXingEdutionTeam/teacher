@@ -15,5 +15,6 @@
 //添加身份
 #define XXEHomeAddIdentityUrl @"http://www.xingxingedu.cn/Teacher/add_position"
 
+#define XXEClassAlbumGoodUrl @"http://www.xingxingedu.cn/Teacher/class_album_good"
 
 #endif /* XXEHomePageHeader_h */

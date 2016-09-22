@@ -9,23 +9,40 @@
 #import "XXEAlbumContentViewController.h"
 #import "XXEAlbumContentApi.h"
 #import "XXEContentAlbumCollectionViewCell.h"
+#import "XXEContentAlbumCollectionCell.h"
+
 #import "XXECollectionHeaderReusableView.h"
 #import "XXEAlbumDetailsModel.h"
 #import "XXEAlbumShowViewController.h"
+#import "XXEUpdataImageViewController.h"
+#import "XXEDeleteClassPicApi.h"
 
 
 @class XXEMySelfAlbumModel;
-@interface XXEAlbumContentViewController ()<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>
+@interface XXEAlbumContentViewController ()<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>{
+    //右上  编辑 按钮
+    UIButton *editButton;
+    //底部 视图
+    UIView *bottomView;
+    //全选
+    UIButton *allSeletedButton;
+    //删除
+    UIButton *deleteButton;
+    //上传
+    UIButton *upButton;
+}
 
-@property (nonatomic, strong)UICollectionView *contentCollectionView;
+@property (nonatomic, strong)UICollectionView *myCollcetionView;
 /** 时间戳数组 */
 @property (nonatomic, strong)NSMutableArray *timeDatasource;
 /** 原始的时间数组 */
 @property (nonatomic, strong)NSMutableArray *originalDatasource;
 /** 数据源 */
-@property (nonatomic, strong)NSMutableArray *datasource;
+@property (nonatomic, strong)NSMutableArray *datasourceA;
 /** 每一区的数组元 */
 @property (nonatomic, strong)NSMutableArray *itemDatasource;
+//选中 item 的model
+@property (nonatomic, strong) NSMutableArray *seletedModelArray;
 @end
 
 static NSString *identifierCell = @"CELL";
@@ -56,6 +73,14 @@ static NSString *headerCell = @"HEADERCELL";
     return _datasource;
 }
 
+- (NSMutableArray *)datasourceA
+{
+    if (!_datasourceA) {
+        _datasourceA = [NSMutableArray array];
+    }
+    return _datasourceA;
+}
+
 - (NSMutableArray *)timeDatasource
 {
     if (!_timeDatasource) {
@@ -79,6 +104,16 @@ static NSString *headerCell = @"HEADERCELL";
     self.view.backgroundColor = XXEBackgroundColor;
     self.navigationController.navigationBarHidden = NO;
     [[UINavigationBar appearance]setTintColor:[UIColor whiteColor]];
+    
+    editButton.selected = YES;
+    deleteButton.selected = YES;
+    _seletedModelArray = [[NSMutableArray alloc] init];
+    //下面 bottom
+    [self createBottomView];
+    //设置 navgiationBar
+    [self settingNavgiationBar];
+    ///获取数据
+    [self setupAlbumContentRequeue];
 }
 -(UIStatusBarStyle)preferredStatusBarStyle
 {
@@ -90,9 +125,17 @@ static NSString *headerCell = @"HEADERCELL";
     self.navigationItem.title = _contentModel.album_name;
     //创建试图
     [self creatCollectionView];
+}
+
+#pragma mark - 设置页面
+- (void)settingNavgiationBar{
+    editButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    editButton.frame = CGRectMake(330, 5, 40, 22);
+    [editButton setTitle:@"编辑" forState:UIControlStateNormal];
+    [editButton addTarget:self action:@selector(editButtonCick:) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:editButton];
+    self.navigationItem.rightBarButtonItem =rightItem;
     
-    ///获取数据
-    [self setupAlbumContentRequeue];
 }
 
 - (void)creatCollectionView
@@ -102,14 +145,64 @@ static NSString *headerCell = @"HEADERCELL";
     layout.minimumLineSpacing = 10;
     layout.minimumInteritemSpacing = 10;
     layout.itemSize = CGSizeMake((KScreenWidth- 4*10)/3, (KScreenWidth-4*10)/3);
-    self.contentCollectionView = [[UICollectionView alloc]initWithFrame:CGRectMake(0, 0,KScreenWidth , KScreenHeight-64) collectionViewLayout:layout];
-    self.contentCollectionView.backgroundColor = [UIColor whiteColor];
-    self.contentCollectionView.delegate =self;
-    self.contentCollectionView.dataSource = self;
-    [self.contentCollectionView registerClass:[XXEContentAlbumCollectionViewCell class] forCellWithReuseIdentifier:identifierCell];
-    [self.contentCollectionView registerClass:[XXECollectionHeaderReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:headerCell];
-    [self.view addSubview:self.contentCollectionView];
+    self.myCollcetionView = [[UICollectionView alloc]initWithFrame:CGRectMake(0, 0,KScreenWidth , KScreenHeight-64) collectionViewLayout:layout];
+    self.myCollcetionView.backgroundColor = [UIColor whiteColor];
+    self.myCollcetionView.delegate =self;
+    self.myCollcetionView.dataSource = self;
+    [self.myCollcetionView registerNib:[UINib nibWithNibName:@"XXEContentAlbumCollectionCell" bundle:nil] forCellWithReuseIdentifier:identifierCell];
+    
+    [self.myCollcetionView registerClass:[XXECollectionHeaderReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:headerCell];
+    [self.view addSubview:self.myCollcetionView];
 }
+
+- (void)createBottomView{
+    bottomView = [[UIView alloc] initWithFrame:CGRectMake(0, KScreenHeight - 64 - 49, KScreenWidth, 49)];
+    bottomView.backgroundColor = [UIColor whiteColor];
+    bottomView.hidden = YES;
+    [self.view addSubview:bottomView];
+    bottomView.userInteractionEnabled =YES;
+    
+    CGFloat itemWidth = KScreenWidth / 3;
+    CGFloat itemHeight = 49;
+    
+    CGFloat buttonWidth = itemWidth;
+    CGFloat buttonHeight = itemHeight;
+    
+    //---------------------------- 全选 -----------
+    allSeletedButton = [UIButton createButtonWithFrame:CGRectMake(buttonWidth / 2 * 0, 2 * kScreenRatioHeight, buttonWidth, buttonHeight) backGruondImageName:nil Target:self Action:@selector(allSeletedButtonClick:) Title:@"全选"];
+    [allSeletedButton setImage:[UIImage imageNamed:@"home_logo_allselete_unseleted_icon"] forState:UIControlStateNormal];
+    [allSeletedButton setImage:[UIImage imageNamed:@"home_logo_allselete_seleted_icon"] forState:UIControlStateHighlighted];
+    allSeletedButton.titleLabel.font = [UIFont systemFontOfSize:10];
+    //设置 图片 位置
+    allSeletedButton.imageEdgeInsets = UIEdgeInsetsMake(-10 * kScreenRatioHeight, buttonWidth / 2 - 38 * kScreenRatioWidth, 0, 0);
+    //设置title在button上的位置（上top，左left，下bottom，右right）
+    allSeletedButton.titleEdgeInsets = UIEdgeInsetsMake(30 * kScreenRatioHeight, -allSeletedButton.titleLabel.bounds.size.width-20, 0, 0);
+    [bottomView addSubview:allSeletedButton];
+    
+    //-------------------------- 删除 ----------
+    deleteButton = [UIButton createButtonWithFrame:CGRectMake(buttonWidth, 2 * kScreenRatioHeight, buttonWidth, buttonHeight) backGruondImageName:nil Target:self Action:@selector(deleteButtonClick:) Title:@"删除"];
+    [deleteButton setImage:[UIImage imageNamed:@"home_logo_delete_unseleted_icon"] forState:UIControlStateNormal];
+    [deleteButton setImage:[UIImage imageNamed:@"home_logo_delete_seleted_icon"] forState:UIControlStateHighlighted];
+    deleteButton.titleLabel.font = [UIFont systemFontOfSize:10];
+    //设置 图片 位置
+    deleteButton.imageEdgeInsets = UIEdgeInsetsMake(-10 * kScreenRatioHeight, buttonWidth / 2 - 38 * kScreenRatioWidth, 0, 0);
+    //设置title在button上的位置（上top，左left，下bottom，右right）
+    deleteButton.titleEdgeInsets = UIEdgeInsetsMake(30 * kScreenRatioHeight, -deleteButton.titleLabel.bounds.size.width-20, 0, 0);
+    [bottomView addSubview:deleteButton];
+    
+    //--------------------------------上传-------
+    upButton = [UIButton createButtonWithFrame:CGRectMake(buttonWidth * 2, 2 * kScreenRatioHeight, buttonWidth, buttonHeight) backGruondImageName:nil Target:self Action:@selector(upButtonClick:) Title:@"上传"];
+    [upButton setImage:[UIImage imageNamed:@"home_logo_upload_unseleted_icon"] forState:UIControlStateNormal];
+    [upButton setImage:[UIImage imageNamed:@"home_logo_upload_seleted_icon"] forState:UIControlStateHighlighted];
+    upButton.titleLabel.font = [UIFont systemFontOfSize:10];
+    //设置 图片 位置
+    upButton.imageEdgeInsets = UIEdgeInsetsMake(-10 * kScreenRatioHeight, buttonWidth / 2 - 38 * kScreenRatioWidth, 0, 0);
+    //设置title在button上的位置（上top，左left，下bottom，右right）
+    upButton.titleEdgeInsets = UIEdgeInsetsMake(30 * kScreenRatioHeight, -upButton.titleLabel.bounds.size.width-20, 0, 0);
+    [bottomView addSubview:upButton];
+    
+}
+
 
 #pragma mark - UICollectionViewDelegate/ Datasource
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
@@ -124,11 +217,12 @@ static NSString *headerCell = @"HEADERCELL";
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    XXEContentAlbumCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:identifierCell forIndexPath:indexPath];
+    XXEContentAlbumCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:identifierCell forIndexPath:indexPath];
     XXEAlbumDetailsModel *model = self.itemDatasource[indexPath.section][indexPath.item];
     NSLog(@"相片的地址:%@",model.pic);
     NSString *string = [NSString stringWithFormat:@"%@%@",kXXEPicURL,model.pic];
-    cell.imageName = string;
+    
+    [cell configterContentAblumCellPicURl:string];
     return cell;
 }
 
@@ -140,11 +234,26 @@ static NSString *headerCell = @"HEADERCELL";
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     NSLog(@"===选中某一个View====");
-    XXEAlbumShowViewController *showVC = [[XXEAlbumShowViewController alloc]init];
-    showVC.showDatasource = self.itemDatasource[indexPath.section];
-    showVC.showAlbumXid = self.albumTeacherXID;
-    [self.navigationController pushViewController:showVC animated:YES];
+    if (editButton.selected == YES) {
+//        XXEAlbumDetailsModel *picModel = _dataSourceArray[indexPath.item];
+        XXEAlbumDetailsModel *model = self.itemDatasource[indexPath.section][indexPath.item];
+        NSLog(@"%@",model);
+        [_seletedModelArray addObject:model];
+        [self updateButtonTitle];
+    }else if(editButton.selected == NO){
+        
+        XXEAlbumShowViewController *showVC = [[XXEAlbumShowViewController alloc]init];
+        showVC.showDatasource = self.itemDatasource[indexPath.section];
+        showVC.showAlbumXid = self.albumTeacherXID;
+        [self.navigationController pushViewController:showVC animated:YES];
+    }
 }
+
+- (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+}
+
 
 //头视图
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
@@ -164,16 +273,126 @@ static NSString *headerCell = @"HEADERCELL";
     return CGSizeMake(20, 20);
 }
 
+#pragma mark - 方法
+- (void)updateButtonTitle{
+    
+    if (editButton.selected == NO) {
+        _myCollcetionView.allowsMultipleSelection = NO;
+    }else if (editButton.selected == YES){
+        _myCollcetionView.allowsMultipleSelection = YES;
+    }
+}
+
+#pragma mark - actionButton
+- (void)editButtonCick:(UIButton *)button{
+    //    NSLog(@"-----  editButtonCick ----");
+    button.selected = !button.selected;
+    bottomView.hidden = !editButton.selected;
+    if (editButton.selected == YES) {
+        _myCollcetionView.frame = CGRectMake(0, 0, KScreenWidth, KScreenHeight - 64 - 49);
+    }else if (editButton.selected == NO){
+        _myCollcetionView.frame = CGRectMake(0, 0, KScreenWidth, KScreenHeight - 64);
+    }
+    
+}
+
+#pragma mark - ---------------------上传 照片----------------
+- (void)upButtonClick:(UIButton *)upBtn{
+    NSLog(@"上传图片");
+    XXEUpdataImageViewController *updataVC = [[XXEUpdataImageViewController alloc]init];
+    updataVC.datasource = self.datasource ;
+    updataVC.myAlbumUpSchoolId = self.myAlbumUpSchoolId;
+    updataVC.myAlbumUpClassId = self.myAlbumUpClassId;
+    [self.navigationController pushViewController:updataVC animated:YES];
+}
+
+#pragma mark ----------------全选 -------------------
+- (void)allSeletedButtonClick:(UIButton *)button{
+    //暂时不让全选
+//    if (_itemDatasource.count != 0) {
+//        if (_seletedModelArray.count != 0) {
+//            [_seletedModelArray removeAllObjects];
+//        }
+//        for (int i = 0; i < _itemDatasource.count; i++) {
+//            NSIndexPath *indexPath = [NSIndexPath indexPathForItem:i inSection:0];
+//            
+//            [self collectionView:_myCollcetionView didSelectItemAtIndexPath:indexPath];
+//            UICollectionViewCell *cell = (XXEContentAlbumCollectionCell *)[_myCollcetionView cellForItemAtIndexPath:indexPath];
+//            cell.selected = YES;
+//        }
+//    }
+    
+    [self popoverPresentationController];
+}
+
+#pragma mark ----------------删除 -------------------
+- (void)deleteButtonClick:(UIButton *)button{
+    //    NSLog(@"=====  deleteButtonClick =====");
+    button.selected = !button.selected;
+    if (button.selected == YES) {
+        if (_seletedModelArray.count == 0) {
+            [self showHudWithString:@"请选择要删除的图片!" forSecond:1.5];
+        }else{
+            [self deleteShoolPic];
+            
+        }
+    }
+    
+}
+
+#pragma mark - 删除相册
+- (void)deleteShoolPic
+{
+    NSLog(@"%@",self.seletedModelArray);
+    NSString *strngXid;
+    NSString *homeUserId;
+    if ([XXEUserInfo user].login) {
+        strngXid = [XXEUserInfo user].xid;
+        homeUserId = [XXEUserInfo user].user_id;
+    }else {
+        strngXid = XID;
+        homeUserId = USER_ID;
+    }
+    
+    for (int i=0; i<self.seletedModelArray.count; i++) {
+       XXEAlbumDetailsModel *model = self.seletedModelArray[i];
+        XXEDeleteClassPicApi *deleteApi = [[XXEDeleteClassPicApi alloc]initWithDeleteUserXid:strngXid UserID:homeUserId PicId:model.photoId];
+        [deleteApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
+            NSLog(@"%@",request.responseJSONObject);
+            NSLog(@"%@",[request.responseJSONObject objectForKey:@"msg"]);
+            
+        } failure:^(__kindof YTKBaseRequest *request) {
+            
+        }];
+    }
+    //重新获取数据
+    [self setupAlbumContentRequeue];
+}
+
+
 #pragma mark - 获取数据
 - (void)setupAlbumContentRequeue
 {
-    XXEAlbumContentApi *contentApi = [[XXEAlbumContentApi alloc]initWithAlbumContentAlbumId:self.contentModel.album_id];
+    NSString *strngXid;
+    NSString *homeUserId;
+    if ([XXEUserInfo user].login) {
+        strngXid = [XXEUserInfo user].xid;
+        homeUserId = [XXEUserInfo user].user_id;
+    }else {
+        strngXid = XID;
+        homeUserId = USER_ID;
+    }
+    
+    XXEAlbumContentApi *contentApi = [[XXEAlbumContentApi alloc]initWithAlbumContentAlbumId:self.contentModel.album_id UserXid:strngXid UserId:homeUserId];
     NSLog(@"%@",self.contentModel.album_id);
     
     [contentApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         NSLog(@"总的%@",request.responseJSONObject);
         NSDictionary *data = [request.responseJSONObject objectForKey:@"data"];
         NSLog(@"data:%@",data);
+        [self.timeDatasource removeAllObjects];
+        [self.originalDatasource removeAllObjects];
+        [self.itemDatasource removeAllObjects];
         
         for (NSString *timeStr in data) {
             NSString *newTime = [XXETool dateStringFromNumberTimer:timeStr];
@@ -184,15 +403,15 @@ static NSString *headerCell = @"HEADERCELL";
         for (int i = 0; i<self.originalDatasource.count; i++) {
             NSMutableArray *arr = [[NSMutableArray alloc]initWithArray:[data objectForKey:self.originalDatasource[i]]];
             
-            self.datasource = NULL;
+            self.datasourceA = NULL;
             for (int j =0; j<arr.count; j++) {
                 XXEAlbumDetailsModel *model = [[XXEAlbumDetailsModel alloc]initWithDictionary:arr[j] error:nil];
-                [self.datasource addObject:model];
+                [self.datasourceA addObject:model];
             }
-            [self.itemDatasource addObject:self.datasource];
+            [self.itemDatasource addObject:self.datasourceA];
         }
         NSLog(@"%@",self.itemDatasource);
-        [self.contentCollectionView reloadData];
+        [self.myCollcetionView reloadData];
     } failure:^(__kindof YTKBaseRequest *request) {
         [self showString:@"照片数据请求失败" forSecond:1.f];
     }];

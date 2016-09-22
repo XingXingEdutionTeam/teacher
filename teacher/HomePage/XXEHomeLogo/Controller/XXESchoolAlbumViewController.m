@@ -15,6 +15,8 @@
 #import "XXESchoolAlbumModel.h"
 #import "XXEDeleteSchoolPicApi.h"
 #import "XXEAlbumShowViewController.h"
+#import "XXEAlbumContentApi.h"
+#import "XXEAlbumDetailsModel.h"
 
 @interface XXESchoolAlbumViewController ()<UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout>
 {
@@ -40,8 +42,6 @@
 
 //选中 item 的model
 @property (nonatomic, strong) NSMutableArray *seletedModelArray;
-
-
 @end
 
 @implementation XXESchoolAlbumViewController
@@ -263,9 +263,7 @@
     int i=1;
     XXESchoolUpPicViewController *schoolUpPicVC =[[XXESchoolUpPicViewController alloc]init];
     schoolUpPicVC.t =i;
-//    schoolUpPicVC.albumName =@"上传图片";
-//    schoolUpPicVC.vedioName =@"请为您发布的相册命名";
-    
+
     schoolUpPicVC.schoolId = _schoolId;
     schoolUpPicVC.flagStr = @"fromSchoolAlbum";
     [self.navigationController pushViewController:schoolUpPicVC animated:YES];

@@ -208,7 +208,6 @@ typedef NS_OPTIONS(NSInteger, Comments){
         strngXid = XID;
         homeUserId = USER_ID;
     }
-    
     //    NSLog(@"==============_talkId_talkId_talkId================%@",_talkId);
     NSString *urlStr = @"http://www.xingxingedu.cn/Global/one_shuoshuo";
     AFHTTPRequestOperationManager *mgr = [AFHTTPRequestOperationManager manager];
@@ -220,114 +219,114 @@ typedef NS_OPTIONS(NSInteger, Comments){
                            @"talk_id":_talkId,
                            };
     
-    [mgr POST:urlStr parameters:dict success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
-        NSLog(@"%@",responseObject);
-        
-        if([[NSString stringWithFormat:@"%@",dict[@"code"]] isEqualToString:@"1"] ){
-            
-            NSString *commentPosition = [NSString stringWithFormat:@"%@",dict[@"data"][@"position"]];
-            NSString *commentId =[NSString stringWithFormat:@"%@",dict[@"data"][@"id"]];
-            NSString *commentFile_type = [NSString stringWithFormat:@"%@",dict[@"data"][@"file_type"]];
-            NSString *commentPic_url =[NSString stringWithFormat:@"%@",dict[@"data"][@"pic_url"]];
-            NSString *commentXid =[NSString stringWithFormat:@"%@",dict[@"data"][@"xid"]];
-            NSString *commentDate_tm = [NSString stringWithFormat:@"%@",dict[@"data"][@"date_tm"]];
-            NSString *commentWords =[NSString stringWithFormat:@"%@",dict[@"data"][@"words"]];
-            
-            
-            if ([dict[@"data"][@"head_img_type"] isEqualToString:@"1"]) {
-                _commentHead_img =[NSString stringWithFormat:@"%@",dict[@"data"][@"head_img"]];
-            }else{
-                _commentHead_img =[NSString stringWithFormat:@"%@%@",kXXEPicURL,dict[@"data"][@"head_img"]];
-            }
-            
-            NSString *commentNickname =[NSString stringWithFormat:@"%@",dict[@"data"][@"nickname"]];
-            
-            _baseInfo = [[NSMutableArray alloc] initWithObjects:commentPosition,commentId,commentFile_type,commentPic_url,commentXid,commentXid,commentDate_tm,commentWords,_commentHead_img,commentNickname, nil];
-            
-            _commentListArr = dict[@"data"][@"comment_group"];
-            if (_commentListArr.count > 0) {
-                for (int i=0; i<_commentListArr.count; i++) {
-                    
-                    [_talk_idArr addObject:[_commentListArr[i] objectForKey:@"talk_id"]];
-                    [_nicknameArr addObject:[_commentListArr[i] objectForKey:@"nickname"]];
-                    [_conArr addObject:[_commentListArr[i] objectForKey:@"con"]];
-                    [_com_typeArr addObject:[_commentListArr[i] objectForKey:@"com_type"]];
-                    [_xidArr addObject:[_commentListArr[i] objectForKey:@"xid"]];
-                    [_idArr addObject:[_commentListArr[i] objectForKey:@"id"]];
-                    [_to_who_xidArr addObject:[_commentListArr[i] objectForKey:@"to_who_xid"]];
-                    [_to_who_nicknameArr  addObject:[_commentListArr[i] objectForKey:@"to_who_nickname"]];
-                }
-            }
-            [self createDetailMessage];
-            
-            [self initTableView];
-            
-            CGFloat bgScrollMaxH =  CGRectGetMaxY(_tableView.frame) + 800;
-            _bgScrollView.contentSize = CGSizeMake(0, bgScrollMaxH);
-        }
-        [_tableView reloadData];
-        
-    } failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error) {
-        NSLog(@"请求失败:%@",error);
-        [SVProgressHUD showErrorWithStatus:@"网络不通，请检查网络！"];
-    }];
+//    [mgr POST:urlStr parameters:dict success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
+//        NSLog(@"%@",responseObject);
+//        
+//        if([[NSString stringWithFormat:@"%@",dict[@"code"]] isEqualToString:@"1"] ){
+//            
+//            NSString *commentPosition = [NSString stringWithFormat:@"%@",dict[@"data"][@"position"]];
+//            NSString *commentId =[NSString stringWithFormat:@"%@",dict[@"data"][@"id"]];
+//            NSString *commentFile_type = [NSString stringWithFormat:@"%@",dict[@"data"][@"file_type"]];
+//            NSString *commentPic_url =[NSString stringWithFormat:@"%@",dict[@"data"][@"pic_url"]];
+//            NSString *commentXid =[NSString stringWithFormat:@"%@",dict[@"data"][@"xid"]];
+//            NSString *commentDate_tm = [NSString stringWithFormat:@"%@",dict[@"data"][@"date_tm"]];
+//            NSString *commentWords =[NSString stringWithFormat:@"%@",dict[@"data"][@"words"]];
+//            
+//            
+//            if ([dict[@"data"][@"head_img_type"] isEqualToString:@"1"]) {
+//                _commentHead_img =[NSString stringWithFormat:@"%@",dict[@"data"][@"head_img"]];
+//            }else{
+//                _commentHead_img =[NSString stringWithFormat:@"%@%@",kXXEPicURL,dict[@"data"][@"head_img"]];
+//            }
+//            
+//            NSString *commentNickname =[NSString stringWithFormat:@"%@",dict[@"data"][@"nickname"]];
+//            
+//            _baseInfo = [[NSMutableArray alloc] initWithObjects:commentPosition,commentId,commentFile_type,commentPic_url,commentXid,commentXid,commentDate_tm,commentWords,_commentHead_img,commentNickname, nil];
+//            
+//            _commentListArr = dict[@"data"][@"comment_group"];
+//            if (_commentListArr.count > 0) {
+//                for (int i=0; i<_commentListArr.count; i++) {
+//                    
+//                    [_talk_idArr addObject:[_commentListArr[i] objectForKey:@"talk_id"]];
+//                    [_nicknameArr addObject:[_commentListArr[i] objectForKey:@"nickname"]];
+//                    [_conArr addObject:[_commentListArr[i] objectForKey:@"con"]];
+//                    [_com_typeArr addObject:[_commentListArr[i] objectForKey:@"com_type"]];
+//                    [_xidArr addObject:[_commentListArr[i] objectForKey:@"xid"]];
+//                    [_idArr addObject:[_commentListArr[i] objectForKey:@"id"]];
+//                    [_to_who_xidArr addObject:[_commentListArr[i] objectForKey:@"to_who_xid"]];
+//                    [_to_who_nicknameArr  addObject:[_commentListArr[i] objectForKey:@"to_who_nickname"]];
+//                }
+//            }
+//            [self createDetailMessage];
+//            
+//            [self initTableView];
+//            
+//            CGFloat bgScrollMaxH =  CGRectGetMaxY(_tableView.frame) + 800;
+//            _bgScrollView.contentSize = CGSizeMake(0, bgScrollMaxH);
+//        }
+//        [_tableView reloadData];
+//        
+//    } failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error) {
+//        NSLog(@"请求失败:%@",error);
+//        [SVProgressHUD showErrorWithStatus:@"网络不通，请检查网络！"];
+//    }];
     
-//    mgr.responseSerializer = [AFHTTPResponseSerializer serializer]; // 二进制数据
-//    [mgr POST:urlStr parameters:dict success:^(AFHTTPRequestOperation *operation, id responseObject)
-//     {
-//         NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableLeaves error:nil];
-//         //         NSLog(@"===============createNewMessageNetRequest=====================%@",dict);
-//         
-//         
-//         
-//         
-//         if([[NSString stringWithFormat:@"%@",dict[@"code"]] isEqualToString:@"1"] ){
-//             
-//             NSString *commentPosition = [NSString stringWithFormat:@"%@",dict[@"data"][@"position"]];
-//             NSString *commentId =[NSString stringWithFormat:@"%@",dict[@"data"][@"id"]];
-//             NSString *commentFile_type = [NSString stringWithFormat:@"%@",dict[@"data"][@"file_type"]];
-//             NSString *commentPic_url =[NSString stringWithFormat:@"%@",dict[@"data"][@"pic_url"]];
-//             NSString *commentXid =[NSString stringWithFormat:@"%@",dict[@"data"][@"xid"]];
-//             NSString *commentDate_tm = [NSString stringWithFormat:@"%@",dict[@"data"][@"date_tm"]];
-//             NSString *commentWords =[NSString stringWithFormat:@"%@",dict[@"data"][@"words"]];
-//             
-//             
-//             if ([dict[@"data"][@"head_img_type"] isEqualToString:@"1"]) {
-//                 _commentHead_img =[NSString stringWithFormat:@"%@",dict[@"data"][@"head_img"]];
-//             }else{
-//                 _commentHead_img =[NSString stringWithFormat:@"%@%@",kXXEPicURL,dict[@"data"][@"head_img"]];
-//             }
-//             
-//             NSString *commentNickname =[NSString stringWithFormat:@"%@",dict[@"data"][@"nickname"]];
-//             
-//             _baseInfo = [[NSMutableArray alloc] initWithObjects:commentPosition,commentId,commentFile_type,commentPic_url,commentXid,commentXid,commentDate_tm,commentWords,_commentHead_img,commentNickname, nil];
-//             
-//             _commentListArr = dict[@"data"][@"comment_group"];
-//             if (_commentListArr.count > 0) {
-//                 for (int i=0; i<_commentListArr.count; i++) {
-//                     
-//                     [_talk_idArr addObject:[_commentListArr[i] objectForKey:@"talk_id"]];
-//                     [_nicknameArr addObject:[_commentListArr[i] objectForKey:@"nickname"]];
-//                     [_conArr addObject:[_commentListArr[i] objectForKey:@"con"]];
-//                     [_com_typeArr addObject:[_commentListArr[i] objectForKey:@"com_type"]];
-//                     [_xidArr addObject:[_commentListArr[i] objectForKey:@"xid"]];
-//                     [_idArr addObject:[_commentListArr[i] objectForKey:@"id"]];
-//                     [_to_who_xidArr addObject:[_commentListArr[i] objectForKey:@"to_who_xid"]];
-//                     [_to_who_nicknameArr  addObject:[_commentListArr[i] objectForKey:@"to_who_nickname"]];
-//                 }
-//             }
-//             [self createDetailMessage];
-//             
-//             [self initTableView];
-//             
-//             CGFloat bgScrollMaxH =  CGRectGetMaxY(_tableView.frame) + 800;
-//             _bgScrollView.contentSize = CGSizeMake(0, bgScrollMaxH);
-//         }
-//         [_tableView reloadData];
-//     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//         NSLog(@"请求失败:%@",error);
-//         [SVProgressHUD showErrorWithStatus:@"网络不通，请检查网络！"];
-//     }];
+    mgr.responseSerializer = [AFHTTPResponseSerializer serializer]; // 二进制数据
+    [mgr POST:urlStr parameters:dict success:^(AFHTTPRequestOperation *operation, id responseObject)
+     {
+         NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableLeaves error:nil];
+         //         NSLog(@"===============createNewMessageNetRequest=====================%@",dict);
+         
+         
+         
+         
+         if([[NSString stringWithFormat:@"%@",dict[@"code"]] isEqualToString:@"1"] ){
+             
+             NSString *commentPosition = [NSString stringWithFormat:@"%@",dict[@"data"][@"position"]];
+             NSString *commentId =[NSString stringWithFormat:@"%@",dict[@"data"][@"id"]];
+             NSString *commentFile_type = [NSString stringWithFormat:@"%@",dict[@"data"][@"file_type"]];
+             NSString *commentPic_url =[NSString stringWithFormat:@"%@",dict[@"data"][@"pic_url"]];
+             NSString *commentXid =[NSString stringWithFormat:@"%@",dict[@"data"][@"xid"]];
+             NSString *commentDate_tm = [NSString stringWithFormat:@"%@",dict[@"data"][@"date_tm"]];
+             NSString *commentWords =[NSString stringWithFormat:@"%@",dict[@"data"][@"words"]];
+             
+             
+             if ([dict[@"data"][@"head_img_type"] isEqualToString:@"1"]) {
+                 _commentHead_img =[NSString stringWithFormat:@"%@",dict[@"data"][@"head_img"]];
+             }else{
+                 _commentHead_img =[NSString stringWithFormat:@"%@%@",kXXEPicURL,dict[@"data"][@"head_img"]];
+             }
+             
+             NSString *commentNickname =[NSString stringWithFormat:@"%@",dict[@"data"][@"nickname"]];
+             
+             _baseInfo = [[NSMutableArray alloc] initWithObjects:commentPosition,commentId,commentFile_type,commentPic_url,commentXid,commentXid,commentDate_tm,commentWords,_commentHead_img,commentNickname, nil];
+             
+             _commentListArr = dict[@"data"][@"comment_group"];
+             if (_commentListArr.count > 0) {
+                 for (int i=0; i<_commentListArr.count; i++) {
+                     
+                     [_talk_idArr addObject:[_commentListArr[i] objectForKey:@"talk_id"]];
+                     [_nicknameArr addObject:[_commentListArr[i] objectForKey:@"nickname"]];
+                     [_conArr addObject:[_commentListArr[i] objectForKey:@"con"]];
+                     [_com_typeArr addObject:[_commentListArr[i] objectForKey:@"com_type"]];
+                     [_xidArr addObject:[_commentListArr[i] objectForKey:@"xid"]];
+                     [_idArr addObject:[_commentListArr[i] objectForKey:@"id"]];
+                     [_to_who_xidArr addObject:[_commentListArr[i] objectForKey:@"to_who_xid"]];
+                     [_to_who_nicknameArr  addObject:[_commentListArr[i] objectForKey:@"to_who_nickname"]];
+                 }
+             }
+             [self createDetailMessage];
+             
+             [self initTableView];
+             
+             CGFloat bgScrollMaxH =  CGRectGetMaxY(_tableView.frame) + 800;
+             _bgScrollView.contentSize = CGSizeMake(0, bgScrollMaxH);
+         }
+         [_tableView reloadData];
+     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+         NSLog(@"请求失败:%@",error);
+         [SVProgressHUD showErrorWithStatus:@"网络不通，请检查网络！"];
+     }];
 }
 
 

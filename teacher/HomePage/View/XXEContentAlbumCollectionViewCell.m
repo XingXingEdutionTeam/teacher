@@ -31,5 +31,12 @@
     
 }
 
+- (void)setSelected:(BOOL)selected
+{
+    [super setSelected:selected];
+    [self updateCheckImage];
+}
+- (void)updateCheckImage {
+}
 
 @end

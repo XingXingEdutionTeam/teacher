@@ -12,7 +12,7 @@
 #import "XXEAlbumContentViewController.h"
 
 static NSString * OTherCELL = @"OTHERCELL";
-@interface XXEOtherTeacherAlbumViewController ()<UITableViewDelegate,UITableViewDataSource>
+@interface XXEOtherTeacherAlbumViewController ()<UITableViewDelegate,UITableViewDataSource,MKMapViewDelegate>
 /** 单元格 */
 @property (nonatomic, strong)UITableView *otherTeacherTableView;
 /** 数据源 */
@@ -46,6 +46,7 @@ static NSString * OTherCELL = @"OTHERCELL";
     self.view.backgroundColor = XXEBackgroundColor;
     self.navigationController.navigationBarHidden = NO;
 }
+
 -(UIStatusBarStyle)preferredStatusBarStyle
 {
     return UIStatusBarStyleLightContent;
@@ -72,6 +73,9 @@ static NSString * OTherCELL = @"OTHERCELL";
         strngXid = XID;
         albumUserId = USER_ID;
     }
+    
+    NSLog(@"老师ID%@ 学校%@ 班级%@",self.otherTeacherId,self.otherSchoolId,self.otherClassId);
+    
     //真实环境
         XXEMyselfAblumApi *myselfAblum = [[XXEMyselfAblumApi alloc]initWithMyselfAblumSchoolId:self.otherSchoolId ClassId:self.otherClassId TeacherId:self.otherTeacherId AlbumXid:strngXid AlbumUserId:albumUserId];
     [myselfAblum startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
@@ -83,8 +87,6 @@ static NSString * OTherCELL = @"OTHERCELL";
                 [self.datasource addObject:model];
             }
         }
-        
-        
         
         NSLog(@"%@",self.datasource);
         [self.otherTeacherTableView reloadData];

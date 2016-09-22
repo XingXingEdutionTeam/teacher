@@ -14,6 +14,7 @@
 #import "XXEMyselfAblumAddApi.h"
 #import "XXEMyselfAblumDeleApi.h"
 #import "XXEAlbumContentViewController.h"
+#import "XXESchoolAlbumViewController.h"
 
 static NSString * IdentifierCELL = @"IdentifierCELL";
 
@@ -139,10 +140,13 @@ static NSString * IdentifierCELL = @"IdentifierCELL";
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"===相册的详情=====");
+//    NSLog(@"===相册的详情=====");
     XXEAlbumContentViewController *contentVC = [[XXEAlbumContentViewController alloc]init];
     contentVC.contentModel = self.datasource[indexPath.row];
     contentVC.albumTeacherXID  = self.myAlbumTeacherId;
+    contentVC.myAlbumUpSchoolId = self.myAlbumSchoolId;
+    contentVC.myAlbumUpClassId = self.myAlbumClassId;
+    contentVC.datasource = self.datasource;
     NSLog(@"%@",contentVC.contentModel);
     [self.navigationController pushViewController:contentVC animated:YES];
 }

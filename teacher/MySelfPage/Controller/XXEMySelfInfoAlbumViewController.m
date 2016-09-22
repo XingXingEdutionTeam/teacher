@@ -117,7 +117,6 @@
     }else if (editButton.selected == NO){
         _myCollcetionView.frame = CGRectMake(0, 0, KScreenWidth, KScreenHeight - 64);
     }
-    
 }
 
 
@@ -387,16 +386,6 @@
         return NO;
     }
 }
-
-//- (BOOL)collectionView:(UICollectionView *)collectionView shouldDeselectItemAtIndexPath:(NSIndexPath *)indexPath {
-//    if ([self.disabledContactIds count]) {
-//        NSInteger item = indexPath.item;
-//        User *contact = _contacts[item];
-//        return ![self.disabledContactIds containsObject:contact.userId];
-//    }
-//    return YES;
-//}
-
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     if (editButton.selected == YES) {

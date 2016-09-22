@@ -8,8 +8,10 @@
 
 #import "XXELocationAddController.h"
 #import "XXELocationModel.h"
+#import <MapKit/MapKit.h>
+#import <CoreLocation/CoreLocation.h>
 
-@interface XXELocationAddController ()<UITableViewDelegate,UITableViewDataSource,CLLocationManagerDelegate>
+@interface XXELocationAddController ()<UITableViewDelegate,UITableViewDataSource,CLLocationManagerDelegate,MKMapViewDelegate>
 {
     UITableView *_tableView;
     NSMutableArray *dataArray;
@@ -28,6 +30,9 @@
 
 @property (nonatomic, strong)CLLocationManager *locationManager;
 
+/** 定义为MKMapView */
+@property (nonatomic, strong)MKMapView *mapView;
+
 @end
 
 @implementation XXELocationAddController
@@ -44,8 +49,15 @@
 {
     [super viewWillAppear:animated];
     self.view.backgroundColor = XXEBackgroundColor;
+   
     //获取经纬度或者城市
     [self setupCityName];
+}
+
+- (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation
+{
+    CLLocationCoordinate2D coord = [userLocation coordinate];
+    NSLog(@"经度%f 纬度%f",coord.latitude,coord.longitude);
 }
 
 - (void)setupCityName
@@ -131,8 +143,12 @@
 }
 
 - (void)viewDidLoad {
-    [super viewDidLoad];
+//    
+//    [self.mapView setDelegate:self];
+//    [self.mapView setShowsUserLocation:YES];
+//    [self.mapView setHidden:YES];
     
+    [super viewDidLoad];
     [self.navigationController.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor],NSForegroundColorAttributeName,nil]];
     self.navigationController.navigationBar.barStyle = UIStatusBarStyleDefault;
     [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
@@ -156,6 +172,9 @@
         strngXid = XID;
         homeUserId = USER_ID;
     }
+    
+    NSLog(@"经度%@ 纬度%@",_longitudeString,_latitudeString);
+    
     NSDictionary *dict = @{@"lng":_longitudeString,
                            @"lat":_latitudeString,
                            @"city":_cityName,

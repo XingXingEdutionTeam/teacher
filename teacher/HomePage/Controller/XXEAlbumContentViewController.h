@@ -13,4 +13,12 @@
 @property (nonatomic, strong)XXEMySelfAlbumModel *contentModel;
 @property (nonatomic, copy)NSString *albumTeacherXID;
 
+/** 学校Id */
+@property (nonatomic, copy)NSString *myAlbumUpSchoolId;
+/** 班级id */
+@property (nonatomic, copy)NSString *myAlbumUpClassId;
+
+@property (nonatomic,strong)NSMutableArray *datasource;
+
+
 @end

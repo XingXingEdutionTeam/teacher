@@ -10,6 +10,6 @@
 
 @interface XXEAlbumContentApi : YTKRequest
 
-- (id)initWithAlbumContentAlbumId:(NSString *)albumId;
+- (id)initWithAlbumContentAlbumId:(NSString *)albumId UserXid:(NSString *)userXid UserId:(NSString *)userId;
 
 @end

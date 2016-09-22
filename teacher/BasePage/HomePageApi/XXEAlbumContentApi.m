@@ -10,13 +10,17 @@
 
 @implementation XXEAlbumContentApi{
     NSString *_album_id;
+    NSString *_userXid;
+    NSString *_userId;
 }
 
-- (id)initWithAlbumContentAlbumId:(NSString *)albumId
+- (id)initWithAlbumContentAlbumId:(NSString *)albumId UserXid:(NSString *)userXid UserId:(NSString *)userId
 {
     self = [super init];
     if (self) {
         _album_id = albumId;
+        _userXid = userXid;
+        _userId = userId;
     }
     return self;
 }
@@ -37,9 +41,9 @@
              @"album_id":_album_id,
              @"appkey":APPKEY,
              @"backtype":BACKTYPE,
-             @"user_id":USER_ID,
+             @"user_id":_userId,
              @"user_type":USER_TYPE,
-             @"xid":XID
+             @"xid":_userXid
              };
 }
 

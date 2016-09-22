@@ -25,37 +25,6 @@
     return self;
 }
 
-//- (void)layoutSubviews
-//{
-//    [super layoutSubviews];
-    //创建 十二宫格  三行、四列
-//    int totalLine = 4;
-//    int buttonCount = 12;
-//    int margin = 1;
-//    
-//    CGFloat buttonWidth = (KScreenWidth - 3 * margin) / 4;
-//    CGFloat buttonHeight = (self.frame.size.height  - 2 * margin)/ 3;
-//    for (int i = 0; i < buttonCount; i++) {
-//        //行
-//        int buttonRow = i / totalLine;
-//        //列
-//        int buttonLine = i % totalLine;
-//        CGFloat buttonX = (buttonWidth + margin) * buttonLine;
-//        CGFloat buttonY = (buttonHeight + margin) * buttonRow;
-//        UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-//        self.button = button;
-//        button.tag = i;
-//        button.backgroundColor = [UIColor whiteColor];
-//        button.frame = CGRectMake(buttonX, buttonY, buttonWidth, buttonHeight);
-//        NSString *string = [NSString stringWithFormat:@"home_%d_click",i+1];
-//        [button setImage:[UIImage imageNamed:string] forState:UIControlStateNormal];
-//        [button addTarget:self action:@selector(homeClassButtonClick:) forControlEvents:UIControlEventTouchUpInside];
-//        [self addSubview:button];
-//        
-//    }
-    
-//}
-
 - (void)configBottomViewButton:(NSString *)position
 {
     if ([position isEqualToString:@"1"]||[position isEqualToString:@"2"]) {
@@ -91,7 +60,14 @@
         button.tag = i;
         button.backgroundColor = [UIColor whiteColor];
         button.frame = CGRectMake(buttonX, buttonY, buttonWidth, buttonHeight);
-        NSString *string = [NSString stringWithFormat:@"home_%d_click",i+1];
+        NSString *string;
+        if (num == 12) {
+            string = [NSString stringWithFormat:@"home_%d_click",i+1];
+        }else if (num == 11){
+            string = [NSString stringWithFormat:@"home_1_%d_click",i+1];
+        }else{
+            string = [NSString stringWithFormat:@"home_2_%d_click",i+1];
+        }
         [button setImage:[UIImage imageNamed:string] forState:UIControlStateNormal];
         [button addTarget:self action:@selector(homeClassButtonClick:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:button];
@@ -102,6 +78,7 @@
 #pragma mark - 点击按钮
 - (void)homeClassButtonClick:(UIButton *)sender
 {
+    
     
     switch (sender.tag) {
         case 0:
