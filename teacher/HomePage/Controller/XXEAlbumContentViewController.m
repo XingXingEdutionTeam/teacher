@@ -11,7 +11,7 @@
 #import "XXEContentAlbumCollectionViewCell.h"
 #import "XXEContentAlbumCollectionCell.h"
 
-#import "XXECollectionHeaderReusableView.h"
+//#import "XXECollectionHeaderReusableView.h"
 #import "XXEAlbumDetailsModel.h"
 #import "XXEAlbumShowViewController.h"
 #import "XXEUpdataImageViewController.h"
@@ -34,7 +34,7 @@
 
 @property (nonatomic, strong)UICollectionView *myCollcetionView;
 /** 时间戳数组 */
-@property (nonatomic, strong)NSMutableArray *timeDatasource;
+@property (nonatomic, strong)NSMutableArray *timesDatasource;
 /** 原始的时间数组 */
 @property (nonatomic, strong)NSMutableArray *originalDatasource;
 /** 数据源 */
@@ -43,6 +43,9 @@
 @property (nonatomic, strong)NSMutableArray *itemDatasource;
 //选中 item 的model
 @property (nonatomic, strong) NSMutableArray *seletedModelArray;
+
+@property (nonatomic, copy)NSString *isAllSelected;
+
 @end
 
 static NSString *identifierCell = @"CELL";
@@ -81,12 +84,12 @@ static NSString *headerCell = @"HEADERCELL";
     return _datasourceA;
 }
 
-- (NSMutableArray *)timeDatasource
+- (NSMutableArray *)timesDatasource
 {
-    if (!_timeDatasource) {
-        _timeDatasource = [NSMutableArray array];
+    if (!_timesDatasource) {
+        _timesDatasource = [NSMutableArray array];
     }
-    return _timeDatasource;
+    return _timesDatasource;
 }
 
 - (XXEMySelfAlbumModel *)contentModel
@@ -151,7 +154,7 @@ static NSString *headerCell = @"HEADERCELL";
     self.myCollcetionView.dataSource = self;
     [self.myCollcetionView registerNib:[UINib nibWithNibName:@"XXEContentAlbumCollectionCell" bundle:nil] forCellWithReuseIdentifier:identifierCell];
     
-    [self.myCollcetionView registerClass:[XXECollectionHeaderReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:headerCell];
+//    [self.myCollcetionView registerClass:[XXECollectionHeaderReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:headerCell];
     [self.view addSubview:self.myCollcetionView];
 }
 
@@ -207,18 +210,18 @@ static NSString *headerCell = @"HEADERCELL";
 #pragma mark - UICollectionViewDelegate/ Datasource
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
 {
-    return  self.itemDatasource.count;
+    return  1;
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return [self.itemDatasource[section] count];
+    return self.datasourceA.count;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     XXEContentAlbumCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:identifierCell forIndexPath:indexPath];
-    XXEAlbumDetailsModel *model = self.itemDatasource[indexPath.section][indexPath.item];
+    XXEAlbumDetailsModel *model = self.datasourceA[indexPath.item];
     NSLog(@"相片的地址:%@",model.pic);
     NSString *string = [NSString stringWithFormat:@"%@%@",kXXEPicURL,model.pic];
     
@@ -233,40 +236,43 @@ static NSString *headerCell = @"HEADERCELL";
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"===选中某一个View====");
+    
     if (editButton.selected == YES) {
-//        XXEAlbumDetailsModel *picModel = _dataSourceArray[indexPath.item];
-        XXEAlbumDetailsModel *model = self.itemDatasource[indexPath.section][indexPath.item];
+        XXEAlbumDetailsModel *model = self.datasourceA[indexPath.item];
         NSLog(@"%@",model);
         [_seletedModelArray addObject:model];
         [self updateButtonTitle];
     }else if(editButton.selected == NO){
         
         XXEAlbumShowViewController *showVC = [[XXEAlbumShowViewController alloc]init];
-        showVC.showDatasource = self.itemDatasource[indexPath.section];
+        showVC.showDatasource = self.datasourceA[indexPath.item];
         showVC.showAlbumXid = self.albumTeacherXID;
         [self.navigationController pushViewController:showVC animated:YES];
     }
+//    }
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath
 {
+    XXEAlbumDetailsModel *picModel = _datasourceA[indexPath.item];
+    [_seletedModelArray removeObject:picModel];
+    [self updateButtonTitle];
     
 }
 
 
-//头视图
-- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
-{
-    if ([kind isEqualToString:UICollectionElementKindSectionHeader]) {
-        XXECollectionHeaderReusableView *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:headerCell forIndexPath:indexPath];
-        headerView.title =  self.timeDatasource[indexPath.section];
-        headerView.backgroundColor = [UIColor lightGrayColor];
-        return headerView;
-    } else {
-        return nil;
-    }
-}
+////头视图
+//- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
+//{
+//    if ([kind isEqualToString:UICollectionElementKindSectionHeader]) {
+//        XXECollectionHeaderReusableView *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:headerCell forIndexPath:indexPath];
+//        headerView.title =  self.timesDatasource[indexPath.section];
+//        headerView.backgroundColor = [UIColor lightGrayColor];
+//        return headerView;
+//    } else {
+//        return nil;
+//    }
+//}
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section{
     
@@ -308,19 +314,20 @@ static NSString *headerCell = @"HEADERCELL";
 
 #pragma mark ----------------全选 -------------------
 - (void)allSeletedButtonClick:(UIButton *)button{
+    self.isAllSelected = @"1";
     //暂时不让全选
-//    if (_itemDatasource.count != 0) {
-//        if (_seletedModelArray.count != 0) {
-//            [_seletedModelArray removeAllObjects];
-//        }
-//        for (int i = 0; i < _itemDatasource.count; i++) {
-//            NSIndexPath *indexPath = [NSIndexPath indexPathForItem:i inSection:0];
-//            
-//            [self collectionView:_myCollcetionView didSelectItemAtIndexPath:indexPath];
-//            UICollectionViewCell *cell = (XXEContentAlbumCollectionCell *)[_myCollcetionView cellForItemAtIndexPath:indexPath];
-//            cell.selected = YES;
-//        }
-//    }
+    if (_datasourceA.count != 0) {
+        if (_seletedModelArray.count != 0) {
+            [_seletedModelArray removeAllObjects];
+        }
+        for (int i = 0; i < _datasourceA.count; i++) {
+            NSIndexPath *indexPath = [NSIndexPath indexPathForItem:i inSection:0];
+            
+            [self collectionView:_myCollcetionView didSelectItemAtIndexPath:indexPath];
+            UICollectionViewCell *cell = (XXEContentAlbumCollectionCell *)[_myCollcetionView cellForItemAtIndexPath:indexPath];
+            cell.selected = YES;
+        }
+    }
     
     [self popoverPresentationController];
 }
@@ -390,27 +397,28 @@ static NSString *headerCell = @"HEADERCELL";
         NSLog(@"总的%@",request.responseJSONObject);
         NSDictionary *data = [request.responseJSONObject objectForKey:@"data"];
         NSLog(@"data:%@",data);
-        [self.timeDatasource removeAllObjects];
+        [self.timesDatasource removeAllObjects];
         [self.originalDatasource removeAllObjects];
         [self.itemDatasource removeAllObjects];
+        [self.datasourceA removeAllObjects];
         
         for (NSString *timeStr in data) {
             NSString *newTime = [XXETool dateStringFromNumberTimer:timeStr];
-            [self.timeDatasource addObject:newTime];
+            [self.timesDatasource addObject:newTime];
             [self.originalDatasource addObject:timeStr];
         }
         
         for (int i = 0; i<self.originalDatasource.count; i++) {
             NSMutableArray *arr = [[NSMutableArray alloc]initWithArray:[data objectForKey:self.originalDatasource[i]]];
             
-            self.datasourceA = NULL;
+//            self.datasourceA = NULL;
             for (int j =0; j<arr.count; j++) {
                 XXEAlbumDetailsModel *model = [[XXEAlbumDetailsModel alloc]initWithDictionary:arr[j] error:nil];
                 [self.datasourceA addObject:model];
             }
-            [self.itemDatasource addObject:self.datasourceA];
+//            [self.itemDatasource addObject:self.datasourceA];
         }
-        NSLog(@"%@",self.itemDatasource);
+        NSLog(@"所有对象%@",self.datasourceA);
         [self.myCollcetionView reloadData];
     } failure:^(__kindof YTKBaseRequest *request) {
         [self showString:@"照片数据请求失败" forSecond:1.f];

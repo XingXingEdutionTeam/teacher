@@ -100,6 +100,7 @@ static NSString *const IdentifierCell = @"classAlbunCell";
     XXEClassAlbumApi *classApi = [[XXEClassAlbumApi alloc]initWithClassAlbumSchoolID:self.schoolID classID:self.classID UserXId:strngXid UserID:albumUserId];
     [classApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         NSLog(@"%@",request.responseJSONObject);
+        
         NSString *code = [request.responseJSONObject objectForKey:@"code"];
         if ([code intValue]==1) {
             if ([[request.responseJSONObject objectForKey:@"data"] isKindOfClass:[NSString class]]) {
