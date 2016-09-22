@@ -8,10 +8,12 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="XXEReleaseViewController">
             <connections>
+                <outlet property="auditLabel" destination="q2v-9G-4iU" id="fHm-Lu-Xcs"/>
                 <outlet property="auditView" destination="AgQ-qR-59u" id="J9M-Xc-P72"/>
                 <outlet property="certainButton" destination="yyP-kc-zJX" id="0eQ-mF-uUJ"/>
                 <outlet property="contentTextView" destination="gw8-ZZ-rZp" id="Aba-Cy-3lJ"/>
                 <outlet property="numLabel" destination="gQJ-Oh-lRr" id="cJl-bG-moq"/>
+                <outlet property="scopeLabel" destination="IxL-39-qTQ" id="LFn-k6-rfc"/>
                 <outlet property="scopeView" destination="vD9-cs-fsa" id="qD8-kN-ghc"/>
                 <outlet property="subjectTextField" destination="Tex-bZ-24e" id="jNQ-Mr-4Qe"/>
                 <outlet property="subjectView" destination="VnN-kA-rk3" id="7hM-bS-WPK"/>

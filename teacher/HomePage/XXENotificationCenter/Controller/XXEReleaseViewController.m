@@ -74,11 +74,15 @@
 - (void)createContent{
 
     //----------------------通知 范围 下拉框
-    CGFloat scopeCommboxX = 90 * kScreenRatioWidth;
-    CGFloat scopeCommboxY = _scopeView.frame.origin.y + 5 * kScreenRatioHeight;
     CGFloat scopeCommboxWidth = 280 * kScreenRatioWidth;
-    CGFloat scopeCommboxHeight = 20 * kScreenRatioHeight;
+    CGFloat scopeCommboxHeight = 30 * kScreenRatioHeight;
+    CGFloat scopeCommboxX = 90 * kScreenRatioWidth;
+    CGFloat scopeCommboxY = _scopeView.frame.origin.y + (35 - scopeCommboxHeight) / 2;
+
     _scopeCommbox = [[WJCommboxView alloc] initWithFrame:CGRectMake(scopeCommboxX, scopeCommboxY, scopeCommboxWidth, scopeCommboxHeight)];
+    CGRect rect1 = _scopeCommbox.textField.frame;
+    rect1.size.height = scopeCommboxHeight;
+    _scopeCommbox.textField.frame = rect1;
     _scopeCommbox.textField.backgroundColor =UIColorFromRGB(246, 246, 246);
     _scopeCommbox.textField.placeholder = @"通知范围";
     _scopeCommbox.textField.textAlignment = NSTextAlignmentLeft;
@@ -102,12 +106,16 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(commboxAction:) name:@"commboxNotice"object:nil];
     
     //-------------------审核人员 下拉框
-    CGFloat auditorCommboxX = 90 * kScreenRatioWidth;
-    CGFloat auditorCommboxY = _auditView.frame.origin.y + 5 * kScreenRatioHeight;
     CGFloat auditorCommboxWidth = 280 * kScreenRatioWidth;
-    CGFloat auditorCommboxHeight = 20 * kScreenRatioHeight;
-    
+    CGFloat auditorCommboxHeight = 30 * kScreenRatioHeight;
+    CGFloat auditorCommboxX = 90 * kScreenRatioWidth;
+    CGFloat auditorCommboxY = _auditView.frame.origin.y + (25 - auditorCommboxHeight) / 2;
+
     _auditorCommbox = [[WJCommboxView alloc] initWithFrame:CGRectMake(auditorCommboxX, auditorCommboxY, auditorCommboxWidth, auditorCommboxHeight)];
+    CGRect rect2 = _auditorCommbox.textField.frame;
+    rect2.size.height = auditorCommboxHeight;
+    _auditorCommbox.textField.frame = rect2;
+    
     _auditorCommbox.textField.backgroundColor =UIColorFromRGB(246, 246, 246);
     _auditorCommbox.textField.placeholder =@"审核人员";
     _auditorCommbox.textField.textAlignment =NSTextAlignmentLeft;

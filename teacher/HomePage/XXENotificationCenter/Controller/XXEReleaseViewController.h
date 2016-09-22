@@ -23,6 +23,12 @@
 
 @property (weak, nonatomic) IBOutlet UIView *subjectView;
 
+@property (weak, nonatomic) IBOutlet UILabel *scopeLabel;
+
+
+@property (weak, nonatomic) IBOutlet UILabel *auditLabel;
+
+
 @property (weak, nonatomic) IBOutlet UITextField *subjectTextField;
 
 

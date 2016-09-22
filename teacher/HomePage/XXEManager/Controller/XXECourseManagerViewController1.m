@@ -169,7 +169,7 @@
 //发布
 - (void)createReleaseButton{
     UIButton *releaseButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    releaseButton.frame = CGRectMake(0, _contentScrollView.frame.origin.y + _contentScrollView.frame.size.height, KScreenWidth, 50 * kScreenRatioHeight);
+    releaseButton.frame = CGRectMake(0, _contentScrollView.frame.origin.y + _contentScrollView.frame.size.height, KScreenWidth, KScreenHeight - (_contentScrollView.frame.origin.y + _contentScrollView.frame.size.height) - 64 - 50 * kScreenRatioHeight);
     releaseButton.backgroundColor = UIColorFromRGB(0, 170, 42);
     [releaseButton setTitle:@"发布课程" forState:UIControlStateNormal];
     [releaseButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -183,6 +183,10 @@
 
 //    NSLog(@"发布课程");
     XXECourseManagerCourseReleaseViewController *courseManagerCourseReleaseVC = [[XXECourseManagerCourseReleaseViewController alloc] init];
+    
+    courseManagerCourseReleaseVC.schoolId = _schoolId;
+    courseManagerCourseReleaseVC.schoolType = _schoolType;
+    courseManagerCourseReleaseVC.classId = _classId;
     
     [self.navigationController pushViewController:courseManagerCourseReleaseVC animated:YES];
 

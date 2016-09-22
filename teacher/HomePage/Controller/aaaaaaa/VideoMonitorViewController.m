@@ -227,8 +227,6 @@
     self.schoolTypeCombox.listTableView.frame = frame;
     [self.schoolTypeCombox removeFromSuperview];
     [bgScrollView addSubview:self.schoolTypeCombox];
-    
-    
 }
 
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context{
