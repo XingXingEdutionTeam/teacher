@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0421468F1D94C69200A2F7F3 /* XXESchoolAlbumShowViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0421468E1D94C69200A2F7F3 /* XXESchoolAlbumShowViewController.m */; };
+		042146921D94D3BA00A2F7F3 /* XXEShoolPicSupportApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 042146911D94D3BA00A2F7F3 /* XXEShoolPicSupportApi.m */; };
 		0430B1601D7D5689001F463F /* XXEMyselfInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0430B15F1D7D5689001F463F /* XXEMyselfInfoViewController.m */; };
 		0430B1641D7D79CC001F463F /* XXEMyselfInfoNameModifyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0430B1621D7D79CC001F463F /* XXEMyselfInfoNameModifyViewController.m */; };
 		0430B1651D7D79CC001F463F /* XXEMyselfInfoNameModifyViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0430B1631D7D79CC001F463F /* XXEMyselfInfoNameModifyViewController.xib */; };
@@ -688,6 +690,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0421468D1D94C69200A2F7F3 /* XXESchoolAlbumShowViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXESchoolAlbumShowViewController.h; sourceTree = "<group>"; };
+		0421468E1D94C69200A2F7F3 /* XXESchoolAlbumShowViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXESchoolAlbumShowViewController.m; sourceTree = "<group>"; };
+		042146901D94D3BA00A2F7F3 /* XXEShoolPicSupportApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXEShoolPicSupportApi.h; sourceTree = "<group>"; };
+		042146911D94D3BA00A2F7F3 /* XXEShoolPicSupportApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXEShoolPicSupportApi.m; sourceTree = "<group>"; };
 		0430B15E1D7D5689001F463F /* XXEMyselfInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXEMyselfInfoViewController.h; sourceTree = "<group>"; };
 		0430B15F1D7D5689001F463F /* XXEMyselfInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXEMyselfInfoViewController.m; sourceTree = "<group>"; };
 		0430B1611D7D79CC001F463F /* XXEMyselfInfoNameModifyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXEMyselfInfoNameModifyViewController.h; sourceTree = "<group>"; };
@@ -2671,6 +2677,8 @@
 				04530C771D8935AE00620105 /* XXEDeleteSchoolPicApi.m */,
 				9E1671E81D93B03B00463BBD /* XXEDeleteClassPicApi.h */,
 				9E1671E91D93B03B00463BBD /* XXEDeleteClassPicApi.m */,
+				042146901D94D3BA00A2F7F3 /* XXEShoolPicSupportApi.h */,
+				042146911D94D3BA00A2F7F3 /* XXEShoolPicSupportApi.m */,
 			);
 			path = Api;
 			sourceTree = "<group>";
@@ -2720,6 +2728,8 @@
 				04BB39BB1D74742A00AA5C5C /* XXESchoolVideoViewController.m */,
 				04F216B81D76C05B005C2EBF /* XXEStarRemarkViewController.h */,
 				04F216B91D76C05B005C2EBF /* XXEStarRemarkViewController.m */,
+				0421468D1D94C69200A2F7F3 /* XXESchoolAlbumShowViewController.h */,
+				0421468E1D94C69200A2F7F3 /* XXESchoolAlbumShowViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -4851,6 +4861,7 @@
 				9E5E23B21D90CC04008B1AAF /* DFLineCellManager.m in Sources */,
 				9EEA0E2E1D6E83550070C8C3 /* TAAnimatedDotView.m in Sources */,
 				9ED3DCD21D7FE3B500743B79 /* XXESearchUniversityController.m in Sources */,
+				042146921D94D3BA00A2F7F3 /* XXEShoolPicSupportApi.m in Sources */,
 				9E6693A91D6413B100FFA0A7 /* XXERegisterViewController.m in Sources */,
 				9E5E23961D90CC04008B1AAF /* DFLineLikeItem.m in Sources */,
 				9E5E23D11D90CCD8008B1AAF /* CommentInputViewController.m in Sources */,
@@ -5239,6 +5250,7 @@
 				04DE86291D93BF760062BF18 /* XXECourseManagerSchoolTeacherListApi.m in Sources */,
 				044DEBFF1D9027E700DE101A /* XXEStudentManagerViewController2.m in Sources */,
 				04BB3A421D74742B00AA5C5C /* XXERecipeAddTextAndPicApi.m in Sources */,
+				0421468F1D94C69200A2F7F3 /* XXESchoolAlbumShowViewController.m in Sources */,
 				9E1671F01D93BB9500463BBD /* XXEContentAlbumCollectionCell.m in Sources */,
 				9EE498EF1D658B5C00FC5472 /* XXETeacherTableViewCell.m in Sources */,
 			);

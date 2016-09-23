@@ -20,5 +20,8 @@
  //剩余花篮数量
 @property (nonatomic, copy) NSString *flower_able;
 
+@property (nonatomic, copy) NSString *position;
+
+
 
 @end

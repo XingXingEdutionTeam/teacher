@@ -9,6 +9,14 @@
 #import "XXEBaseViewController.h"
 #import "XXEMySelfAlbumModel.h"
 
+@class XXEAlbumContentViewController;
+@protocol XXEAlbumContentViewControllerDelegate <NSObject>
+
+- (void)contactsPickerViewControllerDidFinish:(XXEAlbumContentViewController *)controller withSelectedContacts:(NSArray *)contacts;
+
+@end
+
+
 @interface XXEAlbumContentViewController : XXEBaseViewController
 @property (nonatomic, strong)XXEMySelfAlbumModel *contentModel;
 @property (nonatomic, copy)NSString *albumTeacherXID;
@@ -19,6 +27,10 @@
 @property (nonatomic, copy)NSString *myAlbumUpClassId;
 
 @property (nonatomic,strong)NSMutableArray *datasource;
+
+@property (nonatomic, strong) NSSet *selectedContactIds;
+@property (nonatomic, strong) NSSet *disabledContactIds;
+@property (nonatomic, strong) id<XXEAlbumContentViewControllerDelegate>delegate;
 
 
 @end

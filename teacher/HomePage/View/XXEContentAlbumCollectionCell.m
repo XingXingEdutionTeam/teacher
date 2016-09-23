@@ -12,16 +12,44 @@
 
 - (void)awakeFromNib {
     // Initialization code
-    [self updateCheckImageView];
-}
-- (void)setSelected:(BOOL)selected{
-    [super setSelected:selected];
-    
-    [self updateCheckImageView];
+    [self updateCheckImage];
 }
 
-- (void)updateCheckImageView {
+
+- (void)prepareForReuse {
+    [super prepareForReuse];
+    
+    self.user = nil;
+    self.disabled = NO;
+    
+    [self updateCheckImage];
+}
+
+- (void)setSelected:(BOOL)selected {
+    [super setSelected:selected];
+    
+    [self updateCheckImage];
+}
+
+- (void)setDisabled:(BOOL)disabled {
+    if (_disabled == disabled) {
+        return;
+    }
+    _disabled = disabled;
+    
+    //    [self updateViews];
+}
+
+- (void)updateCheckImage {
     self.checkImageView.hidden = !self.selected;
+}
+
+- (void)setUser:(XXEAlbumDetailsModel *)user {
+    if (_model == user) {
+        return;
+    }
+    _model = user;
+    
 }
 
 //重写初始化方法

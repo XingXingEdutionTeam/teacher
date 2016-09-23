@@ -10,6 +10,9 @@
 
 
 @class XXEAlbumDetailsModel;
+
+@class XXESchoolAlbumModel;
+
 @interface XXEAlbumShowViewController : XXEBaseViewController
 
 /** 需要展示的图片的信息 */
@@ -27,7 +30,10 @@
 
 @property (nonatomic, copy) NSString *picUrlStr;
 
-@property (nonatomic, strong)XXEAlbumDetailsModel *detailsModel;
+@property (nonatomic, strong) XXEAlbumDetailsModel *detailsModel;
+
+@property (nonatomic, strong) XXESchoolAlbumModel *schoolAlbumModel;
+
 
 
 @end

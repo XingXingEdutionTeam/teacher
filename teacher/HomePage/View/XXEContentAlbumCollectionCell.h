@@ -7,12 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "XXEAlbumDetailsModel.h"
+
 
 @interface XXEContentAlbumCollectionCell : UICollectionViewCell
 @property (weak, nonatomic) IBOutlet UIImageView *checkImageView;
 @property (weak, nonatomic) IBOutlet UIView *backView;
 @property (weak, nonatomic) IBOutlet UIImageView *myImageView;
 
+
+@property (nonatomic, strong) XXEAlbumDetailsModel *model;
 @property (nonatomic) BOOL disabled;
 
 - (void)configterContentAblumCellPicURl:(NSString *)picUrl;

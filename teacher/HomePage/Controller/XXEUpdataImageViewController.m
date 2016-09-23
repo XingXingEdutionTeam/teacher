@@ -98,8 +98,11 @@
 - (void)updataButtonClick:(UIButton*)btn{
 
     [self showHudWithString:@"正在上传"];
-    NSLog(@"%@",self.photoDatasource);
-    if (self.photoDatasource.count == 0) {
+//    NSLog(@"%@",self.photoDatasource);
+    
+    if ([_albumCommbox.textField.text isEqualToString:@""]) {
+        [self showHudWithString:@"请选择相册" forSecond:1.5];
+    }else if (self.photoDatasource.count == 0) {
         [self hideHud];
         [self showString:@"请选择相片" forSecond:1.f];
     }
@@ -115,12 +118,16 @@
     
     
     NSMutableArray *arr = [NSMutableArray array];
+    
+//    NSLog(@"%@ --- %@ --- %@ ----", _myAlbumUpSchoolId, _myAlbumUpClassId, _albumID);
+    
+    
     for (int i =0; i < self.photoDatasource.count; i++) {
         XXEMyselfAblumUpDataApi *updataApi = [[XXEMyselfAblumUpDataApi alloc]initWithAblumSchoolId:self.myAlbumUpSchoolId ClassId:self.myAlbumUpClassId AblumId:self.albumID ImageArray:self.photoDatasource[i] UserXid:strngXid UserId:albumUserId];
         [arr addObject:updataApi];
     }
     
-    NSLog(@"相册  -- %@", arr);
+//    NSLog(@"相册  -- %@", arr);
     YTKBatchRequest *bathRequest = [[YTKBatchRequest alloc]initWithRequestArray:arr];
     [bathRequest startWithCompletionBlockWithSuccess:^(YTKBatchRequest *batchRequest) {
         NSLog(@"----%@",bathRequest);

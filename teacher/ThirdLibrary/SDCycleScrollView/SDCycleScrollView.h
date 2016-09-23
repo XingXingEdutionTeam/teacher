@@ -88,9 +88,6 @@ typedef enum {
 @property (nonatomic, strong) NSArray *localizationImageNamesGroup;
 
 
-
-
-
 //////////////////////  滚动控制接口 //////////////////////
 
 /** 自动滚动间隔时间,默认2s */

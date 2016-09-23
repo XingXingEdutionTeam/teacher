@@ -31,6 +31,7 @@
 //监控
 #import "VideoMonitorViewController.h"
 #import "XXEClassAddressHeadermasterAndManagerViewController.h"
+#import "XXEClassAddressEveryclassInfoViewController.h"
 #import "XXESignInViewController.h"
 //猩天地
 #import "XXEXingCommunityViewController.h"
@@ -448,6 +449,7 @@
     //
     redFlowerSentHistoryVC.schoolId = self.schoolHomeId;
     redFlowerSentHistoryVC.classId = self.classHomeId;
+    
     //    NSLog(@"%@%@",self.schoolHomeId,self.classHomeId);
     
     [self.navigationController pushViewController:redFlowerSentHistoryVC animated:YES];
@@ -485,11 +487,11 @@
         if ([code intValue] == 1) {
             [self showHudWithString:@"正在请求数据..."];
             
-            NSLog(@"%@",request.responseJSONObject  );
+//            NSLog(@"%@",request.responseJSONObject  );
             NSDictionary *data = [request.responseJSONObject objectForKey:@"data"];
             
             XXEHomePageModel *homePageModel = [[XXEHomePageModel alloc]initWithDictionary:data error:nil];
-            NSLog(@"首页 -- %@",homePageModel);
+//            NSLog(@"首页 -- %@",homePageModel);
             [self.headView configCellWithInfo:homePageModel];
             [self.middleView configCellMiddleWithInfo:homePageModel];
             [self.arraySchool removeAllObjects];
@@ -590,14 +592,23 @@
             break;
         case 3:
         {
-            //  NSLog(@"---通讯录----");
-            XXEClassAddressHeadermasterAndManagerViewController *classAddressHeadermasterAndManagerVC = [[XXEClassAddressHeadermasterAndManagerViewController alloc] init];
-            //            NSLog(@"--  %@", _schoolType);
+            //通讯录
+            if ([self.userPosition isEqualToString:@"1"] || [self.userPosition isEqualToString:@"2"]) {
             
-            classAddressHeadermasterAndManagerVC.schoolId = _schoolHomeId;
-            classAddressHeadermasterAndManagerVC.schoolType = _schoolType;
+            //XXEClassAddressEveryclassInfoViewController
+                XXEClassAddressEveryclassInfoViewController *classAddressEveryclassInfoVC = [[XXEClassAddressEveryclassInfoViewController alloc] init];
+                classAddressEveryclassInfoVC.schoolId = _schoolHomeId;
+                classAddressEveryclassInfoVC.selectedClassId = _classHomeId;
+                classAddressEveryclassInfoVC.babyClassName = _homeSchoolView.textField.text;
+                [self.navigationController pushViewController:classAddressEveryclassInfoVC animated:YES];
+            }else if([self.userPosition isEqualToString:@"3"] || [self.userPosition isEqualToString:@"4"]){
+                XXEClassAddressHeadermasterAndManagerViewController *classAddressHeadermasterAndManagerVC = [[XXEClassAddressHeadermasterAndManagerViewController alloc] init];
+                classAddressHeadermasterAndManagerVC.schoolId = _schoolHomeId;
+                classAddressHeadermasterAndManagerVC.schoolType = _schoolType;
+                
+                [self.navigationController pushViewController:classAddressHeadermasterAndManagerVC animated:YES];
+            }
             
-            [self.navigationController pushViewController:classAddressHeadermasterAndManagerVC animated:YES];
             break;
         }
         case 4:
@@ -690,8 +701,7 @@
             break;
             
         }
-            
-            
+    
         case 7:
             NSLog(@"---猩猩商城----");
             break;
@@ -734,14 +744,23 @@
             break;
         case 3:
         {
-            //            NSLog(@"---通讯录----");
-            XXEClassAddressHeadermasterAndManagerViewController *classAddressHeadermasterAndManagerVC = [[XXEClassAddressHeadermasterAndManagerViewController alloc] init];
-            //            NSLog(@"--  %@", _schoolType);
+            //通讯录
+            if ([self.userPosition isEqualToString:@"1"] || [self.userPosition isEqualToString:@"2"]) {
+                
+                //XXEClassAddressEveryclassInfoViewController
+                XXEClassAddressEveryclassInfoViewController *classAddressEveryclassInfoVC = [[XXEClassAddressEveryclassInfoViewController alloc] init];
+                classAddressEveryclassInfoVC.schoolId = _schoolHomeId;
+                classAddressEveryclassInfoVC.selectedClassId = _classHomeId;
+                classAddressEveryclassInfoVC.babyClassName = _homeSchoolView.textField.text;
+                [self.navigationController pushViewController:classAddressEveryclassInfoVC animated:YES];
+            }else if([self.userPosition isEqualToString:@"3"] || [self.userPosition isEqualToString:@"4"]){
+                XXEClassAddressHeadermasterAndManagerViewController *classAddressHeadermasterAndManagerVC = [[XXEClassAddressHeadermasterAndManagerViewController alloc] init];
+                classAddressHeadermasterAndManagerVC.schoolId = _schoolHomeId;
+                classAddressHeadermasterAndManagerVC.schoolType = _schoolType;
+                
+                [self.navigationController pushViewController:classAddressHeadermasterAndManagerVC animated:YES];
+            }
             
-            classAddressHeadermasterAndManagerVC.schoolId = _schoolHomeId;
-            classAddressHeadermasterAndManagerVC.schoolType = _schoolType;
-            
-            [self.navigationController pushViewController:classAddressHeadermasterAndManagerVC animated:YES];
             break;
         }
         case 4:
@@ -866,14 +885,23 @@
             break;
         case 3:
         {
-            //            NSLog(@"---通讯录----");
-            XXEClassAddressHeadermasterAndManagerViewController *classAddressHeadermasterAndManagerVC = [[XXEClassAddressHeadermasterAndManagerViewController alloc] init];
-            //            NSLog(@"--  %@", _schoolType);
+            //通讯录
+            if ([self.userPosition isEqualToString:@"1"] || [self.userPosition isEqualToString:@"2"]) {
+                
+                //XXEClassAddressEveryclassInfoViewController
+                XXEClassAddressEveryclassInfoViewController *classAddressEveryclassInfoVC = [[XXEClassAddressEveryclassInfoViewController alloc] init];
+                classAddressEveryclassInfoVC.schoolId = _schoolHomeId;
+                classAddressEveryclassInfoVC.selectedClassId = _classHomeId;
+                classAddressEveryclassInfoVC.babyClassName = _homeSchoolView.textField.text;
+                [self.navigationController pushViewController:classAddressEveryclassInfoVC animated:YES];
+            }else if([self.userPosition isEqualToString:@"3"] || [self.userPosition isEqualToString:@"4"]){
+                XXEClassAddressHeadermasterAndManagerViewController *classAddressHeadermasterAndManagerVC = [[XXEClassAddressHeadermasterAndManagerViewController alloc] init];
+                classAddressHeadermasterAndManagerVC.schoolId = _schoolHomeId;
+                classAddressHeadermasterAndManagerVC.schoolType = _schoolType;
+                
+                [self.navigationController pushViewController:classAddressHeadermasterAndManagerVC animated:YES];
+            }
             
-            classAddressHeadermasterAndManagerVC.schoolId = _schoolHomeId;
-            classAddressHeadermasterAndManagerVC.schoolType = _schoolType;
-            
-            [self.navigationController pushViewController:classAddressHeadermasterAndManagerVC animated:YES];
             break;
         }
         case 4:

@@ -401,6 +401,8 @@ NSLog(@"********查看圈子 *******");
 //分享
 - (void)shareButtonClick:(UIButton *)button{
 NSLog(@"********分享 *******");
+    
+    
 
 }
 
