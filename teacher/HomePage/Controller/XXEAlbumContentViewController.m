@@ -245,7 +245,7 @@ static NSString *headerCell = @"HEADERCELL";
     }else if(editButton.selected == NO){
         
         XXEAlbumShowViewController *showVC = [[XXEAlbumShowViewController alloc]init];
-        showVC.showDatasource = self.datasourceA[indexPath.item];
+        showVC.detailsModel = self.datasourceA[indexPath.item];
         showVC.showAlbumXid = self.albumTeacherXID;
         [self.navigationController pushViewController:showVC animated:YES];
     }

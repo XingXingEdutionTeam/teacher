@@ -17,6 +17,7 @@
 #import "AppDelegate.h"
 #import "UMSocial.h"
 #import "XXEClassAlbumGoodApi.h"
+#import "XXEAlbumDetailsModel.h"
 
 @interface XXEAlbumShowViewController ()<SDCycleScrollViewDelegate,KTActionSheetDelegate,UMSocialUIDelegate>
 
@@ -67,14 +68,11 @@
             [self.albumNameDatasource addObject:albumUrl];
         }
     }else{
-        for (XXEAlbumDetailsModel *model in self.showDatasource) {
-//            NSLog(@"%@",model.pic);
-            NSString *albumUrl = [NSString stringWithFormat:@"%@%@",kXXEPicURL,model.pic];
+        
+        NSLog(@"%@",self.detailsModel);
+            NSString *albumUrl = [NSString stringWithFormat:@"%@%@",kXXEPicURL,self.detailsModel.pic];
             [self.albumNameDatasource addObject:albumUrl];
-        }
     }
-    
-    
     [self creatSDCycleScrollView];
     //创建点击按钮
     [self creatButtonView];
@@ -163,9 +161,9 @@
 {
     NSLog(@"下载照片");
 //    int index = [self.albumIndexPaths intValue];
-    XXEAlbumDetailsModel *model = self.showDatasource[self.albumIndexPaths];
-    NSLog(@"%@",model.pic);
-    NSString *stringUtl = [NSString stringWithFormat:@"%@%@",kXXEPicURL,model.pic];
+//    XXEAlbumDetailsModel *model = self.showDatasource[self.albumIndexPaths];
+//    NSLog(@"%@",model.pics);
+    NSString *stringUtl = [NSString stringWithFormat:@"%@%@",kXXEPicURL,self.detailsModel.pic];
     NSURL *url = [NSURL URLWithString:stringUtl];
     NSData *data = [NSData dataWithContentsOfURL:url];
     UIImage *image = [UIImage imageWithData:data];
@@ -202,8 +200,8 @@
 {
     NSLog(@"点赞");
     
-    XXEAlbumDetailsModel *model = self.showDatasource[self.albumIndexPaths];
-    NSLog(@"%@",model.photoId);
+//    XXEAlbumDetailsModel *model = self.showDatasource[self.albumIndexPaths];
+    NSLog(@"%@",self.detailsModel.photoId);
     NSString *strngXid;
     NSString *homeUserId;
     if ([XXEUserInfo user].login) {
@@ -214,7 +212,7 @@
         homeUserId = USER_ID;
     }
     
-    XXEClassAlbumGoodApi *classAlbumApi = [[XXEClassAlbumGoodApi alloc]initWithHomePageClassAblumGoodUserXid:strngXid UserId:homeUserId PicId:model.photoId];
+    XXEClassAlbumGoodApi *classAlbumApi = [[XXEClassAlbumGoodApi alloc]initWithHomePageClassAblumGoodUserXid:strngXid UserId:homeUserId PicId:self.detailsModel.photoId];
     [classAlbumApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         NSString *code = [request.responseJSONObject objectForKey:@"code"];
         NSLog(@"%@",request.responseJSONObject);
@@ -246,12 +244,12 @@
         }else if (action.tag == 1001) {
             if (index  == 0) {
                 NSLog(@"分享");
-                 XXEAlbumDetailsModel *model = self.showDatasource[self.albumIndexPaths];
-                NSLog(@"图片的位置%@",model.pic);
-                [self shareTextPicUrl:model.pic];
+//                 XXEAlbumDetailsModel *model = self.showDatasource[self.albumIndexPaths];
+//                NSLog(@"图片的位置%@",model.pic);
+                [self shareTextPicUrl:self.detailsModel.pic];
             }else {
                 NSLog(@"举报");
-                XXEAlbumDetailsModel *model = self.showDatasource[self.albumIndexPaths];
+//                XXEAlbumDetailsModel *model = self.showDatasource[self.albumIndexPaths];
                 
                 ReportPicViewController *reportVC = [[ReportPicViewController alloc]init];
                 
@@ -260,7 +258,7 @@
                     reportVC.picUrlStr = _picUrlStr;
                 }else{
                     reportVC.other_xidStr = self.showAlbumXid;
-                    reportVC.picUrlStr = model.pic;
+                    reportVC.picUrlStr = self.detailsModel.pic;
                     reportVC.origin_pageStr = @"5";
                     
                 }
@@ -303,9 +301,9 @@
 #pragma mark  - 收藏
 - (void)collectionPhotoImage
 {
-    XXEAlbumDetailsModel *model = self.showDatasource[self.albumIndexPaths];
-    NSLog(@"%@",model.pic);
-    XXEHomePageCollectionPhotoApi *photoApi = [[XXEHomePageCollectionPhotoApi alloc]initHomePageCollectionPhontImageAddress:model.pic];
+//    XXEAlbumDetailsModel *model = self.showDatasource[self.albumIndexPaths];
+//    NSLog(@"%@",model.pic);
+    XXEHomePageCollectionPhotoApi *photoApi = [[XXEHomePageCollectionPhotoApi alloc]initHomePageCollectionPhontImageAddress:self.detailsModel.pic];
     [photoApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         NSString *code = [request.responseJSONObject objectForKey:@"code"];
         if ([code intValue]==1) {

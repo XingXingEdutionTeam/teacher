@@ -568,7 +568,9 @@
         case 1:
         {
             NSLog(@"---相册----");
-            if ([self.classHomeId integerValue]== 0) {
+            NSLog(@"%@",self.userPosition);
+            
+            if ([self.userPosition isEqualToString:@"3"] || [self.userPosition isEqualToString:@"4"]) {
                 XXEClassAddressHeadermasterAndManagerViewController *headMasterVC = [[XXEClassAddressHeadermasterAndManagerViewController alloc]init];
                 headMasterVC.schoolId = self.schoolHomeId;
                 headMasterVC.schoolType = self.schoolType;
@@ -711,7 +713,8 @@
         case 1:
         {
             NSLog(@"---相册----");
-            if ([self.classHomeId integerValue]== 0) {
+             NSLog(@"%@",self.userPosition);
+            if ([self.userPosition isEqualToString:@"3"] || [self.userPosition isEqualToString:@"4"]) {
                 XXEClassAddressHeadermasterAndManagerViewController *headMasterVC = [[XXEClassAddressHeadermasterAndManagerViewController alloc]init];
                 headMasterVC.schoolId = self.schoolHomeId;
                 headMasterVC.schoolType = self.schoolType;
@@ -841,8 +844,9 @@
         }
         case 1:
         {
+             NSLog(@"%@",self.userPosition);
             NSLog(@"---相册----");
-            if ([self.classHomeId integerValue]== 0) {
+            if ([self.userPosition isEqualToString:@"3"] || [self.userPosition isEqualToString:@"4"]) {
                 XXEClassAddressHeadermasterAndManagerViewController *headMasterVC = [[XXEClassAddressHeadermasterAndManagerViewController alloc]init];
                 headMasterVC.schoolId = self.schoolHomeId;
                 headMasterVC.schoolType = self.schoolType;
