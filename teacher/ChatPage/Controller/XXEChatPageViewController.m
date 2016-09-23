@@ -31,7 +31,6 @@
     UIView *changeView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, KScreenWidth, 50)];
     changeView.backgroundColor = [UIColor redColor];
     [self.view addSubview:changeView];
-    
 }
 
 /** 这两个方法都可以,改变当前控制器的电池条颜色 */

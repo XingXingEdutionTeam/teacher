@@ -87,6 +87,8 @@
 
 #define AliPayAppId @"2016082901818469"
 
+//融云SDk
+#define MyRongCloudAppKey @"4z3hlwrv3t0dt"
 
 
 #endif /* MacroDefine_h */

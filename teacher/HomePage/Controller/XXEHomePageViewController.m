@@ -43,7 +43,9 @@
 #import "XXEManagerManagerPublicViewController.h"
 #import "XXEManagerHeadmasterPrivateViewController.h"
 #import "XXEManagerHeadmasterPublicViewController.h"
+#import "XXRootChatETabBarController.h"
 
+#import "RcRootTabbarViewController.h"
 
 @interface XXEHomePageViewController ()<XXEHomePageHeaderViewDelegate,XXEHomePageMiddleViewDelegate,XXEHomePageBottomViewDelegate>
 {
@@ -571,7 +573,6 @@
         {
             NSLog(@"---相册----");
             NSLog(@"%@",self.userPosition);
-            
             if ([self.userPosition isEqualToString:@"3"] || [self.userPosition isEqualToString:@"4"]) {
                 XXEClassAddressHeadermasterAndManagerViewController *headMasterVC = [[XXEClassAddressHeadermasterAndManagerViewController alloc]init];
                 headMasterVC.schoolId = self.schoolHomeId;
@@ -612,8 +613,14 @@
             break;
         }
         case 4:
+        {
             NSLog(@"----聊天----");
+            XXRootChatETabBarController *rootChatVC = [[XXRootChatETabBarController alloc]init];
+            rootChatVC.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:rootChatVC animated:NO];
+            
             break;
+        }
         case 8:
         {
             NSLog(@"---点评----");
@@ -764,8 +771,14 @@
             break;
         }
         case 4:
+        {
             NSLog(@"----聊天----");
+            XXRootChatETabBarController *rootChatVC = [[XXRootChatETabBarController alloc]init];
+            rootChatVC.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:rootChatVC animated:NO];
+            
             break;
+        }
         case 8:
         {
             NSLog(@"---点评----");
@@ -905,8 +918,14 @@
             break;
         }
         case 4:
+        {
             NSLog(@"----聊天----");
+            XXRootChatETabBarController *rootChatVC = [[XXRootChatETabBarController alloc]init];
+            rootChatVC.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:rootChatVC animated:NO];
+            
             break;
+        }
         case 5:
         {
             NSLog(@"---食谱----");
