@@ -24,6 +24,8 @@
     NSString *parameterUser_Id;
 }
 
+@property (nonatomic , strong) NSMutableArray *selectedBabyInfoArr;
+
 @end
 
 @implementation XXEChiefAndTeacherViewController
@@ -232,21 +234,22 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
-//    XXERedFlowerDetialViewController *redFlowerDetialVC = [[XXERedFlowerDetialViewController alloc] init];
-//    
-//    XXERedFlowerSentHistoryModel *model = _dataSourceArray[indexPath.row];
-//    redFlowerDetialVC.name = model.tname;
-//    redFlowerDetialVC.time = model.date_tm;
-//    redFlowerDetialVC.schoolName = model.school_name;
-//    redFlowerDetialVC.className = model.class_name;
-//    redFlowerDetialVC.course = model.teach_course;
-//    redFlowerDetialVC.content = model.con;
-//    redFlowerDetialVC.picWallArray = model.pic_arr;
-//    redFlowerDetialVC.iconUrl = model.head_img;
-//    [self.navigationController pushViewController:redFlowerDetialVC animated:YES];
+//    NSLog(@"hhh %@", _dataSourceArray);
+    
+    XXEChiefAndTeacherModel *model = _dataSourceArray[indexPath.row];
+    //选中 宝贝 头像/名称/id
+    _selectedBabyInfoArr = [[NSMutableArray alloc] initWithObjects:model.head_img, model.tname, model.baby_id, model.school_id, model.class_id, nil];
+    
+    self.ReturnArrayBlock(_selectedBabyInfoArr);
+    
+    [self.navigationController popViewControllerAnimated:YES];
     
 }
 
+- (void)returnArray:(ReturnArrayBlock)block{
+    self.ReturnArrayBlock = block;
+    
+}
 
 
 @end

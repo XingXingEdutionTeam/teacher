@@ -21,4 +21,6 @@
 
 @property (nonatomic, copy) NSString *babyId;
 
+@property (nonatomic, copy) NSString *position;
+
 @end

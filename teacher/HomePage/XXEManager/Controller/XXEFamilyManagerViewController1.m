@@ -74,7 +74,7 @@
 
 - (void)fetchNetData{
     
-    XXEFamilyManagerApi *familyManagerApi = [[XXEFamilyManagerApi alloc] initWithXid:parameterXid user_id:parameterUser_Id school_id:_schoolId school_type:_schoolType class_id:_classId position:@"1"];
+    XXEFamilyManagerApi *familyManagerApi = [[XXEFamilyManagerApi alloc] initWithXid:parameterXid user_id:parameterUser_Id school_id:_schoolId school_type:_schoolType class_id:_classId position:_position];
     
     [familyManagerApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         classModelArray = [[NSMutableArray alloc] init];
@@ -208,39 +208,42 @@
      [condit] => 0 	 //0:待审核 1:审核通过
      */
 #warning position 1:教师  2:主任  3:管理员  4:校长  === XXEStudentManagerViewController1控制器针对 1/2 ,但是1没有  "移动"/"删除" 学生的操作,故当1时,隐藏 "移动"/"删除" 按钮
-    if ([studentModel.condit isEqualToString:@"0"]) {
-        _agreeBtn = [UIButton createButtonWithFrame:CGRectMake(245 * kScreenRatioWidth, 27, 50, 25) backGruondImageName:nil Target:self Action:@selector(onClickagreeBtn:) Title:@"同意"];
-        [_agreeBtn setTitleColor:UIColorFromRGB(0, 170, 42) forState:UIControlStateNormal];
-        _agreeBtn.titleLabel.font = [UIFont systemFontOfSize:14];
-        [_agreeBtn.layer setBorderColor:UIColorFromRGB(0, 170, 42).CGColor];
-        [_agreeBtn.layer setBorderWidth:1];
-        [_agreeBtn.layer setMasksToBounds:YES];
-        
-        _refuseBtn = [UIButton createButtonWithFrame:CGRectMake(300 * kScreenRatioWidth, 27, 50, 25) backGruondImageName:nil Target:self Action:@selector(onClickRefuseBtn:) Title:@"拒绝"];
-        [_refuseBtn setTitleColor:UIColorFromRGB(0, 170, 42) forState:UIControlStateNormal];
-        _refuseBtn.titleLabel.font = [UIFont systemFontOfSize:14];
-        [_refuseBtn.layer setBorderColor:UIColorFromRGB(0, 170, 42).CGColor];
-        [_refuseBtn.layer setBorderWidth:1];
-        [_refuseBtn.layer setMasksToBounds:YES];
-        
-        [cell.contentView addSubview:_agreeBtn];
-        [cell.contentView addSubview:_refuseBtn];
-        
-        _agreeBtn.tag=100;
-        _refuseBtn.tag=101;
-    }else if ([studentModel.condit isEqualToString:@"1"]){
-        _deletebtn = [UIButton createButtonWithFrame:CGRectMake(300 * kScreenRatioWidth, 27, 50, 25) backGruondImageName:nil Target:self Action:@selector(onClickDeleteBtn:) Title:@"删除"];
-        [_deletebtn setTitleColor:UIColorFromRGB(0, 170, 42) forState:UIControlStateNormal];
-        _deletebtn.titleLabel.font = [UIFont systemFontOfSize:14];
-        [_deletebtn.layer setBorderColor:UIColorFromRGB(0, 170, 42).CGColor];
-        [_deletebtn.layer setBorderWidth:1];
-        [_deletebtn.layer setMasksToBounds:YES];
-        
-        [cell.contentView addSubview:_deletebtn];
-        
-        _deletebtn.tag=102;
+    if ([_position isEqualToString:@"2"] || [_position isEqualToString:@"3"] || [_position isEqualToString:@"4"]) {
+        if ([studentModel.condit isEqualToString:@"0"]) {
+            _agreeBtn = [UIButton createButtonWithFrame:CGRectMake(245 * kScreenRatioWidth, 27, 50, 25) backGruondImageName:nil Target:self Action:@selector(onClickagreeBtn:) Title:@"同意"];
+            [_agreeBtn setTitleColor:UIColorFromRGB(0, 170, 42) forState:UIControlStateNormal];
+            _agreeBtn.titleLabel.font = [UIFont systemFontOfSize:14];
+            [_agreeBtn.layer setBorderColor:UIColorFromRGB(0, 170, 42).CGColor];
+            [_agreeBtn.layer setBorderWidth:1];
+            [_agreeBtn.layer setMasksToBounds:YES];
+            
+            _refuseBtn = [UIButton createButtonWithFrame:CGRectMake(300 * kScreenRatioWidth, 27, 50, 25) backGruondImageName:nil Target:self Action:@selector(onClickRefuseBtn:) Title:@"拒绝"];
+            [_refuseBtn setTitleColor:UIColorFromRGB(0, 170, 42) forState:UIControlStateNormal];
+            _refuseBtn.titleLabel.font = [UIFont systemFontOfSize:14];
+            [_refuseBtn.layer setBorderColor:UIColorFromRGB(0, 170, 42).CGColor];
+            [_refuseBtn.layer setBorderWidth:1];
+            [_refuseBtn.layer setMasksToBounds:YES];
+            
+            [cell.contentView addSubview:_agreeBtn];
+            [cell.contentView addSubview:_refuseBtn];
+            
+            _agreeBtn.tag=100;
+            _refuseBtn.tag=101;
+        }else if ([studentModel.condit isEqualToString:@"1"]){
+            _deletebtn = [UIButton createButtonWithFrame:CGRectMake(300 * kScreenRatioWidth, 27, 50, 25) backGruondImageName:nil Target:self Action:@selector(onClickDeleteBtn:) Title:@"删除"];
+            [_deletebtn setTitleColor:UIColorFromRGB(0, 170, 42) forState:UIControlStateNormal];
+            _deletebtn.titleLabel.font = [UIFont systemFontOfSize:14];
+            [_deletebtn.layer setBorderColor:UIColorFromRGB(0, 170, 42).CGColor];
+            [_deletebtn.layer setBorderWidth:1];
+            [_deletebtn.layer setMasksToBounds:YES];
+            
+            [cell.contentView addSubview:_deletebtn];
+            
+            _deletebtn.tag=102;
+        }
+ 
     }
-    
+
     return cell;
 }
 

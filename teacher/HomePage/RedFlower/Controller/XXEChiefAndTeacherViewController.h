@@ -8,11 +8,17 @@
 
 #import "XXEBaseViewController.h"
 
+typedef void(^ReturnArrayBlock)(NSMutableArray *selectedBabyInfoArray);
+
 @interface XXEChiefAndTeacherViewController : XXEBaseViewController
 
 @property (nonatomic, copy) NSString *schoolId;
 
 @property (nonatomic, copy) NSString *classId;
+
+@property (nonatomic, copy) ReturnArrayBlock ReturnArrayBlock;
+
+- (void)returnArray:(ReturnArrayBlock)block;
 
 
 @end

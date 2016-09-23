@@ -27,6 +27,8 @@
 @property (nonatomic, copy) NSString *cookbook_idStr;
 @property (nonatomic, strong) NSString *schoolId;
 
+@property (nonatomic, copy) NSString *position;
+
 - (IBAction)certainButton:(UIButton *)sender;
 
 

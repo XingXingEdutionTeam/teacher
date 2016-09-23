@@ -101,6 +101,7 @@
         vc0.schoolType = _schoolType;
         vc0.classId = _classId;
         vc0.condit = @"4";
+        vc0.position = _position;
         [self addChildViewController:vc0];
         
         [contentScrollView addSubview:vc0.view];
@@ -114,6 +115,7 @@
         vc1.schoolType = _schoolType;
         vc1.classId = _classId;
         vc1.condit = @"5";
+        vc1.position = _position;
         [self addChildViewController:vc1];
         
         [contentScrollView addSubview:vc1.view];

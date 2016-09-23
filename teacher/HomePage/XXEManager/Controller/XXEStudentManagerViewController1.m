@@ -72,7 +72,7 @@
 
 - (void)fetchNetData{
     
-    XXEStudentManagerApi *studentManagerApi = [[XXEStudentManagerApi alloc] initWithXid:parameterXid user_id:parameterUser_Id school_id:_schoolId school_type:_schoolType class_id:_classId position:@"1"];
+    XXEStudentManagerApi *studentManagerApi = [[XXEStudentManagerApi alloc] initWithXid:parameterXid user_id:parameterUser_Id school_id:_schoolId school_type:_schoolType class_id:_classId position:_position];
     
     [studentManagerApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         classModelArray = [[NSMutableArray alloc] init];
@@ -197,27 +197,30 @@
     
 #warning position 1:教师  2:主任  3:管理员  4:校长  === XXEStudentManagerViewController1控制器针对 1/2 ,但是1没有  "移动"/"删除" 学生的操作,故当1时,隐藏 "移动"/"删除" 按钮
     
-    //移动 按钮
-    _moveBtn = [UIButton createButtonWithFrame:CGRectMake(260, 27, 50, 25) backGruondImageName:nil Target:self Action:@selector(onClickMoveBtn:) Title:@"移动"];
-    [_moveBtn setTitleColor:UIColorFromRGB(0, 170, 42) forState:UIControlStateNormal];
-    _moveBtn.titleLabel.font = [UIFont systemFontOfSize:14];
-    [_moveBtn.layer setBorderColor:UIColorFromRGB(0, 170, 42).CGColor];
-    [_moveBtn.layer setBorderWidth:1];
-    [_moveBtn.layer setMasksToBounds:YES];
+    if ([_position isEqualToString:@"2"] || [_position isEqualToString:@"3"] || [_position isEqualToString:@"4"]) {
     
-    //删除 按钮
-    _deletebtn = [UIButton createButtonWithFrame:CGRectMake(315, 27, 50, 25) backGruondImageName:nil Target:self Action:@selector(onClickDeleteBtn:) Title:@"删除"];
-    [_deletebtn setTitleColor:UIColorFromRGB(0, 170, 42) forState:UIControlStateNormal];
-    _deletebtn.titleLabel.font = [UIFont systemFontOfSize:14];
-    [_deletebtn.layer setBorderColor:UIColorFromRGB(0, 170, 42).CGColor];
-    [_deletebtn.layer setBorderWidth:1];
-    [_deletebtn.layer setMasksToBounds:YES];
-    
-    [cell.contentView addSubview:_moveBtn];
-    [cell.contentView addSubview:_deletebtn];
-    
-    _moveBtn.tag=100;
-    _deletebtn.tag=101;
+        //移动 按钮
+        _moveBtn = [UIButton createButtonWithFrame:CGRectMake(260, 27, 50, 25) backGruondImageName:nil Target:self Action:@selector(onClickMoveBtn:) Title:@"移动"];
+        [_moveBtn setTitleColor:UIColorFromRGB(0, 170, 42) forState:UIControlStateNormal];
+        _moveBtn.titleLabel.font = [UIFont systemFontOfSize:14];
+        [_moveBtn.layer setBorderColor:UIColorFromRGB(0, 170, 42).CGColor];
+        [_moveBtn.layer setBorderWidth:1];
+        [_moveBtn.layer setMasksToBounds:YES];
+        
+        //删除 按钮
+        _deletebtn = [UIButton createButtonWithFrame:CGRectMake(315, 27, 50, 25) backGruondImageName:nil Target:self Action:@selector(onClickDeleteBtn:) Title:@"删除"];
+        [_deletebtn setTitleColor:UIColorFromRGB(0, 170, 42) forState:UIControlStateNormal];
+        _deletebtn.titleLabel.font = [UIFont systemFontOfSize:14];
+        [_deletebtn.layer setBorderColor:UIColorFromRGB(0, 170, 42).CGColor];
+        [_deletebtn.layer setBorderWidth:1];
+        [_deletebtn.layer setMasksToBounds:YES];
+        
+        [cell.contentView addSubview:_moveBtn];
+        [cell.contentView addSubview:_deletebtn];
+        
+        _moveBtn.tag=100;
+        _deletebtn.tag=101;
+    }   
     
     return cell;
 }

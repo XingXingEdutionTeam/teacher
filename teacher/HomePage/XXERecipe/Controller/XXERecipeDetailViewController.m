@@ -183,17 +183,21 @@
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
-
-    UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, KScreenWidth, 60)];
+    if ([self.position isEqualToString:@"3"] || [self.position isEqualToString:@"4"]) {
+        UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, KScreenWidth, 60)];
+        
+        CGFloat buttonWidth = 325 * kScreenRatioWidth;
+        CGFloat buttonHeight = 42 * kScreenRatioHeight;
+        
+        UIButton *modifyButton = [UIButton createButtonWithFrame:CGRectMake((KScreenWidth - buttonWidth) / 2, 10, buttonWidth, buttonHeight) backGruondImageName:@"login_green" Target:self Action:@selector(modifyButtonClick) Title:@"修    改"];
+        [modifyButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [footerView addSubview:modifyButton];
+        
+        return footerView;
+    }else{
+        return nil;
+    }
     
-    CGFloat buttonWidth = 325 * kScreenRatioWidth;
-    CGFloat buttonHeight = 42 * kScreenRatioHeight;
-    
-    UIButton *modifyButton = [UIButton createButtonWithFrame:CGRectMake((KScreenWidth - buttonWidth) / 2, 10, buttonWidth, buttonHeight) backGruondImageName:@"login_green" Target:self Action:@selector(modifyButtonClick) Title:@"修    改"];
-    [modifyButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [footerView addSubview:modifyButton];
-    
-    return footerView;
 }
 
 - (void)modifyButtonClick{
@@ -203,6 +207,7 @@
     recipeModifyVC.contentStr = _contentStr;
     recipeModifyVC.cookbook_idStr = _cookbook_idStr;
     recipeModifyVC.dateStr = _date_tm;
+    recipeModifyVC.position = _position;
     
     [self.navigationController pushViewController:recipeModifyVC animated:YES];
 
@@ -221,10 +226,11 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    deleteRow = indexPath.row;
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"删除图片" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"删除", nil];
-    [alert show];
-    
+    if ([self.position isEqualToString:@"3"] || [self.position isEqualToString:@"4"]) {
+        deleteRow = indexPath.row;
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"删除图片" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"删除", nil];
+        [alert show];
+    }
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
@@ -254,7 +260,7 @@
 
     NSString *pic_idStr = picIdArray[deleteRow];
     
-    XXERecipePicDeleteApi *recipePicDeleteApi = [[XXERecipePicDeleteApi alloc] initWithXid:parameterXid user_id:parameterUser_Id user_type:USER_TYPE pic_id:pic_idStr position:@"4" cookbook_id:_cookbook_idStr];
+    XXERecipePicDeleteApi *recipePicDeleteApi = [[XXERecipePicDeleteApi alloc] initWithXid:parameterXid user_id:parameterUser_Id user_type:USER_TYPE pic_id:pic_idStr position:_position cookbook_id:_cookbook_idStr];
     [recipePicDeleteApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         
 //        NSLog(@"2222---   %@", request.responseJSONObject);

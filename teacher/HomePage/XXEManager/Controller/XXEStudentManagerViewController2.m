@@ -70,7 +70,7 @@
 
 
 - (void)fetchNetData{
-    XXEStudentManagerApi *studentManagerApi = [[XXEStudentManagerApi alloc] initWithXid:parameterXid user_id:parameterUser_Id school_id:_schoolId school_type:_schoolType class_id:_classId position:@"4"];
+    XXEStudentManagerApi *studentManagerApi = [[XXEStudentManagerApi alloc] initWithXid:parameterXid user_id:parameterUser_Id school_id:_schoolId school_type:_schoolType class_id:_classId position:_position];
     
     [studentManagerApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         classModelArray = [[NSMutableArray alloc] init];

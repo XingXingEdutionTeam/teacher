@@ -16,4 +16,6 @@
 
 @property (nonatomic, copy) NSString *schoolType;
 
+@property (nonatomic, copy) NSString *position;
+
 @end

@@ -20,4 +20,6 @@
 
 @property (nonatomic)QHNavSliderMenuType menuType;
 
+@property (nonatomic, copy) NSString *position;
+
 @end

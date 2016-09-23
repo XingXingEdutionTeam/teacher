@@ -23,6 +23,8 @@
 
 @property (nonatomic, copy) NSString *basketNumStr;
 
+@property (nonatomic, copy) NSString *position;
+
 @property (weak, nonatomic) IBOutlet UIView *upPicImageView;
 
 

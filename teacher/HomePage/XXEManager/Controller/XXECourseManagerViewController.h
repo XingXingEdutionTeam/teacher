@@ -18,4 +18,6 @@
 
 @property (nonatomic, copy) NSString *condit;
 
+@property (nonatomic, copy) NSString *position;
+
 @end

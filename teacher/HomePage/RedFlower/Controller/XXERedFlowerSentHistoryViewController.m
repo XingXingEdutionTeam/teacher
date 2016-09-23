@@ -93,7 +93,7 @@
     sentToPeopleVC.schoolId = _schoolId;
     sentToPeopleVC.classId = _classId;
     sentToPeopleVC.basketNumStr = _flower_able;
-    
+    sentToPeopleVC.position = _position;
     [self.navigationController pushViewController:sentToPeopleVC animated:YES];
     
 }
@@ -127,13 +127,13 @@
             if (dict[@"give_num"] == nil) {
                 _give_num = @"";
             }else{
-                _give_num = [NSString stringWithFormat:@"已颁发:%@朵", dict[@"give_num"]];
+                _give_num = [NSString stringWithFormat:@"%@", dict[@"give_num"]];
             }
             //剩余花篮 数量
             if (dict[@"flower_able"] == nil) {
                 _flower_able = @"";
             }else{
-                _flower_able = [NSString stringWithFormat:@"剩余:%@朵", dict[@"flower_able"]];
+                _flower_able = [NSString stringWithFormat:@"%@", dict[@"flower_able"]];
             }
             NSArray *modelArray = [XXERedFlowerSentHistoryModel parseResondsData:dict[@"list"]];
 
@@ -282,12 +282,12 @@
     [headerView addSubview:titleLabel1];
     
     UILabel *titleLabel2 = [UILabel createLabelWithFrame:CGRectMake(labelWidth, 5, labelWidth, 20) Font:14 Text:@""];
-    titleLabel2.text = _give_num;
+    titleLabel2.text = [NSString stringWithFormat:@"已颁发:%@朵", _give_num];
     titleLabel2.textAlignment = NSTextAlignmentCenter;
     [headerView addSubview:titleLabel2];
     
     UILabel *titleLabel3 = [UILabel createLabelWithFrame:CGRectMake(labelWidth * 2, 5, labelWidth, 20) Font:14 Text:@""];
-    titleLabel3.text = _flower_able;
+    titleLabel3.text = [NSString stringWithFormat:@"剩余:%@朵", _flower_able];
     titleLabel3.textAlignment = NSTextAlignmentCenter;
     [headerView addSubview:titleLabel3];
     

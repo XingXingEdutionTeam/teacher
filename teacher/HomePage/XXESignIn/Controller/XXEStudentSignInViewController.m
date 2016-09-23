@@ -125,7 +125,7 @@
     
     [cell.iconImageView sd_setImageWithURL:[NSURL URLWithString:head_img] placeholderImage:[UIImage imageNamed:@"headplaceholder"]];
     
-    if (![_timeLabel.text isEqualToString:nowDateStr]) {
+    if (![_timeLabel.text isEqualToString:nowDateStr] || ![_position isEqualToString:@"2"]) {
       [cell.signInButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
       [cell.signInButton.layer setBorderColor:[UIColor lightGrayColor].CGColor];
       cell.signInButton.enabled = NO;
@@ -268,7 +268,7 @@
 - (void)updateContentInfo{
 
     //如果 看 签到 历史 "一键签到" 按钮 颜色 变为 灰色且 不可点
-    if (![_timeLabel.text isEqualToString:nowDateStr] || [no_sign_in_num integerValue] == 0) {
+    if (![_timeLabel.text isEqualToString:nowDateStr] || [no_sign_in_num integerValue] == 0 || ![_position isEqualToString:@"2"]) {
         [_allRegisterBtn setBackgroundColor:[UIColor lightGrayColor]];
         _allRegisterBtn.enabled = NO;
     }else {
@@ -343,11 +343,16 @@
     
     //一键签到 按钮
     _allRegisterBtn = [UIButton createButtonWithFrame:CGRectMake((KScreenWidth - 325 * kScreenRatioWidth) / 2, 100 * kScreenRatioHeight, 325 * kScreenRatioWidth, 42 * kScreenRatioHeight) backGruondImageName:nil Target:self Action:@selector(allRegisterBtnClick) Title:@"一键签到"];
+    
+//    _allRegisterBtn = [UIButton createButtonWithFrame:CGRectMake((KScreenWidth - 325 * kScreenRatioWidth) / 2, 100 * kScreenRatioHeight, 325 * kScreenRatioWidth, 42 * kScreenRatioHeight) backGruondImageName:nil Target:self Action:nil Title:@"一键签到"];
+    
     _allRegisterBtn.layer.cornerRadius = _allRegisterBtn.frame.size.height / 2;
     _allRegisterBtn.layer.masksToBounds = YES;
     [_allRegisterBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     _allRegisterBtn.titleLabel.font = [UIFont systemFontOfSize:24 * kScreenRatioWidth];
     [_middleBgView addSubview:_allRegisterBtn];
+    
+    [self updateContentInfo];
     
 }
 
@@ -398,7 +403,7 @@
 - (void)allRegisterBtnClick{
     //★★签到已改版,老师签到板块第一期不要了,只要学生签到, 老师看到某个班级签到,管理看到所有班级签到,具体跟我沟通(我这里有页面改动的草稿(小梁没有重新做))
     //position	//身份,传数字(1教师/2班主任/3管理/4校长)
-    XXEStudentAllSignApi *studentAllSignApi = [[XXEStudentAllSignApi alloc] initWithXid:parameterXid user_id:parameterUser_Id user_type:USER_TYPE class_id:_classId school_id:_schoolId position:@"2"];
+    XXEStudentAllSignApi *studentAllSignApi = [[XXEStudentAllSignApi alloc] initWithXid:parameterXid user_id:parameterUser_Id user_type:USER_TYPE class_id:_classId school_id:_schoolId position:_position];
     
     [studentAllSignApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         //

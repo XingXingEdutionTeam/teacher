@@ -109,24 +109,40 @@
         return;
     }
     //根据页数添加相对应的视图 并存入数组
-    //如果 是 班主任 身份的话
-//    XXEStudentSignInViewController * vc0 = [[XXEStudentSignInViewController alloc]init];
-    //如果 是 校长或者 管理人员
-    XXEStudentSignInManagerAndHeadmasterViewController *vc0 = [[XXEStudentSignInManagerAndHeadmasterViewController alloc] init];
     
-    vc0.schoolId = _schoolId;
-    vc0.classId = _classId;
-    vc0.schoolType = _schoolType;
-    vc0.view.left = 0*screenWidth;
-    vc0.view.top  = 0;
+    if ([self.position isEqualToString:@"1"] || [self.position isEqualToString:@"2"]) {
+        //如果 是 班主任 身份的话
+     XXEStudentSignInViewController * vc0 = [[XXEStudentSignInViewController alloc]init];
+        
+        vc0.schoolId = _schoolId;
+        vc0.classId = _classId;
+        vc0.schoolType = _schoolType;
+        vc0.position = _position;
+        vc0.view.left = 0*screenWidth;
+        vc0.view.top  = 0;
+        
+        [self addChildViewController:vc0];
+        
+        [contentScrollView addSubview:vc0.view];
+        [listVCQueue setObject:vc0 forKey:@(0)];
+    }else if ([self.position isEqualToString:@"3"] || [self.position isEqualToString:@"4"]){
+        //如果 是 校长或者 管理人员
+        XXEStudentSignInManagerAndHeadmasterViewController *vc0 = [[XXEStudentSignInManagerAndHeadmasterViewController alloc] init];
+        
+        vc0.schoolId = _schoolId;
+        vc0.classId = _classId;
+        vc0.schoolType = _schoolType;
+        vc0.position = _position;
+        vc0.view.left = 0*screenWidth;
+        vc0.view.top  = 0;
 
+        [self addChildViewController:vc0];
+        
+        [contentScrollView addSubview:vc0.view];
+        [listVCQueue setObject:vc0 forKey:@(0)];
+    }
     
-    [self addChildViewController:vc0];
-
-    [contentScrollView addSubview:vc0.view];
-    [listVCQueue setObject:vc0 forKey:@(0)];
-    
-   }
+}
 
 
 

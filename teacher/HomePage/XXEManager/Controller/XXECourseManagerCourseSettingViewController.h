@@ -10,4 +10,6 @@
 
 @interface XXECourseManagerCourseSettingViewController : XXEBaseViewController
 
+@property (nonatomic, copy) NSString *position;
+
 @end

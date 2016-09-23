@@ -98,6 +98,7 @@
         studentManagerVC.schoolId = _schoolId;
         studentManagerVC.schoolType = _schoolType;
         studentManagerVC.classId = _classId;
+        studentManagerVC.position = _position;
         
         [self addChildViewController:studentManagerVC];
 
@@ -111,6 +112,7 @@
         familyManagerVC.schoolId = _schoolId;
         familyManagerVC.schoolType = _schoolType;
         familyManagerVC.classId = _classId;
+        familyManagerVC.position = _position;
         [self addChildViewController:familyManagerVC];
 
         [contentScrollView addSubview:familyManagerVC.view];

@@ -451,7 +451,7 @@
     //
     redFlowerSentHistoryVC.schoolId = self.schoolHomeId;
     redFlowerSentHistoryVC.classId = self.classHomeId;
-    
+    redFlowerSentHistoryVC.position = self.userPosition;
     //    NSLog(@"%@%@",self.schoolHomeId,self.classHomeId);
     
     [self.navigationController pushViewController:redFlowerSentHistoryVC animated:YES];
@@ -648,6 +648,9 @@
             NSLog(@"---食谱----");
             XXERecipeViewController *recipeViewController = [[XXERecipeViewController alloc] init];
             recipeViewController.schoolId = self.schoolHomeId;
+            
+            recipeViewController.position = self.userPosition;
+            
             [self.navigationController pushViewController:recipeViewController animated:YES];
             
             break;
@@ -655,10 +658,13 @@
         case 11:
         {
             NSLog(@"----签到----");
+        
             XXESignInViewController *signInVC = [[XXESignInViewController alloc] init];
             signInVC.schoolId = self.schoolHomeId;
             signInVC.classId = self.classHomeId;
             signInVC.schoolType = self.schoolType;
+            signInVC.position = self.userPosition;
+            
             [self.navigationController pushViewController:signInVC animated:YES];
             break;
         }
@@ -666,35 +672,17 @@
         case 10:
         {
             NSLog(@"---管理----");
-            //不同 身份
-            //            教师
-            //            XXEManagerTeacherViewController *managerTeacherVC = [[XXEManagerTeacherViewController alloc] init];
-            //            managerTeacherVC.schoolId = self.schoolHomeId;
-            //            managerTeacherVC.classId = self.classHomeId;
-            //            managerTeacherVC.schoolType = self.schoolType;
-            //            [self.navigationController pushViewController:managerTeacherVC animated:YES];
             
-            //            //管理员(私立)
-            XXEManagerManagerPrivateViewController *managerPrivateVC = [[XXEManagerManagerPrivateViewController alloc] init];
-            managerPrivateVC.schoolId = self.schoolHomeId;
-            managerPrivateVC.classId = self.classHomeId;
-            managerPrivateVC.schoolType = self.schoolType;
-            [self.navigationController pushViewController:managerPrivateVC animated:YES];
-            
-            //            //管理员(公立)
-            //            XXEManagerManagerPublicViewController *managerPublicVC = [[XXEManagerManagerPublicViewController alloc] init];
-            //
-            //            [self.navigationController pushViewController:managerPublicVC animated:YES];
-            
-            //            //校长(私立)
-            //            XXEManagerHeadmasterPrivateViewController *managerHeadmasterPrivateVC = [[XXEManagerHeadmasterPrivateViewController alloc] init];
-            //
-            //            [self.navigationController pushViewController:managerHeadmasterPrivateVC animated:YES];
-            
-            //校长(公立)
-            //            XXEManagerHeadmasterPublicViewController *managerHeadmasterPublicVC = [[XXEManagerHeadmasterPublicViewController alloc] init];
-            //
-            //            [self.navigationController pushViewController:managerHeadmasterPublicVC animated:YES];
+            if ([self.userPosition isEqualToString:@"1"] || [self.userPosition isEqualToString:@"2"]) {
+//             教师
+               XXEManagerTeacherViewController *managerTeacherVC = [[XXEManagerTeacherViewController alloc] init];
+                managerTeacherVC.schoolId = self.schoolHomeId;
+                managerTeacherVC.classId = self.classHomeId;
+                managerTeacherVC.schoolType = self.schoolType;
+                managerTeacherVC.position = self.userPosition;
+                
+                [self.navigationController pushViewController:managerTeacherVC animated:YES];
+            }
             
             break;
         }
@@ -796,6 +784,7 @@
             NSLog(@"---食谱----");
             XXERecipeViewController *recipeViewController = [[XXERecipeViewController alloc] init];
             recipeViewController.schoolId = self.schoolHomeId;
+            recipeViewController.position = self.userPosition;
             [self.navigationController pushViewController:recipeViewController animated:YES];
             
             break;
@@ -807,6 +796,7 @@
             signInVC.schoolId = self.schoolHomeId;
             signInVC.classId = self.classHomeId;
             signInVC.schoolType = self.schoolType;
+            signInVC.position = self.userPosition;
             [self.navigationController pushViewController:signInVC animated:YES];
             break;
         }
@@ -814,37 +804,32 @@
         case 10:
         {
             NSLog(@"---管理----");
-            //不同 身份
-            //            教师
-            //            XXEManagerTeacherViewController *managerTeacherVC = [[XXEManagerTeacherViewController alloc] init];
-            //            managerTeacherVC.schoolId = self.schoolHomeId;
-            //            managerTeacherVC.classId = self.classHomeId;
-            //            managerTeacherVC.schoolType = self.schoolType;
-            //            [self.navigationController pushViewController:managerTeacherVC animated:YES];
-            
-            //            //管理员(私立)
-            XXEManagerManagerPrivateViewController *managerPrivateVC = [[XXEManagerManagerPrivateViewController alloc] init];
-            managerPrivateVC.schoolId = self.schoolHomeId;
-            managerPrivateVC.classId = self.classHomeId;
-            managerPrivateVC.schoolType = self.schoolType;
-            [self.navigationController pushViewController:managerPrivateVC animated:YES];
-            
-            //            //管理员(公立)
-            //            XXEManagerManagerPublicViewController *managerPublicVC = [[XXEManagerManagerPublicViewController alloc] init];
-            //
-            //            [self.navigationController pushViewController:managerPublicVC animated:YES];
-            
-            //            //校长(私立)
-            //            XXEManagerHeadmasterPrivateViewController *managerHeadmasterPrivateVC = [[XXEManagerHeadmasterPrivateViewController alloc] init];
-            //
-            //            [self.navigationController pushViewController:managerHeadmasterPrivateVC animated:YES];
-            
-            //校长(公立)
-            //            XXEManagerHeadmasterPublicViewController *managerHeadmasterPublicVC = [[XXEManagerHeadmasterPublicViewController alloc] init];
-            //
-            //            [self.navigationController pushViewController:managerHeadmasterPublicVC animated:YES];
-            
-            break;
+            if ([self.userPosition isEqualToString:@"3"]) {
+                //school_type //学校类型: 幼儿园/小学/中学/机构 1/2/3/4
+                //如果 是 4 表示 私立, 其他为公立学校
+                
+                if ([_schoolType isEqualToString:@"4"]) {
+                    //管理员(私立)
+                    XXEManagerManagerPrivateViewController *managerPrivateVC = [[XXEManagerManagerPrivateViewController alloc] init];
+                    managerPrivateVC.schoolId = self.schoolHomeId;
+                    managerPrivateVC.classId = self.classHomeId;
+                    managerPrivateVC.schoolType = self.schoolType;
+                    managerPrivateVC.position = self.userPosition;
+                    
+                    [self.navigationController pushViewController:managerPrivateVC animated:YES];
+                }else{
+                    //管理员(公立)
+                    XXEManagerManagerPublicViewController *managerPublicVC = [[XXEManagerManagerPublicViewController alloc] init];
+                    managerPublicVC.schoolId = self.schoolHomeId;
+                    managerPublicVC.classId = self.classHomeId;
+                    managerPublicVC.schoolType = self.schoolType;
+                    managerPublicVC.position = self.userPosition;
+                    
+                    [self.navigationController pushViewController:managerPublicVC animated:YES];
+                }
+ 
+            }
+           break;
         }
             
         case 9:
@@ -933,6 +918,7 @@
             NSLog(@"---食谱----");
             XXERecipeViewController *recipeViewController = [[XXERecipeViewController alloc] init];
             recipeViewController.schoolId = self.schoolHomeId;
+            recipeViewController.position = self.userPosition;
             [self.navigationController pushViewController:recipeViewController animated:YES];
             
             break;
@@ -944,6 +930,7 @@
             signInVC.schoolId = self.schoolHomeId;
             signInVC.classId = self.classHomeId;
             signInVC.schoolType = self.schoolType;
+            signInVC.position = self.userPosition;
             [self.navigationController pushViewController:signInVC animated:YES];
             break;
         }
@@ -955,35 +942,32 @@
         {
             NSLog(@"---管理----");
             //不同 身份
-            //            教师
-            //            XXEManagerTeacherViewController *managerTeacherVC = [[XXEManagerTeacherViewController alloc] init];
-            //            managerTeacherVC.schoolId = self.schoolHomeId;
-            //            managerTeacherVC.classId = self.classHomeId;
-            //            managerTeacherVC.schoolType = self.schoolType;
-            //            [self.navigationController pushViewController:managerTeacherVC animated:YES];
             
-            //            //管理员(私立)
-            XXEManagerManagerPrivateViewController *managerPrivateVC = [[XXEManagerManagerPrivateViewController alloc] init];
-            managerPrivateVC.schoolId = self.schoolHomeId;
-            managerPrivateVC.classId = self.classHomeId;
-            managerPrivateVC.schoolType = self.schoolType;
-            [self.navigationController pushViewController:managerPrivateVC animated:YES];
-            
-            //            //管理员(公立)
-            //            XXEManagerManagerPublicViewController *managerPublicVC = [[XXEManagerManagerPublicViewController alloc] init];
-            //
-            //            [self.navigationController pushViewController:managerPublicVC animated:YES];
-            
-            //            //校长(私立)
-            //            XXEManagerHeadmasterPrivateViewController *managerHeadmasterPrivateVC = [[XXEManagerHeadmasterPrivateViewController alloc] init];
-            //
-            //            [self.navigationController pushViewController:managerHeadmasterPrivateVC animated:YES];
-            
-            //校长(公立)
-            //            XXEManagerHeadmasterPublicViewController *managerHeadmasterPublicVC = [[XXEManagerHeadmasterPublicViewController alloc] init];
-            //
-            //            [self.navigationController pushViewController:managerHeadmasterPublicVC animated:YES];
-            
+            if ([self.userPosition isEqualToString:@"4"]) {
+            //school_type //学校类型: 幼儿园/小学/中学/机构 1/2/3/4
+            //如果 是 4 表示 私立, 其他为公立学校
+            if ([_schoolType isEqualToString:@"4"]) {
+                //校长(私立)
+                XXEManagerHeadmasterPrivateViewController *managerHeadmasterPrivateVC = [[XXEManagerHeadmasterPrivateViewController alloc] init];
+                
+                managerHeadmasterPrivateVC.schoolId = self.schoolHomeId;
+                managerHeadmasterPrivateVC.classId = self.classHomeId;
+                managerHeadmasterPrivateVC.schoolType = self.schoolType;
+                managerHeadmasterPrivateVC.position = self.userPosition;
+                
+                [self.navigationController pushViewController:managerHeadmasterPrivateVC animated:YES];
+            }else{
+                // 校长(公立)
+                XXEManagerHeadmasterPublicViewController *managerHeadmasterPublicVC = [[XXEManagerHeadmasterPublicViewController alloc] init];
+                
+                managerHeadmasterPublicVC.schoolId = self.schoolHomeId;
+                managerHeadmasterPublicVC.classId = self.classHomeId;
+                managerHeadmasterPublicVC.schoolType = self.schoolType;
+                managerHeadmasterPublicVC.position = self.userPosition;
+                
+                [self.navigationController pushViewController:managerHeadmasterPublicVC animated:YES];
+            }
+           }
             break;
         }
             

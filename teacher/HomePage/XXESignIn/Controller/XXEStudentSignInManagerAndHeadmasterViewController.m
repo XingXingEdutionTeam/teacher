@@ -311,7 +311,7 @@
     XXEClassAddressHeadermasterAndManagerModel *model = _dataSourceArray[indexPath.row];
     studentSignInVC.schoolId = _schoolId;
     studentSignInVC.classId = model.class_id;
-    
+    studentSignInVC.position = _position;
     [self.navigationController pushViewController:studentSignInVC animated:YES];
 
 }

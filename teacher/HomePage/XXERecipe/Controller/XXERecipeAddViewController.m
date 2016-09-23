@@ -254,7 +254,7 @@
      dinner_url	//晚餐图片(url集合,多个逗号隔开)
      */
     
-    XXERecipeAddTextApi *recipeAddTextApi = [[XXERecipeAddTextApi alloc] initWithXid:parameterXid user_id:parameterUser_Id user_type:USER_TYPE school_id:_schoolId position:@"4" date_tm:timeStr breakfast_name:breakfastStr lunch_name:lunchStr dinner_name:dinnerStr breakfast_url:breakfastPicStr lunch_url:lunchPicStr dinner_url:dinnerPicStr];
+    XXERecipeAddTextApi *recipeAddTextApi = [[XXERecipeAddTextApi alloc] initWithXid:parameterXid user_id:parameterUser_Id user_type:USER_TYPE school_id:_schoolId position:_position date_tm:timeStr breakfast_name:breakfastStr lunch_name:lunchStr dinner_name:dinnerStr breakfast_url:breakfastPicStr lunch_url:lunchPicStr dinner_url:dinnerPicStr];
     
 //    NSLog(@"早餐--- %@ 午餐 --- %@ 晚餐 -- %@", breakfastPicStr, lunchPicStr, dinnerPicStr);
     

@@ -152,7 +152,7 @@
         mealNameStr = @"";
     }
     
-        XXERecipePicModify *recipePicModify = [[XXERecipePicModify alloc] initWithXid:parameterXid user_id:parameterUser_Id user_type:USER_TYPE school_id:_schoolId position:@"4" cookbook_id:_cookbook_idStr meal_type:meal_type meal_name:mealNameStr url_group:url_groupStr];
+        XXERecipePicModify *recipePicModify = [[XXERecipePicModify alloc] initWithXid:parameterXid user_id:parameterUser_Id user_type:USER_TYPE school_id:_schoolId position:_position cookbook_id:_cookbook_idStr meal_type:meal_type meal_name:mealNameStr url_group:url_groupStr];
     
         [recipePicModify startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
             

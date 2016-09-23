@@ -146,6 +146,7 @@
 - (void)toAuditViewController{
     XXECourseManagerCourseToAuditViewController * vc2 = [[XXECourseManagerCourseToAuditViewController alloc]init];
     vc2.schoolId = _schoolId;
+    vc2.position = _position;
 //    vc2.view.left = 2*screenWidth;
 //    vc2.view.top  = 0;
     [self addChildViewController:vc2];
@@ -159,6 +160,7 @@
 - (void)refuseViewController{
     XXECourseManagerCourseRefuseViewController * vc3 = [[XXECourseManagerCourseRefuseViewController alloc]init];
     vc3.schoolId = _schoolId;
+    vc3.position = _position;
 //    vc3.view.left = 3*screenWidth;
 //    vc3.view.top  = 0;
     [self addChildViewController:vc3];
@@ -187,6 +189,8 @@
     courseManagerCourseReleaseVC.schoolId = _schoolId;
     courseManagerCourseReleaseVC.schoolType = _schoolType;
     courseManagerCourseReleaseVC.classId = _classId;
+    courseManagerCourseReleaseVC.position = _position;
+    
     
     [self.navigationController pushViewController:courseManagerCourseReleaseVC animated:YES];
 

@@ -77,7 +77,7 @@
 
 
 - (void)fetchNetData{
-    XXEFamilyManagerApi *familyManagerApi = [[XXEFamilyManagerApi alloc] initWithXid:parameterXid user_id:parameterUser_Id school_id:_schoolId school_type:_schoolType class_id:_classId position:@"4"];
+    XXEFamilyManagerApi *familyManagerApi = [[XXEFamilyManagerApi alloc] initWithXid:parameterXid user_id:parameterUser_Id school_id:_schoolId school_type:_schoolType class_id:_classId position:_position];
     
     [familyManagerApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         classModelArray = [[NSMutableArray alloc] init];

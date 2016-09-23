@@ -86,10 +86,9 @@
         return;
     }
     //根据页数添加相对应的视图 并存入数组
-    //0:待完善(草稿)  1:等待校长审核   2:等待官方审核  3:已上线(官方审核通过)  4:校长驳回  5:官方驳回
+    // condit   0:待完善(草稿)  1:等待校长审核   2:等待官方审核  3:已上线(官方审核通过)  4:校长驳回  5:官方驳回
     //@"待校长审核"
     if (index == 0) {
-        
         XXECourseManagerViewController *vc0 =[[XXECourseManagerViewController alloc]init];
         
         vc0.view.left = 0* screenWidth;
@@ -98,6 +97,8 @@
         vc0.schoolType = _schoolType;
         vc0.classId = _classId;
         vc0.condit = @"1";
+        vc0.position = _position;
+        
         [self addChildViewController:vc0];
         
         [contentScrollView addSubview:vc0.view];
@@ -111,6 +112,7 @@
         vc1.schoolType = _schoolType;
         vc1.classId = _classId;
         vc1.condit = @"2";
+        vc1.position = _position;
         [self addChildViewController:vc1];
         
         [contentScrollView addSubview:vc1.view];

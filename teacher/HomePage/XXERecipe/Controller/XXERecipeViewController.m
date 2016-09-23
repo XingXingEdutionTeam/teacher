@@ -93,10 +93,11 @@
     
     self.title = @"食谱";
     
-    UIButton *addBtn =[UIButton createButtonWithFrame:CGRectMake(0, 0, 22, 22) backGruondImageName:@"comment_request_icon" Target:self Action:@selector(addBtnClick:) Title:@""];
-    UIBarButtonItem *sentItem =[[UIBarButtonItem alloc]initWithCustomView:addBtn];
-    self.navigationItem.rightBarButtonItem =sentItem;
-    
+    if ([self.position isEqualToString:@"3"] || [self.position isEqualToString:@"4"]) {
+        UIButton *addBtn =[UIButton createButtonWithFrame:CGRectMake(0, 0, 22, 22) backGruondImageName:@"comment_request_icon" Target:self Action:@selector(addBtnClick:) Title:@""];
+        UIBarButtonItem *sentItem =[[UIBarButtonItem alloc]initWithCustomView:addBtn];
+        self.navigationItem.rightBarButtonItem =sentItem;
+    }
 //    [self fetchNetData];
     
     [self createTableView];
@@ -109,7 +110,7 @@
     XXERecipeAddViewController *recipeAddVC = [[XXERecipeAddViewController alloc] init];
     
     recipeAddVC.schoolId = _schoolId;
-//    sentToPeopleVC.classId = _classId;
+    recipeAddVC.position = _position;
 //    sentToPeopleVC.basketNumStr = _flower_able;
     
     [self.navigationController pushViewController:recipeAddVC animated:YES];
@@ -323,16 +324,15 @@
         titleLabel1.textAlignment = NSTextAlignmentLeft;
         [headerView addSubview:titleLabel1];
         
-        //home_recipe_delete_icon
-        UIButton *deleteButton = [UIButton createButtonWithFrame:CGRectMake(KScreenWidth - 30, 5, 17, 21) backGruondImageName:@"home_recipe_delete_icon" Target:self Action:@selector(deleteButtonClick:) Title:@""];
-        
-        deleteButton.tag = 100 + section;
-        
-        [headerView addSubview:deleteButton];
-        
+        if ([self.position isEqualToString:@"3"] || [self.position isEqualToString:@"4"]) {
+            //home_recipe_delete_icon
+            UIButton *deleteButton = [UIButton createButtonWithFrame:CGRectMake(KScreenWidth - 30, 5, 17, 21) backGruondImageName:@"home_recipe_delete_icon" Target:self Action:@selector(deleteButtonClick:) Title:@""];
+            
+            deleteButton.tag = 100 + section;
+            
+            [headerView addSubview:deleteButton];
+        }
     }
-    
-
     return headerView;
 }
 
@@ -373,7 +373,7 @@
      */
     NSString *cookbook_idStr = cookbook_idArray[deleteSection];
     
-    XXERecipeDeleteApi *recipeDeleteApi = [[XXERecipeDeleteApi alloc] initWithXid:parameterXid user_id:parameterUser_Id user_type:USER_TYPE school_id:_schoolId position:@"4" cookbook_id:cookbook_idStr];
+    XXERecipeDeleteApi *recipeDeleteApi = [[XXERecipeDeleteApi alloc] initWithXid:parameterXid user_id:parameterUser_Id user_type:USER_TYPE school_id:_schoolId position:_position cookbook_id:cookbook_idStr];
     [recipeDeleteApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         
 //        NSLog(@"2222---   %@", request.responseJSONObject);
@@ -421,6 +421,7 @@
     recipeDetailVC.cookbook_idStr = cookbook_idArray[indexPath.section];
     
     recipeDetailVC.schoolId = _schoolId;
+    recipeDetailVC.position = _position;
     
     [self.navigationController pushViewController:recipeDetailVC animated:YES];
     

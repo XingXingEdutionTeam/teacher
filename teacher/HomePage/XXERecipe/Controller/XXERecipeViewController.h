@@ -13,4 +13,7 @@
 
 @property (nonatomic, strong) NSString *schoolId;
 
+@property (nonatomic, copy) NSString *position;
+
+
 @end

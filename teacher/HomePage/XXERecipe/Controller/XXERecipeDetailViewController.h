@@ -22,7 +22,7 @@
 @property (nonatomic, copy) NSString *contentStr;
 @property (nonatomic, copy) NSString *cookbook_idStr;
 
-
+@property (nonatomic, copy) NSString *position;
 
 
 @end
