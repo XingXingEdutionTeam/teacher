@@ -165,6 +165,7 @@
         XXEClassAlbumViewController *classAlbumVC = [[XXEClassAlbumViewController alloc]init];
         classAlbumVC.schoolID = self.schoolId;
         classAlbumVC.classID = model.class_id;
+        classAlbumVC.userIdentifier = self.homeUserIdentifier;
         NSLog(@"%@ == %@",self.schoolId,model.class_id);
         [self.navigationController pushViewController:classAlbumVC animated:YES];
     }else{

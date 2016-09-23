@@ -16,4 +16,7 @@
 /** 判断进入到是相册还是班级通讯录 */
 @property (nonatomic, copy)NSString *headMasterAlbum;
 
+/** 用户身份 */
+@property (nonatomic, copy)NSString *homeUserIdentifier;
+
 @end

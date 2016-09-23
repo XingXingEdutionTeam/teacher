@@ -81,7 +81,7 @@
 //学校 类型
 @property (nonatomic, copy) NSString *schoolType;
 
-/** 老师身份 */
+/** 用户身份 */
 @property (nonatomic, copy)NSString *userPosition;
 
 /** 学校的名字 */
@@ -573,19 +573,19 @@
         {
             NSLog(@"---相册----");
             NSLog(@"%@",self.userPosition);
-            if ([self.userPosition isEqualToString:@"3"] || [self.userPosition isEqualToString:@"4"]) {
-                XXEClassAddressHeadermasterAndManagerViewController *headMasterVC = [[XXEClassAddressHeadermasterAndManagerViewController alloc]init];
-                headMasterVC.schoolId = self.schoolHomeId;
-                headMasterVC.schoolType = self.schoolType;
-                headMasterVC.headMasterAlbum = @"1";
-                [self.navigationController pushViewController:headMasterVC animated:YES];
-            }else{
+//            if ([self.userPosition isEqualToString:@"3"] || [self.userPosition isEqualToString:@"4"]) {
+//                XXEClassAddressHeadermasterAndManagerViewController *headMasterVC = [[XXEClassAddressHeadermasterAndManagerViewController alloc]init];
+//                headMasterVC.schoolId = self.schoolHomeId;
+//                headMasterVC.schoolType = self.schoolType;
+//                headMasterVC.headMasterAlbum = @"1";
+//                [self.navigationController pushViewController:headMasterVC animated:YES];
+//            }else{
                 XXEClassAlbumViewController *classAlbumVC = [[XXEClassAlbumViewController alloc]init];
                 classAlbumVC.schoolID = self.schoolHomeId;
                 classAlbumVC.classID = self.classHomeId;
                 NSLog(@"%@ == %@",self.schoolHomeId,self.classHomeId);
                 [self.navigationController pushViewController:classAlbumVC animated:YES];
-            }
+//            }
             break;
         }
         case 2:
@@ -731,19 +731,20 @@
         {
             NSLog(@"---相册----");
              NSLog(@"%@",self.userPosition);
-            if ([self.userPosition isEqualToString:@"3"] || [self.userPosition isEqualToString:@"4"]) {
-                XXEClassAddressHeadermasterAndManagerViewController *headMasterVC = [[XXEClassAddressHeadermasterAndManagerViewController alloc]init];
-                headMasterVC.schoolId = self.schoolHomeId;
-                headMasterVC.schoolType = self.schoolType;
-                headMasterVC.headMasterAlbum = @"1";
-                [self.navigationController pushViewController:headMasterVC animated:YES];
-            }else{
-                XXEClassAlbumViewController *classAlbumVC = [[XXEClassAlbumViewController alloc]init];
-                classAlbumVC.schoolID = self.schoolHomeId;
-                classAlbumVC.classID = self.classHomeId;
-                NSLog(@"%@ == %@",self.schoolHomeId,self.classHomeId);
-                [self.navigationController pushViewController:classAlbumVC animated:YES];
-            }
+//            if ([self.userPosition isEqualToString:@"3"] || [self.userPosition isEqualToString:@"4"]) {
+            XXEClassAddressHeadermasterAndManagerViewController *headMasterVC = [[XXEClassAddressHeadermasterAndManagerViewController alloc]init];
+            headMasterVC.schoolId = self.schoolHomeId;
+            headMasterVC.schoolType = self.schoolType;
+            headMasterVC.headMasterAlbum = @"1";
+            headMasterVC.homeUserIdentifier = self.userPosition;
+            [self.navigationController pushViewController:headMasterVC animated:YES];
+//            }else{
+//                XXEClassAlbumViewController *classAlbumVC = [[XXEClassAlbumViewController alloc]init];
+//                classAlbumVC.schoolID = self.schoolHomeId;
+//                classAlbumVC.classID = self.classHomeId;
+//                NSLog(@"%@ == %@",self.schoolHomeId,self.classHomeId);
+//                [self.navigationController pushViewController:classAlbumVC animated:YES];
+//            }
             break;
         }
         case 2:
@@ -878,19 +879,20 @@
         {
              NSLog(@"%@",self.userPosition);
             NSLog(@"---相册----");
-            if ([self.userPosition isEqualToString:@"3"] || [self.userPosition isEqualToString:@"4"]) {
-                XXEClassAddressHeadermasterAndManagerViewController *headMasterVC = [[XXEClassAddressHeadermasterAndManagerViewController alloc]init];
-                headMasterVC.schoolId = self.schoolHomeId;
-                headMasterVC.schoolType = self.schoolType;
-                headMasterVC.headMasterAlbum = @"1";
+//            if ([self.userPosition isEqualToString:@"3"] || [self.userPosition isEqualToString:@"4"]) {
+            XXEClassAddressHeadermasterAndManagerViewController *headMasterVC = [[XXEClassAddressHeadermasterAndManagerViewController alloc]init];
+            headMasterVC.schoolId = self.schoolHomeId;
+            headMasterVC.schoolType = self.schoolType;
+            headMasterVC.headMasterAlbum = @"1";
+            headMasterVC.homeUserIdentifier = self.userPosition;
                 [self.navigationController pushViewController:headMasterVC animated:YES];
-            }else{
-                XXEClassAlbumViewController *classAlbumVC = [[XXEClassAlbumViewController alloc]init];
-                classAlbumVC.schoolID = self.schoolHomeId;
-                classAlbumVC.classID = self.classHomeId;
-                NSLog(@"%@ == %@",self.schoolHomeId,self.classHomeId);
-                [self.navigationController pushViewController:classAlbumVC animated:YES];
-            }
+//            }else{
+//                XXEClassAlbumViewController *classAlbumVC = [[XXEClassAlbumViewController alloc]init];
+//                classAlbumVC.schoolID = self.schoolHomeId;
+//                classAlbumVC.classID = self.classHomeId;
+//                NSLog(@"%@ == %@",self.schoolHomeId,self.classHomeId);
+//                [self.navigationController pushViewController:classAlbumVC animated:YES];
+//            }
             break;
         }
         case 2:

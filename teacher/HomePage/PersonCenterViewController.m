@@ -14,7 +14,6 @@
 #import "RCAddFriendViewController.h"
 #import "SVProgressHUD.h"
 #import "XXEFriendMyCircleViewController.h"
-#import "XXEFriendCirclePageViewController.h"
 #import "ReportPicViewController.h"
 #import "XXEfriendListMdoel.h"
 
@@ -78,35 +77,35 @@
     /**
     私聊
      */
-    chatButton = [HHControl createButtonWithFrame:CGRectMake((kWidth - buttonWidth) / 2, bgView.frame.origin.y + bgView.frame.size.height + 50, buttonWidth, buttonHeight) backGruondImageName:@"按钮big650x84" Target:self Action:@selector(chatButttonClick:) Title:@"私   聊"];
+    chatButton = [HHControl createButtonWithFrame:CGRectMake((kWidth - buttonWidth) / 2, bgView.frame.origin.y + bgView.frame.size.height + 50, buttonWidth, buttonHeight) backGruondImageName:@"login_green" Target:self Action:@selector(chatButttonClick:) Title:@"私   聊"];
     [chatButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self.view addSubview:chatButton];
     
     /**
      圈子
      */
-    seeFriendCirileButton = [HHControl createButtonWithFrame:CGRectMake((kWidth - buttonWidth) / 2, chatButton.frame.origin.y + chatButton.frame.size.height + 20 * kWidth / 375, buttonWidth, buttonHeight) backGruondImageName:@"按钮big650x84" Target:self Action:@selector(seeFriendCirileButtonClick:) Title:@"查看圈子"];
+    seeFriendCirileButton = [HHControl createButtonWithFrame:CGRectMake((kWidth - buttonWidth) / 2, chatButton.frame.origin.y + chatButton.frame.size.height + 20 * kWidth / 375, buttonWidth, buttonHeight) backGruondImageName:@"login_green" Target:self Action:@selector(seeFriendCirileButtonClick:) Title:@"查看圈子"];
     [seeFriendCirileButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self.view addSubview:seeFriendCirileButton];
     
     /**
      拉黑
      */
-    blackButton = [HHControl createButtonWithFrame:CGRectMake((kWidth - buttonWidth) / 2, seeFriendCirileButton.frame.origin.y + seeFriendCirileButton.frame.size.height + 20 * kWidth / 375, buttonWidth, buttonHeight) backGruondImageName:@"按钮big650x84" Target:self Action:@selector(blackButtonClick:) Title:@"拉   黑"];
+    blackButton = [HHControl createButtonWithFrame:CGRectMake((kWidth - buttonWidth) / 2, seeFriendCirileButton.frame.origin.y + seeFriendCirileButton.frame.size.height + 20 * kWidth / 375, buttonWidth, buttonHeight) backGruondImageName:@"login_green" Target:self Action:@selector(blackButtonClick:) Title:@"拉   黑"];
     [blackButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self.view addSubview:blackButton];
     
     /**
      举报
      */
-   reportButton  = [HHControl createButtonWithFrame:CGRectMake((kWidth - buttonWidth) / 2, blackButton.frame.origin.y + blackButton.frame.size.height + 20 * kWidth / 375, buttonWidth, buttonHeight) backGruondImageName:@"按钮big650x84" Target:self Action:@selector(reportButtonClick:) Title:@"举   报"];
+   reportButton  = [HHControl createButtonWithFrame:CGRectMake((kWidth - buttonWidth) / 2, blackButton.frame.origin.y + blackButton.frame.size.height + 20 * kWidth / 375, buttonWidth, buttonHeight) backGruondImageName:@"login_green" Target:self Action:@selector(reportButtonClick:) Title:@"举   报"];
     [reportButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self.view addSubview:reportButton];
     
     /**
      删除
      */
-    deleteButton = [HHControl createButtonWithFrame:CGRectMake((kWidth - buttonWidth) / 2, reportButton.frame.origin.y + reportButton.frame.size.height + 20 * kWidth / 375, buttonWidth, buttonHeight) backGruondImageName:@"按钮big650x84" Target:self Action:@selector(deleteButtonClick:) Title:@"删   除"];
+    deleteButton = [HHControl createButtonWithFrame:CGRectMake((kWidth - buttonWidth) / 2, reportButton.frame.origin.y + reportButton.frame.size.height + 20 * kWidth / 375, buttonWidth, buttonHeight) backGruondImageName:@"login_green" Target:self Action:@selector(deleteButtonClick:) Title:@"删   除"];
     [deleteButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self.view addSubview:deleteButton];
     
@@ -133,10 +132,12 @@
 }
 
 - (void)seeFriendCirileButtonClick:(UIButton *)button{
-
-        XXEFriendCirclePageViewController *viewVC = [[XXEFriendCirclePageViewController alloc]init];
-        [self.navigationController pushViewController:viewVC animated:YES
-         ];
+    
+    XXEFriendMyCircleViewController *viewVC = [[XXEFriendMyCircleViewController alloc]init];
+    viewVC.otherXid = [self.friendModel.xid integerValue];
+    viewVC.rootChat = @"从聊天界面过去";
+    [self.navigationController pushViewController:viewVC animated:YES
+     ];
 
 }
 

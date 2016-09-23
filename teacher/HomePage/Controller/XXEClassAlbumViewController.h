@@ -14,4 +14,6 @@
 /** 班级的ID是不一样的 */
 @property (nonatomic, strong)NSString *classID;
 
+/** 身份 */
+@property (nonatomic, copy)NSString *userIdentifier;
 @end

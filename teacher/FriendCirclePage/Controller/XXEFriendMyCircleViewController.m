@@ -96,7 +96,10 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+    if (self.rootChat != nil) {
+    }else{
     self.friendCirccleRefreshBlock();
+    }
     UIButton*rightButton = [[UIButton alloc]initWithFrame:CGRectMake(-10,0,22,22)];
     [rightButton setImage:[UIImage imageNamed:@"查看历史44x44"]  forState:UIControlStateNormal];
     [rightButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];

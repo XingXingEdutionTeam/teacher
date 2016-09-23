@@ -14,5 +14,6 @@ typedef void(^XXEFriendMyCircleViewControllerBlock)();
 
 @property (nonatomic, assign)NSInteger otherXid;
 @property (nonatomic, copy) XXEFriendMyCircleViewControllerBlock friendCirccleRefreshBlock;
-
+/** 从哪里过来的数据 */
+@property (nonatomic ,copy)NSString *rootChat;
 @end
