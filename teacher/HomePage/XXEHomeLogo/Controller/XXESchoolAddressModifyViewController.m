@@ -448,7 +448,7 @@
 }
 
 - (void)submitNewSchoolAddressInfo{
-    XXEModifySchoolAddressApi *modifySchoolAddressApi = [[XXEModifySchoolAddressApi alloc] initWithXid:parameterXid user_id:parameterUser_Id user_type:USER_TYPE school_id:_schoolId position:@"4" province:_provinceCombox.textField.text city:_cityCombox.textField.text district:_areaCombox.textField.text address:_schoolAddressTextView.text];
+    XXEModifySchoolAddressApi *modifySchoolAddressApi = [[XXEModifySchoolAddressApi alloc] initWithXid:parameterXid user_id:parameterUser_Id user_type:USER_TYPE school_id:_schoolId position:_position province:_provinceCombox.textField.text city:_cityCombox.textField.text district:_areaCombox.textField.text address:_schoolAddressTextView.text];
     
 
     [modifySchoolAddressApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {

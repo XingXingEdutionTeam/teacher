@@ -262,6 +262,8 @@
         commentHistoryDetailInfoVC.com_con = model.com_con;
         commentHistoryDetailInfoVC.picString = model.com_pic;
         commentHistoryDetailInfoVC.type = model.type;
+    
+    commentHistoryDetailInfoVC.comment_id = model.commentId;
     commentHistoryDetailInfoVC.collect_conditStr = model.collect_condit;
     commentHistoryDetailInfoVC.collect_id = model.commentId;
         [self.navigationController pushViewController:commentHistoryDetailInfoVC animated:YES];

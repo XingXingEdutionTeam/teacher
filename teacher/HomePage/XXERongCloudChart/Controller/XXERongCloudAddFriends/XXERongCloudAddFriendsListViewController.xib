@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="XXERongCloudAddFriendsListViewController">
+            <connections>
+                <outlet property="LookNearUserBtn" destination="Ds8-aV-NCj" id="Bwp-Es-mdc"/>
+                <outlet property="PhoneAddressBookBtn" destination="1kN-oG-ZPb" id="xay-my-UG6"/>
+                <outlet property="fromClassBtn" destination="fkS-Gx-avF" id="dfV-k0-9xc"/>
+                <outlet property="searchButton" destination="vqv-fA-zMl" id="4Nw-gg-hCD"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IaK-rf-9EP">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vqv-fA-zMl">
+                            <rect key="frame" x="8" y="8" width="359" height="28"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <state key="normal" title="Button">
+                                <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstItem="vqv-fA-zMl" firstAttribute="top" secondItem="IaK-rf-9EP" secondAttribute="top" constant="8" id="5aM-YA-jld"/>
+                        <constraint firstItem="vqv-fA-zMl" firstAttribute="leading" secondItem="IaK-rf-9EP" secondAttribute="leading" constant="8" id="B8R-C4-5qG"/>
+                        <constraint firstAttribute="bottom" secondItem="vqv-fA-zMl" secondAttribute="bottom" constant="8" id="aKR-LE-nFx"/>
+                        <constraint firstAttribute="width" secondItem="IaK-rf-9EP" secondAttribute="height" multiplier="375:44" id="tZO-lT-HGr"/>
+                        <constraint firstAttribute="width" constant="375" id="xHU-90-T0h"/>
+                        <constraint firstAttribute="trailing" secondItem="vqv-fA-zMl" secondAttribute="trailing" constant="8" id="yxA-1a-1gQ"/>
+                    </constraints>
+                </view>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fkS-Gx-avF">
+                    <rect key="frame" x="0.0" y="49" width="375" height="42"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="375" id="Vq4-VH-XMj"/>
+                        <constraint firstAttribute="width" secondItem="fkS-Gx-avF" secondAttribute="height" multiplier="125:14" id="hfc-uh-mq2"/>
+                    </constraints>
+                    <state key="normal" title="从班级通讯录导入"/>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1kN-oG-ZPb">
+                    <rect key="frame" x="0.0" y="96" width="375" height="42"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="375" id="XFe-6k-uK8"/>
+                        <constraint firstAttribute="width" secondItem="1kN-oG-ZPb" secondAttribute="height" multiplier="125:14" id="bsO-qv-ctK"/>
+                    </constraints>
+                    <state key="normal" title="从手机通讯录导入"/>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ds8-aV-NCj">
+                    <rect key="frame" x="0.0" y="143" width="375" height="42"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="375" id="Qxm-Gs-iqo"/>
+                        <constraint firstAttribute="width" secondItem="Ds8-aV-NCj" secondAttribute="height" multiplier="125:14" id="tSJ-pp-8g1"/>
+                    </constraints>
+                    <state key="normal" title="查看附近用户"/>
+                </button>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="fkS-Gx-avF" secondAttribute="trailing" id="11F-eE-1Vc"/>
+                <constraint firstAttribute="trailing" secondItem="1kN-oG-ZPb" secondAttribute="trailing" id="H7O-hN-1sV"/>
+                <constraint firstItem="Ds8-aV-NCj" firstAttribute="top" secondItem="1kN-oG-ZPb" secondAttribute="bottom" constant="5" id="Pig-1m-eTo"/>
+                <constraint firstItem="1kN-oG-ZPb" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="QhM-6e-5PI"/>
+                <constraint firstAttribute="trailing" secondItem="IaK-rf-9EP" secondAttribute="trailing" id="SHG-xU-Why"/>
+                <constraint firstItem="1kN-oG-ZPb" firstAttribute="top" secondItem="fkS-Gx-avF" secondAttribute="bottom" constant="5" id="TsX-oe-EDl"/>
+                <constraint firstItem="Ds8-aV-NCj" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="d1j-PB-eHL"/>
+                <constraint firstItem="IaK-rf-9EP" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="hkh-zJ-Hsi"/>
+                <constraint firstAttribute="trailing" secondItem="Ds8-aV-NCj" secondAttribute="trailing" id="lth-u3-lat"/>
+                <constraint firstItem="fkS-Gx-avF" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="qYX-H1-H2P"/>
+                <constraint firstItem="fkS-Gx-avF" firstAttribute="top" secondItem="IaK-rf-9EP" secondAttribute="bottom" constant="5" id="wIz-3i-Zzl"/>
+                <constraint firstItem="IaK-rf-9EP" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="xcF-w3-TJG"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+        </view>
+    </objects>
+</document>

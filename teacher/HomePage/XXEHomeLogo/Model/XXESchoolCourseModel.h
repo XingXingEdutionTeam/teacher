@@ -27,18 +27,19 @@
  [1] => 丁梦近
  )
  )
+ 
  */
 
-@property (nonatomic, copy) NSString *courseId;
-@property (nonatomic, copy) NSString *course_name;
-@property (nonatomic, copy) NSString *need_num;
-@property (nonatomic, copy) NSString *now_num;
-@property (nonatomic, copy) NSString *original_price;
-@property (nonatomic, copy) NSString *now_price;
-@property (nonatomic, copy) NSString *coin;
-@property (nonatomic, copy) NSString *allow_return;
-@property (nonatomic, copy) NSString *course_pic;
-@property (nonatomic, strong) NSArray *teacher_tname_group;
+@property (nonatomic, copy) NSString<Optional> *courseId;
+@property (nonatomic, copy) NSString<Optional> *course_name;
+@property (nonatomic, copy) NSString<Optional> *need_num;
+@property (nonatomic, copy) NSString<Optional> *now_num;
+@property (nonatomic, copy) NSString<Optional> *original_price;
+@property (nonatomic, copy) NSString<Optional> *now_price;
+@property (nonatomic, copy) NSString<Optional> *coin;
+@property (nonatomic, copy) NSString<Optional> *allow_return;
+@property (nonatomic, copy) NSString<Optional> *course_pic;
+@property (nonatomic, strong) NSArray<Optional> *teacher_tname_group;
 
 
 + (NSArray*)parseResondsData:(id)respondObject;

@@ -9,6 +9,7 @@
 //
 
 #import "XXEClassAddressEveryclassInfoViewController.h"
+#import "XXEXingClassRoomTeacherDetailInfoViewController.h"
 #import "XXEClassAddressTableViewCell.h"
 #import "XXEClassAddressEveryclassInfoApi.h"
 #import "XXEClassAddressStudentInfoModel.h"
@@ -16,7 +17,8 @@
 #import "XXEClassAddressManagerInfoModel.h"
 #import "XXEBabyFamilyInfoViewController.h"
 #import "XXEBabyInfoViewController.h"
-
+//从聊天界面 过来 加好友
+#import "XXERongCloudAddFriendRequestApi.h"
 
 @interface XXEClassAddressEveryclassInfoViewController ()<UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate>
 {
@@ -56,7 +58,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+
     self.flagArray = [[NSMutableArray alloc]init];
     for (int j=0; j<3; j++) {
         NSNumber *flagN = [NSNumber numberWithBool:YES];
@@ -209,8 +211,6 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     
 //    NSLog(@"%@", _dataSourceArray[section]);
-    
-    
     if ([self.flagArray[section] boolValue] == YES) {
         return [_dataSourceArray[section] count];
     }else{
@@ -295,12 +295,40 @@
 //        NSLog(@"%@", model);
         babyFamilyInfoVC.baby_id = model.baby_id;
         babyFamilyInfoVC.familyInfoArray = model.parent_list;
+        babyFamilyInfoVC.fromFlagStr = _fromFlagStr;
         [self.navigationController pushViewController:babyFamilyInfoVC animated:YES];
         
     }else if (indexPath.section == 1){
-    
+        XXEClassAddressTeacherInfoModel *model = _dataSourceArray[indexPath.section][indexPath.row];
+        
+        if ([_fromFlagStr isEqualToString:@"fromRCIM"]) {
+            //从聊天界面 过来 添加 好友
+            //被选中 老师 的xid
+            NSString *teacherXid = model.xid;
+            [self addFriendRequestNotice:teacherXid];
+        }else{
+             //进入 老师 详情
+            XXEXingClassRoomTeacherDetailInfoViewController *xingClassRoomTeacherDetailInfoVC = [[XXEXingClassRoomTeacherDetailInfoViewController alloc] init];
+            xingClassRoomTeacherDetailInfoVC.teacher_id = model.teacher_id;
+            [self.navigationController pushViewController:xingClassRoomTeacherDetailInfoVC animated:YES];
+            
+        }
+        
+        
     }else if (indexPath.section == 2){
-    
+        XXEClassAddressManagerInfoModel *model = _dataSourceArray[indexPath.section][indexPath.row];
+        
+        if ([_fromFlagStr isEqualToString:@"fromRCIM"]) {
+            //从聊天界面 过来 添加 好友
+            //被选中 管理员 的xid
+            NSString *managerXid = model.xid;
+            [self addFriendRequestNotice:managerXid];
+        }else{
+            //进入 管理人员 详情
+            XXEXingClassRoomTeacherDetailInfoViewController *xingClassRoomTeacherDetailInfoVC = [[XXEXingClassRoomTeacherDetailInfoViewController alloc] init];
+            xingClassRoomTeacherDetailInfoVC.teacher_id = model.manager_id;
+            [self.navigationController pushViewController:xingClassRoomTeacherDetailInfoVC animated:YES];
+        }
     }
     
 }
@@ -312,10 +340,8 @@
     XXEClassAddressStudentInfoModel *model = _dataSourceArray[0][tap.view.tag - 100];
 //    if ([XXEUserInfo user].login){
         XXEBabyInfoViewController *babyInfoVC =[[XXEBabyInfoViewController alloc]init];
-//    NSLog(@"%@", model.baby_id);
-    
         babyInfoVC.babyId = model.baby_id;
-    babyInfoVC.babyClassName = _babyClassName;
+        babyInfoVC.babyClassName = _babyClassName;
         [self.navigationController pushViewController:babyInfoVC animated:NO];
 //    }else{
 //        [SVProgressHUD showInfoWithStatus:@"请用账号登录后查看"];
@@ -380,6 +406,8 @@
     
     
 }
+
+
 //返回每个分组的表头视图的高度
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     return 40;
@@ -422,8 +450,6 @@
     return YES;
 }
 
-
-
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
     search_wordsStr = _searchBar.text;
     
@@ -451,6 +477,102 @@
     _searchBar.text=nil;
     _searchBar.showsCancelButton = NO;
     [_searchBar resignFirstResponder];
+}
+
+- (void)addFriendRequestNotice:(NSString *)otherXid{
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"添加好友" message:nil preferredStyle:UIAlertControllerStyleAlert];
+    [alert addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+        //
+        textField.placeholder = @"申请备注";
+    }];
+    
+    UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
+    
+    UIAlertAction *ok = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        //
+        [self requestAddFriend:otherXid];
+    }];
+    [alert addAction:cancel];
+    [alert addAction:ok];
+    
+    [self presentViewController:alert animated:YES completion:nil];
+
+}
+
+
+- (void)requestAddFriend:(NSString *)otherXidStr{
+    
+    XXERongCloudAddFriendRequestApi *rongCloudAddFriendRequestApi = [[XXERongCloudAddFriendRequestApi alloc] initWithXid:parameterXid user_id:parameterUser_Id other_xid:otherXidStr];
+    [rongCloudAddFriendRequestApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
+        //      NSLog(@"2222---   %@", request.responseJSONObject);
+        
+        NSString *codeStr = [NSString stringWithFormat:@"%@", request.responseJSONObject[@"code"]];
+        /*
+         ★其他结果需提醒用户
+         code:4	//不能请求自己
+         code:5	//已经是好友了(不能对好友发起请求)
+         code:6	//对方在我的黑名单中,无法发起请求!
+         code:7	//您已经在对方黑名单中,无法发起请求!
+         code:8	//不能重复对同一个人发起请求!
+         code:9	//对方已同意,可以直接聊天了 (对方设置了任何人请求直接通过)
+         */
+        if ([codeStr isEqualToString:@"1"]) {
+            [self showHudWithString:@"请求发送成功!" forSecond:1.5];
+            
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [self.navigationController popViewControllerAnimated:YES];
+            });
+        }else if ([codeStr isEqualToString:@"4"]) {
+            [self showHudWithString:@"不能请求自己!" forSecond:1.5];
+            
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [self.navigationController popViewControllerAnimated:YES];
+            });
+        }else if ([codeStr isEqualToString:@"5"]) {
+            [self showHudWithString:@"对方已经是您的好友!" forSecond:1.5];
+            
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [self.navigationController popViewControllerAnimated:YES];
+            });
+        }else if ([codeStr isEqualToString:@"6"]) {
+            [self showHudWithString:@"对方在我的黑名单中,无法发起请求!" forSecond:1.5];
+            
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [self.navigationController popViewControllerAnimated:YES];
+            });
+        }else if ([codeStr isEqualToString:@"7"]) {
+            [self showHudWithString:@"您已经在对方黑名单中,无法发起请求!" forSecond:1.5];
+            
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [self.navigationController popViewControllerAnimated:YES];
+            });
+        }else if ([codeStr isEqualToString:@"8"]) {
+            [self showHudWithString:@"不能重复对同一个人发起请求!" forSecond:1.5];
+            
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [self.navigationController popViewControllerAnimated:YES];
+            });
+        }else if ([codeStr isEqualToString:@"9"]) {
+            [self showHudWithString:@"对方已同意,可以直接聊天了!" forSecond:1.5];
+            
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [self.navigationController popViewControllerAnimated:YES];
+            });
+        }else if ([codeStr isEqualToString:@"10"]) {
+            [self showHudWithString:@"添加成功!" forSecond:1.5];
+            
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [self.navigationController popViewControllerAnimated:YES];
+            });
+        }else{
+            [self showHudWithString:@"请求发送失败!" forSecond:1.5];
+        }
+        
+    } failure:^(__kindof YTKBaseRequest *request) {
+        
+        [self showString:@"数据请求失败" forSecond:1.f];
+    }];
+    
 }
 
 

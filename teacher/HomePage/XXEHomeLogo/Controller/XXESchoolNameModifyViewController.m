@@ -55,7 +55,7 @@
         parameterUser_Id = USER_ID;
     }
     
-    XXEModifySchoolNameApi *modifySchoolNameApi = [[XXEModifySchoolNameApi alloc] initWithXid:parameterXid user_id:parameterUser_Id user_type:USER_TYPE school_id:_schoolId position:@"4" name:_schoolNameTextView.text];
+    XXEModifySchoolNameApi *modifySchoolNameApi = [[XXEModifySchoolNameApi alloc] initWithXid:parameterXid user_id:parameterUser_Id user_type:USER_TYPE school_id:_schoolId position:_position name:_schoolNameTextView.text];
     
     [modifySchoolNameApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         //        NSLog(@"%@", request.responseJSONObject);

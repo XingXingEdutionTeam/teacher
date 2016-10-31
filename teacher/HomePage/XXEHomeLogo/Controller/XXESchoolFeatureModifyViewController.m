@@ -36,6 +36,15 @@
         parameterUser_Id = USER_ID;
     }
     
+    if ([self.position isEqualToString:@"1"] || [self.position isEqualToString:@"2"]) {
+        _submitButton.hidden = YES;
+        _featureTextView.editable = NO;
+    }else if ([self.position isEqualToString:@"3"] || [self.position isEqualToString:@"4"]) {
+        _submitButton.hidden = NO;
+        _featureTextView.editable = YES;
+        [_submitButton addTarget:self action:@selector(submitButtonClick) forControlEvents:UIControlEventTouchUpInside];
+    }
+    
     [self createContent];
 }
 
@@ -51,8 +60,7 @@
 
 
 
-- (IBAction)submitButton:(UIButton *)sender {
-    
+- (void)submitButtonClick{
     if ([_featureTextView.text isEqualToString:@""]) {
         [self showHudWithString:@"请完善信息" forSecond:1.5];
     }else{
@@ -87,7 +95,7 @@
 //修改 学校 特点
 - (void)modifySchoolFeatureInfo{
 
-    XXEModifyCharacterApi *modifySchoolCharacterApi = [[XXEModifyCharacterApi alloc] initWithXid:parameterXid user_id:parameterUser_Id user_type:USER_TYPE school_id:_schoolId position:@"4" charact:_featureTextView.text];
+    XXEModifyCharacterApi *modifySchoolCharacterApi = [[XXEModifyCharacterApi alloc] initWithXid:parameterXid user_id:parameterUser_Id user_type:USER_TYPE school_id:_schoolId position:_position charact:_featureTextView.text];
     
     [modifySchoolCharacterApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         //        NSLog(@"%@", request.responseJSONObject);

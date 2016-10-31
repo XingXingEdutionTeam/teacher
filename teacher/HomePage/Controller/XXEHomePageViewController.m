@@ -44,14 +44,22 @@
 #import "XXEManagerHeadmasterPrivateViewController.h"
 #import "XXEManagerHeadmasterPublicViewController.h"
 #import "XXRootChatETabBarController.h"
+#import "RCUserInfo+XXEAddition.h"
+#import <RongIMKit/RongIMKit.h>
+#import "XXERCDataManager.h"
+//课程表
+#import "XXESchoolTimetableViewController.h"
 
-#import "RcRootTabbarViewController.h"
 
 @interface XXEHomePageViewController ()<XXEHomePageHeaderViewDelegate,XXEHomePageMiddleViewDelegate,XXEHomePageBottomViewDelegate>
 {
 
     //左边 选中 学校 的是第几行
     NSInteger didSelectedSchoolRow;
+    //
+    NSString *babySchoolName;
+    NSString *babyClassName;
+    
 }
 
 
@@ -175,7 +183,7 @@
     self.schoolType = model3.school_type;
     self.classHomeId = model1.class_id;
     self.userPosition = model1.position;
-    NSLog(@"身份:%@",self.userPosition);
+//    NSLog(@"学校类型:%@",self.schoolType);
     
     //*******************  学 校  *************************
     self.homeSchoolView = [[WJCommboxView alloc] initWithFrame:CGRectMake(65 * kScreenRatioWidth, 41 * kScreenRatioHeight, 120 * kScreenRatioWidth, 36 * kScreenRatioHeight)];
@@ -219,7 +227,7 @@
     self.homeClassView.textField.placeholder = @"班级";
     self.homeClassView.textField.text = model1.class_name;
     self.userPosition = model1.position;
-    NSLog(@"身份%@",self.userPosition);
+//    NSLog(@"kkk 身份%@",self.userPosition);
     self.homeClassView.textField.textAlignment = NSTextAlignmentCenter;
     self.homeClassView.textField.tag = 103;
     self.homeClassView.textField.layer.cornerRadius =10 * KScreenWidth / 375;
@@ -264,7 +272,7 @@
     }
 }
 
-#pragma mark - 获取身份
+#pragma mark - 获取身份 -----------------------
 - (void)homePageBottomViewText:(NSString *)text
 {
     if ([text isEqualToString:@"校长"]){
@@ -283,18 +291,24 @@
         self.userPosition = @"1";
         [self bottomViewShowPosition:self.userPosition];
     }
+    
+//    NSLog(@"----- *** ----- %@", self.userPosition);
+    
+    
+    [DEFAULTS setObject:self.userPosition forKey:@"POSITION"];
+    [DEFAULTS synchronize];
 }
 
 #pragma mark - 通知选择的学校
 
 - (void)commboxAction:(NSNotification *)notif{
-    NSLog(@"%@",notif.object);
-    NSLog(@"文字是什么%@",self.homeClassView.textField.text);
+//    NSLog(@"%@",notif.object);
+//    NSLog(@"文字是什么%@",self.homeClassView.textField.text);
     switch ([notif.object integerValue]) {
         case 102:
         {
-            NSLog(@"%@",notif.object);
-            NSLog(@"文字是什么%@",self.homeClassView.textField.text);
+//            NSLog(@"%@",notif.object);
+//            NSLog(@"文字是什么%@",self.homeClassView.textField.text);
             [self.homeSchoolView removeFromSuperview];
             
             [self.view addSubview:self.schoolBgView];
@@ -307,7 +321,7 @@
             [self.homeClassView removeFromSuperview];
             [self.view addSubview:self.classBgView];
             [self.view addSubview:self.homeClassView];
-            NSLog(@"老师的身份是什么%@",self.userPosition);
+//            NSLog(@"老师的身份是什么%@",self.userPosition);
         }
             break;
         default:
@@ -334,7 +348,7 @@
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context{
     
     NSString *str = [NSString stringWithFormat:@"%@",context];
-    NSLog(@"str:%@",str);
+//    NSLog(@"str:%@",str);
     
     if ([str integerValue] == 1) {
         if ([object isKindOfClass:[UITextField class]]){
@@ -366,7 +380,9 @@
                         XXEHomePageClassModel *classModel = [model.class_info firstObject];
                         self.classHomeId = classModel.class_id;
                         self.userPosition = classModel.position;
-                        NSLog(@"身份%@",self.userPosition);
+//                        NSLog(@"身份%@ === %@",self.userPosition, self.schoolType);
+                        [DEFAULTS setObject:self.schoolType forKey:@"SCHOOL_TYPE"];
+                        [DEFAULTS synchronize];
                         //获取下部试图
                         [self bottomViewShowPosition:self.userPosition];
                         
@@ -383,6 +399,7 @@
             //如果 改变 右边的年级班级信息  ——》自动关联到 左边 学校
             //取出name的旧值和新值
             // NSString * newNameTwo=[change objectForKey:@"new"];
+//            NSLog(@"hahahaha %@", self.userPosition);
             
         }
     }
@@ -394,6 +411,8 @@
     // Do any additional setup after loading the view.
     NSLog(@"首页控制器");
     self.identifyCard = @"";
+    babySchoolName = @"";
+    babyClassName = @"";
     //获取数据
     [self setupHomePageRequeue];
     
@@ -410,6 +429,7 @@
     [self.view addSubview:self.middleView];
     [self.view addSubview:self.headView];
    
+    [self setRongCloud];
 //    self.tabBarItem.badgeValue = @"10";
 }
 
@@ -423,6 +443,7 @@
     
     homeLogoRootVC.schoolId = _schoolHomeId;
     homeLogoRootVC.classId = _classHomeId;
+    homeLogoRootVC.position = self.userPosition;
     
     [self.navigationController pushViewController:homeLogoRootVC animated:NO];
 }
@@ -549,16 +570,20 @@
 - (void)homeClassOneButtonClick:(NSInteger)tag
 {
     if ([self.userPosition isEqualToString:@"1"] || [self.userPosition isEqualToString:@"2"]) {
+        //教师/班主任
         [self xxe_homePageTeacherIdentifierNum:tag];
     }else if ([self.userPosition isEqualToString:@"3"]){
+        //管理员
         [self xxe_homePageAdminIdentifierNum:tag];
     }else{
+        //校长
         [self xxe_homePageHeaderIdentifierNum:tag];
     }
     
 }
 
 #pragma mark - 身份不同点击的区域就不一样
+#pragma mark ---------- position 1 或 2---------------
 
 - (void)xxe_homePageTeacherIdentifierNum:(NSInteger )numTag
 {
@@ -571,32 +596,31 @@
         }
         case 1:
         {
-            NSLog(@"---相册----");
-            NSLog(@"%@",self.userPosition);
-//            if ([self.userPosition isEqualToString:@"3"] || [self.userPosition isEqualToString:@"4"]) {
-//                XXEClassAddressHeadermasterAndManagerViewController *headMasterVC = [[XXEClassAddressHeadermasterAndManagerViewController alloc]init];
-//                headMasterVC.schoolId = self.schoolHomeId;
-//                headMasterVC.schoolType = self.schoolType;
-//                headMasterVC.headMasterAlbum = @"1";
-//                [self.navigationController pushViewController:headMasterVC animated:YES];
-//            }else{
+//            NSLog(@"---相册----");
+//            NSLog(@"%@",self.userPosition);
+
                 XXEClassAlbumViewController *classAlbumVC = [[XXEClassAlbumViewController alloc]init];
                 classAlbumVC.schoolID = self.schoolHomeId;
                 classAlbumVC.classID = self.classHomeId;
                 NSLog(@"%@ == %@",self.schoolHomeId,self.classHomeId);
                 [self.navigationController pushViewController:classAlbumVC animated:YES];
-//            }
             break;
         }
         case 2:
+        {
             NSLog(@"----课程表----");
+            
+            XXESchoolTimetableViewController *schoolTimetableVC = [[XXESchoolTimetableViewController alloc] init];
+            
+            [self.navigationController pushViewController:schoolTimetableVC animated:YES];
+            
             break;
+        }
         case 3:
         {
             //通讯录
             if ([self.userPosition isEqualToString:@"1"] || [self.userPosition isEqualToString:@"2"]) {
             
-            //XXEClassAddressEveryclassInfoViewController
                 XXEClassAddressEveryclassInfoViewController *classAddressEveryclassInfoVC = [[XXEClassAddressEveryclassInfoViewController alloc] init];
                 classAddressEveryclassInfoVC.schoolId = _schoolHomeId;
                 classAddressEveryclassInfoVC.selectedClassId = _classHomeId;
@@ -615,10 +639,15 @@
         case 4:
         {
             NSLog(@"----聊天----");
+            if ([XXEUserInfo user].login) {
+                
             XXRootChatETabBarController *rootChatVC = [[XXRootChatETabBarController alloc]init];
             rootChatVC.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:rootChatVC animated:NO];
+        }else{
             
+            [self showHudWithString:@"请用账号登录" forSecond:1.5];
+        }
             break;
         }
         case 8:
@@ -706,6 +735,8 @@
     }
 }
 
+
+#pragma mark ---------- position 3---------------
 - (void)xxe_homePageAdminIdentifierNum:(NSInteger )numTag
 {
     switch (numTag) {
@@ -719,52 +750,51 @@
         {
             NSLog(@"---相册----");
              NSLog(@"%@",self.userPosition);
-//            if ([self.userPosition isEqualToString:@"3"] || [self.userPosition isEqualToString:@"4"]) {
-            XXEClassAddressHeadermasterAndManagerViewController *headMasterVC = [[XXEClassAddressHeadermasterAndManagerViewController alloc]init];
-            headMasterVC.schoolId = self.schoolHomeId;
-            headMasterVC.schoolType = self.schoolType;
-            headMasterVC.headMasterAlbum = @"1";
-            headMasterVC.homeUserIdentifier = self.userPosition;
-            [self.navigationController pushViewController:headMasterVC animated:YES];
-//            }else{
-//                XXEClassAlbumViewController *classAlbumVC = [[XXEClassAlbumViewController alloc]init];
-//                classAlbumVC.schoolID = self.schoolHomeId;
-//                classAlbumVC.classID = self.classHomeId;
-//                NSLog(@"%@ == %@",self.schoolHomeId,self.classHomeId);
-//                [self.navigationController pushViewController:classAlbumVC animated:YES];
-//            }
+
+            XXEClassAlbumViewController *classAlbumVC = [[XXEClassAlbumViewController alloc]init];
+            classAlbumVC.schoolID = self.schoolHomeId;
+            classAlbumVC.classID = self.classHomeId;
+            NSLog(@"%@ == %@",self.schoolHomeId,self.classHomeId);
+            [self.navigationController pushViewController:classAlbumVC animated:YES];
             break;
         }
         case 2:
+        {
             NSLog(@"----课程表----");
+            
+            XXESchoolTimetableViewController *schoolTimetableVC = [[XXESchoolTimetableViewController alloc] init];
+            
+            [self.navigationController pushViewController:schoolTimetableVC animated:YES];
+            
             break;
+        }
         case 3:
         {
             //通讯录
-            if ([self.userPosition isEqualToString:@"1"] || [self.userPosition isEqualToString:@"2"]) {
-                
-                //XXEClassAddressEveryclassInfoViewController
-                XXEClassAddressEveryclassInfoViewController *classAddressEveryclassInfoVC = [[XXEClassAddressEveryclassInfoViewController alloc] init];
-                classAddressEveryclassInfoVC.schoolId = _schoolHomeId;
-                classAddressEveryclassInfoVC.selectedClassId = _classHomeId;
-                classAddressEveryclassInfoVC.babyClassName = _homeSchoolView.textField.text;
-                [self.navigationController pushViewController:classAddressEveryclassInfoVC animated:YES];
-            }else if([self.userPosition isEqualToString:@"3"] || [self.userPosition isEqualToString:@"4"]){
+//            if([self.userPosition isEqualToString:@"3"] || [self.userPosition isEqualToString:@"4"]){
                 XXEClassAddressHeadermasterAndManagerViewController *classAddressHeadermasterAndManagerVC = [[XXEClassAddressHeadermasterAndManagerViewController alloc] init];
                 classAddressHeadermasterAndManagerVC.schoolId = _schoolHomeId;
                 classAddressHeadermasterAndManagerVC.schoolType = _schoolType;
                 
                 [self.navigationController pushViewController:classAddressHeadermasterAndManagerVC animated:YES];
-            }
+//            }
             
             break;
         }
         case 4:
         {
             NSLog(@"----聊天----");
+            
+            if ([XXEUserInfo user].login) {
+                
             XXRootChatETabBarController *rootChatVC = [[XXRootChatETabBarController alloc]init];
             rootChatVC.hidesBottomBarWhenPushed = YES;
+            
             [self.navigationController pushViewController:rootChatVC animated:NO];
+        }else{
+            
+            [self showHudWithString:@"请用账号登录" forSecond:1.5];
+        }
             
             break;
         }
@@ -850,7 +880,7 @@
     }
 }
 
-
+#pragma mark ---------- position 4---------------
 - (void)xxe_homePageHeaderIdentifierNum:(NSInteger )numTag
 {
     switch (numTag) {
@@ -864,53 +894,47 @@
         {
              NSLog(@"%@",self.userPosition);
             NSLog(@"---相册----");
-//            if ([self.userPosition isEqualToString:@"3"] || [self.userPosition isEqualToString:@"4"]) {
-            XXEClassAddressHeadermasterAndManagerViewController *headMasterVC = [[XXEClassAddressHeadermasterAndManagerViewController alloc]init];
-            headMasterVC.schoolId = self.schoolHomeId;
-            headMasterVC.schoolType = self.schoolType;
-            headMasterVC.headMasterAlbum = @"1";
-            headMasterVC.homeUserIdentifier = self.userPosition;
-                [self.navigationController pushViewController:headMasterVC animated:YES];
-//            }else{
-//                XXEClassAlbumViewController *classAlbumVC = [[XXEClassAlbumViewController alloc]init];
-//                classAlbumVC.schoolID = self.schoolHomeId;
-//                classAlbumVC.classID = self.classHomeId;
-//                NSLog(@"%@ == %@",self.schoolHomeId,self.classHomeId);
-//                [self.navigationController pushViewController:classAlbumVC animated:YES];
-//            }
+            XXEClassAlbumViewController *classAlbumVC = [[XXEClassAlbumViewController alloc]init];
+            classAlbumVC.schoolID = self.schoolHomeId;
+            classAlbumVC.classID = self.classHomeId;
+            NSLog(@"%@ == %@",self.schoolHomeId,self.classHomeId);
+            [self.navigationController pushViewController:classAlbumVC animated:YES];
             break;
         }
         case 2:
-            NSLog(@"----课程表----");
-            break;
-        case 3:
+            {
+                NSLog(@"----课程表----");
+                
+                XXESchoolTimetableViewController *schoolTimetableVC = [[XXESchoolTimetableViewController alloc] init];
+                
+                [self.navigationController pushViewController:schoolTimetableVC animated:YES];
+                
+                break;
+            }        case 3:
         {
             //通讯录
-            if ([self.userPosition isEqualToString:@"1"] || [self.userPosition isEqualToString:@"2"]) {
-                
-                //XXEClassAddressEveryclassInfoViewController
-                XXEClassAddressEveryclassInfoViewController *classAddressEveryclassInfoVC = [[XXEClassAddressEveryclassInfoViewController alloc] init];
-                classAddressEveryclassInfoVC.schoolId = _schoolHomeId;
-                classAddressEveryclassInfoVC.selectedClassId = _classHomeId;
-                classAddressEveryclassInfoVC.babyClassName = _homeSchoolView.textField.text;
-                [self.navigationController pushViewController:classAddressEveryclassInfoVC animated:YES];
-            }else if([self.userPosition isEqualToString:@"3"] || [self.userPosition isEqualToString:@"4"]){
+//           if([self.userPosition isEqualToString:@"3"] || [self.userPosition isEqualToString:@"4"]){
                 XXEClassAddressHeadermasterAndManagerViewController *classAddressHeadermasterAndManagerVC = [[XXEClassAddressHeadermasterAndManagerViewController alloc] init];
                 classAddressHeadermasterAndManagerVC.schoolId = _schoolHomeId;
                 classAddressHeadermasterAndManagerVC.schoolType = _schoolType;
                 
                 [self.navigationController pushViewController:classAddressHeadermasterAndManagerVC animated:YES];
-            }
+//            }
             
             break;
         }
         case 4:
         {
             NSLog(@"----聊天----");
+            if ([XXEUserInfo user].login) {
+                
             XXRootChatETabBarController *rootChatVC = [[XXRootChatETabBarController alloc]init];
             rootChatVC.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:rootChatVC animated:NO];
+        }else{
             
+            [self showHudWithString:@"请用账号登录" forSecond:1.5];
+        }
             break;
         }
         case 5:
@@ -1000,6 +1024,59 @@
     [self.homeSchoolView.textField removeObserver:self forKeyPath:@"text"];
     [self.homeClassView.textField removeObserver:self forKeyPath:@"text"];
 }
+
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    
+    babySchoolName = _homeSchoolView.textField.text;
+    babyClassName = _homeClassView.textField.text;
+    
+    [DEFAULTS setObject:babySchoolName forKey:@"SCHOOL_NAME"];
+    [DEFAULTS setObject:babyClassName forKey:@"CLASS_NAME"];
+    
+    [DEFAULTS setObject:self.schoolHomeId forKey:@"SCHOOL_ID"];
+    
+    [DEFAULTS setObject:self.classHomeId forKey:@"CLASS_ID"];
+    
+    //身份
+//    [DEFAULTS setObject:self.userPosition forKey:@"POSITION"];
+    
+//    [DEFAULTS setObject:self.schoolType forKey:@"SCHOOL_TYPE"];
+    
+    [DEFAULTS synchronize];
+    
+    
+//   NSLog(@"viewWillDisappear:  %@ == %@", self.userPosition, self.schoolType);
+}
+
+#pragma mark - 融云
+- (void)setRongCloud
+{
+    [[RCIM sharedRCIM] initWithAppKey:MyRongCloudAppKey];
+    
+    NSString *token = [XXEUserInfo user].token;
+    NSString *userId = [XXEUserInfo user].user_id;
+    NSString *userNickName = [XXEUserInfo user].nickname;
+    NSString *userImage = [XXEUserInfo user].user_head_img;
+    
+    RCUserInfo *currentUserInfo = [[RCUserInfo alloc]initWithUserId:userId      name:userNickName portrait:userImage];
+    
+    [RCIM sharedRCIM].currentUserInfo = currentUserInfo;
+    [[RCIM sharedRCIM]connectWithToken:token success:^(NSString *userId) {
+        
+//        NSLog(@"%@ --- %@ --- %@ --- %@ ", token, userId, userNickName, userImage);
+        
+    [[XXERCDataManager shareManager] loginRongCloudWithUserInfo:[[RCUserInfo alloc] initWithUserId:userId name:userNickName portrait:userImage QQ:nil sex:nil age:nil]  withToken:token];
+        NSLog(@"登陆成功当前用户ID为%@",userId);
+        
+    } error:^(RCConnectErrorCode status) {
+       NSLog(@"登录错误%ld",(long)status);
+    } tokenIncorrect:^{
+       NSLog(@"token错误"); 
+    }];
+}
+
+
 
 
 /*

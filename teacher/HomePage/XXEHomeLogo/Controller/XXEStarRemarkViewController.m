@@ -86,7 +86,7 @@
     NSString *pageStr = [NSString stringWithFormat:@"%ld", page];
 //    NSLog(@"***  %@", _schoolId);
     
-    XXEStarRemarkApi *starRemarkApi = [[XXEStarRemarkApi alloc] initWithXid:parameterXid user_id:parameterUser_Id user_type:USER_TYPE school_id:@"7" page:pageStr];
+    XXEStarRemarkApi *starRemarkApi = [[XXEStarRemarkApi alloc] initWithXid:parameterXid user_id:parameterUser_Id user_type:USER_TYPE school_id:_schoolId page:pageStr];
     [starRemarkApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
 //            NSLog(@"2222---   %@", request.responseJSONObject);
         NSString *codeStr = [NSString stringWithFormat:@"%@", request.responseJSONObject[@"code"]];

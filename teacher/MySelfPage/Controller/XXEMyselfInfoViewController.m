@@ -19,10 +19,10 @@
 #import "VPImageCropperViewController.h"
 #import "XXEXingCoinViewController.h"
 #import "XXELoginViewController.h"
-#import "XXEForgetPassWordViewController.h"
+#import "XXEModifyCodeViewController.h"
 #import "XXEMySelfInfoAlbumViewController.h"
 #import "XXEMyselfInfoGraduateInstitutionsViewController.h"
-
+#import "AppDelegate.h"
 
 #define ORIGINAL_MAX_WIDTH 640.0f
 
@@ -74,11 +74,20 @@
     NSString *next_get_coin;
     UILabel *next_get_coinLabel;
     
+    //更换头像 时 提示框
+    UIActionSheet *headImageActionSheet;
+    //修改 密码
+    UIActionSheet *modifyActionSheet;
+    
 }
+
+
 
 @end
 
 @implementation XXEMyselfInfoViewController
+
+
 
 - (void)viewWillAppear:(BOOL)animated
 {
@@ -489,8 +498,8 @@
 #pragma mark - =================点击 头像 ,编辑 头像=================
 
 - (void)editPortrait{
-    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"拍照", @"从相册中选取", nil];
-    [actionSheet showInView:self.view];
+    headImageActionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"拍照", @"从相册中选取", nil];
+    [headImageActionSheet showInView:self.view];
 }
 
 #pragma mark - VPImageCropperDeletegate
@@ -539,41 +548,69 @@
 
 #pragma mark UIActionSheetDelegate
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if (buttonIndex == 0) {
-        // 拍照
-        if ([self isCameraAvailable] && [self doesCameraSupportTakingPhotos]) {
-            UIImagePickerController *controller = [[UIImagePickerController alloc] init];
-            controller.sourceType = UIImagePickerControllerSourceTypeCamera;
-            if ([self isFrontCameraAvailable]) {
-                controller.cameraDevice = UIImagePickerControllerCameraDeviceFront;
+    if (actionSheet == headImageActionSheet) {
+        if (buttonIndex == 0) {
+            // 拍照
+            if ([self isCameraAvailable] && [self doesCameraSupportTakingPhotos]) {
+                UIImagePickerController *controller = [[UIImagePickerController alloc] init];
+                controller.sourceType = UIImagePickerControllerSourceTypeCamera;
+                if ([self isFrontCameraAvailable]) {
+                    controller.cameraDevice = UIImagePickerControllerCameraDeviceFront;
+                }
+                NSMutableArray *mediaTypes = [[NSMutableArray alloc] init];
+                [mediaTypes addObject:(__bridge NSString *)kUTTypeImage];
+                controller.mediaTypes = mediaTypes;
+                controller.delegate = self;
+                [self presentViewController:controller
+                                   animated:YES
+                                 completion:^(void){
+                                     //    NSLog(@"Picker View Controller is presented");
+                                 }];
             }
-            NSMutableArray *mediaTypes = [[NSMutableArray alloc] init];
-            [mediaTypes addObject:(__bridge NSString *)kUTTypeImage];
-            controller.mediaTypes = mediaTypes;
-            controller.delegate = self;
-            [self presentViewController:controller
-                               animated:YES
-                             completion:^(void){
-                                 //    NSLog(@"Picker View Controller is presented");
-                             }];
+            
+        } else if (buttonIndex == 1) {
+            // 从相册中选取
+            if ([self isPhotoLibraryAvailable]) {
+                UIImagePickerController *controller = [[UIImagePickerController alloc] init];
+                controller.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+                NSMutableArray *mediaTypes = [[NSMutableArray alloc] init];
+                [mediaTypes addObject:(__bridge NSString *)kUTTypeImage];
+                controller.mediaTypes = mediaTypes;
+                controller.delegate = self;
+                [self presentViewController:controller
+                                   animated:YES
+                                 completion:^(void){
+                                     //   NSLog(@"Picker View Controller is presented");
+                                 }];
+            }
+        }
+
+    }else if (actionSheet == modifyActionSheet){
+        
+#pragma mark - ============== 修改登录密码/修改支付密码 ============
+        //修改登录密码  modifyLoginCode  /修改支付密码 modifyPayCode
+        if (buttonIndex == 0) {
+//            NSLog(@"000");
+            //修改登录密码
+        XXEModifyCodeViewController *modifyCodeVC = [[XXEModifyCodeViewController alloc] init];
+            modifyCodeVC.fromflagStr = @"modifyLoginCode";
+            
+        [self.navigationController pushViewController:modifyCodeVC animated:YES];
+            
+        }else if (buttonIndex == 1) {
+//            NSLog(@"1111");
+            //修改支付密码
+            XXEModifyCodeViewController *modifyCodeVC = [[XXEModifyCodeViewController alloc] init];
+            modifyCodeVC.fromflagStr = @"modifyPayCode";
+            
+            [self.navigationController pushViewController:modifyCodeVC animated:YES];
+        }else if (buttonIndex == 2){
+//            NSLog(@"2222");
+            //取消
         }
         
-    } else if (buttonIndex == 1) {
-        // 从相册中选取
-        if ([self isPhotoLibraryAvailable]) {
-            UIImagePickerController *controller = [[UIImagePickerController alloc] init];
-            controller.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-            NSMutableArray *mediaTypes = [[NSMutableArray alloc] init];
-            [mediaTypes addObject:(__bridge NSString *)kUTTypeImage];
-            controller.mediaTypes = mediaTypes;
-            controller.delegate = self;
-            [self presentViewController:controller
-                               animated:YES
-                             completion:^(void){
-                                 //   NSLog(@"Picker View Controller is presented");
-                             }];
-        }
     }
+    
 }
 
 #pragma mark - UIImagePickerControllerDelegate
@@ -732,6 +769,15 @@
 
 }
 
+//修改密码
+- (void)modifyCodeButtonClick{
+    modifyActionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"修改登录密码", @"修改支付密码" , nil];
+    modifyActionSheet.actionSheetStyle = UIActionSheetStyleDefault;
+    
+    [modifyActionSheet showInView:self.view];
+    
+}
+
 //注销登录
 - (void)cancelButtonClick{
   UIAlertView *alertView =[[UIAlertView alloc]initWithTitle:@"提示" message:@"是否确定注销登录?" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
@@ -747,7 +793,6 @@
             break;
         case 1:
         {
-            
             [[XXEUserInfo user]cleanUserInfo];
             [XXEUserInfo user].login = NO;
             XXELoginViewController *landVC =[[XXELoginViewController alloc]init];
@@ -762,12 +807,7 @@
 }
 
 
-//修改密码
-- (void)modifyCodeButtonClick{
-    XXEForgetPassWordViewController *forgetPassWordVC = [[XXEForgetPassWordViewController alloc] init];
-    
-    [self.navigationController pushViewController:forgetPassWordVC animated:YES];
-}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

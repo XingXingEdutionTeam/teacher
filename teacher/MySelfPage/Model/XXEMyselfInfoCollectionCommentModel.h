@@ -31,6 +31,8 @@
  [tname] => 粱红水
  [head_img] => app_upload/text/teacher/1.jpg
  [head_img_type] => 0
+ 
+ baby_tname
  )
  */
 @property (nonatomic, copy) NSString *collectionId;
@@ -39,7 +41,7 @@
 @property (nonatomic, copy) NSString *type;
 @property (nonatomic, copy) NSString *condit;
 @property (nonatomic, copy) NSString *baby_id;
-
+@property (nonatomic, copy) NSString *baby_tname;
 
 @property (nonatomic, copy) NSString *puser_id;
 @property (nonatomic, copy) NSString *ask_tm;

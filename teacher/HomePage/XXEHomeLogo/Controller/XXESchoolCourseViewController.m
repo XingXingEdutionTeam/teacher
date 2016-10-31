@@ -9,6 +9,7 @@
 //
 
 #import "XXESchoolCourseViewController.h"
+#import "XXEXingClassRoomCourseDetailInfoViewController.h"
 #import "XXESchoolCourseTableViewCell.h"
 #import "XXESchoolCourseModel.h"
 
@@ -125,10 +126,11 @@
     
     if ([model.teacher_tname_group count] != 0) {
         
-        for (int i = 0; i < [model.teacher_tname_group count]; i++) {
-            UILabel *teacherNameLabel = [UILabel createLabelWithFrame:CGRectMake((190 + 65 * i) * kWidth / 375, 35 , 60 * kWidth / 375, 20) Font:14 * kWidth / 375 Text:model.teacher_tname_group[i]];
+//        for (int i = 0; i < [model.teacher_tname_group count]; i++) {
+//            UILabel *teacherNameLabel = [UILabel createLabelWithFrame:CGRectMake((190 + 65 * i) * kWidth / 375, 35 , 60 * kWidth / 375, 20) Font:14 * kWidth / 375 Text:model.teacher_tname_group[i]];
+            UILabel *teacherNameLabel = [UILabel createLabelWithFrame:CGRectMake((190 + 65 * 0) * kWidth / 375, 35 , 60 * kWidth / 375, 20) Font:14 * kWidth / 375 Text:model.teacher_tname_group[0]];
             [cell.contentView addSubview:teacherNameLabel];
-        }
+//        }
         
     }
     
@@ -165,17 +167,11 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
-//    XXECommentHistoryDetailInfoViewController *commentHistoryDetailInfoVC = [[XXECommentHistoryDetailInfoViewController alloc] init];
-//    
-//    XXECommentRequestModel *model = _dataSourceArray[indexPath.row];
-//    commentHistoryDetailInfoVC.name = model.baby_tname;
-//    commentHistoryDetailInfoVC.ask_con = model.ask_con;
-//    commentHistoryDetailInfoVC.ask_time = model.ask_tm;
-//    commentHistoryDetailInfoVC.com_con = model.com_con;
-//    commentHistoryDetailInfoVC.picString = model.com_pic;
-//    commentHistoryDetailInfoVC.type = model.type;
-//    
-//    [self.navigationController pushViewController:commentHistoryDetailInfoVC animated:YES];
+    XXEXingClassRoomCourseDetailInfoViewController *xingClassRoomCourseDetailInfoVC = [[XXEXingClassRoomCourseDetailInfoViewController alloc] init];
+    XXESchoolCourseModel *model = _dataSourceArray[indexPath.row];
+    xingClassRoomCourseDetailInfoVC.course_id = model.courseId;
+    
+    [self.navigationController pushViewController:xingClassRoomCourseDetailInfoVC animated:YES];
     
 }
 

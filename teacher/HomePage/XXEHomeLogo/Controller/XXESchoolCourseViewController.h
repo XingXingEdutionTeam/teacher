@@ -12,6 +12,7 @@
 
 @property (nonatomic, strong) NSString *schoolId;
 @property (nonatomic, strong) NSString *classId;
+@property (nonatomic, copy) NSString *position;
 
 @property (nonatomic, strong) NSMutableArray *course_groupArray;
 

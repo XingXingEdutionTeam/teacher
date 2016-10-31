@@ -89,6 +89,16 @@
     return _passWordTextField;
 }
 
+//    1. 懒加载初始化：
+- (CLLocationManager *)locationManager{
+    if(!_locationManager){
+        self.locationManager = [[CLLocationManager alloc] init];
+        self.locationManager.delegate = self;
+    }
+    return _locationManager;
+}
+
+
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
@@ -144,16 +154,24 @@
 - (void)startLocationManager
 {
     //    判断定位操作是否允许
-    if ([CLLocationManager locationServicesEnabled])
+    if ([CLLocationManager locationServicesEnabled] &&[CLLocationManager authorizationStatus] != kCLAuthorizationStatusDenied)
     {
-        //定位初始化
-        _locationManager = [[CLLocationManager alloc]init];
-        _locationManager.delegate = self;
-        _locationManager.desiredAccuracy = kCLLocationAccuracyBest;
-        _locationManager.distanceFilter = 1000;//横向移动距离更新
-        [_locationManager requestWhenInUseAuthorization];
+
+        //经度
+        self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+        //每隔多少米 更新 一次
+        //kCLDistanceFilterNone 任意 移动 都会更新
+//        _locationManager.distanceFilter = kCLDistanceFilterNone;//横向移动距离更新
+        self.locationManager.distanceFilter = 0.01;
+        
+        if (__IPHONE_8_0) {
+        
+        [self.locationManager requestWhenInUseAuthorization];
+//        [self.locationManager requestAlwaysAuthorization];
+            
+        }
         //定位开始
-        [_locationManager startUpdatingLocation];
+        [self.locationManager startUpdatingLocation];
     }else{
         //提示用户无法定位操作
         [self initAlertWithTitle:@"温馨提醒" Message:@"您尚未开启定位是否开启" ActionTitle:@"开启" CancelTitle:@"取消" URLS:@"prefs:root=LOCATION_SERVICES"];
@@ -186,17 +204,23 @@
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray<CLLocation *> *)locations
 {
-    CLLocation *currentLocation = [locations lastObject];
+    CLLocation *currentLocation = [locations firstObject];
     //获取当前所在城市的名字
     NSLog(@"经度%f",currentLocation.coordinate.longitude);
     NSLog(@"纬度%f",currentLocation.coordinate.latitude);
     self.longitudeString = [NSString stringWithFormat:@"%f",currentLocation.coordinate.longitude];
     self.latitudeString = [NSString stringWithFormat:@"%f",currentLocation.coordinate.latitude];
+    
+    //沙盒 存储 当前位置
+    [DEFAULTS setObject:self.longitudeString forKey:@"Longitude"];
+    [DEFAULTS setObject:self.latitudeString forKey:@"LatitudeString"];
+    [DEFAULTS synchronize];
+    
     NSLog(@"Token%@ loginType%@",self.loginThirdWeiXinToken,self.loginThirdType);
     if (self.loginThirdWeiXinToken.length > 12) {
         [self loginInterFaceApiSnsAccount:self.loginThirdWeiXinToken LoginTYpe:self.loginThirdType];
     }
-    [manager stopUpdatingLocation];
+//    [manager stopUpdatingLocation];
 }
 
 /** 创建视图View */
@@ -341,7 +365,8 @@
     //创建UIlabel
     UILabel *messageLabel = [[UILabel alloc]init];
     messageLabel.text = @"适用其他账号登录";
-    messageLabel.textColor = XXEColorFromRGB(204, 204, 204);
+//    messageLabel.textColor = XXEColorFromRGB(204, 204, 204);
+    messageLabel.textColor = [UIColor lightGrayColor];
     messageLabel.font = [UIFont systemFontOfSize:14];
     [self.view addSubview:messageLabel];
     [messageLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -424,12 +449,16 @@
 {
     if ([self isChinaMobile:self.userNameTextField.text] && [self detectionPassword:self.passWordTextField.text]) {
         NSLog(@"可以登录");
+        
+//         [[XXEUserInfo user]cleanUserInfo];
+//         [XXEUserInfo user].login = NO;
+
         self.login_type = @"1";
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         
             XXELoginApi *loginApi = [[XXELoginApi alloc]initLoginWithUserName:self.userNameTextField.text PassWord:self.passWordTextField.text LoginType:self.login_type Lng:self.longitudeString Lat:self.latitudeString];
             [loginApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
-                NSLog(@"%@",request.responseJSONObject);
+//                NSLog(@"%@",request.responseJSONObject);
                 NSDictionary *data = [request.responseJSONObject objectForKey:@"data"];
                 NSString *code = [request.responseJSONObject objectForKey:@"code"];
                 NSLog(@"错误信息是什么%@",[request.responseJSONObject objectForKey:@"msg"]);
@@ -449,7 +478,7 @@
                     }else{
                     
                     [_loginButton ExitAnimationCompletion:^{
-                        NSLog(@"---点击登录按钮-------");
+//                        NSLog(@"111---点击登录按钮-------");
                         
                         XXETabBarControllerConfig *tabBarControllerConfig = [[XXETabBarControllerConfig alloc]init];
                         UIWindow *window = [UIApplication sharedApplication].keyWindow;
@@ -516,7 +545,7 @@
     self.login_type = @"10";
     XXELoginApi *loginApi = [[XXELoginApi alloc]initLoginWithUserName:@"" PassWord:@"" LoginType:@"10" Lng:@"" Lat:@""];
     [loginApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
-        NSLog(@"%@",request.responseJSONObject);
+//        NSLog(@"访客登录 -- %@",request.responseJSONObject);
         NSDictionary *data = [request.responseJSONObject objectForKey:@"data"];
         NSString *code = [request.responseJSONObject objectForKey:@"code"];
         NSString *msg = [request.responseJSONObject objectForKey:@"msg"];

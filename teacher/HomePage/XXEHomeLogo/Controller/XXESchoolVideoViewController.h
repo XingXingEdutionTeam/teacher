@@ -10,4 +10,7 @@
 
 @interface XXESchoolVideoViewController : XXEBaseViewController
 
+@property (nonatomic, copy) NSString *position;
+
+
 @end

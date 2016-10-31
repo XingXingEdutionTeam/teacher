@@ -65,6 +65,10 @@
     //加入启动图
 //    [self setupControllers];
     
+    
+    //初始化 融云
+    [self initRongClould];
+    
     return YES;
 }
 
@@ -135,5 +139,22 @@
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
+
+-(void)initRongClould{
+    // 初始化 SDK，传入 AppKey
+    self.friendsArray = [[NSMutableArray alloc]init];
+    self.groupsArray = [[NSMutableArray alloc]init];
+    [[RCIM sharedRCIM] initWithAppKey:MyRongCloudAppKey];
+    //设置用户信息提供者为 [RCDataManager shareManager]
+    [RCIM sharedRCIM].userInfoDataSource = [XXERCDataManager shareManager];
+    //设置群组信息提供者为 [RCDataManager shareManager]
+    [RCIM sharedRCIM].groupInfoDataSource = [XXERCDataManager shareManager];
+    [RCIM sharedRCIM].enableMessageAttachUserInfo = YES;
+}
+
++ (AppDelegate* )shareAppDelegate {
+    return (AppDelegate*)[UIApplication sharedApplication].delegate;
+}
+
 
 @end

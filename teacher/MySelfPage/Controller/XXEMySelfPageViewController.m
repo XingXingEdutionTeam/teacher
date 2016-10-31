@@ -7,14 +7,16 @@
 //
 
 #import "XXEMySelfPageViewController.h"
-#import "XXERedFlowerDetialTableViewCell.h"
-#import "XXEMySelfInfoApi.h"
-#import "XXEMyselfInfoViewController.h"
 #import "XXEMyselfInfoCollectionViewController.h"
-#import "XXEMyselfBlackListViewController.h"
-#import "XXEMyselfSystemSettingViewController.h"
 #import "XXEMyselfPrivacySettingViewController.h"
-
+#import "XXEMyselfSystemSettingViewController.h"
+#import "XXEMyselfBlackListViewController.h"
+#import "XXERedFlowerDetialTableViewCell.h"
+#import "XXEWalletManagerViewController.h"
+#import "WMConversationViewController.h"
+#import "XXEMyselfInfoViewController.h"
+#import "XXERootFriendListController.h"
+#import "XXEMySelfInfoApi.h"
 
 @interface XXEMySelfPageViewController ()<UITableViewDelegate, UITableViewDataSource>
 {
@@ -45,12 +47,21 @@
     NSString *coin_totalStr;
     //等级
     NSString *lvStr;
+    UILabel *lvLabel;
+    UILabel *titleLbl;
     //性别
     UIImage *sexPic;
     
     //用户名
     UILabel *nameLbl;
     NSString *nameStr;
+    //用户 身份
+    NSString *userPosition;
+    //学校 类型
+    NSString *schoolType;
+    //进度条
+    UIProgressView * progressView;
+    
 
 }
 
@@ -59,19 +70,39 @@
 
 @implementation XXEMySelfPageViewController
 
-- (void)viewWillAppear:(BOOL)animated
-{
+
+- (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    self.view.backgroundColor = XXEBackgroundColor;
+
+    userPosition = [DEFAULTS objectForKey:@"POSITION"];
+    schoolType = [DEFAULTS objectForKey:@"SCHOOL_TYPE"];
     
-#warning  如果是私立校长身份 (在头视图上出现 "我的订单"  "我的钱包", 下面的列表中没有 "我的订单")
-    //    if (<#condition#>) {
-    pictureArray = [[NSMutableArray alloc] initWithObjects:@"myself_info_icon40x40", @"myself_friend_icon40x44", @"myself_chat_icon40x40", @"myself_collection_icon40x40", @"myself_friend_circle_icon40x40", @"myself_blackorder_icon40x40", @"myself_system_setting_icon40x40", @"myself_privacy_setting_icon40x40", nil];
-    titleArray = [[NSMutableArray alloc] initWithObjects:@"我的资料",@"我的好友",@"我的聊天",@"我的收藏" , @"我的圈子", @"我的黑名单", @"系统设置", @"隐私设置", nil];
-//}else {
-//    pictureArray = [[NSMutableArray alloc] initWithObjects:@"myself_info_icon40x40", @"myself_order_icon40x48", @"myself_friend_icon40x44", @"myself_chat_icon40x40", @"myself_collection_icon40x40", @"myself_friend_circle_icon40x40", @"myself_blackorder_icon40x40", @"myself_system_setting_icon40x40", @"myself_privacy_setting_icon40x40", nil];
-//    titleArray = [[NSMutableArray alloc] initWithObjects:@"我的资料",@"我的订单",@"我的好友",@"我的聊天",@"我的收藏" , @"我的圈子", @"我的黑名单", @"系统设置", @"隐私设置", nil];
-//}
+//    NSLog(@" %@ ----- %@", userPosition, schoolType);
+    
+    
+//#pragma  如果是私立校长身份 (在头视图上出现 "我的订单"  "我的钱包", 下面的列表中没有 "我的订单")
+    if ([userPosition isEqualToString:@"4"] && [schoolType isEqualToString:@"4"]) {
+        pictureArray = [[NSMutableArray alloc] initWithObjects:@"myself_info_icon40x40", @"myself_friend_icon40x44", @"myself_chat_icon40x40", @"myself_collection_icon40x40", @"myself_friend_circle_icon40x40", @"myself_blackorder_icon40x40", @"myself_system_setting_icon40x40", @"myself_privacy_setting_icon40x40", nil];
+        titleArray = [[NSMutableArray alloc] initWithObjects:@"我的资料",@"我的好友",@"我的聊天",@"我的收藏" , @"我的圈子", @"我的黑名单", @"系统设置", @"隐私设置", nil];
+    }else {
+        pictureArray = [[NSMutableArray alloc] initWithObjects:@"myself_info_icon40x40", @"myself_order_icon40x48", @"myself_friend_icon40x44", @"myself_chat_icon40x40", @"myself_collection_icon40x40", @"myself_friend_circle_icon40x40", @"myself_blackorder_icon40x40", @"myself_system_setting_icon40x40", @"myself_privacy_setting_icon40x40", nil];
+        titleArray = [[NSMutableArray alloc] initWithObjects:@"我的资料",@"我的订单",@"我的好友",@"我的聊天",@"我的收藏" , @"我的圈子", @"我的黑名单", @"系统设置", @"隐私设置", nil];
+    }
+    
+    if (headerView) {
+        [headerView removeFromSuperview];
+    }
+    [self createHeadView];
+    [self fetchNetData];
+    
+}
+
+
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    self.view.backgroundColor = XXEBackgroundColor;
+
     if ([XXEUserInfo user].login){
         parameterXid = [XXEUserInfo user].xid;
         parameterUser_Id = [XXEUserInfo user].user_id;
@@ -80,13 +111,8 @@
         parameterUser_Id = USER_ID;
     }
     
-    [self fetchNetData];
+    
     [self createTableView];
-}
-
-- (void)viewDidLoad {
-    [super viewDidLoad];
-
 }
 
 - (void)fetchNetData{
@@ -132,7 +158,7 @@
         }else{
             
         }
-        [self createHeadView];
+        [self updateHeadViewData];
         
     } failure:^(__kindof YTKBaseRequest *request) {
         
@@ -152,43 +178,34 @@
     headerBgImageView.userInteractionEnabled =YES;
     [headerView addSubview:headerBgImageView];
     
+    //头像
     iconImageView = [[UIImageView alloc] init];
-    [iconImageView sd_setImageWithURL:[NSURL URLWithString:headImageStr] placeholderImage:[UIImage imageNamed:@"headplaceholder"]];
-    
     CGFloat iconWidth = 86 *kScreenRatioWidth;
     CGFloat iconHeight = iconWidth;
-
     [iconImageView setFrame:CGRectMake(30 * kScreenRatioWidth, 30 * kScreenRatioHeight, iconWidth,iconHeight)];
     iconImageView.layer.cornerRadius =iconWidth / 2;
     iconImageView.layer.masksToBounds =YES;
-    [headerView addSubview:iconImageView];
     iconImageView.userInteractionEnabled =YES;
-    
-    
+    [headerView addSubview:iconImageView];
+
+    //性别
     CGFloat sexWidth = 20 * kScreenRatioWidth;
     CGFloat sexHeight = sexWidth;
-    
     manimage = [[UIImageView alloc]initWithFrame:CGRectMake(35 * kScreenRatioWidth, 60 * kScreenRatioHeight, sexWidth, sexHeight)];
-    manimage.image = sexPic;
     [iconImageView addSubview:manimage];
     
     //名称
     CGFloat nameLabelWidth = 150 * kScreenRatioWidth;
     CGFloat nameLabelHeight = 20 *kScreenRatioHeight;
-    
     nameLbl =[UILabel createLabelWithFrame:CGRectMake(150 * kScreenRatioWidth, 40 * kScreenRatioHeight, nameLabelWidth, nameLabelHeight) Font:18 * kScreenRatioWidth Text:nil];
-    nameLbl.text = nameStr;
     nameLbl.textAlignment = NSTextAlignmentLeft;
     nameLbl.textColor =UIColorFromRGB(255, 255, 255);
     [headerView addSubview:nameLbl];
     
     //等级
-    NSString *lvString = [NSString stringWithFormat:@"LV%@", lvStr];
-    
     CGFloat lvLabelWidth = 30 * kScreenRatioWidth;
     CGFloat lvLabelHeight = 15 * kScreenRatioHeight;
-    
-    UILabel *lvLabel = [UILabel createLabelWithFrame:CGRectMake(300 * kScreenRatioWidth , 42 * kScreenRatioHeight, lvLabelWidth, lvLabelHeight) Font:12 Text:lvString];
+    lvLabel = [UILabel createLabelWithFrame:CGRectMake(300 * kScreenRatioWidth , 42 * kScreenRatioHeight, lvLabelWidth, lvLabelHeight) Font:12 Text:@""];
     lvLabel.textColor = UIColorFromRGB(3, 169, 244);
     lvLabel.textAlignment = NSTextAlignmentCenter;
     lvLabel.backgroundColor = [UIColor whiteColor];
@@ -197,76 +214,92 @@
     [headerView addSubview:lvLabel];
     
     //等级  星币 差距
-    int a = [next_grade_coinStr intValue];
-    int b = [coin_totalStr intValue];
-    int c = a - b;
-    int d = [lvStr intValue] + 1;
-    
-    
-    //    NSLog(@"%d  ////   %d  //// %d //// %d", a, b,c,d);
-    
-    NSString *titleStr = [NSString stringWithFormat:@"还差%d星币升级到%d级会员  %d/%d", c, d, b, a];
-    
     CGFloat titleLabelWidth = 200 * kScreenRatioWidth;
     CGFloat titleLabelHeight = 35 * kScreenRatioHeight;
     
-    UILabel *titleLbl =[UILabel createLabelWithFrame:CGRectMake(150 * kScreenRatioWidth, 70 * kScreenRatioHeight, titleLabelWidth, titleLabelHeight) Font:12 * kScreenRatioWidth Text:titleStr];
+    titleLbl =[UILabel createLabelWithFrame:CGRectMake(150 * kScreenRatioWidth, 70 * kScreenRatioHeight, titleLabelWidth, titleLabelHeight) Font:12 * kScreenRatioWidth Text:@""];
     titleLbl.numberOfLines = 0;
     titleLbl.textAlignment = NSTextAlignmentLeft;
-    titleLbl.text = titleStr;
-    
     titleLbl.textColor = [UIColor whiteColor];
-    
     [headerView addSubview:titleLbl];
     
     //中间 进度条
-    UIProgressView * progressView = [[UIProgressView alloc] initWithProgressViewStyle:UIProgressViewStyleDefault];
+    progressView = [[UIProgressView alloc] initWithProgressViewStyle:UIProgressViewStyleDefault];
     progressView.frame = CGRectMake(150 * kScreenRatioWidth, 110 * kScreenRatioHeight, 150 * kScreenRatioWidth, 10 * kScreenRatioHeight);
     // 设置已过进度部分的颜色
     progressView.progressTintColor = XXEColorFromRGB(255, 255, 255);
     // 设置未过进度部分的颜色
     progressView.trackTintColor = XXEColorFromRGB(220, 220, 220);
-    progressView.progress = [coin_totalStr floatValue] / [next_grade_coinStr floatValue] ;
     [headerView addSubview:progressView];
 
-#warning  如果是私立校长身份 (在头视图上出现 "我的订单"  "我的钱包", 下面的列表中没有 "我的订单")
-//    if (<#condition#>) {
+#pragma mark 如果是私立校长身份 (在头视图上出现 "我的订单"  "我的钱包", 下面的列表中没有 "我的订单")
+    if ([userPosition isEqualToString:@"4"] && [schoolType isEqualToString:@"4"]) {
     headerView.height = 200 * kScreenRatioHeight;
     
     //zichan
-    UIView *bgview=[[UIView alloc]initWithFrame:CGRectMake(0, 150, kWidth, 50)];
+    UIView *bgview=[[UIView alloc]initWithFrame:CGRectMake(0, 150 * kScreenRatioHeight, kWidth, 50 * kScreenRatioHeight)];
     bgview.backgroundColor =UIColorFromRGB(255, 255, 255);
     [headerView addSubview:bgview];
     //我的订单
-    UIImageView *menuImgV = [[UIImageView alloc] initWithFrame:CGRectMake(20, 7, 30, 30)];
+    UIImageView *menuImgV = [[UIImageView alloc] initWithFrame:CGRectMake(20 * kScreenRatioWidth, 7, 30 * kScreenRatioWidth, 30 * kScreenRatioWidth)];
     menuImgV.image = [UIImage imageNamed:@"myself_menu_icon60x60"];
     [bgview addSubview:menuImgV];
-    UIButton *menuBtn =[UIButton createButtonWithFrame:CGRectMake(55, 12, 80, 20) backGruondImageName:nil Target:self Action:@selector(menuBtnClick:) Title:@"我的订单"];
-    [menuBtn.titleLabel setFont:[UIFont systemFontOfSize:15]];
+    UIButton *menuBtn =[UIButton createButtonWithFrame:CGRectMake(55 * kScreenRatioWidth, 12 * kScreenRatioHeight, 80 * kScreenRatioHeight, 20 * kScreenRatioHeight) backGruondImageName:nil Target:self Action:@selector(menuBtnClick:) Title:@"我的订单"];
+    [menuBtn.titleLabel setFont:[UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10]];
     [bgview addSubview:menuBtn];
     
     //我的钱包
-    UIImageView *payImgV =[[UIImageView alloc] initWithFrame:CGRectMake(180, 7, 30, 30)];
+    UIImageView *payImgV =[[UIImageView alloc] initWithFrame:CGRectMake(180 * kScreenRatioWidth, 7 * kScreenRatioHeight, 30 * kScreenRatioWidth, 30 * kScreenRatioWidth)];
     payImgV.image = [UIImage imageNamed:@"myself_wallet_icon60x60"];
     [bgview addSubview:payImgV];
-    UIButton *payBtn =[UIButton createButtonWithFrame:CGRectMake(215, 12, 80, 20) backGruondImageName:nil Target:self Action:@selector(payBtnClick:) Title:@"我的钱包"];
-    [payBtn.titleLabel setFont:[UIFont systemFontOfSize:15]];
+    UIButton *payBtn =[UIButton createButtonWithFrame:CGRectMake(215 * kScreenRatioWidth, 12 * kScreenRatioHeight, 80 * kScreenRatioWidth, 20 * kScreenRatioHeight) backGruondImageName:nil Target:self Action:@selector(payBtnClick:) Title:@"我的钱包"];
+    [payBtn.titleLabel setFont:[UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10]];
     [bgview addSubview:payBtn];
     
-//    }
-    
+    }
 
 }
-// 当私立校长 身份 时      "我的订单"
+
+
+- (void)updateHeadViewData{
+    //头像
+    [iconImageView sd_setImageWithURL:[NSURL URLWithString:headImageStr] placeholderImage:[UIImage imageNamed:@"headplaceholder"]];
+    //性别
+    manimage.image = sexPic;
+    //名称
+    nameLbl.text = nameStr;
+    //等级
+    NSString *lvString = [NSString stringWithFormat:@"LV%@", lvStr];
+    lvLabel.text = lvString;
+    //等级  星币 差距
+    int a = [next_grade_coinStr intValue];
+    int b = [coin_totalStr intValue];
+    int c = a - b;
+    int d = [lvStr intValue] + 1;
+    //    NSLog(@"%d  ////   %d  //// %d //// %d", a, b,c,d);
+    
+    NSString *titleStr = [NSString stringWithFormat:@"还差%d星币升级到%d级会员  %d/%d", c, d, b, a];
+    titleLbl.text = titleStr;
+    //进度条
+    progressView.progress = [coin_totalStr floatValue] / [next_grade_coinStr floatValue] ;
+    
+}
+
+
+#pragma mark - ===== 当私立校长 身份 时 "我的订单" ========
 - (void)menuBtnClick:(UIButton *)button{
 
     
     
 }
 
-// 当私立校长 身份 时      "我的资产"
+
+#pragma mark - ====== 当私立校长 身份 时 "我的资产" =========
 - (void)payBtnClick:(UIButton *)button{
 
+    XXEWalletManagerViewController *walletManagerVC = [[XXEWalletManagerViewController alloc] init];
+    
+    [self.navigationController pushViewController:walletManagerVC animated:YES];
     
 }
 
@@ -275,11 +308,11 @@
     
 #warning  如果是私立校长身份 (在头视图上出现 "我的订单"  "我的钱包", 下面的列表中没有 "我的订单")
     CGFloat tableViewY;
-    //    if (<#condition#>) {
+        if ([userPosition isEqualToString:@"4"] && [schoolType isEqualToString:@"4"]) {
     tableViewY = 200 * kScreenRatioHeight;
-//}else {
-//    tableViewY = 150 * kScreenRatioHeight;
-//}
+}else {
+    tableViewY = 150 * kScreenRatioHeight;
+}
 
     _myTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, tableViewY, KScreenWidth, KScreenHeight - 150 * kScreenRatioHeight - 49 - 64) style:UITableViewStyleGrouped];
     
@@ -325,20 +358,47 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
 #warning  如果是私立校长身份 (在头视图上出现 "我的订单"  "我的钱包", 下面的列表中没有 "我的订单")
-//    if (<#condition#>) {
+    if ([userPosition isEqualToString:@"4"] && [schoolType isEqualToString:@"4"]) {
     
     //如果 是 校长 身份
-    if (indexPath.row == 0) {
+//    if (indexPath.row == 0) {
         //@"我的资料"
+        
+        if([XXEUserInfo user].login){
+            
         XXEMyselfInfoViewController *myselfInfoVC = [[XXEMyselfInfoViewController alloc] init];
         [self.navigationController pushViewController:myselfInfoVC animated:YES];
+//        }else{
+//            
+//            [self showHudWithString:@"请用账号登录" forSecond:1.5];
+//        }
+        
     }else if (indexPath.row == 1){
         //@"我的好友"
+        if([XXEUserInfo user].login){
+            
+        XXERootFriendListController *rootFriendListVC = [[XXERootFriendListController alloc] init];
         
+        [self.navigationController pushViewController:rootFriendListVC animated:NO];
+    }else{
+        
+        [self showHudWithString:@"请用账号登录" forSecond:1.5];
+    }
+
         
     }else if (indexPath.row == 2){
         //@"我的聊天"
+        if([XXEUserInfo user].login){
+            
+        WMConversationViewController *WMConversationVC = [[WMConversationViewController alloc] init];
         
+        [self.navigationController pushViewController:WMConversationVC animated:NO];
+    }else{
+        
+        [self showHudWithString:@"请用账号登录" forSecond:1.5];
+    }
+
+    
     }else if (indexPath.row == 3){
         //@"我的收藏"
         XXEMyselfInfoCollectionViewController *myselfInfoCollectionVC = [[XXEMyselfInfoCollectionViewController alloc] init];
@@ -364,49 +424,72 @@
         [self.navigationController pushViewController:myselfPrivacySetting animated:YES];
     }
 
-//    }else{
-//    //如果 不是 校长 身份
-//    if (indexPath.row == 0) {
-//        //@"我的资料"
-//        XXEMyselfInfoViewController *myselfInfoVC = [[XXEMyselfInfoViewController alloc] init];
-//        [self.navigationController pushViewController:myselfInfoVC animated:YES];
-//    }else if (indexPath.row == 1){
-//        //@"我的订单"
-//        
-//    }else if (indexPath.row == 2){
-//        //@"我的好友"
-//        
-//        
-//    }else if (indexPath.row == 3){
-//        //@"我的聊天"
-//        
-//    }else if (indexPath.row == 4){
-//        //@"我的收藏"
-//        XXEMyselfInfoCollectionViewController *myselfInfoCollectionVC = [[XXEMyselfInfoCollectionViewController alloc] init];
-//        
-//        [self.navigationController pushViewController:myselfInfoCollectionVC animated:YES];
-//        
-//    }else if (indexPath.row == 5){
-//        //@"我的圈子"
-//        
-//    }else if (indexPath.row == 6){
-//        //@"我的黑名单"
-//        XXEMyselfBlackListViewController *myselfBlackListVC = [[XXEMyselfBlackListViewController alloc] init];
-//        [self.navigationController pushViewController:myselfBlackListVC animated:YES];
-//    }else if (indexPath.row == 7){
-//        //@"系统设置"
-//        XXEMyselfSystemSettingViewController *myselfSystemSettingVC = [[XXEMyselfSystemSettingViewController alloc] init];
-//        
-//        [self.navigationController pushViewController:myselfSystemSettingVC animated:YES];
-//    }else if (indexPath.row == 8){
-//        //@"隐私设置"
-//        XXEMyselfPrivacySettingViewController *myselfPrivacySetting = [[XXEMyselfPrivacySettingViewController alloc] init];
-//        
-//        [self.navigationController pushViewController:myselfPrivacySetting animated:YES];
-//    }
+    }else{
+    //如果 不是 校长 身份
+    if (indexPath.row == 0) {
+        //@"我的资料"
+        if([XXEUserInfo user].login){
+        
+        XXEMyselfInfoViewController *myselfInfoVC = [[XXEMyselfInfoViewController alloc] init];
+        [self.navigationController pushViewController:myselfInfoVC animated:YES];
+        }else{
+        
+        [self showHudWithString:@"请用账号登录" forSecond:1.5];
+        }
+
+        
+    }else if (indexPath.row == 1){
+        //@"我的订单"
+        
+    }else if (indexPath.row == 2){
+        //@"我的好友"
+        if([XXEUserInfo user].login){
+            
+        XXERootFriendListController *rootFriendListVC = [[XXERootFriendListController alloc] init];
+        
+        [self.navigationController pushViewController:rootFriendListVC animated:NO];
+       }else{
+        
+          [self showHudWithString:@"请用账号登录" forSecond:1.5];
+        }
+    }else if (indexPath.row == 3){
+        if([XXEUserInfo user].login){
+        
+        //@"我的聊天"
+        WMConversationViewController *WMConversationVC = [[WMConversationViewController alloc] init];
+        
+        [self.navigationController pushViewController:WMConversationVC animated:NO];
+        }else{
+        
+            [self showHudWithString:@"请用账号登录" forSecond:1.5];
+        }
+    }else if (indexPath.row == 4){
+        //@"我的收藏"
+        XXEMyselfInfoCollectionViewController *myselfInfoCollectionVC = [[XXEMyselfInfoCollectionViewController alloc] init];
+        
+        [self.navigationController pushViewController:myselfInfoCollectionVC animated:YES];
+        
+    }else if (indexPath.row == 5){
+        //@"我的圈子"
+        
+    }else if (indexPath.row == 6){
+        //@"我的黑名单"
+        XXEMyselfBlackListViewController *myselfBlackListVC = [[XXEMyselfBlackListViewController alloc] init];
+        [self.navigationController pushViewController:myselfBlackListVC animated:YES];
+    }else if (indexPath.row == 7){
+        //@"系统设置"
+        XXEMyselfSystemSettingViewController *myselfSystemSettingVC = [[XXEMyselfSystemSettingViewController alloc] init];
+        
+        [self.navigationController pushViewController:myselfSystemSettingVC animated:YES];
+    }else if (indexPath.row == 8){
+        //@"隐私设置"
+        XXEMyselfPrivacySettingViewController *myselfPrivacySetting = [[XXEMyselfPrivacySettingViewController alloc] init];
+        
+        [self.navigationController pushViewController:myselfPrivacySetting animated:YES];
+    }
 
     
-//    }
+    }
     
 }
 

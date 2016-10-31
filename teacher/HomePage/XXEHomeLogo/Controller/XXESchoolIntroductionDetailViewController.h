@@ -18,11 +18,12 @@ typedef void(^ReturnStrBlock) (NSString *str);
 @property (nonatomic, copy) NSString *schoolIntroductionStr;
 @property (nonatomic, strong) NSString *schoolId;
 @property (nonatomic, strong) NSString *classId;
+@property (nonatomic, copy) NSString *position;
 
 @property (weak, nonatomic) IBOutlet UITextView *introductionDetailTextView;
 
+@property (weak, nonatomic) IBOutlet UIButton *submitButton;
 
-- (IBAction)submitButton:(UIButton *)sender;
 - (void)returnStr:(ReturnStrBlock)block;
 
 @end

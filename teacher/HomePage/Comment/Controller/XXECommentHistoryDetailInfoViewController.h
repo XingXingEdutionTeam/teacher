@@ -27,5 +27,8 @@
 @property (nonatomic, copy) NSString *collect_conditStr;
 @property (nonatomic, copy) NSString *collect_id;
 
+@property (nonatomic, copy) NSString *fromFlagStr;
+@property (nonatomic, copy) NSString *comment_id;
+
 
 @end

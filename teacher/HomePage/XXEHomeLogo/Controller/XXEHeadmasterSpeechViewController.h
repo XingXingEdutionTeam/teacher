@@ -12,6 +12,7 @@
 
 @property (nonatomic, strong) NSString *schoolId;
 @property (nonatomic, strong) NSString *classId;
+@property (nonatomic, copy) NSString *position;
 
 //校长致辞
 @property (nonatomic, copy) NSString *pdt_speech;

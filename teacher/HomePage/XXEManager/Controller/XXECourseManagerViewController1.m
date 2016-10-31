@@ -26,6 +26,7 @@
 
 @implementation XXECourseManagerViewController1
 
+
 - (void)viewDidLoad {
     [super viewDidLoad];
 
@@ -36,9 +37,6 @@
     
     [self createReleaseButton];
     
-//    NSLog(@"vvvv  %@", _schoolId);
-    
-//    [self onlineViewController];
 }
 
 - (void)createSegmentedControl{
@@ -120,6 +118,7 @@
     XXECourseManagerViewController * vc0 = [[XXECourseManagerViewController alloc]init];
     vc0.schoolId = _schoolId;
     vc0.condit = @"3";
+    vc0.position = _position;
 //    vc0.view.left = 0*screenWidth;
 //    vc0.view.top  = 0;
     [self addChildViewController:vc0];
@@ -133,6 +132,7 @@
     XXECourseManagerViewController * vc1 = [[XXECourseManagerViewController alloc]init];
     vc1.schoolId = _schoolId;
     vc1.condit = @"0";
+    vc1.position = _position;
 //    vc1.view.left = 1*screenWidth;
 //    vc1.view.top  = 0;
     [self addChildViewController:vc1];

@@ -52,18 +52,18 @@
         [self.contentView addSubview:_fullImageView];
         
         
-        _lineImageViewOne = [[UIImageView alloc] initWithFrame:CGRectMake(120 * kWidth / 375, 30, kWidth - 100 - 10, 2)];
+        _lineImageViewOne = [[UIImageView alloc] initWithFrame:CGRectMake(120 * kWidth / 375, 30, kWidth - 100 - 10, 1)];
         [_lineImageViewOne setImage:[UIImage imageNamed:@"home_logo_line_icon552x1"]];
         [self.contentView addSubview:_lineImageViewOne];
         
         
         //老师 名称
-        _teacherNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(120 * kWidth / 375, 35, 100 * kWidth / 375, 20)];
+        _teacherNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(120 * kWidth / 375, 35, 150 * kWidth / 375, 20)];
         _teacherNameLabel.font = [UIFont systemFontOfSize:14 * kWidth / 375];
-        _teacherNameLabel.text = @"老师名称:";
+        _teacherNameLabel.text = @"授课老师:";
         [self.contentView addSubview:_teacherNameLabel];
         
-        _lineImageViewTwo = [[UIImageView alloc] initWithFrame:CGRectMake(120 * kWidth / 375, 55, kWidth - 100 - 10, 2)];
+        _lineImageViewTwo = [[UIImageView alloc] initWithFrame:CGRectMake(120 * kWidth / 375, 55, kWidth - 100 - 10, 1)];
         [_lineImageViewTwo setImage:[UIImage imageNamed:@"home_logo_line_icon552x1"]];
         [self.contentView addSubview:_lineImageViewTwo];
         
@@ -78,7 +78,7 @@
         _numberLabel.font = [UIFont systemFontOfSize:14 * kWidth / 375];
         [self.contentView addSubview:_numberLabel];
         
-        _lineImageViewThree = [[UIImageView alloc] initWithFrame:CGRectMake(120 * kWidth / 375, 80, kWidth - 100 - 10, 2)];
+        _lineImageViewThree = [[UIImageView alloc] initWithFrame:CGRectMake(120 * kWidth / 375, 80, kWidth - 100 - 10, 1)];
         [_lineImageViewThree setImage:[UIImage imageNamed:@"home_logo_line_icon552x1"]];
         [self.contentView addSubview:_lineImageViewThree];
         

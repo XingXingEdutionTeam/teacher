@@ -17,4 +17,7 @@
 //家人 是否 收藏
 @property (nonatomic) BOOL isCollected;
 
+@property (nonatomic, copy) NSString *fromFlagStr;
+
+
 @end

@@ -10,9 +10,11 @@
 
 #import "XXECommentHistoryDetailInfoViewController.h"
 #import "XXERedFlowerDetialTableViewCell.h"
+#import "XXEImageBrowsingViewController.h"
 #import "XXEGlobalDecollectApi.h"
 #import "XXEGlobalCollectApi.h"
-#import "XXEImageBrowsingViewController.h"
+#import "XXECommentDeleteApi.h"
+
 
 @interface XXECommentHistoryDetailInfoViewController ()<UITableViewDelegate, UITableViewDataSource>
 {
@@ -56,7 +58,7 @@
     }
     
     NSString *timeStr = [XXETool dateStringFromNumberTimer:_ask_time];
-    //[type] => 1			//点评类型  1:老师主动点评,2:家长请求点评
+    //[type] => 1  //点评类型  1:老师主动点评,2:家长请求点评
     if ([_type isEqualToString:@"1"]) {
         picArray =[[NSMutableArray alloc]initWithObjects:@"comment_people_icon", @"comment_content_icon", @"home_redflower_picIcon",nil];
         titleArray =[[NSMutableArray alloc]initWithObjects:@"学生:", @"评价内容:", @"图片:", nil];
@@ -76,7 +78,12 @@
     
     [self createTableView];
     
+    if ([_fromFlagStr isEqualToString:@"fromCollection"]) {
+        
+    }else{
+    
     [self setRightCollectionButton];
+    }
 }
 
 
@@ -214,17 +221,60 @@
 
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
     UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, KScreenWidth, 100)];
+    
+    if ([_fromFlagStr isEqualToString:@"fromCollection"]) {
+        
+    }else{
+
     UIButton *deleteButton = [UIButton createButtonWithFrame:CGRectMake((KScreenWidth - 325 * kScreenRatioWidth) / 2, 30 * kScreenRatioHeight, 325 * kScreenRatioWidth, 42 * kScreenRatioHeight) backGruondImageName:@"login_green" Target:self Action:@selector(deleteButtonClick) Title:@"删除评论"];
     [deleteButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [footerView addSubview:deleteButton];
+    }
     return footerView;
 }
 
 - (void)deleteButtonClick{
-    
-    NSLog(@"0000");
-    
+        UIAlertController *alert=[UIAlertController alertControllerWithTitle:@"确定删除好友？" message:nil preferredStyle:(UIAlertControllerStyleAlert)];
+
+        UIAlertAction *cancel=[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
+        UIAlertAction *ok=[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            //删除 好友
+            [self deleteComment];
+
+        }];
+        [alert addAction:ok];
+        [alert addAction:cancel];
+        [self presentViewController:alert animated:YES completion:nil];
+
+
 }
+
+- (void)deleteComment{
+    
+    XXECommentDeleteApi *commentDeleteApi = [[XXECommentDeleteApi alloc] initWithXid:parameterXid user_id:parameterUser_Id com_id:_comment_id];
+    [commentDeleteApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
+
+        //      NSLog(@"2222---   %@", request.responseJSONObject);
+
+        NSString *codeStr = [NSString stringWithFormat:@"%@", request.responseJSONObject[@"code"]];
+
+        if ([codeStr isEqualToString:@"1"]) {
+            [self showHudWithString:@"删除成功!" forSecond:1.5];
+
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [self.navigationController popViewControllerAnimated:YES];
+            });
+        }else{
+            [self showHudWithString:@"删除失败!" forSecond:1.5];
+        }
+
+    } failure:^(__kindof YTKBaseRequest *request) {
+
+        [self showString:@"数据请求失败" forSecond:1.f];
+    }];
+
+}
+
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     

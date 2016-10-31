@@ -10,4 +10,7 @@
 
 @interface XXEForgetPassWordViewController : XXEBaseViewController
 
+
+
+
 @end

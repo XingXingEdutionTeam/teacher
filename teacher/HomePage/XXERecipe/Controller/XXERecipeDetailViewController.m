@@ -268,11 +268,11 @@
         NSString *codeStr = [NSString stringWithFormat:@"%@", request.responseJSONObject[@"code"]];
         
         if ([codeStr isEqualToString:@"1"]) {
-            
+            [self updateData];
         }else{
             
         }
-        [self updateData];
+        
         
     } failure:^(__kindof YTKBaseRequest *request) {
         

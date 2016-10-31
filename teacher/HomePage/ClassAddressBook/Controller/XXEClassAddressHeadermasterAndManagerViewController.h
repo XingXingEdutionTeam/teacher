@@ -19,4 +19,6 @@
 /** 用户身份 */
 @property (nonatomic, copy)NSString *homeUserIdentifier;
 
+@property(nonatomic, copy) NSString *fromFlagStr;
+
 @end

@@ -12,7 +12,7 @@
 #import "XXEStudentManagerViewController2.h"
 #import "XXEFamilyManagerViewController2.h"
 #import "XXETeacherManagerViewController.h"
-#import "XXECourseManagerViewController.h"
+#import "XXECourseManagerViewController1.h"
 #import "XXEDataManagerViewController.h"
 
 @interface XXEManagerHeadmasterPrivateViewController ()<QHNavSliderMenuDelegate, UIScrollViewDelegate, UISearchBarDelegate>
@@ -50,7 +50,8 @@
     model.menuWidth=screenWidth / 5.f;
     model.sliderMenuTextColorForNormal = QHRGB(120, 120, 120);
     model.sliderMenuTextColorForSelect = QHRGB(0, 170, 42);
-    model.titleLableFont               = defaultFont(16);
+//    model.titleLableFont               = defaultFont(16);
+    model.titleLableFont = [UIFont systemWithIphone6P:18 Iphone6:16 Iphone5:14 Iphone4:12];
     model.menuHorizontalSpacing = 1;
     model.donotScrollTapViewWhileScroll = YES;
     navSliderMenu = [[QHNavSliderMenu alloc] initWithFrame:(CGRect){0,0,KScreenWidth,50 * kScreenRatioHeight} andStyleModel:model andDelegate:self showType:self.menuType];
@@ -61,9 +62,10 @@
     //example 用于滑动的滚动视图
     contentScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, navSliderMenu.bottom, KScreenWidth, KScreenHeight-navSliderMenu.bottom)];
     contentScrollView.contentSize = (CGSize){KScreenWidth*menuCount,contentScrollView.contentSize.height};
-    contentScrollView.pagingEnabled = YES;
+    contentScrollView.pagingEnabled = NO;
     contentScrollView.delegate      = self;
     contentScrollView.scrollsToTop  = NO;
+    contentScrollView.scrollEnabled = NO;
     contentScrollView.showsHorizontalScrollIndicator = NO;
     [self.view addSubview:contentScrollView];
     
@@ -143,7 +145,7 @@
         
     }else if (index == 3){
         //@"课程管理"
-        XXECourseManagerViewController *courseManagerVC = [[XXECourseManagerViewController alloc]init];
+        XXECourseManagerViewController1 *courseManagerVC = [[XXECourseManagerViewController1 alloc]init];
         
         courseManagerVC.view.left =3*screenWidth;
         courseManagerVC.view.top=0;

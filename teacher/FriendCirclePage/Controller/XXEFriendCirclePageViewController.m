@@ -23,6 +23,12 @@
 #import <AVFoundation/AVFoundation.h>
 
 @interface XXEFriendCirclePageViewController ()
+{
+
+    NSString *parameterXid;
+    NSString *parameterUser_Id;
+}
+
 /** 朋友圈的头部视图信息 */
 @property (nonatomic, strong)NSMutableArray *headerDatasource;
 /** 朋友圈列表的信息 */
@@ -77,7 +83,16 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.speakId = @"";
+    
     self.view.backgroundColor = XXEBackgroundColor;
+    if ([XXEUserInfo user].login){
+        parameterXid = [XXEUserInfo user].xid;
+        parameterUser_Id = [XXEUserInfo user].user_id;
+    }else{
+        parameterXid = XID;
+        parameterUser_Id = USER_ID;
+    }
+    
     NSLog(@"朋友圈控制器");
     self.extendedLayoutIncludesOpaqueBars = YES;
     self.page = 1;
@@ -103,25 +118,25 @@
 #pragma mark - 朋友圈网络请求
 - (void)setupFriendCircleMessagePage:(NSInteger )page
 {
-    NSString *strngXid;
-    NSString *homeUserId;
-    if ([XXEUserInfo user].login) {
-        strngXid = [XXEUserInfo user].xid;
-        homeUserId = [XXEUserInfo user].user_id;
-    }else {
-        strngXid = XID;
-        homeUserId = USER_ID;
-    }
-    
+    /*
+     【我的圈子--查询我发布的】
+     接口类型:1
+     接口:
+     http://www.xingxingedu.cn/Global/select_mycircle
+     传参:
+     other_xid	//别人查看某人时,传某人的xid,如果是查看自己发布的,不需要这个参数
+     page	//加载第几次(第几页),默认1
+     */
+
     NSString *pageNum = [NSString stringWithFormat:@"%ld",(long)page];
     if ([pageNum isEqualToString:@"1"]) {
         [self.circleListDatasource removeAllObjects];
     }
 //    NSLog(@"数组为数据:%@",self.circleListDatasource);
-    XXEFriendCircleApi *friendCircleApi = [[XXEFriendCircleApi alloc]initWithFriendCircleXid:strngXid CircleUserId:homeUserId PageNumber:pageNum];
+    XXEFriendCircleApi *friendCircleApi = [[XXEFriendCircleApi alloc]initWithFriendCircleXid:parameterXid CircleUserId:parameterUser_Id PageNumber:pageNum];
     [friendCircleApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         
-//        NSLog(@"%@",request.responseJSONObject);
+//        NSLog(@"vvvvv %@",request.responseJSONObject);
 //        NSLog(@"%@",[request.responseJSONObject objectForKey:@"msg"]);
         
         NSString *code = [request.responseJSONObject objectForKey:@"code"];
@@ -667,7 +682,7 @@
 {
     NSLog(@"%lu",(unsigned long)userId);
     XXEFriendMyCircleViewController *myCircleVC = [[XXEFriendMyCircleViewController alloc]init];
-    myCircleVC.otherXid = userId;
+    myCircleVC.otherXid = [NSString stringWithFormat:@"%lu", userId];
     myCircleVC.friendCirccleRefreshBlock = ^(){
         [self refresh];
     };

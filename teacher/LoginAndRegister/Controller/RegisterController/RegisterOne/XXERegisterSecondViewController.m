@@ -41,7 +41,9 @@
     [super viewWillAppear:animated];
     self.view.backgroundColor = XXEBackgroundColor;
     if ([self.forgetPassWordPage isEqualToString:@"忘记密码--"]) {
-        self.navigationItem.title = @"2/2找回密码";
+
+    self.navigationItem.title = @"2/2 找回密码";
+
     }else{
         self.navigationItem.title = @"2/4注册";
     }

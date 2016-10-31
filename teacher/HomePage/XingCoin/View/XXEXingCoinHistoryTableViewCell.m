@@ -30,10 +30,14 @@
         [self.contentView addSubview:_iconImageView];
         
         
-        //时间 label
-        _timeLabel = [UILabel createLabelWithFrame:CGRectMake(80 * kScreenRatioWidth, 10 * kScreenRatioHeight, 135 * kScreenRatioWidth, 60 * kScreenRatioHeight) Font:14 * kScreenRatioWidth Text:@""];
-        _timeLabel.textAlignment = NSTextAlignmentCenter;
-        [self.contentView addSubview:_timeLabel];
+        //时间 label1
+        _timeLabel1 = [UILabel createLabelWithFrame:CGRectMake(80 * kScreenRatioWidth, 10 * kScreenRatioHeight, 135 * kScreenRatioWidth, 20 * kScreenRatioHeight) Font:14 * kScreenRatioWidth Text:@""];
+        _timeLabel1.textAlignment = NSTextAlignmentCenter;
+        [self.contentView addSubview:_timeLabel1];
+        //时间 label2
+        _timeLabel2 = [UILabel createLabelWithFrame:CGRectMake(80 * kScreenRatioWidth, 40 * kScreenRatioHeight, 135 * kScreenRatioWidth, 20 * kScreenRatioHeight) Font:14 * kScreenRatioWidth Text:@""];
+        _timeLabel2.textAlignment = NSTextAlignmentCenter;
+        [self.contentView addSubview:_timeLabel2];
         
         //用途 label
         _useLabel = [UILabel createLabelWithFrame:CGRectMake(215 * kScreenRatioWidth, 10 * kScreenRatioHeight, 80 * kScreenRatioWidth, 60 * kScreenRatioHeight) Font:14 * kScreenRatioWidth Text:@""];

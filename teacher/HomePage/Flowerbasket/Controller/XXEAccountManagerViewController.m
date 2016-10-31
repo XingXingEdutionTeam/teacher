@@ -17,6 +17,7 @@
 #import "XXEFlowerbasketWithdrawCashViewController.h"
 #import "XXEAccountManagerApi.h"
 #import "XXEFlowerbasketAddAccountViewController.h"
+#import "XXEWalletWithdrawCashViewController.h"
 #import "XXEFlowerAccountDeleteApi.h"
 
 #define URL @"http://www.xingxingedu.cn/Teacher/financial_account_list"
@@ -267,17 +268,33 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    XXEFlowerbasketWithdrawCashViewController *XXEFlowerbasketWithdrawCashVC = [[XXEFlowerbasketWithdrawCashViewController alloc] init];
-    
-    //[id] => 1		//此id操作提现时作为传参(account_id)
-    XXEFlowerbasketWithdrawCashVC.account_id = _account_idArray[indexPath.row];
-    
-    XXEFlowerbasketWithdrawCashVC.aliPayAccountStr = _aliPayAccountArray[indexPath.row];
-    XXEFlowerbasketWithdrawCashVC.accountStr = _accountArray[indexPath.row];
-    
-    XXEFlowerbasketWithdrawCashVC.name = _nameArray[indexPath.row];
-    
-    [self.navigationController pushViewController:XXEFlowerbasketWithdrawCashVC animated:YES];
+    if ([_fromFlagStr isEqualToString:@"wallet"]) {
+        XXEWalletWithdrawCashViewController *walletWithdrawCashVC = [[XXEWalletWithdrawCashViewController alloc] init];
+        walletWithdrawCashVC.account_id = _account_idArray[indexPath.row];
+        
+        walletWithdrawCashVC.aliPayAccountStr = _aliPayAccountArray[indexPath.row];
+        
+        walletWithdrawCashVC.accountStr = _accountArray[indexPath.row];
+        
+        walletWithdrawCashVC.name = _nameArray[indexPath.row];
+        
+        [self.navigationController pushViewController:walletWithdrawCashVC animated:YES];
+        
+    }else{
+        XXEFlowerbasketWithdrawCashViewController *XXEFlowerbasketWithdrawCashVC = [[XXEFlowerbasketWithdrawCashViewController alloc] init];
+        
+        //[id] => 1		//此id操作提现时作为传参(account_id)
+        XXEFlowerbasketWithdrawCashVC.account_id = _account_idArray[indexPath.row];
+        
+        XXEFlowerbasketWithdrawCashVC.aliPayAccountStr = _aliPayAccountArray[indexPath.row];
+        
+        XXEFlowerbasketWithdrawCashVC.accountStr = _accountArray[indexPath.row];
+        
+        XXEFlowerbasketWithdrawCashVC.name = _nameArray[indexPath.row];
+        
+        [self.navigationController pushViewController:XXEFlowerbasketWithdrawCashVC animated:YES];
+    }
+
     
 }
 

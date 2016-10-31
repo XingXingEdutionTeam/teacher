@@ -12,7 +12,7 @@
 #import "XXEMyselfInfoCollectionPicTableViewCell.h"
 #import "XXEMyselfInfoCollectionPicModel.h"
 #import "XXEMyselfInfoCollectionPicApi.h"
-
+#import "XXEMyselfInfoDecollectionApi.h"
 
 
 
@@ -21,10 +21,12 @@
     UITableView *_myTableView;
     
     NSMutableArray *_dataSourceArray;
+    UIImageView *placeholderImageView;
     
     NSInteger page;
     NSString *parameterXid;
     NSString *parameterUser_Id;
+    NSString *_collectionId;
 }
 
 
@@ -74,8 +76,8 @@
     
     XXEMyselfInfoCollectionPicApi *myselfInfoCollectionPicApi = [[XXEMyselfInfoCollectionPicApi alloc] initWithXid:parameterXid user_id:parameterUser_Id page:pageStr];
     [myselfInfoCollectionPicApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
-        
-//                    NSLog(@"111   %@", request.responseJSONObject);
+
+//    NSLog(@"111   %@", request.responseJSONObject);
         
         NSDictionary *dict = request.responseJSONObject;
         
@@ -101,26 +103,40 @@
 
 // 有数据 和 无数据 进行判断
 - (void)customContent{
+    // 如果 有占位图 先 移除
+    [self removePlaceholderImageView];
     
     if (_dataSourceArray.count == 0) {
-        
         _myTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-        
         // 1、无数据的时候
-        UIImage *myImage = [UIImage imageNamed:@"all_placeholder"];
-        CGFloat myImageWidth = myImage.size.width;
-        CGFloat myImageHeight = myImage.size.height;
-        
-        UIImageView *myImageView = [[UIImageView alloc] initWithFrame:CGRectMake(KScreenWidth / 2 - myImageWidth / 2, (KScreenHeight - 64 - 49) / 2 - myImageHeight / 2, myImageWidth, myImageHeight)];
-        myImageView.image = myImage;
-        [self.view addSubview:myImageView];
+        [self createPlaceholderView];
         
     }else{
         //2、有数据的时候
-        
     }
+    
     [_myTableView reloadData];
     
+}
+
+
+//没有 数据 时,创建 占位图
+- (void)createPlaceholderView{
+    // 1、无数据的时候
+    UIImage *myImage = [UIImage imageNamed:@"all_placeholder"];
+    CGFloat myImageWidth = myImage.size.width;
+    CGFloat myImageHeight = myImage.size.height;
+    
+    placeholderImageView = [[UIImageView alloc] initWithFrame:CGRectMake(kWidth / 2 - myImageWidth / 2, (kHeight - 64 - 49) / 2 - myImageHeight / 2, myImageWidth, myImageHeight)];
+    placeholderImageView.image = myImage;
+    [self.view addSubview:placeholderImageView];
+}
+
+//去除 占位图
+- (void)removePlaceholderImageView{
+    if (placeholderImageView != nil) {
+        [placeholderImageView removeFromSuperview];
+    }
 }
 
 
@@ -187,7 +203,72 @@
     cell.timeLabel.text = [XXETool dateStringFromNumberTimer:model.date_tm];
     [cell.bgImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", kXXEPicURL, model.pic]] placeholderImage:[UIImage imageNamed:@"placeholder"]];
     
+    UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressClick:)];
+    [cell.contentView addGestureRecognizer:longPress];
+    
     return cell;
+}
+
+- (void)longPressClick:(UILongPressGestureRecognizer *)longPress{
+    
+    UIAlertController *alertController=[UIAlertController alertControllerWithTitle:@"取消收藏？" message:nil preferredStyle:(UIAlertControllerStyleAlert)];
+    UIAlertAction *cancel=[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
+    UIAlertAction *ok=[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        
+#pragma mark - 取消收藏=================================================
+        XXEMyselfInfoCollectionPicTableViewCell *cell = (XXEMyselfInfoCollectionPicTableViewCell *)[longPress.view superview];
+        
+        NSIndexPath *path = [_myTableView indexPathForCell:cell];
+        
+        XXEMyselfInfoCollectionPicModel *model = _dataSourceArray[path.row];
+        _collectionId = model.collectionId;
+        
+        [self cancelCollection];
+    }];
+    [alertController addAction:ok];
+    [alertController addAction:cancel];
+    [self presentViewController:alertController animated:YES completion:nil];
+    
+}
+
+- (void)cancelCollection{
+    /*
+     接口:
+     http://www.xingxingedu.cn/Global/deleteCollect
+     
+     传参:
+     collect_id	//收藏id (如果是收藏用户,这里是xid)
+     collect_type	//收藏品种类型	1:商品  2:点评  3:用户  4:课程  5:学校  6:花朵 7、图片
+     */
+    
+//    NSLog(@"%@", _collectionId);
+    XXEMyselfInfoDecollectionApi *myselfInfoDecollectionApi = [[XXEMyselfInfoDecollectionApi alloc] initWithXid:parameterXid user_id:parameterUser_Id collect_id:_collectionId collect_type:@"7" return_param_all:@""];
+    
+    [myselfInfoDecollectionApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
+        
+//        NSLog(@"同意 2222---   %@", request.responseJSONObject);
+        
+        NSString *codeStr = [NSString stringWithFormat:@"%@", request.responseJSONObject[@"code"]];
+        
+        if ([codeStr isEqualToString:@"1"]) {
+            
+            [self showHudWithString:@"取消收藏成功!" forSecond:1.5];
+            if (_dataSourceArray.count != 0) {
+                [_dataSourceArray removeAllObjects];
+            }
+            page = 1;
+        }else{
+            [self showHudWithString:@"取消收藏失败!" forSecond:1.5];
+        }
+        [self fetchNetData];
+        [_myTableView reloadData];
+    } failure:^(__kindof YTKBaseRequest *request) {
+        
+        [self showHudWithString:@"提交失败!" forSecond:1.5];
+    }];
+    
+    
+    
 }
 
 

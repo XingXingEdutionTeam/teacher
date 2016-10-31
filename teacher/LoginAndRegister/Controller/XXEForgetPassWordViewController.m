@@ -54,9 +54,11 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    self.navigationItem.title = @"1/2忘记密码";
     self.view.backgroundColor = XXEBackgroundColor;
     self.navigationController.navigationBarHidden = NO;
+
+    self.navigationItem.title = @"1/2 忘记密码";
+    
 }
 /** 这两个方法都可以,改变当前控制器的电池条颜色 */
 -(UIStatusBarStyle)preferredStatusBarStyle

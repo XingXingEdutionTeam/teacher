@@ -216,7 +216,12 @@
     cell.iconImageView.layer.masksToBounds = YES;
     
     [cell.iconImageView sd_setImageWithURL:[NSURL URLWithString:model.pic] placeholderImage:[UIImage imageNamed:@"home_flowerbasket_placehoderIcon120x120"]];
-    cell.timeLabel.text = [XXETool dateStringFromNumberTimer:model.date_tm];
+//    cell.timeLabel.text = [XXETool dateStringFromNumberTimer:model.date_tm];
+    NSString *timeString =[XXETool dateStringFromNumberTimer:model.date_tm];
+    NSArray *arr = [NSArray arrayWithArray:[timeString componentsSeparatedByString:@" "]];
+    cell.timeLabel1.text = arr[0];
+    cell.timeLabel2.text = arr[1];
+    
     cell.useLabel.text = model.con;
     cell.moneyLabel.text = model.coin_num;
     

@@ -16,5 +16,7 @@
 
 @property (nonatomic, copy) NSString *babyClassName;
 
+@property(nonatomic, copy) NSString * fromFlagStr;
+
 
 @end

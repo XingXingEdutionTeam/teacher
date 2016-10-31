@@ -20,6 +20,14 @@
 #import "XXEAlbumDetailsModel.h"
 
 @interface XXEAlbumShowViewController ()<SDCycleScrollViewDelegate,KTActionSheetDelegate,UMSocialUIDelegate>
+{
+
+    NSString *parameterXid;
+    NSString *parameterUser_Id;
+
+
+}
+
 
 @property (nonatomic, strong)NSMutableArray *albumNameDatasource;
 /** 索引 图片的位置 */
@@ -60,6 +68,14 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
+    if ([XXEUserInfo user].login) {
+        parameterXid = [XXEUserInfo user].xid;
+        parameterUser_Id = [XXEUserInfo user].user_id;
+    }else {
+        parameterXid = XID;
+        parameterUser_Id = USER_ID;
+    }
     
     if ([_flagStr isEqualToString:@"fromSchoolAlbum"]) {
         for (XXESchoolAlbumModel *model in self.showDatasource) {
@@ -202,17 +218,9 @@
     
 //    XXEAlbumDetailsModel *model = self.showDatasource[self.albumIndexPaths];
     NSLog(@"%@",self.detailsModel.photoId);
-    NSString *strngXid;
-    NSString *homeUserId;
-    if ([XXEUserInfo user].login) {
-        strngXid = [XXEUserInfo user].xid;
-        homeUserId = [XXEUserInfo user].user_id;
-    }else {
-        strngXid = XID;
-        homeUserId = USER_ID;
-    }
+
     
-    XXEClassAlbumGoodApi *classAlbumApi = [[XXEClassAlbumGoodApi alloc]initWithHomePageClassAblumGoodUserXid:strngXid UserId:homeUserId PicId:self.detailsModel.photoId];
+    XXEClassAlbumGoodApi *classAlbumApi = [[XXEClassAlbumGoodApi alloc]initWithHomePageClassAblumGoodUserXid:parameterXid UserId:parameterUser_Id PicId:self.detailsModel.photoId];
     [classAlbumApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         NSString *code = [request.responseJSONObject objectForKey:@"code"];
         NSLog(@"%@",request.responseJSONObject);
@@ -342,14 +350,6 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

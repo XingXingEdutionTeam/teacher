@@ -21,6 +21,7 @@
 {
     UIButton *btn;
     UIScrollView *src;
+    NSString *position;
     UIPageControl *pageControl;
     NSString *parameterXid;
     NSString *parameterUser_Id;
@@ -46,6 +47,8 @@
         parameterXid = XID;
         parameterUser_Id = USER_ID;
     }
+    
+    position = [DEFAULTS objectForKey:@"POSITION"];
     
     self.view.backgroundColor = UIColorFromRGB(229, 232, 233);
     // Do any additional setup after loading the view.
@@ -73,7 +76,7 @@
     for (int i =0; i < _upPicArray.count; i++) {
         
         if ([_flagStr isEqualToString:@"fromSchoolAlbum"]) {
-            XXESchoolUpPicApi *schoolUpPicApi = [[XXESchoolUpPicApi alloc] initWithXid:parameterXid user_id:parameterUser_Id user_type:USER_TYPE school_id:_schoolId position:@"4" upImage:_upPicArray[i]];
+            XXESchoolUpPicApi *schoolUpPicApi = [[XXESchoolUpPicApi alloc] initWithXid:parameterXid user_id:parameterUser_Id user_type:USER_TYPE school_id:_schoolId position:position upImage:_upPicArray[i]];
             [arr addObject:schoolUpPicApi];
         
         }else if ([_flagStr isEqualToString:@"formMyselfAlbum"]){

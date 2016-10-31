@@ -10,17 +10,18 @@
 //
 
 #import "XXEFlowerbasketWithdrawCashViewController.h"
-#import "XXEFlowerbasketWithdrawCashApi.h"
-#import "XXEFlowerbasketSubmitAccountInfoApi.h"
 #import "XXEFlowerbasketSentHistoryViewController.h"
-
+#import "XXEFlowerbasketSubmitAccountInfoApi.h"
+#import "XXEFlowerbasketWithdrawCashApi.h"
+#import "XXECheckPassWordApi.h"
+#import "PayPwdView.h"
 
 #define requestUrl @"http://www.xingxingedu.cn/Teacher/fbasket_withdraw_page"
 
 #define submitUrl @"http://www.xingxingedu.cn/Teacher/fbasket_withdraw_action"
 
 
-@interface XXEFlowerbasketWithdrawCashViewController ()<UITextFieldDelegate>
+@interface XXEFlowerbasketWithdrawCashViewController ()<UITextFieldDelegate, PayPwdViewDelegate>
 {
     NSString *parameterXid;
     NSString *parameterUser_Id;
@@ -162,12 +163,59 @@
         
         [self showHudWithString:@"请输入姓名" forSecond:1.5];
     }else{
-        
-        [self submitAccountInfo];
+        //请输入支付密码
+        [self writePayCode];
         
     }
     
 }
+
+
+
+- (void)writePayCode{
+    PayPwdView *myPayPwdView=[[PayPwdView alloc]initWithFrame:CGRectMake(0, -64, KScreenWidth, KScreenHeight)];
+    myPayPwdView.delegate=self;
+    [self.view addSubview:myPayPwdView];
+    
+}
+
+
+#pragma mark -支付视图的Delegate =============================
+// 每次输入的密码
+-(void)eachInputPwd:(PayPwdView *)payView eachClickPwd:(NSString *)eachClickPwd{
+    NSLog(@"这次输入的是:%@",eachClickPwd);
+}
+// 最终的密码(点击了确认按钮才回调用这个方法)
+-(void)finaInputPwd:(PayPwdView *)payView surePwd:(NSString *)surePwd{
+    NSLog(@"最终的密码是:%@",surePwd);
+    //需要先提交给顾老师 确认 支付 密码是否正确
+    [self checkPayCode:surePwd];
+    
+}
+
+- (void)checkPayCode:(NSString *)surePwd{
+    
+    XXECheckPassWordApi *checkPassWordApi = [[XXECheckPassWordApi alloc] initWithXid:parameterXid user_id:parameterUser_Id pass:surePwd];
+    [checkPassWordApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
+        //
+        NSLog(@"%@", request.responseJSONObject);
+        
+        NSString *codeStr = request.responseJSONObject[@"code"];
+        if ([codeStr integerValue] == 1) {
+            //如果 支付 密码 正确 再提交请求
+            [self submitAccountInfo];
+        }else{
+            
+            [self showHudWithString:@"密码错误!" forSecond:1.5];
+        }
+        
+    } failure:^(__kindof YTKBaseRequest *request) {
+        //
+        [self showHudWithString:@"获取数据失败!" forSecond:1.5];
+    }];
+
+}
+
 
 - (void)submitAccountInfo{
     //    NSLog(@"账号%@ ---  数量%@", _account_id, _numberTextField.text);

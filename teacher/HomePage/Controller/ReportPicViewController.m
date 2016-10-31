@@ -24,6 +24,9 @@
     UIAlertView *_alert;
     MBProgressHUD *HUD;
     NSMutableString * report_name_idStr;
+    
+    NSString *parameterXid;
+    NSString *parameterUser_Id;
 }
 
 @property (nonatomic, strong)UITableView *reportTableView;
@@ -86,20 +89,35 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title =@"举报";
-    [self fetchNetData];
     
-    _other_xidStr = @"";
+    if ([XXEUserInfo user].login){
+        parameterXid = [XXEUserInfo user].xid;
+        parameterUser_Id = [XXEUserInfo user].user_id;
+    }else{
+        parameterXid = XID;
+        parameterUser_Id = USER_ID;
+    }
     
     seletedIdArray = [[NSMutableArray alloc] init];
+    
+    [self fetchNetData];
+    
+    [self createTableView];
+
+}
+
+- (void)createTableView{
     self.reportTableView.delegate = self;
     self.reportTableView.dataSource = self;
     [self.reportTableView registerNib:[UINib nibWithNibName:@"ReportCell" bundle:nil] forCellReuseIdentifier:@"ReportCELL"];
     [self.view addSubview:self.reportTableView];
+
 }
+
 
 - (void)fetchNetData{
     
-    XXEHomeReportListApi *reportListApi = [[XXEHomeReportListApi alloc]initWithToReportListUserId:USER_ID XXID:XID];
+    XXEHomeReportListApi *reportListApi = [[XXEHomeReportListApi alloc]initWithToReportListUserId:parameterUser_Id XXID:parameterXid];
     [reportListApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
 //        NSLog(@"%@",request.responseJSONObject);
 //        NSLog(@"%@",[request.responseJSONObject objectForKey:@"msg"]);
@@ -183,9 +201,28 @@
 #pragma mark - 提交举报的网络信息
 - (void)reportSubmitMessage:(NSString *)string
 {
-    XXEReportSubmitMessageApi *submitApi = [[XXEReportSubmitMessageApi alloc]initWithReportSubmitUserID:USER_ID UserXID:XID OtherXid:self.other_xidStr ReportNameId:string ReportType:self.report_type PhotoUrl:self.picUrlStr OriginPage:self.origin_pageStr];
+    
+//    NSLog(@"%@ --- %@ ", )
+    
+    if (_other_xidStr == nil) {
+        _other_xidStr = @"";
+    }
+    if (_origin_pageStr == nil) {
+        _origin_pageStr = @"";
+    }
+
+    if (_picUrlStr == nil) {
+        _picUrlStr = @"";
+    }
+
+    if (_report_type == nil) {
+        _report_type = @"";
+    }
+
+    
+    XXEReportSubmitMessageApi *submitApi = [[XXEReportSubmitMessageApi alloc]initWithReportSubmitUserID:parameterUser_Id UserXID:parameterXid OtherXid:self.other_xidStr ReportNameId:string ReportType:self.report_type PhotoUrl:self.picUrlStr OriginPage:self.origin_pageStr];
     [submitApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
-        NSLog(@"%@",request.responseJSONObject);
+//        NSLog(@"%@",request.responseJSONObject);
         NSString *code = [request.responseJSONObject objectForKey:@"code"];
         if ([code intValue]==1) {
             [self showString:@"举报成功,谢谢你的举报" forSecond:2.f];
@@ -203,115 +240,6 @@
     }];
 }
 
-
-- (void)submit{
-    /*
-     【举报提交(两端通用)】
-     
-     接口:
-     http://www.xingxingedu.cn/Global/report_sub
-     
-     传参:
-     other_xid	//被举报人xid (举报用户时才有此参数)
-     report_name_id	//举报内容id , 多个逗号隔开
-     report_type	//举报类型 1:举报用户  2:举报图片
-     url		//被举报的链接(report_type非等于1时才有此参数),如果是图片,不带http头部的,例如:app_upload/........
-     origin_page	//举报内容来源(report_type非等于1时才有此参数),传参是数字:
-     1:小红花赠言中的图片
-     2:圈子图片
-     3:猩课堂发布的课程图片
-     4:学校相册图片
-     5:班级相册
-     6:老师点评
-     7:作业图片
-     */
-    
-    //路径
-//    NSString *urlStr = @"http://www.xingxingedu.cn/Global/report_sub";
-    
-    //请求参数
-    //获取学校id数组
-    //    NSLog(@"已选 id  %@", seletedIdArray);
-    
-//    
-//    NSMutableString *tidStr = [NSMutableString string];
-//    
-//    for (int j = 0; j < seletedIdArray.count; j ++) {
-////        NSString *str = seletedIdArray[j];
-//
-//        if (j != seletedIdArray.count - 1) {
-//            [tidStr appendFormat:@"%@,", str];
-//        }else{
-//            [tidStr appendFormat:@"%@", str];
-//        }
-//    }
-//    
-//    report_name_idStr = tidStr;
-//    NSString *parameterXid;
-//    NSString *parameterUser_Id;
-//   
-    
-    
-//    NSDictionary *params;
-//    
-//    if (_other_xidStr == nil) {
-//        //被举报的是图片
-//    params = @{@"appkey":APPKEY, @"backtype":BACKTYPE, @"xid":parameterXid, @"user_id":parameterUser_Id, @"user_type":USER_TYPE, @"report_name_id":report_name_idStr, @"report_type":@"2", @"url":_picUrlStr, @"origin_page":_origin_pageStr};
-////    }else{
-////    //被举报的是人
-//    params = @{@"appkey":APPKEY, @"backtype":BACKTYPE, @"xid":parameterXid, @"user_id":parameterUser_Id, @"user_type":USER_TYPE, @"report_name_id":report_name_idStr, @"report_type":@"1", @"other_xid":_other_xidStr};
-//    }
-//        NSLog(@"传参  --  %@", params);
-    
-//    HUD =[[MBProgressHUD alloc]initWithView:self.view];
-//    [self.view addSubview:HUD];
-//    HUD.mode =MBProgressHUDModeText;
-//    HUD.dimBackground =YES;
-    
-//    [WZYHttpTool post:urlStr params:params success:^(id responseObj) {
-//        //
-////        NSLog(@"%@", responseObj);
-//        
-//        NSString *codeStr = [NSString stringWithFormat:@"%@", responseObj[@"code"]];
-//        
-//        if ([codeStr isEqualToString:@"1"]) {
-//
-//            _alert=[[UIAlertView alloc]initWithTitle:@"提示" message:@"感谢您的举报,我们会在第一时间进行审核,谢谢您的支持!" delegate:self cancelButtonTitle:nil otherButtonTitles:nil, nil];
-//            [_alert show];
-//            
-//            [HUD showAnimated:YES whileExecutingBlock:^{
-//                sleep(2);
-//            } completionBlock:^{
-//                [HUD removeFromSuperview];
-//                HUD =nil;
-//                [_alert dismissWithClickedButtonIndex:0 animated:NO];
-//                [self.navigationController popViewControllerAnimated:YES];
-//            }];
-//        }else{
-//            
-//        }
-//        
-//    } failure:^(NSError *error) {
-//        //
-//        NSLog(@"%@", error);
-//
-//        _alert=[[UIAlertView alloc]initWithTitle:@"提示" message:@"提交失败,请重新提交!" delegate:self cancelButtonTitle:nil otherButtonTitles:nil, nil];
-//        [_alert show];
-//        
-//        [HUD showAnimated:YES whileExecutingBlock:^{
-//            sleep(2);
-//        } completionBlock:^{
-//            [HUD removeFromSuperview];
-//            HUD =nil;
-//            [_alert dismissWithClickedButtonIndex:0 animated:NO];
-//
-//        }];
-//        
-//    }];
-
-
-
-}
 
 
 @end

@@ -8,8 +8,14 @@
 
 #import "XXEBaseViewController.h"
 
+typedef void(^ReturnArrayBlock) (NSArray *resultArray);
+
 @interface XXECourseManagerCourseSettingViewController : XXEBaseViewController
 
 @property (nonatomic, copy) NSString *position;
+
+@property (nonatomic, copy) ReturnArrayBlock returnArrayBlock;
+
+- (void)returnStr:(ReturnArrayBlock)block;
 
 @end

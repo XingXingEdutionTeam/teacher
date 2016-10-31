@@ -13,4 +13,7 @@
 @property (nonatomic, copy) NSString *baby_id;
 @property (nonatomic, strong) NSArray *familyInfoArray;
 
+@property(nonatomic, copy) NSString * fromFlagStr;
+
+
 @end

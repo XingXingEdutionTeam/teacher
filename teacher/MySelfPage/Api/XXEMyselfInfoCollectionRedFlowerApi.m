@@ -17,15 +17,18 @@
 @property (nonatomic, copy) NSString *user_id;
 
 @property (nonatomic, copy) NSString *page;
+@property (nonatomic, copy) NSString *return_param_all;
+
 
 @end
 
 @implementation XXEMyselfInfoCollectionRedFlowerApi
-- (instancetype)initWithXid:(NSString *)xid user_id:(NSString *)user_id page:(NSString *)page{
+- (instancetype)initWithXid:(NSString *)xid user_id:(NSString *)user_id page:(NSString *)page return_param_all:(NSString *)return_param_all{
     if (self = [super init]) {
         _xid = xid;
         _user_id = user_id;
         _page = page;
+        _return_param_all = return_param_all;
     }
     return self;
     
@@ -52,7 +55,8 @@
              @"xid":_xid,
              @"user_id":_user_id,
              @"user_type":USER_TYPE,
-             @"page":_page
+             @"page":_page,
+             @"return_param_all":_return_param_all
              };
     
 }

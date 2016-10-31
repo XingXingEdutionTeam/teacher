@@ -20,4 +20,6 @@
 /** 从忘记页面传过来的电话号码 */
 @property (nonatomic, copy)NSString *forgetPhonrNum;
 
+
+
 @end

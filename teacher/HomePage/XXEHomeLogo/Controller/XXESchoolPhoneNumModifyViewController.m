@@ -248,7 +248,7 @@
 - (void)modifySchoolPhoneNum{
 
     //position		//教职身份(传数字,1:授课老师  2:主任  3:管理  4:校长)
-    XXEModifyPhoneNumApi *modifyPhoneNumApi = [[XXEModifyPhoneNumApi alloc] initWithXid:parameterXid user_id:parameterUser_Id user_type:USER_TYPE school_id:_schoolId position:@"4" tel:_registerUserName];
+    XXEModifyPhoneNumApi *modifyPhoneNumApi = [[XXEModifyPhoneNumApi alloc] initWithXid:parameterXid user_id:parameterUser_Id user_type:USER_TYPE school_id:_schoolId position:_position tel:_registerUserName];
     [modifyPhoneNumApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         //
         //        NSLog(@"%@", request.responseJSONObject);

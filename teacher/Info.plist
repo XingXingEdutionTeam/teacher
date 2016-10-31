@@ -108,9 +108,9 @@
 		<true/>
 	</dict>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>开启定位</string>
+	<true/>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>定位</string>
+	<true/>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>

@@ -202,7 +202,7 @@
     cell.iconImageView.layer.cornerRadius = cell.iconImageView.frame.size.width / 2;
     cell.iconImageView.layer.masksToBounds = YES;
     
-    [cell.iconImageView sd_setImageWithURL:[NSURL URLWithString:head_img] placeholderImage:[UIImage imageNamed:@"home_flowerbasket_placehoderIcon120x120"]];
+    [cell.iconImageView sd_setImageWithURL:[NSURL URLWithString:head_img] placeholderImage:[UIImage imageNamed:@"headplaceholder"]];
     cell.nameLabel.text = [NSString stringWithFormat:@"%@  年龄:%@岁", model.tname, model.age];
     cell.scoreLabel.text = [NSString stringWithFormat:@"%@分", model.score_num];
     cell.courseLabel.text = [NSString stringWithFormat:@"授课范围:%@", model.teach_course];

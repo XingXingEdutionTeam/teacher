@@ -20,4 +20,7 @@
 
 @property (nonatomic, copy) NSString *collect_conditStr;
 
+@property (nonatomic, copy) NSString *position;
+
+
 @end

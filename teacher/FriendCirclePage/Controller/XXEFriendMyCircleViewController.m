@@ -97,7 +97,9 @@
 {
     [super viewDidAppear:animated];
     if (self.rootChat != nil) {
+        
     }else{
+        
     self.friendCirccleRefreshBlock();
     }
     UIButton*rightButton = [[UIButton alloc]initWithFrame:CGRectMake(-10,0,22,22)];
@@ -121,9 +123,10 @@
         strngXid = XID;
         homeUserId = USER_ID;
     }
-    NSString *otherXid = [NSString stringWithFormat:@"%ld",(long)self.otherXid];
+//    NSString *otherXid = [NSString stringWithFormat:@"%ld",(long)self.otherXid];
+    
     NSString *page1 = [NSString stringWithFormat:@"%ld",(long)page];
-    XXEFriendMyCircleApi *friendMyApi = [[XXEFriendMyCircleApi alloc]initWithChechFriendCircleOtherXid:otherXid page:page1 UserId:homeUserId MyCircleXid:strngXid];
+    XXEFriendMyCircleApi *friendMyApi = [[XXEFriendMyCircleApi alloc]initWithChechFriendCircleOtherXid:_otherXid page:page1 UserId:homeUserId MyCircleXid:strngXid];
     [friendMyApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         
         if (page ==1) {

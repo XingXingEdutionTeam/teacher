@@ -273,10 +273,13 @@
      7:作业图片
      8:星级评分图片
      */
-//    reportVC.other_xidStr = self.showAlbumXid;
-//    reportVC.picUrlStr = model.pic;
-//    reportVC.origin_pageStr = @"5";
-//    reportVC.report_type = @"2";
+    
+    CGPoint contentOffset =bgScrollView.contentOffset;
+    int d =contentOffset.x/kWidth;
+    NSString *imageUrl = _imageUrlArray[d];
+    reportVC.picUrlStr = imageUrl;
+    reportVC.origin_pageStr = _origin_pageStr;
+    reportVC.report_type = @"2";
     [self.navigationController pushViewController:reportVC animated:YES];
     
 }

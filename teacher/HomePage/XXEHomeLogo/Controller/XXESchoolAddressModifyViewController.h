@@ -15,6 +15,7 @@ typedef void(^ReturnStrBlock) (NSString *str);
 @property (nonatomic, copy) ReturnStrBlock returnStrBlock;
 @property (nonatomic, strong) NSString *schoolId;
 @property (nonatomic, strong) NSString *classId;
+@property (nonatomic, copy) NSString *position;
 
 //学校地址
 @property (nonatomic, copy) NSString *schoolAddressStr;

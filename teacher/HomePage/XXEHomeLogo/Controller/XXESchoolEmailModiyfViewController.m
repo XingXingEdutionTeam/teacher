@@ -74,7 +74,7 @@
 
 - (void)modifySchoolEmail{
 
-    XXEModifyEmailApi *modifyEmailApi = [[XXEModifyEmailApi alloc] initWithXid:parameterXid user_id:parameterUser_Id user_type:USER_TYPE school_id:_schoolId position:@"4" email:_emailTextField.text];
+    XXEModifyEmailApi *modifyEmailApi = [[XXEModifyEmailApi alloc] initWithXid:parameterXid user_id:parameterUser_Id user_type:USER_TYPE school_id:_schoolId position:_position email:_emailTextField.text];
     
     [modifyEmailApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         

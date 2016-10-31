@@ -90,7 +90,7 @@
     [self showHudWithString:@"正在上传......"];
     NSMutableArray *arr = [NSMutableArray array];
     for (int i =0; i < arr1.count; i++) {
-        XXEModifyCertificateApi *modifyCertificateApi = [[XXEModifyCertificateApi alloc] initWithXid:parameterXid user_id:parameterUser_Id user_type:USER_TYPE school_id:_schoolId position:@"4" upImage:arr1[i]];
+        XXEModifyCertificateApi *modifyCertificateApi = [[XXEModifyCertificateApi alloc] initWithXid:parameterXid user_id:parameterUser_Id user_type:USER_TYPE school_id:_schoolId position:_position upImage:arr1[i]];
         [arr addObject:modifyCertificateApi];
     }
     

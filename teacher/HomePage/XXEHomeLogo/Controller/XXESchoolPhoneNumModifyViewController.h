@@ -26,7 +26,7 @@ typedef void(^ReturnStrBlock) (NSString *str);
 
 
 @property (nonatomic, strong) NSString *schoolId;
-
+@property (nonatomic, copy) NSString *position;
 
 //如果  是 从 "我的"跳转 进来  fromMyselfInfo
 @property (nonatomic, copy) NSString *flagStr;

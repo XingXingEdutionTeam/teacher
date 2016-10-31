@@ -10,4 +10,6 @@
 
 @interface XXEAccountManagerViewController : XXEBaseViewController
 
+@property (nonatomic, copy) NSString *fromFlagStr;
+
 @end

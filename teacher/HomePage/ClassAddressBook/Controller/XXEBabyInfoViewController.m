@@ -68,9 +68,12 @@
         
         if ([codeStr isEqualToString:@"1"]) {
             
+            NSString *schoolName = [DEFAULTS objectForKey:@"SCHOOL_NAME"];
+            NSString *className = [DEFAULTS objectForKey:@"CLASS_NAME"];
+            
             NSDictionary *dict = request.responseJSONObject[@"data"];
             //@"昵称:",@"姓名:",@"年龄:", @"关系:", @"生日:", @"学校:", @"班级:", @"个性签名:", @"个人描述:"
-            contentArray = [[NSMutableArray alloc] initWithObjects:dict[@"nickname"], dict[@"tname"],  dict[@"age"], dict[@"birthday"], @"学校", _babyClassName, dict[@"personal_sign"], dict[@"pdescribe"], nil];
+            contentArray = [[NSMutableArray alloc] initWithObjects:dict[@"nickname"], dict[@"tname"],  dict[@"age"], dict[@"birthday"], schoolName, className, dict[@"personal_sign"], dict[@"pdescribe"], nil];
             headImageStr = dict[@"head_img"];
         }else{
             
@@ -140,6 +143,8 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
+//    NSLog(@"%ld === %@", indexPath.row, contentArray);
+    
     static NSString *identifier = @"cell";
     XXERedFlowerDetialTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
     
@@ -149,7 +154,7 @@
 
     cell.iconImageView.image = [UIImage imageNamed:pictureArray[indexPath.row]];
     cell.titleLabel.text = titleArray[indexPath.row];
-
+    
     cell.contentLabel.text = contentArray[indexPath.row];
     return cell;
 }

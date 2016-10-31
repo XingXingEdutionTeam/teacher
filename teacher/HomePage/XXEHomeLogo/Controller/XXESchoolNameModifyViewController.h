@@ -18,7 +18,7 @@ typedef void(^ReturnStrBlock) (NSString *str);
 @property (nonatomic, copy) NSString *schoolNameStr;
 @property (nonatomic, strong) NSString *schoolId;
 @property (nonatomic, strong) NSString *classId;
-
+@property (nonatomic, copy) NSString *position;
 
 @property (weak, nonatomic) IBOutlet UITextView *schoolNameTextView;
 

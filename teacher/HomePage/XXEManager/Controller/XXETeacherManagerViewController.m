@@ -223,16 +223,16 @@
      */
     
     if ([studentModel.condit isEqualToString:@"0"]) {
-        _agreeBtn = [UIButton createButtonWithFrame:CGRectMake(245 * kScreenRatioWidth, 27, 50, 25) backGruondImageName:nil Target:self Action:@selector(onClickagreeBtn:) Title:@"同意"];
+        _agreeBtn = [UIButton createButtonWithFrame:CGRectMake(245 * kScreenRatioWidth, 27, 50 * kScreenRatioWidth, 25 * kScreenRatioHeight) backGruondImageName:nil Target:self Action:@selector(onClickagreeBtn:) Title:@"同意"];
         [_agreeBtn setTitleColor:UIColorFromRGB(0, 170, 42) forState:UIControlStateNormal];
-        _agreeBtn.titleLabel.font = [UIFont systemFontOfSize:14];
+        _agreeBtn.titleLabel.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
         [_agreeBtn.layer setBorderColor:UIColorFromRGB(0, 170, 42).CGColor];
         [_agreeBtn.layer setBorderWidth:1];
         [_agreeBtn.layer setMasksToBounds:YES];
         
-        _refuseBtn = [UIButton createButtonWithFrame:CGRectMake(300 * kScreenRatioWidth, 27, 50, 25) backGruondImageName:nil Target:self Action:@selector(onClickRefuseBtn:) Title:@"拒绝"];
+        _refuseBtn = [UIButton createButtonWithFrame:CGRectMake(300 * kScreenRatioWidth, 27, 50 * kScreenRatioWidth, 25 * kScreenRatioHeight) backGruondImageName:nil Target:self Action:@selector(onClickRefuseBtn:) Title:@"拒绝"];
         [_refuseBtn setTitleColor:UIColorFromRGB(0, 170, 42) forState:UIControlStateNormal];
-        _refuseBtn.titleLabel.font = [UIFont systemFontOfSize:14];
+        _refuseBtn.titleLabel.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
         [_refuseBtn.layer setBorderColor:UIColorFromRGB(0, 170, 42).CGColor];
         [_refuseBtn.layer setBorderWidth:1];
         [_refuseBtn.layer setMasksToBounds:YES];
@@ -243,9 +243,9 @@
         _agreeBtn.tag=100;
         _refuseBtn.tag=101;
     }else if ([studentModel.condit isEqualToString:@"1"]){
-        _deletebtn = [UIButton createButtonWithFrame:CGRectMake(300 * kScreenRatioWidth, 27, 50, 25) backGruondImageName:nil Target:self Action:@selector(onClickDeleteBtn:) Title:@"删除"];
+        _deletebtn = [UIButton createButtonWithFrame:CGRectMake(300 * kScreenRatioWidth, 27, 50 * kScreenRatioWidth, 25 * kScreenRatioHeight) backGruondImageName:nil Target:self Action:@selector(onClickDeleteBtn:) Title:@"删除"];
         [_deletebtn setTitleColor:UIColorFromRGB(0, 170, 42) forState:UIControlStateNormal];
-        _deletebtn.titleLabel.font = [UIFont systemFontOfSize:14];
+        _deletebtn.titleLabel.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
         [_deletebtn.layer setBorderColor:UIColorFromRGB(0, 170, 42).CGColor];
         [_deletebtn.layer setBorderWidth:1];
         [_deletebtn.layer setMasksToBounds:YES];
@@ -518,21 +518,21 @@
     }
     
     //班级名称
-    UILabel *nameLabel = [[UILabel alloc]initWithFrame:CGRectMake(30, 5, 200 * kScreenRatioWidth, 30)];
+    UILabel *nameLabel = [[UILabel alloc]initWithFrame:CGRectMake(30 * kScreenRatioWidth, 5, 200 * kScreenRatioWidth, 30)];
     nameLabel.text = [NSString stringWithFormat:@"%@",classNameStr];
     nameLabel.textColor = [UIColor blackColor];
     nameLabel.font = [UIFont boldSystemFontOfSize:16 * kScreenRatioWidth];
     [view addSubview:nameLabel];
     
     //已审核的老师数
-    UILabel *auditedLabel = [[UILabel alloc]initWithFrame:CGRectMake(230, 5, 70 * kScreenRatioWidth, 30)];
+    UILabel *auditedLabel = [[UILabel alloc]initWithFrame:CGRectMake(230 * kScreenRatioWidth, 5, 70 * kScreenRatioWidth, 30)];
     auditedLabel.text = [NSString stringWithFormat:@"已审核:%@",numStr];
     auditedLabel.textColor = [UIColor blackColor];
     auditedLabel.font = [UIFont boldSystemFontOfSize:14 * kScreenRatioWidth];
     [view addSubview:auditedLabel];
     
     //待审核的老师数
-    UILabel *unauditLabel = [[UILabel alloc]initWithFrame:CGRectMake(300, 5, 70 * kScreenRatioWidth, 30)];
+    UILabel *unauditLabel = [[UILabel alloc]initWithFrame:CGRectMake(300 * kScreenRatioWidth, 5, 70 * kScreenRatioWidth, 30)];
     unauditLabel.text = [NSString stringWithFormat:@"待审核:%@",wait_numStr];
     unauditLabel.textColor = [UIColor blackColor];
     unauditLabel.font = [UIFont boldSystemFontOfSize:14 * kScreenRatioWidth];

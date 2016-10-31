@@ -192,6 +192,7 @@
     
     UITextView *checkInText = [[UITextView alloc] initWithFrame:CGRectMake(20, CGRectGetMaxY(downBgImgView.frame) + 20, KScreenWidth - 40, KScreenHeight /3)];
     checkInText.text = @"  1.每周第一次签到获得5猩币，之后每天签到多增加5猩币,直至20猩币,如有签到中断,将会重新从5猩币开始获取.\n  2.签到签满1周额外获得10猩币,连续签满2周额外获得20猩币,连续签满3周额外获得30猩币,连续签满4周额外获得40猩币.\n";
+    checkInText.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
     checkInText.layer.backgroundColor = [[UIColor clearColor] CGColor];
     checkInText.font = [UIFont systemFontOfSize:16];
     checkInText.layer.borderColor = [[UIColor colorWithRed:230.0/255.0 green:230.0/255.0 blue:230.0/255.0 alpha:1.0]CGColor];
@@ -201,7 +202,7 @@
     checkInText.editable = NO;
     [checkInText.layer setMasksToBounds:YES];
     //自动适应行高
-    static CGFloat maxHeight = 130.0f;
+    static CGFloat maxHeight = 150.0f;
     CGRect frame = checkInText.frame;
     CGSize constraintSize = CGSizeMake(frame.size.width, MAXFLOAT);
     CGSize size = [checkInText sizeThatFits:constraintSize];

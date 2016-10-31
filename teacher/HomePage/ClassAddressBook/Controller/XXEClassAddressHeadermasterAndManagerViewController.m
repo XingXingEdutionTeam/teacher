@@ -40,6 +40,7 @@
     
     self.title = @"通讯录";
     
+    
     [self createTableView];
     
     [self fetchNetData];
@@ -166,13 +167,15 @@
         classAlbumVC.schoolID = self.schoolId;
         classAlbumVC.classID = model.class_id;
         classAlbumVC.userIdentifier = self.homeUserIdentifier;
-        NSLog(@"%@ == %@",self.schoolId,model.class_id);
+//        NSLog(@"%@ == %@",self.schoolId,model.class_id);
         [self.navigationController pushViewController:classAlbumVC animated:YES];
     }else{
          XXEClassAddressEveryclassInfoViewController *classAddressEveryclassInfoVC = [[XXEClassAddressEveryclassInfoViewController alloc] init];
         classAddressEveryclassInfoVC.schoolId = _schoolId;
         classAddressEveryclassInfoVC.babyClassName = model.class_name;
         classAddressEveryclassInfoVC.selectedClassId = model.class_id;
+        classAddressEveryclassInfoVC.fromFlagStr = _fromFlagStr;
+        
         [self.navigationController pushViewController:classAddressEveryclassInfoVC animated:YES];
     }
 }

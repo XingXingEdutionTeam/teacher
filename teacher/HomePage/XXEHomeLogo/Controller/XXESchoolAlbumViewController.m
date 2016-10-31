@@ -98,24 +98,19 @@
     self.title = @"相   册";
     [self.myCollcetionView registerNib:[UINib nibWithNibName:NSStringFromClass([XXESchoolAlbumCollectionViewCell class]) bundle:nil] forCellWithReuseIdentifier:NSStringFromClass([XXESchoolAlbumCollectionViewCell class])];
     
-//    self.myCollcetionView.allowsMultipleSelection = YES;
-    
 }
 
 - (void)settingNavgiationBar{
 
-    //    NSString * name =[[NSUserDefaults standardUserDefaults] objectForKey:@"KEENTEAM"];
-    //    //教师 91 只有教师不能改
-    //    if ([name integerValue] == 91) {
-    //        self.navigationItem.rightBarButtonItem = nil;
-    //    }else{
-//    设置 navigationBar 右边 赠送
+    if ([self.position isEqualToString:@"3"] || [self.position isEqualToString:@"4"]) {
+        //设置 navigationBar 右边 赠送
         editButton = [UIButton buttonWithType:UIButtonTypeCustom];
         editButton.frame = CGRectMake(330, 5, 40, 22);
         [editButton setTitle:@"编辑" forState:UIControlStateNormal];
         [editButton addTarget:self action:@selector(editButtonCick:) forControlEvents:UIControlEventTouchUpInside];
         UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:editButton];
         self.navigationItem.rightBarButtonItem =rightItem;
+    }
 
 }
 

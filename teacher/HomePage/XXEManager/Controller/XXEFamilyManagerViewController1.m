@@ -12,6 +12,7 @@
 #import "XXERedFlowerSentHistoryTableViewCell.h"
 #import "XXEBabyFamilyInfoDetailViewController.h"
 #import "XXEFamilyManagerRefuseApi.h"
+#import "XXEFamilyManagerDeleteApi.h"
 #import "XXEFamilyManagerAgreeApi.h"
 #import "XXEFamilyManagerApi.h"
 
@@ -382,13 +383,13 @@
     
     //当前 所要删除 学生 的 babyid 及 所在 的classid
     NSString *currentClassId = classModel.class_id;
-    NSString *currentBabyId = stuModel.examine_id;
+    NSString *currentParentId = stuModel.parent_id;
     
     UIAlertController *alert=[UIAlertController alertControllerWithTitle:@"确定删除？" message:nil preferredStyle:(UIAlertControllerStyleAlert)];
     UIAlertAction *cancel=[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
     UIAlertAction *ok=[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
 #pragma mark - 删除=======================================
-        [self deleteStudentInfo:currentClassId andWithBabyId:currentBabyId andIndexPath:path];
+        [self deleteStudentInfo:currentClassId andWithParentId:currentParentId andIndexPath:path];
         
     }];
     [alert addAction:ok];
@@ -398,33 +399,35 @@
 
 
 
-- (void)deleteStudentInfo:(NSString *)currentClassId andWithBabyId:(NSString *)currentBabyId andIndexPath:(NSIndexPath *)path{
-//
-//    XXEStudentManagerDeleteApi *studentManagerDeleteApi = [[XXEStudentManagerDeleteApi alloc] initWithXid:parameterXid user_id:parameterUser_Id school_id:_schoolId class_id:currentClassId baby_id:currentBabyId];
-//    
-//    [studentManagerDeleteApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
-//        
-//        //              NSLog(@"2222---   %@", request.responseJSONObject);
-//        
-//        NSString *codeStr = [NSString stringWithFormat:@"%@", request.responseJSONObject[@"code"]];
-//        
-//        if ([codeStr isEqualToString:@"1"]) {
-//            
-//            [self showHudWithString:@"删除成功!" forSecond:1.5];
-//            //从 数据源中 删除
-//            XXEClassModel *classModel = classModelArray[path.section];
-//            [classModel.baby_list removeObjectAtIndex:path.row];
-//            //从 列表 中 删除
-//            [_myTableView deleteRowsAtIndexPaths:@[path] withRowAnimation:UITableViewRowAnimationAutomatic];
-//        }else{
-//            
-//        }
-//        [_myTableView reloadData];
-//        
-//    } failure:^(__kindof YTKBaseRequest *request) {
-//        
-//        [self showHudWithString:@"提交失败!" forSecond:1.5];
-//    }];
+- (void)deleteStudentInfo:(NSString *)currentClassId andWithParentId:(NSString *)currentParentId andIndexPath:(NSIndexPath *)path{
+
+//    NSLog(@"%@ --- %@ -- %@", _schoolId ,currentClassId, currentParentId);
+    
+    XXEFamilyManagerDeleteApi *familyManagerDeleteApi = [[XXEFamilyManagerDeleteApi alloc] initWithXid:parameterXid user_id:parameterUser_Id school_id:_schoolId class_id:currentClassId parent_id:currentParentId];
+    
+    [familyManagerDeleteApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
+        
+//        NSLog(@"2222---   %@", request.responseJSONObject);
+        
+        NSString *codeStr = [NSString stringWithFormat:@"%@", request.responseJSONObject[@"code"]];
+        
+        if ([codeStr isEqualToString:@"1"]) {
+            
+            [self showHudWithString:@"删除成功!" forSecond:1.5];
+            //从 数据源中 删除
+            XXEFamilyManagerClassInfoModel *classModel = classModelArray[path.section];
+            [classModel.parent_list removeObjectAtIndex:path.row];
+            //从 列表 中 删除
+            [_myTableView deleteRowsAtIndexPaths:@[path] withRowAnimation:UITableViewRowAnimationAutomatic];
+        }else{
+            
+        }
+        [_myTableView reloadData];
+        
+    } failure:^(__kindof YTKBaseRequest *request) {
+        
+        [self showHudWithString:@"提交失败!" forSecond:1.5];
+    }];
 }
 
 
@@ -464,24 +467,24 @@
     }
     
     //班级名称
-    UILabel *nameLabel = [[UILabel alloc]initWithFrame:CGRectMake(30, 5, 200 * kScreenRatioWidth, 30)];
+    UILabel *nameLabel = [[UILabel alloc]initWithFrame:CGRectMake(30 * kScreenRatioWidth, 5, 200 * kScreenRatioWidth, 30 * kScreenRatioHeight)];
     nameLabel.text = [NSString stringWithFormat:@"%@",classNameStr];
     nameLabel.textColor = [UIColor lightGrayColor];
-    nameLabel.font = [UIFont boldSystemFontOfSize:14 * kScreenRatioWidth];
+    nameLabel.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
     [headerView addSubview:nameLabel];
     
     //已审核的家人数
-    UILabel *auditedLabel = [[UILabel alloc]initWithFrame:CGRectMake(230, 5, 70 * kScreenRatioWidth, 30)];
+    UILabel *auditedLabel = [[UILabel alloc]initWithFrame:CGRectMake(230 * kScreenRatioWidth, 5, 70 * kScreenRatioWidth, 30 * kScreenRatioHeight)];
     auditedLabel.text = [NSString stringWithFormat:@"已审核:%@",numStr];
     auditedLabel.textColor = [UIColor lightGrayColor];
-    auditedLabel.font = [UIFont boldSystemFontOfSize:14 * kScreenRatioWidth];
+    auditedLabel.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
     [headerView addSubview:auditedLabel];
     
     //待审核的家人数
-    UILabel *unauditLabel = [[UILabel alloc]initWithFrame:CGRectMake(300, 5, 70 * kScreenRatioWidth, 30)];
+    UILabel *unauditLabel = [[UILabel alloc]initWithFrame:CGRectMake(300 * kScreenRatioWidth, 5, 70 * kScreenRatioWidth, 30 * kScreenRatioHeight)];
     unauditLabel.text = [NSString stringWithFormat:@"待审核:%@",wait_numStr];
     unauditLabel.textColor = [UIColor lightGrayColor];
-    unauditLabel.font = [UIFont boldSystemFontOfSize:14 * kScreenRatioWidth];
+    unauditLabel.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
     [headerView addSubview:unauditLabel];
 
     

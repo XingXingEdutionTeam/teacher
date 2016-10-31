@@ -154,6 +154,7 @@
     CGRect frame = self.listTableView.frame;
     frame.size.height = 0;
     self.listTableView.frame = frame;
+    
 }
 
 

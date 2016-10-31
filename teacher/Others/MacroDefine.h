@@ -57,6 +57,9 @@
 #define W(x) WinWidth*(x)/375.0
 #define H(y) WinHeight*(y)/667.0
 
+//沙盒 存储
+#define DEFAULTS [NSUserDefaults standardUserDefaults]
+
 //1148468535 app id苹果唯一标示
 
 //友盟

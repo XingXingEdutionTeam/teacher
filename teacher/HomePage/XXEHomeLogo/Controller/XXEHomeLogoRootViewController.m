@@ -144,6 +144,9 @@
     self.schoolIntroductionVC.classId = _classId;
     self.schoolCourseVC.classId = _classId;
     self.headmasterSpeechVC.classId = _classId;
+    self.schoolIntroductionVC.position = _position;
+    self.schoolCourseVC.position = _position;
+    self.headmasterSpeechVC.position = _position;
     
     _childViews = [[NSMutableArray alloc] init];
     
@@ -285,7 +288,7 @@
 // 数据 更新
 - (void)customContent{
   //学校logo
-  [_iconImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",kXXEPicURL, _logoIconStr]] placeholderImage:[UIImage imageNamed:@"头像174x174"]];
+  [_iconImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",kXXEPicURL, _logoIconStr]] placeholderImage:[UIImage imageNamed:@"school_logo_icon172x172"]];
     //学校名称
     titleLabel.text = _schoolNameStr;
     
@@ -302,19 +305,18 @@
     
     introductionButton.selected = YES;
     
-    
     if (self.navigationItem.rightBarButtonItem == nil) {
         [self setRightCollectionButton];
     }
     
     self.schoolIntroductionVC.contentArray = _contentArray;
     self.schoolIntroductionVC.schoolId = _schoolId;
+    self.schoolIntroductionVC.position = _position;
     [self addChildViewController:self.schoolIntroductionVC];
     [self.myScrollView addSubview:self.schoolIntroductionVC.view];
     self.schoolIntroductionVC.view.frame = CGRectMake(0, 0, KScreenWidth, KScreenHeight - 49 - 64);
     
 }
-
 
 
 - (void)createImageView{
@@ -361,11 +363,12 @@
     [self.view addSubview:headView];
 }
 
-#pragma mark 星级评分 跳转----------------------------------------------
+#pragma mark 星级评分 跳转---------------------------------------
 - (void)starRankButtonClick{
     XXEStarRemarkViewController *starRemarkVC = [[XXEStarRemarkViewController alloc] init];
     starRemarkVC.hidesBottomBarWhenPushed = YES;
     starRemarkVC.schoolId = _schoolId;
+    starRemarkVC.position = _position;
     [self.navigationController pushViewController:starRemarkVC animated:YES];
     
 }
@@ -406,7 +409,7 @@
     speechButton  = [self createButtonFrame:CGRectMake(buttonWidth * 2, 2 * kScreenRatioHeight, buttonWidth, buttonHeight) unseletedImageName:@"home_logo_tabbar_speech_unseletedIcon48x48" seletedImageName:@"home_logo_tabbar_speech_seletedIcon48x48" title:@"校长致辞" unseletedTitleColor:[UIColor lightGrayColor] seletedTitleColor:XXEColorFromRGB(0, 170, 42) font:[UIFont systemFontOfSize:10] target:self action:@selector(tabbarButtonClick:)];
     speechButton.tag = 12;
     //设置 图片 位置
-    speechButton.imageEdgeInsets = UIEdgeInsetsMake(-10 * kScreenRatioHeight, buttonWidth / 2 - 30 * kScreenRatioWidth, 0, 0);
+    speechButton.imageEdgeInsets = UIEdgeInsetsMake(-10 * kScreenRatioHeight, buttonWidth / 2 - 20 * kScreenRatioWidth, 0, 0);
     //设置title在button上的位置（上top，左left，下bottom，右right）
     speechButton.titleEdgeInsets = UIEdgeInsetsMake(30 * kScreenRatioHeight, -speechButton.titleLabel.bounds.size.width-20, 0, 0);
     
@@ -434,6 +437,7 @@
         }
         self.schoolIntroductionVC.contentArray = _contentArray;
         self.schoolIntroductionVC.schoolId = _schoolId;
+        self.schoolIntroductionVC.position = _position;
         self.schoolIntroductionVC.collect_conditStr = _cheeck_collect;
         [self addChildViewController:self.schoolIntroductionVC];
         [self.myScrollView addSubview:self.schoolIntroductionVC.view];
@@ -444,6 +448,7 @@
         self.navigationItem.rightBarButtonItem = nil;
         
         self.schoolCourseVC.schoolId = _schoolId;
+        self.schoolCourseVC.position = _position;
 //        NSLog(@"%@", _course_groupArray);
         self.schoolCourseVC.course_groupArray = _course_groupArray;
         [self addChildViewController:self.schoolCourseVC];
@@ -453,47 +458,17 @@
     }else if (button == speechButton){
         self.navigationItem.title = @"校长致辞";
         self.navigationItem.rightBarButtonItem = nil;
-//        UIButton *sentBtn =[UIButton createButtonWithFrame:CGRectMake(0, 0, 22, 22) backGruondImageName:@"home_redflower_sent" Target:self Action:@selector(sent:) Title:@""];
-//        UIBarButtonItem *sentItem =[[UIBarButtonItem alloc]initWithCustomView:sentBtn];
-//        self.navigationItem.rightBarButtonItem =sentItem;
+
         self.headmasterSpeechVC.schoolId = _schoolId;
         self.headmasterSpeechVC.pdt_speech = _pdt_speech;
         self.headmasterSpeechVC.head_img = _head_img;
+        self.headmasterSpeechVC.position = _position;
         [self addChildViewController:self.headmasterSpeechVC];
         [self.myScrollView addSubview:self.headmasterSpeechVC.view];
         self.headmasterSpeechVC.view.frame = CGRectMake(KScreenWidth * 2, 0, KScreenWidth, KScreenHeight - (49 + 64) * kScreenRatioHeight);
     }
     
-    
 }
-
-- (void)request:(UINavigationItem *)item{
-    
-    //    NSLog(@"点评 请求");
-    
-//    XXECommentStudentViewController *commentStudentVC = [[XXECommentStudentViewController alloc] init];
-//    
-//    commentStudentVC.schoolId = _schoolId;
-//    commentStudentVC.classId = _classId;
-//    
-//    [self.navigationController pushViewController:commentStudentVC animated:YES];
-}
-
-- (void)sent:(UIButton *)button{
-    
-    //    NSLog(@"小红花");
-    
-//    XXESentToPeopleViewController *sentToPeopleVC = [[XXESentToPeopleViewController alloc] init];
-//    
-//    sentToPeopleVC.schoolId = _schoolId;
-//    sentToPeopleVC.classId = _classId;
-//    //    sentToPeopleVC.basketNumStr = _RedFlowerSentHistoryVC.flower_able;
-//    
-//    [self.navigationController pushViewController:sentToPeopleVC animated:YES];
-    
-}
-
-
 
 - (void)createBigScrollView{
     
@@ -508,7 +483,6 @@
     _myScrollView.showsHorizontalScrollIndicator = NO;
     
     [self.view addSubview: _myScrollView];
-    
 }
 
 

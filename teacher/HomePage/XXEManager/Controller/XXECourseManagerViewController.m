@@ -9,6 +9,7 @@
 //
 
 #import "XXECourseManagerViewController.h"
+#import "XXECourseManagerCourseDetailInfoViewController.h"
 #import "XXECourseManagerTableViewCell.h"
 #import "XXECourseManagerModel.h"
 #import "XXECourseManagerApi.h"
@@ -79,7 +80,7 @@
      http://www.xingxingedu.cn/Teacher/edit_course_list
      传参:
      school_id	//学校id
-     condit 		//要求需要返回的数据   0:待完善(草稿)   10:返回全部课程    */
+     condit 		//要求需要返回的数据   //0:待完善(草稿)  1:等待校长审核   2:等待官方审核  3:已上线(官方审核通过)  4:校长驳回  5:官方驳回    */
     
     NSString *pageStr = [NSString stringWithFormat:@"%ld", page];
     
@@ -135,7 +136,7 @@
 
 
 - (void)createTableView{
-    _myTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, KScreenWidth, KScreenHeight) style:UITableViewStyleGrouped];
+    _myTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, KScreenWidth, KScreenHeight - 160) style:UITableViewStyleGrouped];
     
     _myTableView.dataSource = self;
     _myTableView.delegate = self;
@@ -249,21 +250,18 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
-//    XXERedFlowerDetialViewController *redFlowerDetialVC = [[XXERedFlowerDetialViewController alloc] init];
-//    
-//    XXERedFlowerSentHistoryModel *model = _dataSourceArray[indexPath.row];
-//    redFlowerDetialVC.name = model.tname;
-//    redFlowerDetialVC.time = [XXETool dateStringFromNumberTimer:model.date_tm];
-//    redFlowerDetialVC.schoolName = model.school_name;
-//    redFlowerDetialVC.className = model.class_name;
-//    redFlowerDetialVC.course = model.teach_course;
-//    redFlowerDetialVC.content = model.con;
-//    redFlowerDetialVC.picWallArray = model.pic_arr;
-//    redFlowerDetialVC.iconUrl = model.head_img;
-//    redFlowerDetialVC.collect_conditStr =model.collect_condit;
-//    redFlowerDetialVC.collect_id = model.collectionId;
-//    [self.navigationController pushViewController:redFlowerDetialVC animated:YES];
+    XXECourseManagerModel *model = _dataSourceArray[indexPath.row];
     
+    XXECourseManagerCourseDetailInfoViewController *courseManagerCourseDetailInfoVC = [[XXECourseManagerCourseDetailInfoViewController alloc] init];
+    courseManagerCourseDetailInfoVC.schoolId = _schoolId;
+    courseManagerCourseDetailInfoVC.schoolType = _schoolType;
+    courseManagerCourseDetailInfoVC.classId = _classId;
+    courseManagerCourseDetailInfoVC.position = _position;
+    
+    //courseId
+    courseManagerCourseDetailInfoVC.courseId = model.course_id;
+    
+    [self.navigationController pushViewController:courseManagerCourseDetailInfoVC animated:YES];
 }
 
 

@@ -24,7 +24,7 @@
 #import "XXETool.h"
 #import "UIImageView+WebCache.h"
 #import <UIKit/UIKit.h>
-#import<Foundation/Foundation.h>
+#import <Foundation/Foundation.h>
 #import <ReactiveCocoa/ReactiveCocoa.h>
 #import "XXEUserInfo.h"
 #import "XXEHomePageHeader.h"

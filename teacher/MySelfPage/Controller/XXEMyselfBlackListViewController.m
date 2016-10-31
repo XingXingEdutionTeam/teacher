@@ -147,7 +147,7 @@
         _dataSourceArray = [[NSMutableArray alloc] init];
         removeXidArray = [[NSMutableArray alloc] init];
         
-        //        NSLog(@"111   %@", request.responseJSONObject);
+//                NSLog(@"111999   %@", request.responseJSONObject);
         
         NSDictionary *dict = request.responseJSONObject;
         

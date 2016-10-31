@@ -7,12 +7,14 @@
 //
 
 #import "XXEBabyFamilyInfoDetailViewController.h"
-#import "XXERedFlowerDetialTableViewCell.h"
-#import "XXEBabyFamilyInfoDetailApi.h"
-#import "XXEGlobalCollectApi.h"
-#import "XXEGlobalDecollectApi.h"
 #import "XXEPermissionSettingViewController.h"
-
+#import "XXERedFlowerDetialTableViewCell.h"
+#import "WMConversationViewController.h"
+#import "XXEBabyFamilyInfoDetailApi.h"
+#import "ReportPicViewController.h"
+#import "XXEGlobalDecollectApi.h"
+#import "XXEGlobalCollectApi.h"
+#import "UMSocial.h"
 
 @interface XXEBabyFamilyInfoDetailViewController ()<UITableViewDelegate, UITableViewDataSource>
 {
@@ -64,8 +66,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    pictureArray = [[NSMutableArray alloc] initWithObjects:@"babyinfo_nickname_icon", @"babyinfo_tname_icon", @"home_logo_phone_icon40x40", @"home_logo_email_icon40x40", @"family_setting_icon", nil];
-    titleArray = [[NSMutableArray alloc] initWithObjects:@"昵称:",@"姓名:",@"电话号码:",@"邮箱:",@"权限设置", nil];
     
     if ([XXEUserInfo user].login){
         parameterXid = [XXEUserInfo user].xid;
@@ -73,6 +73,17 @@
     }else{
         parameterXid = XID;
         parameterUser_Id = USER_ID;
+    }
+
+    
+    if ([_fromFlagStr isEqualToString:@"fromCollection"]) {
+        pictureArray = [[NSMutableArray alloc] initWithObjects:@"babyinfo_nickname_icon", @"babyinfo_tname_icon", @"home_logo_phone_icon40x40", @"home_logo_email_icon40x40", @"family_setting_icon", nil];
+        
+        titleArray = [[NSMutableArray alloc] initWithObjects:@"昵称:",@"姓名:", @"电话号码:",@"邮箱:",@"权限设置", nil];
+    }else{
+        pictureArray = [[NSMutableArray alloc] initWithObjects:@"babyinfo_nickname_icon", @"babyinfo_tname_icon", @"babyinfo_relation_icon",@"home_logo_phone_icon40x40", @"home_logo_email_icon40x40", @"family_setting_icon", nil];
+        
+        titleArray = [[NSMutableArray alloc] initWithObjects:@"昵称:",@"姓名:", @"关系:", @"电话号码:",@"邮箱:",@"权限设置", nil];
     }
     
     [self fetchNetData];
@@ -82,20 +93,32 @@
 }
 
 - (void)fetchNetData{
+    
+    if (_baby_id == nil) {
+        _baby_id = @"";
+    }
 
     XXEBabyFamilyInfoDetailApi *babyFamilyInfoDetailApi = [[XXEBabyFamilyInfoDetailApi alloc] initWithXid:parameterXid user_id:parameterUser_Id user_type:USER_TYPE baby_id:_baby_id parent_id:_parent_id];
     
     [babyFamilyInfoDetailApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         
-//              NSLog(@"111   %@", request.responseJSONObject);
+//    NSLog(@"111   %@", request.responseJSONObject);
 
         NSString *codeStr = [NSString stringWithFormat:@"%@", request.responseJSONObject[@"code"]];
         
         if ([codeStr isEqualToString:@"1"]) {
             
             NSDictionary *dict = request.responseJSONObject[@"data"];
-            //@"昵称:",@"姓名:",@"电话号码:",@"邮箱:",@"权限设置"
-            contentArray = [[NSMutableArray alloc] initWithObjects:dict[@"nickname"], dict[@"tname"],  dict[@"phone"], dict[@"email"],@"", nil];
+            
+            if ([_fromFlagStr isEqualToString:@"fromCollection"]) {
+                //@"昵称:",@"姓名:",@"电话号码:",@"邮箱:",@"权限设置"
+                contentArray = [[NSMutableArray alloc] initWithObjects:dict[@"nickname"], dict[@"tname"], dict[@"phone"], dict[@"email"],@"", nil];
+            }else{
+                //@"昵称:",@"姓名:",@"电话号码:",@"邮箱:",@"权限设置"
+                contentArray = [[NSMutableArray alloc] initWithObjects:dict[@"nickname"], dict[@"tname"], dict[@"relation"], dict[@"phone"], dict[@"email"],@"", nil];
+            }
+            
+
             //头像
             NSString * head_img;
             if([[NSString stringWithFormat:@"%@",dict[@"head_img_type"]]isEqualToString:@"0"]){
@@ -209,9 +232,17 @@
     cell.iconImageView.image = [UIImage imageNamed:pictureArray[indexPath.row]];
     cell.titleLabel.text = titleArray[indexPath.row];
     cell.contentLabel.text = contentArray[indexPath.row];
-    if (indexPath.row == 4) {
-        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    
+    if ([_fromFlagStr isEqualToString:@"fromCollection"]) {
+        if (indexPath.row == 4) {
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        }
+    }else{
+        if (indexPath.row == 5) {
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        }
     }
+    
     
     return cell;
 }
@@ -222,11 +253,20 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (indexPath.row == 4) {
-        XXEPermissionSettingViewController *permissionSettingVC = [[XXEPermissionSettingViewController alloc] init];
-        
-        permissionSettingVC.XIDStr = familyXidStr;
-        [self.navigationController pushViewController:permissionSettingVC animated:YES];
+    
+    
+    if ([_fromFlagStr isEqualToString:@"fromCollection"]) {
+        if (indexPath.row == 4) {
+            XXEPermissionSettingViewController *permissionSettingVC = [[XXEPermissionSettingViewController alloc] init];
+            
+            permissionSettingVC.XIDStr = familyXidStr;
+            [self.navigationController pushViewController:permissionSettingVC animated:YES];        }
+    }else{
+        if (indexPath.row == 5) {
+            XXEPermissionSettingViewController *permissionSettingVC = [[XXEPermissionSettingViewController alloc] init];
+            
+            permissionSettingVC.XIDStr = familyXidStr;
+            [self.navigationController pushViewController:permissionSettingVC animated:YES];        }
     }
 
 }
@@ -388,7 +428,29 @@
 - (void)chartButtonClick:(UIButton *)button{
 
     NSLog(@"********发起聊天 *******");
-
+    if ([XXEUserInfo user].login) {
+        NSString * userId = [XXEUserInfo user].user_id;
+        
+        NSString * userNickName = [XXEUserInfo user].nickname;
+        
+        NSString * userPortraitUri = [XXEUserInfo user].user_head_img;
+        
+        RCUserInfo *_currentUserInfo =
+        [[RCUserInfo alloc] initWithUserId:userId
+                                      name:userNickName
+                                  portrait:userPortraitUri];
+        [RCIM sharedRCIM].currentUserInfo = _currentUserInfo;
+        
+        WMConversationViewController *vc = [[WMConversationViewController alloc] init];
+        
+        vc.conversationType = ConversationType_PRIVATE;
+        vc.targetId = familyXidStr;
+        vc.title = contentArray[1];
+        [self.navigationController pushViewController:vc animated:YES];
+    }else{
+        
+        [self showHudWithString:@"请先用账号登录" forSecond:1.5];
+    }
 }
 
 //查看圈子
@@ -401,7 +463,11 @@ NSLog(@"********查看圈子 *******");
 //分享
 - (void)shareButtonClick:(UIButton *)button{
 NSLog(@"********分享 *******");
-    
+    NSString *shareText = @"来自猩猩教室:";
+    UIImage *shareImage = [UIImage imageNamed:@"xingxingjiaoshi_share_icon"];
+    //    snsNames 你要分享到的sns平台类型，该NSArray值是`UMSocialSnsPlatformManager.h`定义的平台名的字符串常量，有UMShareToSina，UMShareToTencent，UMShareToRenren，UMShareToDouban，UMShareToQzone，UMShareToEmail，UMShareToSms等
+    //调用快速分享接口
+    [UMSocialSnsService presentSnsIconSheetView:self appKey:UMSocialAppKey shareText:shareText shareImage:shareImage shareToSnsNames:[NSArray arrayWithObjects:UMShareToSina,UMShareToQzone,UMShareToQQ,UMShareToWechatSession,UMShareToWechatTimeline,nil] delegate:self];
     
 
 }
@@ -409,7 +475,26 @@ NSLog(@"********分享 *******");
 //举报
 - (void)reportButtonClick:(UIButton *)button{
 
-NSLog(@"********举报 *******");
+//NSLog(@"********举报 *******");
+    ReportPicViewController * vc=[[ReportPicViewController alloc]init];
+    /*
+     【举报提交】
+     
+     接口类型:2
+     
+     接口:
+     http://www.xingxingedu.cn/Global/report_sub
+     
+     传参:
+     other_xid	//被举报人xid (举报用户时才有此参数)
+     report_name_id	//举报内容id , 多个逗号隔开
+     report_type	//举报类型 1:举报用户  2:举报图片
+     */
+    vc.other_xidStr = familyXidStr;
+    vc.report_type = @"1";
+    
+    [self.navigationController pushViewController:vc animated:YES];
+    
     
 }
 

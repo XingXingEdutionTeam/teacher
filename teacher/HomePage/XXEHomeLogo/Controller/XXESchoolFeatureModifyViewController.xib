@@ -9,6 +9,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="XXESchoolFeatureModifyViewController">
             <connections>
                 <outlet property="featureTextView" destination="vVv-nd-ETK" id="YAb-az-FJ0"/>
+                <outlet property="submitButton" destination="1aQ-JC-QnL" id="eP5-OB-uaa"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -37,9 +38,6 @@
                     <state key="normal" title="提     交" backgroundImage="login_green">
                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
-                    <connections>
-                        <action selector="submitButton:" destination="-1" eventType="touchUpInside" id="ULB-LD-SKt"/>
-                    </connections>
                 </button>
             </subviews>
             <color key="backgroundColor" red="0.89925986842105265" green="0.91128700657894635" blue="0.91473067434210531" alpha="1" colorSpace="calibratedRGB"/>

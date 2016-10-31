@@ -51,7 +51,7 @@
 
 - (void)submitButtonClick{
     
-    XXEModifyQQApi *modifyQQApi = [[XXEModifyQQApi alloc] initWithXid:parameterXid user_id:parameterUser_Id user_type:USER_TYPE school_id:_schoolId position:@"4" qq:_QQTextField.text];
+    XXEModifyQQApi *modifyQQApi = [[XXEModifyQQApi alloc] initWithXid:parameterXid user_id:parameterUser_Id user_type:USER_TYPE school_id:_schoolId position:_position qq:_QQTextField.text];
     
     [modifyQQApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         //
