@@ -10,7 +10,7 @@
 #import "XXEAlbumContentApi.h"
 #import "XXEContentAlbumCollectionViewCell.h"
 #import "XXEContentAlbumCollectionCell.h"
-
+#import "XXESchoolAlbumShowViewController.h"
 //#import "XXECollectionHeaderReusableView.h"
 #import "XXEAlbumDetailsModel.h"
 #import "XXEAlbumShowViewController.h"
@@ -542,9 +542,22 @@ static NSString *headerCell = @"HEADERCELL";
         [self.selectedIndexSet addIndex:indexPath.item];
         [self updateToggleSelectionButton];
     }else if(editButton.selected == NO){
-        XXEAlbumShowViewController *showVC = [[XXEAlbumShowViewController alloc]init];
-        showVC.detailsModel = self.datasourceA[indexPath.item];
-        showVC.showAlbumXid = self.albumTeacherXID;
+//        XXEAlbumShowViewController *showVC = [[XXEAlbumShowViewController alloc]init];
+//        showVC.detailsModel = self.datasourceA[indexPath.item];
+//        showVC.showAlbumXid = self.albumTeacherXID;
+//        [self.navigationController pushViewController:showVC animated:YES];
+        XXESchoolAlbumShowViewController *showVC = [[XXESchoolAlbumShowViewController alloc]init];
+        
+        NSMutableArray *picArr = [[NSMutableArray alloc] init];
+        for (XXEAlbumDetailsModel *model in _datasourceA) {
+            [picArr addObject:model.pic];
+        }
+        
+        showVC.imageUrlArray = picArr;
+        showVC.currentIndex = indexPath.item;
+        //举报 来源 5:班级相册
+        showVC.origin_pageStr = @"5";
+        showVC.imageModelArray = _datasourceA;
         [self.navigationController pushViewController:showVC animated:YES];
     }
 }

@@ -490,7 +490,7 @@
     
             showVC.imageUrlArray = picArr;
             showVC.currentIndex = indexPath.item;
-            //举报 来源 8:星级评分图片
+            //举报 来源 4:学校相册图片
             showVC.origin_pageStr = @"4";
             showVC.imageModelArray = _dataSourceArray;
             [self.navigationController pushViewController:showVC animated:YES];

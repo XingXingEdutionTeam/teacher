@@ -142,7 +142,7 @@
     [self.view addSubview:bottomView];
     bottomView.userInteractionEnabled =YES;
     
-    CGFloat itemWidth = KScreenWidth / 3;
+    CGFloat itemWidth = KScreenWidth / 2;
     CGFloat itemHeight = 49;
     
     CGFloat buttonWidth = itemWidth;
@@ -154,7 +154,7 @@
     [downloadButton setImage:[UIImage imageNamed:@"album_down_icon"] forState:UIControlStateHighlighted];
     downloadButton.titleLabel.font = [UIFont systemFontOfSize:10];
     //设置 图片 位置
-    downloadButton.imageEdgeInsets = UIEdgeInsetsMake(-10 * kScreenRatioHeight, buttonWidth / 2 - 80 * kScreenRatioWidth, 0, 0);
+    downloadButton.imageEdgeInsets = UIEdgeInsetsMake(-10 * kScreenRatioHeight, buttonWidth / 2 - 110 * kScreenRatioWidth, 0, 0);
     //设置title在button上的位置（上top，左left，下bottom，右right）
     downloadButton.titleEdgeInsets = UIEdgeInsetsMake(30 * kScreenRatioHeight, -downloadButton.titleLabel.bounds.size.width-60, 0, 0);
     [bottomView addSubview:downloadButton];
@@ -165,36 +165,36 @@
     [shareButton setImage:[UIImage imageNamed:@"classAddress_share_seleted_icon"] forState:UIControlStateHighlighted];
     shareButton.titleLabel.font = [UIFont systemFontOfSize:10];
     //设置 图片 位置
-    shareButton.imageEdgeInsets = UIEdgeInsetsMake(-10 * kScreenRatioHeight, buttonWidth / 2 - 30 * kScreenRatioWidth, 0, 0);
+    shareButton.imageEdgeInsets = UIEdgeInsetsMake(-10 * kScreenRatioHeight, buttonWidth / 2 - 65 * kScreenRatioWidth, 0, 0);
     //设置title在button上的位置（上top，左left，下bottom，右right）
     shareButton.titleEdgeInsets = UIEdgeInsetsMake(30 * kScreenRatioHeight, -shareButton.titleLabel.bounds.size.width-20, 0, 0);
     [bottomView addSubview:shareButton];
     
-    //--------------------------------点赞----------------
-    supportButton = [UIButton createButtonWithFrame:CGRectMake(buttonWidth * 2, 2 * kScreenRatioHeight, buttonWidth, buttonHeight) backGruondImageName:nil Target:self Action:@selector(supportButtonClick:) Title:@"点赞"];
-    [supportButton setImage:[UIImage imageNamed:@"album_good_icon_click"] forState:UIControlStateNormal];
-    [supportButton setImage:[UIImage imageNamed:@"album_good_icon"] forState:UIControlStateHighlighted];
-    supportButton.titleLabel.font = [UIFont systemFontOfSize:10];
-    //设置 图片 位置
-    supportButton.imageEdgeInsets = UIEdgeInsetsMake(-10 * kScreenRatioHeight, buttonWidth / 2 + 7 * kScreenRatioWidth, 0, 0);
-    //设置title在button上的位置（上top，左left，下bottom，右right）
-    supportButton.titleEdgeInsets = UIEdgeInsetsMake(30 * kScreenRatioHeight, -supportButton.titleLabel.bounds.size.width + 20, 0, 0);
-    [bottomView addSubview:supportButton];
+//    //--------------------------------点赞----------------
+//    supportButton = [UIButton createButtonWithFrame:CGRectMake(buttonWidth * 2, 2 * kScreenRatioHeight, buttonWidth, buttonHeight) backGruondImageName:nil Target:self Action:@selector(supportButtonClick:) Title:@"点赞"];
+//    [supportButton setImage:[UIImage imageNamed:@"album_good_icon_click"] forState:UIControlStateNormal];
+//    [supportButton setImage:[UIImage imageNamed:@"album_good_icon"] forState:UIControlStateHighlighted];
+//    supportButton.titleLabel.font = [UIFont systemFontOfSize:10];
+//    //设置 图片 位置
+//    supportButton.imageEdgeInsets = UIEdgeInsetsMake(-10 * kScreenRatioHeight, buttonWidth / 2 + 7 * kScreenRatioWidth, 0, 0);
+//    //设置title在button上的位置（上top，左left，下bottom，右right）
+//    supportButton.titleEdgeInsets = UIEdgeInsetsMake(30 * kScreenRatioHeight, -supportButton.titleLabel.bounds.size.width + 20, 0, 0);
+//    [bottomView addSubview:supportButton];
     
     //点赞数量
-    redBtn = [[UIButton alloc]initWithFrame:CGRectMake(20,-10, 20, 20) ];
-    [redBtn setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
-    
-//    if (self.goodNMArr.count!=0) {
-//        [redBtn setTitle:[NSString stringWithFormat:@"%@",self.goodNMArr[0]] forState:UIControlStateNormal];
-//    }
-    redBtn.titleLabel.textAlignment = NSTextAlignmentCenter;
-    redBtn.titleLabel.font =[UIFont boldSystemFontOfSize:12.0f];
-    redBtn.backgroundColor = [UIColor whiteColor];
-    [redBtn.layer setMasksToBounds:YES];   //设置yes
-    [redBtn.layer setCornerRadius:10.0f];   //弧度等于宽度的一半 就是圆角
-    
-    [supportButton addSubview:redBtn];
+//    redBtn = [[UIButton alloc]initWithFrame:CGRectMake(20,-10, 20, 20) ];
+//    [redBtn setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+//    
+////    if (self.goodNMArr.count!=0) {
+////        [redBtn setTitle:[NSString stringWithFormat:@"%@",self.goodNMArr[0]] forState:UIControlStateNormal];
+////    }
+//    redBtn.titleLabel.textAlignment = NSTextAlignmentCenter;
+//    redBtn.titleLabel.font =[UIFont boldSystemFontOfSize:12.0f];
+//    redBtn.backgroundColor = [UIColor whiteColor];
+//    [redBtn.layer setMasksToBounds:YES];   //设置yes
+//    [redBtn.layer setCornerRadius:10.0f];   //弧度等于宽度的一半 就是圆角
+//    
+//    [supportButton addSubview:redBtn];
 
     
 }
@@ -272,23 +272,23 @@
 //    
 //}
 
-- (void)supportButtonClick:(UIButton *)bu{
-    CGPoint contentOffset =bgScrollView.contentOffset;
-    int d =contentOffset.x/kWidth;
-//    NSString *imageUrl = _imageUrlArray[d];
-    
-    XXESchoolAlbumModel *model = _imageModelArray[d];
-    
-    XXEShoolPicSupportApi *shoolPicSupportApi = [[XXEShoolPicSupportApi alloc] initWithXid:parameterXid user_id:parameterUser_Id pic_id:model.schoolPicId];
-    [shoolPicSupportApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
-        //
-//        NSLog(@"%@", request.responseJSONObject);
-        
-    } failure:^(__kindof YTKBaseRequest *request) {
-        //
-        [self showHudWithString:@"" forSecond:1.5];
-    }];
-}
+//- (void)supportButtonClick:(UIButton *)bu{
+//    CGPoint contentOffset =bgScrollView.contentOffset;
+//    int d =contentOffset.x/kWidth;
+////    NSString *imageUrl = _imageUrlArray[d];
+//    
+//    XXESchoolAlbumModel *model = _imageModelArray[d];
+//    
+//    XXEShoolPicSupportApi *shoolPicSupportApi = [[XXEShoolPicSupportApi alloc] initWithXid:parameterXid user_id:parameterUser_Id pic_id:model.schoolPicId];
+//    [shoolPicSupportApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
+//        //
+////        NSLog(@"%@", request.responseJSONObject);
+//        
+//    } failure:^(__kindof YTKBaseRequest *request) {
+//        //
+//        [self showHudWithString:@"" forSecond:1.5];
+//    }];
+//}
 
 #pragma mark - actionViewDelegate
 - (void)sheetViewDidSelectIndex:(NSInteger)index title:(NSString *)title sender:(id)sender

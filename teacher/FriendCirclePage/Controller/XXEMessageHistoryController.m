@@ -14,6 +14,13 @@
 #import "XXENewMessageApi.h"
 
 @interface XXEMessageHistoryController ()<UITableViewDelegate,UITableViewDataSource>
+{
+
+    NSString *parameterXid;
+    NSString *parameterUser_Id;
+
+}
+
 @property (nonatomic, strong)UITableView *messageTableView;
 /** 数据源 */
 @property (nonatomic, strong)NSMutableArray *messageDatasource;
@@ -56,6 +63,14 @@ static NSString *const IdentifierHistory = @"messageHistoryCell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.view.backgroundColor = XXEBackgroundColor;
+    if ([XXEUserInfo user].login){
+        parameterXid = [XXEUserInfo user].xid;
+        parameterUser_Id = [XXEUserInfo user].user_id;
+    }else{
+        parameterXid = XID;
+        parameterUser_Id = USER_ID;
+    }
     
     if ([self.messageNumber isEqualToString:@"1"]) {
         self.title = @"新消息";
@@ -74,20 +89,11 @@ static NSString *const IdentifierHistory = @"messageHistoryCell";
 #pragma mark - 获取网络请求
 - (void)setupNetWorkRequest
 {
-    NSString *strngXid;
-    NSString *homeUserId;
-    if ([XXEUserInfo user].login) {
-        strngXid = [XXEUserInfo user].xid;
-        homeUserId = [XXEUserInfo user].user_id;
-    }else {
-        strngXid = XID;
-        homeUserId = USER_ID;
-    }
+
     [self.messageDatasource removeAllObjects];
-    XXEMessageHistoryApi * messageApi = [[XXEMessageHistoryApi alloc]initWithCircleMeesageHistoryUserXid:strngXid UserId:homeUserId];
+    XXEMessageHistoryApi * messageApi = [[XXEMessageHistoryApi alloc]initWithCircleMeesageHistoryUserXid:parameterXid UserId:parameterUser_Id];
     [messageApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         NSLog(@"%@",request.responseJSONObject);
-        NSLog(@"%@",[request.responseJSONObject objectForKey:@"msg"]);
         NSString *code = [request.responseJSONObject objectForKey:@"code"];
         if ([code integerValue]==1) {
             NSArray *data = [request.responseJSONObject objectForKey:@"data"];
@@ -108,17 +114,9 @@ static NSString *const IdentifierHistory = @"messageHistoryCell";
 
 - (void)setupNewMessageList
 {
-    NSString *strngXid;
-    NSString *homeUserId;
-    if ([XXEUserInfo user].login) {
-        strngXid = [XXEUserInfo user].xid;
-        homeUserId = [XXEUserInfo user].user_id;
-    }else {
-        strngXid = XID;
-        homeUserId = USER_ID;
-    }
+
      [self.messageDatasource removeAllObjects];
-    XXENewMessageApi *newMessageApi = [[XXENewMessageApi alloc]initWithNewMeesageHistoryUserXid:strngXid UserId:homeUserId];
+    XXENewMessageApi *newMessageApi = [[XXENewMessageApi alloc]initWithNewMeesageHistoryUserXid:parameterXid UserId:parameterUser_Id];
     [newMessageApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         NSLog(@"%@",request.responseJSONObject);
         NSLog(@"%@",[request.responseJSONObject objectForKey:@"msg"]);

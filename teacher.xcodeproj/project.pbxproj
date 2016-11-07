@@ -258,6 +258,16 @@
 		046E13211DBE020300FCBE49 /* XXEConfirmCourseOrderApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 046E13201DBE020300FCBE49 /* XXEConfirmCourseOrderApi.m */; };
 		046E13251DBE044300FCBE49 /* XXEXingClassRoomBuyCourseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 046E13231DBE044300FCBE49 /* XXEXingClassRoomBuyCourseViewController.m */; };
 		046E13261DBE044300FCBE49 /* XXEXingClassRoomBuyCourseViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 046E13241DBE044300FCBE49 /* XXEXingClassRoomBuyCourseViewController.xib */; };
+		046E9E7F1DC980620049DF69 /* XXESchoolTimetableCourseTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 046E9E7D1DC980620049DF69 /* XXESchoolTimetableCourseTableViewCell.m */; };
+		046E9E801DC980620049DF69 /* XXESchoolTimetableCourseTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 046E9E7E1DC980620049DF69 /* XXESchoolTimetableCourseTableViewCell.xib */; };
+		046E9E831DC982A20049DF69 /* XXESchoolTimetableCourseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 046E9E821DC982A10049DF69 /* XXESchoolTimetableCourseViewController.m */; };
+		046E9E861DC986890049DF69 /* XXESchoolTimetableCourseApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 046E9E851DC986890049DF69 /* XXESchoolTimetableCourseApi.m */; };
+		046E9E891DC9920C0049DF69 /* XXESchoolTimetableCourseModifyApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 046E9E881DC9920C0049DF69 /* XXESchoolTimetableCourseModifyApi.m */; };
+		046E9E8C1DC997A90049DF69 /* XXESchoolTimetableCourseDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 046E9E8B1DC997A90049DF69 /* XXESchoolTimetableCourseDetailViewController.m */; };
+		046E9E8F1DC9BC2E0049DF69 /* XXESchoolTimetableAddCourseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 046E9E8E1DC9BC2E0049DF69 /* XXESchoolTimetableAddCourseViewController.m */; };
+		046E9E921DC9E1560049DF69 /* XXESchoolTimetableCourseAddApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 046E9E911DC9E1560049DF69 /* XXESchoolTimetableCourseAddApi.m */; };
+		046E9E951DC9E5BD0049DF69 /* XXESchoolTimetableCourseDeleteApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 046E9E941DC9E5BD0049DF69 /* XXESchoolTimetableCourseDeleteApi.m */; };
+		0472676A1DCAD1CC00E32DFC /* XXESchoolTimetableTimeLineApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 047267691DCAD1CB00E32DFC /* XXESchoolTimetableTimeLineApi.m */; };
 		0473A4B41D98BC33003C3D8C /* XXECourseManagerCourseReleaseApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 0473A4B31D98BC33003C3D8C /* XXECourseManagerCourseReleaseApi.m */; };
 		0473A4BA1D9912A4003C3D8C /* XXECourseManagerCourseDetailInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0473A4B91D9912A4003C3D8C /* XXECourseManagerCourseDetailInfoViewController.m */; };
 		0473A4BE1D9916B0003C3D8C /* XXECourseManagerCourseDetailInfoTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0473A4BC1D9916B0003C3D8C /* XXECourseManagerCourseDetailInfoTableViewCell.m */; };
@@ -272,7 +282,6 @@
 		047AC9361DC72526001891DE /* XXEAllWeeksApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 047AC9351DC72526001891DE /* XXEAllWeeksApi.m */; };
 		047AC9391DC732EA001891DE /* XXESchoolTimetableTraditionApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 047AC9381DC732EA001891DE /* XXESchoolTimetableTraditionApi.m */; };
 		047AC93C1DC7339E001891DE /* XXESchoolTimetableTimeApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 047AC93B1DC7339E001891DE /* XXESchoolTimetableTimeApi.m */; };
-		047AC93F1DC753A7001891DE /* XXESchoolTimetableCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 047AC93E1DC753A7001891DE /* XXESchoolTimetableCollectionViewCell.m */; };
 		0480A0851D87DC1400D7589B /* XXENotificationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0480A0841D87DC1400D7589B /* XXENotificationViewController.m */; };
 		0480A0881D87DC4100D7589B /* XXESchoolNotificationApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 0480A0871D87DC4100D7589B /* XXESchoolNotificationApi.m */; };
 		0480A08B1D87DC5800D7589B /* XXESystemNotificationApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 0480A08A1D87DC5800D7589B /* XXESystemNotificationApi.m */; };
@@ -549,6 +558,7 @@
 		04BB3AB81D75672400AA5C5C /* XXEBabyInfoApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 04BB3AB71D75672400AA5C5C /* XXEBabyInfoApi.m */; };
 		04BB3ABE1D758FD700AA5C5C /* XXEGlobalCollectApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 04BB3ABD1D758FD700AA5C5C /* XXEGlobalCollectApi.m */; };
 		04BB3AC11D75910500AA5C5C /* XXEGlobalDecollectApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 04BB3AC01D75910500AA5C5C /* XXEGlobalDecollectApi.m */; };
+		04BEAA101DC8833D0098757A /* XXESchoolTimetableModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 04BEAA0F1DC8833D0098757A /* XXESchoolTimetableModel.m */; };
 		04C52CC71D7EAD7000DB7C4A /* XXEMyselfInfoModifyTeachingAgeApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 04C52CC61D7EAD7000DB7C4A /* XXEMyselfInfoModifyTeachingAgeApi.m */; };
 		04C52CCA1D7EB3A500DB7C4A /* XXEMyselfInfoCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04C52CC91D7EB3A500DB7C4A /* XXEMyselfInfoCollectionViewController.m */; };
 		04C52CCD1D7EB94C00DB7C4A /* XXEMyselfInfoCollectionRedFlowerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04C52CCC1D7EB94C00DB7C4A /* XXEMyselfInfoCollectionRedFlowerViewController.m */; };
@@ -1347,6 +1357,7 @@
 		0462FA321DC37A4400C67BA9 /* PayPwdView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PayPwdView.m; sourceTree = "<group>"; };
 		0462FA341DC37C8500C67BA9 /* MBProgressHUD+MJ.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MBProgressHUD+MJ.h"; sourceTree = "<group>"; };
 		0462FA351DC37C8500C67BA9 /* MBProgressHUD+MJ.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MBProgressHUD+MJ.m"; sourceTree = "<group>"; };
+		046690AD1DC8464D0043F066 /* teacher.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = teacher.entitlements; sourceTree = "<group>"; };
 		046E12FD1DBDA84E00FCBE49 /* XXEXingClassRoomTeacherDetailInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXEXingClassRoomTeacherDetailInfoViewController.h; sourceTree = "<group>"; };
 		046E12FE1DBDA84E00FCBE49 /* XXEXingClassRoomTeacherDetailInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXEXingClassRoomTeacherDetailInfoViewController.m; sourceTree = "<group>"; };
 		046E13001DBDA86D00FCBE49 /* XXEXingClassRoomCourseDetailInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXEXingClassRoomCourseDetailInfoViewController.h; sourceTree = "<group>"; };
@@ -1367,6 +1378,25 @@
 		046E13221DBE044300FCBE49 /* XXEXingClassRoomBuyCourseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXEXingClassRoomBuyCourseViewController.h; sourceTree = "<group>"; };
 		046E13231DBE044300FCBE49 /* XXEXingClassRoomBuyCourseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXEXingClassRoomBuyCourseViewController.m; sourceTree = "<group>"; };
 		046E13241DBE044300FCBE49 /* XXEXingClassRoomBuyCourseViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XXEXingClassRoomBuyCourseViewController.xib; sourceTree = "<group>"; };
+		046E9E7C1DC980620049DF69 /* XXESchoolTimetableCourseTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXESchoolTimetableCourseTableViewCell.h; sourceTree = "<group>"; };
+		046E9E7D1DC980620049DF69 /* XXESchoolTimetableCourseTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXESchoolTimetableCourseTableViewCell.m; sourceTree = "<group>"; };
+		046E9E7E1DC980620049DF69 /* XXESchoolTimetableCourseTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XXESchoolTimetableCourseTableViewCell.xib; sourceTree = "<group>"; };
+		046E9E811DC982A10049DF69 /* XXESchoolTimetableCourseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXESchoolTimetableCourseViewController.h; sourceTree = "<group>"; };
+		046E9E821DC982A10049DF69 /* XXESchoolTimetableCourseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXESchoolTimetableCourseViewController.m; sourceTree = "<group>"; };
+		046E9E841DC986890049DF69 /* XXESchoolTimetableCourseApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXESchoolTimetableCourseApi.h; sourceTree = "<group>"; };
+		046E9E851DC986890049DF69 /* XXESchoolTimetableCourseApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXESchoolTimetableCourseApi.m; sourceTree = "<group>"; };
+		046E9E871DC9920C0049DF69 /* XXESchoolTimetableCourseModifyApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXESchoolTimetableCourseModifyApi.h; sourceTree = "<group>"; };
+		046E9E881DC9920C0049DF69 /* XXESchoolTimetableCourseModifyApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXESchoolTimetableCourseModifyApi.m; sourceTree = "<group>"; };
+		046E9E8A1DC997A90049DF69 /* XXESchoolTimetableCourseDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXESchoolTimetableCourseDetailViewController.h; sourceTree = "<group>"; };
+		046E9E8B1DC997A90049DF69 /* XXESchoolTimetableCourseDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXESchoolTimetableCourseDetailViewController.m; sourceTree = "<group>"; };
+		046E9E8D1DC9BC2E0049DF69 /* XXESchoolTimetableAddCourseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXESchoolTimetableAddCourseViewController.h; sourceTree = "<group>"; };
+		046E9E8E1DC9BC2E0049DF69 /* XXESchoolTimetableAddCourseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXESchoolTimetableAddCourseViewController.m; sourceTree = "<group>"; };
+		046E9E901DC9E1560049DF69 /* XXESchoolTimetableCourseAddApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXESchoolTimetableCourseAddApi.h; sourceTree = "<group>"; };
+		046E9E911DC9E1560049DF69 /* XXESchoolTimetableCourseAddApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXESchoolTimetableCourseAddApi.m; sourceTree = "<group>"; };
+		046E9E931DC9E5BD0049DF69 /* XXESchoolTimetableCourseDeleteApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXESchoolTimetableCourseDeleteApi.h; sourceTree = "<group>"; };
+		046E9E941DC9E5BD0049DF69 /* XXESchoolTimetableCourseDeleteApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXESchoolTimetableCourseDeleteApi.m; sourceTree = "<group>"; };
+		047267681DCAD1CB00E32DFC /* XXESchoolTimetableTimeLineApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXESchoolTimetableTimeLineApi.h; sourceTree = "<group>"; };
+		047267691DCAD1CB00E32DFC /* XXESchoolTimetableTimeLineApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXESchoolTimetableTimeLineApi.m; sourceTree = "<group>"; };
 		0473A4B21D98BC33003C3D8C /* XXECourseManagerCourseReleaseApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXECourseManagerCourseReleaseApi.h; sourceTree = "<group>"; };
 		0473A4B31D98BC33003C3D8C /* XXECourseManagerCourseReleaseApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXECourseManagerCourseReleaseApi.m; sourceTree = "<group>"; };
 		0473A4B81D9912A4003C3D8C /* XXECourseManagerCourseDetailInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXECourseManagerCourseDetailInfoViewController.h; sourceTree = "<group>"; };
@@ -1394,8 +1424,6 @@
 		047AC9381DC732EA001891DE /* XXESchoolTimetableTraditionApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXESchoolTimetableTraditionApi.m; sourceTree = "<group>"; };
 		047AC93A1DC7339E001891DE /* XXESchoolTimetableTimeApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXESchoolTimetableTimeApi.h; sourceTree = "<group>"; };
 		047AC93B1DC7339E001891DE /* XXESchoolTimetableTimeApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXESchoolTimetableTimeApi.m; sourceTree = "<group>"; };
-		047AC93D1DC753A7001891DE /* XXESchoolTimetableCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXESchoolTimetableCollectionViewCell.h; sourceTree = "<group>"; };
-		047AC93E1DC753A7001891DE /* XXESchoolTimetableCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXESchoolTimetableCollectionViewCell.m; sourceTree = "<group>"; };
 		0480A0831D87DC1400D7589B /* XXENotificationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXENotificationViewController.h; sourceTree = "<group>"; };
 		0480A0841D87DC1400D7589B /* XXENotificationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXENotificationViewController.m; sourceTree = "<group>"; };
 		0480A0861D87DC4100D7589B /* XXESchoolNotificationApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXESchoolNotificationApi.h; sourceTree = "<group>"; };
@@ -1897,6 +1925,8 @@
 		04BB3ABD1D758FD700AA5C5C /* XXEGlobalCollectApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXEGlobalCollectApi.m; sourceTree = "<group>"; };
 		04BB3ABF1D75910500AA5C5C /* XXEGlobalDecollectApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXEGlobalDecollectApi.h; sourceTree = "<group>"; };
 		04BB3AC01D75910500AA5C5C /* XXEGlobalDecollectApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXEGlobalDecollectApi.m; sourceTree = "<group>"; };
+		04BEAA0E1DC8833D0098757A /* XXESchoolTimetableModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXESchoolTimetableModel.h; sourceTree = "<group>"; };
+		04BEAA0F1DC8833D0098757A /* XXESchoolTimetableModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXESchoolTimetableModel.m; sourceTree = "<group>"; };
 		04C52CC51D7EAD6F00DB7C4A /* XXEMyselfInfoModifyTeachingAgeApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXEMyselfInfoModifyTeachingAgeApi.h; sourceTree = "<group>"; };
 		04C52CC61D7EAD7000DB7C4A /* XXEMyselfInfoModifyTeachingAgeApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXEMyselfInfoModifyTeachingAgeApi.m; sourceTree = "<group>"; };
 		04C52CC81D7EB3A500DB7C4A /* XXEMyselfInfoCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXEMyselfInfoCollectionViewController.h; sourceTree = "<group>"; };
@@ -3389,6 +3419,16 @@
 				047AC9381DC732EA001891DE /* XXESchoolTimetableTraditionApi.m */,
 				047AC93A1DC7339E001891DE /* XXESchoolTimetableTimeApi.h */,
 				047AC93B1DC7339E001891DE /* XXESchoolTimetableTimeApi.m */,
+				046E9E841DC986890049DF69 /* XXESchoolTimetableCourseApi.h */,
+				046E9E851DC986890049DF69 /* XXESchoolTimetableCourseApi.m */,
+				046E9E871DC9920C0049DF69 /* XXESchoolTimetableCourseModifyApi.h */,
+				046E9E881DC9920C0049DF69 /* XXESchoolTimetableCourseModifyApi.m */,
+				046E9E901DC9E1560049DF69 /* XXESchoolTimetableCourseAddApi.h */,
+				046E9E911DC9E1560049DF69 /* XXESchoolTimetableCourseAddApi.m */,
+				046E9E931DC9E5BD0049DF69 /* XXESchoolTimetableCourseDeleteApi.h */,
+				046E9E941DC9E5BD0049DF69 /* XXESchoolTimetableCourseDeleteApi.m */,
+				047267681DCAD1CB00E32DFC /* XXESchoolTimetableTimeLineApi.h */,
+				047267691DCAD1CB00E32DFC /* XXESchoolTimetableTimeLineApi.m */,
 			);
 			path = Api;
 			sourceTree = "<group>";
@@ -3398,6 +3438,12 @@
 			children = (
 				047AC9311DC7177B001891DE /* XXESchoolTimetableViewController.h */,
 				047AC9321DC7177B001891DE /* XXESchoolTimetableViewController.m */,
+				046E9E811DC982A10049DF69 /* XXESchoolTimetableCourseViewController.h */,
+				046E9E821DC982A10049DF69 /* XXESchoolTimetableCourseViewController.m */,
+				046E9E8A1DC997A90049DF69 /* XXESchoolTimetableCourseDetailViewController.h */,
+				046E9E8B1DC997A90049DF69 /* XXESchoolTimetableCourseDetailViewController.m */,
+				046E9E8D1DC9BC2E0049DF69 /* XXESchoolTimetableAddCourseViewController.h */,
+				046E9E8E1DC9BC2E0049DF69 /* XXESchoolTimetableAddCourseViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -3405,6 +3451,8 @@
 		047AC92F1DC7175F001891DE /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				04BEAA0E1DC8833D0098757A /* XXESchoolTimetableModel.h */,
+				04BEAA0F1DC8833D0098757A /* XXESchoolTimetableModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -3412,8 +3460,9 @@
 		047AC9301DC7175F001891DE /* View */ = {
 			isa = PBXGroup;
 			children = (
-				047AC93D1DC753A7001891DE /* XXESchoolTimetableCollectionViewCell.h */,
-				047AC93E1DC753A7001891DE /* XXESchoolTimetableCollectionViewCell.m */,
+				046E9E7C1DC980620049DF69 /* XXESchoolTimetableCourseTableViewCell.h */,
+				046E9E7D1DC980620049DF69 /* XXESchoolTimetableCourseTableViewCell.m */,
+				046E9E7E1DC980620049DF69 /* XXESchoolTimetableCourseTableViewCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -4849,6 +4898,7 @@
 		9E4813811D504D0900C614AC /* teacher */ = {
 			isa = PBXGroup;
 			children = (
+				046690AD1DC8464D0043F066 /* teacher.entitlements */,
 				9E4813851D504D0900C614AC /* AppDelegate.h */,
 				9E4813861D504D0900C614AC /* AppDelegate.m */,
 				9E4813D11D506C6100C614AC /* LoginAndRegister */,
@@ -5956,7 +6006,12 @@
 				TargetAttributes = {
 					9E48137E1D504D0900C614AC = {
 						CreatedOnToolsVersion = 7.2;
-						DevelopmentTeam = 6XY86P6N2E;
+						DevelopmentTeam = 85KPV26F4F;
+						SystemCapabilities = {
+							com.apple.Keychain = {
+								enabled = 0;
+							};
+						};
 					};
 					9E4813971D504D0900C614AC = {
 						CreatedOnToolsVersion = 7.2;
@@ -6098,6 +6153,7 @@
 				04BB3AA21D74743300AA5C5C /* XXEClassAddressTableViewCell.xib in Resources */,
 				0462FA1F1DC3423700C67BA9 /* XXEWalletWithdrawCashViewController.xib in Resources */,
 				9E2F7F6C1D73D24B00DD9CD1 /* UMSCommentDetailController.xib in Resources */,
+				046E9E801DC980620049DF69 /* XXESchoolTimetableCourseTableViewCell.xib in Resources */,
 				04F2169A1D7671BB005C2EBF /* images-2.jpeg in Resources */,
 				9E6693C71D6417C500FFA0A7 /* CityPlace.plist in Resources */,
 				043596AA1DAA458100F85DAE /* rcim7.png in Resources */,
@@ -6330,6 +6386,7 @@
 				044BFDD91DACAC2200E1EB4D /* XXERCCustomCellTableViewCell.m in Sources */,
 				04F216CC1D76F0CE005C2EBF /* XXESchoolCourseTableViewCell.m in Sources */,
 				0480A0851D87DC1400D7589B /* XXENotificationViewController.m in Sources */,
+				046E9E951DC9E5BD0049DF69 /* XXESchoolTimetableCourseDeleteApi.m in Sources */,
 				0454C29F1D9A8AE200D32983 /* XXECourseManagerDeleteCoursePicApi.m in Sources */,
 				9E5E23AF1D90CC04008B1AAF /* DFBaseLineCell.m in Sources */,
 				9EBA6EFF1D5CACA5001B45C3 /* XXEClassAlbumApi.m in Sources */,
@@ -6433,6 +6490,7 @@
 				043301381D62C48300722DE2 /* XXEChiefAndTeacherApi.m in Sources */,
 				046E12FF1DBDA84E00FCBE49 /* XXEXingClassRoomTeacherDetailInfoViewController.m in Sources */,
 				04BB3A9B1D74743300AA5C5C /* XXEClassAddressEveryclassInfoViewController.m in Sources */,
+				046E9E831DC982A20049DF69 /* XXESchoolTimetableCourseViewController.m in Sources */,
 				04F216911D7671BB005C2EBF /* NullSafe.m in Sources */,
 				9EEA0E321D6E83550070C8C3 /* SDCycleScrollView.m in Sources */,
 				043C80B61D86BC14004F1B85 /* XXEXingCommunityKindergartenViewController.m in Sources */,
@@ -6465,6 +6523,7 @@
 				04530C6F1D891ED000620105 /* XXEReleaseDetailInfoViewController.m in Sources */,
 				04BA0CFE1D9CB62900B4AAD9 /* XXEClassManagerSettingClassTimeViewController.m in Sources */,
 				044DEBDF1D8FD31000DE101A /* XXEClassManagerViewController.m in Sources */,
+				0472676A1DCAD1CC00E32DFC /* XXESchoolTimetableTimeLineApi.m in Sources */,
 				9E50F4061D5B13B400FA6594 /* XXEHomePageClassModel.m in Sources */,
 				9E5E23B51D90CC04008B1AAF /* DFLikeCommentToolbar.m in Sources */,
 				044DEBE21D8FD32000DE101A /* XXEDataManagerViewController.m in Sources */,
@@ -6505,6 +6564,7 @@
 				9E94B77B1D75A62D0045D575 /* XXERegisterPicApi.m in Sources */,
 				04F216961D7671BB005C2EBF /* QHUtilAss.m in Sources */,
 				044DEBEF1D90049200DE101A /* XXEStudentManagerTableViewCell.m in Sources */,
+				046E9E8F1DC9BC2E0049DF69 /* XXESchoolTimetableAddCourseViewController.m in Sources */,
 				9EBA6F5A1D5CADBA001B45C3 /* VedioSaveViewController.m in Sources */,
 				0473A4BE1D9916B0003C3D8C /* XXECourseManagerCourseDetailInfoTableViewCell.m in Sources */,
 				0462FA1C1DC3423700C67BA9 /* XXETransactionRecordsViewController.m in Sources */,
@@ -6604,7 +6664,6 @@
 				9E6693BC1D64140700FFA0A7 /* SchoolInfoViewController.m in Sources */,
 				0433012F1D62BDD000722DE2 /* XXERedFlowerSentHistoryModel.m in Sources */,
 				9E5E23D41D90CCD8008B1AAF /* XXELocationAddController.m in Sources */,
-				047AC93F1DC753A7001891DE /* XXESchoolTimetableCollectionViewCell.m in Sources */,
 				9E14098F1D618A0C00E43AE4 /* XXEMyselfAblumUpDataApi.m in Sources */,
 				04BB3A4E1D74742B00AA5C5C /* XXEMealModel.m in Sources */,
 				9EE498FA1D65AF7C00FC5472 /* TWSelectCityView.m in Sources */,
@@ -6721,6 +6780,7 @@
 				04F216C41D76C0BA005C2EBF /* XXEStarRemarkTableViewCell.m in Sources */,
 				043596911DAA458100F85DAE /* PersonCenterViewController.m in Sources */,
 				044DEC051D90DFB000DE101A /* XXEClassModel.m in Sources */,
+				04BEAA101DC8833D0098757A /* XXESchoolTimetableModel.m in Sources */,
 				9ED146FF1D597DB40049D2AA /* XXEHomePageHeaderView.m in Sources */,
 				9EEA0E361D6E95700070C8C3 /* XXEVerticalButton.m in Sources */,
 				04BB3A141D74742A00AA5C5C /* XXEModifySchoolNameApi.m in Sources */,
@@ -6758,6 +6818,7 @@
 				043596961DAA458100F85DAE /* WMConversationViewController.m in Sources */,
 				04BB3A0C1D74742A00AA5C5C /* XXEHomeLogoApi.m in Sources */,
 				9E50F4031D5B139400FA6594 /* XXEHomePageSchoolModel.m in Sources */,
+				046E9E7F1DC980620049DF69 /* XXESchoolTimetableCourseTableViewCell.m in Sources */,
 				043301301D62BDD000722DE2 /* XXEChiefAndTeacherTableViewCell.m in Sources */,
 				04BB3A391D74742B00AA5C5C /* XXEHomeworkIssueTextInfoApi.m in Sources */,
 				04BB3A291D74742B00AA5C5C /* XXESchoolPhoneNumModifyViewController.m in Sources */,
@@ -6847,6 +6908,7 @@
 				0485FD311D82C5050077E10B /* XXEBlackListApi.m in Sources */,
 				04A9DDB51D8165F000544782 /* XXEMyselfInfoCollectionUsersViewController.m in Sources */,
 				049998001D9B8A05001EA07F /* XXECourseManagerDeleteCourseApi.m in Sources */,
+				046E9E861DC986890049DF69 /* XXESchoolTimetableCourseApi.m in Sources */,
 				9EBA6F521D5CADBA001B45C3 /* SSVideoPlayController.m in Sources */,
 				043595DF1DA8E4C100F85DAE /* XXEDataManagerApi.m in Sources */,
 				04BB3AB11D74743300AA5C5C /* XXECommentRequestTableViewCell.m in Sources */,
@@ -6876,8 +6938,10 @@
 				04530C741D891EE800620105 /* XXEReleaseViewController.m in Sources */,
 				9E9B4C7A1D633C8400983F5E /* XXEFriendCircleApi.m in Sources */,
 				0473A4CB1D991F3D003C3D8C /* XXECourseManagerCourseTeacherModel.m in Sources */,
+				046E9E921DC9E1560049DF69 /* XXESchoolTimetableCourseAddApi.m in Sources */,
 				9E03CFDF1D92664D0083308C /* XXEMessageHistoryController.m in Sources */,
 				04D5B1F21D6B262500ABA89A /* XXETeachOfTypeModel.m in Sources */,
+				046E9E891DC9920C0049DF69 /* XXESchoolTimetableCourseModifyApi.m in Sources */,
 				048754A31D5C0BF200F680C5 /* XXEFlowerbasketModel.m in Sources */,
 				9E2F7F1A1D70298000DD9CD1 /* XXEReportModel.m in Sources */,
 				9E50F3F91D5AC11300FA6594 /* XXEUserInfo.m in Sources */,
@@ -6916,6 +6980,7 @@
 				04947CB41DC0CE3A008A351F /* BCQueryBillsCountResp.m in Sources */,
 				04947CD31DC0CE3A008A351F /* BCWXPayAdapter.m in Sources */,
 				0421468F1D94C69200A2F7F3 /* XXESchoolAlbumShowViewController.m in Sources */,
+				046E9E8C1DC997A90049DF69 /* XXESchoolTimetableCourseDetailViewController.m in Sources */,
 				9E1671F01D93BB9500463BBD /* XXEContentAlbumCollectionCell.m in Sources */,
 				04947CA81DC0CE3A008A351F /* BeeCloud.m in Sources */,
 				9EE498EF1D658B5C00FC5472 /* XXETeacherTableViewCell.m in Sources */,
@@ -7108,7 +7173,7 @@
 					"$(PROJECT_DIR)/teacher/ThirdLibrary/BeeCloud/BCPaySDK/Channel/WXPay",
 				);
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.xingxingEdu.teachers;
+				PRODUCT_BUNDLE_IDENTIFIER = com.xingxingEdu.teachering;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				VALID_ARCHS = "arm64 armv7 armv7s";
@@ -7157,7 +7222,7 @@
 					"$(PROJECT_DIR)/teacher/ThirdLibrary/BeeCloud/BCPaySDK/Channel/WXPay",
 				);
 				ONLY_ACTIVE_ARCH = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = com.xingxingEdu.teachers;
+				PRODUCT_BUNDLE_IDENTIFIER = com.xingxingEdu.teachering;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				VALID_ARCHS = "arm64 armv7 armv7s";

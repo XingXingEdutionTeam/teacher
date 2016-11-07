@@ -17,5 +17,8 @@
 
 + (UIImage*)createImageWithColor:(UIColor*)color size:(CGSize)imageSize;
 
+//判断 当前 是星期几
++ (int)queryWeekday;
+
 
 @end

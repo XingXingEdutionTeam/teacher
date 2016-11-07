@@ -49,7 +49,17 @@
     return theImage;
 }
 
-
++ (int)queryWeekday
+{
+    NSDate * today = [NSDate date];
+    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    //NSInteger unitFlags = NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit | NSWeekdayCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit;
+    NSInteger unitFlags = NSCalendarUnitWeekday;
+    NSDateComponents *comps = [[NSDateComponents alloc] init];
+    comps = [calendar components:unitFlags fromDate:today];
+    int weekday = (int)[comps weekday];
+    return weekday;
+}
 
 
 
