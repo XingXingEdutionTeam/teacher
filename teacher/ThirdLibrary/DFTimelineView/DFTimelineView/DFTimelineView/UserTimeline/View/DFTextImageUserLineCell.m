@@ -46,6 +46,8 @@
     if (_coverView == nil) {
         _coverView = [[UIImageView alloc] initWithFrame:CGRectZero];
         _coverView.backgroundColor = [UIColor lightGrayColor];
+        _coverView.contentMode = UIViewContentModeScaleAspectFill;
+        _coverView.clipsToBounds = YES;
         [self.bodyView addSubview:_coverView];
     }
     

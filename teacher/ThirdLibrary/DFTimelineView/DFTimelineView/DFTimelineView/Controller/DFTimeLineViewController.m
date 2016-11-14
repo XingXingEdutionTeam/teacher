@@ -22,6 +22,7 @@
 
 #import "DFImagesSendViewController.h"
 #import "DFVideoCaptureController.h"
+#import "XXEUserInfo.h"
 
 @interface DFTimeLineViewController ()<DFLineCellDelegate, CommentInputViewDelegate, TZImagePickerControllerDelegate, UIImagePickerControllerDelegate,UINavigationControllerDelegate, DFImagesSendViewControllerDelegate,DFVideoCaptureControllerDelegate>
 
@@ -75,6 +76,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    [self.tableView registerClass:[UITableViewCell self] forCellReuseIdentifier:@"Cell"];
     [self initCommentInputView];
 }
 
@@ -201,33 +204,80 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    DFBaseLineItem *item = [_items objectAtIndex:indexPath.row];
-    DFBaseLineCell *typeCell = [self getCell:[item class]];
-    return [typeCell getReuseableCellHeight:item];
+    if (_items.count != 0) {
+        DFBaseLineItem *item = [_items objectAtIndex:indexPath.row];
+        DFBaseLineCell *typeCell = [self getCell:[item class]];
+        return [typeCell getReuseableCellHeight:item];
+    }
+    return 0;
 }
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    DFBaseLineItem *item = [_items objectAtIndex:indexPath.row];
-    DFBaseLineCell *typeCell = [self getCell:[item class]];
-    
-    NSString *reuseIdentifier = NSStringFromClass([typeCell class]);
-    DFBaseLineCell *cell = [tableView dequeueReusableCellWithIdentifier: reuseIdentifier];
-    if (cell == nil ) {
-        cell = [[[typeCell class] alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier];
-    }else{
-        NSLog(@"重用Cell: %@", reuseIdentifier);
-    }
+    if (_items.count != 0) {
+        DFBaseLineItem *item = [_items objectAtIndex:indexPath.row];
+        
+        DFBaseLineCell *typeCell = [self getCell:[item class]];
 
-    cell.delegate = self;
-    
-    cell.separatorInset = UIEdgeInsetsZero;
-    if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
-        cell.layoutMargins = UIEdgeInsetsZero;
+        NSString *CellIdentifier = [NSString stringWithFormat:@"cell%ld%ld",indexPath.section,indexPath.row];
+        // 通过不同标识创建cell实例
+        DFBaseLineCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+        // 判断为空进行初始化  --（当拉动页面显示超过主页面内容的时候就会重用之前的cell，而不会再次初始化）
+//        if (!cell) {
+//            cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
+//        }
+//        
+//        NSString *reuseIdentifier = NSStringFromClass([typeCell class]);
+//        DFBaseLineCell *cell = [tableView dequeueReusableCellWithIdentifier: reuseIdentifier];
+        if (cell == nil ) {
+            cell = [[[typeCell class] alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        }else{
+            NSLog(@"重用Cell: %@", CellIdentifier);
+        }
+        
+//        BOOL isLiked = NO;
+        
+        for (DFLineLikeItem *like in item.likes) {
+            if (like.userId  == [[XXEUserInfo user].xid integerValue])  {
+                [cell setIsLikedFun];
+            }else {
+                NSLog(@"%@", [XXEUserInfo user].xid);
+                NSLog(@"%lu", (unsigned long)like.userId);
+            }
+        };
+        //    for (int i = 0; i < item.likes.count; i+=1) {
+        //        if (item.likes[i].userId == USER_ID)
+        //    }
+        
+        
+        
+        cell.likeCmtButton.tag = 10 + indexPath.row;
+//        [cell.likeCmtButton addTarget:self action:@selector(onClickLikeCommentBtn:) forControlEvents:UIControlEventTouchUpInside];
+        
+        cell.delegate = self;
+        
+        cell.separatorInset = UIEdgeInsetsZero;
+        if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
+            cell.layoutMargins = UIEdgeInsetsZero;
+        }
+        [cell updateWithItem:item];
+        
+        return cell;
     }
-    [cell updateWithItem:item];
+    return nil;
     
-    return cell;
+}
+
+
+-(void) onClickLikeCommentBtn:(id)sender
+{
+    NSLog(@"onClickLikeCommentBtn");
+//    _likeCommentToolbar.zanFlag = @"赞";
+
+    DFBaseLineCell *cell = (DFBaseLineCell *)[[sender superview] superview];
+    cell.isLikeCommentToolbarShow = !cell.isLikeCommentToolbarShow;
+    cell.likeCommentToolbar.hidden = !cell.isLikeCommentToolbarShow;
+    
 }
 
 
@@ -292,49 +342,70 @@
 }
 
 -(void)addLikeItem:(DFLineLikeItem *)likeItem itemId:(long long)itemId
+isSelet:(BOOL)isSelet
 {
     NSLog(@"点赞人的Model:%@",likeItem);
     NSLog(@"%lu",(unsigned long)likeItem.userId);
     
     DFBaseLineItem *item = [self getItem:itemId];
-    
-    NSLog(@"点的赞的数组%@",item.likes);
-    
-    [item.likes insertObject:likeItem atIndex:0];
-    NSLog(@"所有点赞的数组信息%@",item.likes);
-    item.likesStr = nil;
-    item.cellHeight = 0;
-    [self genLikeAttrString:item];
-    [self.tableView reloadData];
-}
-
-//取消点赞
-- (void)cancelLikeItem:(DFLineLikeItem *)likeItem itemId:(long long)itemId
-{
-    DFBaseLineItem *item = [self getItem:itemId];
-    NSLog(@"%lu",(unsigned long)item.userId);
-    int index = 1;
-    int indexPath = 0;
-    if (item.likes.count >0) {
-        for (DFLineLikeItem *itemA in item.likes) {
-            if (itemA.userId == item.userId) {
-                indexPath = index-1;
-                NSLog(@"indexPath:%d",indexPath);
-            }
-            index++;
-            NSLog(@"index:%d",index);
-        }
-
-    }else{
-        indexPath = 0;
+    //remove
+    if (isSelet == NO) {
+//        [item.likes insertObject:likeItem atIndex:0];
+        [item.likes addObject:likeItem];
+        isSelet = YES;
     }
-    
-    [item.likes removeObjectAtIndex:indexPath];
+    else{
+//        if ([item.likes lastObject]) {
+////            [item.likes removeObjectAtIndex:0];
+//            [item.likes removeLastObject];
+//            
+//        }
+        NSMutableArray *tempLikes = [NSMutableArray array];
+        for (DFLineLikeItem *like in item.likes) {
+            if (like.userId  != [[XXEUserInfo user].xid integerValue])  {
+                [tempLikes addObject:like];
+            };
+        };
+        item.likes = tempLikes;
+        isSelet = NO;
+    }
+//    NSLog(@"点的赞的数组%@",item.likes);
+//    
+//    [item.likes insertObject:likeItem atIndex:0];
+//    NSLog(@"所有点赞的数组信息%@",item.likes);
     item.likesStr = nil;
     item.cellHeight = 0;
     [self genLikeAttrString:item];
     [self.tableView reloadData];
 }
+
+////取消点赞
+//- (void)cancelLikeItem:(DFLineLikeItem *)likeItem itemId:(long long)itemId
+//{
+//    DFBaseLineItem *item = [self getItem:itemId];
+//    NSLog(@"%lu",(unsigned long)item.userId);
+//    int index = 1;
+//    int indexPath = 0;
+//    if (item.likes.count >0) {
+//        for (DFLineLikeItem *itemA in item.likes) {
+//            if (itemA.userId == item.userId) {
+//                indexPath = index-1;
+//                NSLog(@"indexPath:%d",indexPath);
+//            }
+//            index++;
+//            NSLog(@"index:%d",index);
+//        }
+//
+//    }else{
+//        indexPath = 0;
+//    }
+//    
+//    [item.likes removeObjectAtIndex:indexPath];
+//    item.likesStr = nil;
+//    item.cellHeight = 0;
+//    [self genLikeAttrString:item];
+//    [self.tableView reloadData];
+//}
 
 
 -(void)addCommentItem:(DFLineCommentItem *)commentItem itemId:(long long)itemId replyCommentId:(long long)replyCommentId
@@ -405,6 +476,9 @@
 
 -(void)onComment:(long long)itemId
 {
+    
+    NSLog(@"评论/点赞 按钮");
+    
     _currentItemId = itemId;
     
     _commentInputView.commentId = 0;
@@ -418,6 +492,7 @@
 -(void)onLike:(long long)itemId
 {
     
+    NSLog(@"pppp");
 }
 
 -(void)onClickUser:(NSUInteger)userId
@@ -455,6 +530,7 @@
 //删除评论
 -(void) deleteClickComment:(long long) commentId itemId:(long long) itemId
 {
+    
 }
 
 

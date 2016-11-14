@@ -15,6 +15,8 @@
 
 @interface DFTimeLineViewController : DFBaseTimeLineViewController
 
+
+
 //添加到末尾
 -(void) addItem:(DFBaseLineItem *) item;
 
@@ -25,10 +27,10 @@
 -(void) deleteItem:(long long) itemId;
 
 //赞
--(void) addLikeItem:(DFLineLikeItem *) likeItem itemId:(long long) itemId;
+-(void) addLikeItem:(DFLineLikeItem *) likeItem itemId:(long long) itemId isSelet:(BOOL)isSelet;
 
 //取消点赞
-- (void)cancelLikeItem:(DFLineLikeItem *)likeItem itemId:(long long)itemId;
+//- (void)cancelLikeItem:(DFLineLikeItem *)likeItem itemId:(long long)itemId;
 
 //评论
 -(void) addCommentItem:(DFLineCommentItem *) commentItem itemId:(long long) itemId replyCommentId:(long long) replyCommentId;

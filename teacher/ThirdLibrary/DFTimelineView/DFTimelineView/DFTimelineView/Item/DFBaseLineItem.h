@@ -34,4 +34,6 @@
 
 @property (nonatomic, strong) NSMutableArray *commentStrArray;
 
+//@property (nonatomic, strong) NSString *zanFlag;
+
 @end

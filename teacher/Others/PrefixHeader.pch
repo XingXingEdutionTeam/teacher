@@ -30,9 +30,12 @@
 #import "XXEHomePageHeader.h"
 #import "FriendCircleHeader.h"
 #import "XXEMyselfPageHeader.h"
+#import "XXEUserInfo.h"
+#import "StringHeight.h"
+#import "XXECommentModel.h"
+#import <UIImageView+WebCache.h>
 
-
-
+#import "WZYHttpTool.h"
 
 
 #endif /* PrefixHeader_pch */

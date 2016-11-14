@@ -162,11 +162,12 @@
     
     UIButton *verificationButton = [[UIButton alloc]init];
     [verificationButton setTitle:@"获取验证码" forState:UIControlStateNormal];
+//    verificationButton.backgroundColor = [UIColor redColor];
     _verificationButton = verificationButton;
     verificationButton.titleLabel.font = [UIFont systemWithIphone6P:18 Iphone6:16 Iphone5:14 Iphone4:12];
     [verificationButton setTitleColor:XXEColorFromRGB(189, 210, 38) forState:UIControlStateNormal];
     [verificationButton addTarget:self action:@selector(setupVerificationNumber:) forControlEvents:UIControlEventTouchUpInside];
-    verificationButton.userInteractionEnabled = NO;
+//    verificationButton.userInteractionEnabled = NO;
     [verificationImageView addSubview:verificationButton];
     [verificationButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(verificationImageView.mas_centerY);
@@ -237,6 +238,9 @@
 {
     if (self.registerUerTextField == textField) {
         [self.registerUerTextField resignFirstResponder];
+        
+        NSLog(@"%@", self.registerUerTextField.text);
+        
         if (self.registerUserName == nil) {
             [self showString:@"输入电话号码有误" forSecond:1.f];
         } else {
@@ -270,10 +274,12 @@
 
 - (void)setupVerificationNumber:(UIButton *)sender
 {
-    NSLog(@"----获取验证码----");
+   
     [sender startWithTime:59 title:@"获取验证码" countDownTile:@"s后重新获取" mColor:XXEColorFromRGB(189, 210, 38) countColor:XXEColorFromRGB(204, 204, 204)];
     [self showString:@"验证码已发送" forSecond:1.f];
     [self getVerificationNumber];
+    
+     NSLog(@"----获取验证码----");
 }
 
 - (void)nextButtonsClick:(UIButton *)sender
@@ -325,12 +331,12 @@
             [self showString:@"此号码可以注册" forSecond:1.f];
             self.verificationButton.userInteractionEnabled = YES;
             self.registerVerificationTextField.enabled = YES;
-        } else if ([string intValue] == 3) {
+        }else if ([string intValue] == 3) {
             [self showString:@"手机已存在" forSecond:3.f];
             [self.registerVerificationTextField resignFirstResponder];
             self.registerVerificationTextField.enabled = NO;
             self.verificationButton.userInteractionEnabled = NO;
-        } else{
+        }else{
             [self showString:@"请重新注册" forSecond:1.f];
         }
     } failure:^(__kindof YTKBaseRequest *request) {

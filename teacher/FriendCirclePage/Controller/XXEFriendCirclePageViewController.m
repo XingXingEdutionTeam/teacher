@@ -127,7 +127,7 @@
      other_xid	//别人查看某人时,传某人的xid,如果是查看自己发布的,不需要这个参数
      page	//加载第几次(第几页),默认1
      */
-
+//    __weak __typeof(self) weakSelf = self;
     NSString *pageNum = [NSString stringWithFormat:@"%ld",(long)page];
     if ([pageNum isEqualToString:@"1"]) {
         [self.circleListDatasource removeAllObjects];
@@ -136,21 +136,29 @@
     XXEFriendCircleApi *friendCircleApi = [[XXEFriendCircleApi alloc]initWithFriendCircleXid:parameterXid CircleUserId:parameterUser_Id PageNumber:pageNum];
     [friendCircleApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         
-        NSLog(@"vvvvv %@",request.responseJSONObject);
+//        NSLog(@"vvvvv %@",request.responseJSONObject);
 //        NSLog(@"%@",[request.responseJSONObject objectForKey:@"msg"]);
         
-        NSLog(@"list-count:%ld", [request.responseJSONObject[@"data"][@"list"] count]);
+//        NSLog(@"list-count:%ld", [request.responseJSONObject[@"data"][@"list"] count]);
         
         NSString *code = [request.responseJSONObject objectForKey:@"code"];
 //        NSLog(@"%@",code);
         [self detelAllSource];
+        
         if ([code intValue]==1 && [[request.responseJSONObject objectForKey:@"data"] isKindOfClass:[NSDictionary class]]) {
             NSDictionary *data = [request.responseJSONObject objectForKey:@"data"];
             NSDictionary *userInfo = [data objectForKey:@"user_info"];
             XXECircleUserModel *Usermodel = [[XXECircleUserModel alloc]initWithDictionary:userInfo error:nil];
             [self.headerDatasource addObject:Usermodel];
-            //设置顶部视图信息
             [self setHeaderMessage:Usermodel];
+//            dispatch_async(dispatch_get_global_queue(0, 0), ^{
+//                [weakSelf.headerDatasource addObject:Usermodel];
+//                dispatch_async(dispatch_get_main_queue(), ^{
+//                    [weakSelf setHeaderMessage:Usermodel];
+//                });
+//            });
+            //设置顶部视图信息
+            
             //判断是否有信息
             if ([Usermodel.circle_noread isEqualToString:@"1"]) {
                 [self creatNewMessageRemindcircleNoread:Usermodel.circle_noread];
@@ -161,10 +169,23 @@
                 for (int i =0; i<list.count; i++) {
                     XXECircleModel *circleModel = [[XXECircleModel alloc]initWithDictionary:list[i] error:nil];
                     [self.circleListDatasource addObject:circleModel];
-                }
+                    NSLog(@"%@ %@", circleModel.head_img, circleModel.nickname);
+                };
+                
+                [self friendCircleMessage];
+//                dispatch_async(dispatch_get_global_queue(0, 0), ^{
+//                    for (int i =0; i<list.count; i++) {
+//                        XXECircleModel *circleModel = [[XXECircleModel alloc]initWithDictionary:list[i] error:nil];
+//                        [weakSelf.circleListDatasource addObject:circleModel];
+//                    }
+//                    dispatch_async(dispatch_get_main_queue(), ^{
+//                       [weakSelf friendCircleMessage];
+//                    });
+//                });
+                
 //                NSLog(@"%lu",(unsigned long)self.circleListDatasource.count);
                 //朋友圈的信息列表
-                [self friendCircleMessage];
+                
             }
             [self endRefresh];
 //        NSLog(@"圈子顶部信息数组信息%@",self.headerDatasource);
@@ -205,7 +226,14 @@
 //            NSLog(@"时间轴:%lld",textImageItem.itemId);
             j++;
             textImageItem.userId = [circleModel.xid intValue];
-            textImageItem.userAvatar = [NSString stringWithFormat:@"%@%@",kXXEPicURL,circleModel.head_img];
+            
+            if ([circleModel.head_img_type isEqual: @"0"]) {
+                textImageItem.userAvatar = [NSString stringWithFormat:@"%@%@",kXXEPicURL,circleModel.head_img];
+            } else if ([circleModel.head_img_type  isEqual: @"1"]) {
+                textImageItem.userAvatar = circleModel.head_img;
+            }
+            
+            
             textImageItem.userNick = circleModel.nickname;
             textImageItem.title = @"发表了";
             textImageItem.text = circleModel.words;
@@ -218,9 +246,12 @@
             [self fritnd_circleImageShowTextImageItem:textImageItem CircleModel:circleModel];
         }
     }else{
-        NSLog(@"没有数据");
+        NSLog(@"ggg没有数据");
     }
 }
+
+
+
 
 #pragma mark - 显示图片
 - (void)fritnd_circleImageShowTextImageItem:(DFTextImageLineItem *)textImageItem CircleModel:(XXECircleModel *)circleModel
@@ -258,10 +289,14 @@
 #pragma mark - 数据点赞和评论的信息
 - (void)friend_circleShowCommentAndGoodCircleModel:(XXECircleModel *)circleModel TextImageItem:(DFTextImageLineItem *)textImageItem
 {
+    
+//    NSLog(@"点赞 == %@", circleModel.good_user);
     //点赞
     if (circleModel.good_user.count == 0) {
 //        NSLog(@"没有人点赞");
     }else{
+        
+        
         for (int j =0; j<circleModel.good_user.count; j++) {
             XXEGoodUserModel *goodModel = circleModel.good_user[j];
 //            NSLog(@"%@",goodModel.goodXid);
@@ -595,6 +630,10 @@
     }];
 }
 
+
+
+
+#pragma mark *******************  点赞  ********************
 - (void)onLike:(long long)itemId
 {
     NSLog(@"%lld",itemId);
@@ -609,6 +648,17 @@
 //    NSLog(@"说说ID%@ XID%@ UserID%@",self.speakId ,strngXid,homeUserId);
     XXEFriendCirclegoodApi *friendGoodApi = [[XXEFriendCirclegoodApi alloc]initWithFriendCircleGoodOrCancelUerXid:parameterXid UserID:parameterUser_Id TalkId:self.speakId];
     [friendGoodApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
+        /*
+         code = 10;    //取消点赞 成功
+         data =     {
+         nickname = summer;
+         xid = 18886394;
+         };
+         msg = "Success!\U53d6\U6d88\U8d5e\U6210\U529f!";
+         */
+        
+//        NSLog(@"zan ===== %@", request.responseJSONObject);
+        
         NSString *code = [request.responseJSONObject objectForKey:@"code"];
         NSDictionary *data = [request.responseJSONObject objectForKey:@"data"];
         NSString *goodXid = [data objectForKey:@"xid"];
@@ -618,18 +668,15 @@
             DFLineLikeItem *likeItem = [[DFLineLikeItem alloc] init];
             likeItem.userId = [goodXid integerValue];
             likeItem.userNick = goodNickName;
-            NSLog(@"Model%@ ID%lld",likeItem,itemId);
-            [self addLikeItem:likeItem itemId:itemId];
+//            NSLog(@"Model%@ ID%lld",likeItem,itemId);
+            [self addLikeItem:likeItem itemId:itemId isSelet:NO];
             [self hudShowText:@"点赞成功" second:1.f];
-//            [self setupFriendCircleMessagePage:1];
         }else if ([code integerValue]==10){
             DFLineLikeItem *likeItem = [[DFLineLikeItem alloc] init];
             likeItem.userId = [goodXid integerValue];
             likeItem.userNick = goodNickName;
-            NSLog(@"Model%@ ID%lld",likeItem,itemId);
-            [self cancelLikeItem:likeItem itemId:itemId];
+            [self addLikeItem:likeItem itemId:itemId isSelet:YES];
             [self hudShowText:@"取消成功" second:1.f];
-//            [self setupFriendCircleMessagePage:1];
         }
     
     } failure:^(__kindof YTKBaseRequest *request) {
@@ -642,7 +689,7 @@
 //点击左边头像 或者 点击评论和赞的用户昵称
 -(void)onClickUser:(NSUInteger)userId
 {
-    NSLog(@"%lu",(unsigned long)userId);
+//    NSLog(@"%lu",(unsigned long)userId);
     XXEFriendMyCircleViewController *myCircleVC = [[XXEFriendMyCircleViewController alloc]init];
     myCircleVC.otherXid = [NSString stringWithFormat:@"%lu", userId];
     myCircleVC.friendCirccleRefreshBlock = ^(){
@@ -804,6 +851,43 @@
     }];
 
 }
+
+#pragma mark - TabelViewDelegate
+
+//-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    //点击所有cell空白地方 隐藏toolbar
+//    NSInteger rows =  [tableView numberOfRowsInSection:0];
+//    for (int row = 0; row < rows; row++) {
+//        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:row inSection:0];
+//        DFBaseLineCell *cell  = (DFBaseLineCell *)[tableView cellForRowAtIndexPath:indexPath];
+//        [cell hideLikeCommentToolbar];
+//    }
+//    NSLog(@"第几个单元格%ld",(long)indexPath.row);
+//}
+
+
+//#pragma mark - Method
+//
+//-(DFBaseLineCell *) getCell:(Class)itemClass
+//{
+//    DFLineCellManager *manager = [DFLineCellManager sharedInstance];
+//    return [manager getCell:itemClass];
+//}
+
+-(void) onClickLikeCommentBtn:(id)sender{
+/*
+ _likeCommentToolbar.zanFlag = @"赞";
+ _isLikeCommentToolbarShow = !_isLikeCommentToolbarShow;
+ _likeCommentToolbar.hidden = !_isLikeCommentToolbarShow;
+ */
+    DFBaseLineCell *cell = [[DFBaseLineCell alloc] init];
+    cell.likeCmtButton = sender;
+    
+    NSLog(@"aaa");
+    
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

@@ -49,6 +49,9 @@
 #import "XXERCDataManager.h"
 //课程表
 #import "XXESchoolTimetableViewController.h"
+//猩商城
+#import "XXEStoreRootViewController.h"
+
 
 
 @interface XXEHomePageViewController ()<XXEHomePageHeaderViewDelegate,XXEHomePageMiddleViewDelegate,XXEHomePageBottomViewDelegate>
@@ -727,8 +730,13 @@
         }
     
         case 7:
+        {
             NSLog(@"---猩猩商城----");
+            XXEStoreRootViewController *storeRootVC = [[XXEStoreRootViewController alloc] init];
+            
+            [self.navigationController pushViewController:storeRootVC animated:YES];
             break;
+        }
             
         default:
             break;
@@ -872,8 +880,13 @@
             
         }
         case 7:
+        {
             NSLog(@"---猩猩商城----");
+            XXEStoreRootViewController *storeRootVC = [[XXEStoreRootViewController alloc] init];
+            
+            [self.navigationController pushViewController:storeRootVC animated:YES];
             break;
+        }
             
         default:
             break;
@@ -959,8 +972,13 @@
             break;
         }
         case 7:
+        {
             NSLog(@"---猩猩商城----");
+            XXEStoreRootViewController *storeRootVC = [[XXEStoreRootViewController alloc] init];
+            
+            [self.navigationController pushViewController:storeRootVC animated:YES];
             break;
+        }
             
         case 8:
         {

@@ -10,15 +10,28 @@
 
 @interface MessageListDetailViewCell : UITableViewCell
 
-//图片名字
-@property (nonatomic,strong) UIImageView *imageName;
+//判断 评论 类型 1:别人的评论   2:自己回复
+@property (nonatomic, copy) NSString *com_type;
+
 //id
 @property (nonatomic,copy) NSString *talkId;
-//评论内容
-@property (nonatomic,strong) UILabel *con;
+
+//评论 图标
+@property (nonatomic, strong) UIImageView *commentIconImageView;
+//头像
+@property (nonatomic, strong) UIImageView *headIconImageView;
 //昵称
 @property (nonatomic,strong) UILabel *nickName;
+//评论内容
+@property (nonatomic,strong) UITextView *contentTextView;
+
 //时间
 @property (nonatomic,strong) UILabel *dateTime;
+//回复
+@property (nonatomic,strong) UILabel *replyLabel;
+//回复 对象 名称
+@property (nonatomic, copy) NSString *otherName;
 
+
+-(void)configure:(XXECommentModel*)commentModel isLastCell:(BOOL)isLastCell;
 @end

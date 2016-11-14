@@ -24,6 +24,9 @@
 @property (nonatomic, copy)NSString <Optional>*to_who_xid;
 /** 发表的内容 */
 @property (nonatomic, copy)NSString <Optional>*con;
+//内容 图片
+@property (nonatomic, copy) NSString <Optional> *pic_url;
+
 /** 用户昵称 */
 @property (nonatomic, copy)NSString <Optional>*nickname;
 /** 头像地址 */

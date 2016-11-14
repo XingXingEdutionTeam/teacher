@@ -41,4 +41,7 @@
 /** 每一个说说的id */
 @property (nonatomic, copy)NSString <Optional>*talkId;
 
+//circle_set
+@property (nonatomic, copy)NSString <Optional>*circle_set;
+
 @end

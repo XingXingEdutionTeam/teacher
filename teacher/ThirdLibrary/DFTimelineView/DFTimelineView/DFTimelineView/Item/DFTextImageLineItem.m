@@ -14,7 +14,6 @@
 {
     self = [super init];
     if (self) {
-        
         _text = @"";
         _thumbImages = [NSMutableArray array];
         _srcImages = [NSMutableArray array];

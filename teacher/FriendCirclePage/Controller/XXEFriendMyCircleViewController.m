@@ -173,7 +173,14 @@
 - (void)setHeaderMyCircleMessage:(XXECircleUserModel *)model
 {
     NSLog(@"======%@",model.head_img);
-    NSString *cover = [NSString stringWithFormat:@"%@%@",kXXEPicURL,model.head_img];
+    
+    NSString *cover;
+    if ([model.head_img_type isEqual: @"0"]) {
+        cover = [NSString stringWithFormat:@"%@%@",kXXEPicURL,model.head_img];
+    } else if ([model.head_img_type  isEqual: @"1"]) {
+        cover = [NSString stringWithFormat:@"%@", model.head_img];
+    }
+    
     [self setCover:cover];
     [self setUserAvatar:cover];
     [self setUserNick:model.nickname];
@@ -225,6 +232,7 @@
         }
     }else{
         NSLog(@"不包含");
+        
         [srcSmallImages addObject:[NSString stringWithFormat:@"%@%@",kXXEPicURL,circleModel.pic_url ]];
         [thumbBigImages addObject:[NSString stringWithFormat:@"%@%@",kXXEPicURL,circleModel.pic_url ]];
         textItem.photoCount = srcSmallImages.count;

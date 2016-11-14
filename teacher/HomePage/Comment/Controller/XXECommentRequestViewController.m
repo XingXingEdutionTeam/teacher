@@ -315,47 +315,6 @@
     
 }
 
--(UIButton *)createButtonFrame:(CGRect)frame unseletedImageName:(NSString *)unseletedImageName seletedImageName:(NSString *)seletedImageName title:(NSString *)title unseletedTitleColor:(UIColor *)unseletedTitleColor seletedTitleColor:(UIColor *)seletedTitleColor font:(UIFont *)font target:(id)target action:(SEL)action
-{
-    UIButton *btn=[UIButton buttonWithType:UIButtonTypeCustom];
-    btn.frame=frame;
-    //未选中 时 图片
-    if (unseletedImageName)
-    {
-        [btn setImage:[UIImage imageNamed:unseletedImageName] forState:UIControlStateNormal];
-    }
-    //选中 时 图片
-    if (seletedImageName)
-    {
-        UIImage *commentSeletedImage = [UIImage imageNamed:seletedImageName];
-        commentSeletedImage = [commentSeletedImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-        [btn setImage:commentSeletedImage forState:UIControlStateSelected];
-    }
-    if (font)
-    {
-        btn.titleLabel.font=font;
-    }
-    
-    if (title)
-    {
-        [btn setTitle:title forState:UIControlStateNormal];
-    }
-    //未选中 时 标题 颜色
-    if (unseletedTitleColor)
-    {
-        [btn setTitleColor:unseletedTitleColor forState:UIControlStateNormal];
-    }
-    //选中 时 标题 颜色
-    if (seletedTitleColor)
-    {
-        [btn setTitleColor:seletedTitleColor forState:UIControlStateSelected];
-    }
-    if (target&&action)
-    {
-        [btn addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
-    }
-    return btn;
-}
 
 
 

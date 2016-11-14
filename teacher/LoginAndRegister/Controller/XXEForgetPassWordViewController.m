@@ -162,13 +162,14 @@
     
     UIButton *verificationButton = [[UIButton alloc]init];
     [verificationButton setTitle:@"获取验证码" forState:UIControlStateNormal];
-    _verificationButton = verificationButton;
     verificationButton.titleLabel.font = [UIFont systemWithIphone6P:18 Iphone6:16 Iphone5:14 Iphone4:12];
     [verificationButton setTitleColor:XXEColorFromRGB(189, 210, 38) forState:UIControlStateNormal];
     [verificationButton addTarget:self action:@selector(setupVerificationNumber:) forControlEvents:UIControlEventTouchUpInside];
-    verificationButton.userInteractionEnabled = NO;
+    verificationButton.enabled = NO;
+//    verificationButton.userInteractionEnabled = NO;
     [verificationImageView addSubview:verificationButton];
-    [verificationButton mas_makeConstraints:^(MASConstraintMaker *make) {
+    _verificationButton = verificationButton;
+    [_verificationButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(verificationImageView.mas_centerY);
         make.right.equalTo(weakSelf.registerVerificationTextField.mas_right).offset(-10);
         make.height.mas_equalTo(41*kScreenRatioHeight);
@@ -233,6 +234,8 @@
     }] subscribeNext:^(id x) {
         self.registerVerifi = x;
     }];
+    
+//    NSLog(@"获取验证码=======");
 }
 
 #pragma mark - UItextFieldDelegate
@@ -260,13 +263,15 @@
         NSString *string = [dic objectForKey:@"code"];
         if ([string intValue] == 1) {
             [self showString:@"此号码没有注册过" forSecond:1.f];
-            self.verificationButton.userInteractionEnabled = NO;
+            self.verificationButton.enabled = NO;
+//            self.verificationButton.userInteractionEnabled = NO;
             self.registerVerificationTextField.enabled = NO;
         } else if ([string intValue] == 3) {
             [self showString:@"可以更改密码" forSecond:3.f];
             
             self.registerVerificationTextField.enabled = YES;
-            self.verificationButton.userInteractionEnabled = YES;
+//            self.verificationButton.userInteractionEnabled = YES;
+            self.verificationButton.enabled = YES;
         } else{
             [self showString:@"请重新输入" forSecond:1.f];
         }
@@ -287,10 +292,12 @@
 
 - (void)setupVerificationNumber:(UIButton *)sender
 {
-    NSLog(@"----获取验证码----");
+    
     [sender startWithTime:5 title:@"获取验证码" countDownTile:@"s后重新获取" mColor:XXEColorFromRGB(189, 210, 38) countColor:XXEColorFromRGB(204, 204, 204)];
     [self showString:@"验证码已发送" forSecond:1.f];
     [self getVerificationNumber];
+    
+    NSLog(@"----获取验证码----");
 }
 
 - (void)nextButtonsClick:(UIButton *)sender
@@ -302,7 +309,7 @@
 //    registerVC.forgetPassWordPage = @"忘记密码--";
 //    registerVC.forgetPhonrNum = self.registerUserName;
 //    [self.navigationController pushViewController:registerVC animated:YES];
-//    
+//
 }
 
 #pragma mark - 验证验证码对不对

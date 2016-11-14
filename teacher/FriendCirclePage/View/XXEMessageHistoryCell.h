@@ -14,6 +14,10 @@
 @property (weak, nonatomic) IBOutlet UILabel *messageNickNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *messageConLabel;
 
+@property (weak, nonatomic) IBOutlet UIImageView *contentPic;
+
+
+
 /** 给单元格赋值 */
 
 - (void)configerGetCircleMessageHistory:(XXEMessageHistoryModel *)model;
