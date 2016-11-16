@@ -35,7 +35,6 @@
         UIImage *image = [UIImage imageNamed:@"AlbumOperateMore"];
         _commentIconImageView = [[UIImageView alloc] initWithFrame:CGRectMake(5, 5, image.size.width, image.size.width)];
     //第一行的评论图标
-        _commentIconImageView = [[UIImageView alloc] init];
         _commentIconImageView.image = image;
 //        _commentIconImageView = [[UIImageView alloc] initWithFrame:CGRectMake(5, 5, 15, 15)];
 //      _commentIconImageView.image = [UIImage imageNamed:@"AlbumOperateMore"];
@@ -109,7 +108,7 @@
     _dateTime.text = commentModel.date_tm;
     _dateTime.font = [UIFont systemFontOfSize:12*kScreenRatioHeight];
     _dateTime.textAlignment = NSTextAlignmentRight;
-    _dateTime.frame = CGRectMake(100, 5, self.frame.size.width - 165, 12);
+    _dateTime.frame = CGRectMake(100, 5, KScreenWidth - 60 - 105, 12);
     
     
     NSString *string = [XXETool dateStringFromNumberTimer:commentModel.date_tm];

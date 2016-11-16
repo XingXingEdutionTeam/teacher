@@ -170,6 +170,7 @@ static NSString *const IdentifierHistory = @"messageHistoryCell";
 {
     MessageListDetailController *listVC = [[MessageListDetailController alloc]init];
     XXEMessageHistoryModel *model = self.messageDatasource[indexPath.row];
+    listVC.model = model;
     listVC.talkId = model.talk_id;
     NSLog(@"说说的TalkId%@",model.talk_id);
     [self.navigationController pushViewController:listVC animated:YES];
