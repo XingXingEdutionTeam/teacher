@@ -74,11 +74,13 @@
     
     DFBaseUserLineCell *typeCell = [self getCell:[item class]];
     
-    NSString *reuseIdentifier = NSStringFromClass([typeCell class]);
-    DFBaseUserLineCell *cell = [tableView dequeueReusableCellWithIdentifier: reuseIdentifier];
+//    NSString *reuseIdentifier = NSStringFromClass([typeCell class]);
+    NSString *reuseIdentifier = [NSString stringWithFormat:@"cell%ld%ld",indexPath.section,indexPath.row];
+    DFTextImageUserLineCell *cell = [tableView dequeueReusableCellWithIdentifier: reuseIdentifier];
     if (cell == nil ) {
         cell = [[[typeCell class] alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier];
     }else{
+        
         NSLog(@"重用Cell: %@", reuseIdentifier);
     }
     cell.delegate = self;
@@ -128,7 +130,7 @@
 
 
 
--(void)onClickItem:(DFBaseUserLineItem *)item
+-(void)onClickItem:(DFBaseUserLineItem *)item passImage:(UIImage *)passImage
 {
     
 }

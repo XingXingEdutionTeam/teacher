@@ -10,8 +10,6 @@
 
 @interface DFLikeCommentToolbar()
 
-@property (nonatomic, strong) UIButton *likeButton;
-
 @property (nonatomic, strong) UIButton *commentButton;
 
 @end
@@ -32,6 +30,9 @@
 -(void) initView
 {
     
+    
+//    NSLog(@"kkkk");
+    
     self.userInteractionEnabled = YES;
     
     UIImage *image = [UIImage imageNamed:@"AlbumOperateMoreViewBkg"];
@@ -49,6 +50,15 @@
     
     _likeButton = [self getButton:CGRectMake(x, y, width, height) title:@"赞" image:@"AlbumLike"];
     _likeButton.selected = NO;
+//    NSLog(@"赞 :%@", _zanFlag);
+//    if ([_zanFlag isEqualToString:@"赞"]) {
+//            _likeButton.selected = NO;
+//        [_likeButton setTitle:@"赞" forState:UIControlStateNormal];
+//    }else if([_zanFlag isEqualToString:@"取消"]){
+//        _likeButton.selected = YES;
+//        [_likeButton setTitle:@"取消" forState:UIControlStateNormal];
+//    }
+    
     [_likeButton addTarget:self action:@selector(onLike:) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:_likeButton];
     
@@ -86,9 +96,12 @@
 //    if (_delegate != nil && [_delegate respondsToSelector:@selector(onLike)]) {
 //        [_delegate onLike];
 //    }
-    
+
     if (_likeButton.selected == NO) {
-        sender.selected = YES;
+        
+//        NSLog(@"111111");
+        
+        sender.selected = !_likeButton.selected;
         _likeButton = sender;
         [_likeButton setTitle:@"取消" forState:UIControlStateSelected];
         if (_delegate != nil && [_delegate respondsToSelector:@selector(onLike)]) {
@@ -97,7 +110,8 @@
         }
     }
     else{
-        sender.selected=NO;
+        NSLog(@"22222");
+        sender.selected = !_likeButton.selected;
         _likeButton=sender;
         [_likeButton setTitle:@"赞" forState:UIControlStateNormal];
         

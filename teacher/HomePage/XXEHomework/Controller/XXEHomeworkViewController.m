@@ -290,6 +290,10 @@
     if (cell == nil) {
         cell = [[[NSBundle mainBundle] loadNibNamed:@"XXEHomeworkTableViewCell" owner:self options:nil]lastObject];
     }
+    
+//    cell.iconImageView.frame.size.width = 75;
+//    cell.iconImageView.frame.size.height = 75;
+    
     XXEHomeworkModel *model = _dataSourceArray[indexPath.row];
     /*
      0 :表示 自己 头像 ，需要添加 前缀

@@ -281,8 +281,8 @@
     lable.adjustsFontSizeToFitWidth = NO;
     lable.textInsets = UIEdgeInsetsZero;
     
-    lable.dataDetectorTypes = MLDataDetectorTypeAll;
-    lable.allowLineBreakInsideLinks = NO;
+    lable.dataDetectorTypes = MLDataDetectorTypeAttributedLink;
+    lable.allowLineBreakInsideLinks = YES;
     lable.linkTextAttributes = nil;
     lable.activeLinkTextAttributes = nil;
     lable.lineHeightMultiple = CommentLabelLineHeight;
@@ -293,7 +293,6 @@
     [lable setDidClickLinkBlock:^(MLLink *link, NSString *linkText, MLLinkLabel *label) {
         
         if (_delegate != nil && [_delegate respondsToSelector:@selector(onClickUser:)]) {
-            
             NSUInteger userId = [link.linkValue integerValue];
             [likeCommentView.delegate onClickUser:userId];
         }

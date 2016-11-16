@@ -8,7 +8,8 @@
 
 #import "UIImageView+WebCache.h"
 #import "DFBaseLineItem.h"
-
+#import "DFLikeCommentView.h"
+#import "DFLikeCommentToolbar.h"
 #import "Const.h"
 
 
@@ -23,6 +24,7 @@
 @protocol DFLineCellDelegate <NSObject>
 
 @optional
+
 -(void) onLike:(long long) itemId;
 
 -(void) onComment:(long long) itemId;
@@ -37,6 +39,19 @@
 @end
 
 @interface DFBaseLineCell : UITableViewCell
+
+
+@property (nonatomic, strong) UIButton *likeCmtButton;
+
+@property (nonatomic, strong) DFLikeCommentView *likeCommentView;
+
+
+@property (nonatomic, strong) DFLikeCommentToolbar *likeCommentToolbar;
+
+
+@property (nonatomic, assign) BOOL isLikeCommentToolbarShow;
+
+@property (nonatomic, assign) BOOL isLiked;
 
 
 @property (nonatomic, strong) UIView *bodyView;
@@ -56,5 +71,9 @@
 -(void) hideLikeCommentToolbar;
 
 -(UINavigationController *) getController;
+
+-(void)setIsLikedFun;
+
+//-(void) onClickLikeCommentBtn:(id)sender;
 
 @end

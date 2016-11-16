@@ -101,7 +101,12 @@
         
         
         NSString *codeStr = request.responseJSONObject[@"code"];
-        if ([codeStr integerValue] == 1) {
+        
+        
+        NSArray *arr = [[NSArray alloc] init];
+        arr = request.responseJSONObject[@"data"];
+        
+        if ([codeStr integerValue] == 1 && [arr[0] count] != 0) {
             _courseModelArray = [[NSMutableArray alloc] init];
             NSArray *modelArray = [XXESchoolTimetableModel parseResondsData:request.responseJSONObject[@"data"]];
             

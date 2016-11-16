@@ -93,7 +93,7 @@ static NSString *const IdentifierHistory = @"messageHistoryCell";
     [self.messageDatasource removeAllObjects];
     XXEMessageHistoryApi * messageApi = [[XXEMessageHistoryApi alloc]initWithCircleMeesageHistoryUserXid:parameterXid UserId:parameterUser_Id];
     [messageApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
-        NSLog(@"%@",request.responseJSONObject);
+//        NSLog(@"消息%@",request.responseJSONObject);
         NSString *code = [request.responseJSONObject objectForKey:@"code"];
         if ([code integerValue]==1) {
             NSArray *data = [request.responseJSONObject objectForKey:@"data"];
@@ -118,7 +118,7 @@ static NSString *const IdentifierHistory = @"messageHistoryCell";
      [self.messageDatasource removeAllObjects];
     XXENewMessageApi *newMessageApi = [[XXENewMessageApi alloc]initWithNewMeesageHistoryUserXid:parameterXid UserId:parameterUser_Id];
     [newMessageApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
-        NSLog(@"%@",request.responseJSONObject);
+//        NSLog(@"xiaoxi %@",request.responseJSONObject);
         NSLog(@"%@",[request.responseJSONObject objectForKey:@"msg"]);
         NSString *code = [request.responseJSONObject objectForKey:@"code"];
         if([code integerValue]==1) {
@@ -153,7 +153,7 @@ static NSString *const IdentifierHistory = @"messageHistoryCell";
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 60;
+    return 90;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath

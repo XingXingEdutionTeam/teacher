@@ -27,6 +27,10 @@
     [self.messageImageView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"register_user_icon"]];
     self.messageNickNameLabel.text = model.nickname;
     self.messageConLabel.text = model.con;
+
+    NSString *imageStr1 = [NSString stringWithFormat:@"%@%@",kXXEPicURL,model.pic_url];
+    NSURL *url1 = [NSURL URLWithString:imageStr1];
+    [self.contentPic sd_setImageWithURL:url1];
 }
 
 

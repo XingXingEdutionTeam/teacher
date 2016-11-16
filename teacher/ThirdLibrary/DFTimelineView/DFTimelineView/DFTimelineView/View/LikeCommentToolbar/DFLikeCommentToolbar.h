@@ -17,7 +17,9 @@
 
 @interface DFLikeCommentToolbar : UIImageView
 
+@property (nonatomic, strong) UIButton *likeButton;
 
+@property (nonatomic, copy) NSString *zanFlag;
 
 @property (nonatomic, weak) id<DFLikeCommentToolbarDelegate> delegate;
 

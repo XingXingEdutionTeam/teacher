@@ -33,4 +33,10 @@
 //新消息
 #define XXECircleNewMessageUrl @"http://www.xingxingedu.cn/Global/circle_new_msg"
 
+//每一条说说
+#define XXEEveryTalkDetailUrl @"http://www.xingxingedu.cn/Global/one_shuoshuo"
+
+
+
+
 #endif /* FriendCircleHeader_h */

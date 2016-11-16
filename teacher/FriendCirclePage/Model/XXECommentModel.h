@@ -27,4 +27,14 @@
 @property (nonatomic, copy)NSString <Optional>*com_type;
 /** 评论的内容 */
 @property (nonatomic, copy)NSString <Optional>*con;
+//这条说说的 id
+@property (nonatomic, copy) NSString <Optional>*talk_id;
+//头像及头像类型
+@property (nonatomic, copy) NSString <Optional>*head_img;
+@property (nonatomic, copy) NSString <Optional>*head_img_type;
+//时间 date_tm
+@property (nonatomic, copy) NSString <Optional> *date_tm;
+
++ (NSArray*)parseResondsData:(id)respondObject;
+
 @end

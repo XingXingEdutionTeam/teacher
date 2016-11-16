@@ -138,7 +138,7 @@
         NSLog(@"%@",request.responseJSONObject);
         NSLog(@"%@",[request.responseJSONObject objectForKey:@"msg"]);
         NSString *code = [request.responseJSONObject objectForKey:@"code"];
-        if ([code intValue]==1 && [[request.responseJSONObject objectForKey:@"data"] isKindOfClass:[NSDictionary class]]) {
+        if ([code intValue]==1) {// && [[request.responseJSONObject objectForKey:@"data"] isKindOfClass:[NSDictionary class]]
             NSDictionary *data = [request.responseJSONObject objectForKey:@"data"];
             NSArray *listSS = [data objectForKey:@"ss"];
             NSLog(@"数组信息%@",listSS);
@@ -159,7 +159,7 @@
             //朋友圈的信息列表
             [self myFriendCircleMessage];
             NSLog(@"圈子顶部信息数组信息%@",self.headerMyCircleDatasource);
-        }else{
+        } else{
             [self hudShowText:@"获取数据错误" second:2.f];
             [self endRefresh];
             [self endLoadMore];
@@ -173,7 +173,14 @@
 - (void)setHeaderMyCircleMessage:(XXECircleUserModel *)model
 {
     NSLog(@"======%@",model.head_img);
-    NSString *cover = [NSString stringWithFormat:@"%@%@",kXXEPicURL,model.head_img];
+    
+    NSString *cover;
+    if ([model.head_img_type isEqual: @"0"]) {
+        cover = [NSString stringWithFormat:@"%@%@",kXXEPicURL,model.head_img];
+    } else if ([model.head_img_type  isEqual: @"1"]) {
+        cover = [NSString stringWithFormat:@"%@", model.head_img];
+    }
+    
     [self setCover:cover];
     [self setUserAvatar:cover];
     [self setUserNick:model.nickname];
@@ -201,6 +208,7 @@
     }else{
         NSLog(@"没有数据");
         [self hudShowText:@"没有数据" second:1.f];
+        [self endLoadMore];
     }
 }
 
@@ -225,6 +233,7 @@
         }
     }else{
         NSLog(@"不包含");
+        
         [srcSmallImages addObject:[NSString stringWithFormat:@"%@%@",kXXEPicURL,circleModel.pic_url ]];
         [thumbBigImages addObject:[NSString stringWithFormat:@"%@%@",kXXEPicURL,circleModel.pic_url ]];
         textItem.photoCount = srcSmallImages.count;

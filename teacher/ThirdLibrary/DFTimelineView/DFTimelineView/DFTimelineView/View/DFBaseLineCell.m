@@ -38,9 +38,13 @@
 
 #import "DFBaseLineCell.h"
 #import "MLLabel+Size.h"
-#import "DFLikeCommentView.h"
-#import "DFLikeCommentToolbar.h"
+//#import "DFLikeCommentView.h"
+//#import "DFLikeCommentToolbar.h"
 #import "DFToolUtil.h"
+#import "DFLineLikeItem.h"
+
+
+static NSInteger btnTag = 1;
 
 
 @interface DFBaseLineCell()<DFLikeCommentToolbarDelegate, DFLikeCommentViewDelegate>
@@ -60,17 +64,13 @@
 
 @property (nonatomic, strong) UILabel *timeLabel;
 
-@property (nonatomic, strong) UIButton *likeCmtButton;
+@property (nonatomic, assign) BOOL isMine;
+
+//@property (nonatomic, assign) NSInteger btnTag;
 
 
 
-@property (nonatomic, strong) DFLikeCommentView *likeCommentView;
 
-
-@property (nonatomic, strong) DFLikeCommentToolbar *likeCommentToolbar;
-
-
-@property (nonatomic, assign) BOOL isLikeCommentToolbarShow;
 
 @end
 
@@ -87,13 +87,15 @@
         
         _isLikeCommentToolbarShow = NO;
         
-        [self initBaseCell];
+        [self initBaseCell:_item];
     }
     return self;
 }
 
--(void) initBaseCell
+-(void) initBaseCell:(DFBaseLineItem *)item
 {
+    btnTag ++;
+    
     self.selectionStyle = UITableViewCellSelectionStyleNone;
     
     CGFloat x = 0.0, y, width, height;
@@ -172,6 +174,8 @@
         _likeCmtButton.hidden = YES;
         [_likeCmtButton setImage:[UIImage imageNamed:@"AlbumOperateMore"] forState:UIControlStateNormal];
         [_likeCmtButton setImage:[UIImage imageNamed:@"AlbumOperateMoreHL"] forState:UIControlStateHighlighted];
+        
+        _likeCmtButton.tag = btnTag;
         [_likeCmtButton addTarget:self action:@selector(onClickLikeCommentBtn:) forControlEvents:UIControlEventTouchUpInside];
         [self.contentView addSubview:_likeCmtButton];
     }
@@ -210,6 +214,7 @@
 {
     self.item = item;
     
+    _likeCmtButton.tag = 10 + item.itemId;
     
     [_userAvatarView sd_setImageWithURL:[NSURL URLWithString:item.userAvatar]];
     
@@ -371,9 +376,18 @@
     }
 }
 
+-(void)setIsLikedFun {
+    _likeCommentToolbar.likeButton.selected = NO;
+    _likeCommentToolbar.likeButton.selected = !_likeCommentToolbar.likeButton.selected;
+    [_likeCommentToolbar.likeButton setTitle:@"取消" forState:UIControlStateSelected];
+    self.isMine = YES;
+    
+};
 
--(void) onClickLikeCommentBtn:(id)sender
+-(void) onClickLikeCommentBtn:(UIButton *)sender
 {
+    NSLog(@" cell onClickLikeCommentBtn");
+    _likeCmtButton = (UIButton *)[self viewWithTag:sender.tag];
     _isLikeCommentToolbarShow = !_isLikeCommentToolbarShow;
     _likeCommentToolbar.hidden = !_isLikeCommentToolbarShow;
 }
@@ -395,9 +409,8 @@
 -(void)onLike
 {
     [self hideLikeCommentToolbar];
-    
     if (_delegate != nil && [_delegate respondsToSelector:@selector(onLike:)]) {
-        [_delegate onLike:self.item.itemId];
+            [_delegate onLike:self.item.itemId];
     }
 }
 

@@ -108,6 +108,7 @@
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
     DFBaseLineItem *item = [_items objectAtIndex:indexPath.row];
     DFBaseLineCell *typeCell = [self getCell:[item class]];
     
