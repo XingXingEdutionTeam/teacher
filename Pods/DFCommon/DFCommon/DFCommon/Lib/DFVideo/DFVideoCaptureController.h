@@ -12,7 +12,7 @@
 
 @optional
 
--(void) onCaptureVideo:(NSString *) filePath screenShot:(UIImage *) screenShot;
+-(void) onCaptureVideo:(NSString *) filePath screenShot:(UIImage *) screenShot name:(NSString*)name fileName:(NSString*)fileName;
 
 @end
 

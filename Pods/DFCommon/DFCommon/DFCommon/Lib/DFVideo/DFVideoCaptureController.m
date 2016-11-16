@@ -24,6 +24,7 @@
 @property (nonatomic, strong) AVCaptureMovieFileOutput *movieFileOutput;
 @property (nonatomic, strong) AVCaptureVideoPreviewLayer *previewLayer;
 
+@property(nonatomic ,strong) UIButton *cancelBtn;
 @property (nonatomic, strong) UIButton *pressButton;
 @property (nonatomic, strong) UIView *timeBar;
 
@@ -34,6 +35,12 @@
 @property (assign, nonatomic) CGFloat length;
 
 @property (assign, nonatomic) BOOL isFinished;
+
+@property(nonatomic ,strong) NSData* data;
+
+@property(nonatomic ,strong) NSString *name;
+
+@property(nonatomic ,strong) NSString *fileName;
 
 @end
 
@@ -52,7 +59,7 @@
 -(void)viewDidLoad
 {
     [super viewDidLoad];
-    
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     [self prepare];
     
     [self initUI];
@@ -61,17 +68,36 @@
 
 -(void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
+    
     [_session startRunning];
+}
+
+-(void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear: animated];
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
+
 }
 
 -(void)viewDidDisappear:(BOOL)animated{
     [super viewDidDisappear:animated];
     [_session stopRunning];
-}
+    }
 
+
+//MARK: - 返回
+-(void)backPrepareView{
+    [self dismissViewControllerAnimated:true completion:nil];
+}
 
 -(void) initUI
 {
+    
+    _cancelBtn = [[UIButton alloc] initWithFrame:CGRectMake(10, 28, 50, 20)];
+    [_cancelBtn setTitle:@"取消" forState:(UIControlStateNormal)];
+    [_cancelBtn setTitleColor:Color_Green forState:(UIControlStateNormal)];
+    [_cancelBtn addTarget:self action:@selector(backPrepareView) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:_cancelBtn];
+    
     self.view.backgroundColor = [UIColor blackColor];
     
     CGFloat x, y, width, height;
@@ -369,7 +395,7 @@
     
     if (![_movieFileOutput isRecording]) {
         captureConnection.videoOrientation=[_previewLayer connection].videoOrientation;
-        NSString *filePath=[NSTemporaryDirectory() stringByAppendingString:@"temp.mov"];
+        NSString *filePath=[NSTemporaryDirectory() stringByAppendingString:@"temp.mp4"];
         NSURL *url=[NSURL fileURLWithPath:filePath];
         [_movieFileOutput startRecordingToOutputFileURL:url recordingDelegate:self];
     }
@@ -401,15 +427,86 @@
     
     if (_isFinished) {
         NSLog(@"开始处理视频");
-        NSString *filename= [NSString stringWithFormat:@"%d.mov", (int)[NSDate timeIntervalSinceReferenceDate]];
+        NSString *date = [NSString stringWithFormat:@"%@", (int)[[NSDate date] timeIntervalSince1970]];
+        
+        self.name = date;
+        NSString *filename= [NSString stringWithFormat:@"%d.mp4", date];
+        self.fileName = filename;
+        
         NSString *scaledFilePath=[NSTemporaryDirectory() stringByAppendingString:filename];
         [self scaleAndPress:outputFileURL savePath:scaledFilePath];
+//        [self transcoding:scaledFilePath outputFileURL:outputFileURL];
     }else{
         NSLog(@"不用处理视频");
     }
 }
 
+//MARK: - 转码
+- (void)transcoding:(NSString *)scaledFilePath outputFileURL:(NSString *)outputFileURL{
+    //转码配置
+    AVURLAsset *asset = [AVURLAsset URLAssetWithURL:scaledFilePath options:nil];
+    
+    AVAssetExportSession *exportSession= [[AVAssetExportSession alloc] initWithAsset:asset presetName:AVAssetExportPresetMediumQuality];
+    exportSession.shouldOptimizeForNetworkUse = YES;
+    exportSession.outputURL = outputFileURL;
+    exportSession.outputFileType = AVFileTypeMPEG4;
+    [exportSession exportAsynchronouslyWithCompletionHandler:^{
+        int exportStatus = exportSession.status;
+        NSLog(@"%d",exportStatus);
+        switch (exportStatus)
+        {
+            case AVAssetExportSessionStatusFailed:
+            {
+                // log error to text view
+                NSError *exportError = exportSession.error;
+                NSLog (@"AVAssetExportSessionStatusFailed: %@", exportError);
+                break;
+            }
+            case AVAssetExportSessionStatusCompleted:
+            {
+                NSLog(@"视频转码成功");
+                NSData *data = [NSData dataWithContentsOfFile:outputFileURL];
+                self.data = data;
+            }
+        }
+    }];
+}
 
+//+ (void) convertVideoWithModel:(RZProjectFileModel *) model
+//{
+//    //保存至沙盒路径
+//    NSString *pathDocuments = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+//    NSString *videoPath = [NSString stringWithFormat:@"%@/Image", pathDocuments];
+//    model.sandBoxFilePath = [videoPath stringByAppendingPathComponent:model.filename];
+//    
+//    //转码配置
+//    AVURLAsset *asset = [AVURLAsset URLAssetWithURL:model.assetFilePath options:nil];
+//    AVAssetExportSession *exportSession= [[AVAssetExportSession alloc] initWithAsset:asset presetName:AVAssetExportPresetMediumQuality];
+//    exportSession.shouldOptimizeForNetworkUse = YES;
+//    exportSession.outputURL = [NSURL fileURLWithPath:model.sandBoxFilePath];
+//    exportSession.outputFileType = AVFileTypeMPEG4;
+//    [exportSession exportAsynchronouslyWithCompletionHandler:^{
+//        int exportStatus = exportSession.status;
+//        RZLog(@"%d",exportStatus);
+//        switch (exportStatus)
+//        {
+//            case AVAssetExportSessionStatusFailed:
+//            {
+//                // log error to text view
+//                NSError *exportError = exportSession.error;
+//                NSLog (@"AVAssetExportSessionStatusFailed: %@", exportError);
+//                break;
+//            }
+//            case AVAssetExportSessionStatusCompleted:
+//            {
+//                RZLog(@"视频转码成功");
+//                NSData *data = [NSData dataWithContentsOfFile:model.sandBoxFilePath];
+//                model.fileData = data;
+//            }
+//        }
+//    }];
+//    
+//}
 
 
 -(void) scaleAndPress:(NSURL *) url savePath:(NSString *) savePath
@@ -472,12 +569,12 @@
     UIImage *screenShot = [self generateScreenshot:[NSURL fileURLWithPath:filePath]];
     
     if (_delegate && [_delegate respondsToSelector:@selector(onCaptureVideo:screenShot:)]) {
-        [_delegate onCaptureVideo:filePath screenShot:screenShot];
-        [self dismissViewControllerAnimated:YES completion:^{
-            
-        }];
+        [_delegate onCaptureVideo:filePath screenShot:screenShot name:self.name fileName:self.fileName];
+//        [self dismissViewControllerAnimated:YES completion:^{
+//            
+//        }];
     }else{
-        [self onCaptureVideo:filePath screenShot:screenShot];
+        [self onCaptureVideo:filePath screenShot:screenShot ];
     }
     
 }

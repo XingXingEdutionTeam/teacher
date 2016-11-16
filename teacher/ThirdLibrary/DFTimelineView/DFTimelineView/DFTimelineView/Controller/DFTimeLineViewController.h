@@ -56,7 +56,7 @@
 - (void)xxe_whoCanLookMessage:(NSString *)personLook;
 
 //发送视频消息
--(void)onSendVideo:(NSString *)text videoPath:(NSString *)videoPath screenShot:(UIImage *) screenShot;
+-(void)onSendVideo:(NSString *)text videoPath:(NSString *)videoPath screenShot:(UIImage *) screenShot name:(NSString*)name fileName:(NSString*)fileName;
 
 - (void)detelAllSource;
 

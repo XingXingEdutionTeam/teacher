@@ -688,14 +688,14 @@ isSelet:(BOOL)isSelet
 }
 
 #pragma mark - DFVideoCaptureControllerDelegate
--(void)onCaptureVideo:(NSString *)filePath screenShot:(UIImage *)screenShot
+-(void)onCaptureVideo:(NSString *)filePath screenShot:(UIImage *)screenShot name:(NSString *)name fileName:(NSString *)fileName
 {
     dispatch_async(dispatch_get_main_queue(), ^{
-        [self onSendVideo:@"" videoPath:filePath screenShot:screenShot];
+        [self onSendVideo:@"" videoPath:filePath screenShot:screenShot name:name fileName:fileName];
     });
 }
 
--(void)onSendVideo:(NSString *)text videoPath:(NSString *)videoPath screenShot:(UIImage *)screenShot
+-(void)onSendVideo:(NSString *)text videoPath:(NSString *)videoPath screenShot:(UIImage *) screenShot name:(NSString*)name fileName:(NSString*)fileName
 {
     
 }

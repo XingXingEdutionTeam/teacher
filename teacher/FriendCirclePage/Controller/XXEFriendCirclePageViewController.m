@@ -751,7 +751,7 @@
 
 
 //发送视频 目前没有实现填写文字
--(void)onSendVideo:(NSString *)text videoPath:(NSString *)videoPath screenShot:(UIImage *)screenShot
+-(void)onSendVideo:(NSString *)text videoPath:(NSString *)videoPath screenShot:(UIImage *)screenShot name:(NSString *)name fileName:(NSString *)fileName
 {
     NSData *data = [NSData dataWithContentsOfFile:videoPath];
 //    NSURL *sourceUrl = [NSURL URLWithString:videoPath];
@@ -820,75 +820,77 @@
 //        
 //    }
     
-        
-//
-//    DFVideoLineItem *videoItem = [[DFVideoLineItem alloc] init];
-//    videoItem.itemId = 1; //随便设置一个 待服务器生成
-//    videoItem.userId = 10018;
-//    videoItem.userAvatar = @"http://file-cdn.datafans.net/avatar/1.jpeg";
-//    videoItem.userNick = @"富二代";
-//    videoItem.title = @"发表了";
-//    videoItem.text = @"新年过节 哈哈"; //这里需要present一个界面 用户填入文字后再发送 场景和发图片一样
+    
+
+    DFVideoLineItem *videoItem = [[DFVideoLineItem alloc] init];
+    videoItem.itemId = 1; //随便设置一个 待服务器生成
+    videoItem.userId = 10018;
+    videoItem.userAvatar = @"http://file-cdn.datafans.net/avatar/1.jpeg";
+    videoItem.userNick = @"富二代";
+    videoItem.title = @"发表了";
+    videoItem.text = @"新年过节 哈哈"; //这里需要present一个界面 用户填入文字后再发送 场景和发图片一样
 //    XXEWhoCanLookController *whoVC = [[XXEWhoCanLookController alloc]init];
 //    [self presentViewController:whoVC animated:YES completion:nil];
     
-//    videoItem.location = @"广州";
-//    
-//    videoItem.localVideoPath = videoPath;
-//    videoItem.videoUrl = @""; //网络路径
-//    videoItem.thumbUrl = @"";
-//    videoItem.thumbImage = screenShot; //如果thumbImage存在 优先使用thumbImage
+    videoItem.location = @"广州";
     
+    videoItem.localVideoPath = videoPath;
+    videoItem.videoUrl = @""; //网络路径
+    videoItem.thumbUrl = @"";
+    videoItem.thumbImage = screenShot; //如果thumbImage存在 优先使用thumbImage
+    [self wwwqqqqqqWithPath:data name:name fileName:fileName dataURL:[NSURL URLWithString:videoPath]];
 //    [self addItemTop:videoItem];
     
     //接着上传图片 和 请求服务器接口
     //请求完成之后 刷新整个界面
     
-    NSDictionary *dict = @{@"file_type":@"2",
-                           @"page_origin":@"35",
-                           @"upload_format":@"1",
-                           @"appkey":APPKEY,
-                           @"user_type":USER_TYPE,
-                           @"backtype":BACKTYPE
-                           };
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    [manager POST:XXERegisterUpLoadPicUrl parameters:dict constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
-        [formData appendPartWithFileData:data name:@"video" fileName:@"video.mov" mimeType:@"video/quicktime"];
-        
-    } success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
-        
+//    NSDictionary *dict = @{@"file_type":@"2",
+//                           @"page_origin":@"35",
+//                           @"upload_format":@"1",
+//                           @"appkey":APPKEY,
+//                           @"user_type":USER_TYPE,
+//                           @"backtype":BACKTYPE
+//                           };
+//    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+//    [manager POST:XXERegisterUpLoadPicUrl parameters:dict constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+//        [formData appendPartWithFileData:data name:@"video" fileName:@"video.mov" mimeType:@"video/quicktime"];
+//        
+//    } success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
+//        
 //        NSLog(@"%@",responseObject);
-//        NSLog(@"%@",[responseObject objectForKey:@"msg"]);
-        
-    } failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error) {
-        NSLog(@"%@",error);
-    }];
+////        NSLog(@"%@",[responseObject objectForKey:@"msg"]);
+//        
+//    } failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error) {
+//        NSLog(@"%@",error);
+//    }];
 }
 
 
 //测试传视频
-- (void)wwwqqqqqq
+- (void)wwwqqqqqqWithPath:(NSData *)data1 name:(NSString*)name fileName:(NSString*)fileName dataURL:(NSURL*)dataURL
 {
-    NSString *videoPath1 = [[NSBundle mainBundle] pathForResource:@"1122" ofType:@"mp4"];
-    NSLog(@"videoPath1:%@",videoPath1);
-    NSData *data1=[NSData dataWithContentsOfFile:videoPath1];
     NSDictionary *dict = @{@"file_type":@"2",
                            @"page_origin":@"35",
                            @"upload_format":@"1",
                            @"appkey":APPKEY,
                            @"user_type":USER_TYPE,
-                           @"backtype":BACKTYPE
+                           @"backtype":BACKTYPE,
+                           @"return_param_all":@"1",
+                           @"return":@"re"
                            };
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     [manager POST:XXERegisterUpLoadPicUrl parameters:dict constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
-        NSString *name = [NSString stringWithFormat:@"video"];
-        NSString *formKey = [NSString stringWithFormat:@"video.mp4"];
+//        NSString *name = [NSString stringWithFormat:@"video2"];
+//        NSString *formKey = [NSString stringWithFormat:@"video2.mp4"];
         NSString *type = @"video/mp4";
-        [formData appendPartWithFileData:data1 name:formKey fileName:name mimeType:type];
+        NSError *error = nil;
+        [formData appendPartWithFileURL:dataURL name:name fileName:fileName mimeType:type error:&error];
+        NSLog(@"%@",error);
+//        [formData appendPartWithFileURL:dataURL name:formKey fileName:name mimeType:type];
         
     } success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
         
-//        NSLog(@"%@",responseObject);
+        NSLog(@"%@",responseObject);
 //        NSLog(@"%@",[responseObject objectForKey:@"msg"]);
         
     } failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error) {
@@ -896,7 +898,61 @@
     }];
 
 }
-
+- (void)aaa{
+//    NSDictionary *dict = @{@"file_type":@"2",
+//                           @"page_origin":@"35",
+//                           @"upload_format":@"1",
+//                           @"appkey":APPKEY,
+//                           @"user_type":USER_TYPE,
+//                           @"backtype":BACKTYPE,
+//                           @"return_param_all":@"1",
+//                           @"return": @"return"
+//                           };
+//    AFHTTPRequestSerializer *ser = [[AFHTTPRequestSerializer alloc] init];
+//    NSMutableURLRequest *request = [ser multipartFormRequestWithMethod:@"POST"
+//                                                             URLString:XXERegisterUpLoadPicUrl parameters:dict constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+//                                                                 [formData appendPartWithFileURL:fileURL name:@"file" fileName:@"fileName" mimeType:@"video/mp4" error:nil];
+//                                                             } error:nil];
+//    
+//    AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
+//    
+//    NSProgress *progress = nil;
+//    
+//    NSURLSessionUploadTask *uploadTask = [manager uploadTaskWithStreamedRequest:request progress:&progress completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
+//        if (error) {
+//            NSLog(@"request = %@", request );
+//            //            MyLog(@"response = %@", response );
+//            //            MyLog(@"Error: %@", error );
+//            //            [_hud hide:YES];
+//            //            CXAlertView *alert=[[CXAlertView alloc]initWithTitle:NSLocalizedString(@"Warning", nil)
+//            //                                                         message:NSLocalizedString(@"Upload Failed",nil)
+//            //                                               cancelButtonTitle:NSLocalizedString(@"Iknow", nil)];
+//            //            alert.showBlurBackground = NO;
+//            //            [alert show];
+//        } else {
+//            NSLog(@"%@ %@", response, responseObject);
+//            NSDictionary *backDict=(NSDictionary *)responseObject;
+//            if ([backDict[@"success"] boolValue] != NO) {
+//                //                _hud.labelText = NSLocalizedString(@"Updating", nil);
+//                //                [self UpdateResxDateWithDict:backDict discription:dict[@"discription"]];
+//                //                [_hud hide:YES];
+//            }else{
+//                //                [_hud hide:YES];
+//                //                [MyHelper showAlertWith:nil txt:backDict[@"msg"]];
+//            }
+//        }
+//        //        [progress removeObserver:self
+//        //                      forKeyPath:@"fractionCompleted"
+//        //                         context:@"1"];
+//    }];
+//    
+//    //    [progress addObserver:self
+//    //               forKeyPath:@"fractionCompleted"
+//    //                  options:NSKeyValueObservingOptionNew
+//    //                  context:@"1"];
+//    //    [progress setUserInfoObject:@"someThing" forKey:@"Y.X."];
+//    [uploadTask resume];
+}
 #pragma mark - TabelViewDelegate
 
 //-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath

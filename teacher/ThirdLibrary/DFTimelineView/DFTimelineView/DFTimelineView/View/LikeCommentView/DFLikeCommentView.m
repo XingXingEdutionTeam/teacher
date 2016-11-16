@@ -305,16 +305,16 @@
 
 -(void)longPress:(UITapGestureRecognizer*)recognizer
 {
-    NSLog(@"长按了Label");
-    keenteamLabel  = (UILabel *)recognizer.view;
-    //解决响应两次的问题
-    if (recognizer.state == UIGestureRecognizerStateEnded) {
-        return;
-        
-    } else if (recognizer.state == UIGestureRecognizerStateBegan) {
-        UIActionSheet *actionSheet =[[UIActionSheet alloc]initWithTitle:@"删除评论?" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:@"确定" otherButtonTitles:nil, nil];
-        [actionSheet showInView:self];
-    }
+//    NSLog(@"长按了Label");
+//    keenteamLabel  = (UILabel *)recognizer.view;
+//    //解决响应两次的问题
+//    if (recognizer.state == UIGestureRecognizerStateEnded) {
+//        return;
+//        
+//    } else if (recognizer.state == UIGestureRecognizerStateBegan) {
+//        UIActionSheet *actionSheet =[[UIActionSheet alloc]initWithTitle:@"删除评论?" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:@"确定" otherButtonTitles:nil, nil];
+//        [actionSheet showInView:self];
+//    }
 }
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{

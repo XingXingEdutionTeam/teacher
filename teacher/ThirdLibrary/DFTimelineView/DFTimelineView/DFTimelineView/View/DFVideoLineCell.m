@@ -159,7 +159,7 @@
             [manager createDirectoryAtPath:dirPath withIntermediateDirectories:YES attributes:nil error:nil];
         }
         
-        NSString *filePath = [NSString stringWithFormat:@"%@%@.mov",dirPath, key];
+        NSString *filePath = [NSString stringWithFormat:@"%@%@.mp4",dirPath, key];
         
         if ([manager fileExistsAtPath:filePath]) {
             _videoItem.localVideoPath = filePath;
