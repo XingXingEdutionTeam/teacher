@@ -23,6 +23,8 @@
 #import "XXECircleModel.h"
 #import "XXEUserInfo.h"
 #import "StringHeight.h"
+#import "XXEDeleteCommentApi.h"
+
 
 #define Kmarg 10.0f
 #define KLabelH 25.0f
@@ -43,7 +45,7 @@ typedef NS_OPTIONS(NSInteger, Comments){
 };
 
 
-@interface MessageListDetailController ()<YDCommentInputViewDelegate,UITableViewDelegate,UITableViewDataSource>{
+@interface MessageListDetailController ()<YDCommentInputViewDelegate,UITableViewDelegate,UITableViewDataSource,UIAlertViewDelegate>{
     UIScrollView *_bgScrollView;
     UIView *_detailView;
     UIImageView *_headImage;//头像
@@ -124,6 +126,7 @@ typedef NS_OPTIONS(NSInteger, Comments){
     return _commentInputView;
 }
 
+//MARK: 设置数据
 -(void)configure:(XXECircleModel*)model {
     //头像
     NSString * head_img;
@@ -213,7 +216,7 @@ typedef NS_OPTIONS(NSInteger, Comments){
     _timeLabel.text = timeStr;
     
     _detailImage.frame = CGRectMake(kWidth - Kmarg*6 , CGRectGetMaxY(_picView.frame) + Kmarg, 40, 30);
-    _detailImage.image = [UIImage imageNamed:@"AlbumOperateMoreHL.png"];
+    _detailImage.image = [UIImage imageNamed:@"AlbumOperateMoreHL"];
     
     //重写详情背景的frame
     CGSize size3 = _detailView.size;
@@ -223,6 +226,7 @@ typedef NS_OPTIONS(NSInteger, Comments){
     _tableView.frame = CGRectMake(30, CGRectGetMaxY(_detailView.frame), kWidth - 60, model.comment_group.count * 70);
 }
 
+//MARK: - 设置控件
 -(void)createDetailMessage {
     //背景
     _bgScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, kWidth,kHeight *2 )];
@@ -309,6 +313,8 @@ typedef NS_OPTIONS(NSInteger, Comments){
     [self.navigationController pushViewController:imageBrowsingVC animated:YES];
     
 }
+
+
 -(void)createDetailMessageNetRequest{
     XXEEveryTalkDetailApi * everyTalkDetailApi = [[XXEEveryTalkDetailApi alloc] initWithXid:parameterXid user_id:parameterUser_Id talk_id:_talkId];
     [everyTalkDetailApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
@@ -318,9 +324,6 @@ typedef NS_OPTIONS(NSInteger, Comments){
         if ([codeStr integerValue] == 1) {
             NSDictionary *dic = request.responseJSONObject[@"data"];
             talkModel = [[XXECircleModel alloc]initWithDictionary:dic error:nil];
-            
-//            NSLog(@"talkModel.comment_group %@", talkModel.comment_group);
-            //创建  说说 视图
             
             [self configure:talkModel];
             CGFloat bgScrollMaxH =  CGRectGetMaxY(_tableView.frame) + 800;
@@ -431,16 +434,72 @@ typedef NS_OPTIONS(NSInteger, Comments){
 }
 
 #pragma mark - TabelViewDelegate
-
+XXECommentModel* comment;
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    UILabel *replyUserNick = [_tableView viewWithTag:10000];
-    //回复评论
-    self.message = ReplyCommentsMessage;
-    self.commentInputView.commentInputTextField.placeholder = [NSString stringWithFormat:@"回复%@",replyUserNick.text];
-    [self.commentInputView showInputView];
+    comment = talkModel.comment_group[indexPath.row];
     
+    if ([comment.commentXid isEqualToString:[XXEUserInfo user].xid]) {
+        UIActionSheet *actionSheet =[[UIActionSheet alloc]initWithTitle:@"删除评论?" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        [actionSheet showInView:self.view];
+    }else {
+//        UILabel *replyUserNick = [_tableView viewWithTag:10000];
+        //回复评论
+        self.message = ReplyCommentsMessage;
+        self.commentInputView.commentInputTextField.placeholder = [NSString stringWithFormat:@"回复%@",comment.commentNicknName];
+        [self.commentInputView showInputView];
+    }
+    
+    
+}
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
+    
+    if (buttonIndex==1) {
+        NSLog(@"取消删除");
+    }
+    else{
+        NSLog(@"确定删除");
+        [self deleteComment];
+    }
+    
+}
+
+//MARK: - 删除评论
+-(void)deleteComment {
+    XXEDeleteCommentApi *deleteApi = [[XXEDeleteCommentApi alloc] initWithDeleteCommentEventType:@"3" TalkId:_talkId CommentId:comment.commentId UserXid:[XXEUserInfo user].xid UserId:[XXEUserInfo user].user_id];
+    [deleteApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
+        NSString *code = [request.responseJSONObject objectForKey:@"code"];
+        //        NSLog(@":data%@",data);
+        if ([code integerValue]==1 || [code integerValue]==5 ) {
+            DFLineCommentItem *commentItem = [[DFLineCommentItem alloc] init];
+            commentItem.commentId = [comment.commentId intValue];
+            commentItem.userId = [parameterXid integerValue];
+            commentItem.userNick = @"";
+            commentItem.text = @"";
+            [self hudShowText:@"删除成功" second:1.f];
+            [self createDetailMessageNetRequest];
+        }else{
+            [self hudShowText:@"删除失败" second:1.f];
+        }
+        
+    } failure:^(__kindof YTKBaseRequest *request) {
+        
+        [self hudShowText:@"网络请求失败" second:1.f];
+    }];
+}
+
+//MARK: - loading图
+-(void) hudShowText:(NSString *)text second:(NSInteger)second
+{
+    
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view.window animated:YES];
+    hud.mode = MBProgressHUDModeText;
+    hud.animationType = MBProgressHUDAnimationFade;
+    hud.removeFromSuperViewOnHide = YES;
+    hud.labelText = text;
+    [hud hide:YES afterDelay:second];
 }
 
 //(long)评论
@@ -510,7 +569,7 @@ typedef NS_OPTIONS(NSInteger, Comments){
                                @"com_type":@"2",
                                @"talk_id":_talkId,
                                @"con":aText,
-                               @"to_who_xid":@"12345",
+                               @"to_who_xid":comment.commentXid,
                                };
         
         // 服务器返回的数据格式
