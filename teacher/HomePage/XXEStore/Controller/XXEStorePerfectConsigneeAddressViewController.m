@@ -10,8 +10,8 @@
 
 #import "XXEStorePerfectConsigneeAddressViewController.h"
 #import "XXEStoreConsigneeAddressViewController.h"
-
-
+//支付
+#import "XXEStorePayViewController.h"
 
 @interface XXEStorePerfectConsigneeAddressViewController ()<UITextFieldDelegate, UITextViewDelegate>
 {
@@ -21,7 +21,10 @@
     //姓名 电话 地址 背景
     UIView *addressBgView;
     
-    
+    UILabel *nameLabel;
+    UILabel *phoneLabel;
+    UILabel *addressLabel;
+    NSString *address_id;
     
     //下部 背景
     UIView *downBgView;
@@ -32,7 +35,12 @@
     UITextView *messageTextView;
     //支付 按钮
     UIButton *payButton;
-
+    
+    //待支付订单
+    NSDictionary *daizhifuOrderDictInfo;
+    
+    NSString *parameterXid;
+    NSString *parameterUser_Id;
 }
 
 @end
@@ -43,7 +51,15 @@
     [super viewDidLoad];
     
     self.view.backgroundColor = XXEBackgroundColor;
-
+    if ([XXEUserInfo user].login){
+        parameterXid = [XXEUserInfo user].xid;
+        parameterUser_Id = [XXEUserInfo user].user_id;
+    }else{
+        parameterXid = XID;
+        parameterUser_Id = USER_ID;
+    }
+    daizhifuOrderDictInfo = [[NSDictionary alloc] init];
+    address_id = @"";
     //上部 地址 信息
     [self createUpContent];
     
@@ -78,29 +94,31 @@
     [upBgView addSubview:addressBgView];
     
     //姓名
-    UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, KScreenWidth / 2 - 20, 20)];
+    nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, KScreenWidth / 2 - 20, 20)];
 //    nameLabel.backgroundColor = [UIColor greenColor];
     [addressBgView addSubview:nameLabel];
     
     //电话
-    UILabel *phoneLabel = [[UILabel alloc] initWithFrame:CGRectMake(KScreenWidth / 2, 0, KScreenWidth / 2, 20)];
+    phoneLabel = [[UILabel alloc] initWithFrame:CGRectMake(KScreenWidth / 2, 0, KScreenWidth / 2, 20)];
 //    phoneLabel.backgroundColor = [UIColor purpleColor];
     [addressBgView addSubview:phoneLabel];
     
     //地址 title
-    UILabel *addressTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 40, 60, 20)];
+    UILabel *addressTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 80, 60, 20)];
     addressTitleLabel.text = @"[收货地址]";
     addressTitleLabel.font = [UIFont systemWithIphone6P:14 Iphone6:12 Iphone5:10 Iphone4:8];
     addressTitleLabel.textColor = [UIColor lightGrayColor];
     [addressBgView addSubview:addressTitleLabel];
     
     //地址
-    UILabel *addressLabel = [[UILabel alloc] initWithFrame:CGRectMake(addressTitleLabel.frame.origin.x + addressTitleLabel.width, addressTitleLabel.frame.origin.y, KScreenWidth - 120, 110)];
+    addressLabel = [[UILabel alloc] initWithFrame:CGRectMake(addressTitleLabel.frame.origin.x + addressTitleLabel.width, 40, KScreenWidth - 100, 110)];
+    addressLabel.font = [UIFont systemWithIphone6P:14 Iphone6:12 Iphone5:10 Iphone4:8];
+    addressLabel.numberOfLines = 0;
 //    addressLabel.backgroundColor = [UIColor blueColor];
     [addressBgView addSubview:addressLabel];
     
     //箭头
-    UIImageView *icon = [[UIImageView alloc] initWithFrame:CGRectMake(addressLabel.frame.origin.x + addressLabel.width, addressLabel.frame.origin.y, 7, 13)];
+    UIImageView *icon = [[UIImageView alloc] initWithFrame:CGRectMake(KScreenWidth - 20, addressLabel.frame.origin.y, 7, 13)];
     icon.image = [UIImage imageNamed:@"narrow_icon14x26"];
     [addressBgView addSubview:icon];
     
@@ -119,6 +137,15 @@
 
 //    NSLog(@"kkkkkk");
     XXEStoreConsigneeAddressViewController *storeConsigneeAddressVC = [[XXEStoreConsigneeAddressViewController alloc] init];
+    
+    storeConsigneeAddressVC.isBuy = YES;
+    [storeConsigneeAddressVC returnArrayBlock:^(NSMutableArray *returnArray) {
+        //
+        nameLabel.text = returnArray[0];
+        phoneLabel.text = returnArray[1];
+        addressLabel.text = returnArray[2];
+        address_id = returnArray[3];
+    }];
     
     [self.navigationController pushViewController:storeConsigneeAddressVC animated:YES];
 
@@ -181,19 +208,17 @@
     //合计 钱
     UILabel *moneyLabel = [[UILabel alloc] initWithFrame:CGRectMake(moneyTitleLabel.frame.origin.x + moneyTitleLabel.width, moneyTitleLabel.frame.origin.y, 100, 20)];
     moneyLabel.textColor = UIColorFromRGB(244, 52, 139);
-    
-//    moneyLabel.backgroundColor = [UIColor redColor];
+    moneyLabel.text = _price;
     [downBgView addSubview:moneyLabel];
     
     //合计 猩币 title
     UILabel *coinTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(moneyLabel.frame.origin.x + moneyLabel.width, moneyTitleLabel.frame.origin.y, 80, 20)];
     coinTitleLabel.text = @"合计猩币:";
-//    coinTitleLabel.backgroundColor = [UIColor blueColor];
     [downBgView addSubview:coinTitleLabel];
     
     //合计 猩币
     UILabel *coinLabel = [[UILabel alloc] initWithFrame:CGRectMake(coinTitleLabel.frame.origin.x + coinTitleLabel.width, moneyTitleLabel.frame.origin.y, 100, 20)];
-//    coinLabel.backgroundColor = [UIColor whiteColor];
+    coinLabel.text = _xingIconNum;
     [downBgView addSubview:coinLabel];
     
     
@@ -206,13 +231,88 @@
     
 }
 
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
+
+    [self.view endEditing:YES];
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField{
+    [textField resignFirstResponder];
+    return YES;
+}
 
 //去支付
 - (void)payButtonClick{
+    
+    if ([nameLabel.text isEqualToString:@""] || nameLabel.text == nil) {
+        [self showString:@"请完善收货人信息" forSecond:1.5];
+    }else{
+        //产生未支付订单
+        [self createNoPayOrder];
 
-
+    }
 
 }
+
+#pragma mark ======== 产生未支付订单 ============
+- (void)createNoPayOrder{
+/*
+ 【猩猩商城--猩币兑换商品点立即支付(产生订单),金额+猩币】
+ 接口类型:2
+ 接口:
+ http://www.xingxingedu.cn/Global/coin_shopping
+ 传参:
+	address_id	//地址id
+	goods_id	//商品id
+	receipt		//发票抬头
+	buyer_words	//买家留言
+ */
+  
+    NSString *urlStr = @"http://www.xingxingedu.cn/Global/coin_shopping";
+    
+    //发票 抬头 invoiceTextField
+    NSString *receipt = invoiceTextField.text;
+    NSString *buyer_words = messageTextView.text;
+    
+    NSDictionary *params = @{@"appkey":APPKEY,
+                             @"backtype":BACKTYPE,
+                             @"xid":parameterXid,
+                             @"user_id":parameterUser_Id,
+                             @"user_type":USER_TYPE,
+                             @"goods_id":_good_id,
+                             @"address_id":address_id,
+                             @"receipt":receipt,
+                             @"buyer_words":buyer_words
+                             };
+    [WZYHttpTool post:urlStr params:params success:^(id responseObj) {
+        //
+//        NSLog(@"生成待支付订单 == %@", responseObj);
+        /*
+         data =     {
+         "order_id" = 594;
+         "order_index" = 39288589297;
+         "pay_coin" = 300;
+         "pay_price" = 0;
+         "user_coin_able" = 10708;
+         };
+         */
+        if ([responseObj[@"code"]  integerValue] == 1) {
+            daizhifuOrderDictInfo = responseObj[@"data"];
+            
+            XXEStorePayViewController *storePayVC = [[XXEStorePayViewController alloc] init];
+            storePayVC.dict = daizhifuOrderDictInfo;
+            [self.navigationController pushViewController:storePayVC animated:YES];
+        }
+        
+    } failure:^(NSError *error) {
+        //
+        [self showString:@"获取数据失败!" forSecond:1.5];
+    }];
+    
+    
+    
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

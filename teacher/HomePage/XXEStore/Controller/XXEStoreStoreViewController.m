@@ -13,7 +13,14 @@
 #import "ZQCountDownView.h"
 #import "XXEStoreStoreApi.h"
 #import "XXEStoreListModel.h"
-
+//签到送猩币
+#import "XXEXingCoinViewController.h"
+//猩币转赠
+#import "XXEStoreSentIconToOtherViewController.h"
+//花篮专区
+#import "XXEStoreBuyFlowerbasketViewController.h"
+//购买
+#import "XXEStorePerfectConsigneeAddressViewController.h"
 
 #define Kmarg 6.0f
 #define KLabelX 27.0f
@@ -286,7 +293,7 @@
     countdownView.colonColor = [UIColor whiteColor];
     countdownView.countDownTimeInterval = spaceTime;
     
-    //立刻签到
+    //签到送猩币
     UIButton *checkinBtn = [UIButton createButtonWithFrame:CGRectMake(CGRectGetMaxX(countdownView.frame)+ Kmarg, CGRectGetMaxY(grayView1.frame) + Kmarg,(kWidth - CGRectGetMaxX(countdownView.frame))/3 - 10, KButtonH) backGruondImageName:nil Target:nil Action:@selector(checkInBtn) Title:@"签到送猩币"];
     checkinBtn.titleLabel.font = [UIFont systemWithIphone6P:12 Iphone6:10 Iphone5:8 Iphone4:6];
     [checkinBtn setTitleColor:UIColorFromRGB(0, 170, 42) forState:UIControlStateNormal];
@@ -326,22 +333,26 @@
 
 //立刻 签到
 - (void)checkInBtn{
-
-
+    //签到送猩币
+    XXEXingCoinViewController *xingCoinVC = [[XXEXingCoinViewController alloc] init];
+    
+    [self.navigationController pushViewController:xingCoinVC animated:YES];
+    
 }
 
 
 //猩币 转赠
 - (void)moneyPresentBtn{
-
-
+    XXEStoreSentIconToOtherViewController *storeSentIconToOtherVC = [[XXEStoreSentIconToOtherViewController alloc] init];
+    
+    [self.navigationController pushViewController:storeSentIconToOtherVC animated:YES];
 }
 
 //花篮 专区
 - (void)FlowersPrefecture{
-
-
-
+    XXEStoreBuyFlowerbasketViewController *storeBuyFlowerbasketVC = [[XXEStoreBuyFlowerbasketViewController alloc] init];
+    
+    [self.navigationController pushViewController:storeBuyFlowerbasketVC animated:YES];
 }
 
 #pragma mark $$$$$$$$$$$$ 创建 下部 tableView $$$$$$$$
@@ -397,7 +408,15 @@
 
 - (void)buyButtonClick:(UIButton *)button{
     
-    NSLog(@"购买");
+    XXEStoreListModel *model = _dataSourceArray[button.tag - 1000];
+    
+    XXEStorePerfectConsigneeAddressViewController *perfectConsigneeAddressVC = [[XXEStorePerfectConsigneeAddressViewController alloc] init];
+    
+    perfectConsigneeAddressVC.xingIconNum = model.exchange_coin;
+    perfectConsigneeAddressVC.price = model.exchange_price;
+    perfectConsigneeAddressVC.good_id = model.good_id;
+    
+    [self.navigationController pushViewController:perfectConsigneeAddressVC animated:YES];
 
 }
 
@@ -405,16 +424,6 @@
     return 100;
 }
 
-
-//-(void)collectPressed:(UIButton *)btn{
-//    StoreArticleBuyViewController *vc= [[StoreArticleBuyViewController alloc]init];
-//    int i=(int)btn.tag-1000;
-//    vc.orderNum=articleArray[i][6];
-//    vc.xingMoney=articleArray[i][4];
-//    vc.rmbMoney=articleArray[i][2];
-//    [self.navigationController pushViewController:vc animated:YES];
-//    
-//}
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     XXEStoreGoodDetailInfoViewController*storeGoodDetailInfoVC=  [[XXEStoreGoodDetailInfoViewController alloc]init];

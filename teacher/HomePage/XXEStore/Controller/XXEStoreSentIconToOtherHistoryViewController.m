@@ -1,22 +1,20 @@
 
 
 //
-//  XXEXingCoinHistoryViewController.m
+//  XXEStoreSentIconToOtherHistoryViewController.m
 //  teacher
 //
-//  Created by Mac on 16/8/11.
+//  Created by Mac on 2016/11/15.
 //  Copyright © 2016年 XingXingEdu. All rights reserved.
 //
 
-#import "XXEXingCoinHistoryViewController.h"
+#import "XXEStoreSentIconToOtherHistoryViewController.h"
 #import "XXEXingCoinHistoryTableViewCell.h"
 #import "XXEXingCoinHistoryModel.h"
 #import "XXEXingCoinHistoryApi.h"
 
-#define URL @"http://www.xingxingedu.cn/Global/select_coin_msg"
 
-
-@interface XXEXingCoinHistoryViewController ()<UITableViewDataSource, UITableViewDelegate>
+@interface XXEStoreSentIconToOtherHistoryViewController ()<UITableViewDataSource, UITableViewDelegate>
 {
     UITableView *_myTableView;
     
@@ -27,13 +25,13 @@
     NSString *parameterUser_Id;
 }
 
+
 @end
 
-@implementation XXEXingCoinHistoryViewController
+@implementation XXEStoreSentIconToOtherHistoryViewController
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-//    _dataSourceArray = [[NSMutableArray alloc] init];
     
     page = 0;
     if ([XXEUserInfo user].login){
@@ -61,7 +59,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+    
     self.title = @"猩币历史";
     
     [self createTableView];
@@ -70,24 +68,20 @@
 - (void)fetchNetData{
     /*
      【猩猩商城--查询猩币变更记录】
-     
      接口类型:1
-     
      接口:
      http://www.xingxingedu.cn/Global/select_coin_msg
-     
      传参:
      require_con = "4"	//想要查询的内容,如果是空默认全部类型,4代表互赠
      year = "2016"		//可以查询某一年,如果是空,查询所有年份的猩币记录
      page
      */
-    
 //    NSString *pageStr = [NSString stringWithFormat:@"%ld", page];
     
-    XXEXingCoinHistoryApi *xingCoinHistoryApi = [[XXEXingCoinHistoryApi alloc] initWithXid:parameterXid user_id:parameterUser_Id require_con:@"" year:@"" page:@""];
+    
+    XXEXingCoinHistoryApi *xingCoinHistoryApi = [[XXEXingCoinHistoryApi alloc] initWithXid:parameterXid user_id:parameterUser_Id require_con:@"4" year:@"" page:@""];
     [xingCoinHistoryApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         _dataSourceArray = [[NSMutableArray alloc] init];
-        
 //        NSLog(@"111   %@", request.responseJSONObject);
         
         NSDictionary *dict = request.responseJSONObject;
@@ -216,7 +210,7 @@
     cell.iconImageView.layer.masksToBounds = YES;
     
     [cell.iconImageView sd_setImageWithURL:[NSURL URLWithString:model.pic] placeholderImage:[UIImage imageNamed:@"home_flowerbasket_placehoderIcon120x120"]];
-//    cell.timeLabel.text = [XXETool dateStringFromNumberTimer:model.date_tm];
+    //    cell.timeLabel.text = [XXETool dateStringFromNumberTimer:model.date_tm];
     NSString *timeString =[XXETool dateStringFromNumberTimer:model.date_tm];
     NSArray *arr = [NSArray arrayWithArray:[timeString componentsSeparatedByString:@" "]];
     cell.timeLabel1.text = arr[0];
@@ -241,12 +235,12 @@
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, KScreenWidth, 20)];
     headerView.backgroundColor = [UIColor whiteColor];
     
-//    CGFloat labelWidth = KScreenWidth / 3;
+    //    CGFloat labelWidth = KScreenWidth / 3;
     UILabel *titleLabel1 = [UILabel createLabelWithFrame:CGRectMake(80 * kScreenRatioWidth, 5, 135 * kScreenRatioWidth, 20 * kScreenRatioHeight) Font:16 * kScreenRatioHeight Text:@"时间"];
     titleLabel1.textAlignment = NSTextAlignmentCenter;
     [headerView addSubview:titleLabel1];
     
-    UILabel *titleLabel2 = [UILabel createLabelWithFrame:CGRectMake(215 * kScreenRatioWidth, 5, 80 * kScreenRatioWidth, 20 * kScreenRatioHeight) Font:16 * kScreenRatioHeight Text:@"用途"];
+    UILabel *titleLabel2 = [UILabel createLabelWithFrame:CGRectMake(215 * kScreenRatioWidth, 5, 80 * kScreenRatioWidth, 20 * kScreenRatioHeight) Font:16 * kScreenRatioHeight Text:@"接收人"];
     titleLabel2.textAlignment = NSTextAlignmentCenter;
     [headerView addSubview:titleLabel2];
     
@@ -261,5 +255,19 @@
     return 30;
 }
 
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+/*
+#pragma mark - Navigation
+
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+}
+*/
 
 @end

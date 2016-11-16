@@ -11,7 +11,9 @@
 
 #import "XXEStoreConsigneeAddressViewController.h"
 #import "XXEStoreConsigneeAddressTableViewCell.h"
+#import "XXEStoreAddUserAddressViewController.h"
 #import "XXEStoreAddressModel.h"
+
 
 @interface XXEStoreConsigneeAddressViewController ()<UITableViewDelegate, UITableViewDataSource>
 {
@@ -32,7 +34,7 @@
 - (void)viewWillAppear:(BOOL)animated{
     
     [super viewWillAppear:animated];
-    //    self.navigationController.navigationBar.topItem.title = @"小红花";
+
     _dataSourceArray = [[NSMutableArray alloc] init];
     if ([XXEUserInfo user].login){
         parameterXid = [XXEUserInfo user].xid;
@@ -82,13 +84,10 @@
 
 - (void)addBtnClick:(UIButton *)button{
     
-//    XXESentToPeopleViewController *sentToPeopleVC = [[XXESentToPeopleViewController alloc] init];
-//    
-//    sentToPeopleVC.schoolId = _schoolId;
-//    sentToPeopleVC.classId = _classId;
-//    sentToPeopleVC.basketNumStr = _flower_able;
-//    sentToPeopleVC.position = _position;
-//    [self.navigationController pushViewController:sentToPeopleVC animated:YES];
+    XXEStoreAddUserAddressViewController *storeAddUserAddressVC = [[XXEStoreAddUserAddressViewController alloc] init];
+    
+
+    [self.navigationController pushViewController:storeAddUserAddressVC animated:YES];
     
 }
 
@@ -106,13 +105,13 @@
     
     NSDictionary *params = @{@"appkey":APPKEY,
                            @"backtype":BACKTYPE,
-                           @"xid":@"18884982",
-                           @"user_id":@"1",
+                           @"xid":parameterXid,
+                           @"user_id":parameterUser_Id,
                            @"user_type":USER_TYPE
                            };
     [WZYHttpTool post:urlStr params:params success:^(id responseObj) {
         //
-        NSLog(@"UUUU %@", responseObj);
+//        NSLog(@"UUUU %@", responseObj);
         NSString *codeStr = responseObj[@"code"];
         if ([codeStr integerValue] == 1) {
             
@@ -164,32 +163,7 @@
     _myTableView.delegate = self;
     
     [self.view addSubview:_myTableView];
-    
-//    _myTableView.header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadNewData)];
-//    
-//    _myTableView.footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadFooterNewData)];
-    
-    
 }
-
-//-(void)loadNewData{
-////    page ++;
-//    
-//    [self fetchNetData];
-//    [ _myTableView.header endRefreshing];
-//}
-//-(void)endRefresh{
-//    [_myTableView.header endRefreshing];
-//    [_myTableView.footer endRefreshing];
-//}
-//
-//- (void)loadFooterNewData{
-////    page ++ ;
-//    
-//    [self fetchNetData];
-//    [ _myTableView.footer endRefreshing];
-//    
-//}
 
 
 #pragma mark
@@ -226,6 +200,12 @@
     cell.phoneLabel.text = model.phone;
     cell.addressLabel.text = [NSString stringWithFormat:@"%@ %@ %@", model.province, model.city, model.address];
     
+    if (indexPath.row == 0) {
+        cell.defaultAddressLabel.hidden = NO;
+    }else{
+        cell.defaultAddressLabel.hidden = YES;
+    }
+    
     return cell;
 }
 
@@ -241,22 +221,28 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    XXEStoreAddressModel *model = _dataSourceArray[indexPath.row];
+    if (_isBuy) {
+        NSString *str = [NSString stringWithFormat:@"%@ %@ %@", model.province, model.city, model.address];
+        NSMutableArray *mArray = [[NSMutableArray alloc] initWithObjects:model.name, model.phone, str,model.address_id, nil];
+        self.returnArrayBlock(mArray);
+        [self.navigationController popViewControllerAnimated:YES];
+    }else{
+        XXEStoreAddUserAddressViewController *storeAddUserAddressVC = [[XXEStoreAddUserAddressViewController alloc] init];
+        storeAddUserAddressVC.isModify = YES;
+        storeAddUserAddressVC.model = model;
+        if (indexPath.row == 0) {
+            //是 默认收货 地址
+            storeAddUserAddressVC.defaultAddress = @"1";
+        }else{
+            //不是 默认收货 地址
+            storeAddUserAddressVC.defaultAddress = @"0";
+        }
+        
+        [self.navigationController pushViewController:storeAddUserAddressVC animated:YES];
     
-//    XXERedFlowerDetialViewController *redFlowerDetialVC = [[XXERedFlowerDetialViewController alloc] init];
-//    
-//    XXERedFlowerSentHistoryModel *model = _dataSourceArray[indexPath.row];
-//    redFlowerDetialVC.name = model.tname;
-//    redFlowerDetialVC.time = [XXETool dateStringFromNumberTimer:model.date_tm];
-//    redFlowerDetialVC.schoolName = model.school_name;
-//    redFlowerDetialVC.className = model.class_name;
-//    redFlowerDetialVC.course = model.teach_course;
-//    redFlowerDetialVC.content = model.con;
-//    redFlowerDetialVC.picWallArray = model.pic_arr;
-//    redFlowerDetialVC.iconUrl = model.head_img;
-//    redFlowerDetialVC.collect_conditStr =model.collect_condit;
-//    redFlowerDetialVC.collect_id = model.collectionId;
-//    [self.navigationController pushViewController:redFlowerDetialVC animated:YES];
-    
+    }
+
 }
 
 //滑动 删除 地址
@@ -287,15 +273,15 @@
     
     NSDictionary *params = @{@"appkey":APPKEY,
                              @"backtype":BACKTYPE,
-                             @"xid":@"18884982",
-                             @"user_id":@"1",
+                             @"xid":parameterXid,
+                             @"user_id":parameterUser_Id,
                              @"user_type":USER_TYPE,
                              @"address_id":address_id
                              };
 
     [WZYHttpTool post:urlStr params:params success:^(id responseObj) {
         //
-        NSLog(@"删除 地址 %@", responseObj);
+//        NSLog(@"删除 地址 %@", responseObj);
         
         if ([responseObj[@"code"] integerValue] == 1) {
             [self showHudWithString:@"删除成功!" forSecond:1.5];
@@ -314,6 +300,10 @@
     
 }
 
+
+- (void)returnArrayBlock:(returnArrayBlock)block{
+    self.returnArrayBlock = block;
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

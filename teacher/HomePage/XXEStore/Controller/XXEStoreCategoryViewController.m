@@ -8,6 +8,8 @@
 //
 
 #import "XXEStoreCategoryViewController.h"
+//商品详情
+#import "XXEStoreGoodDetailInfoViewController.h"
 #import "XXEStoreGoodClassApi.h"
 #import "XXEStoreGoodClassModel.h"
 #import "XXEStoreGoodInfoModel.h"
@@ -243,9 +245,9 @@
     
     menuView =[[MultilevelMenu alloc] initWithFrame:CGRectMake(0, 50, KScreenWidth, KScreenHeight-50) WithData:lis withSelectIndex:^(NSInteger left, NSInteger right,rightMeun* info) {
         
-        //        ArticleInfoViewController*vc=  [[ArticleInfoViewController alloc]init];
-        //        vc.orderNum = info.ID;
-        //        [self.navigationController pushViewController:vc animated:YES];
+        XXEStoreGoodDetailInfoViewController *storeGoodDetailInfoVC = [[XXEStoreGoodDetailInfoViewController alloc] init];
+        storeGoodDetailInfoVC.orderNum = info.ID;
+        [self.navigationController pushViewController:storeGoodDetailInfoVC animated:YES];
     }];
     menuView.leftSelectColor=UIColorFromRGB(133, 199, 1);
     menuView.leftUnSelectBgColor=[UIColor whiteColor];

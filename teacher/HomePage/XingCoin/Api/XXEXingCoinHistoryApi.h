@@ -24,7 +24,7 @@
  */
 
 //- (instancetype)initWithUrlString:(NSString *)url xid:(NSString *)xid  user_id:(NSString *)user_id user_type:(NSString *)user_type require_con:(NSString *)require_con year:(NSString *)year page:(NSString *)page;
-- (instancetype)initWithUrlString:(NSString *)url xid:(NSString *)xid  user_id:(NSString *)user_id user_type:(NSString *)user_type require_con:(NSString *)require_con year:(NSString *)year;
 
+- (instancetype)initWithXid:(NSString *)xid user_id:(NSString *)user_id  require_con:(NSString *)require_con year:(NSString *)year page:(NSString *)page;
 
 @end
