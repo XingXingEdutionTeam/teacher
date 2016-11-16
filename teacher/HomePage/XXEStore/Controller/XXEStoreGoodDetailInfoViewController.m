@@ -11,6 +11,8 @@
 
 #import "XXEStoreGoodDetailInfoViewController.h"
 #import "XXEStorePerfectConsigneeAddressViewController.h"
+#import "XXEGlobalDecollectApi.h"
+#import "XXEGlobalCollectApi.h"
 #import "UMSocial.h"
 
 @interface XXEStoreGoodDetailInfoViewController ()<UIScrollViewDelegate>
@@ -33,6 +35,14 @@
     UIButton *shareButton;
     //购买 按钮
     UIButton *buyButton;
+    
+    //收藏 商品
+    UIButton *rightButton;
+    BOOL isCollect;
+    //判断商品是否收藏 1代表收藏过, 2代表未收藏
+    NSString *collect_conditStr;
+    //收藏 id
+    NSString *collect_id;
     
     NSDictionary *goodDetailInfoDic;
     
@@ -57,16 +67,11 @@
     goodDetailInfoDic = [[NSDictionary alloc] init];
     picArray = [[NSMutableArray alloc] init];
     
-    CGFloat buttonWidth = KScreenWidth / 3;
-    CGFloat buttonHeight = 49;
-    
-//    browseCount = 3;
-    
+
     
     //获取 商品 具体 信息
     [self fetchGoodDetailInfo];
     
-
     //创建 底部 按钮
     [self createBottomButtons];
 
@@ -87,14 +92,20 @@
                            
                            };
 [WZYHttpTool post:urlStr params:params success:^(id responseObj) {
-    //
+
 //    NSLog(@"hh %@", responseObj);
     
     NSString *codeStr = responseObj[@"code"];
     if ([codeStr integerValue] == 1) {
         goodDetailInfoDic = responseObj[@"data"];
+        
+        collect_conditStr = goodDetailInfoDic[@"collect_condit"];
+        collect_id = goodDetailInfoDic[@"id"];
+        
     }
-
+    //收藏 商品
+    [self setRightCollectionButton];
+    
     [self createContent];
     
 } failure:^(NSError *error) {
@@ -235,7 +246,7 @@
     
     
     //详情
-    UITextView *detailTextView = [[UITextView alloc] initWithFrame:CGRectMake(detailLabel.frame.origin.x + detailLabel.width, detailLabel.frame.origin.y - 3, KScreenWidth - 80, 70)];
+    UITextView *detailTextView = [[UITextView alloc] initWithFrame:CGRectMake(detailLabel.frame.origin.x + detailLabel.width, detailLabel.frame.origin.y - 3, KScreenWidth - 80, 70 * kScreenRatioHeight)];
     detailTextView.font = [UIFont systemWithIphone6P:14 Iphone6:12 Iphone5:10 Iphone4:8];
     detailTextView.editable = NO;
     detailTextView.text = goodDetailInfoDic[@"con"];
@@ -337,10 +348,121 @@
 
     XXEStorePerfectConsigneeAddressViewController *storePerfectConsigneeAddressVC = [[XXEStorePerfectConsigneeAddressViewController alloc] init];
     
+    storePerfectConsigneeAddressVC.xingIconNum = goodDetailInfoDic[@"exchange_coin"];
+    storePerfectConsigneeAddressVC.price = goodDetailInfoDic[@"exchange_price"];
+    storePerfectConsigneeAddressVC.good_id = goodDetailInfoDic[@"id"];
+    
     [self.navigationController pushViewController:storePerfectConsigneeAddressVC animated:YES];
 
 }
 
+#pragma mark ======= 收藏 商品 =============
+- (void)setRightCollectionButton{
+    
+  rightButton = [[UIButton alloc]initWithFrame:CGRectMake(0,0,22,22)];
+    [rightButton addTarget:self action:@selector(rightButtonClick:)forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem*rightItem = [[UIBarButtonItem alloc]initWithCustomView:rightButton];
+    self.navigationItem.rightBarButtonItem= rightItem;
+    
+    //[collect_condit] => 1			//1:是收藏过这个商品  2:未收藏过
+    UIImage *saveImage;
+    
+    if ([collect_conditStr integerValue] == 1) {
+        isCollect = YES;
+        saveImage = [UIImage imageNamed:@"home_logo_collection_icon44x44"];
+        
+    }else if([collect_conditStr integerValue] == 2){
+        isCollect = NO;
+        saveImage = [UIImage imageNamed:@"home_logo_uncollection_icon44x44"];
+    }
+    [rightButton setBackgroundImage:saveImage forState:UIControlStateNormal];
+    
+}
+
+-(void)rightButtonClick:(UIButton *)btn{
+    
+    if (isCollect==NO) {
+        [self collectRedFlower];
+        
+    }
+    else  if (isCollect==YES) {
+        
+        [self deleteCollectcollectRedFlower];
+    }
+    
+}
+
+//收藏
+- (void)collectRedFlower{
+    /*
+     【收藏】通用于各种收藏
+     接口类型:2
+     接口:
+     http://www.xingxingedu.cn/Global/collect
+     传参:
+     collect_id	//收藏id (如果是收藏用户,这里是xid)
+     collect_type	//收藏品种类型	1:商品  2:点评  3:用户  4:课程  5:学校  6:花朵
+     */
+    
+    XXEGlobalCollectApi *globalCollectApi = [[XXEGlobalCollectApi alloc] initWithXid:parameterXid user_id:parameterUser_Id collect_id:collect_id collect_type:@"1"];
+    
+    
+    [globalCollectApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
+        //
+        //                NSLog(@"收藏 -- %@", request.responseJSONObject);
+        NSString *codeStr = [NSString stringWithFormat:@"%@", request.responseJSONObject[@"code"]];
+        if ([codeStr isEqualToString:@"1"]) {
+            [self showHudWithString:@"收藏成功!" forSecond:1.5];
+            [rightButton setBackgroundImage:[UIImage imageNamed:@"home_logo_collection_icon44x44"] forState:UIControlStateNormal];
+            isCollect=!isCollect;
+        }else if([codeStr isEqualToString:@"5"]){
+            
+            [self showHudWithString:@"" forSecond:1.5];
+        }else{
+            
+        }
+        
+    } failure:^(__kindof YTKBaseRequest *request) {
+        //
+        [self showHudWithString:@"收藏失败!" forSecond:1.5];
+    }];
+    
+}
+
+//取消收藏 
+- (void)deleteCollectcollectRedFlower{
+    /*
+     【删除/取消收藏】通用于各种取消收藏
+     
+     接口类型:2
+     
+     接口:
+     http://www.xingxingedu.cn/Global/deleteCollect
+     
+     传参:
+     collect_id	//收藏id (如果是收藏用户,这里是xid)
+     collect_type	//收藏品种类型	1:商品  2:点评  3:用户  4:课程  5:学校  6:花朵 7:图片
+     */
+    XXEGlobalDecollectApi *globalDecollectApi = [[XXEGlobalDecollectApi alloc] initWithXid:parameterXid user_id:parameterUser_Id collect_id:collect_id collect_type:@"1"];
+    [globalDecollectApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
+        //        NSLog(@"取消收藏 -- %@", request.responseJSONObject);
+        NSString *codeStr = [NSString stringWithFormat:@"%@", request.responseJSONObject[@"code"]];
+        if ([codeStr isEqualToString:@"1"]) {
+            [self showHudWithString:@"取消收藏成功!" forSecond:1.5];
+            
+            [rightButton setBackgroundImage:[UIImage imageNamed:@"home_logo_uncollection_icon44x44"] forState:UIControlStateNormal];
+            isCollect=!isCollect;
+        }else{
+            
+            
+        }
+        
+    } failure:^(__kindof YTKBaseRequest *request) {
+        //
+        [self showHudWithString:@"取消收藏失败!" forSecond:1.5];
+    }];
+    
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

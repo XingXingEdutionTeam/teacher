@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11542" systemVersion="16B2657" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="KGk-i7-Jjw" customClass="XXESotreGoodsCollectionTableViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="90"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="375" height="90"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Lpb-bA-4DJ">
+                        <rect key="frame" x="10" y="10" width="90" height="70"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="90" id="FsA-a8-Ys9"/>
+                            <constraint firstAttribute="height" constant="70" id="s3e-wb-95z"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SNw-si-eJf">
+                        <rect key="frame" x="108" y="10" width="259" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="259" id="Idh-WV-JrF"/>
+                            <constraint firstAttribute="width" secondItem="SNw-si-eJf" secondAttribute="height" multiplier="37:3" id="qc9-F8-jtP"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="store_xingbi_icon" translatesAutoresizingMaskIntoConstraints="NO" id="gPU-x5-QN3">
+                        <rect key="frame" x="108" y="59" width="20" height="20"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="20" id="XaD-kF-jxs"/>
+                            <constraint firstAttribute="height" constant="20" id="tZF-6N-eKB"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="anG-ry-FGu">
+                        <rect key="frame" x="202" y="60" width="165" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="165" id="Z2N-Rt-kZf"/>
+                            <constraint firstAttribute="height" constant="21" id="p2X-Mb-tCw"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b33-Wl-RNn">
+                        <rect key="frame" x="130" y="59" width="73" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="73" id="Dnd-uQ-yto"/>
+                            <constraint firstAttribute="height" constant="21" id="rM1-bO-scI"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="anG-ry-FGu" firstAttribute="leading" secondItem="gPU-x5-QN3" secondAttribute="trailing" constant="74" id="1vD-70-NMB"/>
+                    <constraint firstItem="b33-Wl-RNn" firstAttribute="leading" secondItem="gPU-x5-QN3" secondAttribute="trailing" constant="2" id="8to-Jh-1x9"/>
+                    <constraint firstItem="gPU-x5-QN3" firstAttribute="top" secondItem="SNw-si-eJf" secondAttribute="bottom" constant="28" id="BKB-ds-gc7"/>
+                    <constraint firstItem="Lpb-bA-4DJ" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="Cjl-SU-eZp"/>
+                    <constraint firstItem="SNw-si-eJf" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="T89-PO-41s"/>
+                    <constraint firstItem="b33-Wl-RNn" firstAttribute="top" secondItem="SNw-si-eJf" secondAttribute="bottom" constant="28" id="ThH-Lc-4As"/>
+                    <constraint firstAttribute="trailing" secondItem="SNw-si-eJf" secondAttribute="trailing" constant="8" id="XJP-j9-adx"/>
+                    <constraint firstItem="Lpb-bA-4DJ" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="ctF-U8-zfJ"/>
+                    <constraint firstItem="anG-ry-FGu" firstAttribute="top" secondItem="SNw-si-eJf" secondAttribute="bottom" constant="29" id="dSO-BT-5wx"/>
+                    <constraint firstItem="gPU-x5-QN3" firstAttribute="leading" secondItem="Lpb-bA-4DJ" secondAttribute="trailing" constant="8" id="gMh-l0-CuZ"/>
+                    <constraint firstItem="SNw-si-eJf" firstAttribute="leading" secondItem="Lpb-bA-4DJ" secondAttribute="trailing" constant="8" id="pRd-Ag-L7y"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="dateLabel" destination="anG-ry-FGu" id="uTe-fI-jMr"/>
+                <outlet property="iconImageView" destination="Lpb-bA-4DJ" id="gWL-3f-LxJ"/>
+                <outlet property="iconNumLabel" destination="b33-Wl-RNn" id="da3-Y8-aXF"/>
+                <outlet property="nameLabel" destination="SNw-si-eJf" id="3tk-1E-zNo"/>
+                <outlet property="xingIconImageView" destination="gPU-x5-QN3" id="ElG-ye-rw3"/>
+            </connections>
+            <point key="canvasLocation" x="63.5" y="148"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="store_xingbi_icon" width="16" height="16"/>
+    </resources>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination" type="retina4_7.fullscreen"/>
+    </simulatedMetricsContainer>
+</document>
