@@ -86,7 +86,6 @@ static NSInteger btnTag = 1;
     if (self) {
         
         _isLikeCommentToolbarShow = NO;
-//        _btnTag = 0;
         
         [self initBaseCell:_item];
     }
@@ -95,9 +94,7 @@ static NSInteger btnTag = 1;
 
 -(void) initBaseCell:(DFBaseLineItem *)item
 {
-//    NSLog(@"aaa === %ld", btnTag);
     btnTag ++;
-//    NSLog(@"bbbb === %ld", btnTag);
     
     self.selectionStyle = UITableViewCellSelectionStyleNone;
     
@@ -178,7 +175,6 @@ static NSInteger btnTag = 1;
         [_likeCmtButton setImage:[UIImage imageNamed:@"AlbumOperateMore"] forState:UIControlStateNormal];
         [_likeCmtButton setImage:[UIImage imageNamed:@"AlbumOperateMoreHL"] forState:UIControlStateHighlighted];
         
-//        NSLog(@"_item == %@", _item);
         _likeCmtButton.tag = btnTag;
         [_likeCmtButton addTarget:self action:@selector(onClickLikeCommentBtn:) forControlEvents:UIControlEventTouchUpInside];
         [self.contentView addSubview:_likeCmtButton];
@@ -390,30 +386,8 @@ static NSInteger btnTag = 1;
 
 -(void) onClickLikeCommentBtn:(UIButton *)sender
 {
-//    if (_isLiked == YES) {
-//        _likeCommentToolbar.likeButton.selected = NO;
-//    }else {
-//        _likeCommentToolbar.likeButton.selected = YES;
-//    }
-    
     NSLog(@" cell onClickLikeCommentBtn");
     _likeCmtButton = (UIButton *)[self viewWithTag:sender.tag];
-    
-//    NSLog(@"nnn %ld", _likeCmtButton.tag);
-    
-    //输出BOOL值的方法：NSLog(@"%@",YES?@"YES":@"NO");％@输出字符串。
-    
-//    NSLog(@"n%@",_likeCmtButton.selected?@"YES":@"NO");
-    
-//    NSLog(@"mmmm %ld", sender.tag);
-    
-    //输出BOOL值的方法：NSLog(@"%@",YES?@"YES":@"NO");％@输出字符串。
-    
-//    NSLog(@"m%@",sender.selected?@"YES":@"NO");
-    
-    
-    
-//    _likeCommentToolbar.zanFlag = @"赞";
     _isLikeCommentToolbarShow = !_isLikeCommentToolbarShow;
     _likeCommentToolbar.hidden = !_isLikeCommentToolbarShow;
 }
@@ -434,23 +408,8 @@ static NSInteger btnTag = 1;
 
 -(void)onLike
 {
-    
-//    NSLog(@"self.item.zanFlag %@", self.item.zanFlag);
-    
     [self hideLikeCommentToolbar];
-//    if (self.isMine == YES) {
-//        NSMutableArray *tempLikes = [NSMutableArray array];
-//        for (DFLineLikeItem *like in self.item.likes) {
-//            if (like.userId  != [[XXEUserInfo user].xid integerValue])  {
-//                [tempLikes addObject:like];
-//            };
-//        };
-//        self.item.likes = tempLikes;
-//    };
-    
-    
     if (_delegate != nil && [_delegate respondsToSelector:@selector(onLike:)]) {
-//        [_delegate onLike:self.item.itemId];
             [_delegate onLike:self.item.itemId];
     }
 }

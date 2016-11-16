@@ -94,6 +94,7 @@ typedef NS_OPTIONS(NSInteger, Comments){
         parameterXid = XID;
         parameterUser_Id = USER_ID;
     }
+    [self createDetailMessage];
     self.title = @"消息详情";
     //获取 这条说说 的具体内容
     [self createDetailMessageNetRequest];
@@ -102,7 +103,7 @@ typedef NS_OPTIONS(NSInteger, Comments){
 
 -(void) initTableView
 {
-    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(30, CGRectGetMaxY(_detailView.frame), kWidth - 60, talkModel.comment_group.count * 70) style:UITableViewStylePlain];
+    _tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     _tableView.delegate = self;
     _tableView.dataSource = self;
@@ -123,6 +124,104 @@ typedef NS_OPTIONS(NSInteger, Comments){
     return _commentInputView;
 }
 
+-(void)configure:(XXECircleModel*)model {
+    //头像
+    NSString * head_img;
+    if([model.head_img_type integerValue] == 0){
+        head_img=[kXXEPicURL stringByAppendingString:model.head_img];
+    }else{
+        head_img=talkModel.head_img;
+    }
+    [_headImage sd_setImageWithURL:[NSURL URLWithString:head_img] placeholderImage:[UIImage imageNamed:@"headplaceholder"]];
+    
+    _nameLabel.frame = CGRectMake(CGRectGetMaxX(_headImage.frame) + Kmarg, Kmarg, kWidth - 20, KLabelH);
+    _nameLabel.text = model.nickname;
+    
+    _detailSayView.frame = CGRectMake(CGRectGetMaxX(_headImage.frame) + Kmarg, CGRectGetMaxY(_nameLabel.frame) + Kmarg, kWidth - 80, 120);
+    _detailSayView.text = talkModel.words;
+    //自动适应行高
+    static CGFloat maxHeight = 130.0f;
+    CGRect frame = _detailSayView.frame;
+    CGSize constraintSize = CGSizeMake(frame.size.width, MAXFLOAT);
+    CGSize size = [_detailSayView sizeThatFits:constraintSize];
+    if (size.height >= maxHeight){
+        size.height = maxHeight;
+        _detailSayView.scrollEnabled = YES;   // 允许滚动
+    }
+    else{
+        _detailSayView.scrollEnabled = NO;    // 不允许滚动，当textview的大小足以容纳它的text的时候，需要设置scrollEnabed为NO，否则会出现光标乱滚动的情况
+    }
+    _detailSayView.frame = CGRectMake(frame.origin.x, frame.origin.y, frame.size.width, size.height);
+    
+    _picView.frame = CGRectMake( CGRectGetMaxX(_headImage.frame) + Kmarg, CGRectGetMaxY(_detailSayView.frame), kWidth - 100, 120);
+    NSString *picStr = talkModel.pic_url;
+    
+    if ([picStr containsString:@","]) {
+        
+        NSArray *arr = [[NSArray alloc] init];
+        arr = [picStr componentsSeparatedByString:@","];
+        _picWallArray = [[NSMutableArray alloc] initWithArray:arr];
+        
+    }else{
+        _picWallArray = [[NSMutableArray alloc] initWithObjects:picStr, nil];
+    }
+    
+    if (_picWallArray.count % 3 == 0) {
+        picRow = _picWallArray.count / 3;
+    }else{
+        
+        picRow = _picWallArray.count / 3 + 1;
+    }
+    //创建 十二宫格  三行、四列
+    int margin = 10;
+    picWidth = (_picView.frame.size.width - 4 * margin) / 3;
+    picHeight = picWidth;
+    
+    for (int i = 0; i < _picWallArray.count; i++) {
+        
+        //行
+        int buttonRow = i / 3;
+        
+        //列
+        int buttonLine = i % 3;
+        
+        CGFloat buttonX = (picWidth + margin) * buttonLine;
+        CGFloat buttonY = (picHeight + margin) * buttonRow;
+        
+        UIImageView *pictureImageView = [[UIImageView alloc] initWithFrame:CGRectMake(buttonX, buttonY, picWidth, picHeight)];
+        pictureImageView.contentMode = UIViewContentModeScaleAspectFill;
+        pictureImageView.clipsToBounds = true;
+        [pictureImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", kXXEPicURL, _picWallArray[i]]]];
+        pictureImageView.tag = 20 + i;
+        pictureImageView.userInteractionEnabled = YES;
+        _picView.userInteractionEnabled = YES;
+        _detailView.userInteractionEnabled = YES;
+        _bgScrollView.userInteractionEnabled = YES;
+        
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(onClickPicture:)];
+        [pictureImageView addGestureRecognizer:tap];
+        
+        [_picView addSubview:pictureImageView];
+    }
+    //图片背景 大小
+    CGSize size1 = _picView.size;
+    size1.height = picRow * (picHeight + 5);
+    _picView.size = size1;
+    
+    NSString *timeStr = [WZYTool dateStringFromNumberTimer:talkModel.date_tm];
+    _timeLabel.frame = CGRectMake(CGRectGetMaxX(_headImage.frame) + Kmarg,CGRectGetMaxY(_picView.frame) + Kmarg, KScreenWidth - 100, KLabelH);
+    _timeLabel.text = timeStr;
+    
+    _detailImage.frame = CGRectMake(kWidth - Kmarg*6 , CGRectGetMaxY(_picView.frame) + Kmarg, 40, 30);
+    _detailImage.image = [UIImage imageNamed:@"AlbumOperateMoreHL.png"];
+    
+    //重写详情背景的frame
+    CGSize size3 = _detailView.size;
+    size3.height = _timeLabel.frame.origin.y + _timeLabel.size.height;
+    _detailView.size = size3;
+    
+    _tableView.frame = CGRectMake(30, CGRectGetMaxY(_detailView.frame), kWidth - 60, model.comment_group.count * 70);
+}
 
 -(void)createDetailMessage {
     //背景
@@ -141,124 +240,55 @@ typedef NS_OPTIONS(NSInteger, Comments){
     
     //头像
     _headImage = [[UIImageView alloc] initWithFrame:CGRectMake(Kmarg , Kmarg , 40, 40)];
-    //头像
-    NSString * head_img;
-    if([talkModel.head_img_type integerValue] == 0){
-        head_img=[kXXEPicURL stringByAppendingString:talkModel.head_img];
-    }else{
-        head_img=talkModel.head_img;
-    }
-    [_headImage sd_setImageWithURL:[NSURL URLWithString:head_img] placeholderImage:[UIImage imageNamed:@"headplaceholder"]];
+//    //头像
+//    NSString * head_img;
+//    if([talkModel.head_img_type integerValue] == 0){
+//        head_img=[kXXEPicURL stringByAppendingString:talkModel.head_img];
+//    }else{
+//        head_img=talkModel.head_img;
+//    }
+//    [_headImage sd_setImageWithURL:[NSURL URLWithString:head_img] placeholderImage:[UIImage imageNamed:@"headplaceholder"]];
     [_detailView addSubview:_headImage];
     
     //名字
-    _nameLabel = [HHControl createLabelWithFrame:CGRectMake(CGRectGetMaxX(_headImage.frame) + Kmarg, Kmarg, kWidth - 20, KLabelH) Font:16 Text:talkModel.nickname];
+    _nameLabel = [[UILabel alloc] init];
+    _nameLabel.font = [UIFont systemFontOfSize:16];
     _nameLabel.textColor = UIColorFromRGB(74, 160, 239);
     [_detailView addSubview:_nameLabel];
     
     //内容
-    _detailSayView = [[UITextView alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_headImage.frame) + Kmarg, CGRectGetMaxY(_nameLabel.frame) + Kmarg, kWidth - 80, 120)];
-    _detailSayView.text = talkModel.words;
+    _detailSayView = [[UITextView alloc] init];
     _detailSayView.font = [UIFont systemFontOfSize:12];
     _detailSayView.userInteractionEnabled = NO;
     [_detailSayView flashScrollIndicators];   // 闪动滚动条
-    //自动适应行高
-    static CGFloat maxHeight = 130.0f;
-    CGRect frame = _detailSayView.frame;
-    CGSize constraintSize = CGSizeMake(frame.size.width, MAXFLOAT);
-    CGSize size = [_detailSayView sizeThatFits:constraintSize];
-    if (size.height >= maxHeight){
-        size.height = maxHeight;
-        _detailSayView.scrollEnabled = YES;   // 允许滚动
-    }
-    else{
-        _detailSayView.scrollEnabled = NO;    // 不允许滚动，当textview的大小足以容纳它的text的时候，需要设置scrollEnabed为NO，否则会出现光标乱滚动的情况
-    }
-    _detailSayView.frame = CGRectMake(frame.origin.x, frame.origin.y, frame.size.width, size.height);
+    
+    
     [_detailView addSubview:_detailSayView];
     
     //图片 待完善
     //    for (int i = 0; i < 9; i ++) {
     
-    _picView = [[UIImageView alloc] initWithFrame:CGRectMake( CGRectGetMaxX(_headImage.frame) + Kmarg, CGRectGetMaxY(_detailSayView.frame), kWidth - 100, 120)];
+    _picView = [[UIImageView alloc] init];
     _picView.contentMode = UIViewContentModeScaleAspectFill;
     _picView.clipsToBounds = YES;
     
 //    NSLog(@"照片 === %@", _baseInfo[3]);
-    NSString *picStr = talkModel.pic_url;
-    
-    if ([picStr containsString:@","]) {
-        
-        NSArray *arr = [[NSArray alloc] init];
-       arr = [picStr componentsSeparatedByString:@","];
-        _picWallArray = [[NSMutableArray alloc] initWithArray:arr];
-        
-    }else{
-        _picWallArray = [[NSMutableArray alloc] initWithObjects:picStr, nil];
-    }
-    
-        if (_picWallArray.count % 3 == 0) {
-            picRow = _picWallArray.count / 3;
-        }else{
-            
-            picRow = _picWallArray.count / 3 + 1;
-        }
-        //创建 十二宫格  三行、四列
-        int margin = 10;
-        picWidth = (_picView.frame.size.width - 4 * margin) / 3;
-        picHeight = picWidth;
-        
-        for (int i = 0; i < _picWallArray.count; i++) {
-            
-            //行
-            int buttonRow = i / 3;
-            
-            //列
-            int buttonLine = i % 3;
-            
-            CGFloat buttonX = (picWidth + margin) * buttonLine;
-            CGFloat buttonY = (picHeight + margin) * buttonRow;
-            
-            UIImageView *pictureImageView = [[UIImageView alloc] initWithFrame:CGRectMake(buttonX, buttonY, picWidth, picHeight)];
-            
-            [pictureImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", kXXEPicURL, _picWallArray[i]]]];
-            pictureImageView.tag = 20 + i;
-            pictureImageView.userInteractionEnabled = YES;
-            _picView.userInteractionEnabled = YES;
-            _detailView.userInteractionEnabled = YES;
-            _bgScrollView.userInteractionEnabled = YES;
-            
-            UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(onClickPicture:)];
-            [pictureImageView addGestureRecognizer:tap];
-            
-            [_picView addSubview:pictureImageView];
-        }
-    //图片背景 大小
-    CGSize size1 = _picView.size;
-    size1.height = picRow * (picHeight + 5);
-    _picView.size = size1;
 
     [_detailView addSubview:_picView];
 
     
     //时间戳
-    NSString *timeStr = [WZYTool dateStringFromNumberTimer:talkModel.date_tm];
-    _timeLabel = [HHControl createLabelWithFrame:CGRectMake(CGRectGetMaxX(_headImage.frame) + Kmarg,CGRectGetMaxY(_picView.frame) + Kmarg, KScreenWidth - 100, KLabelH) Font:14 Text:timeStr];
+    _timeLabel = [[UILabel alloc] init];
+    _timeLabel.font = [UIFont systemFontOfSize:14];
     _timeLabel.textColor = UIColorFromRGB(74, 160, 239);
     [_detailView addSubview:_timeLabel];
     
     //评论
-    _detailImage = [[UIImageView alloc] initWithFrame:CGRectMake(kWidth - Kmarg*6 , CGRectGetMaxY(_picView.frame) + Kmarg, 40, 30)];
-    _detailImage.image = [UIImage imageNamed:@"AlbumOperateMoreHL@2x.png"];
+    _detailImage = [[UIImageView alloc] init];
     _detailImage.userInteractionEnabled = YES;
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(onComment)];
     [_detailImage addGestureRecognizer:tap];
     [_detailView addSubview:_detailImage];
-    
-    //重写详情背景的frame
-    CGSize size3 = _detailView.size;
-    size3.height = _timeLabel.frame.origin.y + _timeLabel.size.height;
-    _detailView.size = size3;
     
     //创建 评论 tableView
     [self initTableView];
@@ -291,8 +321,8 @@ typedef NS_OPTIONS(NSInteger, Comments){
             
 //            NSLog(@"talkModel.comment_group %@", talkModel.comment_group);
             //创建  说说 视图
-            [self createDetailMessage];
             
+            [self configure:talkModel];
             CGFloat bgScrollMaxH =  CGRectGetMaxY(_tableView.frame) + 800;
             _bgScrollView.contentSize = CGSizeMake(0, bgScrollMaxH);
         }

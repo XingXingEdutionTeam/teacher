@@ -503,17 +503,45 @@ isSelet:(BOOL)isSelet
 
 -(void)onClickComment:(long long)commentId itemId:(long long)itemId
 {
-    
     _currentItemId = itemId;
-    
-    _commentInputView.hidden = NO;
     
     _commentInputView.commentId = commentId;
     
-    [_commentInputView show];
-    
     DFLineCommentItem *comment = [_commentDic objectForKey:[NSNumber numberWithLongLong:commentId]];
-    [_commentInputView setPlaceHolder:[NSString stringWithFormat:@"  回复: %@", comment.userNick]];
+    
+    if (comment.userId == [[XXEUserInfo user].xid integerValue]) {
+        UIActionSheet *actionSheet =[[UIActionSheet alloc]initWithTitle:@"删除评论?" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        [actionSheet showInView:self.view];
+    }else {
+        [_commentInputView show];
+        _commentInputView.hidden = NO;
+        [_commentInputView setPlaceHolder:[NSString stringWithFormat:@"  回复: %@", comment.userNick]];
+    }
+    
+    
+}
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
+    
+    if (buttonIndex==1) {
+        NSLog(@"取消删除");
+    }
+    else{
+        NSLog(@"确定删除");
+        
+        [self my_circle_deleteCommment];
+    }
+    
+}
+
+//删除评论
+- (void)my_circle_deleteCommment
+{
+    NSLog(@"删除评论");
+    //    MLClickColorLinkLabel *label = (MLClickColorLinkLabel*)[self viewWithTag:keenteam];
+    [_delegate deleteComment:_commentInputView.commentId itemId:_currentItemId];
+    //    NSLog(@"%ld",keenteam);
+   
     
 }
 

@@ -22,7 +22,7 @@
 #import "XXELocationAddController.h"
 #import <AVFoundation/AVFoundation.h>
 
-@interface XXEFriendCirclePageViewController ()
+@interface XXEFriendCirclePageViewController ()<DFTimeLineViewControllerDelegate>
 {
 
     NSString *parameterXid;
@@ -98,6 +98,8 @@
     self.page = 1;
     //获取朋友圈信息
     [self setupFriendCircleMessagePage: _page];
+    
+    self.delegate = self;
 }
 
 
@@ -505,9 +507,6 @@
 #pragma mark - 评论和点赞
 -(void)onCommentCreate:(long long)commentId text:(NSString *)text itemId:(long long) itemId
 {
-    NSLog(@"-=-=-:%lld",commentId);
-    NSLog(@"%lld",itemId);
-
     NSString *otherXid;
 
     NSInteger myXId = [parameterXid integerValue];
@@ -539,9 +538,11 @@
             
             NSLog(@"点赞/评论 数据 --- %@", request.responseJSONObject);
             NSString *code = [request.responseJSONObject objectForKey:@"code"];
+            NSDictionary *data = [request.responseJSONObject objectForKey:@"data"];
+            
             if ([code integerValue] == 1) {
                 DFLineCommentItem *commentItem = [[DFLineCommentItem alloc] init];
-                commentItem.commentId = [[NSDate date] timeIntervalSince1970];
+                commentItem.commentId = [data[@"id"] intValue];
                 commentItem.userId = myXId;
                 commentItem.userNick = self.userNickName;
                 commentItem.text = text;
@@ -574,7 +575,8 @@
         NSString *code = [request.responseJSONObject objectForKey:@"code"];
         if ([code integerValue] == 1) {
              [self hudShowText:@"回复成功" second:1.f];
-            [self setupFriendCircleMessagePage:_page];
+//            [self setupFriendCircleMessagePage:_page];
+            [self.tableView reloadData];
         }else{
             [self hudShowText:@"回复失败" second:1.f];
         }
@@ -588,12 +590,11 @@
 
 //删除评论 网络请求
 #pragma mark - 删除评论 的网络请求
--(void) deleteClickComment:(long long) commentId itemId:(long long) itemId
-{
-    NSLog(@"长按删除评论");
+
+-(void) deleteComment:(long long)commentId itemId:(long long)itemId {
     
     long indexId = itemId-1;
-//    NSLog(@"新的:%ld",indexId);
+    //    NSLog(@"新的:%ld",indexId);
     if (self.circleListDatasource.count ==0) {
         [self hudShowText:@"没有数据" second:1.f];
     }else{
@@ -601,19 +602,18 @@
         self.speakId = circleModel.talkId;
     }
     
-//    NSLog(@"commentId%lld itemI%lld",commentId, itemId);
-//    NSLog(@"说说ID%@",self.speakId);
-//    NSLog(@"CommentId%lld",commentId);
+    //    NSLog(@"commentId%lld itemI%lld",commentId, itemId);
+    //    NSLog(@"说说ID%@",self.speakId);
+    //    NSLog(@"CommentId%lld",commentId);
     NSString *commentID = [NSString stringWithFormat:@"%lld",commentId];
     XXEDeleteCommentApi *commentApi = [[XXEDeleteCommentApi alloc]initWithDeleteCommentEventType:@"3" TalkId:self.speakId CommentId:commentID UserXid:parameterXid UserId:parameterUser_Id];
     [commentApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
-//        NSLog(@"%@",request.responseJSONObject);
+        //        NSLog(@"%@",request.responseJSONObject);
         NSString *code = [request.responseJSONObject objectForKey:@"code"];
-        NSString *data = [request.responseJSONObject objectForKey:@"data"];
-//        NSLog(@":data%@",data);
+        //        NSLog(@":data%@",data);
         if ([code integerValue]==1 || [code integerValue]==5 ) {
-//            NSLog(@"%@",[request.responseJSONObject objectForKey:@"msg"]);
-//            NSLog(@"%@",[request.responseJSONObject objectForKey:@"data"]);
+            //            NSLog(@"%@",[request.responseJSONObject objectForKey:@"msg"]);
+            //            NSLog(@"%@",[request.responseJSONObject objectForKey:@"data"]);
             DFLineCommentItem *commentItem = [[DFLineCommentItem alloc] init];
             commentItem.commentId = commentId;
             commentItem.userId = [parameterXid integerValue];
@@ -621,13 +621,57 @@
             commentItem.text = @"";
             [self cancelCommentItem:commentItem itemId:itemId replyCommentId:commentId];
             [self hudShowText:@"删除成功" second:1.f];
-            [self setupFriendCircleMessagePage:_page];
+            [self.tableView reloadData];
+//            [self setupFriendCircleMessagePage:_page];
         }else{
             [self hudShowText:@"删除失败" second:1.f];
         }
     } failure:^(__kindof YTKBaseRequest *request) {
         [self hudShowText:@"网络请求失败" second:1.f];
     }];
+
+}
+
+-(void) deleteClickComment:(long long) commentId itemId:(long long) itemId
+{
+//    NSLog(@"长按删除评论");
+//    
+//    long indexId = itemId-1;
+////    NSLog(@"新的:%ld",indexId);
+//    if (self.circleListDatasource.count ==0) {
+//        [self hudShowText:@"没有数据" second:1.f];
+//    }else{
+//        XXECircleModel *circleModel = self.circleListDatasource[indexId];
+//        self.speakId = circleModel.talkId;
+//    }
+//    
+////    NSLog(@"commentId%lld itemI%lld",commentId, itemId);
+////    NSLog(@"说说ID%@",self.speakId);
+////    NSLog(@"CommentId%lld",commentId);
+//    NSString *commentID = [NSString stringWithFormat:@"%lld",commentId];
+//    XXEDeleteCommentApi *commentApi = [[XXEDeleteCommentApi alloc]initWithDeleteCommentEventType:@"3" TalkId:self.speakId CommentId:commentID UserXid:parameterXid UserId:parameterUser_Id];
+//    [commentApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
+////        NSLog(@"%@",request.responseJSONObject);
+//        NSString *code = [request.responseJSONObject objectForKey:@"code"];
+//        NSString *data = [request.responseJSONObject objectForKey:@"data"];
+////        NSLog(@":data%@",data);
+//        if ([code integerValue]==1 || [code integerValue]==5 ) {
+////            NSLog(@"%@",[request.responseJSONObject objectForKey:@"msg"]);
+////            NSLog(@"%@",[request.responseJSONObject objectForKey:@"data"]);
+//            DFLineCommentItem *commentItem = [[DFLineCommentItem alloc] init];
+//            commentItem.commentId = commentId;
+//            commentItem.userId = [parameterXid integerValue];
+//            commentItem.userNick = @"";
+//            commentItem.text = @"";
+//            [self cancelCommentItem:commentItem itemId:itemId replyCommentId:commentId];
+//            [self hudShowText:@"删除成功" second:1.f];
+//            [self setupFriendCircleMessagePage:_page];
+//        }else{
+//            [self hudShowText:@"删除失败" second:1.f];
+//        }
+//    } failure:^(__kindof YTKBaseRequest *request) {
+//        [self hudShowText:@"网络请求失败" second:1.f];
+//    }];
 }
 
 
@@ -700,6 +744,7 @@
 
 -(void)onClickHeaderUserAvatar
 {
+    
     NSInteger myXId = [parameterXid integerValue];
     [self onClickUser:myXId];
 }

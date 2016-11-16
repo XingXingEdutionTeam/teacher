@@ -264,6 +264,7 @@
 
 - (void)back
 {
+    
     XXELoginViewController *registerVC = [[XXELoginViewController alloc]init];
     UIWindow *window = [UIApplication sharedApplication].keyWindow;
     XXENavigationViewController *navi = [[XXENavigationViewController alloc]initWithRootViewController:registerVC];

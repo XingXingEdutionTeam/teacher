@@ -46,7 +46,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    self.view.backgroundColor = XXEBackgroundColor;
+    self.view.backgroundColor = [UIColor blackColor];
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
     [button setTitle:@"" forState:UIControlStateNormal];
     [button setImage:[UIImage imageNamed:@"dian"] forState:UIControlStateNormal];
@@ -91,14 +91,14 @@
 }
 
 -(void)createscrollView{
-    
+//    self.view.backgroundColor = [UIColor blackColor];
     self.scrollView =  [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, KScreenWidth, KScreenHeight - 113)];
     self.scrollView.pagingEnabled =YES;
     self.scrollView.bounces = NO;
     self.scrollView.showsHorizontalScrollIndicator = YES;
     self.scrollView.delegate = self;
     [self.view addSubview:self.scrollView];
-    self.automaticallyAdjustsScrollViewInsets = NO;
+//    self.automaticallyAdjustsScrollViewInsets = NO;
     
     NSArray *arrayImage;
     arrayImage = nil;
@@ -112,12 +112,18 @@
             NSString *imageUrl = [NSString stringWithFormat:@"%@%@",kXXEPicURL,arrayImage[i]];
             NSURL *url =[NSURL URLWithString:imageUrl];
             
-            [imV sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@""]];
+//            [imV sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@""]];
+            [imV sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@""] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+                CGFloat imageWidth = image.size.width;
+                CGFloat imageHeight = image.size.height;
+                CGFloat imVHeight = KScreenWidth/imageWidth * imageHeight;
+                imV.frame = CGRectMake(KScreenWidth*i, (KScreenHeight - 113)/2 - imVHeight/2, KScreenWidth, imVHeight);
+            }];
             [self.scrollView addSubview:imV];
         }
         CGPoint contentOffset = self.scrollView.contentOffset;
         [self.scrollView setContentOffset:contentOffset animated:YES];
-        self.scrollView.contentSize =CGSizeMake(arrayImage.count*kWidth, kHeight-64);
+        self.scrollView.contentSize =CGSizeMake(arrayImage.count*kWidth, 0);
 //        _scrollView.delegate =self;
 
     }else{
@@ -126,19 +132,25 @@
         NSString *imageUrl = [NSString stringWithFormat:@"%@%@",kXXEPicURL,_imagesArr];
         NSLog(@"图片地址%@",imageUrl);
         NSURL *url =[NSURL URLWithString:imageUrl];
-        [imV sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@""]];
+        [imV sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@""] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+            CGFloat imageWidth = image.size.width;
+            CGFloat imageHeight = image.size.height;
+            CGFloat imVHeight = KScreenWidth/imageWidth * imageHeight;
+            imV.frame = CGRectMake(0, (KScreenHeight - 113)/2 - imVHeight/2, KScreenWidth, imVHeight);
+        }];
         [self.scrollView addSubview:imV];
         CGPoint contentOffset = self.scrollView.contentOffset;
         [self.scrollView setContentOffset:contentOffset animated:YES];
-        self.scrollView.contentSize =CGSizeMake(kWidth, kHeight-64);
+        self.scrollView.contentSize =CGSizeMake(kWidth, 0);
 //        _scrollView.delegate =self;
     }
 }
 - (void)createToolbtn{
     
     //UILabel 加白字
-    UILabel *textLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, KScreenHeight-153, KScreenWidth, 50)];
-    textLabel.backgroundColor =UIColorFromRGB(125, 130, 147);
+    UILabel *textLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, KScreenHeight-153, KScreenWidth - 20, 50)];
+//    textLabel.backgroundColor = [UIColor colorWithWhite:0.35 alpha:0.35];
+//    textLabel.backgroundColor =UIColorFromRGB(125, 130, 147);
     [self.view addSubview:textLabel];
     textLabel.numberOfLines =0;
     textLabel.font =[UIFont systemFontOfSize:15];
@@ -146,21 +158,38 @@
     textLabel.textColor =UIColorFromRGB(255, 255, 255);
     
     UIImageView *imageV= [[UIImageView alloc]initWithFrame:CGRectMake(0, KScreenHeight-108, KScreenWidth, 44)];
-    imageV.backgroundColor = UIColorFromRGB(0, 0, 0 );
+//    imageV.backgroundColor = UIColorFromRGB(255, 233, 233 );
     [self.view addSubview:imageV];
     imageV.userInteractionEnabled =YES;
     
-    if (![_goodArr isEqual:@""]) {
-        _likeButton = [self getButton:CGRectMake(5, 2, 60, 40) title:@"取消" image:@"AlbumLike"];
-        [_likeButton addTarget:self action:@selector(onLike:) forControlEvents:UIControlEventTouchUpInside];
-        [imageV addSubview:_likeButton];
-        _likeButton.selected = NO;
-    }else{
-        _likeButton = [self getButton:CGRectMake(5, 2, 60, 40) title:@"赞" image:@"AlbumLike"];
-        [_likeButton addTarget:self action:@selector(onLike:) forControlEvents:UIControlEventTouchUpInside];
-        [imageV addSubview:_likeButton];
-        _likeButton.selected = YES;
-    }
+    _likeButton = [[UIButton alloc] initWithFrame:CGRectMake(5, 2, 60, 40)];
+    _likeButton.titleLabel.font = [UIFont systemFontOfSize:14];
+    [_likeButton setTitle:@"赞" forState:UIControlStateNormal];
+    [_likeButton setImage:[UIImage imageNamed:@"AlbumLike"] forState:UIControlStateNormal];
+    [_likeButton addTarget:self action:@selector(onLike:) forControlEvents:UIControlEventTouchUpInside];
+    [imageV addSubview:_likeButton];
+    _likeButton.selected = YES;
+    
+    for (XXEGoodUserModel * good in _goodArr) {
+        if ([good.goodXid integerValue] == [[XXEUserInfo user].xid integerValue]) {
+            [_likeButton setTitle:@"取消" forState:UIControlStateNormal];
+            [_likeButton setImage:[UIImage imageNamed:@"AlbumLike"] forState:UIControlStateNormal];
+            _likeButton.selected = NO;
+            break;
+        }
+    };
+    
+//    if (![_goodArr isEqual:@""]) {
+//        _likeButton = [self getButton:CGRectMake(5, 2, 60, 40) title:@"取消" image:@"AlbumLike"];
+//        [_likeButton addTarget:self action:@selector(onLike:) forControlEvents:UIControlEventTouchUpInside];
+//        [imageV addSubview:_likeButton];
+//        _likeButton.selected = NO;
+//    }else{
+//        _likeButton = [self getButton:CGRectMake(5, 2, 60, 40) title:@"赞" image:@"AlbumLike"];
+//        [_likeButton addTarget:self action:@selector(onLike:) forControlEvents:UIControlEventTouchUpInside];
+//        [imageV addSubview:_likeButton];
+//        _likeButton.selected = YES;
+//    }
 
     _commentButton = [self getButton:CGRectMake(70, 2, 60, 40) title:@"评论" image:@"AlbumComment"];
     [_commentButton addTarget:self action:@selector(commentButton:) forControlEvents:UIControlEventTouchUpInside];

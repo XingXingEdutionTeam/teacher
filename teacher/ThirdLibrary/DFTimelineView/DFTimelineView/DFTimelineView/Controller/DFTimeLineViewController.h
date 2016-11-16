@@ -13,6 +13,13 @@
 
 #import "DFBaseTimeLineViewController.h"
 
+@protocol DFTimeLineViewControllerDelegate <NSObject>
+
+//删除评论
+-(void) deleteComment:(long long) commentId itemId:(long long) itemId;
+
+@end
+
 @interface DFTimeLineViewController : DFBaseTimeLineViewController
 
 
@@ -52,5 +59,7 @@
 -(void)onSendVideo:(NSString *)text videoPath:(NSString *)videoPath screenShot:(UIImage *) screenShot;
 
 - (void)detelAllSource;
+
+@property (nonatomic, assign) id<DFTimeLineViewControllerDelegate>delegate;
 
 @end

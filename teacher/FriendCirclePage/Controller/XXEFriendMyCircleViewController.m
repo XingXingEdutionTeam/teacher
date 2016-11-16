@@ -138,7 +138,7 @@
         NSLog(@"%@",request.responseJSONObject);
         NSLog(@"%@",[request.responseJSONObject objectForKey:@"msg"]);
         NSString *code = [request.responseJSONObject objectForKey:@"code"];
-        if ([code intValue]==1 && [[request.responseJSONObject objectForKey:@"data"] isKindOfClass:[NSDictionary class]]) {
+        if ([code intValue]==1) {// && [[request.responseJSONObject objectForKey:@"data"] isKindOfClass:[NSDictionary class]]
             NSDictionary *data = [request.responseJSONObject objectForKey:@"data"];
             NSArray *listSS = [data objectForKey:@"ss"];
             NSLog(@"数组信息%@",listSS);
@@ -159,7 +159,7 @@
             //朋友圈的信息列表
             [self myFriendCircleMessage];
             NSLog(@"圈子顶部信息数组信息%@",self.headerMyCircleDatasource);
-        }else{
+        } else{
             [self hudShowText:@"获取数据错误" second:2.f];
             [self endRefresh];
             [self endLoadMore];
@@ -208,6 +208,7 @@
     }else{
         NSLog(@"没有数据");
         [self hudShowText:@"没有数据" second:1.f];
+        [self endLoadMore];
     }
 }
 

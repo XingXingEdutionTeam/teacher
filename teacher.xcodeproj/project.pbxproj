@@ -5690,7 +5690,6 @@
 			isa = PBXGroup;
 			children = (
 				9E5E23641D90CC04008B1AAF /* Controller */,
-				9E5E23671D90CC04008B1AAF /* Item */,
 				9E5E236C1D90CC04008B1AAF /* View */,
 			);
 			path = UserTimeline;
@@ -5701,6 +5700,7 @@
 			children = (
 				9E5E23651D90CC04008B1AAF /* DFUserTimeLineViewController.h */,
 				9E5E23661D90CC04008B1AAF /* DFUserTimeLineViewController.m */,
+				9E5E23671D90CC04008B1AAF /* Item */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -5713,7 +5713,8 @@
 				9E5E236A1D90CC04008B1AAF /* DFTextImageUserLineItem.h */,
 				9E5E236B1D90CC04008B1AAF /* DFTextImageUserLineItem.m */,
 			);
-			path = Item;
+			name = Item;
+			path = ../Item;
 			sourceTree = "<group>";
 		};
 		9E5E236C1D90CC04008B1AAF /* View */ = {

@@ -25,6 +25,7 @@ typedef void(^XXEInfomationViewControllerDeteleModel)(XXECircleModel *, NSString
 @property (nonatomic,copy) NSString *itemId;
 @property (nonatomic,copy) NSString *conText;
 @property (nonatomic, copy) NSString *imagesArr;
+@property (nonatomic, strong) NSMutableArray *images;
 @property (nonatomic, strong) NSArray *goodArr;
 @property (nonatomic, weak) id<XXEInfomationViewControllerDelegate> delegate;
 
