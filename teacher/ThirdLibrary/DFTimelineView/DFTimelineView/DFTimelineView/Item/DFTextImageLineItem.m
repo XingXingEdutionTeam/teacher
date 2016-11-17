@@ -8,6 +8,7 @@
 
 #import "DFTextImageLineItem.h"
 
+
 @implementation DFTextImageLineItem
 
 - (instancetype)init
@@ -20,4 +21,26 @@
     }
     return self;
 }
+
+-(void)configure:(XXECircleModel*)circleModel {
+    self.userId = [circleModel.xid intValue];
+    
+    if ([circleModel.head_img_type isEqual: @"0"]) {
+        self.userAvatar = [NSString stringWithFormat:@"%@%@",kXXEPicURL,circleModel.head_img];
+    } else if ([circleModel.head_img_type  isEqual: @"1"]) {
+        self.userAvatar = circleModel.head_img;
+    }
+    
+    
+    self.userNick = circleModel.nickname;
+    self.title = @"发表了";
+    self.text = circleModel.words;
+    self.location = circleModel.position;
+//    NSString *timeString = [XXETool dateAboutStringFromNumberTimer:circleModel.date_tm];
+    //            NSLog(@"时间:%@",timeString);
+    self.ts = [circleModel.date_tm integerValue]*1000;;
+    self.speak_Id = circleModel.talkId;
+
+}
+
 @end

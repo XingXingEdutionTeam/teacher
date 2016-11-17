@@ -321,12 +321,12 @@ static NSInteger btnTag = 1;
 -(CGFloat)getReuseableCellHeight:(DFBaseLineItem *)item
 {
     if (item.cellHeight != 0) {
-        NSLog(@"重用高度 %f", item.cellHeight);
+//        NSLog(@"重用高度 %f", item.cellHeight);
         return item.cellHeight;
     }
     CGFloat height = [self getCellHeight:item];
     item.cellHeight = height;
-    NSLog(@"计算高度 %f", item.cellHeight);
+//    NSLog(@"计算高度 %f", item.cellHeight);
     
     return height;
 }
@@ -376,12 +376,19 @@ static NSInteger btnTag = 1;
     }
 }
 
--(void)setIsLikedFun {
+-(void)setUnlikedImage {
     _likeCommentToolbar.likeButton.selected = NO;
     _likeCommentToolbar.likeButton.selected = !_likeCommentToolbar.likeButton.selected;
     [_likeCommentToolbar.likeButton setTitle:@"取消" forState:UIControlStateSelected];
     self.isMine = YES;
     
+};
+
+-(void)setLikeImage {
+    _likeCommentToolbar.likeButton.selected = YES;
+    _likeCommentToolbar.likeButton.selected = !_likeCommentToolbar.likeButton.selected;
+    [_likeCommentToolbar.likeButton setTitle:@"赞" forState:UIControlStateSelected];
+    self.isMine = NO;
 };
 
 -(void) onClickLikeCommentBtn:(UIButton *)sender

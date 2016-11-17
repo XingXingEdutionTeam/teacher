@@ -326,10 +326,15 @@
     [self.tableView.footer endRefreshingWithNoMoreData];
 }
 
+-(void)haveMore{
+    [self.tableView.footer endRefreshing];
+}
+
 -(void)endRefresh
 {
 //    [_refreshControl endRefreshing];
     [self.tableView.header endRefreshing];
+    [self.tableView.footer endRefreshing];
 }
 
 #pragma mark - Method
@@ -388,7 +393,7 @@
     self.isNumber = Number;
     UIButton *messageButton = [UIButton buttonWithType:UIButtonTypeCustom];
     _messageButton = messageButton;
-    messageButton.frame = CGRectMake(127, TableHeaderHeight-30, 120, 30);
+    messageButton.frame = CGRectMake(KScreenWidth/2 - 60, TableHeaderHeight-30, 120, 30);
     [messageButton setTitle:@"你有新信息" forState:UIControlStateNormal];
     [messageButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [messageButton addTarget:self action:@selector(messageButtonClick:) forControlEvents:UIControlEventTouchUpInside];

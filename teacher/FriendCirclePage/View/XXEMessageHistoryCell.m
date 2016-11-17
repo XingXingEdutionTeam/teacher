@@ -22,7 +22,13 @@
 
 - (void)configerGetCircleMessageHistory:(XXEMessageHistoryModel *)model
 {
-    NSString *imageStr = [NSString stringWithFormat:@"%@%@",kXXEPicURL,model.head_img];
+    NSString *imageStr;
+    if ([model.head_img_type isEqualToString:@"0"]) {
+        imageStr = [NSString stringWithFormat:@"%@%@",kXXEPicURL,model.head_img];
+    }else {
+        imageStr = model.head_img;
+    }
+    
     NSURL *url = [NSURL URLWithString:imageStr];
     [self.messageImageView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"register_user_icon"]];
     self.messageNickNameLabel.text = model.nickname;

@@ -77,7 +77,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self.tableView registerClass:[UITableViewCell self] forCellReuseIdentifier:@"Cell"];
+//    [self.tableView registerClass:[DFBaseLineCell self] forCellReuseIdentifier:@"DFTextImageLineCell"];
     [self initCommentInputView];
 }
 
@@ -214,32 +214,26 @@
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    
+    
     if (_items.count != 0) {
+        
         DFBaseLineItem *item = [_items objectAtIndex:indexPath.row];
-        
         DFBaseLineCell *typeCell = [self getCell:[item class]];
-
-        NSString *CellIdentifier = [NSString stringWithFormat:@"cell%ld%ld",indexPath.section,indexPath.row];
-        // 通过不同标识创建cell实例
-        DFBaseLineCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-        // 判断为空进行初始化  --（当拉动页面显示超过主页面内容的时候就会重用之前的cell，而不会再次初始化）
-//        if (!cell) {
-//            cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
-//        }
-//        
-//        NSString *reuseIdentifier = NSStringFromClass([typeCell class]);
-//        DFBaseLineCell *cell = [tableView dequeueReusableCellWithIdentifier: reuseIdentifier];
-        if (cell == nil ) {
-            cell = [[[typeCell class] alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        
+        NSString *reuseIdentifier = NSStringFromClass([typeCell class]);
+        DFBaseLineCell *cell = [tableView dequeueReusableCellWithIdentifier: reuseIdentifier];
+        if (cell == nil) {
+            cell = [[[typeCell class] alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier];
         }else{
-            NSLog(@"重用Cell: %@", CellIdentifier);
+            NSLog(@"重用Cell: %@", reuseIdentifier);
         }
-        
 //        BOOL isLiked = NO;
-        
+        [cell setLikeImage];
         for (DFLineLikeItem *like in item.likes) {
             if (like.userId  == [[XXEUserInfo user].xid integerValue])  {
-                [cell setIsLikedFun];
+                [cell setUnlikedImage];
             }else {
                 NSLog(@"%@", [XXEUserInfo user].xid);
                 NSLog(@"%lu", (unsigned long)like.userId);
@@ -324,7 +318,7 @@
     
     [_itemDic setObject:item forKey:[NSNumber numberWithLongLong:item.itemId]];
     
-    [self.tableView reloadData];
+//    [self.tableView reloadData];
 }
 
 

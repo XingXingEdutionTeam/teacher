@@ -43,6 +43,8 @@
 /** 回复的内容 */
 @property (nonatomic, copy)NSString *toWhoComment;
 
+@property(nonatomic ,assign) BOOL isMaxLoading;
+
 
 @end
 
@@ -112,6 +114,10 @@
 
 - (void)loadMore
 {
+    if (self.isMaxLoading) {
+        return;
+    }
+    
     self.page ++;
     [self setupFriendCircleMessagePage:self.page];
 }
@@ -145,20 +151,18 @@
         
         NSString *code = [request.responseJSONObject objectForKey:@"code"];
 //        NSLog(@"%@",code);
-        [self detelAllSource];
+        
         
         if ([code intValue]==1 && [[request.responseJSONObject objectForKey:@"data"] isKindOfClass:[NSDictionary class]]) {
+            
+            [self detelAllSource];
+            
             NSDictionary *data = [request.responseJSONObject objectForKey:@"data"];
             NSDictionary *userInfo = [data objectForKey:@"user_info"];
             XXECircleUserModel *Usermodel = [[XXECircleUserModel alloc]initWithDictionary:userInfo error:nil];
             [self.headerDatasource addObject:Usermodel];
             [self setHeaderMessage:Usermodel];
-//            dispatch_async(dispatch_get_global_queue(0, 0), ^{
-//                [weakSelf.headerDatasource addObject:Usermodel];
-//                dispatch_async(dispatch_get_main_queue(), ^{
-//                    [weakSelf setHeaderMessage:Usermodel];
-//                });
-//            });
+
             //设置顶部视图信息
             
             //判断是否有信息
@@ -171,7 +175,7 @@
                 for (int i =0; i<list.count; i++) {
                     XXECircleModel *circleModel = [[XXECircleModel alloc]initWithDictionary:list[i] error:nil];
                     [self.circleListDatasource addObject:circleModel];
-                    NSLog(@"%@ %@", circleModel.head_img, circleModel.nickname);
+//                    NSLog(@"%@ %@", circleModel.head_img, circleModel.nickname);
                 };
                 
                 [self friendCircleMessage];
@@ -190,10 +194,13 @@
                 
             }
             [self endRefresh];
+            self.isMaxLoading = NO;
 //        NSLog(@"圈子顶部信息数组信息%@",self.headerDatasource);
 //            [self detelAllSource];
         }else{
+            self.isMaxLoading = YES;
             [self hudShowText:@"获取数据错误" second:2.f];
+            [self endRefresh];
             [self endLoadMore];
         }
     } failure:^(__kindof YTKBaseRequest *request) {
@@ -205,8 +212,14 @@
 /** 朋友圈头部信息 */
 - (void)setHeaderMessage:(XXECircleUserModel *)model
 {
+    NSString *cover;
 //    NSLog(@"======%@",model.head_img);
-    NSString *cover = [NSString stringWithFormat:@"%@%@",kXXEPicURL,model.head_img];
+    if ([model.head_img_type isEqualToString:@"0"]){
+        cover = [NSString stringWithFormat:@"%@%@",kXXEPicURL,model.head_img];
+    }else {
+        cover = model.head_img;
+    }
+    
     self.userNickName = model.nickname;
     [self setCover:cover];
     [self setUserAvatar:cover];
@@ -227,24 +240,30 @@
             textImageItem.itemId = j;
 //            NSLog(@"时间轴:%lld",textImageItem.itemId);
             j++;
-            textImageItem.userId = [circleModel.xid intValue];
+            [textImageItem configure:circleModel];
+//            textImageItem.userId = [circleModel.xid intValue];
+//            
+//            if ([circleModel.head_img_type isEqual: @"0"]) {
+//                textImageItem.userAvatar = [NSString stringWithFormat:@"%@%@",kXXEPicURL,circleModel.head_img];
+//            } else if ([circleModel.head_img_type  isEqual: @"1"]) {
+//                textImageItem.userAvatar = circleModel.head_img;
+//            }
+//            
+//            
+//            textImageItem.userNick = circleModel.nickname;
+//            textImageItem.title = @"发表了";
+//            textImageItem.text = circleModel.words;
+//            textImageItem.location = circleModel.position;
+//            NSString *timeString = [XXETool dateAboutStringFromNumberTimer:circleModel.date_tm];
+////            NSLog(@"时间:%@",timeString);
+//            textImageItem.ts = [circleModel.date_tm integerValue]*1000;;
+//            textImageItem.speak_Id = circleModel.talkId;
+            //如果发布的圈子有图片则显示图片
             
-            if ([circleModel.head_img_type isEqual: @"0"]) {
-                textImageItem.userAvatar = [NSString stringWithFormat:@"%@%@",kXXEPicURL,circleModel.head_img];
-            } else if ([circleModel.head_img_type  isEqual: @"1"]) {
-                textImageItem.userAvatar = circleModel.head_img;
+            if (self.page == 1) {
+                [self.tableView reloadData];
             }
             
-            
-            textImageItem.userNick = circleModel.nickname;
-            textImageItem.title = @"发表了";
-            textImageItem.text = circleModel.words;
-            textImageItem.location = circleModel.position;
-            NSString *timeString = [XXETool dateAboutStringFromNumberTimer:circleModel.date_tm];
-//            NSLog(@"时间:%@",timeString);
-            textImageItem.ts = [circleModel.date_tm integerValue]*1000;;
-            textImageItem.speak_Id = circleModel.talkId;
-            //如果发布的圈子有图片则显示图片
             [self fritnd_circleImageShowTextImageItem:textImageItem CircleModel:circleModel];
         }
     }else{
@@ -338,6 +357,7 @@
 {
 //    NSLog(@"发布的文字%@ 发布的图片%@",text,images);
     if (images.count ==0) {
+        
         //往服务器传所有的参数
         [self publishFriendCircleText:text ImageFile:@"" Location:location PersonSee:personSee];
     }else if(images.count == 1) {

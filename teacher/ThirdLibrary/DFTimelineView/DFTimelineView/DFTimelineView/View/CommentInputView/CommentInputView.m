@@ -17,11 +17,11 @@
 
 #define SendButtonColor [UIColor colorWithRed:116/255.0 green:135/255.0 blue:173/255.0 alpha:1.0]
 
-@interface CommentInputView()<UITextFieldDelegate>
+@interface CommentInputView()<UITextViewDelegate>
 
 @property (strong,nonatomic) UIView *inputView;
 
-@property (strong,nonatomic) UITextField *inputTextView;
+@property (strong,nonatomic) UITextView *inputTextView;
 
 @property (strong,nonatomic) UIButton *sendButton;
 
@@ -121,7 +121,7 @@
         width = CGRectGetMinX(_sendButton.frame)-2*InputViewPadding;
         
         
-        _inputTextView = [[UITextField alloc] initWithFrame:CGRectMake(x, y, width, height)];
+        _inputTextView = [[UITextView alloc] initWithFrame:CGRectMake(x, y, width, height)];
         [_inputView addSubview:_inputTextView];
         
         _inputTextView.keyboardType = UIKeyboardTypeDefault;
@@ -212,12 +212,12 @@
 #pragma mark - UITextFieldDelegate
 
 
--(BOOL)textFieldShouldReturn:(UITextField *)textField
-{
-    [self sendComment];
-    
-    return YES;
-}
+//-(BOOL)textFieldShouldReturn:(UITextField *)textField
+//{
+//    [self sendComment];
+//    
+//    return YES;
+//}
 
 
 #pragma mark - Method
@@ -285,7 +285,7 @@
     self.hidden = YES;
     
     [_inputTextView resignFirstResponder];
-    _inputTextView.placeholder = @"";
+//    _inputTextView.placeholder = @"";
     _inputView.hidden = YES;
     
     CGFloat offsetY = CGRectGetHeight(self.frame) - InputViewHeight ;
@@ -301,7 +301,7 @@
 
 -(void)setPlaceHolder:(NSString *)text
 {
-    _inputTextView.placeholder = text;
+//    _inputTextView.placeholder = text;
 }
 
 

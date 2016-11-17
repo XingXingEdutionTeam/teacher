@@ -72,7 +72,9 @@
 
 -(UINavigationController *) getController;
 
--(void)setIsLikedFun;
+-(void)setUnlikedImage;
+
+-(void)setLikeImage;
 
 //-(void) onClickLikeCommentBtn:(id)sender;
 
