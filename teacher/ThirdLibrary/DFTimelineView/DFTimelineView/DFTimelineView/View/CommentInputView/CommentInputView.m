@@ -212,6 +212,14 @@
 #pragma mark - UITextFieldDelegate
 
 
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text; {
+    
+    if ([@"\n" isEqualToString:text] == YES) {
+        [self sendComment];
+        return NO;
+    }
+    return YES;
+}
 //-(BOOL)textFieldShouldReturn:(UITextField *)textField
 //{
 //    [self sendComment];

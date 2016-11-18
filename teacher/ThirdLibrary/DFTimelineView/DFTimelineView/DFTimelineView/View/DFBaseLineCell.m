@@ -44,7 +44,7 @@
 #import "DFLineLikeItem.h"
 
 
-static NSInteger btnTag = 1;
+NSInteger btnTag = 1;
 
 
 @interface DFBaseLineCell()<DFLikeCommentToolbarDelegate, DFLikeCommentViewDelegate>
@@ -86,14 +86,15 @@ static NSInteger btnTag = 1;
     if (self) {
         
         _isLikeCommentToolbarShow = NO;
-        
         [self initBaseCell:_item];
     }
     return self;
 }
 
+
 -(void) initBaseCell:(DFBaseLineItem *)item
 {
+    
     btnTag ++;
     
     self.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -391,15 +392,20 @@ static NSInteger btnTag = 1;
     self.isMine = NO;
 };
 
+
 -(void) onClickLikeCommentBtn:(UIButton *)sender
 {
     NSLog(@" cell onClickLikeCommentBtn");
+//    self.isShowLikeComment = YES;
     _likeCmtButton = (UIButton *)[self viewWithTag:sender.tag];
-    _isLikeCommentToolbarShow = !_isLikeCommentToolbarShow;
-    _likeCommentToolbar.hidden = !_isLikeCommentToolbarShow;
+    [self showLikeCommentToolbar];
 }
 
+-(void)showLikeCommentToolbar {
+    _isLikeCommentToolbarShow = !_isLikeCommentToolbarShow;
+    _likeCommentToolbar.hidden = !_isLikeCommentToolbarShow;
 
+}
 
 -(void)hideLikeCommentToolbar
 {

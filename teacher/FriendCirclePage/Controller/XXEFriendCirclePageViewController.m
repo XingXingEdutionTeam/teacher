@@ -22,7 +22,7 @@
 #import "XXELocationAddController.h"
 #import <AVFoundation/AVFoundation.h>
 
-@interface XXEFriendCirclePageViewController ()<DFTimeLineViewControllerDelegate>
+@interface XXEFriendCirclePageViewController ()<DFTimeLineViewControllerDelegate, NSCopying>
 {
 
     NSString *parameterXid;
@@ -140,45 +140,33 @@
     if ([pageNum isEqualToString:@"1"]) {
         [self.circleListDatasource removeAllObjects];
     }
-//    NSLog(@"数组为数据:%@",self.circleListDatasource);
+    __weak __typeof(self)weakSelf = self;
     XXEFriendCircleApi *friendCircleApi = [[XXEFriendCircleApi alloc]initWithFriendCircleXid:parameterXid CircleUserId:parameterUser_Id PageNumber:pageNum];
     [friendCircleApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
-        
-//        NSLog(@"vvvvv %@",request.responseJSONObject);
-//        NSLog(@"%@",[request.responseJSONObject objectForKey:@"msg"]);
-        
-//        NSLog(@"list-count:%ld", [request.responseJSONObject[@"data"][@"list"] count]);
-        
         NSString *code = [request.responseJSONObject objectForKey:@"code"];
-//        NSLog(@"%@",code);
-        
+        NSInteger maxPage = [[[request.responseJSONObject objectForKey:@"data"] objectForKey:@"max_page"] integerValue];
         
         if ([code intValue]==1 && [[request.responseJSONObject objectForKey:@"data"] isKindOfClass:[NSDictionary class]]) {
-            
-            [self detelAllSource];
-            
+            [weakSelf detelAllSource];
             NSDictionary *data = [request.responseJSONObject objectForKey:@"data"];
             NSDictionary *userInfo = [data objectForKey:@"user_info"];
             XXECircleUserModel *Usermodel = [[XXECircleUserModel alloc]initWithDictionary:userInfo error:nil];
-            [self.headerDatasource addObject:Usermodel];
-            [self setHeaderMessage:Usermodel];
-
-            //设置顶部视图信息
+            [weakSelf.headerDatasource addObject:Usermodel];
+            [weakSelf setHeaderMessage:Usermodel];
             
             //判断是否有信息
             if ([Usermodel.circle_noread isEqualToString:@"1"]) {
-                [self creatNewMessageRemindcircleNoread:Usermodel.circle_noread];
+                [weakSelf creatNewMessageRemindcircleNoread:Usermodel.circle_noread];
             }
             
             if ([[data objectForKey:@"list"]isKindOfClass:[NSArray class]] ) {
                 NSArray *list = [data objectForKey:@"list"];
                 for (int i =0; i<list.count; i++) {
                     XXECircleModel *circleModel = [[XXECircleModel alloc]initWithDictionary:list[i] error:nil];
-                    [self.circleListDatasource addObject:circleModel];
-//                    NSLog(@"%@ %@", circleModel.head_img, circleModel.nickname);
+                    [weakSelf.circleListDatasource addObject:circleModel];
                 };
                 
-                [self friendCircleMessage];
+                [weakSelf friendCircleMessage];
 //                dispatch_async(dispatch_get_global_queue(0, 0), ^{
 //                    for (int i =0; i<list.count; i++) {
 //                        XXECircleModel *circleModel = [[XXECircleModel alloc]initWithDictionary:list[i] error:nil];
@@ -193,19 +181,25 @@
                 //朋友圈的信息列表
                 
             }
-            [self endRefresh];
-            self.isMaxLoading = NO;
-//        NSLog(@"圈子顶部信息数组信息%@",self.headerDatasource);
-//            [self detelAllSource];
-        }else{
-            self.isMaxLoading = YES;
-            [self hudShowText:@"获取数据错误" second:2.f];
-            [self endRefresh];
-            [self endLoadMore];
+            
+            [weakSelf endRefresh];
+            weakSelf.isMaxLoading = NO;
+            
+            if (weakSelf.page == maxPage) {
+                weakSelf.isMaxLoading = YES;
+                [weakSelf hudShowText:@"已经是最后一条了" second:2.f];
+                [weakSelf endRefresh];
+                [weakSelf endLoadMore];
+            }
+            [weakSelf.tableView reloadData];
+        }else {
+            weakSelf.isMaxLoading = YES;
+            [weakSelf hudShowText:@"获取数据错误" second:2.f];
+            [weakSelf endRefresh];
         }
     } failure:^(__kindof YTKBaseRequest *request) {
-         [self endRefresh];
-        [self endLoadMore];
+         [weakSelf endRefresh];
+        [weakSelf endLoadMore];
     }];
 }
 
@@ -235,31 +229,14 @@
     if (self.circleListDatasource.count != 0) {
         for (int i =0; i<self.circleListDatasource.count; i++) {
             XXECircleModel *circleModel = self.circleListDatasource[i];
-            DFTextImageLineItem *textImageItem = [[DFTextImageLineItem alloc]init];
+            DFTextImageLineItem *textImageItem = [[DFTextImageLineItem alloc] init];
+            
             
             textImageItem.itemId = j;
 //            NSLog(@"时间轴:%lld",textImageItem.itemId);
             j++;
-            [textImageItem configure:circleModel];
-//            textImageItem.userId = [circleModel.xid intValue];
-//            
-//            if ([circleModel.head_img_type isEqual: @"0"]) {
-//                textImageItem.userAvatar = [NSString stringWithFormat:@"%@%@",kXXEPicURL,circleModel.head_img];
-//            } else if ([circleModel.head_img_type  isEqual: @"1"]) {
-//                textImageItem.userAvatar = circleModel.head_img;
-//            }
-//            
-//            
-//            textImageItem.userNick = circleModel.nickname;
-//            textImageItem.title = @"发表了";
-//            textImageItem.text = circleModel.words;
-//            textImageItem.location = circleModel.position;
-//            NSString *timeString = [XXETool dateAboutStringFromNumberTimer:circleModel.date_tm];
-////            NSLog(@"时间:%@",timeString);
-//            textImageItem.ts = [circleModel.date_tm integerValue]*1000;;
-//            textImageItem.speak_Id = circleModel.talkId;
+            [textImageItem configure:[circleModel copy]];
             //如果发布的圈子有图片则显示图片
-            
             if (self.page == 1) {
                 [self.tableView reloadData];
             }
@@ -282,12 +259,10 @@
     NSMutableArray *thumbBigImages = [NSMutableArray array];
     //判断图片的字符串里面有没有逗号
     if ([circleModel.pic_url containsString:@","]) {
-//        NSLog(@"包含");
         NSArray *array = [circleModel.pic_url componentsSeparatedByString:@","];
         for (NSString *image in array) {
             [srcSmallImages addObject:[NSString stringWithFormat:@"%@%@",kXXEPicURL,image]];
             [thumbBigImages addObject:[NSString stringWithFormat:@"%@%@",kXXEPicURL,image]];
-//            NSLog(@"小图片%@ 大图片%@",srcSmallImages,thumbBigImages);
             
         }
         textImageItem.srcImages = srcSmallImages;
@@ -301,7 +276,6 @@
         [thumbBigImages addObject:@"哈哈.png"];
         textImageItem.srcImages = srcSmallImages;
         textImageItem.thumbImages = thumbBigImages;
-//        NSLog(@"小图片%@ 大图片%@",srcSmallImages,thumbBigImages);
     }
     //发布的评论和点赞
     [self friend_circleShowCommentAndGoodCircleModel:circleModel TextImageItem:textImageItem];
@@ -311,22 +285,18 @@
 - (void)friend_circleShowCommentAndGoodCircleModel:(XXECircleModel *)circleModel TextImageItem:(DFTextImageLineItem *)textImageItem
 {
     
-//    NSLog(@"点赞 == %@", circleModel.good_user);
     //点赞
     if (circleModel.good_user.count == 0) {
 //        NSLog(@"没有人点赞");
     }else{
         
-        
         for (int j =0; j<circleModel.good_user.count; j++) {
             XXEGoodUserModel *goodModel = circleModel.good_user[j];
-//            NSLog(@"%@",goodModel.goodXid);
             DFTextImageLineItem *likeItem = [[DFTextImageLineItem alloc]init];
             likeItem.userNick = goodModel.goodNickName;
             likeItem.userId = [goodModel.goodXid integerValue];
             [textImageItem.likes addObject:likeItem];
         }
-//        NSLog(@"点赞的信息%@",textImageItem.likes);
     }
     
     // 评论内容

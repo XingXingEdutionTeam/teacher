@@ -37,6 +37,10 @@
 
 @implementation XXELocationAddController
 
+    double longitudeOffset = 0.009907;
+    double latitudeOffset = 0.003488;
+
+
 - (NSMutableArray *)locationDatasource
 {
     if (!_locationDatasource) {
@@ -100,15 +104,26 @@
             [self presentViewController:alert animated:YES completion:nil];
         }
     }
-    
+
+double x_pi = 3.14159265358979324 * 3000.0 / 180.0;
 #pragma mark - CoreLocationdelegate
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray<CLLocation *> *)locations
     {
         CLLocation *currentLocation = [locations lastObject];
         NSLog(@"经度%f",currentLocation.coordinate.longitude);
         NSLog(@"纬度%f",currentLocation.coordinate.latitude);
-        _longitudeString = [NSString stringWithFormat:@"%f",currentLocation.coordinate.longitude];
-        _latitudeString = [NSString stringWithFormat:@"%f",currentLocation.coordinate.latitude];
+        
+        double x = currentLocation.coordinate.longitude;
+        double y = currentLocation.coordinate.latitude;
+        double z = sqrt(x * x + y * y) + 0.00002 * sin(y * x_pi);
+        double theta = atan2(y, x) + 0.000003 * cos(x * x_pi);
+        double bd_lon = z * cos(theta) + 0.0065;
+        double bd_lat = z * sin(theta) + 0.006;
+        
+        _longitudeString = [NSString stringWithFormat:@"%.10f",bd_lon];
+        _latitudeString = [NSString stringWithFormat:@"%.10f",bd_lat];
+        
+        
         //获取当前所在城市的名字
         CLGeocoder *geocoder = [[CLGeocoder alloc]init];
         //根据经纬度反向地理编译出地址信息
@@ -165,6 +180,7 @@
 {
     NSString *strngXid;
     NSString *homeUserId;
+    
     if ([XXEUserInfo user].login) {
         strngXid = [XXEUserInfo user].xid;
         homeUserId = [XXEUserInfo user].user_id;
@@ -227,22 +243,22 @@
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     
-    return self.locationDatasource.count;
+    return self.locationDatasource.count + 1;
 }
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     static  NSString *cellID =@"cellID";
-    UITableViewCell *cell =[tableView dequeueReusableCellWithIdentifier:cellID];
-    if (!cell) {
-        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellID];
-    }
+    UITableViewCell *cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellID];
+//    if (!cell) {
+//        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellID];
+//    }
     if (indexPath.row==0) {
         cell.textLabel.text =@"不显示位置";
     }
     else{
-        XXELocationModel *model = self.locationDatasource[indexPath.row]
+        XXELocationModel *model = self.locationDatasource[indexPath.row - 1]
         ;
-        cell.textLabel.text = model.address;
-        cell.detailTextLabel.text = model.name;
+        cell.textLabel.text = model.name;
+        cell.detailTextLabel.text = model.address;
     }
     return cell;
     
@@ -252,8 +268,8 @@
         localText =@"所在位置";
     }
     else{
-        XXELocationModel *model = self.locationDatasource[indexPath.row];
-        localText = model.address;
+        XXELocationModel *model = self.locationDatasource[indexPath.row - 1];
+        localText = model.name;
         
     }
     [self.navigationController popViewControllerAnimated:YES];

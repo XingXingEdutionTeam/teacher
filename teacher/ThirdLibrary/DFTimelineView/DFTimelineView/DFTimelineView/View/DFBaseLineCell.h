@@ -53,6 +53,8 @@
 
 @property (nonatomic, assign) BOOL isLiked;
 
+@property(nonatomic ,assign) BOOL isShowLikeComment;
+
 
 @property (nonatomic, strong) UIView *bodyView;
 
@@ -69,6 +71,8 @@
 -(void)updateBodyView:(CGFloat) height;
 
 -(void) hideLikeCommentToolbar;
+
+-(void)showLikeCommentToolbar;
 
 -(UINavigationController *) getController;
 

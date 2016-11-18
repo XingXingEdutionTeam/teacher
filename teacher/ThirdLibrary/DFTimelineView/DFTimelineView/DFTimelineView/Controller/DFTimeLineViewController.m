@@ -40,6 +40,8 @@
 
 @property (nonatomic, strong) UIImagePickerController *pickerController;
 
+@property (nonatomic, assign) NSInteger indexRow;
+
 //测试获得被评轮人的XID
 @property (nonatomic, assign)NSInteger toWhoXid;
 
@@ -142,22 +144,24 @@
     MMPopupItemHandler block = ^(NSInteger index){
         switch (index) {
             case 0:
-                [self captureViedo];
-                break;
-            case 1:
                 [self takePhoto];
                 break;
-            case 2:
+            case 1:
                 [self pickFromAlbum];
                 break;
             default:
                 break;
+                
+//            case 0:
+//                [self captureViedo];
+//                break;
         }
     };
     
-    NSArray *items = @[MMItemMake(@"小视频", MMItemTypeNormal, block),
+    NSArray *items = @[
       MMItemMake(@"拍照", MMItemTypeNormal, block),
-      MMItemMake(@"从相册选取", MMItemTypeNormal, block)];
+      MMItemMake(@"从相册选取", MMItemTypeNormal, block)
+      ];
     
     MMSheetView *sheetView = [[MMSheetView alloc] initWithTitle:@"" items:items];
     
@@ -205,7 +209,7 @@
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (_items.count != 0) {
-        DFBaseLineItem *item = [_items objectAtIndex:indexPath.row];
+        DFBaseLineItem *item = _items[indexPath.row];
         DFBaseLineCell *typeCell = [self getCell:[item class]];
         return [typeCell getReuseableCellHeight:item];
     }
@@ -215,7 +219,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    
+    self.indexRow = indexPath.row;
     
     if (_items.count != 0) {
         
@@ -228,6 +232,7 @@
             cell = [[[typeCell class] alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier];
         }else{
             NSLog(@"重用Cell: %@", reuseIdentifier);
+            
         }
 //        BOOL isLiked = NO;
         [cell setLikeImage];
@@ -235,26 +240,21 @@
             if (like.userId  == [[XXEUserInfo user].xid integerValue])  {
                 [cell setUnlikedImage];
             }else {
-                NSLog(@"%@", [XXEUserInfo user].xid);
-                NSLog(@"%lu", (unsigned long)like.userId);
+                
             }
         };
-        //    for (int i = 0; i < item.likes.count; i+=1) {
-        //        if (item.likes[i].userId == USER_ID)
-        //    }
         
-        
-        
+        [cell hideLikeCommentToolbar];
         cell.likeCmtButton.tag = 10 + indexPath.row;
+//        cell.likeCommentToolbar.tag = 100 + self.indexRow;
 //        [cell.likeCmtButton addTarget:self action:@selector(onClickLikeCommentBtn:) forControlEvents:UIControlEventTouchUpInside];
-        
         cell.delegate = self;
-        
         cell.separatorInset = UIEdgeInsetsZero;
         if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
             cell.layoutMargins = UIEdgeInsetsZero;
         }
         [cell updateWithItem:item];
+        
         
         return cell;
     }
@@ -262,6 +262,10 @@
     
 }
 
+-(void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+//    DFLikeCommentToolbar *likeCommentToolbar = (DFLikeCommentToolbar *)[self.view viewWithTag:100 + self.indexRow];
+//    likeCommentToolbar.hidden = YES;
+}
 
 -(void) onClickLikeCommentBtn:(id)sender
 {
