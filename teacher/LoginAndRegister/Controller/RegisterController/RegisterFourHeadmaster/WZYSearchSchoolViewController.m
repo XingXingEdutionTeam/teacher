@@ -99,12 +99,12 @@ static NSString *CellIdentifier = @"Cell";
     XXERegisterSearchSchoolApi *searchSchoolApi = [[XXERegisterSearchSchoolApi alloc]initWithRegisterSearchSchoolName:searchBar.text];
     [searchSchoolApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         
-        NSLog(@"%@",request.responseJSONObject);
+//        NSLog(@"xxxx %@",request.responseJSONObject);
         
         if ([[request.responseJSONObject objectForKey:@"code"] intValue] == 1)
         {
             NSArray *dic = [request.responseJSONObject objectForKey:@"data"];
-            NSLog(@"搜索的学校的信息:%@",dic);
+//            NSLog(@"搜索的学校的信息:%@",dic);
             for (int i = 0; i < dic.count; i++) {
                 XXETeacherModel *model = [[XXETeacherModel alloc]initWithDictionary:dic[i] error:nil];
                 [self.searchSchoolDatasource addObject:model];
@@ -153,6 +153,10 @@ static NSString *CellIdentifier = @"Cell";
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     NSMutableArray *arr = self.searchSchoolDatasource[indexPath.row];
+    
+//    NSLog(@"搜索数据%@", self.searchSchoolDatasource);
+    
+//    NSLog(@"搜索结果%@", self.searchSchoolDatasource[indexPath.row]);
     
     self.returnArrayBlock(arr);
     XXETeacherModel *model = self.searchSchoolDatasource[indexPath.row];

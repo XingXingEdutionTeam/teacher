@@ -190,7 +190,7 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
     
     self.isHave = NO;
     
-    NSLog(@"打印传过来的数据:电话号码%@ 姓名%@ 身份证%@ 密码%@ 类型%@ 头像%@ 登录类型%@ 性别%@ 年龄%@",self.userPhoneNum,self.userName,self.userIDCarNum,self.userPassword,self.userIdentifier,self.userAvatarImage,self.login_type,self.userSex,self.userAge);
+//    NSLog(@"打印传过来的数据:电话号码%@ 姓名%@ 身份证%@ 密码%@ 类型%@ 头像%@ 登录类型%@ 性别%@ 年龄%@",self.userPhoneNum,self.userName,self.userIDCarNum,self.userPassword,self.userIdentifier,self.userAvatarImage,self.login_type,self.userSex,self.userAge);
     
     _titleArr = @[@"学校名称:",@"学校类型:",@"学校地址:",@"详细地址:",@"联系方式:",@"",@"审核人员:",@"邀请码"];
     
@@ -530,9 +530,15 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
 #pragma mark - 网服务器传送注册
 - (void)uploadHeadMasterRegisterMessage
 {
+    
+    if (self.userPhoneNum == nil) {
+        self.userPhoneNum = @"";
+    }
+    //_userPhoneNum
+    //return_param_all = 1		//要求返回所有传参,测试用
     NSDictionary *parameter = @{
                                 @"login_type":_login_type,
-                                @"phone":_userPhoneNum,
+                                @"phone":@"13938498882",
                                 @"pass":_userPassword,
                                 @"tname":_userName,
                                 @"id_card":_userIDCarNum,
@@ -560,7 +566,8 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
                                 @"alipay":_headThirdAliPayToken,
                                 @"appkey":APPKEY,
                                 @"backtype":BACKTYPE,
-                                @"user_type":USER_TYPE
+                                @"user_type":USER_TYPE,
+                                @"return_param_all":@""
                                 };
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
@@ -569,7 +576,7 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
         
     }success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
-        NSLog(@"%@",responseObject);
+        NSLog(@"注册传参 :%@",responseObject);
         NSLog(@"%@",[responseObject objectForKey:@"msg"]);
         
         if ([[responseObject objectForKey:@"code"] intValue]==1) {
@@ -623,12 +630,16 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
 - (void)searchSchoolMessage:(XXETeacherModel *)model
 {
     
+//    NSLog(@" 搜索 model == %@", model);
+    
     self.theEndSchoolId = model.schoolId;
     self.theEndSchoolType = model.type;
     self.schoolName = model.name;
     self.schoolProvince = model.province;
     self.schoolCity = model.city;
     self.schoolDistrict = model.district;
+    self.schoolAddrss = model.address;
+    self.schoolTel = model.tel;
     
     NSLog(@"%@ %@",model,model.name);
     self.teacherCell = [self cellAtIndexRow:0 andAtSection:0 Message:model.name];
@@ -647,6 +658,22 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
     self.teacherCell = [self cellAtIndexRow:1 andAtSection:0 Message:typeName];
     NSString *addressSchool = [NSString stringWithFormat:@"%@-%@-%@",model.province,model.city,model.district];
     self.teacherCell = [self cellAtIndexRow:2 andAtSection:0 Message:addressSchool];
+    //详细地址
+    self.teacherCell = [self cellAtIndexRow:3 andAtSection:0 Message:model.address];
+    //联系方式
+    self.teacherCell = [self cellAtIndexRow:4 andAtSection:0 Message:model.tel];
+    
+    //搜索结果 重新赋值后 不能再手动更改
+    //学校名称
+    [self tureOrFalseCellClick:NO Tag:100];
+    //学校类型
+    [self tureOrFalseCellClick:NO Tag:101];
+    //学校地址
+    [self tureOrFalseCellClick:NO Tag:102];
+    //详细地址
+    [self tureOrFalseCellClick:NO Tag:103];
+    //联系方式
+    [self tureOrFalseCellClick:NO Tag:104];
     
     //获取审核人
     [self setupReviewerMessage:model.schoolId];
@@ -657,10 +684,23 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
 
 - (void)setupReviewerMessage:(NSString *)schoolID
 {
-    XXEReviewerApi *reviewerApi = [[XXEReviewerApi alloc]initReviwerNameSchoolId:schoolID PositionID:@"4"];
+    
+    /*
+     【获取审核人员(管理员,校长,以及平台审核)】
+     接口类型:1
+     接口:
+     http://www.xingxingedu.cn/Teacher/get_examine_teacher
+     传参(参数名):
+     school_id 		//学校id
+     position		//教职身份(传数字,1:授课老师  2:主任  3:管理  4:校长)
+     */
+    
+//    NSLog(@"_userIdentifier == %@", _userIdentifier);
+    
+    XXEReviewerApi *reviewerApi = [[XXEReviewerApi alloc]initReviwerNameSchoolId:schoolID PositionID:_userIdentifier];
     [reviewerApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
-        NSLog(@"审核人信息:======%@",request.responseJSONObject);
-        NSLog(@"%@",[request.responseJSONObject objectForKey:@"msg"]);
+//        NSLog(@"审核人信息:======%@",request.responseJSONObject);
+//        NSLog(@"%@",[request.responseJSONObject objectForKey:@"msg"]);
         NSArray *data = [request.responseJSONObject objectForKey:@"data"];
         [self.reviewerDatasource removeAllObjects];
         [self.reviewerNameArray removeAllObjects];
@@ -673,7 +713,7 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
         XXEReviewerModel *model = self.reviewerDatasource[0];
         self.theEndReviewerId = model.reviewerId;
         
-        NSLog(@"-=-=%@",self.theEndReviewerId);
+//        NSLog(@"-=-=%@",self.theEndReviewerId);
         
     } failure:^(__kindof YTKBaseRequest *request) {
         

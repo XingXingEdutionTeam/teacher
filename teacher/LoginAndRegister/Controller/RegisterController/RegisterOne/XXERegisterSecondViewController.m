@@ -237,7 +237,7 @@
     NSLog(@"000:%@ 999:%@",self.confirmPassWordTextField.text,self.passWordTextField.text);
     if ([self.confirmPassWordTextField.text isEqualToString:@""] || [self.passWordTextField.text isEqualToString:@""]) {
         [self showString:@"不能为空" forSecond:1.f];
-    }else if ([self.confirmPassWordTextField.text isEqualToString:self.passWordTextField.text]) {
+    }else if (self.confirmPassWordTextField.text == self.passWordTextField.text) {
         if ([self.forgetPassWordPage isEqualToString:@"忘记密码--"]) {
             [self setupAgainForgetPassWord];
             

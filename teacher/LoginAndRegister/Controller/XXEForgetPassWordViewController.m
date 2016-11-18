@@ -162,14 +162,13 @@
     
     UIButton *verificationButton = [[UIButton alloc]init];
     [verificationButton setTitle:@"获取验证码" forState:UIControlStateNormal];
+    _verificationButton = verificationButton;
     verificationButton.titleLabel.font = [UIFont systemWithIphone6P:18 Iphone6:16 Iphone5:14 Iphone4:12];
     [verificationButton setTitleColor:XXEColorFromRGB(189, 210, 38) forState:UIControlStateNormal];
     [verificationButton addTarget:self action:@selector(setupVerificationNumber:) forControlEvents:UIControlEventTouchUpInside];
-    verificationButton.enabled = NO;
-//    verificationButton.userInteractionEnabled = NO;
+    verificationButton.userInteractionEnabled = NO;
     [verificationImageView addSubview:verificationButton];
-    _verificationButton = verificationButton;
-    [_verificationButton mas_makeConstraints:^(MASConstraintMaker *make) {
+    [verificationButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(verificationImageView.mas_centerY);
         make.right.equalTo(weakSelf.registerVerificationTextField.mas_right).offset(-10);
         make.height.mas_equalTo(41*kScreenRatioHeight);
@@ -263,15 +262,13 @@
         NSString *string = [dic objectForKey:@"code"];
         if ([string intValue] == 1) {
             [self showString:@"此号码没有注册过" forSecond:1.f];
-            self.verificationButton.enabled = NO;
-//            self.verificationButton.userInteractionEnabled = NO;
+            self.verificationButton.userInteractionEnabled = NO;
             self.registerVerificationTextField.enabled = NO;
         } else if ([string intValue] == 3) {
             [self showString:@"可以更改密码" forSecond:3.f];
             
             self.registerVerificationTextField.enabled = YES;
-//            self.verificationButton.userInteractionEnabled = YES;
-            self.verificationButton.enabled = YES;
+            self.verificationButton.userInteractionEnabled = YES;
         } else{
             [self showString:@"请重新输入" forSecond:1.f];
         }

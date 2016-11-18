@@ -277,6 +277,9 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
     [self commBoxInfo];
     
     
+    
+    NSLog(@"_userIdentifier === %@", _userIdentifier);
+    
     _titleArr = @[@"学校名称:",@"学校类型:",@"班级信息:",@"年级信息:",@"教学类型:",@"",@"审核人员:",@"邀请码"];
     
     _titleTextArr = @[@"请选择学校名称",@"请选择你学校类型",@"班级信息",@"请选择年级",@"请选择职位",@"",@"请选择审核人",@"可不填"];
@@ -390,6 +393,7 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
             break;
         }
         case 1:{
+            
             break;
         }
         case 2:{
@@ -576,7 +580,7 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
     
     [teachTypeApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         
-        NSLog(@"%@",request.responseJSONObject);
+        NSLog(@"获取教学类型 === %@",request.responseJSONObject);
         if ([[request.responseJSONObject objectForKey:@"code"]intValue]== 1) {
             NSArray *data = [request.responseJSONObject objectForKey:@"data"];
             NSLog(@"获取教学类型:%@",data); 
@@ -589,9 +593,9 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
                 [self.teachOfTypeDatasource addObject:model];
                 [self.teachOfTypeArray addObject:model.teachTypeName];
             }
-//            self.teacherCell = [self cellAtIndexRow:4 andAtSection:0 Message:self.teachOfTypeArray[0]];
-//            XXETeachOfTypeModel *model = self.teachOfTypeDatasource[0];
-//            self.theEndTeachType = model.teachTypeId;
+            self.teacherCell = [self cellAtIndexRow:4 andAtSection:0 Message:self.teachOfTypeArray[0]];
+            XXETeachOfTypeModel *model = self.teachOfTypeDatasource[0];
+            self.theEndTeachType = model.teachTypeId;
         }else {
         
             [self showString:@"教学类型数据请求失败" forSecond:1.f];
@@ -622,10 +626,10 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
                     [self.classNameDatasource addObject:classModel];
                     [self.classNameArray addObject:classModel.className];
                 }
-//                NSString *calssName = self.classNameArray[0];
-//                self.teacherCell = [self cellAtIndexRow:3 andAtSection:0 Message:calssName];
-//                XXETeacherClassModel *model = self.classNameDatasource[0];
-//                self.theEndClassId = model.class_id;
+                NSString *calssName = self.classNameArray[0];
+                self.teacherCell = [self cellAtIndexRow:3 andAtSection:0 Message:calssName];
+                XXETeacherClassModel *model = self.classNameDatasource[0];
+                self.theEndClassId = model.class_id;
                 
             }else {
                 [self showString:@"获取班级信息失败" forSecond:1.f];
@@ -787,10 +791,32 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
     }
     self.teacherCell = [self cellAtIndexRow:1 andAtSection:0 Message:typeName];
     
+    NSString *addressSchool = [NSString stringWithFormat:@"%@-%@-%@",model.province,model.city,model.district];
+    self.teacherCell = [self cellAtIndexRow:2 andAtSection:0 Message:addressSchool];
+    //详细地址
+    self.teacherCell = [self cellAtIndexRow:3 andAtSection:0 Message:model.address];
+    //联系方式
+    self.teacherCell = [self cellAtIndexRow:4 andAtSection:0 Message:model.tel];
+    
+    //搜索结果 重新赋值后 不能再手动更改
+    //学校名称
+//    [self tureOrFalseCellClick:NO Tag:100];
+//    //学校类型
+//    [self tureOrFalseCellClick:NO Tag:101];
+//    //学校地址
+//    [self tureOrFalseCellClick:NO Tag:102];
+//    //详细地址
+//    [self tureOrFalseCellClick:NO Tag:103];
+//    //联系方式
+//    [self tureOrFalseCellClick:NO Tag:104];
+    
     //获取班级信息的网络请求
     [self getoutSchoolGradeSchoolId:model.schoolId SchoolType:model.type];
     
     //获取教学类型网络请求
+    
+    NSLog(@"model.type == %@", model.type);
+    
     [self getoutTeachTypeSchoolType:model.type];
     
     //获取教师的审核人信息

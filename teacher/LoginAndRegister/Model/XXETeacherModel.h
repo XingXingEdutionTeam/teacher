@@ -22,4 +22,10 @@
 @property (nonatomic, copy)NSString <Optional>*city;
 /** 学校所在的区 */
 @property (nonatomic, copy)NSString <Optional>*district;
+//详细地址
+@property (nonatomic, copy)NSString <Optional>*address;
+//电话
+@property (nonatomic, copy)NSString <Optional>*tel;
+
+
 @end

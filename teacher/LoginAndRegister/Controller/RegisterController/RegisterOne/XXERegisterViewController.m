@@ -264,7 +264,6 @@
 
 - (void)back
 {
-    
     XXELoginViewController *registerVC = [[XXELoginViewController alloc]init];
     UIWindow *window = [UIApplication sharedApplication].keyWindow;
     XXENavigationViewController *navi = [[XXENavigationViewController alloc]initWithRootViewController:registerVC];
@@ -296,20 +295,23 @@
 //    [self.navigationController pushViewController:registerSecondVC animated:YES];
 }
 
+
+
+#warning ================ 注册 测试  ===================
 #pragma mark - 验证验证码对不对
 -(void)verifyNumberISRight
 {
-    NSLog(@"电话号码%@ 验证码%@",self.registerUserName,self.registerVerifi);
-    [SMSSDK commitVerificationCode:self.registerVerifi phoneNumber:self.registerUserName zone:@"86" result:^(NSError *error) {
-        if (error) {
-            [self showString:@"验证码错误" forSecond:1.f];
-        }else {
+//    NSLog(@"电话号码%@ 验证码%@",self.registerUserName,self.registerVerifi);
+//    [SMSSDK commitVerificationCode:self.registerVerifi phoneNumber:self.registerUserName zone:@"86" result:^(NSError *error) {
+//        if (error) {
+//            [self showString:@"验证码错误" forSecond:1.f];
+//        }else {
             XXERegisterSecondViewController *registerSecondVC = [[XXERegisterSecondViewController alloc]init];
             registerSecondVC.userPhoneNum = self.registerUserName;
             registerSecondVC.login_type = @"1";
             [self.navigationController pushViewController:registerSecondVC animated:YES];
-        }
-    }];
+//        }
+//    }];
 }
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
