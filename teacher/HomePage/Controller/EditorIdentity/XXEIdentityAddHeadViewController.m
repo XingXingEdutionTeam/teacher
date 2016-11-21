@@ -554,15 +554,27 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
     WZYSearchSchoolViewController *searchVC = [[WZYSearchSchoolViewController alloc]init];
     self.schoolVC = searchVC;
     
-    [searchVC returnArray:^(NSMutableArray *mArr) {
-        if (mArr != nil) {
-            self.isHave = YES;
-        }else {
-            self.isHave = NO;
-        }
-        [self LnitializeTheParameter];
-        self.schoolDatasource = mArr;
-        self.schoolVC.delegate = self;
+//    [searchVC returnArray:^(NSMutableArray *mArr) {
+//        if (mArr != nil) {
+//            self.isHave = YES;
+//        }else {
+//            self.isHave = NO;
+//        }
+//        [self LnitializeTheParameter];
+//        self.schoolDatasource = mArr;
+//        self.schoolVC.delegate = self;
+//    }];
+    
+    [searchVC returnModel:^(XXETeacherModel *teacherModel) {
+        //
+                if (teacherModel != nil) {
+                    self.isHave = YES;
+                }else {
+                    self.isHave = NO;
+                }
+                [self LnitializeTheParameter];
+//                self.schoolDatasource = mArr;
+                self.schoolVC.delegate = self;
     }];
     [self.navigationController pushViewController:searchVC animated:YES];
 }

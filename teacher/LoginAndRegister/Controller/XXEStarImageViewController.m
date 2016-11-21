@@ -13,7 +13,6 @@
 @property (nonatomic, weak) UIScrollView *scrollView;
 @property (nonatomic, strong) UISwipeGestureRecognizer *swipeGR;
 @property (nonatomic, strong) UIButton *starButton;
-@property(nonatomic ,strong) UIPageControl *pageControl;
 @end
 
 @implementation XXEStarImageViewController
@@ -41,49 +40,33 @@
     if (scrollH > 600 && scrollH < 700) {
         imageIndex = 6;
     }
-    for (int i = 0; i < 5; i ++) {
+    for (int i = 0; i < 4; i ++) {
         UIImageView *imageView = [[UIImageView alloc]init];
         imageView.width = scrollW;
         imageView.height = scrollH;
         imageView.y = 0;
         imageView.x = i * scrollW;
         //显示图片
-        NSString *name = [NSString stringWithFormat:@"qidongtu0%d",i+1];
+        NSString *name = [NSString stringWithFormat:@"qqq_%i_%ld",i+1,(long)imageIndex];
         NSLog(@"%@",name);
         imageView.image = [UIImage imageNamed:name];
         [scrollView addSubview:imageView];
         //如果是最后一个ImageView,就往里面加入左划手势
-        if (i == 4) {
+        if (i == 4-1) {
             [self setupLastImageView:imageView];
         }
     }
-    scrollView.contentSize = CGSizeMake(5 * scrollW, 0);
+    scrollView.contentSize = CGSizeMake(4 * scrollW, 0);
     scrollView.pagingEnabled = YES;
     scrollView.bounces = NO;
     scrollView.showsVerticalScrollIndicator = NO;
     scrollView.showsHorizontalScrollIndicator = NO;
     scrollView.delegate = self;
     
-    self.pageControl = [[UIPageControl alloc] initWithFrame:CGRectMake(0, KScreenHeight - 36, KScreenWidth, 30)];
-    self.pageControl.numberOfPages = 5;
-    [self.view addSubview:self.pageControl];
-    
-    UIButton *skipBtn = [UIButton buttonWithType:0];
-    skipBtn.frame = CGRectMake(KScreenWidth - 87, 25, 80, 30);
-    skipBtn.layer.cornerRadius = 2;
-    skipBtn.layer.masksToBounds = YES;
-    [skipBtn setTitle:@"跳过>" forState:UIControlStateNormal];
-    skipBtn.titleLabel.font = [UIFont systemFontOfSize:15];
-    [skipBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [skipBtn addTarget:self action:@selector(startClick:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:skipBtn];
-    
 }
 
 - (void)setupLastImageView:(UIImageView *)imageView
 {
-    
-    
     //开启交互
     imageView.userInteractionEnabled = YES;
     UIButton *startButton = [[UIButton alloc]initWithFrame:imageView.bounds];
@@ -100,8 +83,7 @@
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    CGFloat contentOffset_x = scrollView.contentOffset.x;
-    self.pageControl.currentPage = (int)((contentOffset_x + KScreenWidth)/KScreenWidth) - 1;
+    
 }
 
 - (void)startClick:(UIButton *)sender

@@ -152,23 +152,32 @@ static NSString *CellIdentifier = @"Cell";
 
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    NSMutableArray *arr = self.searchSchoolDatasource[indexPath.row];
     
-//    NSLog(@"搜索数据%@", self.searchSchoolDatasource);
+//    if ([_WZYSearchFlagStr isEqualToString:@"fromHeadermasterVC"]) {
+//        NSMutableArray *arr = self.searchSchoolDatasource[indexPath.row];
     
-//    NSLog(@"搜索结果%@", self.searchSchoolDatasource[indexPath.row]);
+        //    NSLog(@"搜索数据%@", self.searchSchoolDatasource);
+        
+        //    NSLog(@"搜索结果%@", self.searchSchoolDatasource[indexPath.row]);
+        
     
-    self.returnArrayBlock(arr);
-    XXETeacherModel *model = self.searchSchoolDatasource[indexPath.row];
-    if ([self.delegate respondsToSelector:@selector(searchSchoolMessage:)]) {
-        [self.delegate searchSchoolMessage:model];
-    }
-    [self.navigationController popViewControllerAnimated:YES];
+        XXETeacherModel *model = self.searchSchoolDatasource[indexPath.row];
+        self.returnModelBlock(model);
+        if ([self.delegate respondsToSelector:@selector(searchSchoolMessage:)]) {
+            [self.delegate searchSchoolMessage:model];
+        }
+        [self.navigationController popViewControllerAnimated:YES];
+ 
+//    }else if ([_WZYSearchFlagStr isEqualToString:@"fromTeacherVC"]){
+//    
+//    
+//    }
+    
 }
 
 
-- (void)returnArray:(ReturnArrayBlock)block{
-    self.returnArrayBlock = block;
+- (void)returnModel:(ReturnModelBlock)block{
+    self.returnModelBlock = block;
 }
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
