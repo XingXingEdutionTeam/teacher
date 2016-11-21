@@ -48,19 +48,19 @@
     [UMSocialConfig hiddenNotInstallPlatforms:@[UMShareToQQ,UMShareToQzone,UMShareToWechatTimeline,UMShareToWechatSession]];
     
     
-    self.window = [[UIWindow alloc]init];
-    self.window.frame = [UIScreen mainScreen].bounds;
-    //测试界面 --------------------------
-    XXELoginViewController *loginVC = [[XXELoginViewController alloc]init];
-//    XXEStarImageViewController *startVC = [[XXEStarImageViewController alloc]init];
-    XXENavigationViewController *navi = [[XXENavigationViewController alloc]initWithRootViewController:loginVC];
-    
-    self.window.rootViewController = navi;
-    
-    
-//    XXETabBarControllerConfig *tabBarControllerConfig = [[XXETabBarControllerConfig alloc]init];
-//    [self.window setRootViewController:tabBarControllerConfig.tabBarController];
-    [self.window makeKeyAndVisible];
+//    self.window = [[UIWindow alloc]init];
+//    self.window.frame = [UIScreen mainScreen].bounds;
+//    //测试界面 --------------------------
+//    XXELoginViewController *loginVC = [[XXELoginViewController alloc]init];
+////    XXEStarImageViewController *startVC = [[XXEStarImageViewController alloc]init];
+//    XXENavigationViewController *navi = [[XXENavigationViewController alloc]initWithRootViewController:loginVC];
+//    
+//    self.window.rootViewController = navi;
+//    
+//    
+////    XXETabBarControllerConfig *tabBarControllerConfig = [[XXETabBarControllerConfig alloc]init];
+////    [self.window setRootViewController:tabBarControllerConfig.tabBarController];
+//    [self.window makeKeyAndVisible];
     
     //加入启动图
 //    [self setupControllers];
@@ -69,12 +69,52 @@
     //初始化 融云
     [self initRongClould];
     
+    [self toMainAPP];
+    
+    [self loadStarView];
+    
+    
+    
     return YES;
 }
 
+- (void) toMainAPP {
+    UIViewController *initViewController = [[UIViewController alloc] init];
+    
+    self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    self.window.backgroundColor = [UIColor whiteColor];
+    [self.window makeKeyAndVisible];
+    
+    XXELoginViewController *loginVC = [[XXELoginViewController alloc]init];
+    XXENavigationViewController *navi = [[XXENavigationViewController alloc] initWithRootViewController:loginVC];
+    XXETabBarControllerConfig *tarVC = [[XXETabBarControllerConfig alloc] init];
+    
+    if ([XXEUserInfo user].login){
+        initViewController = tarVC;
+    }else{
+        initViewController = navi;
+    }
+    
+    self.window.rootViewController = initViewController;
+    
+    
+}
+
 #pragma mark - 加入启动图片
+- (void)loadStarView {
+    NSUserDefaults *first = [NSUserDefaults standardUserDefaults];
+    NSString *isFirst = [first objectForKey:@"isFirst"];
+    if (!isFirst) {
+        [self setupControllers];
+    }
+    isFirst = @"NO";
+    [first setObject:isFirst  forKey:@"isFirst"];
+    [first synchronize];
+}
+
 - (void)setupControllers
 {
+    
     NSString *key = @"CFBundleShortVersionString";
     NSString *lastVersion = [[NSUserDefaults standardUserDefaults]objectForKey:key];
     //当前软件的版本号
