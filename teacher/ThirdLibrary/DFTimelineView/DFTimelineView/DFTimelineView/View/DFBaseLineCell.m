@@ -91,6 +91,10 @@ NSInteger btnTag = 1;
     return self;
 }
 
+-(void) configure {
+//    _isLikeCommentToolbarShow = NO;
+//    [self initBaseCell:_item];
+}
 
 -(void) initBaseCell:(DFBaseLineItem *)item
 {
@@ -378,6 +382,7 @@ NSInteger btnTag = 1;
 }
 
 -(void)setUnlikedImage {
+    
     _likeCommentToolbar.likeButton.selected = NO;
     _likeCommentToolbar.likeButton.selected = !_likeCommentToolbar.likeButton.selected;
     [_likeCommentToolbar.likeButton setTitle:@"取消" forState:UIControlStateSelected];

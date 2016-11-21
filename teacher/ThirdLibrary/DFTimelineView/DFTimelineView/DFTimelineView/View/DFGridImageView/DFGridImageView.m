@@ -39,15 +39,16 @@
     self = [super initWithFrame:frame];
     if (self) {
         
-        _imageViews = [NSMutableArray array];
         
-        [self initView];
+        
+        
     }
     return self;
 }
 
 -(void) initView
 {
+    _imageViews = [NSMutableArray array];
     CGFloat x, y, width, height;
     
     width = (self.frame.size.width - 2*Padding)/3;
@@ -67,64 +68,102 @@
         }
     }
     
-    _oneImageView = [[UIImageView alloc] initWithFrame:CGRectZero];
-    _oneImageView.hidden = YES;
-    _oneImageView.backgroundColor = [UIColor lightGrayColor];
-    
-    
-    _oneImageButton = [[UIButton alloc] initWithFrame:CGRectZero];
-    _oneImageButton.hidden = YES;
-    //_oneImageButton.backgroundColor = [UIColor lightGrayColor];
-    [_oneImageButton addTarget:self action: @selector(onClickImage:) forControlEvents:UIControlEventTouchUpInside];
-    
-    [self addSubview:_oneImageView];
-    [self addSubview:_oneImageButton];
+//    _oneImageView = [[UIImageView alloc] initWithFrame:CGRectZero];
+//    _oneImageView.hidden = YES;
+//    _oneImageView.backgroundColor = [UIColor lightGrayColor];
+//    
+//    
+//    _oneImageButton = [[UIButton alloc] initWithFrame:CGRectZero];
+//    _oneImageButton.hidden = YES;
+//    [_oneImageButton addTarget:self action: @selector(onClickImage:) forControlEvents:UIControlEventTouchUpInside];
+//    
+//    [self addSubview:_oneImageView];
+//    [self addSubview:_oneImageButton];
     
     
 }
 -(void)updateWithImages:(NSMutableArray *)images srcImages:(NSMutableArray *)srcImages oneImageWidth:(CGFloat)oneImageWidth oneImageHeight:(CGFloat)oneImageHeight
 {
     
+    if (_imageViews.count != 0) {
+        for (id typeView in self.subviews) {
+            [typeView removeFromSuperview];
+        }
+        [_imageViews removeAllObjects];
+    }
+//    _imageViews = [NSMutableArray array];
+//    if (_imageViews.count != 0) {
+//        for (id  typeView in self.subviews) {
+//            if([typeView isKindOfClass:[DFImageUnitView class]]){
+//                
+//                [typeView removeFromSuperview];
+//                break;
+//            }
+//        }
+//        [_imageViews removeAllObjects];
+//    }
+    
+    [self initView];
+    
+    
+    
     self.images = images;
     self.srcImages = srcImages;
     
-    if (images.count > 0) {
-        id img = [images objectAtIndex:0];
-        if ([img isKindOfClass:[UIImage class]]) {
-            UIImage *image = img;
-            oneImageWidth = image.size.width;
-            oneImageHeight = image.size.height;
-        }
-    }
-    
-    if (images.count == 1) {
-        _oneImageView.hidden = NO;
-        _oneImageButton.hidden = NO;
-        if (oneImageWidth > OneImageMaxWidth) {
-            _oneImageView.frame = CGRectMake(0, 0, OneImageMaxWidth, oneImageHeight*(OneImageMaxWidth/oneImageWidth));
-            _oneImageButton.frame = CGRectMake(0, 0, OneImageMaxWidth, oneImageHeight*(OneImageMaxWidth/oneImageWidth));;
-        }else{
-            _oneImageView.frame = CGRectMake(0, 0, oneImageWidth, oneImageHeight);
-            _oneImageButton.frame = CGRectMake(0, 0, oneImageWidth, oneImageHeight);
-        }
-        
-        id img = [images objectAtIndex:0];
-        if ([img isKindOfClass:[UIImage class]]) {
-            _oneImageView.image = img;
-        }else{
-            [_oneImageView sd_setImageWithURL:[NSURL URLWithString:[images objectAtIndex:0]]];
-        }
-        _oneImageButton.tag = 0;
-        
-    }else{
-        _oneImageView.hidden = YES;
-    }
+//    if (images.count > 0) {
+//        id img = [images objectAtIndex:0];
+//        if ([img isKindOfClass:[UIImage class]]) {
+//            UIImage *image = img;
+//            oneImageWidth = image.size.width;
+//            oneImageHeight = image.size.height;
+//        }
+//    }
+//    
+//    if (images.count == 1) {
+//        _oneImageView.hidden = NO;
+//        _oneImageButton.hidden = NO;
+//        
+//        
+//        id img = [images objectAtIndex:0];
+//        if ([img isKindOfClass:[UIImage class]]) {
+//            
+//            if (oneImageWidth > OneImageMaxWidth) {
+//                _oneImageView.frame = CGRectMake(0, 0, OneImageMaxWidth, oneImageHeight*(OneImageMaxWidth/oneImageWidth));
+//                _oneImageButton.frame = CGRectMake(0, 0, OneImageMaxWidth, oneImageHeight*(OneImageMaxWidth/oneImageWidth));;
+//            }else{
+//                _oneImageView.frame = CGRectMake(0, 0, oneImageWidth, oneImageHeight);
+//                _oneImageButton.frame = CGRectMake(0, 0, oneImageWidth, oneImageHeight);
+//            }
+//            _oneImageView.image = img;
+//        }else{
+//            _oneImageView.frame = CGRectMake(0, 0, 60, 60);
+//            _oneImageButton.frame = CGRectMake(0, 0, 60, 60);
+//            
+//            [_oneImageView sd_setImageWithURL:[NSURL URLWithString:[images objectAtIndex:0]]];
+//        }
+//        _oneImageButton.tag = 0;
+//        
+//    }else{
+//        _oneImageView.hidden = YES;
+//    }
     
     for (int i=0; i< _imageViews.count; i++) {
         DFImageUnitView *imageUnitView = [_imageViews objectAtIndex:i];
         
         if (images.count == 1) {
-            imageUnitView.hidden = YES;
+            
+            id img = [images objectAtIndex:0];
+            if ([img isKindOfClass:[UIImage class]]) {
+                imageUnitView.imageView.image = img;
+            }else{
+                [imageUnitView.imageView sd_setImageWithURL:[NSURL URLWithString:[images objectAtIndex:0]]];
+            }
+            
+            imageUnitView.imageButton.tag = 0;
+            imageUnitView.hidden = NO;
+//            imageUnitView.hidden = YES;
+//            [imageUnitView.imageView sd_setImageWithURL:[NSURL URLWithString:[images objectAtIndex:0]]];
+            break;
         }else{
             
             if (images.count == 4) {
@@ -228,21 +267,21 @@
         return 0.0;
     }
     
-    if (images.count == 1) {
-        id img = [images objectAtIndex:0];
-        if ([img isKindOfClass:[UIImage class]]) {
-            UIImage *image = img;
-            oneImageWidth = image.size.width;
-            oneImageHeight = image.size.height;
-        }
-        
-        if (oneImageWidth > OneImageMaxWidth) {
-            return oneImageHeight*(OneImageMaxWidth/oneImageWidth);
-        }
-        return oneImageHeight;
-    }
+//    if (images.count == 1) {
+//        id img = [images objectAtIndex:0];
+//        if ([img isKindOfClass:[UIImage class]]) {
+//            UIImage *image = img;
+//            oneImageWidth = image.size.width;
+//            oneImageHeight = image.size.height;
+//        }
+//        
+//        if (oneImageWidth > OneImageMaxWidth) {
+//            return oneImageHeight*(OneImageMaxWidth/oneImageWidth);
+//        }
+//        return oneImageHeight;
+//    }
     
-    if (images.count >1 && images.count <=3 ) {
+    if (images.count >0 && images.count <=3 ) {
         return height;
     }
     

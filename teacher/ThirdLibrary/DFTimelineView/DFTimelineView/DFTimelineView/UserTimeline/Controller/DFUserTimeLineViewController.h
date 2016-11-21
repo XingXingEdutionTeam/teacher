@@ -11,6 +11,7 @@
 
 @interface DFUserTimeLineViewController: DFBaseTimeLineViewController
 
+@property (nonatomic, strong) NSMutableArray *items;
 
 -(void)addItem:(DFBaseUserLineItem *)item;
 

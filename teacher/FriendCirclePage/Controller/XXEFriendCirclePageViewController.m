@@ -199,7 +199,7 @@
         }
     } failure:^(__kindof YTKBaseRequest *request) {
          [weakSelf endRefresh];
-        [weakSelf endLoadMore];
+         [weakSelf hudShowText:@"网络连接错误" second:2.f];
     }];
 }
 
@@ -235,7 +235,7 @@
             textImageItem.itemId = j;
 //            NSLog(@"时间轴:%lld",textImageItem.itemId);
             j++;
-            [textImageItem configure:[circleModel copy]];
+            [textImageItem configure:circleModel];
             //如果发布的圈子有图片则显示图片
             if (self.page == 1) {
                 [self.tableView reloadData];
@@ -270,10 +270,10 @@
     }else{
 //        NSLog(@"不包含");
         [srcSmallImages addObject:[NSString stringWithFormat:@"%@%@",kXXEPicURL,circleModel.pic_url ]];
-        [srcSmallImages addObject:@"哈哈.png"];
+//        [srcSmallImages addObject:@"哈哈.png"];
         
         [thumbBigImages addObject:[NSString stringWithFormat:@"%@%@",kXXEPicURL,circleModel.pic_url ]];
-        [thumbBigImages addObject:@"哈哈.png"];
+//        [thumbBigImages addObject:@"哈哈.png"];
         textImageItem.srcImages = srcSmallImages;
         textImageItem.thumbImages = thumbBigImages;
     }

@@ -234,8 +234,15 @@
             cell = [[[typeCell class] alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier];
         }else{
             NSLog(@"重用Cell: %@", reuseIdentifier);
+//            while ([cell.contentView.subviews lastObject] != nil) {
+//                [(UIView *)[cell.contentView.subviews lastObject] removeFromSuperview];
+//            }
+            
             
         }
+        
+//        [cell configure];
+        
 //        BOOL isLiked = NO;
         [cell setLikeImage];
         for (DFLineLikeItem *like in item.likes) {

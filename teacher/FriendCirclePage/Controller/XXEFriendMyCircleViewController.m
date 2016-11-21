@@ -86,6 +86,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
      self.view.backgroundColor = XXEBackgroundColor;
+    self.tableView.frame = CGRectMake(0, 0, KScreenWidth, KScreenHeight - 64);
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
     button.frame = CGRectMake(0, -64, 70, 64);
     button.backgroundColor = [UIColor redColor];
@@ -144,7 +145,7 @@
             NSLog(@"数组信息%@",listSS);
             NSLog(@"用户信息%@",[data objectForKey:@"user_info"]);
             NSDictionary *userInfo = [data objectForKey:@"user_info"];
-            
+            [self.items removeAllObjects];
             XXECircleUserModel *Usermodel = [[XXECircleUserModel alloc]initWithDictionary:userInfo error:nil];
             [self.headerMyCircleDatasource addObject:Usermodel];
             //设置顶部视图信息
@@ -158,7 +159,8 @@
             [self endRefresh];
             //朋友圈的信息列表
             [self myFriendCircleMessage];
-            NSLog(@"圈子顶部信息数组信息%@",self.headerMyCircleDatasource);
+            [self.tableView reloadData];
+//            NSLog(@"圈子顶部信息数组信息%@",self.headerMyCircleDatasource);
         } else{
             [self hudShowText:@"获取数据错误" second:2.f];
             [self endRefresh];
@@ -193,9 +195,9 @@
 //    XXECircleModel *circleModel = self.circleMyCircleListDatasource[0];
 //    NSLog(@"%@",circleModel.words);
     
-    if (self.circleDatasource.count != 0) {
-        for (int i =0; i<self.circleDatasource.count; i++) {
-            XXECircleModel *circleModel = self.circleDatasource[i];
+    if (self.circleMyCircleListDatasource.count != 0) {
+        for (int i =0; i<self.circleMyCircleListDatasource.count; i++) {
+            XXECircleModel *circleModel = self.circleMyCircleListDatasource[i];
             DFTextImageUserLineItem *textItem = [[DFTextImageUserLineItem alloc]init];
             textItem.itemId = i;
             NSLog(@"%@",circleModel.date_tm);
@@ -264,7 +266,7 @@
     infomationVC.imagesArr = circleModel.pic_url;
     infomationVC.goodArr = circleModel.good_user;
     infomationVC.hidesBottomBarWhenPushed = YES;
-    infomationVC.deleteOtherXid = self.otherXid;
+    infomationVC.deleteOtherXid = [self.otherXid integerValue];
     
     infomationVC.deteleModelBlock = ^ (XXECircleModel *model, NSString *item){
         [self.circleMyCircleListDatasource enumerateObjectsUsingBlock:^(XXECircleModel  *_Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {

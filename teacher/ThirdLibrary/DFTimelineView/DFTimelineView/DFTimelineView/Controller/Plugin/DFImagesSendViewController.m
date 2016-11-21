@@ -32,6 +32,7 @@
     UIScrollView *bgScrollView;
     UIView *bgBtnView;
     UITapGestureRecognizer * _gesture;
+    UILabel *lineLabel;
 }
 
 @property (nonatomic, strong) NSMutableArray *images;
@@ -126,7 +127,7 @@
     _contentView.font = [UIFont systemFontOfSize:17];
     //_contentView.layer.borderColor = [UIColor redColor].CGColor;
     //_contentView.layer.borderWidth =2;
-    [self.view addSubview:_contentView];
+    [bgScrollView addSubview:_contentView];
     
     //placeholder
     _placeholder = [[UILabel alloc] initWithFrame:CGRectMake(x+5, y+5, 150, 25)];
@@ -134,13 +135,24 @@
     _placeholder.font = [UIFont systemFontOfSize:14];
     _placeholder.textColor = [UIColor lightGrayColor];
     _placeholder.enabled = NO;
-    [self.view addSubview:_placeholder];
+    [bgScrollView addSubview:_placeholder];
     
+    bgBtnView = [[UIView alloc]init];
+    bgBtnView.backgroundColor = [UIColor whiteColor];
+    [bgScrollView  addSubview:bgBtnView];
     
     _gridView = [[DFPlainGridImageView alloc] initWithFrame:CGRectZero];
     _gridView.delegate = self;
-    [self.view addSubview:_gridView];
+    [bgScrollView addSubview:_gridView];
     
+    self.locationButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [bgBtnView addSubview:self.locationButton];
+    
+    lineLabel = [[UILabel alloc]init];
+    [bgBtnView addSubview:lineLabel];
+    
+    self.whoButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [bgBtnView addSubview:self.whoButton];
     
     _mask = [[UIView alloc] initWithFrame:self.view.bounds];
     _mask.backgroundColor = [UIColor clearColor];
@@ -171,25 +183,22 @@
     
     CGFloat bgViewH = CGRectGetMaxY(_gridView.frame)+10;
     bgView.frame = CGRectMake(0, 0, KScreenWidth, bgViewH);
-    bgBtnView = [[UIView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(bgView.frame)+20, KScreenWidth, 110)];
-    bgBtnView.backgroundColor = [UIColor whiteColor];
-    [bgScrollView  addSubview:bgBtnView];
+    bgBtnView.frame = CGRectMake(0, CGRectGetMaxY(bgView.frame)+20, KScreenWidth, 110);
+    
     //所在位置
-    self.locationButton = [UIButton buttonWithType:UIButtonTypeCustom];
     self.locationButton.frame = CGRectMake(10, 10, KScreenWidth-20, 40);
     [self.locationButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [self.locationButton setTitle:@"所在位置" forState:UIControlStateNormal];
     self.locationButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     self.locationButton.titleEdgeInsets = UIEdgeInsetsMake(0, 10, 0, 0);
     [self.locationButton addTarget:self action:@selector(locationButtonAction:) forControlEvents:UIControlEventTouchUpInside];
-    [bgBtnView addSubview:self.locationButton];
     
-    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(10, CGRectGetMaxY(self.locationButton.frame)+5, KScreenWidth-20, 1)];
-    label.backgroundColor = [UIColor lightGrayColor];
-    [bgBtnView addSubview:label];
+    lineLabel.frame = CGRectMake(10, CGRectGetMaxY(self.locationButton.frame)+5, KScreenWidth-20, 1);
+    lineLabel.backgroundColor = [UIColor lightGrayColor];
+    
     
     //有谁可以看
-    self.whoButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    
 //    self.whoButton.backgroundColor = [UIColor redColor];
     self.whoButton.frame = CGRectMake(10, CGRectGetMaxY(self.locationButton.frame)+10, KScreenWidth-20, 40);
     [self.whoButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
@@ -197,7 +206,6 @@
     self.whoButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     self.whoButton.titleEdgeInsets = UIEdgeInsetsMake(0, 10, 0, 0);
     [self.whoButton addTarget:self action:@selector(whoButtonAction:) forControlEvents:UIControlEventTouchUpInside];
-    [bgBtnView addSubview:self.whoButton];
 }
 
 #pragma mark - 所在位置的定位

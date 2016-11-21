@@ -19,7 +19,7 @@
 
 @interface DFUserTimeLineViewController()<DFBaseUserLineCellDelegate>
 
-@property (nonatomic, strong) NSMutableArray *items;
+
 
 @property (nonatomic, assign) NSUInteger currentDay;
 
@@ -100,7 +100,7 @@
 
 -(void)addItem:(DFBaseUserLineItem *)item
 {
-    
+//    [_items removeAllObjects];
     NSDate *date = [NSDate dateWithTimeIntervalSince1970:(item.ts)];
     NSCalendar* calendar = [NSCalendar currentCalendar];
     NSDateComponents* components = [calendar components:NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit fromDate:date];
@@ -125,7 +125,7 @@
     NSLog(@"%ld %ld %ld %d", (long)year, (long)month, (long)day, item.bShowTime);
     
     [_items addObject:item];
-    [self.tableView reloadData];
+//    [self.tableView reloadData];
 }
 
 

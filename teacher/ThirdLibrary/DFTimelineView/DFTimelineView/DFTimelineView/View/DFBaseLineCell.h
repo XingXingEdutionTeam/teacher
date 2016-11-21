@@ -80,6 +80,8 @@
 
 -(void)setLikeImage;
 
+-(void) configure;
+
 //-(void) onClickLikeCommentBtn:(id)sender;
 
 @end

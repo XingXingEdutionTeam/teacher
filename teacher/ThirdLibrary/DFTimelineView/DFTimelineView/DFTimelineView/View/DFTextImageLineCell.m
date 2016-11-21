@@ -11,7 +11,7 @@
 
 #import "MLLabel+Size.h"
 
-#import "DFGridImageView.h"
+
 
 
 #import "NSString+MLExpression.h"
@@ -33,7 +33,7 @@
 
 @property (strong, nonatomic) MLLinkLabel *textContentLabel;
 
-@property (strong, nonatomic) DFGridImageView *gridImageView;
+
 
 @end
 
