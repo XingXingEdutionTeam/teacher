@@ -7,7 +7,10 @@
 //
 
 #import "DFLineLikeItem.h"
-
+#import "XXEGoodUserModel.h"
 @implementation DFLineLikeItem
-
+-(void)configure:(XXEGoodUserModel*)model {
+    self.userId = [model.goodXid floatValue];
+    self.userNick = model.goodNickName;
+}
 @end

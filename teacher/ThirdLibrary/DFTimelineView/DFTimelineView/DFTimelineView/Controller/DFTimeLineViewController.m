@@ -42,6 +42,8 @@
 
 @property (nonatomic, assign) NSInteger indexRow;
 
+@property(nonatomic ,copy) NSString *talkId;
+
 //测试获得被评轮人的XID
 @property (nonatomic, assign)NSInteger toWhoXid;
 
@@ -304,6 +306,7 @@
 
 -(void)addItem:(DFBaseLineItem *)item
 {
+    self.talkId = item.talkId;
     [self insertItem:item index:_items.count];
 }
 
@@ -420,7 +423,7 @@ isSelet:(BOOL)isSelet
         //获取回复时的被回复人的XID
         self.toWhoXid = replyCommentItem.userId;
         NSLog(@"%ld",(long)self.toWhoXid);
-        [self xxe_friendCirclePageCommentToWhoXid:self.toWhoXid];
+        [self xxe_friendCirclePageCommentToWhoXid:self.toWhoXid commentId:[NSString stringWithFormat:@"%lld", commentItem.commentId] itemId:itemId replyCommentId:[NSString stringWithFormat:@"%lu", (unsigned long)commentItem.replyUserId] replyNickname:replyCommentItem.userNick];
     }
     item.cellHeight = 0;
     [self genCommentAttrString:item];
@@ -545,10 +548,10 @@ isSelet:(BOOL)isSelet
 
 -(void)onCommentCreate:(long long)commentId text:(NSString *)text
 {
-    [self onCommentCreate:commentId text:text itemId:_currentItemId];
+    [self onCommentCreate:commentId text:text itemId:_currentItemId talkId:self.talkId];
 }
 
--(void)onCommentCreate:(long long)commentId text:(NSString *)text itemId:(long long) itemId
+-(void)onCommentCreate:(long long)commentId text:(NSString *)text itemId:(long long) itemId talkId:(NSString *)talkId
 {
     
 }

@@ -6,6 +6,7 @@
 //  Copyright (c) 2015年 Datafans, Inc. All rights reserved.
 //
 
+@class XXECommentModel;
 
 @interface DFLineCommentItem : NSObject
 
@@ -22,5 +23,7 @@
 @property (nonatomic, strong) NSString *text;
 
 @property (nonatomic, strong)NSString *talk_id;
+
+-(void)configure:(XXECommentModel*)model;
 
 @end

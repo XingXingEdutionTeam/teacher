@@ -7,6 +7,7 @@
 //
 
 #import <JSONModel/JSONModel.h>
+@class  DFLineCommentItem;
 
 @protocol XXECommentModel
 
@@ -36,5 +37,7 @@
 @property (nonatomic, copy) NSString <Optional> *date_tm;
 
 + (NSArray*)parseResondsData:(id)respondObject;
+
+-(void)configure:(DFLineCommentItem*)model;
 
 @end

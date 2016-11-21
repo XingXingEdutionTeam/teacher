@@ -8,6 +8,7 @@
 
 #import "DFBaseLineItem.h"
 #import "XXECircleModel.h"
+#import "XXEGoodUserModel.h"
 
 @interface DFTextImageLineItem : DFBaseLineItem
 
@@ -19,8 +20,11 @@
 
 @property (nonatomic, strong) NSAttributedString *attrText;
 
+
+
 //说说ID
 @property (nonatomic, strong)NSString *speak_Id;
 -(void)configure:(XXECircleModel*)circleModel;
+-(void)configureWithGoodUser:(XXEGoodUserModel*)model;
 
 @end

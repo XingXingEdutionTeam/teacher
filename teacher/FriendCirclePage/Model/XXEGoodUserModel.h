@@ -7,7 +7,7 @@
 //
 
 #import <JSONModel/JSONModel.h>
-
+@class DFLineLikeItem;
 @protocol  XXEGoodUserModel
 @end
 
@@ -17,5 +17,7 @@
 @property (nonatomic, copy)NSString <Optional>*goodXid;
 /** 点赞人的昵称 */
 @property (nonatomic, copy)NSString <Optional>*goodNickName;
+
+-(void)configure:(DFLineLikeItem *)model;
 
 @end

@@ -45,7 +45,7 @@
 -(void)cancelCommentItem:(DFLineCommentItem *)commentItem itemId:(long long)itemId replyCommentId:(long long)replyCommentId;
 
 //回调评论的时候的被评论人的XID
-- (void)xxe_friendCirclePageCommentToWhoXid:(NSInteger)toWhoXid;
+- (void)xxe_friendCirclePageCommentToWhoXid:(NSInteger)toWhoXid commentId:(NSString *)commentId itemId:(long long)itemId replyCommentId:(NSString *)replyCommentId replyNickname:(NSString*)replyNickname;
 
 //发送图文
 -(void)onSendTextImage:(NSString *)text images:(NSArray *)images Location:(NSString *)location PersonSee:(NSString *)personSee;

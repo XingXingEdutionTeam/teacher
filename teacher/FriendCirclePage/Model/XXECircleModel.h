@@ -13,9 +13,9 @@
 @interface XXECircleModel : JSONModel
 
 /** 评论的model */
-@property (nonatomic, strong)NSArray <XXECommentModel>*comment_group;
+@property (nonatomic, strong)NSMutableArray <XXECommentModel>*comment_group;
 /** 点赞的Model */
-@property (nonatomic, strong)NSArray <XXEGoodUserModel>*good_user;
+@property (nonatomic, strong)NSMutableArray <XXEGoodUserModel>*good_user;
 /** 朋友圈用户头像 */
 @property (nonatomic, copy)NSString <Optional>*head_img;
 ///** 朋友圈头像类型 0为系统头像1为第三方图像*/

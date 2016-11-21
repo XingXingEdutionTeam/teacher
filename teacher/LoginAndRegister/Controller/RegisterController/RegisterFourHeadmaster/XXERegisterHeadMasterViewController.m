@@ -538,7 +538,7 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
     //return_param_all = 1		//要求返回所有传参,测试用
     NSDictionary *parameter = @{
                                 @"login_type":_login_type,
-                                @"phone":@"13938498882",
+                                @"phone":_userPhoneNum,
                                 @"pass":_userPassword,
                                 @"tname":_userName,
                                 @"id_card":_userIDCarNum,

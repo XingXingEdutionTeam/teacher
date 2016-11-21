@@ -293,8 +293,9 @@
         for (int j =0; j<circleModel.good_user.count; j++) {
             XXEGoodUserModel *goodModel = circleModel.good_user[j];
             DFTextImageLineItem *likeItem = [[DFTextImageLineItem alloc]init];
-            likeItem.userNick = goodModel.goodNickName;
-            likeItem.userId = [goodModel.goodXid integerValue];
+            [likeItem configureWithGoodUser:goodModel];
+//            likeItem.userNick = goodModel.goodNickName;
+//            likeItem.userId = [goodModel.goodXid integerValue];
             [textImageItem.likes addObject:likeItem];
         }
     }
@@ -304,12 +305,13 @@
         for (int k =0; k<circleModel.comment_group.count; k++) {
             DFLineCommentItem *commentItem = [[DFLineCommentItem alloc]init];
             XXECommentModel *commentModel = circleModel.comment_group[k];
-            commentItem.commentId = [commentModel.commentId integerValue];
-            commentItem.userId = [commentModel.commentXid integerValue];
-            commentItem.userNick = commentModel.commentNicknName;
-            commentItem.replyUserId = [commentModel.to_who_xid integerValue];
-            commentItem.replyUserNick = commentModel.to_who_nickname;
-            commentItem.text = commentModel.con;
+            [commentItem configure:commentModel];
+//            commentItem.commentId = [commentModel.commentId integerValue];
+//            commentItem.userId = [commentModel.commentXid integerValue];
+//            commentItem.userNick = commentModel.commentNicknName;
+//            commentItem.replyUserId = [commentModel.to_who_xid integerValue];
+//            commentItem.replyUserNick = commentModel.to_who_nickname;
+//            commentItem.text = commentModel.con;
             [textImageItem.comments addObject:commentItem];
         }
 //        NSLog(@"评论的信息%@",textImageItem.comments);
@@ -495,7 +497,7 @@
 }
 
 #pragma mark - 评论和点赞
--(void)onCommentCreate:(long long)commentId text:(NSString *)text itemId:(long long) itemId
+-(void)onCommentCreate:(long long)commentId text:(NSString *)text itemId:(long long) itemId talkId:(NSString *)talkId
 {
     NSString *otherXid;
 
@@ -524,6 +526,7 @@
         //评论
         //网络请求可以放在这里
         XXEFriendCircleCommentApi *friendCommentApi = [[XXEFriendCircleCommentApi alloc]initWithFriendCircleCommentUerXid:parameterXid UserID:parameterUser_Id TalkId:self.speakId Com_type:@"1" Con:text To_Who_Xid:otherXid];
+        __weak __typeof(self)weakSelf = self;
         [friendCommentApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
             
             NSLog(@"点赞/评论 数据 --- %@", request.responseJSONObject);
@@ -531,29 +534,41 @@
             NSDictionary *data = [request.responseJSONObject objectForKey:@"data"];
             
             if ([code integerValue] == 1) {
+                
+                XXECommentModel *commentModel = [[XXECommentModel alloc] init];
+                commentModel.commentId = data[@"id"];
+                commentModel.commentXid = [NSString stringWithFormat:@"%ld", (long)myXId];
+                commentModel.commentNicknName = weakSelf.userNickName;
+                commentModel.con = text;
+                
                 DFLineCommentItem *commentItem = [[DFLineCommentItem alloc] init];
-                commentItem.commentId = [data[@"id"] intValue];
-                commentItem.userId = myXId;
-                commentItem.userNick = self.userNickName;
-                commentItem.text = text;
-                [self addCommentItem:commentItem itemId:itemId replyCommentId:commentId];
-                [self hudShowText:@"评论成功" second:1.f];
-//                [self setupFriendCircleMessagePage:_page];
+                [commentItem configure:commentModel];
+//                commentItem.commentId = [data[@"id"] intValue];
+//                commentItem.userId = myXId;
+//                commentItem.userNick = weakSelf.userNickName;
+//                commentItem.text = text;
+                [weakSelf addCommentItem:commentItem itemId:itemId replyCommentId:commentId];
+                [weakSelf hudShowText:@"评论成功" second:1.f];
+                
+                //刷新本地数据
+                XXECircleModel * model = weakSelf.circleListDatasource[(int)itemId - 1];
+                [model.comment_group addObject:commentModel];
+                weakSelf.circleListDatasource[(int)itemId - 1] = model;
             }else{
                 
-                [self hudShowText:@"评论失败" second:1.f];
+                [weakSelf hudShowText:@"评论失败" second:1.f];
             }
 //            NSLog(@"%@",request.responseJSONObject);
 //            NSLog(@"%@",[request.responseJSONObject objectForKey:@"msg"]);
             
         } failure:^(__kindof YTKBaseRequest *request) {
-            [self hudShowText:@"网络失败" second:1.f];
+            [weakSelf hudShowText:@"网络失败" second:1.f];
         }];
     }
 }
 
 //如果是回复就会执行这个方法所以回复的网络请求就可以放在这里
-- (void)xxe_friendCirclePageCommentToWhoXid:(NSInteger)toWhoXid
+- (void)xxe_friendCirclePageCommentToWhoXid:(NSInteger)toWhoXid commentId:(NSString *)commentId itemId:(long long)itemId replyCommentId:(NSString *)replyCommentId replyNickname:(NSString*)replyNickname
 {
 //    NSLog(@"%ld",(long)toWhoXid);
 
@@ -561,20 +576,34 @@
 //    NSLog(@"回复人的XID%@,回复人的USERID%@",strngXid,homeUserId);
 //    NSLog(@"回复内容%@ 被回复人的XID%@",self.toWhoComment,stringToWhoXid);
      XXEFriendCircleCommentApi *friendCommentApi = [[XXEFriendCircleCommentApi alloc]initWithFriendCircleCommentUerXid:parameterXid UserID:parameterUser_Id TalkId:self.speakId Com_type:@"2" Con:self.toWhoComment To_Who_Xid:stringToWhoXid];
+    __weak __typeof(self)weakSelf = self;
     [friendCommentApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         NSString *code = [request.responseJSONObject objectForKey:@"code"];
         if ([code integerValue] == 1) {
-             [self hudShowText:@"回复成功" second:1.f];
+             [weakSelf hudShowText:@"回复成功" second:1.f];
 //            [self setupFriendCircleMessagePage:_page];
-            [self.tableView reloadData];
+            [weakSelf.tableView reloadData];
+            
+            XXECommentModel *commentModel = [[XXECommentModel alloc] init];
+            commentModel.con = weakSelf.toWhoComment;
+            commentModel.to_who_xid = stringToWhoXid;
+            commentModel.commentId = commentId;
+            commentModel.commentNicknName = [XXEUserInfo user].nickname;
+            commentModel.to_who_nickname = replyNickname;
+    
+            //刷新本地数据
+            XXECircleModel * model = weakSelf.circleListDatasource[(int)itemId - 1];
+            [model.comment_group addObject:commentModel];
+            weakSelf.circleListDatasource[(int)itemId - 1] = model;
+            
         }else{
-            [self hudShowText:@"回复失败" second:1.f];
+            [weakSelf hudShowText:@"回复失败" second:1.f];
         }
 //        NSLog(@"%@",request.responseJSONObject);
 //        NSLog(@"%@",[request.responseJSONObject objectForKey:@"msg"]);
         
     } failure:^(__kindof YTKBaseRequest *request) {
-        [self hudShowText:@"回复失败" second:1.f];
+        [weakSelf hudShowText:@"回复失败" second:1.f];
     }];
 }
 
@@ -597,6 +626,7 @@
     //    NSLog(@"CommentId%lld",commentId);
     NSString *commentID = [NSString stringWithFormat:@"%lld",commentId];
     XXEDeleteCommentApi *commentApi = [[XXEDeleteCommentApi alloc]initWithDeleteCommentEventType:@"3" TalkId:self.speakId CommentId:commentID UserXid:parameterXid UserId:parameterUser_Id];
+    __weak __typeof(self)weakSelf = self;
     [commentApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         //        NSLog(@"%@",request.responseJSONObject);
         NSString *code = [request.responseJSONObject objectForKey:@"code"];
@@ -604,14 +634,39 @@
         if ([code integerValue]==1 || [code integerValue]==5 ) {
             //            NSLog(@"%@",[request.responseJSONObject objectForKey:@"msg"]);
             //            NSLog(@"%@",[request.responseJSONObject objectForKey:@"data"]);
+            
+            XXECommentModel *commentModel = [[XXECommentModel alloc]init];
+            commentModel.commentId = [NSString stringWithFormat:@"%lld", commentId];
+            commentModel.commentXid = parameterXid;
+            commentModel.commentNicknName = @"";
+            commentModel.con = @"";
+             
             DFLineCommentItem *commentItem = [[DFLineCommentItem alloc] init];
-            commentItem.commentId = commentId;
-            commentItem.userId = [parameterXid integerValue];
-            commentItem.userNick = @"";
-            commentItem.text = @"";
+            [commentItem configure:commentModel];
+//            commentItem.commentId = commentId;
+//            commentItem.userId = [parameterXid integerValue];
+//            commentItem.userNick = @"";
+//            commentItem.text = @"";
             [self cancelCommentItem:commentItem itemId:itemId replyCommentId:commentId];
             [self hudShowText:@"删除成功" second:1.f];
             [self.tableView reloadData];
+            
+            //刷新本地数据
+            XXECircleModel * model = weakSelf.circleListDatasource[(int)itemId - 1];
+            
+            for (XXECommentModel * commentModel in model.comment_group) {
+                
+                if ([commentModel.commentId isEqualToString:[NSString stringWithFormat:@"%lld",commentId]]) {
+                    [model.comment_group removeObject:commentModel];
+                    break;
+                }
+                
+            }
+            
+            
+//            [model.comment_group removeObject:model];
+            weakSelf.circleListDatasource[(int)itemId - 1] = model;
+            
 //            [self setupFriendCircleMessagePage:_page];
         }else{
             [self hudShowText:@"删除失败" second:1.f];
@@ -681,6 +736,7 @@
         self.speakId = circleModel.talkId;
 //    NSLog(@"说说ID%@ XID%@ UserID%@",self.speakId ,strngXid,homeUserId);
     XXEFriendCirclegoodApi *friendGoodApi = [[XXEFriendCirclegoodApi alloc]initWithFriendCircleGoodOrCancelUerXid:parameterXid UserID:parameterUser_Id TalkId:self.speakId];
+        __weak __typeof(self)weakSelf = self;
     [friendGoodApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         /*
          code = 10;    //取消点赞 成功
@@ -695,23 +751,35 @@
         
         NSString *code = [request.responseJSONObject objectForKey:@"code"];
         NSDictionary *data = [request.responseJSONObject objectForKey:@"data"];
-        NSString *goodXid = [data objectForKey:@"xid"];
-        NSString *goodNickName = [data objectForKey:@"nickname"];
+        
+        XXEGoodUserModel * goodModel = [[XXEGoodUserModel alloc] init];
+        goodModel.goodXid = [data objectForKey:@"xid"];
+        goodModel.goodNickName = [data objectForKey:@"nickname"];
+        DFLineLikeItem *likeItem = [[DFLineLikeItem alloc] init];
+        [likeItem configure:goodModel];
+        
+        //刷新本地数据
+        XXECircleModel * model = weakSelf.circleListDatasource[(int)itemId - 1];
         
         if ([code integerValue]==1) {
-            DFLineLikeItem *likeItem = [[DFLineLikeItem alloc] init];
-            likeItem.userId = [goodXid integerValue];
-            likeItem.userNick = goodNickName;
-//            NSLog(@"Model%@ ID%lld",likeItem,itemId);
             [self addLikeItem:likeItem itemId:itemId isSelet:NO];
             [self hudShowText:@"点赞成功" second:1.f];
+            [model.good_user addObject:goodModel];
+            
         }else if ([code integerValue]==10){
-            DFLineLikeItem *likeItem = [[DFLineLikeItem alloc] init];
-            likeItem.userId = [goodXid integerValue];
-            likeItem.userNick = goodNickName;
+            
             [self addLikeItem:likeItem itemId:itemId isSelet:YES];
             [self hudShowText:@"取消成功" second:1.f];
+            dispatch_async(dispatch_get_global_queue(0, 0), ^{
+                for (XXEGoodUserModel * good in model.good_user) {
+                    if ([good.goodXid isEqualToString:[XXEUserInfo user].xid]) {
+                        [model.good_user removeObject:good];
+                        break;
+                    }
+                }
+            });
         }
+        weakSelf.circleListDatasource[(int)itemId - 1] = model;
     
     } failure:^(__kindof YTKBaseRequest *request) {
         [self hudShowText:@"网络不通，请检查网络！" second:1.f];

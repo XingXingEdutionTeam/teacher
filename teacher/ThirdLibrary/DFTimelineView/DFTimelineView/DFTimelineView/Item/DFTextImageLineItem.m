@@ -31,7 +31,7 @@
         self.userAvatar = circleModel.head_img;
     }
     
-    
+    self.talkId = circleModel.talkId;
     self.userNick = circleModel.nickname;
     self.title = @"发表了";
     self.text = circleModel.words;
@@ -41,6 +41,11 @@
     self.ts = [circleModel.date_tm integerValue]*1000;;
     self.speak_Id = circleModel.talkId;
 
+}
+
+-(void)configureWithGoodUser:(XXEGoodUserModel*)model {
+    self.userNick = model.goodNickName;
+    self.userId = [model.goodXid integerValue];
 }
 
 @end

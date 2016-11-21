@@ -7,6 +7,7 @@
 //
 
 #import "XXECommentModel.h"
+#import "DFLineCommentItem.h"
 
 @implementation XXECommentModel
 
@@ -23,6 +24,10 @@
 +(JSONKeyMapper *)keyMapper
 {
     return [[JSONKeyMapper alloc] initWithDictionary:@{@"id":@"commentId",@"xid":@"commentXid",@"nickname":@"commentNicknName"}];
+}
+
+-(void)configure:(DFLineCommentItem*)model {
+    
 }
 
 @end

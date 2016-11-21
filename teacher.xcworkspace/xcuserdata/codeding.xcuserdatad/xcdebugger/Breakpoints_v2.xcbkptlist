@@ -201,38 +201,6 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "teacher/FriendCirclePage/Controller/XXEFriendCirclePageViewController.m"
-            timestampString = "501154121.799548"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "883"
-            endingLineNumber = "883"
-            landmarkName = "-wwwqqqqqqWithPath:name:fileName:dataURL:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "teacher/FriendCirclePage/Controller/XXEFriendCirclePageViewController.m"
-            timestampString = "501154121.799548"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "887"
-            endingLineNumber = "887"
-            landmarkName = "-wwwqqqqqqWithPath:name:fileName:dataURL:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "teacher/MySelfPage/Controller/XXEMyselfInfoCollectionUsersViewController.m"
             timestampString = "500989969.792875"
             startingColumnNumber = "9223372036854775807"
@@ -256,6 +224,22 @@
             startingLineNumber = "112"
             endingLineNumber = "112"
             landmarkName = "-onLongPress:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "teacher/FriendCirclePage/Controller/XXEFriendCirclePageViewController.m"
+            timestampString = "501345450.400932"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "655"
+            endingLineNumber = "655"
+            landmarkName = "-deleteComment:itemId:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

@@ -34,6 +34,8 @@
 
 @property (nonatomic, strong) NSMutableArray *commentStrArray;
 
+@property(nonatomic , copy) NSString* talkId;
+
 //@property (nonatomic, strong) NSString *zanFlag;
 
 @end
