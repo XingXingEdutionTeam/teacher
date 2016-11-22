@@ -891,6 +891,9 @@
 		9E8E095B1DE31AAB00B0A942 /* XXETeacherMessTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9E8E09201DE31AAA00B0A942 /* XXETeacherMessTableViewCell.xib */; };
 		9E8E095C1DE31AAB00B0A942 /* XXETeacherTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E8E09221DE31AAA00B0A942 /* XXETeacherTableViewCell.m */; };
 		9E8E095D1DE31AAB00B0A942 /* XXETeacherTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9E8E09231DE31AAA00B0A942 /* XXETeacherTableViewCell.xib */; };
+		9E8E09621DE3E77800B0A942 /* RuningXX.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E8E09611DE3E77800B0A942 /* RuningXX.swift */; };
+		9E8E09641DE3E7F800B0A942 /* RuningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E8E09631DE3E7F800B0A942 /* RuningView.swift */; };
+		9E8E09731DE4445700B0A942 /* XXENewCourseView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E8E09721DE4445700B0A942 /* XXENewCourseView.m */; };
 		9E9B4C7A1D633C8400983F5E /* XXEFriendCircleApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E9B4C791D633C8400983F5E /* XXEFriendCircleApi.m */; };
 		9E9FAF191D5DBD1500C15AD5 /* XXEMyselfAblumAddApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E9FAF181D5DBD1500C15AD5 /* XXEMyselfAblumAddApi.m */; };
 		9E9FAF1C1D5DC09800C15AD5 /* XXEOtherTeacherAlbumViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E9FAF1B1D5DC09800C15AD5 /* XXEOtherTeacherAlbumViewController.m */; };
@@ -2560,6 +2563,12 @@
 		9E8E09211DE31AAA00B0A942 /* XXETeacherTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXETeacherTableViewCell.h; sourceTree = "<group>"; };
 		9E8E09221DE31AAA00B0A942 /* XXETeacherTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXETeacherTableViewCell.m; sourceTree = "<group>"; };
 		9E8E09231DE31AAA00B0A942 /* XXETeacherTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XXETeacherTableViewCell.xib; sourceTree = "<group>"; };
+		9E8E095E1DE3E66700B0A942 /* teacher-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "teacher-Bridging-Header.h"; sourceTree = "<group>"; };
+		9E8E09611DE3E77800B0A942 /* RuningXX.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RuningXX.swift; sourceTree = "<group>"; };
+		9E8E09631DE3E7F800B0A942 /* RuningView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RuningView.swift; sourceTree = "<group>"; };
+		9E8E09711DE4445600B0A942 /* XXENewCourseView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXENewCourseView.h; sourceTree = "<group>"; };
+		9E8E09721DE4445700B0A942 /* XXENewCourseView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXENewCourseView.m; sourceTree = "<group>"; };
+		9E8E09751DE45B1C00B0A942 /* CGFloat_Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CGFloat_Extension.h; sourceTree = "<group>"; };
 		9E9B4C781D633C8400983F5E /* XXEFriendCircleApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXEFriendCircleApi.h; sourceTree = "<group>"; };
 		9E9B4C791D633C8400983F5E /* XXEFriendCircleApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXEFriendCircleApi.m; sourceTree = "<group>"; };
 		9E9FAF171D5DBD1500C15AD5 /* XXEMyselfAblumAddApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXEMyselfAblumAddApi.h; sourceTree = "<group>"; };
@@ -5294,6 +5303,8 @@
 				9E02B4281D78399200BE40E3 /* XXEIdentityListViewCell.h */,
 				9E02B4291D78399200BE40E3 /* XXEIdentityListViewCell.m */,
 				9E02B42A1D78399200BE40E3 /* XXEIdentityListViewCell.xib */,
+				9E8E09711DE4445600B0A942 /* XXENewCourseView.h */,
+				9E8E09721DE4445700B0A942 /* XXENewCourseView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -5412,6 +5423,7 @@
 				9EE3BA971D95106C00D420A7 /* UIColor+RCColor.m */,
 				9EE3BA981D95106C00D420A7 /* UIImage+RCImage.h */,
 				9EE3BA991D95106C00D420A7 /* UIImage+RCImage.m */,
+				9E8E09751DE45B1C00B0A942 /* CGFloat_Extension.h */,
 				9EE3BA8B1D94FC2F00D420A7 /* KxMenu.h */,
 				9EE3BA8C1D94FC2F00D420A7 /* KxMenu.m */,
 				9EEA0E341D6E95700070C8C3 /* XXEVerticalButton.h */,
@@ -5424,6 +5436,9 @@
 				045350641DB9C96600F93537 /* XXESearchHistoryWord.m */,
 				9EB63A731DD5B17D003C4DEC /* StringHeight.h */,
 				9EB63A741DD5B17D003C4DEC /* StringHeight.m */,
+				9E8E095E1DE3E66700B0A942 /* teacher-Bridging-Header.h */,
+				9E8E09611DE3E77800B0A942 /* RuningXX.swift */,
+				9E8E09631DE3E7F800B0A942 /* RuningView.swift */,
 			);
 			path = XXETools;
 			sourceTree = "<group>";
@@ -6271,6 +6286,7 @@
 					9E48137E1D504D0900C614AC = {
 						CreatedOnToolsVersion = 7.2;
 						DevelopmentTeam = T66J45HUSH;
+						LastSwiftMigration = 0810;
 						SystemCapabilities = {
 							com.apple.Keychain = {
 								enabled = 0;
@@ -6826,6 +6842,7 @@
 				04A9DDB11D815CA700544782 /* XXEPermissionSettingTableViewCell.m in Sources */,
 				043596981DAA458100F85DAE /* XXERootReplyListController.m in Sources */,
 				04947CB31DC0CE3A008A351F /* BCQueryBillsCountReq.m in Sources */,
+				9E8E09641DE3E7F800B0A942 /* RuningView.swift in Sources */,
 				044DEC2F1D91383B00DE101A /* XXETeacherManagerClassInfoModel.m in Sources */,
 				04BB3AB51D75644400AA5C5C /* XXEBabyInfoViewController.m in Sources */,
 				0433013B1D62F0C600722DE2 /* XXEManagerAndHeadmasterApi.m in Sources */,
@@ -7052,6 +7069,7 @@
 				046E13191DBDB3A200FCBE49 /* XXEXingClassRoomTeacherCourseInfoViewController.m in Sources */,
 				9E5E23E61D90CD04008B1AAF /* YDEmojiCell.m in Sources */,
 				0454C2961D9A4DEA00D32983 /* XXECourseManagerSupportAndRefuseApi.m in Sources */,
+				9E8E09621DE3E77800B0A942 /* RuningXX.swift in Sources */,
 				04547B531DAB6BA50059F3F1 /* HomeViewController.m in Sources */,
 				0473A4C21D9918D0003C3D8C /* XXECourseManagerCourseDetailInfoApi.m in Sources */,
 				9E5E23E41D90CD04008B1AAF /* WZYTool.m in Sources */,
@@ -7092,6 +7110,7 @@
 				9EBA6F601D5CAE2D001B45C3 /* VedioCell.m in Sources */,
 				043301281D62BDD000722DE2 /* XXEChiefAndTeacherViewController.m in Sources */,
 				049479751DC0895B008A351F /* XXEXingClassRoomBuyCourseOrderMessageViewController.m in Sources */,
+				9E8E09731DE4445700B0A942 /* XXENewCourseView.m in Sources */,
 				04BB3A1C1D74742B00AA5C5C /* XXESchoolAlbumViewController.m in Sources */,
 				04A9DDC91D81712500544782 /* XXEMyselfInfoCollectionCommentModel.m in Sources */,
 				04947CAC1DC0CE3A008A351F /* BCPayResp.m in Sources */,
@@ -7448,9 +7467,11 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = T66J45HUSH;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -7489,6 +7510,9 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.xingxingEdu.teachercc;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "teacher/XXETools/teacher-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 				VALID_ARCHS = "arm64 armv7 armv7s";
 			};
 			name = Debug;
@@ -7499,9 +7523,11 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = T66J45HUSH;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -7540,6 +7566,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.xingxingEdu.teachercc;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "teacher/XXETools/teacher-Bridging-Header.h";
+				SWIFT_VERSION = 3.0;
 				VALID_ARCHS = "arm64 armv7 armv7s";
 			};
 			name = Release;
@@ -7547,6 +7575,7 @@
 		9E4813B01D504D0900C614AC /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				INFOPLIST_FILE = teacherTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -7559,6 +7588,7 @@
 		9E4813B11D504D0900C614AC /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				INFOPLIST_FILE = teacherTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -7571,6 +7601,7 @@
 		9E4813B31D504D0900C614AC /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				INFOPLIST_FILE = teacherUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.xingxingEdu.teacherUITests;
@@ -7583,6 +7614,7 @@
 		9E4813B41D504D0900C614AC /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				INFOPLIST_FILE = teacherUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.xingxingEdu.teacherUITests;

@@ -21,6 +21,7 @@
 #import "XXEWhoCanLookController.h"
 #import "XXELocationAddController.h"
 #import <AVFoundation/AVFoundation.h>
+#import "teacher-swift.h"
 
 @interface XXEFriendCirclePageViewController ()<DFTimeLineViewControllerDelegate, NSCopying>
 {
@@ -99,6 +100,7 @@
     self.extendedLayoutIncludesOpaqueBars = YES;
     self.page = 1;
     //获取朋友圈信息
+    [RuningXX.sharedInstance showRuning];
     [self setupFriendCircleMessagePage: _page];
     
     self.delegate = self;
@@ -197,7 +199,9 @@
             [weakSelf hudShowText:@"获取数据错误" second:2.f];
             [weakSelf endRefresh];
         }
+        [RuningXX.sharedInstance dismissWithAnimation];
     } failure:^(__kindof YTKBaseRequest *request) {
+         [RuningXX.sharedInstance dismissWithAnimation];
          [weakSelf endRefresh];
          [weakSelf hudShowText:@"网络连接错误" second:2.f];
     }];

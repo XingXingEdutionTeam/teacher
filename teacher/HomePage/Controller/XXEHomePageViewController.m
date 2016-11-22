@@ -52,6 +52,7 @@
 //猩商城
 #import "XXEStoreRootViewController.h"
 
+#import "XXENewCourseView.h"
 
 
 @interface XXEHomePageViewController ()<XXEHomePageHeaderViewDelegate,XXEHomePageMiddleViewDelegate,XXEHomePageBottomViewDelegate>
@@ -167,12 +168,22 @@
     [super viewWillAppear:animated];
     self.view.backgroundColor = XXEBackgroundColor;
     self.navigationController.navigationBarHidden = YES;
+    [self initNewCourseView];
     
 }
 /** 这两个方法都可以,改变当前控制器的电池条颜色 */
 -(UIStatusBarStyle)preferredStatusBarStyle
 {
     return UIStatusBarStyleLightContent;
+}
+
+//MARK: - 新手教程
+-(void)initNewCourseView{
+    UIWindow *window = [[UIApplication sharedApplication] windows][1];
+//    window.userInteractionEnabled = true;
+    XXENewCourseView *newCourseView = [[XXENewCourseView alloc] init];
+//    newCourseView.frame = window.bounds;
+    [window addSubview:newCourseView];
 }
 
 #pragma mark - 下拉选择框
