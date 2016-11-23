@@ -853,7 +853,14 @@
              1 :表示 第三方 头像 ，不需要 添加 前缀
              //判断是否是第三方头像
              */
-            NSString *head_img = [kXXEPicURL stringByAppendingString:model.head_img];
+        
+            NSString *head_img;
+            if ([model.head_img_type isEqualToString:@"0"] ) {
+                head_img = [NSString stringWithFormat:@"%@%@",kXXEPicURL,model.head_img];
+            }else {
+                head_img = model.head_img;
+            }
+        
             cell.iconImageView.layer.cornerRadius = cell.iconImageView.frame.size.width / 2;
             cell.iconImageView.layer.masksToBounds = YES;
         

@@ -12,6 +12,7 @@
 #import "XXEMessageHistoryCell.h"
 #import "MessageListDetailController.h"
 #import "XXENewMessageApi.h"
+#import "teacher-swift.h"
 
 @interface XXEMessageHistoryController ()<UITableViewDelegate,UITableViewDataSource>
 {
@@ -72,6 +73,7 @@ static NSString *const IdentifierHistory = @"messageHistoryCell";
         parameterUser_Id = USER_ID;
     }
     
+    [RuningXX.sharedInstance showRuning];
     if ([self.messageNumber isEqualToString:@"1"]) {
         self.title = @"新消息";
         [self setupNewMessageList];
@@ -79,6 +81,7 @@ static NSString *const IdentifierHistory = @"messageHistoryCell";
     }else{
         self.title = @"历史消息";
         //获取网络请求
+        [RuningXX.sharedInstance showRuning];
         [self setupNetWorkRequest];
     }
     [self.messageTableView registerNib:[UINib nibWithNibName:@"XXEMessageHistoryCell" bundle:nil] forCellReuseIdentifier:IdentifierHistory];
@@ -107,7 +110,9 @@ static NSString *const IdentifierHistory = @"messageHistoryCell";
         }else{
             [self showString:@"获取数据失败" forSecond:1.f];
         }
+        [RuningXX.sharedInstance dismissWithAnimation];
     } failure:^(__kindof YTKBaseRequest *request) {
+        [RuningXX.sharedInstance dismissWithAnimation];
         [self showString:@"网络异常" forSecond:1.f];
     }];
 }
@@ -133,9 +138,10 @@ static NSString *const IdentifierHistory = @"messageHistoryCell";
         }else{
             [self showString:@"获取数据失败" forSecond:1.f];
         }
+        [RuningXX.sharedInstance dismissWithAnimation];
         
     } failure:^(__kindof YTKBaseRequest *request) {
-        
+        [RuningXX.sharedInstance dismissWithAnimation];
     }];
     
 }

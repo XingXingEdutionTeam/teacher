@@ -20,5 +20,10 @@
  */
 + (UIImage *)image:(UIImage*)image byScalingToSize:(CGSize)targetSize;
 
+- (CGFloat)imageWidth;
+- (CGFloat)imageHeight;
+
+- (CGFloat)imageScale_W;
+- (CGFloat)imageScale_H;
 
 @end
