@@ -107,9 +107,7 @@
     if (!isFirst) {
         [self setupControllers];
     }
-    isFirst = @"NO";
-    [first setObject:isFirst  forKey:@"isFirst"];
-    [first synchronize];
+    
 }
 
 - (void)setupControllers

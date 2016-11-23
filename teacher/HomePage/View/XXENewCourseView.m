@@ -165,7 +165,7 @@
     firstIV.image = firstImg;
     [self.thirdView addSubview:firstIV];
     [firstIV mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(self).offset(206 * kScreenRatioHeight);
+        make.top.mas_equalTo(self).offset(220 * kScreenRatioHeight);
         make.leading.mas_equalTo(self).offset(23 * kScreenRatioWidth);
         make.width.mas_equalTo(firstImg.imageWidth);
         make.height.mas_equalTo(firstImg.imageHeight);
@@ -176,7 +176,7 @@
     secondIV.image = secondImg;
     [self.thirdView addSubview:secondIV];
     [secondIV mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(self).offset(206 * kScreenRatioHeight);
+        make.top.mas_equalTo(self).offset(220 * kScreenRatioHeight);
         make.leading.mas_equalTo(firstIV.mas_trailing).offset(30 * kScreenRatioWidth);
         make.width.mas_equalTo(secondImg.imageWidth);
         make.height.mas_equalTo(secondImg.imageHeight);
@@ -187,7 +187,7 @@
     thirdIV.image = thirdImg;
     [self.thirdView addSubview:thirdIV];
     [thirdIV mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(self).offset(206 * kScreenRatioHeight);
+        make.top.mas_equalTo(self).offset(220 * kScreenRatioHeight);
         make.leading.mas_equalTo(secondIV.mas_trailing).offset(25 * kScreenRatioWidth);
         make.width.mas_equalTo(thirdImg.imageWidth);
         make.height.mas_equalTo(thirdImg.imageHeight);
@@ -198,8 +198,8 @@
     forthIV.image = forthImg;
     [self.thirdView addSubview:forthIV];
     [forthIV mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(self).offset(206 * kScreenRatioHeight);
-        make.leading.mas_equalTo(thirdIV.mas_trailing).offset(37 * kScreenRatioWidth);
+        make.top.mas_equalTo(self).offset(220 * kScreenRatioHeight);
+        make.trailing.mas_equalTo(self).offset(-34 * kScreenRatioWidth);
         make.width.mas_equalTo(forthImg.imageWidth);
         make.height.mas_equalTo(forthImg.imageHeight);
     }];

@@ -168,7 +168,7 @@
     [super viewWillAppear:animated];
     self.view.backgroundColor = XXEBackgroundColor;
     self.navigationController.navigationBarHidden = YES;
-    [self initNewCourseView];
+    
     
 }
 /** 这两个方法都可以,改变当前控制器的电池条颜色 */
@@ -179,11 +179,18 @@
 
 //MARK: - 新手教程
 -(void)initNewCourseView{
-    UIWindow *window = [[UIApplication sharedApplication] windows][1];
-//    window.userInteractionEnabled = true;
-    XXENewCourseView *newCourseView = [[XXENewCourseView alloc] init];
-//    newCourseView.frame = window.bounds;
-    [window addSubview:newCourseView];
+    NSUserDefaults *first = [NSUserDefaults standardUserDefaults];
+    NSString *isFirst = [first objectForKey:@"isFirst"];
+    if (!isFirst) {
+        UIWindow *window = [[UIApplication sharedApplication] windows][1];
+        XXENewCourseView *newCourseView = [[XXENewCourseView alloc] init];
+        [window addSubview:newCourseView];
+    }
+    isFirst = @"NO";
+    [first setObject:isFirst  forKey:@"isFirst"];
+    [first synchronize];
+    
+   
 }
 
 #pragma mark - 下拉选择框
@@ -444,6 +451,8 @@
     [self.view addSubview:self.headView];
    
     [self setRongCloud];
+    
+    [self initNewCourseView];
 //    self.tabBarItem.badgeValue = @"10";
 }
 
