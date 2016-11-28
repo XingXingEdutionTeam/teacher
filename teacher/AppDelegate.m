@@ -19,6 +19,9 @@
 #import "XXELoginViewController.h"
 #import "XXENavigationViewController.h"
 
+//支付
+#import "BeeCloud.h"
+
 
 @interface AppDelegate ()
 
@@ -66,12 +69,19 @@
 //    [self setupControllers];
     
     
+    //支付
+    [BeeCloud initWithAppID:@"a2c64858-7c9c-4fd2-b2f8-2c58f853d47f" andAppSecret:@"fc8fe808-d180-48e7-99ba-54b42d3c725d"];
+    [BeeCloud initWeChatPay:@"wxed731a36270b5a4f"];
+    
     //初始化 融云
     [self initRongClould];
     
     [self toMainAPP];
     
     [self loadStarView];
+    
+    
+   
     
     //获取deviceToken
     
@@ -170,8 +180,30 @@
  */
 - (BOOL)application:(UIApplication *)app openURL:(NSURL *)url sourceApplication:(nullable NSString *)sourceApplication annotation:(nonnull id)annotation
 {
-    return [UMSocialSnsService handleOpenURL:url wxApiDelegate:nil];
+    
+    if (![BeeCloud handleOpenUrl:url]) {
+        //handle其他类型的url
+        NSLog(@"打开支付宝!");
+        return [UMSocialSnsService handleOpenURL:url wxApiDelegate:nil];
+        
+    }
+    return YES;
+
 }
+
+
+//iOS9之后apple官方建议使用此方法
+- (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<NSString *,id> *)options {
+    if (![BeeCloud handleOpenUrl:url]) {
+        //handle其他类型的url
+        
+        NSLog(@"打开支付宝!===== ");
+        return  [UMSocialSnsService handleOpenURL:url];
+    }
+    return YES;
+}
+
+
 
 /** 
  这里处理新浪微博SSO授权进入新浪微博客户端后进入后台,再返回来应用

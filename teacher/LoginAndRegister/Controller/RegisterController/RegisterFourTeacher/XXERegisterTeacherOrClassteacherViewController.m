@@ -258,6 +258,9 @@
     _schoolNameTextField = [[UITextField alloc] initWithFrame:CGRectMake(90 * kScreenRatioWidth, 5, KScreenWidth - 120, 30)];
     _schoolNameTextField.borderStyle = UITextBorderStyleRoundedRect;
     _schoolNameTextField.textAlignment = NSTextAlignmentCenter;
+    _schoolNameTextField.enabled = NO;
+    [_schoolNameTextField addTarget:self action:@selector(schoolNameTextFieldClick) forControlEvents:UIControlEventTouchUpInside];
+    
     [self.view addSubview:_schoolNameTextField];
     
     //学校类型
@@ -289,6 +292,11 @@
     [_teachSubjectCombox.textField addObserver:self forKeyPath:@"text" options:NSKeyValueObservingOptionNew context:@"14"];
     [self.view addSubview:_teachSubjectCombox];
 
+}
+
+- (void)schoolNameTextFieldClick{
+    
+    [self showString:@"授课老师或班主任,不能自己填写学校,请搜索学校" forSecond:1.5];
 }
 
 #pragma mark ========= 创建中部 上传照片 ========
