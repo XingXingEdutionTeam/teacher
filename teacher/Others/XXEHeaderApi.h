@@ -9,8 +9,6 @@
 #ifndef XXEHeaderApi_h
 #define XXEHeaderApi_h
 
-#define JPushAppKey @"4246476d42da75a98d9e01f2"
-
 //访客登录XID不变
 #define XID  @"18886389"
 #define APPKEY  @"U3k8Dgj7e934bh5Y"

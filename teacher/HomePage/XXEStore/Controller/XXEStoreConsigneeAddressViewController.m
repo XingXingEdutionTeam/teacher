@@ -45,6 +45,7 @@
     }
 
 //    page = 0;
+
     [self fetchNetData];
     
     [_myTableView reloadData];

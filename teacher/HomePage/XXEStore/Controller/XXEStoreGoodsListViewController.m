@@ -10,7 +10,7 @@
 #import "XXEStoreGoodsListViewController.h"
 #import "XXEStoreGoodsOrderListTableViewCell.h"
 #import "XXEStoreGoodsOrderListModel.h"
-#import "XXEStoreGoodsOrderDetailViewController.h"
+#import "XXEStoreGoodDetailInfoViewController.h"
 
 @interface XXEStoreGoodsListViewController ()<UIScrollViewDelegate, UITableViewDelegate, UITableViewDataSource>
 {
@@ -31,19 +31,6 @@
 
 @implementation XXEStoreGoodsListViewController
 
-- (void)viewWillAppear:(BOOL)animated{
-    [super viewWillAppear:animated];
-
-   
-    
-//    NSString *str = [DEFAULTS objectForKey:@"StoreGoodsCondit"];
-//     NSLog(@"bbbb %@", str);
-    
-    [self  fetchNetData:@"0"];
-}
-
-
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = XXEBackgroundColor;
@@ -61,7 +48,7 @@
     
     [self createTableView];
     
-//    [self  fetchNetData:@"0"];
+    [self  fetchNetData:@"0"];
     
 }
 
@@ -85,11 +72,6 @@
     }
     
     NSString *condit = [NSString stringWithFormat:@"%ld", seg.selectedSegmentIndex];
-//    NSLog(@"condit : %@", condit);
-    
-    [DEFAULTS setObject:condit forKey:@"StoreGoodsCondit"];
-    [DEFAULTS synchronize];
-    
     
     [self fetchNetData:condit];
     
@@ -105,12 +87,6 @@
      传参:
      condit		//要求返回什么数据 0:待付款 1:待发货 2:待收货 3:完成 4:退货  (★待收货状态才允许退货)	*/
     NSString *urlStr = @"http://www.xingxingedu.cn/Global/my_goods_order";
-    
-//    if ([condit isEqualToString:@""]) {
-//        condit = @"0";
-//    }
-    
-//    NSLog(@"------ %@", condit);
     
     NSDictionary *params = @{@"appkey":APPKEY,
                              @"backtype":BACKTYPE,
@@ -261,10 +237,10 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    XXEStoreGoodsOrderDetailViewController*storeGoodsOrderDetailVC=  [[XXEStoreGoodsOrderDetailViewController alloc]init];
+    XXEStoreGoodDetailInfoViewController*storeGoodDetailInfoVC=  [[XXEStoreGoodDetailInfoViewController alloc]init];
     XXEStoreGoodsOrderListModel *model = _dataSourceArray[indexPath.row];
-    storeGoodsOrderDetailVC.order_id=model.order_id;
-    [self.navigationController pushViewController:storeGoodsOrderDetailVC animated:YES];
+    storeGoodDetailInfoVC.orderNum=model.goods_id;
+    [self.navigationController pushViewController:storeGoodDetailInfoVC animated:YES];
     
 }
 

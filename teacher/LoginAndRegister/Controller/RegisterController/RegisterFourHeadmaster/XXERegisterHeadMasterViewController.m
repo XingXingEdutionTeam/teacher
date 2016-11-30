@@ -456,17 +456,13 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
     [self getIdCardPhotoImage];
     }
     
-    NSLog(@"登录类型%@ 电话号码%@ 密码%@ 用户姓名%@ 用户身份证%@ 年龄%@ 性别%@ 用户身份%@ 用户头像%@",self.login_type,self.userPhoneNum,self.userPassword,self.userName,self.userIDCarNum,self.userAge,self.userSex,self.userIdentifier,self.userAvatarImage);
-    NSLog(@"邀请码%@ 学校详细地址%@ 学校电话%@ 学校ID%@ 学校类型%@ 学校名字%@ 学校省%@ 学校市%@ 学校区%@ 审核人%@",self.theEndInviteCode,self.schoolAddrss,self.schoolTel,self.theEndSchoolId,self.theEndSchoolType,self.schoolName,self.schoolProvince,self.schoolCity,self.schoolDistrict,self.theEndReviewerId);
+//    NSLog(@"登录类型%@ 电话号码%@ 密码%@ 用户姓名%@ 用户身份证%@ 年龄%@ 性别%@ 用户身份%@ 用户头像%@",self.login_type,self.userPhoneNum,self.userPassword,self.userName,self.userIDCarNum,self.userAge,self.userSex,self.userIdentifier,self.userAvatarImage);
+//    NSLog(@"邀请码%@ 学校详细地址%@ 学校电话%@ 学校ID%@ 学校类型%@ 学校名字%@ 学校省%@ 学校市%@ 学校区%@ 审核人%@",self.theEndInviteCode,self.schoolAddrss,self.schoolTel,self.theEndSchoolId,self.theEndSchoolType,self.schoolName,self.schoolProvince,self.schoolCity,self.schoolDistrict,self.theEndReviewerId);
 }
 
 #pragma mark - 获取证件图片
 - (void)getIdCardPhotoImage
 {
-    NSLog(@"self.picker.data === %@", self.picker.data);
-    NSLog(@"self.picker.data.count === %ld", self.picker.data.count);
-    
-    
     NSMutableArray *arr = [NSMutableArray array];
     if (self.picker.data.count ==1) {
         //往服务器传所有的参数
@@ -475,10 +471,7 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
     }else{
         [self.picker.data removeLastObject];
         arr = self.picker.data;
-        
         for (int i =0; i <arr.count; i++) {
-            NSLog(@"arr[i] === %@", arr[i]);
-            
             FSImageModel *model = self.picker.data[i];
             UIImage *fileImage = [UIImage imageWithData:model.data];
             [self.fileHeadImageArray addObject:fileImage];
@@ -491,7 +484,7 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
 #pragma mark - 用户的证件照上传服务器得到返回值
 - (void)fileUserUpLoadSomeImage
 {
-//    NSLog(@"管理员 ===== 校长 ===== 上传 图片 处理 %@",self.fileHeadImageArray);
+    NSLog(@"%@",self.fileHeadImageArray);
     NSDictionary *dict = @{@"file_type":@"1",
                            @"page_origin":@"2",
                            @"upload_format":@"2",
@@ -510,7 +503,7 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
         }
         
     } success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
-//        NSLog(@"+++++ %@",responseObject);
+        NSLog(@"%@",responseObject);
         NSString *code = [responseObject objectForKey:@"code"];
         if ([code intValue] == 1) {
             NSArray *data = [responseObject objectForKey:@"data"];
@@ -523,8 +516,6 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
                     [str appendFormat:@"%@",string];
                 }
             }
-            
-            NSLog(@"tp str === %@", str);
             self.theEndFileImage = str;
             //往服务器传所有的参数
             [self uploadHeadMasterRegisterMessage];
@@ -543,14 +534,11 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
     if (self.userPhoneNum == nil) {
         self.userPhoneNum = @"";
     }
-
-    NSLog(@"theEndFileImage == %@", _theEndFileImage);
-    
     //_userPhoneNum
     //return_param_all = 1		//要求返回所有传参,测试用
     NSDictionary *parameter = @{
                                 @"login_type":_login_type,
-                                @"phone": _userPhoneNum,
+                                @"phone":_userPhoneNum,
                                 @"pass":_userPassword,
                                 @"tname":_userName,
                                 @"id_card":_userIDCarNum,
@@ -624,20 +612,17 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
     
     WZYSearchSchoolViewController *searchVC = [[WZYSearchSchoolViewController alloc]init];
     self.schoolVC = searchVC;
-    searchVC.WZYSearchFlagStr = @"fromHeadermasterVC";
     
-    [searchVC returnModel:^(XXETeacherModel *teacherModel) {
-        //
-        if (teacherModel != nil) {
-        self.isHave = YES;
+    [searchVC returnArray:^(NSMutableArray *mArr) {
+        if (mArr != nil) {
+            self.isHave = YES;
         }else {
-        self.isHave = NO;
+            self.isHave = NO;
         }
         [self LnitializeTheParameter];
-//        self.schoolDatasource = mArr;
+        self.schoolDatasource = mArr;
         self.schoolVC.delegate = self;
     }];
-    
     [self.navigationController pushViewController:searchVC animated:YES];
 }
 
@@ -657,7 +642,6 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
     self.schoolTel = model.tel;
     
     NSLog(@"%@ %@",model,model.name);
-    //学校名称
     self.teacherCell = [self cellAtIndexRow:0 andAtSection:0 Message:model.name];
     NSString *typeName ;
     if ([model.type isEqualToString:@"1"]) {
@@ -671,7 +655,6 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
     } else if ([model.type isEqualToString:@"4"]){
         typeName = @"培训机构";
     }
-    //学校类型
     self.teacherCell = [self cellAtIndexRow:1 andAtSection:0 Message:typeName];
     NSString *addressSchool = [NSString stringWithFormat:@"%@-%@-%@",model.province,model.city,model.district];
     self.teacherCell = [self cellAtIndexRow:2 andAtSection:0 Message:addressSchool];

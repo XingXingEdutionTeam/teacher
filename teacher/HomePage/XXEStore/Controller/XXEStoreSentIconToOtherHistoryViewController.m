@@ -78,6 +78,7 @@
      */
 //    NSString *pageStr = [NSString stringWithFormat:@"%ld", page];
     
+    
     XXEXingCoinHistoryApi *xingCoinHistoryApi = [[XXEXingCoinHistoryApi alloc] initWithXid:parameterXid user_id:parameterUser_Id require_con:@"4" year:@"" page:@""];
     [xingCoinHistoryApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         _dataSourceArray = [[NSMutableArray alloc] init];

@@ -9,11 +9,8 @@
 //
 
 #import "XXEStorePayViewController.h"
-#import "BeeCloud.h"
-#import "LSSAlertView.h"
-#import "XXEStoreGoodsOrderDetailViewController.h"
 
-@interface XXEStorePayViewController ()<BeeCloudDelegate>
+@interface XXEStorePayViewController ()
 {
     //上部 订单bgView
     UIView *orderBgView;
@@ -27,10 +24,7 @@
     NSString *coinAble;
     //纯猩币支付时候的说明
     UILabel *noteLabel1;
-    //
-    NSInteger buttonTag;
-    //
-    NSMutableArray *seleteButtonArray;
+    
     
     NSString *parameterXid;
     NSString *parameterUser_Id;
@@ -49,11 +43,21 @@
         parameterXid = XID;
         parameterUser_Id = USER_ID;
     }
-    coinAble = _dict[@"user_coin_able"];
-    seleteButtonArray = [[NSMutableArray alloc] init];
+    coinAble = @"";
+
+    /*
+     data =     {
+     "order_id" = 594;
+     "order_index" = 39288589297;
+     "pay_coin" = 300;
+     "pay_price" = 0;   //一/当 pay_price 为0的时候,为纯猩币支付;二/当非0 的时候,非两种情况:(1)纯钱 (2)钱和猩币  ,两者调用同一个接口,如果使用猩币抵扣,后台会自动扣除猩币
+     "user_coin_able" = 10708;
+     };
+     */
+
     
-    //输出BOOL值的方法：
-//    NSLog(@"%@", _onlyXingCoin ?@"YES":@"NO");
+    //当前可用猩币数
+    [self fetchXingCoinableInfo];
 
     //创建 内容
     [self createContent];
@@ -74,45 +78,29 @@
     //金额
     UILabel *moneyLabel = [[UILabel alloc] initWithFrame:CGRectMake(shoppingCart.frame.origin.x + shoppingCart.width + 20, 10, KScreenWidth - 50, 20)];
     moneyLabel.font = [UIFont systemWithIphone6P:18 Iphone6:16 Iphone5:14 Iphone4:12];
-    if (_dict) {
-        if ([_dict[@"pay_price"] floatValue] == 0.000000) {
-            _onlyXingCoin = YES;
-        }else{
-            _onlyXingCoin = NO;
-        }
-        _pay_coin = _dict[@"pay_coin"];
-        _pay_price = _dict[@"pay_price"];
-        _order_index = _dict[@"order_index"];
-
+    if ([_dict[@"pay_price"] integerValue] == 0) {
+    moneyLabel.text = [NSString stringWithFormat:@"猩币:%@",_dict[@"pay_coin"]];
+    }else{
+    moneyLabel.text = [NSString stringWithFormat:@"猩币:%@     ￥:%@",_dict[@"pay_coin"], _dict[@"pay_price"]];
     }
     
-    if (_onlyXingCoin == YES) {
-        moneyLabel.text = [NSString stringWithFormat:@"猩币:%@", _pay_coin];
-    }else if (_onlyXingCoin == NO){
-        moneyLabel.text = [NSString stringWithFormat:@"猩币:%@     ￥:%@",_pay_coin, _pay_price];
-    }
-    
-
     [orderBgView addSubview:moneyLabel];
     
     //订单号
     UILabel *orderCodeLabel = [[UILabel alloc] initWithFrame:CGRectMake(moneyLabel.frame.origin.x ,moneyLabel.frame.origin.y + moneyLabel.height + 10, KScreenWidth - 50, 20)];
     orderCodeLabel.font = [UIFont systemWithIphone6P:14 Iphone6:12 Iphone5:10 Iphone4:8];
-    orderCodeLabel.text = [NSString stringWithFormat:@"订单号:%@", _order_index];
+    orderCodeLabel.text = [NSString stringWithFormat:@"订单号:%@", _dict[@"order_index"]];
     orderCodeLabel.textColor = [UIColor lightGrayColor];
     [orderBgView addSubview:orderCodeLabel];
     
-//    NSLog(@"~~~~~~~~~%f", [_dict[@"pay_price"] floatValue]);
     //下部 支付
-    NSString *buttonTitle = @"";
-    if (_onlyXingCoin == YES) {
+    if ([_dict[@"pay_price"] integerValue] == 0) {
         //纯猩币 支付
         [self createOnlyXingCoinPay];
-        buttonTitle = [NSString stringWithFormat:@"确认支付猩币:%@个", _pay_coin];
+        
     }else{
         // 可猩币 / 可钱
         [self createMoneyPay];
-        buttonTitle = [NSString stringWithFormat:@"确认支付金额:%@元", _pay_price];
     }
     
     //确认 支付 按钮
@@ -122,11 +110,16 @@
     CGFloat buttonH = 42 * kScreenRatioHeight;
     
     sureButton = [UIButton createButtonWithFrame:CGRectMake(buttonX, buttonY, buttonW, buttonH) backGruondImageName:@"zhifuaniu" Target:self Action:@selector(sureButtonClick:) Title:@""];
-    
+    NSString *buttonTitle = @"";
     sureButton.titleLabel.font = [UIFont systemWithIphone6P:18 Iphone6:16 Iphone5:14 Iphone4:12];
     [sureButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     
-
+    if ([_dict[@"pay_price"] integerValue] == 0) {
+      //纯猩币 支付
+        buttonTitle = [NSString stringWithFormat:@"确认支付猩币:%@个", _dict[@"pay_coin"]];
+    }else{
+        buttonTitle = [NSString stringWithFormat:@"确认支付金额:%@元", _dict[@"pay_price"]];
+    }
     [sureButton setTitle:buttonTitle forState:UIControlStateNormal];
     [self.view addSubview:sureButton];
 
@@ -156,31 +149,13 @@
     [payBgView addSubview:noteLabel1];
 
     UIButton *selectButton = [UIButton createButtonWithFrame:CGRectMake(KScreenWidth - 50, 20, 25, 25) backGruondImageName:@"weixuan" Target:self Action:@selector(selectButtonClick:) Title:@""];
-    selectButton.tag = 100;
     [payBgView addSubview:selectButton];
 
 }
 
-//选择使用猩币支付
 - (void)selectButtonClick:(UIButton *)button{
 
-    if (button.tag == 100) {
-        buttonTag = 100;
-        
-        [button setBackgroundImage:[UIImage imageNamed:@"yixuan"] forState:UIControlStateNormal];
-    }else if (button.tag == 101){
-        buttonTag = 101;
-        [button setBackgroundImage:[UIImage imageNamed:@"yixuan"] forState:UIControlStateNormal];
-        UIButton *btn = (UIButton *)[self.view viewWithTag:102];
-        [btn setBackgroundImage:[UIImage imageNamed:@"weixuan"] forState:UIControlStateNormal];
-    
-    }else if (button.tag == 102){
-        buttonTag = 102;
-        [button setBackgroundImage:[UIImage imageNamed:@"yixuan"] forState:UIControlStateNormal];
-        UIButton *btn = (UIButton *)[self.view viewWithTag:101];
-        [btn setBackgroundImage:[UIImage imageNamed:@"weixuan"] forState:UIControlStateNormal];
-        
-    }
+
 
 }
 
@@ -213,13 +188,13 @@
         [cellBgView addSubview:titleLabel];
         
         //说明
-        UILabel *noteLabel = [[UILabel alloc] initWithFrame:CGRectMake(titleLabel.frame.origin.x ,titleLabel.frame.origin.y + titleLabel.height + 10, KScreenWidth - 50, 20)];
-        noteLabel.font = [UIFont systemWithIphone6P:12 Iphone6:10 Iphone5:8 Iphone4:6];
-        noteLabel.text = noteArray[i];
-        [cellBgView addSubview:noteLabel];
+        UILabel *noteLabel1 = [[UILabel alloc] initWithFrame:CGRectMake(titleLabel.frame.origin.x ,titleLabel.frame.origin.y + titleLabel.height + 10, KScreenWidth - 50, 20)];
+        noteLabel1.font = [UIFont systemWithIphone6P:12 Iphone6:10 Iphone5:8 Iphone4:6];
+        noteLabel1.text = noteArray[i];
+        [cellBgView addSubview:noteLabel1];
         
         UIButton *selectButton = [UIButton createButtonWithFrame:CGRectMake(KScreenWidth - 50, 20, 25, 25) backGruondImageName:@"weixuan" Target:self Action:@selector(selectButtonClick:) Title:@""];
-        selectButton.tag = 101 + i;
+        selectButton.tag = 100 + i;
         
         [cellBgView addSubview:selectButton];
     
@@ -228,263 +203,55 @@
 }
 
 
+#pragma mark ======== 当前可用猩币数 ==============
+- (void)fetchXingCoinableInfo{
+/*
+ 【获得用户单个字段信息】通用接口
+ 接口类型:1
+ 接口:
+ http://www.xingxingedu.cn/Global/getUserGlobalInfo
+ 传参:
+	field	//想要获取信息的字段名,可以获取1个或者多个,多个逗号隔开,比如:coin_total,coin_able
+ //可用字段名:
+ lv		//登录
+ coin_total	//猩币历史总数
+ coin_able	//猩币可用数
+ */
+    NSString *urlStr = @"http://www.xingxingedu.cn/Global/getUserGlobalInfo";
+    
+    NSDictionary *params = @{@"appkey":APPKEY,
+                             @"backtype":BACKTYPE,
+                             @"xid":parameterXid,
+                             @"user_id":parameterUser_Id,
+                             @"user_type":USER_TYPE,
+                             @"field":@"coin_able"
+                             };
+    [WZYHttpTool post:urlStr params:params success:^(id responseObj) {
+//        NSLog(@"可用猩币数 : %@", responseObj);
+        /*
+         data =     {
+         "coin_able" = 10708;
+         };
+         */
+        if ([responseObj[@"code"] integerValue] == 1) {
+            coinAble = responseObj[@"data"][@"coin_able"];
+            
+            noteLabel1.text = [NSString stringWithFormat:@"您的剩余猩币总数:%@(每100猩币可抵扣1元)", coinAble];
+        }
+        
+    } failure:^(NSError *error) {
+        //
+        [self showString:@"获取数据失败!" forSecond:1.5];
+    }];
+    
+    
+}
 
 #pragma mark ********** 确认支付 ******************
 - (void)sureButtonClick:(UIButton *)button{
-    if (buttonTag == 100) {
-        //纯猩币 支付
-        if ([_pay_coin integerValue] > [coinAble integerValue]) {
-            [self showHudWithString:@"您猩币余额不足" forSecond:1.5];
-        }else{
-            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"确定使用猩币支付?" message:nil preferredStyle:UIAlertControllerStyleAlert];
-            UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
-            UIAlertAction *ok = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                //纯猩币兑换
-                [self goods_confirm_payAndOrderID:_order_index];
-            }];
-        
-            [alert addAction:ok];
-            [alert addAction:cancel];
-            [self presentViewController:alert animated:YES completion:nil];
-        }
-    }else if (buttonTag == 101){
-    //微信 支付
-         [self doPay:PayChannelWxApp];
-    
-    }else if (buttonTag == 102){
-        //支付宝 支付
-        [self doPay:PayChannelAliApp];
-        
-    }
-}
 
 
 
-#pragma mark ============== 纯猩币兑换 ===========
-//商品订单确认兑换 (只用于纯猩币兑换)
-- (void)goods_confirm_payAndOrderID:(NSString *)order_id{
-/*
- 【猩猩商城--商品订单确认兑换 (只用于纯猩币兑换)】
- 接口类型:2
- 接口:
- http://www.xingxingedu.cn/Global/goods_confirm_pay
- 传参:
-	order_id	//订单id
- */
-    
-    NSString *urlStr = @"http://www.xingxingedu.cn/Global/goods_confirm_pay";
-    NSDictionary *params = @{@"appkey":APPKEY,
-                             @"backtype":BACKTYPE,
-                             @"xid":parameterXid,
-                             @"user_id":parameterUser_Id,
-                             @"user_type":USER_TYPE,
-                             @"order_id":order_id
-                             };
-    [WZYHttpTool post:urlStr params:params success:^(id responseObj) {
-        //
-//        NSLog(@"纯猩币支付 ==== %@", responseObj);
-        
-        NSString *codeStr = responseObj[@"code"];
-        
-        if ([codeStr integerValue] == 1) {
-            [self showHudWithString:@"支付成功!" forSecond:1.5];
-            
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                [self.navigationController popViewControllerAnimated:YES];
-            });
-
-        }else if ([codeStr integerValue] == 2){
-        
-            [self showHudWithString:@"appkey错误!" forSecond:1.5];
-        }else if ([codeStr integerValue] == 3){
-            
-            [self showHudWithString:@"此订单不存在!" forSecond:1.5];
-        }else if ([codeStr integerValue] == 4){
-            
-            [self showHudWithString:@"猩币不足!" forSecond:1.5];
-        }else if ([codeStr integerValue] == 5){
-            
-            [self showHudWithString:@"扣除用户猩币失败!" forSecond:1.5];
-        }else if ([codeStr integerValue] == 6){
-            
-            [self showHudWithString:@"修改订单状态失败!" forSecond:1.5];
-        }
-
-    } failure:^(NSError *error) {
-        //
-        [self showHudWithString:@"获取数据失败!" forSecond:1.5];
-    }];
-    
-}
-
-#pragma mark $$$$$$$$$$$$$ beeCloud **************************
-#pragma mark - 设置delegate
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    [BeeCloud setBeeCloudDelegate:self];
-}
-
-#pragma mark - 微信、支付宝、银联、百度钱包
-- (void)doPay:(PayChannel)channel {
-    NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"value",@"key", nil];
-
-    BCPayReq *payReq = [[BCPayReq alloc] init];
-    /**
-     *  支付渠道，PayChannelWxApp,PayChannelAliApp,PayChannelUnApp,PayChannelBaiduApp
-     */
-    payReq.channel = channel; //支付渠道
-    payReq.title = @"猩猩教室教师端订单";//订单标题
-    int price = [_pay_price floatValue]*100;
-    
-    payReq.totalFee = [NSString stringWithFormat:@"%d", price];//订单价格;
-    payReq.billNo = _order_index;//商户自定义订单号
-    payReq.scheme = @"XXETeacherPay";//URL Scheme,在Info.plist中配置; 支付宝必有参数/注意不能有下划线
-    payReq.billTimeOut = 300;//订单超时时间
-    payReq.viewController = self; //银联支付和Sandbox环境必填
-    payReq.optional = dict;//商户业务扩展参数，会在webhook回调时返回
-
-    [BeeCloud sendBCReq:payReq];
-}
-
-#pragma mark - BCPay回调
-- (void)onBeeCloudResp:(BCBaseResp *)resp {
-    
-    switch (resp.type) {
-        case BCObjsTypePayResp:
-        {
-            // 支付请求响应
-            BCPayResp *tempResp = (BCPayResp *)resp;
-            
-//            NSLog(@"tempResp ==== %@", tempResp);
-//            
-//            NSLog(@"tempResp.resultCode --- %ld", tempResp.resultCode);
-            
-            NSLog(@"错误 详情 == %@", tempResp.errDetail);
-            
-            if (tempResp.resultCode == 0) {
-                
-                //支付宝 或者 微信 支付
-                [self showAlertView:resp.resultMsg];
-                
-                [self weixinPayOrAliPay:tempResp];
-                
-            } else {
-                //支付取消或者支付失败
-//                [self showAlertView:[NSString stringWithFormat:@"%@ : %@",tempResp.resultMsg, tempResp.errDetail]];
-        NSLog(@"tempResp.errDetail == %@", tempResp.errDetail);
-                
-                LSSAlertView *alert = [[LSSAlertView alloc] initWithTitle:[NSString stringWithFormat:@"%@",tempResp.errDetail] message:@"您已取消支付，或者密码不对"  picImage:@"payfailed_icon120x120" sureBtn:@"重新购买" cancleBtn:@"现在离开"];
-                alert.returnIndex = ^(NSInteger index){
-                    
-                    if (index == 1) {
-                        [self.navigationController popToRootViewControllerAnimated:YES];
-                    }
-                };
-                
-                [alert showAlertView];
-
-            }
-        }
-            break;
-        default:
-        {
-            if (resp.resultCode == 0) {
-                [self showAlertView:resp.resultMsg];
-            } else {
-                [self showAlertView:[NSString stringWithFormat:@"%@ : %@",resp.resultMsg, resp.errDetail]];
-            }
-        }
-            break;
-    }
-}
-
-- (void)showAlertView:(NSString *)msg {
-    UIAlertView* alert = [[UIAlertView alloc]initWithTitle:@"提示" message:msg delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-    [alert show];
-}
-
-
-
-
-#pragma mark - 生成订单号
-- (NSString *)genBillNo {
-    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"yyyyMMddHHmmssSSS"];
-    return [formatter stringFromDate:[NSDate date]];
-}
-
-- (void)setHideTableViewCell:(UITableView *)tableView {
-    UIView *view = [[UIView alloc] init];
-    view.backgroundColor = [UIColor clearColor];
-    tableView.tableFooterView = view;
-}
-
-
-
-- (void)logEventId:(NSString *)eventId eventDesc:(NSString *)eventDesc {
-    
-    
-}
-
-
-
-#pragma mark ################ 微信 或者  支付宝 支付 #############
-- (void)weixinPayOrAliPay:(BCPayResp *)resp{
-/*
- 【猩猩商城--商品用钱支付完成回调信息验证】
- 接口类型:2
- 接口:
- http://www.xingxingedu.cn/Global/pay_goods_back
- 传参:
-	order_index		//订单号
-	pay_price		//支付金额
- */
-   NSString *urlStr = @"http://www.xingxingedu.cn/Global/pay_goods_back";
-    NSDictionary *params = @{@"appkey":APPKEY,
-                             @"backtype":BACKTYPE,
-                             @"xid":parameterXid,
-                             @"user_id":parameterUser_Id,
-                             @"user_type":USER_TYPE,
-                             @"order_index": _order_index,
-                             @"pay_price":_pay_price
-                             };
-//    NSLog(@"params  支付 %@", params);
-    
-    
-    [WZYHttpTool post:urlStr params:params success:^(id responseObj) {
-        //
-//        NSLog(@"微信 / 支付宝 支付 ==== %@", responseObj);
-        NSString *codeStr = responseObj[@"code"];
-        
-        if ([codeStr integerValue] == 1) {
-            
-            LSSAlertView *alert = [[LSSAlertView alloc] initWithTitle:resp.resultMsg message:@"支付成功!"  picImage:@"paysuccess_icon120x120"  sureBtn:@"查看订单" cancleBtn:@"现在离开"];
-            alert.returnIndex = ^(NSInteger index){
-                if (index == 0) {
-                    
-//                    NSLog(@"查看订单详情");
-                    XXEStoreGoodsOrderDetailViewController *goodsOrderDetailVC = [[XXEStoreGoodsOrderDetailViewController alloc] init];
-                    NSLog(@"_order_id === %@", _order_id);
-                    
-                    if (_order_id) {
-                      goodsOrderDetailVC.order_id = _order_id;
-                    }
-
-                    [self.navigationController pushViewController:goodsOrderDetailVC animated:YES];
-                    
-                }
-                
-                if (index == 1) {
-                    [self.navigationController popToRootViewControllerAnimated:YES];
-                }
-            };
-            [alert showAlertView];
-        }
-
-    } failure:^(NSError *error) {
-        //
-        [self showHudWithString:@"获取数据失败!" forSecond:1.5];
-    }];
 }
 
 

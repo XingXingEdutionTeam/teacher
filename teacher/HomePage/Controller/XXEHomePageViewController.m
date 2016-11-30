@@ -52,7 +52,6 @@
 //猩商城
 #import "XXEStoreRootViewController.h"
 
-#import "XXENewCourseView.h"
 
 
 @interface XXEHomePageViewController ()<XXEHomePageHeaderViewDelegate,XXEHomePageMiddleViewDelegate,XXEHomePageBottomViewDelegate>
@@ -168,32 +167,12 @@
     [super viewWillAppear:animated];
     self.view.backgroundColor = XXEBackgroundColor;
     self.navigationController.navigationBarHidden = YES;
-    [self initNewCourseView];
     
 }
 /** 这两个方法都可以,改变当前控制器的电池条颜色 */
 -(UIStatusBarStyle)preferredStatusBarStyle
 {
     return UIStatusBarStyleLightContent;
-}
-
-//MARK: - 新手教程
--(void)initNewCourseView{
-    
-    NSUserDefaults *first = [NSUserDefaults standardUserDefaults];
-    NSString *isFirst = [first objectForKey:@"isFirst"];
-    
-    if (!isFirst) {
-        UIWindow *window = [[UIApplication sharedApplication] windows][1];
-        XXENewCourseView *newCourseView = [[XXENewCourseView alloc] init];
-        [window addSubview:newCourseView];
-    }
-    
-    isFirst = @"NO";
-    [first setObject:isFirst  forKey:@"isFirst"];
-    [first synchronize];
-    
-    
 }
 
 #pragma mark - 下拉选择框
@@ -1094,7 +1073,7 @@
     [[RCIM sharedRCIM] initWithAppKey:MyRongCloudAppKey];
     
     NSString *token = [XXEUserInfo user].token;
-    NSString *userId = [XXEUserInfo user].xid;
+    NSString *userId = [XXEUserInfo user].user_id;
     NSString *userNickName = [XXEUserInfo user].nickname;
     NSString *userImage = [XXEUserInfo user].user_head_img;
     

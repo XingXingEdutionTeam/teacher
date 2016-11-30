@@ -9,7 +9,6 @@
 #import "CheckIDCard.h"
 #import "XXERegisterTeacherViewController.h"
 #import "XXERegisterHeadMasterViewController.h"
-#import "XXERegisterTeacherOrClassteacherViewController.h"
 #import "KTActionSheet.h"
 #import "AFNetworking.h"
 
@@ -59,7 +58,7 @@
         [_portraitImageView setContentMode:UIViewContentModeScaleAspectFill];
         _portraitImageView.userInteractionEnabled = YES;
         _portraitImageView.backgroundColor = [UIColor clearColor];
-        _portraitImageView.image = [UIImage imageNamed:@"img"];
+        _portraitImageView.image = [UIImage imageNamed:@"home_logo"];
         UITapGestureRecognizer *portraitTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(editPortrait)];
         [_portraitImageView addGestureRecognizer:portraitTap];
     }
@@ -289,43 +288,24 @@
           }else {
               self.userType = @"2";
           }
-//        XXERegisterTeacherViewController *teacherVC = [[XXERegisterTeacherViewController alloc]init];
-//          teacherVC.userPhoneNum = self.userSettingPhoneNum;
-//          teacherVC.userName = parentsName.text;
-//          teacherVC.userIDCarNum = self.userIDCard;
-//          teacherVC.teacherPassport = self.userPassPort;
-//          teacherVC.userPassword = self.userSettingPassWord;
-//          teacherVC.userIdentifier = self.userType;
-//          teacherVC.userAvatarImage = self.avatarImage;
-//          teacherVC.login_type = self.login_type;
-//          teacherVC.userSex = self.userSex;
-//          teacherVC.userAge = self.userAge;
-//          teacherVC.teacherThirdNickName = self.nickName;
-//          teacherVC.teacherThirdHeadImage = self.t_head_img;
-//          teacherVC.teacherThirdQQToken = self.QQToken;
-//          teacherVC.teacherThirdWeiXinToken = self.weixinToken;
-//          teacherVC.teacherThirdSinaToken = self.sinaToken;
-//          teacherVC.teacherThirdAliPayToken = self.aliPayToken;
-//        [self.navigationController pushViewController:teacherVC animated:YES];
-          
-          XXERegisterTeacherOrClassteacherViewController *registerTeacherOrClassteacherVC = [[XXERegisterTeacherOrClassteacherViewController alloc] init];
-            registerTeacherOrClassteacherVC.userPhoneNum = self.userSettingPhoneNum;
-            registerTeacherOrClassteacherVC.userName = parentsName.text;
-            registerTeacherOrClassteacherVC.userIDCarNum = self.userIDCard;
-            registerTeacherOrClassteacherVC.teacherPassport = self.userPassPort;
-            registerTeacherOrClassteacherVC.userPassword = self.userSettingPassWord;
-            registerTeacherOrClassteacherVC.userIdentifier = self.userType;
-            registerTeacherOrClassteacherVC.userAvatarImage = self.avatarImage;
-            registerTeacherOrClassteacherVC.login_type = self.login_type;
-            registerTeacherOrClassteacherVC.userSex = self.userSex;
-            registerTeacherOrClassteacherVC.userAge = self.userAge;
-            registerTeacherOrClassteacherVC.teacherThirdNickName = self.nickName;
-            registerTeacherOrClassteacherVC.teacherThirdHeadImage = self.t_head_img;
-            registerTeacherOrClassteacherVC.teacherThirdQQToken = self.QQToken;
-            registerTeacherOrClassteacherVC.teacherThirdWeiXinToken = self.weixinToken;
-            registerTeacherOrClassteacherVC.teacherThirdSinaToken = self.sinaToken;
-            registerTeacherOrClassteacherVC.teacherThirdAliPayToken = self.aliPayToken;
-          [self.navigationController pushViewController:registerTeacherOrClassteacherVC animated:YES];
+        XXERegisterTeacherViewController *teacherVC = [[XXERegisterTeacherViewController alloc]init];
+          teacherVC.userPhoneNum = self.userSettingPhoneNum;
+          teacherVC.userName = parentsName.text;
+          teacherVC.userIDCarNum = self.userIDCard;
+          teacherVC.teacherPassport = self.userPassPort;
+          teacherVC.userPassword = self.userSettingPassWord;
+          teacherVC.userIdentifier = self.userType;
+          teacherVC.userAvatarImage = self.avatarImage;
+          teacherVC.login_type = self.login_type;
+          teacherVC.userSex = self.userSex;
+          teacherVC.userAge = self.userAge;
+          teacherVC.teacherThirdNickName = self.nickName;
+          teacherVC.teacherThirdHeadImage = self.t_head_img;
+          teacherVC.teacherThirdQQToken = self.QQToken;
+          teacherVC.teacherThirdWeiXinToken = self.weixinToken;
+          teacherVC.teacherThirdSinaToken = self.sinaToken;
+          teacherVC.teacherThirdAliPayToken = self.aliPayToken;
+        [self.navigationController pushViewController:teacherVC animated:YES];
     }
 }
 

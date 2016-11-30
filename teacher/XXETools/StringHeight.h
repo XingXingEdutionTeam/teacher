@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+
 @interface StringHeight : NSObject
 + (CGFloat)contentSizeOfString:(NSString*)content maxWidth:(CGFloat)width fontSize:(CGFloat)fontSize;
 @end

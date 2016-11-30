@@ -52,12 +52,7 @@
     NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:schoolUrl]];
     [self.homePageLeftButton setImage:[UIImage imageWithData:data] forState:UIControlStateNormal];
     
-    NSString *stringImage;
-    if ([homePageModel.head_img_type isEqualToString:@"0"] ) {
-        stringImage = [NSString stringWithFormat:@"%@%@",kXXEPicURL,homePageModel.head_img];
-    }else {
-        stringImage = homePageModel.head_img;
-    }
+    NSString *stringImage = [NSString stringWithFormat:@"%@%@",kXXEPicURL,homePageModel.head_img];
     [self.homeUserImageView sd_setImageWithURL:[NSURL URLWithString:stringImage] placeholderImage:[UIImage imageNamed:@"register_user_icon"]];
     self.homeUserLabel.text = homePageModel.tname;
     self.homeUserLVLabel.text = [NSString stringWithFormat:@"LV%@",homePageModel.lv];

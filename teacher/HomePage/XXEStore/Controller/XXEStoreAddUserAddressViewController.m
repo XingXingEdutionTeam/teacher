@@ -17,7 +17,7 @@
 #define Kmarg 8.0f
 #define KLabelX 20.0f
 #define KLabelW 65.0f
-#define KLabelH 20.0f
+#define KLabelH 30.0f
 #define kUnderButtonH 64.0f
 #define kDropDownListTag 1000
 
@@ -31,6 +31,7 @@
     NSArray *province;
     NSArray *city;
     NSArray *district;
+    
     
     NSString *selectedProvince;
     NSString *selectedCity;
@@ -48,6 +49,8 @@
     UIView *_view3;
     //所在地区
     UILabel *_areaLabel;
+    
+    
     
     NSString *parameterXid;
     NSString *parameterUser_Id;
@@ -100,25 +103,22 @@
     //邮编
     mailText.text = _model.zip_code;
     
-    CGFloat labelW = (KScreenWidth - 120 * kScreenRatioWidth)/3;
-    CGFloat labelH = 20;
-    
     //省
     //CGRectMake(85+(90+3)*i, 150, (kWidth - 85) / 3, 28)
-    UILabel *provinceLabel = [[UILabel alloc] initWithFrame:CGRectMake(80+labelW*0, 145 * kScreenRatioHeight, labelW, labelH)];
+    UILabel *provinceLabel = [[UILabel alloc] initWithFrame:CGRectMake(85+(90+3)*0, 150, (kWidth - 85) / 3, 28)];
     provinceLabel.text = [NSString stringWithFormat:@"省:%@",_model.province];
     provinceLabel.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
     [bgScrollView addSubview:provinceLabel];
 
     
     //市
-    UILabel *cityLabel = [[UILabel alloc] initWithFrame:CGRectMake(80+labelW*1, 145 * kScreenRatioHeight, labelW, labelH)];
+    UILabel *cityLabel = [[UILabel alloc] initWithFrame:CGRectMake(85+(90+3)*1, 150, (kWidth - 85) / 3, 28)];
     cityLabel.text = [NSString stringWithFormat:@"市:%@",_model.city];
     cityLabel.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
     [bgScrollView addSubview:cityLabel];
 
     //区
-    UILabel *areaLabel = [[UILabel alloc] initWithFrame:CGRectMake(80+labelW*2, 145 * kScreenRatioHeight, labelW, labelH)];
+    UILabel *areaLabel = [[UILabel alloc] initWithFrame:CGRectMake(85+(90+3)*2, 150, (kWidth - 85) / 3, 28)];
     areaLabel.text = [NSString stringWithFormat:@"区:%@",_model.district];
     areaLabel.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
     [bgScrollView addSubview:areaLabel];
@@ -154,7 +154,6 @@
     
     //收货人姓名
     UILabel * consignee = [UILabel createLabelWithFrame:CGRectMake(KLabelX, Kmarg, KLabelW, KLabelH) Font:14 Text:@"收货人:"];
-    consignee.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
     [bgScrollView addSubview:consignee];
     
     nameText = [[UITextField alloc] initWithFrame:CGRectMake(CGRectGetMaxX(consignee.frame) + Kmarg, Kmarg, kWidth - CGRectGetMaxX(consignee.frame) - KLabelX *2, KLabelH)];
@@ -167,9 +166,7 @@
     [bgScrollView addSubview:view1];
     
     //电话
-    UILabel *phoneTitleLabel = [UILabel createLabelWithFrame:CGRectMake(KLabelX, CGRectGetMaxY(view1.frame) + Kmarg , KLabelW, KLabelH) Font:14 Text:@"联系电话:"];
-    phoneTitleLabel.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
-    [bgScrollView addSubview:phoneTitleLabel];
+    [bgScrollView addSubview:[UILabel createLabelWithFrame:CGRectMake(KLabelX, CGRectGetMaxY(view1.frame) + Kmarg , KLabelW, KLabelH) Font:14 Text:@"联系电话:"]];
     
     phoneText = [[UITextField alloc] initWithFrame:CGRectMake(CGRectGetMaxX(consignee.frame) + Kmarg, CGRectGetMaxY(view1.frame) + Kmarg, kWidth - CGRectGetMaxX(consignee.frame) - KLabelX *2, KLabelH)];
     phoneText.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
@@ -182,10 +179,7 @@
     [bgScrollView addSubview:view2];
     
     //邮政编码
-    UILabel *codeLabel = [UILabel createLabelWithFrame:CGRectMake(KLabelX, CGRectGetMaxY(view2.frame) + Kmarg, KLabelW, KLabelH) Font:14 Text:@"邮政编码:"];
-    codeLabel.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
-    [bgScrollView addSubview:codeLabel];
-    
+    [bgScrollView addSubview:[UILabel createLabelWithFrame:CGRectMake(KLabelX, CGRectGetMaxY(view2.frame) + Kmarg, KLabelW, KLabelH) Font:14 Text:@"邮政编码:"]];
     
     mailText = [[UITextField alloc] initWithFrame:CGRectMake(CGRectGetMaxX(consignee.frame) + Kmarg, CGRectGetMaxY(view2.frame) + Kmarg, kWidth - CGRectGetMaxX(consignee.frame) - KLabelX *2, KLabelH)];
     mailText.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
@@ -198,7 +192,6 @@
     
     //所在地区
     _areaLabel =  [UILabel createLabelWithFrame:CGRectMake(KLabelX, CGRectGetMaxY(_view3.frame) + Kmarg, KLabelW, KLabelH) Font:14 Text:@"所在地区:"];
-    _areaLabel.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
     [bgScrollView addSubview:_areaLabel];
     
     UIView *view4 = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(_areaLabel.frame) + Kmarg, kWidth, 1)];
@@ -207,10 +200,7 @@
     [bgScrollView addSubview:view4];
     
     //详细地址
-    UILabel *addressLabel = [UILabel createLabelWithFrame:CGRectMake(KLabelX, CGRectGetMaxY(view4.frame) + Kmarg, KLabelW, KLabelH) Font:14 Text:@"详细地址:"];
-    addressLabel.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
-    [bgScrollView addSubview:addressLabel];
-    
+    [bgScrollView addSubview:[UILabel createLabelWithFrame:CGRectMake(KLabelX, CGRectGetMaxY(view4.frame) + Kmarg, KLabelW, KLabelH) Font:14 Text:@"详细地址:"]];
     
     addressText = [[UITextField alloc] initWithFrame:CGRectMake(CGRectGetMaxX(consignee.frame) + Kmarg, CGRectGetMaxY(view4.frame) + Kmarg, kWidth - CGRectGetMaxX(consignee.frame) - KLabelX *2, KLabelH)];
     addressText.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
@@ -225,18 +215,14 @@
     [bgScrollView addSubview:view6];
     
     //保存地址
-    CGFloat buttonX = (KScreenWidth - 325 * kScreenRatioWidth) / 2;
-    CGFloat buttonW = 325 * kScreenRatioWidth;
-    CGFloat buttonH = 42 * kScreenRatioHeight;
-    
-    saveBtn=[UIButton createButtonWithFrame:CGRectMake(buttonX, CGRectGetMaxY(view6.frame) + KLabelX *2, buttonW, buttonH) backGruondImageName:@"login_green" Target:nil Action:@selector(saveBtn) Title:nil];
+    saveBtn=[UIButton createButtonWithFrame:CGRectMake(KLabelX, CGRectGetMaxY(view6.frame) + KLabelX *2, kWidth - KLabelX *2, 42) backGruondImageName:@"login_green" Target:nil Action:@selector(saveBtn) Title:nil];
     [saveBtn setTitle:@"保存地址" forState:UIControlStateNormal];
     [saveBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [bgScrollView addSubview:saveBtn];
     
     //设为默认
     defaultBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    defaultBtn.frame = CGRectMake(buttonX, CGRectGetMaxY(saveBtn.frame) + KLabelX, buttonW, buttonH);
+    defaultBtn.frame = CGRectMake(KLabelX, CGRectGetMaxY(saveBtn.frame) + KLabelX, kWidth - KLabelX *2, 42);
     [defaultBtn setBackgroundImage:[UIImage imageNamed:@"login_green"] forState:UIControlStateNormal];
     if ([_defaultAddress integerValue] == 1) {
         //是 默认 地址
@@ -256,7 +242,7 @@
 
     
     //删除地址
-    removeBtn = [UIButton createButtonWithFrame:CGRectMake(buttonX, CGRectGetMaxY(defaultBtn.frame) + KLabelX, buttonW, buttonH) backGruondImageName:@"login_green" Target:nil Action:@selector(removeBtnClick) Title:nil];
+    removeBtn = [UIButton createButtonWithFrame:CGRectMake(KLabelX, CGRectGetMaxY(defaultBtn.frame) + KLabelX, kWidth - KLabelX *2, 42) backGruondImageName:@"login_green" Target:nil Action:@selector(removeBtnClick) Title:nil];
     [removeBtn setTitle:@"删除地址" forState:UIControlStateNormal];
     [removeBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [bgScrollView addSubview:removeBtn];
@@ -355,10 +341,7 @@
     NSArray *keys = [NSArray arrayWithObjects:@"province",@"city",@"area", nil];
     for(NSInteger i=0;i<3;i++)
     {
-        CGFloat comboxW = (KScreenWidth - 120 * kScreenRatioWidth)/3;
-        CGFloat comboxH = 20;
-        
-        LMComBoxView *comBox = [[LMComBoxView alloc]initWithFrame:CGRectMake(80+comboxW*i, 145 * kScreenRatioHeight, comboxW, comboxH)];
+        LMComBoxView *comBox = [[LMComBoxView alloc]initWithFrame:CGRectMake(85+(90+3)*i, 150, (kWidth - 100) / 3, 20)];
         comBox.backgroundColor = [UIColor whiteColor];
         comBox.arrowImgName = @"down_dark0.png";
         NSMutableArray *itemsArray = [NSMutableArray arrayWithArray:[addressDict objectForKey:[keys objectAtIndex:i]]];

@@ -104,15 +104,15 @@
     [addressBgView addSubview:phoneLabel];
     
     //地址 title
-    UILabel *addressTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 80, 90, 20)];
+    UILabel *addressTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 80, 60, 20)];
     addressTitleLabel.text = @"[收货地址]";
-    addressTitleLabel.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
+    addressTitleLabel.font = [UIFont systemWithIphone6P:14 Iphone6:12 Iphone5:10 Iphone4:8];
     addressTitleLabel.textColor = [UIColor lightGrayColor];
     [addressBgView addSubview:addressTitleLabel];
     
     //地址
     addressLabel = [[UILabel alloc] initWithFrame:CGRectMake(addressTitleLabel.frame.origin.x + addressTitleLabel.width, 40, KScreenWidth - 100, 110)];
-    addressLabel.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
+    addressLabel.font = [UIFont systemWithIphone6P:14 Iphone6:12 Iphone5:10 Iphone4:8];
     addressLabel.numberOfLines = 0;
 //    addressLabel.backgroundColor = [UIColor blueColor];
     [addressBgView addSubview:addressLabel];
@@ -301,8 +301,6 @@
             
             XXEStorePayViewController *storePayVC = [[XXEStorePayViewController alloc] init];
             storePayVC.dict = daizhifuOrderDictInfo;
-            storePayVC.order_id = daizhifuOrderDictInfo[@"order_id"];
-            
             [self.navigationController pushViewController:storePayVC animated:YES];
         }
         

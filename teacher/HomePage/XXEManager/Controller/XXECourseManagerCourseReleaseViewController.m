@@ -1286,7 +1286,7 @@
                   @"course_end_tm":endTimeStr,
                   @"address":address,
                   @"middle_in_rule":insertFlagStr,
-                  @"allow_return":exitFlagStr,
+                  @"quit_rule":exitFlagStr,
                   @"coin":deductFlagStr,
                   @"original_price":original_price,
                   @"now_price":now_price,
