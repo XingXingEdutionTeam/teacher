@@ -394,9 +394,9 @@
             XXEAuditDetailInfoViewController *auditDetailInfoVC =[[XXEAuditDetailInfoViewController alloc]init];
             XXEAuditAndReleaseModel *model = _auditDataSourceArray[indexPath.row];
             
-            auditDetailInfoVC.subjectStr = model.title;
-            auditDetailInfoVC.contentStr = model.con;
-            auditDetailInfoVC.notice_id = model.notice_id;
+//            auditDetailInfoVC.subjectStr = model.title;
+//            auditDetailInfoVC.contentStr = model.con;
+//            auditDetailInfoVC.notice_id = model.notice_id;
             [self.navigationController pushViewController:auditDetailInfoVC animated:YES];
         }
             break;

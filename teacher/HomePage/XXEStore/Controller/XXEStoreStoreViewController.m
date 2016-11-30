@@ -294,7 +294,8 @@
     countdownView.countDownTimeInterval = spaceTime;
     
     //签到送猩币
-    UIButton *checkinBtn = [UIButton createButtonWithFrame:CGRectMake(CGRectGetMaxX(countdownView.frame)+ Kmarg, CGRectGetMaxY(grayView1.frame) + Kmarg,(kWidth - CGRectGetMaxX(countdownView.frame))/3 - 10, KButtonH) backGruondImageName:nil Target:nil Action:@selector(checkInBtn) Title:@"签到送猩币"];
+//    UIButton *checkinBtn = [UIButton createButtonWithFrame:CGRectMake(CGRectGetMaxX(countdownView.frame)+ Kmarg, CGRectGetMaxY(grayView1.frame) + Kmarg,(kWidth - CGRectGetMaxX(countdownView.frame))/3 - 10, KButtonH) backGruondImageName:nil Target:nil Action:@selector(checkInBtn) Title:@"签到送猩币"];
+    UIButton *checkinBtn = [UIButton createButtonWithFrame:CGRectMake(KScreenWidth - 160 * kScreenRatioWidth, CGRectGetMaxY(grayView1.frame) + Kmarg,70 * kScreenRatioWidth, KButtonH) backGruondImageName:nil Target:nil Action:@selector(checkInBtn) Title:@"签到送猩币"];
     checkinBtn.titleLabel.font = [UIFont systemWithIphone6P:12 Iphone6:10 Iphone5:8 Iphone4:6];
     [checkinBtn setTitleColor:UIColorFromRGB(0, 170, 42) forState:UIControlStateNormal];
     checkinBtn.layer.borderColor = UIColorFromRGB(0, 170, 42).CGColor;
@@ -303,7 +304,7 @@
     [bgScrollView addSubview:checkinBtn];
     
     //猩币转增
-    UIButton *xingbizzBtn = [UIButton createButtonWithFrame:CGRectMake(CGRectGetMaxX(checkinBtn.frame) + Kmarg, CGRectGetMaxY(grayView1.frame) + Kmarg , (kWidth - CGRectGetMaxX(countdownView.frame))/3 - 10, KButtonH)backGruondImageName:nil Target:nil Action:@selector(moneyPresentBtn) Title:@"猩币转赠"];
+    UIButton *xingbizzBtn = [UIButton createButtonWithFrame:CGRectMake(CGRectGetMaxX(checkinBtn.frame) + Kmarg, CGRectGetMaxY(grayView1.frame) + Kmarg , 70 * kScreenRatioWidth, KButtonH)backGruondImageName:nil Target:nil Action:@selector(moneyPresentBtn) Title:@"猩币转赠"];
      xingbizzBtn.titleLabel.font = [UIFont systemWithIphone6P:12 Iphone6:10 Iphone5:8 Iphone4:6];
     [xingbizzBtn setTitleColor:UIColorFromRGB(0, 170, 42) forState:UIControlStateNormal];
     xingbizzBtn.layer.borderColor = UIColorFromRGB(0, 170, 42).CGColor;
@@ -311,14 +312,14 @@
     [xingbizzBtn.layer setMasksToBounds:YES];
     [bgScrollView addSubview:xingbizzBtn];
     
-    //花篮专区
-    UIButton *flowerbtn = [UIButton createButtonWithFrame:CGRectMake(CGRectGetMaxX(xingbizzBtn.frame) + Kmarg, CGRectGetMaxY(grayView1.frame) + Kmarg, (kWidth - CGRectGetMaxX(countdownView.frame))/3 - 10, KButtonH) backGruondImageName:nil Target:nil Action:@selector(FlowersPrefecture) Title:@"花篮专区"];
-    flowerbtn.titleLabel.font = [UIFont systemWithIphone6P:12 Iphone6:10 Iphone5:8 Iphone4:6];
-    [flowerbtn setTitleColor:UIColorFromRGB(0, 170, 42) forState:UIControlStateNormal];
-    flowerbtn.layer.borderColor = UIColorFromRGB(0, 170, 42).CGColor;
-    [flowerbtn.layer setBorderWidth:1];
-    [flowerbtn.layer setMasksToBounds:YES];
-    [bgScrollView addSubview:flowerbtn];
+//    //花篮专区
+//    UIButton *flowerbtn = [UIButton createButtonWithFrame:CGRectMake(CGRectGetMaxX(xingbizzBtn.frame) + Kmarg, CGRectGetMaxY(grayView1.frame) + Kmarg, (kWidth - CGRectGetMaxX(countdownView.frame))/3 - 10, KButtonH) backGruondImageName:nil Target:nil Action:@selector(FlowersPrefecture) Title:@"花篮专区"];
+//    flowerbtn.titleLabel.font = [UIFont systemWithIphone6P:12 Iphone6:10 Iphone5:8 Iphone4:6];
+//    [flowerbtn setTitleColor:UIColorFromRGB(0, 170, 42) forState:UIControlStateNormal];
+//    flowerbtn.layer.borderColor = UIColorFromRGB(0, 170, 42).CGColor;
+//    [flowerbtn.layer setBorderWidth:1];
+//    [flowerbtn.layer setMasksToBounds:YES];
+//    [bgScrollView addSubview:flowerbtn];
     
     UIView *grayView2=[[UIView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(xingbizzBtn.frame) + Kmarg, kWidth, 7)];
     grayView2.backgroundColor=UIColorFromRGB(229, 232, 233);
@@ -348,12 +349,12 @@
     [self.navigationController pushViewController:storeSentIconToOtherVC animated:YES];
 }
 
-//花篮 专区
-- (void)FlowersPrefecture{
-    XXEStoreBuyFlowerbasketViewController *storeBuyFlowerbasketVC = [[XXEStoreBuyFlowerbasketViewController alloc] init];
-    
-    [self.navigationController pushViewController:storeBuyFlowerbasketVC animated:YES];
-}
+////花篮 专区
+//- (void)FlowersPrefecture{
+//    XXEStoreBuyFlowerbasketViewController *storeBuyFlowerbasketVC = [[XXEStoreBuyFlowerbasketViewController alloc] init];
+//    
+//    [self.navigationController pushViewController:storeBuyFlowerbasketVC animated:YES];
+//}
 
 #pragma mark $$$$$$$$$$$$ 创建 下部 tableView $$$$$$$$
 - (void)createTableView{

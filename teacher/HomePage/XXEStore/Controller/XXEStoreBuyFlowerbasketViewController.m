@@ -270,6 +270,9 @@
 //购买
 - (void)buyButtonClick{
     
+    
+    NSLog(@"7777");
+    
 //    XXEStorePerfectConsigneeAddressViewController *storePerfectConsigneeAddressVC = [[XXEStorePerfectConsigneeAddressViewController alloc] init];
 //    
 //    [self.navigationController pushViewController:storePerfectConsigneeAddressVC animated:YES];

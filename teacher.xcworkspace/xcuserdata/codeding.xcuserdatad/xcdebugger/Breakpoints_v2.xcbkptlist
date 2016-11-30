@@ -218,11 +218,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "teacher/FriendCirclePage/Controller/XXEFriendCirclePageViewController.m"
-            timestampString = "501345450.400932"
+            timestampString = "501477918.418809"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "655"
-            endingLineNumber = "655"
+            startingLineNumber = "659"
+            endingLineNumber = "659"
             landmarkName = "-deleteComment:itemId:"
             landmarkType = "7">
          </BreakpointContent>
@@ -313,13 +313,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "teacher/AppDelegate.m"
-            timestampString = "501418159.045221"
+            filePath = "teacher/HomePage/XXEStore/Controller/XXEStoreGoodsOrderDetailViewController.m"
+            timestampString = "501766002.46859"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "150"
-            endingLineNumber = "150"
-            landmarkName = "-application:openURL:sourceApplication:annotation:"
+            startingLineNumber = "146"
+            endingLineNumber = "146"
+            landmarkName = "-buttonClick:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

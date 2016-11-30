@@ -12,7 +12,7 @@
 //
 
 #import "XXERedFlowerDetialViewController.h"
-#import "XXERedFlowerDetialTableViewCell.h"
+#import "XXERedFlowerDetialInfoTableViewCell.h"
 #import "XXEImageBrowsingViewController.h"
 #import "XXEGlobalDecollectApi.h"
 #import "XXEGlobalCollectApi.h"
@@ -49,9 +49,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    picArray =[[NSMutableArray alloc]initWithObjects:@"home_redflower_nameIcon", @"home_redflower_timeIcon", @"home_redflower_schoolIcon", @"home_redflower_classIcon", @"home_redflower_courseIcon", @"home_redflower_contentIcon",  @"home_redflower_picIcon",nil];
-    titleArray =[[NSMutableArray alloc]initWithObjects:@"姓名:",@"赠送时间:",@"学校:", @"班级:", @"课程:", @"赠言:", @"照片墙:", nil];
-    contentArray = [[NSMutableArray alloc] initWithObjects:_name, _time, _schoolName, _className, _course, _content, @"", nil];
+    //@"home_redflower_courseIcon",
+    picArray =[[NSMutableArray alloc]initWithObjects:@"home_redflower_nameIcon", @"home_redflower_timeIcon", @"home_redflower_schoolIcon", @"home_redflower_classIcon", @"home_redflower_contentIcon",  @"home_redflower_picIcon",nil];
+    titleArray =[[NSMutableArray alloc]initWithObjects:@"姓名:",@"赠送时间:",@"学校:", @"班级:", @"赠言:", @"照片墙:", nil];
+    contentArray = [[NSMutableArray alloc] initWithObjects:_name, _time, _schoolName, _className, _content, @"", nil];
     
     if ([XXEUserInfo user].login){
         parameterXid = [XXEUserInfo user].xid;
@@ -105,12 +106,9 @@
 - (void)collectRedFlower{
     /*
      【收藏】通用于各种收藏
-     
      接口类型:2
-     
      接口:
      http://www.xingxingedu.cn/Global/collect
-     
      传参:
      collect_id	//收藏id (如果是收藏用户,这里是xid)
      collect_type	//收藏品种类型	1:商品  2:点评  3:用户  4:课程  5:学校  6:花朵
@@ -145,12 +143,9 @@
 - (void)deleteCollectcollectRedFlower{
     /*
      【删除/取消收藏】通用于各种取消收藏
-     
      接口类型:2
-     
      接口:
      http://www.xingxingedu.cn/Global/deleteCollect
-     
      传参:
      collect_id	//收藏id (如果是收藏用户,这里是xid)
      collect_type	//收藏品种类型	1:商品  2:点评  3:用户  4:课程  5:学校  6:花朵 7:图片
@@ -179,7 +174,7 @@
 
 
 - (void)createTableView{
-    _myTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, KScreenWidth, KScreenHeight) style:UITableViewStyleGrouped];
+    _myTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, KScreenWidth, KScreenHeight - 64) style:UITableViewStyleGrouped];
     
     _myTableView.dataSource = self;
     _myTableView.delegate = self;
@@ -199,25 +194,32 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     
-    return 7;
+    return 6;
     
 }
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    
+
     static NSString *identifier = @"cell";
-    XXERedFlowerDetialTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+    XXERedFlowerDetialInfoTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
     
     if (cell == nil) {
-        cell = [[[NSBundle mainBundle] loadNibNamed:@"XXERedFlowerDetialTableViewCell" owner:self options:nil]lastObject];
+        cell = [[XXERedFlowerDetialInfoTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
     }
 
     cell.iconImageView.image = [UIImage imageNamed:picArray[indexPath.row]];
     cell.titleLabel.text = titleArray[indexPath.row];
     
     cell.contentLabel.text = contentArray[indexPath.row];
-    if (indexPath.row == 6) {
+    
+    CGFloat height = [StringHeight contentSizeOfString:contentArray[indexPath.row] maxWidth:KScreenWidth - 70 fontSize:14];
+    
+    CGSize size = cell.contentLabel.size;
+    size.height = height;
+    cell.contentLabel.size = size;
+    
+    if (indexPath.row == 5) {
         
         //result= num1>num2?num1:num2;
         
@@ -229,7 +231,7 @@
         }
         //创建 十二宫格  三行、四列
         int margin = 10;
-        picWidth = (KScreenWidth - 4 * margin) / 3;
+        picWidth = (KScreenWidth - 20- 4 * margin) / 3;
         picHeight = picWidth;
         
         for (int i = 0; i < _picWallArray.count; i++) {
@@ -240,7 +242,7 @@
             //列
             int buttonLine = i % 3;
             
-            CGFloat buttonX = (picWidth + margin) * buttonLine;
+            CGFloat buttonX = 10 + (picWidth + margin) * buttonLine;
             CGFloat buttonY = 40 + (picHeight + margin) * buttonRow;
             
             UIImageView *pictureImageView = [[UIImageView alloc] initWithFrame:CGRectMake(buttonX, buttonY, picWidth, picHeight)];
@@ -277,11 +279,13 @@
 
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    
-    if (indexPath.row==6) {
+
+    if (indexPath.row == 4) {
+    CGFloat height = [StringHeight contentSizeOfString:contentArray[indexPath.row] maxWidth:KScreenWidth - 70 fontSize:14];
+        return height + 20;
+    }else if (indexPath.row==5) {
         return 44 + picRow * picHeight;
-    }
-    else{
+    } else{
         return 44;
     }
     

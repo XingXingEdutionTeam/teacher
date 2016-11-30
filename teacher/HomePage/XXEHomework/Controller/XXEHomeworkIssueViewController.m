@@ -201,7 +201,7 @@
 
 - (IBAction)certainButton:(id)sender {
     
-//    NSLog(@"确定");
+    NSLog(@"确定");
     _subjectStr = _subjectTextField.text;
     _contentStr = _contentTextView.text;
     _timeStr = _submitTextField.text;
@@ -249,13 +249,21 @@
 //回复 只有  文字 的时候
 - (void)submitIssueTextInfo{
     
-//    NSLog(@"_schoolId:%@ --- _classId:%@ ",_schoolId, _classId);
+    /*
+     [DEFAULTS setObject:self.schoolHomeId forKey:@"SCHOOL_ID"];
+     [DEFAULTS setObject:self.classHomeId forKey:@"CLASS_ID"];
+
+     */
+    _schoolId = [DEFAULTS objectForKey:@"SCHOOL_ID"];
+    _classId = [DEFAULTS objectForKey:@"CLASS_ID"];
     
+//        NSLog(@"_schoolId:%@ --- _classId:%@ ",_schoolId, _classId);
+
     XXEHomeworkIssueTextInfoApi *homeworkIssueTextInfoApi = [[XXEHomeworkIssueTextInfoApi alloc] initWithXid:parameterXid user_id:parameterUser_Id user_type:USER_TYPE school_id:_schoolId class_id:_classId title:_subjectStr con:_contentStr teach_course:_teacherCourseStr date_end_tm:_timeStr url_group:url_groupStr];
     
     [homeworkIssueTextInfoApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         
-//               NSLog(@"2222---   %@", request.responseJSONObject);
+//    NSLog(@"2222---   %@", request.responseJSONObject);
         
         NSString *codeStr = [NSString stringWithFormat:@"%@", request.responseJSONObject[@"code"]];
         
@@ -292,7 +300,6 @@
      page_origin	//页面来源,传数字 			  (必须)
      17	//班级作业
      upload_format	//上传格式, 传数字,1:单个上传  2:批量上传 (必须)
-     file		//文件数据的数组名 			  (必须)
      */
     NSString *url = @"http://www.xingxingedu.cn/Global/uploadFile";
     
@@ -321,7 +328,7 @@
         
     } success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
         NSDictionary *dict =responseObject;
-//        NSLog(@"111111<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<%@",dict);
+        NSLog(@"111111<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<%@",dict);
         if([[NSString stringWithFormat:@"%@",dict[@"code"]]isEqualToString:@"1"] )
         {
             

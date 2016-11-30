@@ -36,4 +36,18 @@
     
     return newImage ;
 }
+
+- (CGFloat)imageWidth {
+    return self.size.width;
+};
+- (CGFloat)imageHeight {
+    return self.size.height;
+};
+
+- (CGFloat)imageScale_W {
+    return self.size.width * kScreenRatioWidth;
+};
+- (CGFloat)imageScale_H {
+    return self.size.height * kScreenRatioHeight;
+};
 @end

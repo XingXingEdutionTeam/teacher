@@ -29,6 +29,8 @@
     UIView *headerView;
     NSString * courseNameStr;
     NSString * dateNameStr;
+    UIImageView *placeholderImageView;
+    
     NSString *parameterXid;
     NSString *parameterUser_Id;
 }
@@ -126,8 +128,8 @@
     
     XXEHomeworkIssueViewController *homeworkIssueVC = [[XXEHomeworkIssueViewController alloc] init];
     
-    homeworkIssueVC.schoolId = _schoolId;
-    homeworkIssueVC.classId = _classId;
+//    homeworkIssueVC.schoolId = _schoolId;
+//    homeworkIssueVC.classId = _classId;
     
     [self.navigationController pushViewController:homeworkIssueVC animated:YES];
     
@@ -136,9 +138,7 @@
 - (void)fetchNetData{
     /*
      【班级作业】
-     
      接口类型:1
-     
      接口:
      http://www.xingxingedu.cn/Parent/class_homework_list
      
@@ -195,39 +195,53 @@
     
 }
 
-
 // 有数据 和 无数据 进行判断
 - (void)customContent{
+    // 如果 有占位图 先 移除
+    [self removePlaceholderImageView];
     
     if (_dataSourceArray.count == 0) {
-        
         _myTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-        
         // 1、无数据的时候
-        UIImage *myImage = [UIImage imageNamed:@"all_placeholder"];
-        CGFloat myImageWidth = myImage.size.width;
-        CGFloat myImageHeight = myImage.size.height;
+        [self createPlaceholderView];
         
-        UIImageView *myImageView = [[UIImageView alloc] initWithFrame:CGRectMake(KScreenWidth / 2 - myImageWidth / 2, _myTableView.frame.size.height / 2 - myImageHeight / 2, myImageWidth, myImageHeight)];
-        myImageView.image = myImage;
-        [_myTableView addSubview:myImageView];
-        
-        [_myTableView reloadData];
     }else{
         //2、有数据的时候
         if (_teach_course_groupArray.count != 0) {
-            self.courseCombox.dataArray = _teach_course_groupArray;
-            [self.courseCombox.listTableView reloadData];
-            
+        self.courseCombox.dataArray = _teach_course_groupArray;
+        [self.courseCombox.listTableView reloadData];
+        
         }
         if (_month_groupArray.count != 0) {
-            self.dateNameCombox.dataArray = _month_groupArray;
-            [self.dateNameCombox.listTableView reloadData];
+        self.dateNameCombox.dataArray = _month_groupArray;
+        [self.dateNameCombox.listTableView reloadData];
         }
-    
     }
+    
     [_myTableView reloadData];
+    
 }
+
+
+//没有 数据 时,创建 占位图
+- (void)createPlaceholderView{
+    // 1、无数据的时候
+    UIImage *myImage = [UIImage imageNamed:@"all_placeholder"];
+    CGFloat myImageWidth = myImage.size.width;
+    CGFloat myImageHeight = myImage.size.height;
+    
+    placeholderImageView = [[UIImageView alloc] initWithFrame:CGRectMake(kWidth / 2 - myImageWidth / 2, (kHeight - 64 - 49) / 2 - myImageHeight / 2, myImageWidth, myImageHeight)];
+    placeholderImageView.image = myImage;
+    [self.view addSubview:placeholderImageView];
+}
+
+//去除 占位图
+- (void)removePlaceholderImageView{
+    if (placeholderImageView != nil) {
+        [placeholderImageView removeFromSuperview];
+    }
+}
+
 
 
 - (void)createTableView{

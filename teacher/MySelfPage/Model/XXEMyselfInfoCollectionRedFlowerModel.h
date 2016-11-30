@@ -29,6 +29,8 @@
  [head_img] => app_upload/text/teacher/1.jpg
  [head_img_type] => 0
  [teach_course] => 语文,音乐
+ baby_head_img
+ baby_tname
  
  )
  */
@@ -50,6 +52,8 @@
 @property (nonatomic, copy) NSString<Optional> *head_img_type;
 @property (nonatomic, copy) NSString<Optional> *teach_course;
 @property (nonatomic, copy) NSString<Optional> *type;
+@property (nonatomic, copy) NSString<Optional> *baby_head_img;
+@property (nonatomic, copy) NSString<Optional> *baby_tname;
 
 + (NSArray*)parseResondsData:(id)respondObject;
 
