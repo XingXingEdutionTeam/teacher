@@ -36,7 +36,9 @@
 {
     if (!_registerUerTextField) {
         _registerUerTextField = [UITextField createTextFieldWithIsOpen:NO textPlaceholder:@"请输入11位手机号"];
+        _registerUerTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
         _registerUerTextField.delegate = self;
+        [_registerUerTextField addTarget:self action:@selector(textFieldTextChange:) forControlEvents:UIControlEventEditingChanged];
         _registerUerTextField.keyboardType = UIKeyboardTypeNumberPad;
     }
     return _registerUerTextField;
@@ -47,7 +49,7 @@
     if (!_registerVerificationTextField) {
         _registerVerificationTextField = [UITextField createTextFieldWithIsOpen:NO textPlaceholder:@"输入4位验证码"];
         _registerVerificationTextField.delegate = self;
-        _registerVerificationTextField.borderStyle = UIKeyboardTypeDefault;
+        _registerVerificationTextField.borderStyle = UIKeyboardTypeNumberPad;
     }
     return _registerVerificationTextField;
 }
@@ -233,22 +235,34 @@
     }];
 }
 
-#pragma mark - UItextFieldDelegate
-- (void)textFieldDidEndEditing:(UITextField *)textField
-{
-    if (self.registerUerTextField == textField) {
-        [self.registerUerTextField resignFirstResponder];
-        
-        NSLog(@"%@", self.registerUerTextField.text);
-        
-        if (self.registerUserName == nil) {
-            [self showString:@"输入电话号码有误" forSecond:1.f];
-        } else {
-            //验证手机号有没有注册过
-            [self checkPhoneNumber];
-        }
+-(void)textFieldResignFirstResponder {
+    [self.registerUerTextField resignFirstResponder];
+    [self.registerVerificationTextField resignFirstResponder];
+}
+
+-(void)textFieldTextChange:(UITextField *)textField {
+    NSString *tmpStr = textField.text;
+    if (textField.text.length >= 11) {
+        textField.text = [tmpStr substringToIndex:11];
     }
 }
+
+#pragma mark - UItextFieldDelegate
+//- (void)textFieldDidEndEditing:(UITextField *)textField
+//{
+////    if (self.registerUerTextField == textField) {
+////        [self.registerUerTextField resignFirstResponder];
+////        
+////        NSLog(@"%@", self.registerUerTextField.text);
+////        
+////        if (self.registerUserName == nil) {
+////            [self showString:@"输入电话号码有误" forSecond:1.f];
+////        } else {
+////            //验证手机号有没有注册过
+////            [self checkPhoneNumber];
+////        }
+////    }
+//}
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField
 {
@@ -274,16 +288,30 @@
 
 - (void)setupVerificationNumber:(UIButton *)sender
 {
-   
-    [sender startWithTime:59 title:@"获取验证码" countDownTile:@"s后重新获取" mColor:XXEColorFromRGB(189, 210, 38) countColor:XXEColorFromRGB(204, 204, 204)];
-    [self showString:@"验证码已发送" forSecond:1.f];
-    [self getVerificationNumber];
+    [self textFieldResignFirstResponder];
+    if ([self.registerUerTextField.text isEqualToString:@""]) {
+        [self showString:@"请输入手机号" forSecond:1.f];
+        return;
+    }
     
-     NSLog(@"----获取验证码----");
+    [self checkPhoneNumber];
+    
+   
 }
 
 - (void)nextButtonsClick:(UIButton *)sender
 {
+    [self textFieldResignFirstResponder];
+    if ([self.registerUerTextField.text isEqualToString:@""]) {
+        [self showString:@"请输入手机号" forSecond:1.f];
+        return;
+    }
+    
+    if ([self.registerVerificationTextField.text isEqualToString:@""]) {
+        [self showString:@"请输入验证码" forSecond:1.f];
+        return;
+    }
+    
     //验证验证码对不对
     [self verifyNumberISRight];
 //
@@ -331,14 +359,15 @@
         NSDictionary *dic = request.responseJSONObject;
         NSString *string = [dic objectForKey:@"code"];
         if ([string intValue] == 1) {
-            [self showString:@"此号码可以注册" forSecond:1.f];
-            self.verificationButton.userInteractionEnabled = YES;
+//            self.verificationButton.userInteractionEnabled = YES;
             self.registerVerificationTextField.enabled = YES;
+            [self.verificationButton startWithTime:60 title:@"获取验证码" countDownTile:@"s后重新获取" mColor:XXEColorFromRGB(189, 210, 38) countColor:XXEColorFromRGB(204, 204, 204)];
+            [self getVerificationNumber];
         }else if ([string intValue] == 3) {
             [self showString:@"手机已存在" forSecond:3.f];
             [self.registerVerificationTextField resignFirstResponder];
             self.registerVerificationTextField.enabled = NO;
-            self.verificationButton.userInteractionEnabled = NO;
+//            self.verificationButton.userInteractionEnabled = NO;
         }else{
             [self showString:@"请重新注册" forSecond:1.f];
         }
@@ -352,9 +381,12 @@
    //短信验证码
     [SMSSDK getVerificationCodeByMethod:SMSGetCodeMethodSMS phoneNumber:self.registerUserName zone:@"86" customIdentifier:nil result:^(NSError *error) {
         if (!error) {
-            [self showString:@"获取验证码成功" forSecond:1.f];
+            
             //记录次数
             [self recordTheVerifyCodeNum];
+        }else {
+            [self showString:@"验证码获取失败" forSecond:1.f];
+
         }
     }];
 }
@@ -370,11 +402,13 @@
         
         if (code1 == 4) {
             [self showString:@"已达今日5条上线" forSecond:1.f];
-           self.verificationButton.userInteractionEnabled = NO;
+//           self.verificationButton.userInteractionEnabled = NO;
+        }else {
+            [self showString:@"获取验证码成功" forSecond:1.f];
         }
         
     } failure:^(__kindof YTKBaseRequest *request) {
-        
+        [self showString:@"验证码获取失败" forSecond:1.f];
     }];
 }
 

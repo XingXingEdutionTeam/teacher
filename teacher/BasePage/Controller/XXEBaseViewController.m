@@ -59,7 +59,14 @@
 {
     if (self.hud) {
         self.hud.mode = MBProgressHUDModeText;
-        self.hud.labelText = text;
+        if ([text isEqualToString:@"密码仅支持6-16位字符，支持字母、数字"]) {
+            self.hud.detailsLabelText = text;
+            self.hud.labelText = nil;
+        }else {
+            self.hud.labelText = text;
+            self.hud.detailsLabelText = nil;
+        }
+        
         [self.hud show:YES];
         [self.view bringSubviewToFront:self.hud];
         [self hideHudAfterSeconds:seconds];
