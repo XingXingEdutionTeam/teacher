@@ -121,22 +121,6 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "teacher/LoginAndRegister/Controller/RegisterController/RegisterOne/XXERegisterViewController.m"
-            timestampString = "500806307.292237"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "248"
-            endingLineNumber = "248"
-            landmarkName = "-textFieldDidEndEditing:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "teacher/FriendCirclePage/Controller/XXETimeUserViewController.m"
             timestampString = "500870093.297736"
             startingColumnNumber = "9223372036854775807"
@@ -320,6 +304,38 @@
             startingLineNumber = "146"
             endingLineNumber = "146"
             landmarkName = "-buttonClick:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "teacher/LoginAndRegister/Controller/XXEForgetPassWordViewController.m"
+            timestampString = "502199415.479068"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "390"
+            endingLineNumber = "390"
+            landmarkName = "-recordTheVerifyCodeNum"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "teacher/LoginAndRegister/Controller/XXEForgetPassWordViewController.m"
+            timestampString = "502199415.479068"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "387"
+            endingLineNumber = "387"
+            landmarkName = "-recordTheVerifyCodeNum"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
