@@ -17,6 +17,8 @@
 #import "XXEMyselfInfoViewController.h"
 #import "XXERootFriendListController.h"
 #import "XXEMySelfInfoApi.h"
+#import "XXECourseOrderDetailViewController.h"
+#import "XXECourseOrderListViewController.h"
 
 @interface XXEMySelfPageViewController ()<UITableViewDelegate, UITableViewDataSource>
 {
@@ -289,7 +291,9 @@
 #pragma mark - ===== 当私立校长 身份 时 "我的订单" ========
 - (void)menuBtnClick:(UIButton *)button{
 
+    XXECourseOrderListViewController *courseOrderListVC = [[XXECourseOrderListViewController alloc] init];
     
+    [self.navigationController pushViewController:courseOrderListVC animated:YES];
     
 }
 

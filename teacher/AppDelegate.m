@@ -19,6 +19,9 @@
 #import "XXELoginViewController.h"
 #import "XXENavigationViewController.h"
 
+//支付
+#import "BeeCloud.h"
+
 
 @interface AppDelegate ()
 
@@ -66,6 +69,10 @@
 //    [self setupControllers];
     
     
+    //支付
+    [BeeCloud initWithAppID:@"a2c64858-7c9c-4fd2-b2f8-2c58f853d47f" andAppSecret:@"fc8fe808-d180-48e7-99ba-54b42d3c725d"];
+    [BeeCloud initWeChatPay:@"wxed731a36270b5a4f"];
+    
     //初始化 融云
     [self initRongClould];
     
@@ -74,7 +81,33 @@
     [self loadStarView];
     
     
+   
     
+    //获取deviceToken
+    
+    /*
+    * 推送处理1
+    */
+    if ([application
+         respondsToSelector:@selector(registerUserNotificationSettings:)]) {
+        //注册推送, 用于iOS8以及iOS8之后的系统
+        UIUserNotificationSettings *settings = [UIUserNotificationSettings
+                                                settingsForTypes:(UIUserNotificationTypeBadge |
+                                                                  UIUserNotificationTypeSound |
+                                                                  UIUserNotificationTypeAlert)
+                                                categories:nil];
+        [application registerUserNotificationSettings:settings];
+    }
+//    else {
+//        //注册推送，用于iOS8之前的系统
+//        UIRemoteNotificationType myTypes = UIRemoteNotificationTypeBadge |
+//        UIRemoteNotificationTypeAlert |
+//        UIRemoteNotificationTypeSound;
+//        [application registerForRemoteNotificationTypes:myTypes];
+//    }
+    
+    NSDictionary *remoteNotificationUserInfo = launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey];
+    NSLog(@"%@", remoteNotificationUserInfo);
     return YES;
 }
 
@@ -107,9 +140,7 @@
     if (!isFirst) {
         [self setupControllers];
     }
-    isFirst = @"NO";
-    [first setObject:isFirst  forKey:@"isFirst"];
-    [first synchronize];
+    
 }
 
 - (void)setupControllers
@@ -149,8 +180,30 @@
  */
 - (BOOL)application:(UIApplication *)app openURL:(NSURL *)url sourceApplication:(nullable NSString *)sourceApplication annotation:(nonnull id)annotation
 {
-    return [UMSocialSnsService handleOpenURL:url wxApiDelegate:nil];
+    
+    if (![BeeCloud handleOpenUrl:url]) {
+        //handle其他类型的url
+        NSLog(@"打开支付宝!");
+        return [UMSocialSnsService handleOpenURL:url wxApiDelegate:nil];
+        
+    }
+    return YES;
+
 }
+
+
+//iOS9之后apple官方建议使用此方法
+- (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<NSString *,id> *)options {
+    if (![BeeCloud handleOpenUrl:url]) {
+        //handle其他类型的url
+        
+        NSLog(@"打开支付宝!===== ");
+        return  [UMSocialSnsService handleOpenURL:url];
+    }
+    return YES;
+}
+
+
 
 /** 
  这里处理新浪微博SSO授权进入新浪微博客户端后进入后台,再返回来应用
@@ -162,6 +215,9 @@
 
 
 - (void)applicationWillResignActive:(UIApplication *)application {
+    
+    
+    
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
     // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
 }
@@ -194,6 +250,38 @@
 
 + (AppDelegate* )shareAppDelegate {
     return (AppDelegate*)[UIApplication sharedApplication].delegate;
+}
+
+/*
+ * 推送处理2
+ */
+//注册用户通知设置
+- (void)application:(UIApplication *)application
+didRegisterUserNotificationSettings:
+(UIUserNotificationSettings *)notificationSettings {
+    // register to receive notifications
+    [application registerForRemoteNotifications];
+}
+
+
+
+- (void)application:(UIApplication *)application
+didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
+    NSString *token =
+    [[[[deviceToken description] stringByReplacingOccurrencesOfString:@"<"
+                                                           withString:@""]
+      stringByReplacingOccurrencesOfString:@">"
+      withString:@""]
+     stringByReplacingOccurrencesOfString:@" "
+     withString:@""];
+    
+    [[RCIMClient sharedRCIMClient] setDeviceToken:token];
+}
+
+- (void)application:(UIApplication *)application
+didReceiveRemoteNotification:(NSDictionary *)userInfo {
+    // userInfo为远程推送的内容
+    NSLog(@"%@", userInfo);
 }
 
 

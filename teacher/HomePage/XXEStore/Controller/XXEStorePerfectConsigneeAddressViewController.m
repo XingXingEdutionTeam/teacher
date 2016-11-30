@@ -38,6 +38,8 @@
     
     //待支付订单
     NSDictionary *daizhifuOrderDictInfo;
+    //默认地址
+    NSDictionary *defaultAddressDict;
     
     NSString *parameterXid;
     NSString *parameterUser_Id;
@@ -59,19 +61,73 @@
         parameterUser_Id = USER_ID;
     }
     daizhifuOrderDictInfo = [[NSDictionary alloc] init];
+    defaultAddressDict = [[NSDictionary alloc] init];
     address_id = @"";
     //上部 地址 信息
     [self createUpContent];
+    
+    //获取默认收货地址
+    [self getDefaultAddress];
+    
     
     //下部 金额
     [self createDownContent];
 
 }
 
+#pragma mark ======== 获取 默认 收货 地址 ===========
+- (void)getDefaultAddress{
+
+    /*
+     【猩猩商城--获取购物地址】
+     接口类型:1
+     接口:
+     http://www.xingxingedu.cn/Global/get_shopping_address
+     */
+    NSString *urlStr = @"http://www.xingxingedu.cn/Global/get_shopping_address";
+    
+    NSDictionary *params = @{@"appkey":APPKEY,
+                             @"backtype":BACKTYPE,
+                             @"xid":parameterXid,
+                             @"user_id":parameterUser_Id,
+                             @"user_type":USER_TYPE
+                             };
+    [WZYHttpTool post:urlStr params:params success:^(id responseObj) {
+        //
+//        NSLog(@"默认 地址 %@", responseObj);
+        
+        if ([responseObj[@"code"] integerValue] == 1) {
+            
+            //[selected] => 1		//0和1, 1是默认地址
+            for (NSDictionary *dict in responseObj[@"data"]) {
+                if ([dict[@"selected"] integerValue] == 1) {
+                    defaultAddressDict = dict;
+                    
+                    nameLabel.text = defaultAddressDict[@"name"];
+                    phoneLabel.text = defaultAddressDict[@"phone"];
+                    addressLabel.text = defaultAddressDict[@"address"];
+                    address_id = defaultAddressDict[@"id"];
+                }
+            }
+            
+        }else{
+        
+            [self showHudWithString:@"请点进下个界面进行添加"];
+        }
+        
+        
+    } failure:^(NSError *error) {
+        //
+        [self showHudWithString:@"获取数据失败!"];
+    }];
+    
+
+}
+
 #pragma mark ====== 上部 地址 信息 ===========
 - (void)createUpContent{
 
-    upBgView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, KScreenWidth, KScreenHeight / 3 - 1)];
+    upBgView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, KScreenWidth, KScreenHeight / 3 - 50)];
     upBgView.backgroundColor = [UIColor whiteColor];
     upBgView.userInteractionEnabled = YES;
     
@@ -80,7 +136,7 @@
     //请填写收货地址
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 10, KScreenWidth - 20, 20)];
     titleLabel.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
-    titleLabel.text = @"请填写收货地址";
+    titleLabel.text = @"请选择收货地址";
     [upBgView addSubview:titleLabel];
     
     //姓名 电话 背景
@@ -95,24 +151,26 @@
     
     //姓名
     nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, KScreenWidth / 2 - 20, 20)];
+    nameLabel.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
 //    nameLabel.backgroundColor = [UIColor greenColor];
     [addressBgView addSubview:nameLabel];
     
     //电话
     phoneLabel = [[UILabel alloc] initWithFrame:CGRectMake(KScreenWidth / 2, 0, KScreenWidth / 2, 20)];
+    phoneLabel.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
 //    phoneLabel.backgroundColor = [UIColor purpleColor];
     [addressBgView addSubview:phoneLabel];
     
     //地址 title
-    UILabel *addressTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 80, 60, 20)];
+    UILabel *addressTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, nameLabel.frame.origin.y + nameLabel.height + 10 + 15 * kScreenRatioHeight, 90, 20)];
     addressTitleLabel.text = @"[收货地址]";
-    addressTitleLabel.font = [UIFont systemWithIphone6P:14 Iphone6:12 Iphone5:10 Iphone4:8];
+    addressTitleLabel.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
     addressTitleLabel.textColor = [UIColor lightGrayColor];
     [addressBgView addSubview:addressTitleLabel];
     
     //地址
-    addressLabel = [[UILabel alloc] initWithFrame:CGRectMake(addressTitleLabel.frame.origin.x + addressTitleLabel.width, 40, KScreenWidth - 100, 110)];
-    addressLabel.font = [UIFont systemWithIphone6P:14 Iphone6:12 Iphone5:10 Iphone4:8];
+    addressLabel = [[UILabel alloc] initWithFrame:CGRectMake(addressTitleLabel.frame.origin.x + addressTitleLabel.width, nameLabel.frame.origin.y + nameLabel.height + 10, KScreenWidth - 100, 50)];
+    addressLabel.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
     addressLabel.numberOfLines = 0;
 //    addressLabel.backgroundColor = [UIColor blueColor];
     [addressBgView addSubview:addressLabel];
@@ -301,6 +359,8 @@
             
             XXEStorePayViewController *storePayVC = [[XXEStorePayViewController alloc] init];
             storePayVC.dict = daizhifuOrderDictInfo;
+            storePayVC.order_id = daizhifuOrderDictInfo[@"order_id"];
+            
             [self.navigationController pushViewController:storePayVC animated:YES];
         }
         

@@ -31,6 +31,12 @@
 #import "XXELoginViewController.h"
 #import "FSImageModel.h"
 #import "XXERegisterPicApi.h"
+
+#import "XXETeacherModel.h"
+
+
+//fromTeacherVC
+
 @interface XXERegisterTeacherViewController ()<UISearchBarDelegate,UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate,XXESearchSchoolMessageDelegate>{
     UIButton *landBtn;
     
@@ -278,9 +284,9 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
     
     
     
-    NSLog(@"_userIdentifier === %@", _userIdentifier);
+//    NSLog(@"_userIdentifier === %@", _userIdentifier);
     
-    _titleArr = @[@"学校名称:",@"学校类型:",@"班级信息:",@"年级信息:",@"教学类型:",@"",@"审核人员:",@"邀请码"];
+    _titleArr = @[@"学校名称:",@"学校类型:",@"年级信息:",@"班级信息:",@"教学类型:",@"",@"审核人员:",@"邀请码"];
     
     _titleTextArr = @[@"请选择学校名称",@"请选择你学校类型",@"班级信息",@"请选择年级",@"请选择职位",@"",@"请选择审核人",@"可不填"];
     
@@ -330,9 +336,13 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
     self.theEndInviteCode = @"";
     self.theEndFileImage = @"";
     [self.picker removeFromSuperview];
+    //年级
     self.teacherCell = [self cellAtIndexRow:2 andAtSection:0 Message:@""];
+    //班级
     self.teacherCell = [self cellAtIndexRow:3 andAtSection:0 Message:@""];
+    //教学类型
     self.teacherCell = [self cellAtIndexRow:4 andAtSection:0 Message:@""];
+    //
     self.teacherCell = [self cellAtIndexRow:6 andAtSection:0 Message:@""];
     self.teacherCell = [self cellAtIndexRow:7 andAtSection:0 Message:@""];
     [self.mutableArray removeAllObjects];
@@ -529,18 +539,20 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
     }];
 }
 
-#pragma mark - 获取班级信息
+#pragma mark - 获取年级信息
 - (void)getoutSchoolGradeSchoolId:(NSString *)schoolId SchoolType:(NSString *)schoolType
 {
     //获取默认的信息
     self.theEndSchoolId = schoolId;
     self.theEndSchoolType = schoolType;
     
-    NSLog(@"%@%@",schoolId,schoolType);
+//    NSLog(@"%@%@",schoolId,schoolType);
     XXERegisterGradeSchoolApi *schoolApi = [[XXERegisterGradeSchoolApi alloc]initWithGetOutSchoolGradeSchoolId:schoolId SchoolType:schoolType];
     
     [schoolApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
        
+        NSLog(@"获取年级信息 %@", request.responseJSONObject);
+        
         if ([[request.responseJSONObject objectForKey:@"code"] intValue] == 1) {
             NSLog(@"%@",request.responseJSONObject);
             NSArray *data = [request.responseJSONObject objectForKey:@"data"];
@@ -557,11 +569,11 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
                 [self.gradeNameDatasource addObject:model];
                 [self.gradeNameArray addObject:model.grade];
             }
-            NSLog(@"班级信息的数组%@",self.gradeNameArray);
+//            NSLog(@"班级信息的数组%@",self.gradeNameArray);
             self.teacherCell = [self cellAtIndexRow:2 andAtSection:0 Message:self.gradeNameArray[0]];
             XXETeacherGradeModel *modelDefault = self.gradeNameDatasource[0];
-            NSLog(@"获取班级信息%@",modelDefault);
-            //通过班级选择年级
+//            NSLog(@"获取班级信息%@",modelDefault);
+//            //通过班级选择年级
             [self getoutClassMesage:modelDefault GradeName:self.gradeNameArray[0]];
             //默认为没有选择的时候
 //            self.theEndClassId = model.course_id;
@@ -761,16 +773,19 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
     WZYSearchSchoolViewController *searchVC = [[WZYSearchSchoolViewController alloc]init];
     self.schoolVC = searchVC;
     
-    [searchVC returnArray:^(NSMutableArray *mArr) {
-        if (mArr != nil) {
+    [searchVC returnModel:^(XXETeacherModel *teacherModel) {
+        //
+        if (teacherModel != nil) {
             self.isHave = YES;
         }else {
             self.isHave = NO;
         }
-        [self InitializeTheMessage];
-        self.schoolDatasource = mArr;
-        self.schoolVC.delegate = self;
+        
+        searchVC.delegate = self;
+        NSLog(@"qqqq %@", teacherModel);
     }];
+    
+
     [self.navigationController pushViewController:searchVC animated:YES];
 }
 
@@ -791,25 +806,8 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
     }
     self.teacherCell = [self cellAtIndexRow:1 andAtSection:0 Message:typeName];
     
-    NSString *addressSchool = [NSString stringWithFormat:@"%@-%@-%@",model.province,model.city,model.district];
-    self.teacherCell = [self cellAtIndexRow:2 andAtSection:0 Message:addressSchool];
-    //详细地址
-    self.teacherCell = [self cellAtIndexRow:3 andAtSection:0 Message:model.address];
-    //联系方式
-    self.teacherCell = [self cellAtIndexRow:4 andAtSection:0 Message:model.tel];
-    
     //搜索结果 重新赋值后 不能再手动更改
-    //学校名称
-//    [self tureOrFalseCellClick:NO Tag:100];
-//    //学校类型
-//    [self tureOrFalseCellClick:NO Tag:101];
-//    //学校地址
-//    [self tureOrFalseCellClick:NO Tag:102];
-//    //详细地址
-//    [self tureOrFalseCellClick:NO Tag:103];
-//    //联系方式
-//    [self tureOrFalseCellClick:NO Tag:104];
-    
+
     //获取班级信息的网络请求
     [self getoutSchoolGradeSchoolId:model.schoolId SchoolType:model.type];
     
@@ -822,6 +820,11 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
     //获取教师的审核人信息
     [self getoutTeacherReviewerSchoolID:model.schoolId];
 }
+
+
+
+
+
 
 #pragma mark - 获取身份图片
 - (void)setupFileImage

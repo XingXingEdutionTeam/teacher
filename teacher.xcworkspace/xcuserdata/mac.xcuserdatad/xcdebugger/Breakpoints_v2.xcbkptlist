@@ -19,14 +19,14 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "teacher/LoginAndRegister/Controller/XXEForgetPassWordViewController.m"
-            timestampString = "500382766.923353"
+            filePath = "teacher/HomePage/XXEStore/Controller/XXEStoreBuyFlowerbasketViewController.m"
+            timestampString = "502196303.202471"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "260"
-            endingLineNumber = "260"
-            landmarkName = "-checkPhoneNumber"
-            landmarkType = "5">
+            startingLineNumber = "274"
+            endingLineNumber = "274"
+            landmarkName = "-buyButtonClick"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

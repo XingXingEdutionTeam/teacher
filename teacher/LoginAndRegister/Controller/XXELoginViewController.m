@@ -397,6 +397,11 @@
         make.size.mas_equalTo(CGSizeMake(90*kScreenRatioWidth, 1));
     }];
     
+    CGFloat buttonW = 52*kScreenRatioWidth;
+    CGFloat buttonH = 50*kScreenRatioHeight;
+    
+    //按钮间距
+    CGFloat space = (KScreenWidth - 50 * 2 * kScreenRatioWidth - 3 * buttonW) / 2;
     
     //创建第三方登录按钮
     //QQ
@@ -406,7 +411,7 @@
     [self.view addSubview:QQButton];
     [QQButton mas_makeConstraints:^(MASConstraintMaker *make) {
         
-        make.left.equalTo(weakSelf.view.mas_left).offset(46*kScreenRatioWidth);
+        make.left.equalTo(weakSelf.view.mas_left).offset(50 * kScreenRatioWidth);
         make.bottom.equalTo(weakSelf.view.mas_bottom).offset(-45*kScreenRatioHeight);
         make.size.mas_equalTo(CGSizeMake(52*kScreenRatioWidth, 50*kScreenRatioHeight));
     }];
@@ -418,10 +423,11 @@
     [self.view addSubview:WechatButton];
     [WechatButton mas_makeConstraints:^(MASConstraintMaker *make) {
         
-        make.left.equalTo(QQButton.mas_right).offset(25*kScreenRatioWidth);
+        make.left.equalTo(QQButton.mas_right).offset(space);
         make.bottom.equalTo(weakSelf.view.mas_bottom).offset(-45*kScreenRatioHeight);
         make.size.mas_equalTo(CGSizeMake(52*kScreenRatioWidth, 50*kScreenRatioHeight));
     }];
+    
     //新浪
     UIButton *SinaButton = [[UIButton alloc]init];
     [SinaButton setBackgroundImage:[UIImage imageNamed:@"sina_icon"] forState:UIControlStateNormal];
@@ -429,21 +435,21 @@
     [self.view addSubview:SinaButton];
     [SinaButton mas_makeConstraints:^(MASConstraintMaker *make) {
         
-        make.left.equalTo(WechatButton.mas_right).offset(25*kScreenRatioWidth);
+        make.left.equalTo(WechatButton.mas_right).offset(space);
         make.bottom.equalTo(weakSelf.view.mas_bottom).offset(-45*kScreenRatioHeight);
         make.size.mas_equalTo(CGSizeMake(52*kScreenRatioWidth, 50*kScreenRatioHeight));
     }];
-    //支付宝
-    UIButton *ZhiFuBaoButton = [[UIButton alloc]init];
-    [ZhiFuBaoButton setBackgroundImage:[UIImage imageNamed:@"zhifubao_icon"] forState:UIControlStateNormal];
-    [ZhiFuBaoButton addTarget:self action:@selector(ZhiFuBaoButtonClick:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:ZhiFuBaoButton];
-    [ZhiFuBaoButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.left.equalTo(SinaButton.mas_right).offset(25*kScreenRatioWidth);
-        make.bottom.equalTo(weakSelf.view.mas_bottom).offset(-45*kScreenRatioHeight);
-        make.size.mas_equalTo(CGSizeMake(52*kScreenRatioWidth, 50*kScreenRatioHeight));
-    }];
+//    //支付宝
+//    UIButton *ZhiFuBaoButton = [[UIButton alloc]init];
+//    [ZhiFuBaoButton setBackgroundImage:[UIImage imageNamed:@"zhifubao_icon"] forState:UIControlStateNormal];
+//    [ZhiFuBaoButton addTarget:self action:@selector(ZhiFuBaoButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+//    [self.view addSubview:ZhiFuBaoButton];
+//    [ZhiFuBaoButton mas_makeConstraints:^(MASConstraintMaker *make) {
+//        
+//        make.left.equalTo(SinaButton.mas_right).offset(25*kScreenRatioWidth);
+//        make.bottom.equalTo(weakSelf.view.mas_bottom).offset(-45*kScreenRatioHeight);
+//        make.size.mas_equalTo(CGSizeMake(52*kScreenRatioWidth, 50*kScreenRatioHeight));
+//    }];
 }
 
 #pragma mark - action - 按钮的点击方法非第三方登录
@@ -637,15 +643,15 @@
     
     
 }
-- (void)ZhiFuBaoButtonClick:(UIButton *)sender
-{
-    NSLog(@"------支付宝登录------");
-//    self.qqLoginToken = snsAccount.accessToken;
-//    self.thirdNickName = snsAccount.userName;
-//    self.thirdHeadImage = snsAccount.iconURL;
-    
-    self.login_type = @"5";
-}
+//- (void)ZhiFuBaoButtonClick:(UIButton *)sender
+//{
+//    NSLog(@"------支付宝登录------");
+////    self.qqLoginToken = snsAccount.accessToken;
+////    self.thirdNickName = snsAccount.userName;
+////    self.thirdHeadImage = snsAccount.iconURL;
+//    
+//    self.login_type = @"5";
+//}
 
 #pragma mark - 给数据库添加信息
 - (void)getAddInfomationMessage:(UMSocialAccountEntity *)snsAccount LoginType:(NSString *)loginType

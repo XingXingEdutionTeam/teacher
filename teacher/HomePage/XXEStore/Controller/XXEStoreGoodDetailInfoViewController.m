@@ -333,14 +333,16 @@
     
 }
 
-//分享
+//咨询
 - (void)shareButtonClick{
 
-    NSString *shareText = @"来自猩猩教室:";
-    UIImage *shareImage = [UIImage imageNamed:@"xingxingjiaoshi_share_icon"];
-    //    snsNames 你要分享到的sns平台类型，该NSArray值是`UMSocialSnsPlatformManager.h`定义的平台名的字符串常量，有UMShareToSina，UMShareToTencent，UMShareToRenren，UMShareToDouban，UMShareToQzone，UMShareToEmail，UMShareToSms等
-    //调用快速分享接口
-    [UMSocialSnsService presentSnsIconSheetView:self appKey:UMSocialAppKey shareText:shareText shareImage:shareImage shareToSnsNames:[NSArray arrayWithObjects:UMShareToSina,UMShareToQzone,UMShareToQQ,UMShareToWechatSession,UMShareToWechatTimeline,nil] delegate:self];
+    
+    
+//    NSString *shareText = @"来自猩猩教室:";
+//    UIImage *shareImage = [UIImage imageNamed:@"xingxingjiaoshi_share_icon"];
+//    //    snsNames 你要分享到的sns平台类型，该NSArray值是`UMSocialSnsPlatformManager.h`定义的平台名的字符串常量，有UMShareToSina，UMShareToTencent，UMShareToRenren，UMShareToDouban，UMShareToQzone，UMShareToEmail，UMShareToSms等
+//    //调用快速分享接口
+//    [UMSocialSnsService presentSnsIconSheetView:self appKey:UMSocialAppKey shareText:shareText shareImage:shareImage shareToSnsNames:[NSArray arrayWithObjects:UMShareToSina,UMShareToQzone,UMShareToQQ,UMShareToWechatSession,UMShareToWechatTimeline,nil] delegate:self];
 }
 
 //购买

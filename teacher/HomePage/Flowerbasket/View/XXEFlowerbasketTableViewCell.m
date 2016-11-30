@@ -14,6 +14,13 @@
 
 - (void)awakeFromNib {
     // Initialization code
+    
+    [super awakeFromNib];
+    
+    CGSize size = self.contentLabel.size;
+    size.width = KScreenWidth - 100 * kScreenRatioWidth;
+    self.contentLabel.size = size;
+    
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

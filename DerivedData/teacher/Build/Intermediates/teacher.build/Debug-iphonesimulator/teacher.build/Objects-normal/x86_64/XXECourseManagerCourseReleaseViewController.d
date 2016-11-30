@@ -1,0 +1,33 @@
+dependencies: \
+  /Users/mac/Documents/teacher/teacher/HomePage/XXEManager/Controller/XXECourseManagerCourseReleaseViewController.m \
+  /Users/mac/Documents/teacher/teacher/Others/PrefixHeader.pch \
+  /Users/mac/Documents/teacher/teacher/XXEHelper/UIView+XXExtension.h \
+  /Users/mac/Documents/teacher/teacher/Others/MacroDefine.h \
+  /Users/mac/Documents/teacher/teacher/XXEHelper/UIFont+XXExtension.h \
+  /Users/mac/Documents/teacher/teacher/XXEHelper/UITextField+XXExtension.h \
+  /Users/mac/Documents/teacher/teacher/XXEHelper/UIButton+XXExtension.h \
+  /Users/mac/Documents/teacher/teacher/ThirdLibrary/KTActionSheet/KTActionSheet.h \
+  /Users/mac/Documents/teacher/teacher/XXEHelper/UILabel+XXExtension.h \
+  /Users/mac/Documents/teacher/teacher/ThirdLibrary/WJCommboxView/WJCommboxView.h \
+  /Users/mac/Documents/teacher/teacher/Others/XXEHeaderApi.h \
+  /Users/mac/Documents/teacher/teacher/LoginAndRegister/LoginAndRegisterApi/LoginRegisterApi.h \
+  /Users/mac/Documents/teacher/teacher/XXETools/XXETool.h \
+  /Users/mac/Documents/teacher/teacher/LoginAndRegister/Model/XXEUserInfo.h \
+  /Users/mac/Documents/teacher/teacher/HomePage/Controller/XXEHomePageHeader.h \
+  /Users/mac/Documents/teacher/teacher/FriendCirclePage/FriendCircleHeader.h \
+  /Users/mac/Documents/teacher/teacher/MySelfPage/XXEMyselfPageHeader.h \
+  /Users/mac/Documents/teacher/teacher/XXETools/StringHeight.h \
+  /Users/mac/Documents/teacher/teacher/FriendCirclePage/Model/XXECommentModel.h \
+  /Users/mac/Documents/teacher/teacher/HomePage/Controller/aaaaaaa/WZYHttpTool.h \
+  /Users/mac/Documents/teacher/teacher/HomePage/XXEManager/Controller/XXECourseManagerCourseReleaseViewController.h \
+  /Users/mac/Documents/teacher/teacher/BasePage/Controller/XXEBaseViewController.h \
+  /Users/mac/Documents/teacher/teacher/HomePage/XXEManager/Controller/XXECourseManagerCourseSettingViewController.h \
+  /Users/mac/Documents/teacher/teacher/HomePage/XXEManager/Api/XXECourseManagerCourseCategoryApi.h \
+  /Users/mac/Documents/teacher/teacher/HomePage/XXEManager/Api/XXECourseManagerSchoolTeacherListApi.h \
+  /Users/mac/Documents/teacher/teacher/HomePage/XXEManager/Model/XXECourseManagerSchoolTeacherModel.h \
+  /Users/mac/Documents/teacher/teacher/HomePage/XXEManager/Model/XXECourseManagerClassModel1.h \
+  /Users/mac/Documents/teacher/teacher/HomePage/XXEManager/Model/XXECourseManagerClassModel2.h \
+  /Users/mac/Documents/teacher/teacher/HomePage/XXEManager/Model/XXECourseManagerClassModel3.h \
+  /Users/mac/Documents/teacher/teacher/ThirdLibrary/FSImagePicker/FSImagePickerView.h \
+  /Users/mac/Documents/teacher/teacher/ThirdLibrary/FSImagePicker/FSImageModel.h \
+  /Users/mac/Documents/teacher/teacher/HomePage/XXEManager/Api/XXECourseManagerCourseReleaseApi.h
