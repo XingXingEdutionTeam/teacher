@@ -239,8 +239,9 @@
             UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"确定使用猩币支付?" message:nil preferredStyle:UIAlertControllerStyleAlert];
             UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
             UIAlertAction *ok = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                
                 //纯猩币兑换
-                [self goods_confirm_payAndOrderID:_order_index];
+                [self goods_confirm_payAndOrderID:_order_id];
             }];
         
             [alert addAction:ok];
@@ -273,6 +274,7 @@
  */
     
     NSString *urlStr = @"http://www.xingxingedu.cn/Global/goods_confirm_pay";
+
     NSDictionary *params = @{@"appkey":APPKEY,
                              @"backtype":BACKTYPE,
                              @"xid":parameterXid,
@@ -280,6 +282,7 @@
                              @"user_type":USER_TYPE,
                              @"order_id":order_id
                              };
+    
     [WZYHttpTool post:urlStr params:params success:^(id responseObj) {
         //
 //        NSLog(@"纯猩币支付 ==== %@", responseObj);

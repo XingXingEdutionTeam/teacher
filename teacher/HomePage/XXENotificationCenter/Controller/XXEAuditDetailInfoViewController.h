@@ -11,18 +11,18 @@
 @interface XXEAuditDetailInfoViewController : XXEBaseViewController
 
 
-@property (nonatomic, copy) NSString *subjectStr;
-@property (nonatomic, copy) NSString *contentStr;
-@property (nonatomic, copy) NSString *notice_id;
+//@property (nonatomic, copy) NSString *subjectStr;
+//@property (nonatomic, copy) NSString *contentStr;
+//@property (nonatomic, copy) NSString *notice_id;
 
 
-@property (weak, nonatomic) IBOutlet UILabel *subjectLabel;
-
-@property (weak, nonatomic) IBOutlet UITextView *contentTextView;
-
-@property (weak, nonatomic) IBOutlet UIButton *againstButton;
-
-@property (weak, nonatomic) IBOutlet UIButton *supportButton;
+//@property (weak, nonatomic) IBOutlet UILabel *subjectLabel;
+//
+//@property (weak, nonatomic) IBOutlet UITextView *contentTextView;
+//
+//@property (weak, nonatomic) IBOutlet UIButton *againstButton;
+//
+//@property (weak, nonatomic) IBOutlet UIButton *supportButton;
 
 
 

@@ -353,7 +353,7 @@
 
 - (void)checkPhoneNumber
 {
-    XXERegisterCheckApi *registerCheckApi = [[XXERegisterCheckApi alloc]initWithChechPhoneNumber:self.registerUserName];
+    XXERegisterCheckApi *registerCheckApi = [[XXERegisterCheckApi alloc]initWithChechPhoneNumber:self.registerUerTextField.text];
     [registerCheckApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         NSLog(@"电话可不可以用%@",request.responseJSONObject);
         NSDictionary *dic = request.responseJSONObject;
@@ -394,7 +394,7 @@
 #pragma mark - 获取验证码次数
 - (void)recordTheVerifyCodeNum
 {
-    XXEVertifyTimesApi *timesApi = [[XXEVertifyTimesApi alloc]initWithVertifyTimesActionPage:@"1" PhoneNum:self.registerUserName];
+    XXEVertifyTimesApi *timesApi = [[XXEVertifyTimesApi alloc]initWithVertifyTimesActionPage:@"1" PhoneNum:self.registerUerTextField.text];
     [timesApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         NSLog(@"%@",request.responseJSONObject);
         NSString *code = [request.responseJSONObject objectForKey:@"code"];

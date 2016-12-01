@@ -205,14 +205,14 @@
      1 :表示 第三方 头像 ，不需要 添加 前缀
      //判断是否是第三方头像
      */
-    NSString *head_img = [kXXEPicURL stringByAppendingString:model.head_img];
+    NSString *head_img = [kXXEPicURL stringByAppendingString:model.baby_head_img];
     cell.iconImageView.layer.cornerRadius = cell.iconImageView.frame.size.width / 2;
     cell.iconImageView.layer.masksToBounds = YES;
     
     [cell.iconImageView sd_setImageWithURL:[NSURL URLWithString:head_img] placeholderImage:[UIImage imageNamed:@"headplaceholder"]];
     
     //    NSLog(@"课程  %@", model.teach_course);
-    cell.titleLabel.text = [NSString stringWithFormat:@"%@ / %@ / %@", model.tname, model.teach_course, model.class_name];
+    cell.titleLabel.text = [NSString stringWithFormat:@"%@", model.baby_tname];
     cell.contentLabel.text = [NSString stringWithFormat:@"赠言:%@", model.con];
     cell.timeLabel.text = [XXETool dateStringFromNumberTimer:model.date_tm];
     
@@ -303,11 +303,11 @@
     XXERedFlowerDetialViewController *redFlowerDetialVC = [[XXERedFlowerDetialViewController alloc] init];
     
     XXEMyselfInfoCollectionRedFlowerModel *model = _dataSourceArray[indexPath.row];
-    redFlowerDetialVC.name = model.tname;
+    redFlowerDetialVC.name = model.baby_tname;
     redFlowerDetialVC.time = [XXETool dateStringFromNumberTimer:model.date_tm];
     redFlowerDetialVC.schoolName = model.school_name;
     redFlowerDetialVC.className = model.class_name;
-    redFlowerDetialVC.course = model.teach_course;
+//    redFlowerDetialVC.course = model.teach_course;
     redFlowerDetialVC.content = model.con;
     
     if (![model.pic isEqualToString:@""]) {

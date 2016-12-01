@@ -26,6 +26,9 @@
 
     NSMutableArray *_dataSourceArray;
     
+    //
+    UIImageView *placeholderImageView;
+    
     NSInteger page;
     NSString *parameterXid;
     NSString *parameterUser_Id;
@@ -94,12 +97,9 @@
 - (void)fetchNetData{
         /*
          【花篮->赠送记录列表】
-    
          接口类型:1
-    
          接口:
          http://www.xingxingedu.cn/Teacher/give_fbasket_record
-    
          传参:
          page	//页码(加载更多,默认1)
          */
@@ -130,34 +130,48 @@
     
 }
 
-
 // 有数据 和 无数据 进行判断
 - (void)customContent{
+    // 如果 有占位图 先 移除
+    [self removePlaceholderImageView];
     
     if (_dataSourceArray.count == 0) {
-        
         _myTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-        
         // 1、无数据的时候
-        UIImage *myImage = [UIImage imageNamed:@"all_placeholder"];
-        CGFloat myImageWidth = myImage.size.width;
-        CGFloat myImageHeight = myImage.size.height;
-        
-        UIImageView *myImageView = [[UIImageView alloc] initWithFrame:CGRectMake(KScreenWidth / 2 - myImageWidth / 2, (KScreenHeight - 64 - 49) / 2 - myImageHeight / 2, myImageWidth, myImageHeight)];
-        myImageView.image = myImage;
-        [self.view addSubview:myImageView];
+        [self createPlaceholderView];
         
     }else{
         //2、有数据的时候
-        
     }
+    
     [_myTableView reloadData];
     
 }
 
 
+//没有 数据 时,创建 占位图
+- (void)createPlaceholderView{
+    // 1、无数据的时候
+    UIImage *myImage = [UIImage imageNamed:@"all_placeholder"];
+    CGFloat myImageWidth = myImage.size.width;
+    CGFloat myImageHeight = myImage.size.height;
+    
+    placeholderImageView = [[UIImageView alloc] initWithFrame:CGRectMake(kWidth / 2 - myImageWidth / 2, (kHeight - 64 - 49) / 2 - myImageHeight / 2, myImageWidth, myImageHeight)];
+    placeholderImageView.image = myImage;
+    [self.view addSubview:placeholderImageView];
+}
+
+//去除 占位图
+- (void)removePlaceholderImageView{
+    if (placeholderImageView != nil) {
+        [placeholderImageView removeFromSuperview];
+    }
+}
+
+
+
 - (void)createTableView{
-    _myTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, KScreenWidth, KScreenHeight) style:UITableViewStyleGrouped];
+    _myTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, KScreenWidth, KScreenHeight - 64) style:UITableViewStyleGrouped];
     
     _myTableView.dataSource = self;
     _myTableView.delegate = self;
@@ -233,8 +247,14 @@
     
     [cell.iconImageView sd_setImageWithURL:[NSURL URLWithString:head_img] placeholderImage:[UIImage imageNamed:@"headplaceholder"]];
     cell.nameLabel.text = model.tname;
-    cell.numberLabel.text = [NSString stringWithFormat:@"数量:%@", model.num];
+    cell.numberLabel.text = [NSString stringWithFormat:@"数量:%@   订单号:%@", model.num, model.idStr];
     cell.contentLabel.text = [NSString stringWithFormat:@"赠言:%@", model.con];
+//    cell.contentLabel.numberOfLines
+    CGFloat height = [StringHeight contentSizeOfString:model.con maxWidth:KScreenWidth - 100 * kScreenRatioWidth fontSize:14];
+    
+    CGSize size = cell.contentLabel.size;
+    size.height = height;
+    cell.contentLabel.size = size;
     
     return cell;
 
@@ -243,7 +263,14 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    return 80;
+    XXEFlowerbasketModel *model = _dataSourceArray[indexPath.row];
+    if (![model.con isEqualToString:@""]) {
+        CGFloat height = [StringHeight contentSizeOfString:model.con maxWidth:KScreenWidth - 70 fontSize:14];
+        
+        return 70 + height;
+    }else{
+        return 80;
+    }
 
 }
 

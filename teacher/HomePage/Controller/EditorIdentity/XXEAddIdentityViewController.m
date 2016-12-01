@@ -32,7 +32,7 @@
 - (UITableView *)identityTableView
 {
     if (!_identityTableView) {
-        _identityTableView = [[UITableView alloc]initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
+        _identityTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, KScreenWidth, KScreenHeight - 64) style:UITableViewStyleGrouped];
         _identityTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         _identityTableView.delegate = self;
         _identityTableView.dataSource = self;
@@ -43,6 +43,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    
     self.view.backgroundColor = XXEBackgroundColor;
     self.navigationItem.title = @"编辑身份";
     self.navigationController.navigationBarHidden = NO;
