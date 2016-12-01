@@ -16,6 +16,7 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *contentLabel;
 
+@property (weak, nonatomic) IBOutlet UILabel *orderIndexLabel;
 
 
 @end

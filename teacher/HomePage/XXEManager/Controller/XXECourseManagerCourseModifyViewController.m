@@ -1333,7 +1333,7 @@
                   @"course_end_tm":endTimeStr,
                   @"address":addressText.text,
                   @"middle_in_rule":insertFlagStr,
-                  @"quit_rule":exitFlagStr,
+                  @"allow_return":exitFlagStr,
                   @"coin":deductFlagStr,
                   @"original_price":oldMoneyText.text,
                   @"now_price":newMoneyText.text,

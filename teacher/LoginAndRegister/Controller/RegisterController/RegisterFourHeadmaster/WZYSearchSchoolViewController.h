@@ -16,18 +16,18 @@
 
 @end
 
-typedef void(^ReturnArrayBlock)(NSMutableArray *mArr);
+typedef void(^ReturnModelBlock)(XXETeacherModel *teacherModel);
 
 @interface WZYSearchSchoolViewController : XXEBaseViewController
 
-@property (nonatomic, copy) ReturnArrayBlock returnArrayBlock;
+@property (nonatomic, copy) ReturnModelBlock returnModelBlock;
 
 @property (nonatomic, weak)id<XXESearchSchoolMessageDelegate>delegate;
+//判断注册身份,如果是管理员或者校长,返回学校名称/学校类型/详细地址/电话等;如果是授课老师或班主任,返回 学校名称/学校类型
+@property (nonatomic, copy) NSString *WZYSearchFlagStr;
 
-@property (nonatomic) BOOL WZYSearchFlagStr;
 
 
-
-- (void)returnArray:(ReturnArrayBlock)block;
+- (void)returnModel:(ReturnModelBlock)block;
 
 @end

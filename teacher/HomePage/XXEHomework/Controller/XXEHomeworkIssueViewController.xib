@@ -1,9 +1,13 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11542" systemVersion="16B2657" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="XXEHomeworkIssueViewController">
@@ -39,7 +43,7 @@
                                 <constraint firstAttribute="height" constant="21" id="Vta-6t-8fb"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="请输入作业主题" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Tj9-hr-6CS">
@@ -52,7 +56,7 @@
                             <textInputTraits key="textInputTraits"/>
                         </textField>
                     </subviews>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstItem="Tj9-hr-6CS" firstAttribute="top" secondItem="D0S-v0-8j4" secondAttribute="top" constant="8" id="BwN-6U-icJ"/>
                         <constraint firstItem="Tj9-hr-6CS" firstAttribute="leading" secondItem="N9H-HW-ybK" secondAttribute="trailing" constant="2" id="Hch-7V-RI2"/>
@@ -82,12 +86,12 @@
                                 <constraint firstAttribute="width" constant="77" id="pgm-Fx-eHu"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="WmM-aU-awr">
                             <rect key="frame" x="8" y="31" width="359" height="116"/>
-                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                         </textView>
@@ -98,11 +102,11 @@
                                 <constraint firstAttribute="width" constant="42" id="vi9-ms-zAo"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                            <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                            <color key="textColor" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                     </subviews>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstItem="WmM-aU-awr" firstAttribute="leading" secondItem="iVh-c9-qZh" secondAttribute="leading" constant="8" id="7Ji-zK-cPY"/>
                         <constraint firstItem="pwZ-BH-7WV" firstAttribute="top" secondItem="WmM-aU-awr" secondAttribute="bottom" constant="6" id="Jso-wH-92O"/>
@@ -136,7 +140,7 @@
                                 <constraint firstAttribute="height" constant="21" id="McQ-fF-W0N"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="请输入上交时间" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="m8R-mg-Rzi">
@@ -149,7 +153,7 @@
                             <textInputTraits key="textInputTraits"/>
                         </textField>
                     </subviews>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstAttribute="width" secondItem="Pkn-6g-ngn" secondAttribute="height" multiplier="375:44" id="60O-Fj-EML"/>
                         <constraint firstItem="GCf-Ya-HXq" firstAttribute="top" secondItem="Pkn-6g-ngn" secondAttribute="top" constant="10" id="7Vz-uN-jjB"/>
@@ -179,11 +183,11 @@
                                 <constraint firstAttribute="height" constant="21" id="SGI-kO-31f"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                     </subviews>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="120" id="C5n-wc-fVV"/>
                         <constraint firstItem="O6p-AE-fm9" firstAttribute="leading" secondItem="usf-wE-lFe" secondAttribute="trailing" constant="8" id="Cjp-Pv-XRc"/>
@@ -220,11 +224,11 @@
                                 <constraint firstAttribute="width" constant="58" id="BrV-KN-wdT"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                     </subviews>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstItem="2t2-Um-zzI" firstAttribute="top" secondItem="VNy-r9-VkZ" secondAttribute="top" constant="10" id="38W-hu-8Mw"/>
                         <constraint firstItem="2t2-Um-zzI" firstAttribute="leading" secondItem="VNy-r9-VkZ" secondAttribute="leading" constant="10" id="LnP-Jy-twj"/>
@@ -235,7 +239,7 @@
                     </constraints>
                 </view>
             </subviews>
-            <color key="backgroundColor" red="0.89923416940789469" green="0.90871710526315785" blue="0.91557874177631571" alpha="1" colorSpace="calibratedRGB"/>
+            <color key="backgroundColor" red="0.89923416940789469" green="0.90871710526315785" blue="0.91557874177631571" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="Pkn-6g-ngn" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="7Yo-gQ-EhF"/>
                 <constraint firstAttribute="trailing" secondItem="VNy-r9-VkZ" secondAttribute="trailing" id="AXj-2d-tVc"/>

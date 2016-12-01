@@ -10,11 +10,11 @@
 
 @interface XXESentToPeopleViewController : XXEBaseViewController
 
-@property (weak, nonatomic) IBOutlet UITextView *contentTextField;
-@property (weak, nonatomic) IBOutlet UILabel *contentNumLabel;
-
-
-@property (weak, nonatomic) IBOutlet UILabel *nameLabel;
+//@property (weak, nonatomic) IBOutlet UITextView *contentTextField;
+//@property (weak, nonatomic) IBOutlet UILabel *contentNumLabel;
+//
+//
+//@property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 
 
 @property (nonatomic, copy) NSString *schoolId;
@@ -25,13 +25,13 @@
 
 @property (nonatomic, copy) NSString *position;
 
-@property (weak, nonatomic) IBOutlet UIView *upPicImageView;
-
-
-
-
-- (IBAction)addButtonClick:(UIButton *)sender;
-- (IBAction)certenButtonClick:(UIButton *)sender;
+//@property (weak, nonatomic) IBOutlet UIView *upPicImageView;
+//
+//
+//
+//
+//- (IBAction)addButtonClick:(UIButton *)sender;
+//- (IBAction)certenButtonClick:(UIButton *)sender;
 
 
 

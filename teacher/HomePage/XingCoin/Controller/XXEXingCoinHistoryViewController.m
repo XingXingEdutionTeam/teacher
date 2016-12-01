@@ -22,6 +22,8 @@
     
     NSMutableArray *_dataSourceArray;
     
+    UIImageView *placeholderImageView;
+    
     NSInteger page;
     NSString *parameterXid;
     NSString *parameterUser_Id;
@@ -70,12 +72,9 @@
 - (void)fetchNetData{
     /*
      【猩猩商城--查询猩币变更记录】
-     
      接口类型:1
-     
      接口:
      http://www.xingxingedu.cn/Global/select_coin_msg
-     
      传参:
      require_con = "4"	//想要查询的内容,如果是空默认全部类型,4代表互赠
      year = "2016"		//可以查询某一年,如果是空,查询所有年份的猩币记录
@@ -126,29 +125,41 @@
 
 // 有数据 和 无数据 进行判断
 - (void)customContent{
+    // 如果 有占位图 先 移除
+    [self removePlaceholderImageView];
     
     if (_dataSourceArray.count == 0) {
-        
         _myTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-        
         // 1、无数据的时候
-        UIImage *myImage = [UIImage imageNamed:@"all_placeholder"];
-        CGFloat myImageWidth = myImage.size.width;
-        CGFloat myImageHeight = myImage.size.height;
-        
-        UIImageView *myImageView = [[UIImageView alloc] initWithFrame:CGRectMake(KScreenWidth / 2 - myImageWidth / 2, (KScreenHeight - 64 - 49) / 2 - myImageHeight / 2, myImageWidth, myImageHeight)];
-        myImageView.image = myImage;
-        [self.view addSubview:myImageView];
+        [self createPlaceholderView];
         
     }else{
         //2、有数据的时候
-        
-        
     }
+    
     [_myTableView reloadData];
     
 }
 
+
+//没有 数据 时,创建 占位图
+- (void)createPlaceholderView{
+    // 1、无数据的时候
+    UIImage *myImage = [UIImage imageNamed:@"all_placeholder"];
+    CGFloat myImageWidth = myImage.size.width;
+    CGFloat myImageHeight = myImage.size.height;
+    
+    placeholderImageView = [[UIImageView alloc] initWithFrame:CGRectMake(kWidth / 2 - myImageWidth / 2, (kHeight - 64 - 49) / 2 - myImageHeight / 2, myImageWidth, myImageHeight)];
+    placeholderImageView.image = myImage;
+    [self.view addSubview:placeholderImageView];
+}
+
+//去除 占位图
+- (void)removePlaceholderImageView{
+    if (placeholderImageView != nil) {
+        [placeholderImageView removeFromSuperview];
+    }
+}
 
 
 - (void)createTableView{
