@@ -299,7 +299,6 @@
             continueAfterRunningActions = "No"
             filePath = "teacher/HomePage/XXEStore/Controller/XXEStoreGoodsOrderDetailViewController.m"
             timestampString = "501766002.46859"
-<<<<<<< HEAD
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "146"
@@ -337,13 +336,6 @@
             startingLineNumber = "387"
             endingLineNumber = "387"
             landmarkName = "-recordTheVerifyCodeNum"
-=======
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "146"
-            endingLineNumber = "146"
-            landmarkName = "-buttonClick:"
->>>>>>> wzy
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -358,7 +350,9 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "284"
-            endingLineNumber = "284">
+            endingLineNumber = "284"
+            landmarkName = "-application:didReceiveRemoteNotification:"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
