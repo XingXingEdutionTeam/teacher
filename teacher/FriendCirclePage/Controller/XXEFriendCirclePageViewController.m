@@ -146,9 +146,9 @@
     XXEFriendCircleApi *friendCircleApi = [[XXEFriendCircleApi alloc]initWithFriendCircleXid:parameterXid CircleUserId:parameterUser_Id PageNumber:pageNum];
     [friendCircleApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         NSString *code = [request.responseJSONObject objectForKey:@"code"];
-        NSInteger maxPage = [[[request.responseJSONObject objectForKey:@"data"] objectForKey:@"max_page"] integerValue];
         
         if ([code intValue]==1 && [[request.responseJSONObject objectForKey:@"data"] isKindOfClass:[NSDictionary class]]) {
+            NSInteger maxPage = [[[request.responseJSONObject objectForKey:@"data"] objectForKey:@"max_page"] integerValue];
             [weakSelf detelAllSource];
             NSDictionary *data = [request.responseJSONObject objectForKey:@"data"];
             NSDictionary *userInfo = [data objectForKey:@"user_info"];
