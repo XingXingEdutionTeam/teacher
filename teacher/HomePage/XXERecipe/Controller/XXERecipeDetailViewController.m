@@ -16,6 +16,9 @@
 @interface XXERecipeDetailViewController ()<UITableViewDelegate, UITableViewDataSource, UIAlertViewDelegate>
 {
     UITableView *_myTableView;
+    //上面 文字 部分
+    UIView *headerView;
+    
    //pic
     NSMutableArray *picArray;
    //pic id
@@ -56,9 +59,58 @@
     [super viewDidLoad];
  
     self.title = @"食谱详情";
+    
+
 
     [self createTableView];
     
+}
+
+#pragma mark ====== 创建 文字 部分 =========
+- (void)createTextContent{
+    headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, KScreenWidth, 40)];
+    headerView.backgroundColor = [UIColor whiteColor];
+    [self.view addSubview:headerView];
+    
+    UIImageView *iconImageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 10, 20, 20)];
+    iconImageView.image = [UIImage imageNamed:iconStr];
+    [headerView addSubview:iconImageView];
+    
+    UILabel *titleLabel1 = [UILabel createLabelWithFrame:CGRectMake(35, 10, 40, 20) Font:14 Text:_titleStr];
+    titleLabel1.textAlignment = NSTextAlignmentCenter;
+    [headerView addSubview:titleLabel1];
+    
+    //    UITextView *contentTextView = [[UITextView alloc] initWithFrame:CGRectMake(80, 10, 250, 40)];
+    //    contentTextView.text = _contentStr;
+    //    contentTextView.editable = NO;
+    //    [headerView addSubview:contentTextView];
+    UILabel *contentLabel = [[UILabel alloc] initWithFrame:CGRectMake(80, 10, 280 * kScreenRatioWidth, 20)];
+    contentLabel.text = _contentStr;
+    contentLabel.numberOfLines = 0;
+    contentLabel.font = [UIFont systemFontOfSize:14];
+    [headerView addSubview:contentLabel];
+    
+    NSLog(@"_contentStr == %@", _contentStr);
+    
+    CGFloat height = [StringHeight contentSizeOfString:_contentStr maxWidth:contentLabel.width fontSize:14];
+    CGSize size1 = contentLabel.size;
+    size1.height = height;
+    contentLabel.size = size1;
+    
+    NSLog(@"height === %lf", height);
+    
+    if (height != 20) {
+        CGSize size2 = headerView.size;
+        size2.height = height + 20;
+        headerView.size = size2;
+    
+//        [headerView setNeedsLayout];
+//        [headerView setNeedsDisplay];
+        
+   }
+
+    [_myTableView reloadData];
+
 }
 
 - (void)createData{
@@ -106,6 +158,8 @@
         }else{
             
         }
+        //创建 文字 部分
+        [self createTextContent];
         
         [_myTableView reloadData];
         
@@ -120,7 +174,10 @@
 
 
 - (void)createTableView{
-    _myTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, KScreenWidth, KScreenHeight - 64) style:UITableViewStyleGrouped];
+    
+//    NSLog(@"头部 == %lf", headerView.height);
+    
+    _myTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, headerView.frame.origin.y + headerView.height + 5, KScreenWidth, KScreenHeight - 64 - headerView.height - 49) style:UITableViewStyleGrouped];
     
     _myTableView.dataSource = self;
     _myTableView.delegate = self;
@@ -161,26 +218,6 @@
     return 220;
 }
 
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
-    
-    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, KScreenWidth, 60)];
-    headerView.backgroundColor = [UIColor whiteColor];
-    
-    UIImageView *iconImageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 15, 20, 20)];
-    iconImageView.image = [UIImage imageNamed:iconStr];
-    [headerView addSubview:iconImageView];
-    
-    UILabel *titleLabel1 = [UILabel createLabelWithFrame:CGRectMake(35, 15, 40, 20) Font:14 Text:_titleStr];
-    titleLabel1.textAlignment = NSTextAlignmentCenter;
-    [headerView addSubview:titleLabel1];
-    
-    UITextView *contentTextView = [[UITextView alloc] initWithFrame:CGRectMake(80, 10, 250, 40)];
-    contentTextView.text = _contentStr;
-    contentTextView.editable = NO;
-    [headerView addSubview:contentTextView];
-    
-    return headerView;
-}
 
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
     if ([self.position isEqualToString:@"3"] || [self.position isEqualToString:@"4"]) {

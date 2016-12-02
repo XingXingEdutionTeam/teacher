@@ -301,9 +301,13 @@
     static NSString *identifier = @"cell";
     XXEHomeworkTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
     
+//    if (cell == nil) {
+//        cell = [[[NSBundle mainBundle] loadNibNamed:@"XXEHomeworkTableViewCell" owner:self options:nil]lastObject];
+//    }
     if (cell == nil) {
-        cell = [[[NSBundle mainBundle] loadNibNamed:@"XXEHomeworkTableViewCell" owner:self options:nil]lastObject];
+        cell = [[XXEHomeworkTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
     }
+
     
 //    cell.iconImageView.frame.size.width = 75;
 //    cell.iconImageView.frame.size.height = 75;

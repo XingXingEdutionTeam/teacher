@@ -9,7 +9,7 @@
 //
 
 #import "XXECommentHistoryDetailInfoViewController.h"
-#import "XXERedFlowerDetialTableViewCell.h"
+#import "XXERedFlowerDetialInfoTableViewCell.h"
 #import "XXEImageBrowsingViewController.h"
 #import "XXEGlobalDecollectApi.h"
 #import "XXEGlobalCollectApi.h"
@@ -34,6 +34,7 @@
     CGFloat picWidth;
     //照片墙 照片 高
     CGFloat picHeight;
+    CGFloat maxWidth;;
     
     BOOL isCollect;
     NSString *parameterXid;
@@ -117,17 +118,24 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
     static NSString *identifier = @"cell";
-    XXERedFlowerDetialTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
-    
+    XXERedFlowerDetialInfoTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+
     if (cell == nil) {
-        cell = [[[NSBundle mainBundle] loadNibNamed:@"XXERedFlowerDetialTableViewCell" owner:self options:nil]lastObject];
+        cell = [[XXERedFlowerDetialInfoTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
     }
-    
+
     cell.iconImageView.image = [UIImage imageNamed:picArray[indexPath.row]];
     cell.titleLabel.text = titleArray[indexPath.row];
     
     if (contentArray.count != 0) {
         cell.contentLabel.text = contentArray[indexPath.row];
+        
+        maxWidth = cell.contentLabel.width;
+        CGFloat height = [StringHeight contentSizeOfString:contentArray[indexPath.row] maxWidth:maxWidth fontSize:14];
+        
+        CGSize size = cell.contentLabel.size;
+        size.height = height;
+        cell.contentLabel.size = size;
     }
     
     NSInteger t;
@@ -153,7 +161,7 @@
         }
         //创建 十二宫格  三行、四列
         int margin = 10;
-        picWidth = (KScreenWidth - 4 * margin - 5 * 2) / 3;
+        picWidth = (KScreenWidth - 20 - 4 * margin - 5 * 2) / 3;
         picHeight = picWidth;
         
         for (int i = 0; i < _picWallArray.count; i++) {
@@ -164,8 +172,8 @@
             //列
             int buttonLine = i % 3;
             
-            CGFloat buttonX = (picWidth + margin) * buttonLine;
-            CGFloat buttonY = 40 + (picHeight + margin) * buttonRow;
+            CGFloat buttonX = 10 + (picWidth + margin) * buttonLine;
+            CGFloat buttonY = 44 + (picHeight + margin) * buttonRow;
             
             UIImageView *pictureImageView = [[UIImageView alloc] initWithFrame:CGRectMake(buttonX + 5, buttonY, picWidth, picHeight)];
             
@@ -202,6 +210,12 @@
 
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    if (indexPath.row == 1) {
+        CGFloat height = [StringHeight contentSizeOfString:contentArray[indexPath.row] maxWidth:maxWidth fontSize:14];
+        return height + 20;
+    }
+    
     NSInteger t;
     //[type] => 1			//点评类型  1:老师主动点评,2:家长请求点评
     if ([_type isEqualToString:@"1"]) {

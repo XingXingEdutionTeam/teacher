@@ -355,14 +355,14 @@
 //点赞
 -(void)onLike:(UIButton *)shareBtn{
     
-    if (_likeButton.selected == NO) {
-        
-        [self onClickLikeButton];
-        
-    }else if (_likeButton.selected == YES){
-        
-        [self onClickLikeButton];
-    }
+//    if (_likeButton.selected == NO) {
+//        
+//        [self onClickLikeButton];
+//        
+//    }else if (_likeButton.selected == YES){
+//        
+//    }
+    [self onClickLikeButton];
 }
 -(void)onClickLikeButton{
     
@@ -383,11 +383,11 @@
             if ([code integerValue]==1) {
                 [self showString:@"点赞成功" forSecond:1.f];
                 [_likeButton setTitle:@"取消" forState:UIControlStateSelected];
-                _likeButton.selected = !_likeButton.selected;
+                _likeButton.selected = YES;
             }else if ([code integerValue]==10){
                 [self showString:@"取消点赞" forSecond:1.f];
                 [_likeButton setTitle:@"赞" forState:UIControlStateNormal];
-                _likeButton.selected = !_likeButton.selected;
+                _likeButton.selected = NO;
             }
             
         } failure:^(__kindof YTKBaseRequest *request) {

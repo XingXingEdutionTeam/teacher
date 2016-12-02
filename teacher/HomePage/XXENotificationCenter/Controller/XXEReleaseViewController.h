@@ -15,7 +15,7 @@
 
 @property (nonatomic, copy) NSString *classId;
 
-@property (nonatomic, copy) NSString *position;
+//@property (nonatomic, copy) NSString *position;
 
 @property (weak, nonatomic) IBOutlet UIView *scopeView;
 

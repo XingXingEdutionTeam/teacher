@@ -36,6 +36,9 @@
     CGFloat picWidth;
     //照片墙 照片 高
     CGFloat picHeight;
+    
+    CGFloat maxWidth;
+    
     BOOL isCollect;
     NSString *parameterXid;
     NSString *parameterUser_Id;
@@ -213,7 +216,8 @@
     
     cell.contentLabel.text = contentArray[indexPath.row];
     
-    CGFloat height = [StringHeight contentSizeOfString:contentArray[indexPath.row] maxWidth:KScreenWidth - 70 fontSize:14];
+    maxWidth = cell.contentLabel.width;
+    CGFloat height = [StringHeight contentSizeOfString:contentArray[indexPath.row] maxWidth:maxWidth fontSize:14];
     
     CGSize size = cell.contentLabel.size;
     size.height = height;
@@ -281,7 +285,7 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
 
     if (indexPath.row == 4) {
-    CGFloat height = [StringHeight contentSizeOfString:contentArray[indexPath.row] maxWidth:KScreenWidth - 70 fontSize:14];
+    CGFloat height = [StringHeight contentSizeOfString:contentArray[indexPath.row] maxWidth:maxWidth fontSize:14];
         return height + 20;
     }else if (indexPath.row==5) {
         return 44 + picRow * picHeight;

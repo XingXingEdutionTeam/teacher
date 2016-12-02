@@ -165,8 +165,8 @@
     [self addSubview:self.homeUserLVLabel];
     [self.homeUserLVLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(weakSelf.homeUserLabel.mas_right).offset(-100*kScreenRatioWidth);
-        make.top.equalTo(weakSelf.homeClassView.mas_bottom).offset(36*kScreenRatioHeight);
-        make.size.mas_equalTo(CGSizeMake(45*kScreenRatioWidth, 25*kScreenRatioHeight));
+        make.top.equalTo(weakSelf.homeClassView.mas_bottom).offset(40*kScreenRatioHeight);
+        make.size.mas_equalTo(CGSizeMake(45*kScreenRatioWidth, 20*kScreenRatioHeight));
     }];
     
     self.homeUserAgeLabel = [UILabel setupHomePageMessageLabel:@"学生年龄:"];

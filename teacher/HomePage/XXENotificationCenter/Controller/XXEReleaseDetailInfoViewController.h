@@ -13,8 +13,8 @@
 @property (nonatomic, copy) NSString *subjectStr;
 @property (nonatomic, copy) NSString *contentStr;
 
-@property (weak, nonatomic) IBOutlet UILabel *subjectLabel;
-@property (weak, nonatomic) IBOutlet UITextView *contentTextView;
+//@property (weak, nonatomic) IBOutlet UILabel *subjectLabel;
+//@property (weak, nonatomic) IBOutlet UITextView *contentTextView;
 
 
 

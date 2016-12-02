@@ -13,7 +13,7 @@
 #import "XXEAuditorApi.h"
 #import "XXEAuditorModel.h"
 
-@interface XXEReleaseViewController ()<UITextViewDelegate>
+@interface XXEReleaseViewController ()<UITextViewDelegate, UITextFieldDelegate>
 {
     //审核人员
     NSMutableArray *auditorArray;
@@ -21,6 +21,10 @@
     NSMutableArray *auditorModelArray;
     NSString *notice_type;	//1:班级通知  2:学校通知
     NSString *examine_tid;	//审核人id
+    //身份
+    NSString *position;
+    //内容
+//    NSString *conStr;
     //传参
     NSString *parameterXid;
     NSString *parameterUser_Id;
@@ -42,10 +46,11 @@
 
 @implementation XXEReleaseViewController
 
-- (void)viewWillAppear:(BOOL)animated{
-    [super viewWillAppear:animated];
-    auditorArray = [[NSMutableArray alloc] init];
-    auditorModelArray = [[NSMutableArray alloc] init];
+
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    self.view.backgroundColor = XXEBackgroundColor;
     
     if ([XXEUserInfo user].login){
         parameterXid = [XXEUserInfo user].xid;
@@ -54,16 +59,16 @@
         parameterXid = XID;
         parameterUser_Id = USER_ID;
     }
-
-}
-
-
-- (void)viewDidLoad {
-    [super viewDidLoad];
+    auditorArray = [[NSMutableArray alloc] init];
+    auditorModelArray = [[NSMutableArray alloc] init];
+    
+    position = [DEFAULTS objectForKey:@"POSITION"];
 
     _contentTextView.delegate = self;
     
     [_certainButton addTarget:self action:@selector(certainButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+    //监听 textfield 输入 字数
+    [_subjectTextField addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
     
     //创建 下拉框
     [self createContent];
@@ -72,12 +77,11 @@
 
 
 - (void)createContent{
-
     //----------------------通知 范围 下拉框
     CGFloat scopeCommboxWidth = 280 * kScreenRatioWidth;
     CGFloat scopeCommboxHeight = 30 * kScreenRatioHeight;
     CGFloat scopeCommboxX = 90 * kScreenRatioWidth;
-    CGFloat scopeCommboxY = _scopeView.frame.origin.y + (35 - scopeCommboxHeight) / 2;
+    CGFloat scopeCommboxY = _scopeView.frame.origin.y + (40 - scopeCommboxHeight) / 2;
 
     _scopeCommbox = [[WJCommboxView alloc] initWithFrame:CGRectMake(scopeCommboxX, scopeCommboxY, scopeCommboxWidth, scopeCommboxHeight)];
     CGRect rect1 = _scopeCommbox.textField.frame;
@@ -109,7 +113,7 @@
     CGFloat auditorCommboxWidth = 280 * kScreenRatioWidth;
     CGFloat auditorCommboxHeight = 30 * kScreenRatioHeight;
     CGFloat auditorCommboxX = 90 * kScreenRatioWidth;
-    CGFloat auditorCommboxY = _auditView.frame.origin.y + (25 - auditorCommboxHeight) / 2;
+    CGFloat auditorCommboxY = _auditView.frame.origin.y + (40 - auditorCommboxHeight) / 2;
 
     _auditorCommbox = [[WJCommboxView alloc] initWithFrame:CGRectMake(auditorCommboxX, auditorCommboxY, auditorCommboxWidth, auditorCommboxHeight)];
     CGRect rect2 = _auditorCommbox.textField.frame;
@@ -223,9 +227,9 @@
 
 - (void)getAuditorInfo{
     
-//    NSLog(@"%@ --- %@ ---- %@ ----%@ ---- %@  ", parameterXid, parameterUser_Id, _schoolId, _classId, notice_type);
+    NSLog(@"%@ --- %@ ---- %@ ----%@ ---- %@  == %@", parameterXid, parameterUser_Id, _schoolId, _classId, notice_type, position);
     
-    XXEAuditorApi *auditorApi = [[XXEAuditorApi alloc] initWithXid:parameterXid user_id:parameterUser_Id school_id:_schoolId class_id:_classId position:@"4" notice_type:notice_type];
+    XXEAuditorApi *auditorApi = [[XXEAuditorApi alloc] initWithXid:parameterXid user_id:parameterUser_Id school_id:_schoolId class_id:_classId position:position notice_type:notice_type];
     [auditorApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         if (auditorModelArray.count != 0) {
             [auditorModelArray removeAllObjects];
@@ -262,6 +266,8 @@
 }
 
 
+
+
 - (void)certainButtonClick:(UIButton *)button{
     
     if ([_subjectTextField.text isEqualToString:@""]) {
@@ -276,7 +282,7 @@
 
 - (void)submitContentInfo{
     
-    XXENotificationReleaseApi *notificationReleaseApi = [[XXENotificationReleaseApi alloc] initWithXid:parameterXid user_id:parameterUser_Id school_id:_schoolId class_id:_classId position:@"4" notice_type:notice_type examine_tid:examine_tid title:_subjectTextField.text con:_contentTextView.text];
+    XXENotificationReleaseApi *notificationReleaseApi = [[XXENotificationReleaseApi alloc] initWithXid:parameterXid user_id:parameterUser_Id school_id:_schoolId class_id:_classId position:position notice_type:notice_type examine_tid:examine_tid title:_subjectTextField.text con:_contentTextView.text];
     
     [notificationReleaseApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         
@@ -299,9 +305,21 @@
         
         [self showHudWithString:@"提交失败!" forSecond:1.5];
     }];
+}
+
+
+#pragma mark ====== textField  方法 =======
+- (void)textFieldDidChange:(UITextField *)textField{
+    if (textField == _subjectTextField) {
+//        NSLog(@"_subjectTextField.text.length == %lu", _subjectTextField.text.length);
+
+        if (_subjectTextField.text.length > 15) {
+            [self showHudWithString:@"最多可输入15个字符"];
+            _subjectTextField.text = [_subjectTextField.text substringToIndex:15];
+        }
     
-    
-    
+    }
+
 }
 
 
@@ -312,7 +330,14 @@
 - (void)textViewDidChange:(UITextView *)textView{
     
     if (textView == _contentTextView) {
-        _numLabel.text =[NSString stringWithFormat:@"%ld/200",textView.text.length];
+//        _numLabel.text =[NSString stringWithFormat:@"%ld/200",textView.text.length];
+        if (_contentTextView.text.length <= 200) {
+            _numLabel.text=[NSString stringWithFormat:@"%lu/200",(unsigned long)textView.text.length];
+        }else{
+            [self showHudWithString:@"最多可输入200个字符"];
+            _contentTextView.text = [_contentTextView.text substringToIndex:200];
+        }
+//        conStr = _contentTextView.text;
     }
     
 }

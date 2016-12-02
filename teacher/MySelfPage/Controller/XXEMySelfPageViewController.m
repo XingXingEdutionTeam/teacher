@@ -17,7 +17,6 @@
 #import "XXEMyselfInfoViewController.h"
 #import "XXERootFriendListController.h"
 #import "XXEMySelfInfoApi.h"
-#import "XXECourseOrderDetailViewController.h"
 #import "XXECourseOrderListViewController.h"
 
 @interface XXEMySelfPageViewController ()<UITableViewDelegate, UITableViewDataSource>
@@ -444,6 +443,9 @@
         
     }else if (indexPath.row == 1){
         //@"我的订单"
+        XXECourseOrderListViewController *courseOrderListVC = [[XXECourseOrderListViewController alloc] init];
+        
+        [self.navigationController pushViewController:courseOrderListVC animated:YES];
         
     }else if (indexPath.row == 2){
         //@"我的好友"

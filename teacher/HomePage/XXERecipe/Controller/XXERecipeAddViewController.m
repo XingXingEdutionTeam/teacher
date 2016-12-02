@@ -185,6 +185,10 @@
     lunchStr = _lunchTextView.text;
     dinnerStr = _dinnerTextView.text;
     
+//    if (![breakfastStr isEqualToString:@""] && ![lunchStr isEqualToString:@""] && ![dinnerStr isEqualToString:@""]) {
+//        <#statements#>
+//    }
+    
     // pickerView.data  里面 有一张加号占位图,所有 个数最少有 1 张
     for (int i = 0; i < pickerView1.data.count - 1; i++) {
         FSImageModel *mdoel = pickerView1.data[i];
@@ -252,11 +256,11 @@
     
     XXERecipeAddTextApi *recipeAddTextApi = [[XXERecipeAddTextApi alloc] initWithXid:parameterXid user_id:parameterUser_Id user_type:USER_TYPE school_id:_schoolId position:_position date_tm:timeStr breakfast_name:breakfastStr lunch_name:lunchStr dinner_name:dinnerStr breakfast_url:breakfastPicStr lunch_url:lunchPicStr dinner_url:dinnerPicStr];
     
-//    NSLog(@"早餐--- %@ 午餐 --- %@ 晚餐 -- %@", breakfastPicStr, lunchPicStr, dinnerPicStr);
+    NSLog(@"早餐--- %@ 午餐 --- %@ 晚餐 -- %@", breakfastStr, lunchPicStr, dinnerPicStr);
     
     [recipeAddTextApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         
-//        NSLog(@"2222---   %@", request.responseJSONObject);
+        NSLog(@"2222---   %@", request.responseJSONObject);
         
         NSString *codeStr = [NSString stringWithFormat:@"%@", request.responseJSONObject[@"code"]];
         
@@ -268,8 +272,8 @@
                 [self.navigationController popViewControllerAnimated:YES];
             });
             
-        }else{
-            
+        }else if([codeStr isEqualToString:@"7"]){
+            [self showHudWithString:@"该日期已存在,不能重复上传"];
         }
         
     } failure:^(__kindof YTKBaseRequest *request) {
@@ -322,7 +326,7 @@
 
     } success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
         NSDictionary *dict =responseObject;
-//          NSLog(@"111111<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<%@",dict);
+//          NSLog(@"111111<<<<<<<<<<<<<<<<<<<%@",dict);
         if([[NSString stringWithFormat:@"%@",dict[@"code"]]isEqualToString:@"1"] )
         {
             breakfastArray = dict[@"data"];

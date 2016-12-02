@@ -72,8 +72,28 @@
     
 
     [self createContent];
+    
+    [_subjectTextField addTarget:self action:@selector(textFieldTextChange:) forControlEvents:UIControlEventEditingChanged];
+
 
 }
+
+
+
+#pragma mark ====== textField  方法 =======
+- (void)textFieldTextChange:(UITextField *)textField{
+    if (textField == _subjectTextField) {
+        
+        NSLog(@"_subjectTextField.text.length == %lu", _subjectTextField.text.length);
+        
+        if (_subjectTextField.text.length > 15) {
+            [self showHudWithString:@"最多可输入15个字符"];
+            _subjectTextField.text = [_subjectTextField.text substringToIndex:15];
+        }
+    }
+    
+}
+
 
 - (void)getCourseInfo{
 
@@ -101,8 +121,7 @@
         
         [self showString:@"数据请求失败" forSecond:1.f];
     }];
-
-
+    
 }
 
 
@@ -201,7 +220,7 @@
 
 - (IBAction)certainButton:(id)sender {
     
-    NSLog(@"确定");
+//    NSLog(@"确定");
     _subjectStr = _subjectTextField.text;
     _contentStr = _contentTextView.text;
     _timeStr = _submitTextField.text;
@@ -328,7 +347,7 @@
         
     } success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
         NSDictionary *dict =responseObject;
-        NSLog(@"111111<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<%@",dict);
+//        NSLog(@"111111<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<%@",dict);
         if([[NSString stringWithFormat:@"%@",dict[@"code"]]isEqualToString:@"1"] )
         {
             
@@ -366,8 +385,16 @@
 
 - (void)textViewDidChange:(UITextView *)textView{
     if (textView == _contentTextView) {
-        self.numLabel.text=[NSString stringWithFormat:@"%lu/200",(unsigned long)textView.text.length];
-        _contentStr = textView.text;
+//        self.numLabel.text=[NSString stringWithFormat:@"%lu/500",(unsigned long)textView.text.length];
+//
+        if (_contentTextView.text.length <= 500) {
+            _numLabel.text=[NSString stringWithFormat:@"%lu/500",(unsigned long)textView.text.length];
+        }else{
+            [self showHudWithString:@"最多可输入500个字符"];
+            _contentTextView.text = [_contentTextView.text substringToIndex:500];
+        }
+        
+        _contentStr = _contentTextView.text;
     }
     
     

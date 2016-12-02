@@ -72,14 +72,7 @@
 - (void)viewWillAppear:(BOOL)animated{
     
     [super viewWillAppear:animated];
-    titleArray = [[NSArray alloc] initWithObjects:@"早餐", @"午餐", @"晚餐", nil];
-    if ([XXEUserInfo user].login){
-        parameterXid = [XXEUserInfo user].xid;
-        parameterUser_Id = [XXEUserInfo user].user_id;
-    }else{
-        parameterXid = XID;
-        parameterUser_Id = USER_ID;
-    }
+
     
 //   NSLog(@"parameterXid:%@ *****parameterUser_Id:%@ ****   _schoolId  +++  %@",  parameterXid, parameterUser_Id, _schoolId);
     
@@ -89,6 +82,15 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    titleArray = [[NSArray alloc] initWithObjects:@"早餐", @"午餐", @"晚餐", nil];
+    if ([XXEUserInfo user].login){
+        parameterXid = [XXEUserInfo user].xid;
+        parameterUser_Id = [XXEUserInfo user].user_id;
+    }else{
+        parameterXid = XID;
+        parameterUser_Id = USER_ID;
+    }
     
     self.navigationController.navigationBar.backgroundColor = XXEColorFromRGB(0, 170, 42);
     self.navigationController.navigationBarHidden = NO;
@@ -228,7 +230,7 @@
     // 如果 有占位图 先 移除
     [self removePlaceholderImageView];
     
-    if (_dataSourceArray.count == 0) {
+    if (totalArray.count == 0) {
         _myTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         // 1、无数据的时候
         [self createPlaceholderView];

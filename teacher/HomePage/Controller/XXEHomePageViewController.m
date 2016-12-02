@@ -168,7 +168,11 @@
     [super viewWillAppear:animated];
     self.view.backgroundColor = XXEBackgroundColor;
     self.navigationController.navigationBarHidden = YES;
+    //新手 教程
     [self initNewCourseView];
+    
+    //获取数据
+    [self setupHomePageRequeue];
     
 }
 /** 这两个方法都可以,改变当前控制器的电池条颜色 */
@@ -192,8 +196,6 @@
     isFirst = @"NO";
     [first setObject:isFirst  forKey:@"isFirst"];
     [first synchronize];
-    
-    
 }
 
 #pragma mark - 下拉选择框
@@ -209,68 +211,34 @@
     self.userPosition = model1.position;
 //    NSLog(@"学校类型:%@",self.schoolType);
     
-    //*******************  学 校  *************************
-    self.homeSchoolView = [[WJCommboxView alloc] initWithFrame:CGRectMake(65 * kScreenRatioWidth, 41 * kScreenRatioHeight, 120 * kScreenRatioWidth, 36 * kScreenRatioHeight)];
+//    //*******************  学 校  *************************
+//    NSLog(@"self.arraySchool ==== %@", self.arraySchool);
+    
     if (self.arraySchool.count != 0) {
         self.homeSchoolView.dataArray = self.arraySchool;
+        [self.homeSchoolView.listTableView reloadData];
     }
-    
-    [self.view addSubview:self.homeSchoolView];
-    
-    self.homeSchoolView.textField.placeholder = @"学校";
+
     self.homeSchoolView.textField.text = model3.school_name;
-    self.homeSchoolView.textField.textAlignment = NSTextAlignmentCenter;
-    self.homeSchoolView.textField.tag = 102;
-    self.homeSchoolView.textField.layer.cornerRadius =10 * KScreenWidth / 375;
-    self.homeSchoolView.textField.layer.masksToBounds =YES;
-    //    //监听 学校 名称 改变
-    [self.homeSchoolView.textField addObserver:self forKeyPath:@"text" options:NSKeyValueObservingOptionNew context:@"1"];
-    
-    self.schoolBgView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, kWidth,kHeight+300)];
-    self.schoolBgView.backgroundColor = [UIColor clearColor];
-    self.schoolBgView.alpha = 0.5;
-    
-    UITapGestureRecognizer *singleTap1 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(commboxHidden1)];
-    [self.schoolBgView addGestureRecognizer:singleTap1];
-    
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(commboxAction:) name:@"commboxNotice"object:nil];
-    
-    //***********************  班 级  ***************************
-    self.homeClassView = [[WJCommboxView alloc] initWithFrame:CGRectMake(65 * kScreenRatioWidth+120 * kScreenRatioWidth+5, 41*kScreenRatioHeight, 120 * kScreenRatioWidth, 36 * kScreenRatioHeight)];
+
+//    //***********************  班 级  ***************************
     NSString *string = @"编辑班级";
-    
+//
     if (self.classAllArray.count != 0) {
         for (int i =0; i<self.classAllArray.count; i++) {
             [self.classAllArray[i] addObject:string];
         }
         self.homeClassView.dataArray = self.classAllArray[0];
     }
-    
-    [self.view addSubview:self.homeClassView];
-    
-    self.homeClassView.textField.placeholder = @"班级";
+
     self.homeClassView.textField.text = model1.class_name;
     self.userPosition = model1.position;
-//    NSLog(@"kkk 身份%@",self.userPosition);
-    self.homeClassView.textField.textAlignment = NSTextAlignmentCenter;
-    self.homeClassView.textField.tag = 103;
-    self.homeClassView.textField.layer.cornerRadius =10 * KScreenWidth / 375;
-    self.homeClassView.textField.layer.masksToBounds =YES;
-    //监听 班级 改变
-    [self.homeClassView.textField addObserver:self forKeyPath:@"text" options:NSKeyValueObservingOptionNew context:@"2"];
 
-    self.classBgView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, kWidth,kHeight+300)];
-    self.classBgView.backgroundColor = [UIColor clearColor];
-     self.classBgView.alpha = 0.5;
-
-    UITapGestureRecognizer *singleTap2 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(commboxHidden2)];
-    [self.classBgView addGestureRecognizer:singleTap2];
-
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(commboxAction:) name:@"commboxNotice"object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(commboxAction2:) name:@"commboxNotice2"object:nil];
-    
     //获取下部试图
     [self bottomViewShowPosition:self.userPosition];
+    
+    //显示 学校 logo 头像
+    [_headView changeSchoolLogo:model3.school_logo];
 }
 
 - (void)bottomViewShowPosition:(NSString *)position
@@ -437,8 +405,8 @@
     self.identifyCard = @"";
     babySchoolName = @"";
     babyClassName = @"";
-    //获取数据
-    [self setupHomePageRequeue];
+//    //获取数据
+//    [self setupHomePageRequeue];
     
     _classGroupArray = [[NSMutableArray alloc] init];
     
@@ -454,8 +422,64 @@
     [self.view addSubview:self.headView];
    
     [self setRongCloud];
+    
+    //创建 下拉框
+    [self createCommboxView];
+    
+    
 //    self.tabBarItem.badgeValue = @"10";
 }
+
+
+#pragma mark ========= 创建 下拉框 =============
+- (void)createCommboxView{
+
+    //*******************  学 校  *************************
+    self.homeSchoolView = [[WJCommboxView alloc] initWithFrame:CGRectMake(65 * kScreenRatioWidth, 41 * kScreenRatioHeight, 120 * kScreenRatioWidth, 36 * kScreenRatioHeight)];
+    
+    [self.view addSubview:self.homeSchoolView];
+    
+    self.homeSchoolView.textField.placeholder = @"学校";
+    self.homeSchoolView.textField.textAlignment = NSTextAlignmentCenter;
+    self.homeSchoolView.textField.tag = 102;
+    self.homeSchoolView.textField.layer.cornerRadius =10 * KScreenWidth / 375;
+    self.homeSchoolView.textField.layer.masksToBounds =YES;
+    //    //监听 学校 名称 改变
+    [self.homeSchoolView.textField addObserver:self forKeyPath:@"text" options:NSKeyValueObservingOptionNew context:@"1"];
+    
+    self.schoolBgView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, kWidth,kHeight+300)];
+    self.schoolBgView.backgroundColor = [UIColor clearColor];
+    self.schoolBgView.alpha = 0.5;
+    
+    UITapGestureRecognizer *singleTap1 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(commboxHidden1)];
+    [self.schoolBgView addGestureRecognizer:singleTap1];
+    
+    
+    //***********************  班 级  ***************************
+    self.homeClassView = [[WJCommboxView alloc] initWithFrame:CGRectMake(65 * kScreenRatioWidth+120 * kScreenRatioWidth+5, 41*kScreenRatioHeight, 120 * kScreenRatioWidth, 36 * kScreenRatioHeight)];
+    
+    [self.view addSubview:self.homeClassView];
+    
+    self.homeClassView.textField.placeholder = @"班级";
+    self.homeClassView.textField.textAlignment = NSTextAlignmentCenter;
+    self.homeClassView.textField.tag = 103;
+    self.homeClassView.textField.layer.cornerRadius =10 * KScreenWidth / 375;
+    self.homeClassView.textField.layer.masksToBounds =YES;
+    //监听 班级 改变
+    [self.homeClassView.textField addObserver:self forKeyPath:@"text" options:NSKeyValueObservingOptionNew context:@"2"];
+    
+    self.classBgView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, kWidth,kHeight+300)];
+    self.classBgView.backgroundColor = [UIColor clearColor];
+    self.classBgView.alpha = 0.5;
+    
+    UITapGestureRecognizer *singleTap2 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(commboxHidden2)];
+    [self.classBgView addGestureRecognizer:singleTap2];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(commboxAction:) name:@"commboxNotice"object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(commboxAction2:) name:@"commboxNotice2"object:nil];
+}
+
+
 
 #pragma mark - 点击代理方法 Delegate
 //顶部视图

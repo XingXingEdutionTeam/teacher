@@ -32,6 +32,8 @@
     NSInteger schoolPage;
     //系统通知 page
     NSInteger systemPage;
+    //身份
+    NSString *position;
     //数据请求参数
     NSString *parameterXid;
     NSString *parameterUser_Id;
@@ -48,19 +50,6 @@
 - (void)viewWillAppear:(BOOL)animated{
     
     [super viewWillAppear:animated];
-    _schoolDataSourceArray = [[NSMutableArray alloc] init];
-    _systemDataSourecArray = [[NSMutableArray alloc] init];
-    
-    if ([XXEUserInfo user].login){
-        parameterXid = [XXEUserInfo user].xid;
-        parameterUser_Id = [XXEUserInfo user].user_id;
-    }else{
-        parameterXid = XID;
-        parameterUser_Id = USER_ID;
-    }
-    
-    schoolPage = 0;
-    systemPage = 0;
     
     [_myTableView reloadData];
     
@@ -75,6 +64,23 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.view.backgroundColor = XXEBackgroundColor;
+    _schoolDataSourceArray = [[NSMutableArray alloc] init];
+    _systemDataSourecArray = [[NSMutableArray alloc] init];
+    
+    if ([XXEUserInfo user].login){
+        parameterXid = [XXEUserInfo user].xid;
+        parameterUser_Id = [XXEUserInfo user].user_id;
+    }else{
+        parameterXid = XID;
+        parameterUser_Id = USER_ID;
+    }
+    
+    schoolPage = 0;
+    systemPage = 0;
+
+    
+    position = [DEFAULTS objectForKey:@"POSITION"];
     
     self.navigationController.navigationBar.backgroundColor = XXEColorFromRGB(0, 170, 42);
     self.navigationController.navigationBarHidden = NO;
@@ -139,7 +145,7 @@
  */
     NSString *pageStr = [NSString stringWithFormat:@"%ld", schoolPage];
     
-    XXESchoolNotificationApi *schoolNotificationApi = [[XXESchoolNotificationApi alloc] initWithXid:parameterXid user_id:parameterUser_Id class_id:_classId school_id:_schoolId position:@"1" page:pageStr];
+    XXESchoolNotificationApi *schoolNotificationApi = [[XXESchoolNotificationApi alloc] initWithXid:parameterXid user_id:parameterUser_Id class_id:_classId school_id:_schoolId position:position page:pageStr];
     [schoolNotificationApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         
         //        NSLog(@"2222---   %@", request.responseJSONObject);
@@ -373,6 +379,7 @@
             
             schoolNotificationDetailVC.time =[XXETool dateStringFromNumberTimer:model.date_tm];
             schoolNotificationDetailVC.content = model.con;
+            schoolNotificationDetailVC.titleStr = model.title;
             [self.navigationController pushViewController:schoolNotificationDetailVC animated:YES];
         }
             break;
@@ -384,6 +391,7 @@
             systemNotificationDetailVC.name = model.school_name;
             systemNotificationDetailVC.time =[XXETool dateStringFromNumberTimer:model.date_tm];
             systemNotificationDetailVC.content = model.con;
+            systemNotificationDetailVC.titleStr = model.title;
             [self.navigationController pushViewController:systemNotificationDetailVC animated:YES];
         }
             break;

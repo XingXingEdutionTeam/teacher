@@ -15,7 +15,7 @@
 
 //注册
 /** 注册中检查手机号有没有注册过 */
-#define XXERegisterCheckUrl @"http://www.xingxingedu.cn/teacher/register_check_phone"
+#define XXERegisterCheckUrl @"http://www.xingxingedu.cn/Teacher/register_check_phone"
 
 /** 验证码 1注册  2修改密码  3更换手机号 */
 #define XXEVerifyNumUrl @"http://www.xingxingedu.cn/Global/limit_phone_verify"

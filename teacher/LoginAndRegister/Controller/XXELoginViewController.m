@@ -73,7 +73,9 @@
 {
     if (!_userNameTextField) {
         _userNameTextField = [UITextField createTextFieldWithIsOpen:NO textPlaceholder:@"手机"];
+        _userNameTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
         _userNameTextField.delegate = self;
+        [_userNameTextField addTarget:self action:@selector(textFieldTextChange:) forControlEvents:UIControlEventEditingChanged];
         _userNameTextField.keyboardType = UIKeyboardTypeNumberPad;
     }
     return _userNameTextField;
@@ -364,7 +366,7 @@
     __weak typeof(self)weakSelf = self;
     //创建UIlabel
     UILabel *messageLabel = [[UILabel alloc]init];
-    messageLabel.text = @"适用其他账号登录";
+    messageLabel.text = @"使用其他账号登录";
 //    messageLabel.textColor = XXEColorFromRGB(204, 204, 204);
     messageLabel.textColor = [UIColor lightGrayColor];
     messageLabel.font = [UIFont systemFontOfSize:14];
@@ -787,6 +789,13 @@
     return button;
 }
 
+-(void)textFieldTextChange:(UITextField*)textField {
+    NSString *tmpStr = textField.text;
+    if (textField.text.length >= 11) {
+        textField.text = [tmpStr substringToIndex:11];
+    }
+}
+
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
     if (textField == self.userNameTextField) {
@@ -798,8 +807,8 @@
         } else {
             [self showString:@"用户名不正确" forSecond:1.f];
         }
-        
-    } else {
+        return;
+    } else if (textField == self.passWordTextField) {
         if ([self detectionPassword:textField.text]) {
             self.passWordTextField.text = textField.text;
             
