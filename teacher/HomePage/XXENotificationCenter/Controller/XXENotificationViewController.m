@@ -86,9 +86,10 @@
     self.navigationController.navigationBarHidden = NO;
     a = 0;
     
+
     UIButton *rightBtn =[UIButton createButtonWithFrame:CGRectMake(0, 0, 22, 22) backGruondImageName:@"home_notification_release_icon44x44" Target:self Action:@selector(rightBtnClick:) Title:@""];
     UIBarButtonItem *sentItem =[[UIBarButtonItem alloc]initWithCustomView:rightBtn];
-    self.navigationItem.rightBarButtonItem =sentItem;
+        self.navigationItem.rightBarButtonItem =sentItem;
     
     [self createSegementControl];
     

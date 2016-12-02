@@ -309,7 +309,7 @@
 
 - (void)createTableView{
     
-#warning  如果是私立校长身份 (在头视图上出现 "我的订单"  "我的钱包", 下面的列表中没有 "我的订单")
+
     CGFloat tableViewY;
         if ([userPosition isEqualToString:@"4"] && [schoolType isEqualToString:@"4"]) {
     tableViewY = 200 * kScreenRatioHeight;
@@ -360,7 +360,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
-#warning  如果是私立校长身份 (在头视图上出现 "我的订单"  "我的钱包", 下面的列表中没有 "我的订单")
+
     if ([userPosition isEqualToString:@"4"] && [schoolType isEqualToString:@"4"]) {
     
     //如果 是 校长 身份

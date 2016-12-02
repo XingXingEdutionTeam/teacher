@@ -73,8 +73,8 @@
         parameterUser_Id = USER_ID;
     }
     
-    auditPage = 1;
-    releasePage = 1;
+    auditPage = 0;
+    releasePage = 0;
     a = 0;
     
     UIButton *rightBtn =[UIButton createButtonWithFrame:CGRectMake(0, 0, 22, 22) backGruondImageName:@"comment_request_icon" Target:self Action:@selector(rightBtnClick:) Title:@""];

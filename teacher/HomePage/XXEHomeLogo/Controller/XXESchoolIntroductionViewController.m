@@ -210,7 +210,6 @@
      if (indexPath.row == 8) {
         XXESchoolFeatureModifyViewController *schoolFeatureModifyVC =[[XXESchoolFeatureModifyViewController alloc]init];
         schoolFeatureModifyVC.schoolId = _schoolId;
-        schoolFeatureModifyVC.position = _position;
         schoolFeatureModifyVC.schoolfeatureStr = _contentArray[8];
         schoolFeatureModifyVC.flagStr = @"formSchoolInfo";
         [schoolFeatureModifyVC returnStr:^(NSString *str) {

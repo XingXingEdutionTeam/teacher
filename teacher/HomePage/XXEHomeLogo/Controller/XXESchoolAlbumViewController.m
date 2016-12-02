@@ -35,6 +35,11 @@
     UIButton *deleteButton;
     //上传
     UIButton *upButton;
+    //身份
+    NSString *position;
+    //占位图
+    UIImageView *placeholderImageView;
+    
 }
 //    数据源数组
 @property (nonatomic) NSMutableArray *dataSourceArray;
@@ -62,6 +67,8 @@
         parameterUser_Id = USER_ID;
     }
     pic_id_str = @"";
+    
+    
     editButton.selected = YES;
     deleteButton.selected = YES;
     _seletedModelArray = [[NSMutableArray alloc] init];
@@ -96,10 +103,13 @@
     self.view.backgroundColor = UIColorFromRGB(229, 232, 233);
     
     self.title = @"相   册";
+    
+    
     [self.myCollcetionView registerNib:[UINib nibWithNibName:NSStringFromClass([XXESchoolAlbumCollectionViewCell class]) bundle:nil] forCellWithReuseIdentifier:NSStringFromClass([XXESchoolAlbumCollectionViewCell class])];
     
 }
 
+#pragma Mark  -------- settingNavgiationBar -------
 - (void)settingNavgiationBar{
 
     if ([self.position isEqualToString:@"3"] || [self.position isEqualToString:@"4"]) {
@@ -114,19 +124,24 @@
 
 }
 
+#pragma mark ========== 右上角 编辑 按钮 editButtonCick ===========
 - (void)editButtonCick:(UIButton *)button{
 //    NSLog(@"-----  editButtonCick ----");
     button.selected = !button.selected;
     bottomView.hidden = !editButton.selected;
+    
     if (editButton.selected == YES) {
         _myCollcetionView.frame = CGRectMake(0, 0, KScreenWidth, KScreenHeight - 64 - 49);
     }else if (editButton.selected == NO){
+        
+        //重新 加载 数据 ,图片均会恢复为未选中状态
+        [self.myCollcetionView reloadData];
         _myCollcetionView.frame = CGRectMake(0, 0, KScreenWidth, KScreenHeight - 64);
     }
     
 }
 
-
+#pragma mark ======== createBottomView =========
 - (void)createBottomView{
     bottomView = [[UIView alloc] initWithFrame:CGRectMake(0, KScreenHeight - 64 - 49, KScreenWidth, 49)];
     bottomView.backgroundColor = [UIColor whiteColor];
@@ -221,11 +236,17 @@
     }
    seletedIndexArray = [allIndexArray objectsAtIndexes:_selectedIndexSet];
     
-    for (NSString *str in seletedIndexArray) {
-        NSInteger t = [str integerValue];
-        
-        [_seletedModelArray addObject:_dataSourceArray[t]];
+    if ([seletedIndexArray count] != 0) {
+        for (NSString *str in seletedIndexArray) {
+            NSInteger t = [str integerValue];
+            
+            [_seletedModelArray addObject:_dataSourceArray[t]];
+        }
+    }else{
+         [self showHudWithString:@"请选择要删除的图片!" forSecond:1.5];
     }
+    
+
     button.selected = !button.selected;
     if (button.selected == YES) {
         if (_seletedModelArray.count == 0) {
@@ -262,9 +283,8 @@
         pic_id_str = tidStr;
     }
 
-//    NSLog(@"bbb %@", pic_id_str);
     
-    XXEDeleteSchoolPicApi *deleteSchoolPicApi = [[XXEDeleteSchoolPicApi alloc] initWithXid:parameterXid user_id:parameterUser_Id school_id:_schoolId position:@"4" pic_id_str:pic_id_str];
+    XXEDeleteSchoolPicApi *deleteSchoolPicApi = [[XXEDeleteSchoolPicApi alloc] initWithXid:parameterXid user_id:parameterUser_Id school_id:_schoolId position:_position pic_id_str:pic_id_str];
     [deleteSchoolPicApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
 //                NSLog(@"2222---   %@", request.responseJSONObject);
         NSString *codeStr = [NSString stringWithFormat:@"%@", request.responseJSONObject[@"code"]];
@@ -275,7 +295,6 @@
             [_dataSourceArray removeObjectsInArray:_seletedModelArray];
             
             [_myCollcetionView reloadData];
-//            editButton.selected = NO;
 //            [self updateButtonTitle];
         }else{
             [self showHudWithString:@"删除失败!" forSecond:1.5];
@@ -313,7 +332,7 @@
     XXESchoolPicApi *schoolPicApi = [[XXESchoolPicApi alloc] initWithXid:parameterXid user_id:parameterUser_Id user_type:USER_TYPE school_id:_schoolId];
     [schoolPicApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         _dataSourceArray = [[NSMutableArray alloc] init];
-        //        NSLog(@"2222---   %@", request.responseJSONObject);
+//                NSLog(@"2222---   %@", request.responseJSONObject);
 
         NSString *codeStr = [NSString stringWithFormat:@"%@", request.responseJSONObject[@"code"]];
         
@@ -336,23 +355,61 @@
 
 }
 
-//相册 有数据 和 无数据 进行判断
+////相册 有数据 和 无数据 进行判断
+//- (void)customContent{
+//        // 1、无数据的时候
+//    if (_dataSourceArray.count == 0) {
+//        UIImage *myImage = [UIImage imageNamed:@"all_placeholder"];
+//        CGFloat myImageWidth = myImage.size.width;
+//        CGFloat myImageHeight = myImage.size.height;
+//        
+//        UIImageView *myImageView = [[UIImageView alloc] initWithFrame:CGRectMake(KScreenWidth / 2 - myImageWidth / 2, (KScreenHeight - 64 - 49) / 2 - myImageHeight / 2, myImageWidth, myImageHeight)];
+//        myImageView.image = myImage;
+//        [self.view addSubview:myImageView];
+//    }else{
+//        //2、有数据的时候
+//        [self createCollectionView];
+//    }
+//    
+//}
+// 有数据 和 无数据 进行判断
 - (void)customContent{
-        // 1、无数据的时候
+    // 如果 有占位图 先 移除
+    [self removePlaceholderImageView];
+    
     if (_dataSourceArray.count == 0) {
-        UIImage *myImage = [UIImage imageNamed:@"all_placeholder"];
-        CGFloat myImageWidth = myImage.size.width;
-        CGFloat myImageHeight = myImage.size.height;
+        // 1、无数据的时候
+        [self createPlaceholderView];
         
-        UIImageView *myImageView = [[UIImageView alloc] initWithFrame:CGRectMake(KScreenWidth / 2 - myImageWidth / 2, (KScreenHeight - 64 - 49) / 2 - myImageHeight / 2, myImageWidth, myImageHeight)];
-        myImageView.image = myImage;
-        [self.view addSubview:myImageView];
     }else{
         //2、有数据的时候
         [self createCollectionView];
     }
     
+    [_myCollcetionView reloadData];
+    
 }
+
+
+//没有 数据 时,创建 占位图
+- (void)createPlaceholderView{
+    // 1、无数据的时候
+    UIImage *myImage = [UIImage imageNamed:@"all_placeholder"];
+    CGFloat myImageWidth = myImage.size.width;
+    CGFloat myImageHeight = myImage.size.height;
+    
+    placeholderImageView = [[UIImageView alloc] initWithFrame:CGRectMake(kWidth / 2 - myImageWidth / 2, (kHeight - 64 - 49) / 2 - myImageHeight / 2, myImageWidth, myImageHeight)];
+    placeholderImageView.image = myImage;
+    [self.view addSubview:placeholderImageView];
+}
+
+//去除 占位图
+- (void)removePlaceholderImageView{
+    if (placeholderImageView != nil) {
+        [placeholderImageView removeFromSuperview];
+    }
+}
+
 
 
 //初始化CollectionView
@@ -402,6 +459,7 @@
     
     cell.model = model;
     cell.disabled = [self.disabledContactIds containsObject:model.schoolPicId];
+    
     return cell;
 }
 
@@ -465,6 +523,7 @@
 }
 
 - (BOOL)collectionView:(UICollectionView *)collectionView shouldDeselectItemAtIndexPath:(NSIndexPath *)indexPath {
+    
     if ([self.disabledContactIds count]) {
         NSInteger item = indexPath.item;
         XXESchoolAlbumModel *contact = _dataSourceArray[item];
@@ -474,13 +533,19 @@
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    //    NSLog(@"%@",editButton.selected ? @"YES":@"NO");
-//        XXESchoolAlbumModel *picModel = _dataSourceArray[indexPath.item];
-        if (editButton.selected == YES) {
-                [self.selectedIndexSet addIndex:indexPath.item];
-                [self updateToggleSelectionButton];
-        }else if(editButton.selected == NO){
     
+    //    NSLog(@"%@",editButton.selected ? @"YES":@"NO");
+    XXESchoolAlbumCollectionViewCell *cell = (XXESchoolAlbumCollectionViewCell*)[collectionView cellForItemAtIndexPath:indexPath];
+        if (editButton.selected == YES) {
+            //显示 勾选
+            cell.checkImageView.hidden = NO;
+            [self.selectedIndexSet addIndex:indexPath.item];
+            
+            [self updateToggleSelectionButton];
+
+        }else if(editButton.selected == NO){
+            //不显示 勾选
+            cell.checkImageView.hidden = YES;
             XXESchoolAlbumShowViewController *showVC = [[XXESchoolAlbumShowViewController alloc]init];
     
             NSMutableArray *picArr = [[NSMutableArray alloc] init];
@@ -498,6 +563,7 @@
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath {
+    
     [self.selectedIndexSet removeIndex:indexPath.item];
     
     [self updateToggleSelectionButton];

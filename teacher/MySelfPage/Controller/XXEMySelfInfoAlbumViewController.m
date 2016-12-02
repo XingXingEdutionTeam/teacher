@@ -36,6 +36,8 @@
     //图片 url 数组
     NSMutableArray *picWallArray;
     
+    UIImageView *placeholderImageView;
+    
 }
 //    数据源数组
 @property (nonatomic) NSMutableArray *dataSourceArray;
@@ -44,6 +46,10 @@
 
 //选中 item 的model
 @property (nonatomic, strong) NSMutableArray *seletedModelArray;
+
+@property (nonatomic, strong) NSSet *selectedContactIds;
+@property (nonatomic, strong) NSSet *disabledContactIds;
+@property (nonatomic, strong) NSMutableIndexSet* selectedIndexSet;
 
 
 @end
@@ -64,9 +70,12 @@
     editButton.selected = YES;
     deleteButton.selected = YES;
     _seletedModelArray = [[NSMutableArray alloc] init];
+    _selectedIndexSet = [NSMutableIndexSet indexSet];
     
     //初始化数据源
     [self fetchNetData];
+
+    
     [_myCollcetionView reloadData];
     
     //设置 navgiationBar
@@ -84,6 +93,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.view.backgroundColor = XXEBackgroundColor;
     
     //  设置 navigationBar 上左右字体 颜色
     [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
@@ -91,6 +101,9 @@
     self.view.backgroundColor = UIColorFromRGB(229, 232, 233);
     
     self.title = @"相   册";
+    
+    
+    
     [self.myCollcetionView registerNib:[UINib nibWithNibName:NSStringFromClass([XXESchoolAlbumCollectionViewCell class]) bundle:nil] forCellWithReuseIdentifier:NSStringFromClass([XXESchoolAlbumCollectionViewCell class])];
     
     self.myCollcetionView.allowsMultipleSelection = YES;
@@ -115,6 +128,8 @@
     if (editButton.selected == YES) {
         _myCollcetionView.frame = CGRectMake(0, 0, KScreenWidth, KScreenHeight - 64 - 49);
     }else if (editButton.selected == NO){
+        
+        [_myCollcetionView reloadData];
         _myCollcetionView.frame = CGRectMake(0, 0, KScreenWidth, KScreenHeight - 64);
     }
 }
@@ -171,43 +186,126 @@
 #pragma mark ----------------全选 -------------------
 - (void)allSeletedButtonClick:(UIButton *)button{
     
-    if (_dataSourceArray.count != 0) {
-        if (_seletedModelArray.count != 0) {
-            [_seletedModelArray removeAllObjects];
-        }
-        
-        for (int i = 0; i < _dataSourceArray.count; i++) {
-            NSIndexPath *indexPath = [NSIndexPath indexPathForItem:i inSection:0];
-            
-            [self collectionView:_myCollcetionView didSelectItemAtIndexPath:indexPath];
-            
-            XXESchoolAlbumCollectionViewCell *cell = (XXESchoolAlbumCollectionViewCell *)[_myCollcetionView cellForItemAtIndexPath:indexPath];
-            if (editButton.selected == NO) {
-                cell.checkImageView.hidden = YES;
-            }else{
-                cell.checkImageView.hidden = NO;
+    NSUInteger count = [_dataSourceArray count];
+    BOOL allEnabledContactsSelected = [self allEnabledContactsSelected];
+    if (!allEnabledContactsSelected) {
+        [_myCollcetionView performBatchUpdates:^{
+            for (NSUInteger index = 0; index < count; ++index) {
+                NSIndexPath *indexPath = [NSIndexPath indexPathForItem:index inSection:0];
+                
+                if ([self collectionView:_myCollcetionView shouldSelectItemAtIndexPath:indexPath]) {
+                    [_myCollcetionView selectItemAtIndexPath:indexPath animated:YES scrollPosition:UICollectionViewScrollPositionNone];
+                    [self.selectedIndexSet addIndex:indexPath.item];
+                }
             }
-        }
-        
+        } completion:^(BOOL finished) {
+            [self updateToggleSelectionButton];
+        }];
+    } else {
+        [_myCollcetionView performBatchUpdates:^{
+            [self.selectedIndexSet enumerateIndexesUsingBlock:^(NSUInteger index, BOOL * _Nonnull stop) {
+                NSIndexPath *indexPath = [NSIndexPath indexPathForItem:index inSection:0];
+                
+                if ([self collectionView:_myCollcetionView shouldDeselectItemAtIndexPath:indexPath]) {
+                    [_myCollcetionView deselectItemAtIndexPath:indexPath animated:YES];
+                    [self.selectedIndexSet removeIndex:indexPath.item];
+                }
+                
+            }];
+        } completion:^(BOOL finished) {
+            [self updateToggleSelectionButton];
+        }];
     }
+
 }
+
+
+#pragma mark ------- ++++++ ====== 全选/反选 ======= ++++++++ ----------
+
+- (void)updateSelections {
+    if (!self.selectedContactIds || ![self.selectedContactIds count]) {
+        return;
+    }
+    NSIndexSet *selectedContactsIndexSet = [_dataSourceArray indexesOfObjectsWithOptions:NSEnumerationConcurrent passingTest:^BOOL(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        XXESchoolAlbumModel *contact = obj;
+        return [self.selectedContactIds containsObject:contact.schoolPicId];
+    }];
+    
+    [selectedContactsIndexSet enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL * _Nonnull stop) {
+        NSIndexPath *indexPath = [NSIndexPath indexPathForItem:idx inSection:0];
+        [_myCollcetionView selectItemAtIndexPath:indexPath animated:NO scrollPosition:UICollectionViewScrollPositionNone];
+        [self.selectedIndexSet addIndex:indexPath.item];
+    }];
+    
+    [self updateToggleSelectionButton];
+}
+
+- (void)updateToggleSelectionButton {
+    BOOL allEnabledContactsSelected = [self allEnabledContactsSelected];
+    NSString *title = !allEnabledContactsSelected ? @"全选" : @"全不选";
+    [allSeletedButton setTitle:title forState:UIControlStateNormal];
+}
+
+- (NSIndexSet *)enabledContactsIndexSetForContancts:(NSArray *)contacts {
+    NSIndexSet *enabledContactsIndexSet = nil;
+    if ([self.disabledContactIds count]) {
+        enabledContactsIndexSet = [contacts indexesOfObjectsWithOptions:NSEnumerationConcurrent passingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
+            XXESchoolAlbumModel* contact = obj;
+            return ![self.disabledContactIds containsObject:contact.schoolPicId];
+        }];
+    } else {
+        enabledContactsIndexSet = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, [contacts count])];
+    }
+    
+    return enabledContactsIndexSet;
+}
+
+- (BOOL)allEnabledContactsSelected {
+    NSIndexSet* enabledIndexSet = [self enabledContactsIndexSetForContancts:_dataSourceArray];
+    BOOL allEnabledContactsSelected = [self.selectedIndexSet containsIndexes:enabledIndexSet];
+    return allEnabledContactsSelected;
+}
+
+- (NSArray *)selectedContacts {
+    return [_dataSourceArray objectsAtIndexes:self.selectedIndexSet];
+}
+
+
 
 #pragma mark ----------------删除 -------------------
 - (void)deleteButtonClick:(UIButton *)button{
-    //    NSLog(@"=====  deleteButtonClick =====");
+
+    //self.selectedIndexSet
+    NSMutableArray *allIndexArray = [[NSMutableArray alloc] init];
+    NSArray *seletedIndexArray = [[NSArray alloc] init];
+    for (int i = 0; i < _dataSourceArray.count; i++) {
+        [allIndexArray addObject:[NSString stringWithFormat:@"%d", i]];
+    }
+    seletedIndexArray = [allIndexArray objectsAtIndexes:_selectedIndexSet];
+    
+    if ([seletedIndexArray count] != 0) {
+        for (NSString *str in seletedIndexArray) {
+            NSInteger t = [str integerValue];
+            
+            [_seletedModelArray addObject:_dataSourceArray[t]];
+        }
+    }else{
+        [self showHudWithString:@"请选择要删除的图片!" forSecond:1.5];
+    }
+    
+    
     button.selected = !button.selected;
     if (button.selected == YES) {
         if (_seletedModelArray.count == 0) {
             [self showHudWithString:@"请选择要删除的图片!" forSecond:1.5];
         }else{
-            [self deleteShoolPic];
+            [self deleteMyselfPic];
             
         }
     }
-    
 }
 
-- (void)deleteShoolPic{
+- (void)deleteMyselfPic{
     if (_seletedModelArray.count == 1) {
         XXEMySelfInfoAlbumModel *picModel = _seletedModelArray[0];
         pic_id_str = picModel.myselfPicId;
@@ -244,8 +342,8 @@
             [_dataSourceArray removeObjectsInArray:_seletedModelArray];
             
             [_myCollcetionView reloadData];
-            editButton.selected = NO;
-            [self updateButtonTitle];
+//            editButton.selected = NO;
+//            [self updateButtonTitle];
         }else{
             [self showHudWithString:@"删除失败!" forSecond:1.5];
         }
@@ -305,22 +403,44 @@
 
 
 //相册 有数据 和 无数据 进行判断
+// 有数据 和 无数据 进行判断
 - (void)customContent{
-    // 1、无数据的时候
+    // 如果 有占位图 先 移除
+    [self removePlaceholderImageView];
+    
     if (_dataSourceArray.count == 0) {
-        UIImage *myImage = [UIImage imageNamed:@"all_placeholder"];
-        CGFloat myImageWidth = myImage.size.width;
-        CGFloat myImageHeight = myImage.size.height;
+        // 1、无数据的时候
+        [self createPlaceholderView];
         
-        UIImageView *myImageView = [[UIImageView alloc] initWithFrame:CGRectMake(KScreenWidth / 2 - myImageWidth / 2, (KScreenHeight - 64 - 49) / 2 - myImageHeight / 2, myImageWidth, myImageHeight)];
-        myImageView.image = myImage;
-        [self.view addSubview:myImageView];
     }else{
         //2、有数据的时候
         [self createCollectionView];
     }
     
+    [_myCollcetionView reloadData];
+    
 }
+
+
+//没有 数据 时,创建 占位图
+- (void)createPlaceholderView{
+    // 1、无数据的时候
+    UIImage *myImage = [UIImage imageNamed:@"all_placeholder"];
+    CGFloat myImageWidth = myImage.size.width;
+    CGFloat myImageHeight = myImage.size.height;
+    
+    placeholderImageView = [[UIImageView alloc] initWithFrame:CGRectMake(kWidth / 2 - myImageWidth / 2, (kHeight - 64 - 49) / 2 - myImageHeight / 2, myImageWidth, myImageHeight)];
+    placeholderImageView.image = myImage;
+    [self.view addSubview:placeholderImageView];
+}
+
+//去除 占位图
+- (void)removePlaceholderImageView{
+    if (placeholderImageView != nil) {
+        [placeholderImageView removeFromSuperview];
+    }
+}
+
 
 
 //初始化CollectionView
@@ -366,9 +486,13 @@
     
     XXESchoolAlbumModel *model = _dataSourceArray[indexPath.item];
     [cell.schoolImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",kXXEPicURL,model.pic]] placeholderImage:[UIImage imageNamed:@""]];
-    if (editButton.selected == NO) {
-        cell.checkImageView.hidden = YES;
+
+    cell.model = model;
+    if ([self.disabledContactIds count] != 0) {
+            cell.disabled = [self.disabledContactIds containsObject:model.schoolPicId];
     }
+
+    
     return cell;
 }
 
@@ -378,21 +502,46 @@
 }
 
 #pragma mark PickerViewDelegate
+
 - (BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    NSLog(@"7777777");
     
-    if (editButton.selected == YES) {
-        return YES;
-    }else{
-        return NO;
+    if ([self.disabledContactIds count]) {
+        NSInteger item = indexPath.item;
+        XXESchoolAlbumModel *contact = _dataSourceArray[item];
+        return ![self.disabledContactIds containsObject:contact.schoolPicId];
     }
+    return YES;
 }
 
+- (BOOL)collectionView:(UICollectionView *)collectionView shouldDeselectItemAtIndexPath:(NSIndexPath *)indexPath {
+    
+    NSLog(@"888888");
+    
+    if ([self.disabledContactIds count]) {
+        NSInteger item = indexPath.item;
+        XXESchoolAlbumModel *contact = _dataSourceArray[item];
+        return ![self.disabledContactIds containsObject:contact.schoolPicId];
+    }
+    return YES;
+}
+
+
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    
+    NSLog(@"99999");
+    
+    XXESchoolAlbumCollectionViewCell *cell = (XXESchoolAlbumCollectionViewCell *)[_myCollcetionView cellForItemAtIndexPath:indexPath];
     if (editButton.selected == YES) {
-        XXEMySelfInfoAlbumModel *picModel = _dataSourceArray[indexPath.item];
-        [_seletedModelArray addObject:picModel];
-        [self updateButtonTitle];
+
+        cell.checkImageView.hidden = NO;
+        [self.selectedIndexSet addIndex:indexPath.item];
+
+        [self updateToggleSelectionButton];
     }else{
+        
+        cell.checkImageView.hidden = YES;
+        
         XXEImageBrowsingViewController * imageBrowsingVC = [[XXEImageBrowsingViewController alloc] init];
         
         imageBrowsingVC.imageUrlArray = picWallArray;
@@ -401,30 +550,19 @@
 //        imageBrowsingVC.origin_pageStr = @"6";
         
         [self.navigationController pushViewController:imageBrowsingVC animated:YES];
-//        XXEAlbumShowViewController *showVC = [[XXEAlbumShowViewController alloc]init];
-//        showVC.showDatasource = _dataSourceArray;
-//        //        showVC.showAlbumXid = self.albumTeacherXID;
-//        showVC.flagStr = @"fromSchoolAlbum";
-//        showVC.currentIndex = indexPath.item;
-//        [self.navigationController pushViewController:showVC animated:YES];
+
     }
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath {
     
-    XXEMySelfInfoAlbumModel *picModel = _dataSourceArray[indexPath.item];
-    [_seletedModelArray removeObject:picModel];
-    [self updateButtonTitle];
+    NSLog(@"101010101");
+    
+    [self.selectedIndexSet removeIndex:indexPath.item];
+    
+    [self updateToggleSelectionButton];
 }
 
-- (void)updateButtonTitle{
-    
-    if (editButton.selected == NO) {
-        _myCollcetionView.allowsMultipleSelection = NO;
-    }else if (editButton.selected == YES){
-        _myCollcetionView.allowsMultipleSelection = YES;
-    }
-}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

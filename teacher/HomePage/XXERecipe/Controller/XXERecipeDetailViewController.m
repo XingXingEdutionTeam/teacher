@@ -90,22 +90,19 @@
     contentLabel.font = [UIFont systemFontOfSize:14];
     [headerView addSubview:contentLabel];
     
-    NSLog(@"_contentStr == %@", _contentStr);
+//    NSLog(@"_contentStr == %@", _contentStr);
     
     CGFloat height = [StringHeight contentSizeOfString:_contentStr maxWidth:contentLabel.width fontSize:14];
     CGSize size1 = contentLabel.size;
     size1.height = height;
     contentLabel.size = size1;
     
-    NSLog(@"height === %lf", height);
+//    NSLog(@"height === %lf", height);
     
-    if (height != 20) {
+    if (height > 20) {
         CGSize size2 = headerView.size;
         size2.height = height + 20;
         headerView.size = size2;
-    
-//        [headerView setNeedsLayout];
-//        [headerView setNeedsDisplay];
         
    }
 
@@ -177,7 +174,7 @@
     
 //    NSLog(@"头部 == %lf", headerView.height);
     
-    _myTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, headerView.frame.origin.y + headerView.height + 5, KScreenWidth, KScreenHeight - 64 - headerView.height - 49) style:UITableViewStyleGrouped];
+    _myTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, headerView.frame.origin.y + headerView.height + 5, KScreenWidth, KScreenHeight - 64 - headerView.height) style:UITableViewStyleGrouped];
     
     _myTableView.dataSource = self;
     _myTableView.delegate = self;
@@ -251,9 +248,9 @@
 }
 
 
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    return 60;
-}
+//- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+//    return 60;
+//}
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
 
@@ -305,15 +302,16 @@
         NSString *codeStr = [NSString stringWithFormat:@"%@", request.responseJSONObject[@"code"]];
         
         if ([codeStr isEqualToString:@"1"]) {
+            [self showHudWithString:@"删除成功!"];
             [self updateData];
         }else{
-            
+            [self showHudWithString:@"删除失败!"];
         }
         
         
     } failure:^(__kindof YTKBaseRequest *request) {
         
-        [self showString:@"删除失败" forSecond:1.f];
+        [self showString:@"获取数据失败!" forSecond:1.f];
     }];
 
 

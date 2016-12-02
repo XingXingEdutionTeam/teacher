@@ -503,6 +503,18 @@
 }
 
 
+- (void)textViewDidChange:(UITextView *)textView{
+    if (textView == _breakfastTextView || textView == _lunchTextView || textView == _dinnerTextView) {
+        
+        if (textView.text.length <= 50) {
+//            numLabel.text=[NSString stringWithFormat:@"%lu/200",(unsigned long)textView.text.length];
+        }else{
+            [self showHudWithString:@"最多可输入50个字符"];
+            textView.text = [textView.text substringToIndex:50];
+        }
+//        conStr = textView.text;
+    }
+}
 
 
 

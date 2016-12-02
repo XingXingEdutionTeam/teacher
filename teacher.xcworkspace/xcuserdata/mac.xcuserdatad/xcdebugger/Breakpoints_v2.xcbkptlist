@@ -83,13 +83,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "teacher/HomePage/XXERecipe/Controller/XXERecipeAddViewController.m"
-            timestampString = "502284323.594698"
+            filePath = "teacher/HomePage/XXEStore/Controller/XXEStoreAddUserAddressViewController.m"
+            timestampString = "502359515.082824"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "257"
-            endingLineNumber = "257"
-            landmarkName = "-submitRecipeAddTextInfo"
+            startingLineNumber = "343"
+            endingLineNumber = "343"
+            landmarkName = "-addAddress:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -99,13 +99,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "teacher/HomePage/XXERecipe/Controller/XXERecipeDetailViewController.m"
-            timestampString = "502285841.273288"
+            filePath = "teacher/HomePage/XXEStore/Controller/XXEStoreAddUserAddressViewController.m"
+            timestampString = "502359515.082824"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "100"
-            endingLineNumber = "100"
-            landmarkName = "-createTextContent"
+            startingLineNumber = "347"
+            endingLineNumber = "347"
+            landmarkName = "-addAddress:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -115,13 +115,45 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "teacher/HomePage/XXERecipe/Controller/XXERecipeDetailViewController.m"
-            timestampString = "502285841.273288"
+            filePath = "teacher/HomePage/XXEStore/Controller/XXEStoreAddUserAddressViewController.m"
+            timestampString = "502359515.082824"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "556"
+            endingLineNumber = "556"
+            landmarkName = "-saveBtn:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "teacher/HomePage/XXEStore/Controller/XXEStoreAddUserAddressViewController.m"
+            timestampString = "502359515.082824"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "327"
+            endingLineNumber = "327"
+            landmarkName = "-addAddress:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "teacher/HomePage/XXEStore/Controller/XXEStoreAddUserAddressViewController.m"
+            timestampString = "502359322.773555"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "93"
             endingLineNumber = "93"
-            landmarkName = "-createTextContent"
+            landmarkName = "-viewDidLoad"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -131,13 +163,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "teacher/HomePage/XXERecipe/Controller/XXERecipeAddViewController.m"
-            timestampString = "502286106.835888"
+            filePath = "teacher/MySelfPage/Controller/XXEMySelfInfoAlbumViewController.m"
+            timestampString = "502366306.690282"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "263"
-            endingLineNumber = "263"
-            landmarkName = "-submitRecipeAddTextInfo"
+            startingLineNumber = "507"
+            endingLineNumber = "507"
+            landmarkName = "-collectionView:shouldSelectItemAtIndexPath:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -147,13 +179,45 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "teacher/HomePage/XXERecipe/Controller/XXERecipeAddViewController.m"
-            timestampString = "502286109.600162"
+            filePath = "teacher/MySelfPage/Controller/XXEMySelfInfoAlbumViewController.m"
+            timestampString = "502366316.044991"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "259"
-            endingLineNumber = "259"
-            landmarkName = "-submitRecipeAddTextInfo"
+            startingLineNumber = "519"
+            endingLineNumber = "519"
+            landmarkName = "-collectionView:shouldDeselectItemAtIndexPath:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "teacher/MySelfPage/Controller/XXEMySelfInfoAlbumViewController.m"
+            timestampString = "502366339.122227"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "532"
+            endingLineNumber = "532"
+            landmarkName = "-collectionView:didSelectItemAtIndexPath:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "teacher/MySelfPage/Controller/XXEMySelfInfoAlbumViewController.m"
+            timestampString = "502366353.3777"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "559"
+            endingLineNumber = "559"
+            landmarkName = "-collectionView:didDeselectItemAtIndexPath:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

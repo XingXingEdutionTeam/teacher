@@ -20,6 +20,7 @@
 @property (weak, nonatomic) IBOutlet UITextView *contentTextView;
 @property (weak, nonatomic) IBOutlet UIView *upPicImageView;
 
+@property (weak, nonatomic) IBOutlet UILabel *numLabel;
 
 @property (nonatomic, copy) NSString *dateStr;
 @property (nonatomic, copy) NSString *titleStr;

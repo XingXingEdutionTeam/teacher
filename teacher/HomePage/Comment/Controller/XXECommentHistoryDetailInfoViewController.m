@@ -211,11 +211,6 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    if (indexPath.row == 1) {
-        CGFloat height = [StringHeight contentSizeOfString:contentArray[indexPath.row] maxWidth:maxWidth fontSize:14];
-        return height + 20;
-    }
-    
     NSInteger t;
     //[type] => 1			//点评类型  1:老师主动点评,2:家长请求点评
     if ([_type isEqualToString:@"1"]) {
@@ -223,6 +218,12 @@
     }else if ([_type isEqualToString:@"2"]){
         t = 4;
     }
+    
+    if (indexPath.row == t - 1) {
+        CGFloat height = [StringHeight contentSizeOfString:contentArray[indexPath.row] maxWidth:maxWidth fontSize:14];
+        return height + 20;
+    }
+
     if (indexPath.row==t) {
 
         return 44 + picRow * (picHeight + 10);

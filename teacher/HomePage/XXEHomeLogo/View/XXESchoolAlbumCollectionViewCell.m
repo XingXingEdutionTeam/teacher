@@ -14,6 +14,9 @@
 
 - (void)awakeFromNib {
     // Initialization code
+    
+    [super awakeFromNib];
+    
     [self updateCheckImage];
 }
 
@@ -21,15 +24,17 @@
 - (void)prepareForReuse {
     [super prepareForReuse];
     
-    self.user = nil;
-    self.disabled = NO;
-    
-    [self updateCheckImage];
+        self.user = nil;
+        self.disabled = NO;
+        
+        [self updateCheckImage];
+
 }
 
 - (void)setSelected:(BOOL)selected {
     [super setSelected:selected];
     
+
     [self updateCheckImage];
 }
 
@@ -39,10 +44,10 @@
     }
     _disabled = disabled;
     
-    //    [self updateViews];
 }
 
 - (void)updateCheckImage {
+    
     self.checkImageView.hidden = !self.selected;
 }
 
