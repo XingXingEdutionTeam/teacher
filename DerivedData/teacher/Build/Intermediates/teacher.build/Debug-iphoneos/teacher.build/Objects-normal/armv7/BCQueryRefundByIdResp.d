@@ -1,0 +1,29 @@
+dependencies: \
+  /Users/mac/Documents/teacher/teacher/ThirdLibrary/BeeCloud/BCPaySDK/BeeCloud/Classes/BCQueryRefundById/BCQueryRefundByIdResp.m \
+  /Users/mac/Documents/teacher/teacher/Others/PrefixHeader.pch \
+  /Users/mac/Documents/teacher/teacher/XXEHelper/UIView+XXExtension.h \
+  /Users/mac/Documents/teacher/teacher/Others/MacroDefine.h \
+  /Users/mac/Documents/teacher/teacher/XXEHelper/UIFont+XXExtension.h \
+  /Users/mac/Documents/teacher/teacher/XXEHelper/UITextField+XXExtension.h \
+  /Users/mac/Documents/teacher/teacher/XXEHelper/UIButton+XXExtension.h \
+  /Users/mac/Documents/teacher/teacher/ThirdLibrary/KTActionSheet/KTActionSheet.h \
+  /Users/mac/Documents/teacher/teacher/XXEHelper/UILabel+XXExtension.h \
+  /Users/mac/Documents/teacher/teacher/ThirdLibrary/WJCommboxView/WJCommboxView.h \
+  /Users/mac/Documents/teacher/teacher/Others/XXEHeaderApi.h \
+  /Users/mac/Documents/teacher/teacher/LoginAndRegister/LoginAndRegisterApi/LoginRegisterApi.h \
+  /Users/mac/Documents/teacher/teacher/XXETools/XXETool.h \
+  /Users/mac/Documents/teacher/teacher/LoginAndRegister/Model/XXEUserInfo.h \
+  /Users/mac/Documents/teacher/teacher/HomePage/Controller/XXEHomePageHeader.h \
+  /Users/mac/Documents/teacher/teacher/FriendCirclePage/FriendCircleHeader.h \
+  /Users/mac/Documents/teacher/teacher/MySelfPage/XXEMyselfPageHeader.h \
+  /Users/mac/Documents/teacher/teacher/XXETools/StringHeight.h \
+  /Users/mac/Documents/teacher/teacher/FriendCirclePage/Model/XXECommentModel.h \
+  /Users/mac/Documents/teacher/teacher/HomePage/Controller/aaaaaaa/WZYHttpTool.h \
+  /Users/mac/Documents/teacher/teacher/ThirdLibrary/BeeCloud/BCPaySDK/BeeCloud/Classes/BCQueryRefundById/BCQueryRefundByIdResp.h \
+  /Users/mac/Documents/teacher/teacher/ThirdLibrary/BeeCloud/BCPaySDK/BeeCloud/Classes/BCBase/BCBaseResp.h \
+  /Users/mac/Documents/teacher/teacher/ThirdLibrary/BeeCloud/BCPaySDK/BeeCloud/Internal/BCPayConstant.h \
+  /Users/mac/Documents/teacher/teacher/ThirdLibrary/BeeCloud/BCPaySDK/BeeCloud/Classes/BCBase/BCBaseReq.h \
+  /Users/mac/Documents/teacher/teacher/ThirdLibrary/BeeCloud/BCPaySDK/BeeCloud/Classes/BCResults/BCQueryRefundResult.h \
+  /Users/mac/Documents/teacher/teacher/ThirdLibrary/BeeCloud/BCPaySDK/BeeCloud/Classes/BCResults/BCBaseResult.h \
+  /Users/mac/Documents/teacher/teacher/ThirdLibrary/BeeCloud/BCPaySDK/BeeCloud/Internal/NSDictionary+Utils.h \
+  /Users/mac/Documents/teacher/teacher/ThirdLibrary/BeeCloud/BCPaySDK/BeeCloud/Classes/BCQueryRefundById/BCQueryRefundByIdReq.h

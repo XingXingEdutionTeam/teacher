@@ -37,7 +37,7 @@
         [self.contentView addSubview:_titleLabel];
         
         //content
-        _contentLabel = [[UILabel alloc] initWithFrame:CGRectMake(_titleLabel.frame.origin.x + _titleLabel.width, _iconImageView.frame.origin.y, KScreenWidth - 120, 20)];
+        _contentLabel = [[UILabel alloc] initWithFrame:CGRectMake(_titleLabel.frame.origin.x + _titleLabel.width, _iconImageView.frame.origin.y, KScreenWidth - 140 * kScreenRatioWidth, 20)];
         _contentLabel.numberOfLines = 0;
         _contentLabel.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
         [self.contentView addSubview:_contentLabel];

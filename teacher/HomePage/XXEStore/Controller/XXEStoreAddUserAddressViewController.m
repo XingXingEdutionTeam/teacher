@@ -23,7 +23,7 @@
 
 
 
-@interface XXEStoreAddUserAddressViewController ()<UIAlertViewDelegate>
+@interface XXEStoreAddUserAddressViewController ()<UIAlertViewDelegate, LMComBoxViewDelegate>
 {
     LMContainsLMComboxScrollView *bgScrollView;
     NSMutableDictionary *addressDict;   //地址选择字典
@@ -89,6 +89,10 @@
         removeBtn.hidden = YES;
     }
     
+    
+    NSLog(@"_defaultAddress === %@", _defaultAddress);
+    
+    
 }
 
 //展示 地址
@@ -105,20 +109,20 @@
     
     //省
     //CGRectMake(85+(90+3)*i, 150, (kWidth - 85) / 3, 28)
-    UILabel *provinceLabel = [[UILabel alloc] initWithFrame:CGRectMake(80+labelW*0, 145 * kScreenRatioHeight, labelW, labelH)];
+    UILabel *provinceLabel = [[UILabel alloc] initWithFrame:CGRectMake(_areaLabel.frame.origin.x + _areaLabel.width + 5 +labelW*0, _areaLabel.frame.origin.y, labelW, labelH)];
     provinceLabel.text = [NSString stringWithFormat:@"省:%@",_model.province];
     provinceLabel.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
     [bgScrollView addSubview:provinceLabel];
 
     
     //市
-    UILabel *cityLabel = [[UILabel alloc] initWithFrame:CGRectMake(80+labelW*1, 145 * kScreenRatioHeight, labelW, labelH)];
+    UILabel *cityLabel = [[UILabel alloc] initWithFrame:CGRectMake(_areaLabel.frame.origin.x + _areaLabel.width + 5 +labelW*1, _areaLabel.frame.origin.y, labelW, labelH)];
     cityLabel.text = [NSString stringWithFormat:@"市:%@",_model.city];
     cityLabel.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
     [bgScrollView addSubview:cityLabel];
 
     //区
-    UILabel *areaLabel = [[UILabel alloc] initWithFrame:CGRectMake(80+labelW*2, 145 * kScreenRatioHeight, labelW, labelH)];
+    UILabel *areaLabel = [[UILabel alloc] initWithFrame:CGRectMake(_areaLabel.frame.origin.x + _areaLabel.width + 5+labelW*2, _areaLabel.frame.origin.y, labelW, labelH)];
     areaLabel.text = [NSString stringWithFormat:@"区:%@",_model.district];
     areaLabel.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
     [bgScrollView addSubview:areaLabel];
@@ -229,28 +233,49 @@
     CGFloat buttonW = 325 * kScreenRatioWidth;
     CGFloat buttonH = 42 * kScreenRatioHeight;
     
-    saveBtn=[UIButton createButtonWithFrame:CGRectMake(buttonX, CGRectGetMaxY(view6.frame) + KLabelX *2, buttonW, buttonH) backGruondImageName:@"login_green" Target:nil Action:@selector(saveBtn) Title:nil];
+    saveBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    saveBtn.frame = CGRectMake(buttonX, CGRectGetMaxY(view6.frame) + KLabelX *2, buttonW, buttonH);
+    [saveBtn setBackgroundImage:[UIImage imageNamed:@"login_green"] forState:UIControlStateNormal];
     [saveBtn setTitle:@"保存地址" forState:UIControlStateNormal];
     [saveBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    
+    if (_isModify == YES) {
+        //修改  后 的保存
+        [saveBtn addTarget:self action:@selector(modifySaveButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+    }else{
+        //新增 地址 的保存
+        [saveBtn addTarget:self action:@selector(addNewAddressSaveButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+    }
+    
+    
     [bgScrollView addSubview:saveBtn];
     
+
     //设为默认
     defaultBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     defaultBtn.frame = CGRectMake(buttonX, CGRectGetMaxY(saveBtn.frame) + KLabelX, buttonW, buttonH);
     [defaultBtn setBackgroundImage:[UIImage imageNamed:@"login_green"] forState:UIControlStateNormal];
-    if ([_defaultAddress integerValue] == 1) {
-        //是 默认 地址
-        [defaultBtn setTitle:@"已默认" forState:UIControlStateNormal];
-        defaultBtn.enabled = NO;
+    //如果是 修改 已有 地址
+    if (_isModify == YES) {
+        if ([_defaultAddress integerValue] == 1) {
+            //是 默认 地址
+            [defaultBtn setTitle:@"已默认" forState:UIControlStateNormal];
+            defaultBtn.enabled = NO;
+            
+        }else if ([_defaultAddress integerValue] == 0){
+            //不是 默认 地址
+            [defaultBtn setTitle:@"设为默认" forState:UIControlStateNormal];
+            defaultBtn.enabled = YES;
+            [defaultBtn addTarget:self action:@selector(defaultBtnClick) forControlEvents:UIControlEventTouchUpInside];
+        }
+    }else{
         
-    }else if ([_defaultAddress integerValue] == 0){
-        //不是 默认 地址
+        //新增 地址 ,且设为 默认地址
         [defaultBtn setTitle:@"设为默认" forState:UIControlStateNormal];
         defaultBtn.enabled = YES;
-        [defaultBtn addTarget:self action:@selector(defaultBtnClick) forControlEvents:UIControlEventTouchUpInside];
+        [defaultBtn addTarget:self action:@selector(setNewAddressDefaultBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     }
-    
-    
+
     [defaultBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [bgScrollView addSubview:defaultBtn];
 
@@ -261,10 +286,45 @@
     [removeBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [bgScrollView addSubview:removeBtn];
 }
+
+
+#pragma mark ========= 修改  后 的保存 =======
+- (void)modifySaveButtonClick:(UIButton *)button{
+    if (_defaultAddress != nil) {
+         [self addAddress:_defaultAddress];
+    }
+}
+
+
+
+#pragma mark ---------- 新增 地址 的保存 且不设为默认地址----------
+- (void)addNewAddressSaveButtonClick:(UIButton *)button{
+
+    if (_defaultAddress == nil) {
+        //设置默认地址,可以传值0或者1, 1代表设为默认
+        [self addAddress:@"0"];
+    }
+}
+
+#pragma mark ========== 新增 地址 且 设为 默认地址 ==========
+- (void)setNewAddressDefaultBtnClick:(UIButton *)button{
+
+    if (_defaultAddress == nil) {
+        //设置默认地址,可以传值0或者1, 1代表设为默认
+        [self addAddress:@"1"];
+    }
+}
+
+
+
+
 #pragma mark ============= 保存用户地址 ===============
-- (void)addAddress
+- (void)addAddress:(NSString *)defaultAddress
 {
     NSString *urlStr = @"http://www.xingxingedu.cn/Global/add_shopping_address";
+    
+
+    NSLog(@"selectedProvince === %@", selectedProvince);
     
     NSDictionary *params = @{@"appkey":APPKEY,
                            @"backtype":BACKTYPE,
@@ -278,14 +338,16 @@
                            @"name":nameText.text,
                            @"phone":phoneText.text,
                            @"zip_code":mailText.text,
-                           @"selected":_defaultAddress,
+                           @"selected":defaultAddress,
                            };
-    //    NSLog(@"%@",dict);
+        NSLog(@"params == %@",params);
     
     [WZYHttpTool post:urlStr params:params success:^(id responseObj) {
         
+        NSLog(@"结果===== %@", responseObj);
+        
         if ([responseObj[@"code"] integerValue] == 1) {
-//
+
             [self showString:@"添加成功" forSecond:1.5];
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
            [self.navigationController popViewControllerAnimated:YES];
@@ -358,9 +420,10 @@
         CGFloat comboxW = (KScreenWidth - 120 * kScreenRatioWidth)/3;
         CGFloat comboxH = 20;
         
-        LMComBoxView *comBox = [[LMComBoxView alloc]initWithFrame:CGRectMake(80+comboxW*i, 145 * kScreenRatioHeight, comboxW, comboxH)];
+        LMComBoxView *comBox = [[LMComBoxView alloc]initWithFrame:CGRectMake(_areaLabel.frame.origin.x + _areaLabel.width + 5 +comboxW*i, _areaLabel.frame.origin.y, comboxW, comboxH)];
         comBox.backgroundColor = [UIColor whiteColor];
         comBox.arrowImgName = @"down_dark0.png";
+        
         NSMutableArray *itemsArray = [NSMutableArray arrayWithArray:[addressDict objectForKey:[keys objectAtIndex:i]]];
         comBox.titlesList = itemsArray;
         
@@ -468,7 +531,7 @@
     
 }
 
--(void)saveBtn{
+-(void)saveBtn:(NSString *)newAddressFlagStr{
     if ([nameText.text isEqualToString:@""])
     {
         [self showString:@"亲,请输入您的姓名" forSecond:1.5];
@@ -489,9 +552,17 @@
         [self showString:@"亲,请输入您的详细地址" forSecond:1.5];
         return;
     }
-    [self addAddress];
     
+    NSLog(@"_defaultAddress == %@", _defaultAddress);
     
+    if (_defaultAddress == nil) {
+        //新增 地址
+        //新增 地址 直接 保存 ,没有设为 默认,故_defaultAddress = @"0";
+        _defaultAddress = @"0";
+        
+    }
+    [self addAddress: _defaultAddress];
+
 }
 
 
@@ -521,14 +592,15 @@
     if ([_defaultAddress isEqualToString:@"0"]) {
         _defaultAddress=@"1";
         [defaultBtn setTitle:@"已默认" forState:UIControlStateNormal];
-        [self settingDefaultAddress];
+//        [self settingDefaultAddress];
     }
     else if([_defaultAddress isEqualToString:@"1"]){
         _defaultAddress=@"0";
         [defaultBtn setTitle:@"设为默认" forState:UIControlStateNormal];
-        [self settingDefaultAddress];
+        
     }
     
+    [self settingDefaultAddress];
     
 }
 

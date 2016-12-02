@@ -18,13 +18,16 @@ typedef void(^ReturnStrBlock) (NSString *str);
 @property (nonatomic, copy) NSString *schoolfeatureStr;
 @property (nonatomic, strong) NSString *schoolId;
 @property (nonatomic, strong) NSString *classId;
-@property (nonatomic, copy) NSString *position;
+//@property (nonatomic, copy) 
 
 @property (nonatomic, copy) NSString *flagStr;
 
 @property (weak, nonatomic) IBOutlet UITextView *featureTextView;
 
 @property (weak, nonatomic) IBOutlet UIButton *submitButton;
+@property (weak, nonatomic) IBOutlet UILabel *numLabel;
+
+
 
 
 

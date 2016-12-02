@@ -45,6 +45,22 @@
 - (void)viewWillAppear:(BOOL)animated{
     
     [super viewWillAppear:animated];
+
+    
+    [_myTableView reloadData];
+    
+}
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    [_myTableView.header beginRefreshing];
+}
+
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    self.view.backgroundColor = XXEBackgroundColor;
     
     _auditDataSourceArray = [[NSMutableArray alloc] init];
     _releaseDataSourecArray = [[NSMutableArray alloc] init];
@@ -59,21 +75,6 @@
     
     auditPage = 0;
     releasePage = 0;
-    
-    [_myTableView reloadData];
-    
-}
--(void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-    
-    [_myTableView.header beginRefreshing];
-}
-
-
-
-- (void)viewDidLoad {
-    [super viewDidLoad];
     a = 0;
     
     UIButton *rightBtn =[UIButton createButtonWithFrame:CGRectMake(0, 0, 22, 22) backGruondImageName:@"comment_request_icon" Target:self Action:@selector(rightBtnClick:) Title:@""];
@@ -127,12 +128,9 @@
     /*
      传参:
      【校园通知--我发布的通知和我要审核的通知】
-     
      接口类型:1
-     
      接口:
      http://www.xingxingedu.cn/Teacher/school_notice_me
-     
      传参:
      school_id	//学校id
      class_id	//班级id (校长和管理身份不需要传class_id)
@@ -142,14 +140,14 @@
      */
     NSString *pageStr = [NSString stringWithFormat:@"%ld", auditPage];
     
-//    NSLog(@"%@--- %@ --- %@ --- %@ -- %@", parameterXid, parameterUser_Id, _schoolId, _classId, pageStr);
+    NSLog(@"%@--- %@ --- %@ --- %@ -- %@", parameterXid, parameterUser_Id, _schoolId, _classId, pageStr);
     
     XXEAuditAndReleaseApi *auditAndReleaseApi = [[XXEAuditAndReleaseApi alloc] initWithXid:parameterXid user_id:parameterUser_Id school_id:_schoolId class_id:_classId request_type:@"1" page:pageStr];
     [auditAndReleaseApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
-        if (_auditDataSourceArray.count != 0) {
-            [_auditDataSourceArray removeAllObjects];
-        }
-//                NSLog(@"2222---   %@", request.responseJSONObject);
+//        if (_auditDataSourceArray.count != 0) {
+//            [_auditDataSourceArray removeAllObjects];
+//        }
+    NSLog(@"2222---   %@", request.responseJSONObject);
         
         NSString *codeStr = [NSString stringWithFormat:@"%@", request.responseJSONObject[@"code"]];
         
@@ -186,9 +184,9 @@
     NSString *pageStr = [NSString stringWithFormat:@"%ld", releasePage];
     XXEAuditAndReleaseApi *auditAndReleaseApi = [[XXEAuditAndReleaseApi alloc] initWithXid:parameterXid user_id:parameterUser_Id school_id:_schoolId class_id:_classId request_type:@"2" page:pageStr];
     [auditAndReleaseApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
-        if (_releaseDataSourecArray.count != 0) {
-            [_releaseDataSourecArray removeAllObjects];
-        }
+//        if (_releaseDataSourecArray.count != 0) {
+//            [_releaseDataSourecArray removeAllObjects];
+//        }
         //        NSLog(@"2222---   %@", request.responseJSONObject);
         NSDictionary *dic = request.responseJSONObject;
         

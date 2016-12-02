@@ -60,12 +60,9 @@
 - (void)fetchNetData{
     /*
      【班级作业详情】
-     
      接口类型:1
-     
      接口:
      http://www.xingxingedu.cn/Parent/class_homework_detail
-     
      传参:
      homework_id	//作业id */
     
@@ -153,7 +150,7 @@
         }
         //创建 十二宫格  三行、四列
         int margin = 10;
-        picWidth = (KScreenWidth - 4 * margin) / 3;
+        picWidth = (KScreenWidth - 20 - 4 * margin) / 3;
         picHeight = picWidth;
         
         for (int i = 0; i < _picWallArray.count; i++) {
@@ -164,8 +161,8 @@
             //列
             int buttonLine = i % 3;
             
-            CGFloat buttonX = (picWidth + margin) * buttonLine;
-            CGFloat buttonY = 40 + (picHeight + margin) * buttonRow;
+            CGFloat buttonX = 10 + (picWidth + margin) * buttonLine;
+            CGFloat buttonY = 44 + (picHeight + margin) * buttonRow;
             
             UIImageView *pictureImageView = [[UIImageView alloc] initWithFrame:CGRectMake(buttonX, buttonY, picWidth, picHeight)];
             

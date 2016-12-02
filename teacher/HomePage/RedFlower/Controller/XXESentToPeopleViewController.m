@@ -332,7 +332,7 @@
     if (_position == nil) {
         _position = @"";
     }
-    
+        
     // pickerView.data  里面 有一张加号占位图,所有 个数最少有 1 张
     for (int i = 0; i < picker1.data.count - 1; i++) {
         FSImageModel *mdoel = picker1.data[i];
@@ -480,6 +480,12 @@
         conStr = contentTextView.text;
     }
 }
+
+- (void)textViewDidEndEditing:(UITextView *)textView{
+     numLabel.text=[NSString stringWithFormat:@"%lu/200",(unsigned long)textView.text.length];
+}
+
+
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
     [self.view endEditing:YES];
 }

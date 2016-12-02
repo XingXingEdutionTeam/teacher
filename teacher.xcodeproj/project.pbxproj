@@ -192,9 +192,7 @@
 		04520C7B1DB8CF8D00524FFD /* XXEXingClassRoomCourseListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04520C791DB8CF8D00524FFD /* XXEXingClassRoomCourseListTableViewCell.xib */; };
 		04530C631D88E7B500620105 /* XXEAuditAndReleaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04530C621D88E7B500620105 /* XXEAuditAndReleaseViewController.m */; };
 		04530C671D891E9D00620105 /* XXEAuditDetailInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04530C651D891E9D00620105 /* XXEAuditDetailInfoViewController.m */; };
-		04530C681D891E9D00620105 /* XXEAuditDetailInfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04530C661D891E9D00620105 /* XXEAuditDetailInfoViewController.xib */; };
 		04530C6F1D891ED000620105 /* XXEReleaseDetailInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04530C6D1D891ED000620105 /* XXEReleaseDetailInfoViewController.m */; };
-		04530C701D891ED000620105 /* XXEReleaseDetailInfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04530C6E1D891ED000620105 /* XXEReleaseDetailInfoViewController.xib */; };
 		04530C741D891EE800620105 /* XXEReleaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04530C721D891EE800620105 /* XXEReleaseViewController.m */; };
 		04530C751D891EE800620105 /* XXEReleaseViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04530C731D891EE800620105 /* XXEReleaseViewController.xib */; };
 		04530C781D8935AE00620105 /* XXEDeleteSchoolPicApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 04530C771D8935AE00620105 /* XXEDeleteSchoolPicApi.m */; };
@@ -289,9 +287,7 @@
 		0480A08E1D87DC7000D7589B /* XXESchoolNotificationModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0480A08D1D87DC7000D7589B /* XXESchoolNotificationModel.m */; };
 		0480A0911D87DC8700D7589B /* XXESystemNotificationModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0480A0901D87DC8700D7589B /* XXESystemNotificationModel.m */; };
 		0480A09A1D87ED2300D7589B /* XXESchoolNotificationDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0480A0981D87ED2300D7589B /* XXESchoolNotificationDetailViewController.m */; };
-		0480A09B1D87ED2300D7589B /* XXESchoolNotificationDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0480A0991D87ED2300D7589B /* XXESchoolNotificationDetailViewController.xib */; };
 		0480A09F1D87ED3400D7589B /* XXESystemNotificationDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0480A09D1D87ED3400D7589B /* XXESystemNotificationDetailViewController.m */; };
-		0480A0A01D87ED3400D7589B /* XXESystemNotificationDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0480A09E1D87ED3400D7589B /* XXESystemNotificationDetailViewController.xib */; };
 		0481FEBF1DB8657A00E0CA3B /* XXERongCloudReplyListDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0481FEBD1DB8657A00E0CA3B /* XXERongCloudReplyListDetailViewController.m */; };
 		0481FEC01DB8657A00E0CA3B /* XXERongCloudReplyListDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0481FEBE1DB8657A00E0CA3B /* XXERongCloudReplyListDetailViewController.xib */; };
 		0485FCFA1D8246C10077E10B /* XXEMyselfInfoCollectionPicApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 0485FCF91D8246C10077E10B /* XXEMyselfInfoCollectionPicApi.m */; };
@@ -505,7 +501,6 @@
 		04BB3A3D1D74742B00AA5C5C /* XXEHomeworkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04BB39D91D74742A00AA5C5C /* XXEHomeworkViewController.m */; };
 		04BB3A3F1D74742B00AA5C5C /* XXEHomeworkModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 04BB39DE1D74742A00AA5C5C /* XXEHomeworkModel.m */; };
 		04BB3A401D74742B00AA5C5C /* XXEHomeworkTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04BB39E11D74742A00AA5C5C /* XXEHomeworkTableViewCell.m */; };
-		04BB3A411D74742B00AA5C5C /* XXEHomeworkTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04BB39E21D74742A00AA5C5C /* XXEHomeworkTableViewCell.xib */; };
 		04BB3A421D74742B00AA5C5C /* XXERecipeAddTextAndPicApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 04BB39E61D74742A00AA5C5C /* XXERecipeAddTextAndPicApi.m */; };
 		04BB3A431D74742B00AA5C5C /* XXERecipeAddTextApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 04BB39E81D74742A00AA5C5C /* XXERecipeAddTextApi.m */; };
 		04BB3A441D74742B00AA5C5C /* XXERecipeApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 04BB39EA1D74742A00AA5C5C /* XXERecipeApi.m */; };
@@ -1328,10 +1323,8 @@
 		04530C621D88E7B500620105 /* XXEAuditAndReleaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXEAuditAndReleaseViewController.m; sourceTree = "<group>"; };
 		04530C641D891E9D00620105 /* XXEAuditDetailInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXEAuditDetailInfoViewController.h; sourceTree = "<group>"; };
 		04530C651D891E9D00620105 /* XXEAuditDetailInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXEAuditDetailInfoViewController.m; sourceTree = "<group>"; };
-		04530C661D891E9D00620105 /* XXEAuditDetailInfoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XXEAuditDetailInfoViewController.xib; sourceTree = "<group>"; };
 		04530C6C1D891ED000620105 /* XXEReleaseDetailInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXEReleaseDetailInfoViewController.h; sourceTree = "<group>"; };
 		04530C6D1D891ED000620105 /* XXEReleaseDetailInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXEReleaseDetailInfoViewController.m; sourceTree = "<group>"; };
-		04530C6E1D891ED000620105 /* XXEReleaseDetailInfoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XXEReleaseDetailInfoViewController.xib; sourceTree = "<group>"; };
 		04530C711D891EE800620105 /* XXEReleaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXEReleaseViewController.h; sourceTree = "<group>"; };
 		04530C721D891EE800620105 /* XXEReleaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXEReleaseViewController.m; sourceTree = "<group>"; };
 		04530C731D891EE800620105 /* XXEReleaseViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XXEReleaseViewController.xib; sourceTree = "<group>"; };
@@ -1510,10 +1503,8 @@
 		0480A0901D87DC8700D7589B /* XXESystemNotificationModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXESystemNotificationModel.m; sourceTree = "<group>"; };
 		0480A0971D87ED2300D7589B /* XXESchoolNotificationDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXESchoolNotificationDetailViewController.h; sourceTree = "<group>"; };
 		0480A0981D87ED2300D7589B /* XXESchoolNotificationDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXESchoolNotificationDetailViewController.m; sourceTree = "<group>"; };
-		0480A0991D87ED2300D7589B /* XXESchoolNotificationDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XXESchoolNotificationDetailViewController.xib; sourceTree = "<group>"; };
 		0480A09C1D87ED3400D7589B /* XXESystemNotificationDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXESystemNotificationDetailViewController.h; sourceTree = "<group>"; };
 		0480A09D1D87ED3400D7589B /* XXESystemNotificationDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXESystemNotificationDetailViewController.m; sourceTree = "<group>"; };
-		0480A09E1D87ED3400D7589B /* XXESystemNotificationDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XXESystemNotificationDetailViewController.xib; sourceTree = "<group>"; };
 		0481FEBC1DB8657A00E0CA3B /* XXERongCloudReplyListDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXERongCloudReplyListDetailViewController.h; sourceTree = "<group>"; };
 		0481FEBD1DB8657A00E0CA3B /* XXERongCloudReplyListDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXERongCloudReplyListDetailViewController.m; sourceTree = "<group>"; };
 		0481FEBE1DB8657A00E0CA3B /* XXERongCloudReplyListDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XXERongCloudReplyListDetailViewController.xib; sourceTree = "<group>"; };
@@ -1900,7 +1891,6 @@
 		04BB39DE1D74742A00AA5C5C /* XXEHomeworkModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXEHomeworkModel.m; sourceTree = "<group>"; };
 		04BB39E01D74742A00AA5C5C /* XXEHomeworkTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXEHomeworkTableViewCell.h; sourceTree = "<group>"; };
 		04BB39E11D74742A00AA5C5C /* XXEHomeworkTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXEHomeworkTableViewCell.m; sourceTree = "<group>"; };
-		04BB39E21D74742A00AA5C5C /* XXEHomeworkTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XXEHomeworkTableViewCell.xib; sourceTree = "<group>"; };
 		04BB39E51D74742A00AA5C5C /* XXERecipeAddTextAndPicApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXERecipeAddTextAndPicApi.h; sourceTree = "<group>"; };
 		04BB39E61D74742A00AA5C5C /* XXERecipeAddTextAndPicApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXERecipeAddTextAndPicApi.m; sourceTree = "<group>"; };
 		04BB39E71D74742A00AA5C5C /* XXERecipeAddTextApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXERecipeAddTextApi.h; sourceTree = "<group>"; };
@@ -3720,18 +3710,14 @@
 				0480A0841D87DC1400D7589B /* XXENotificationViewController.m */,
 				0480A0971D87ED2300D7589B /* XXESchoolNotificationDetailViewController.h */,
 				0480A0981D87ED2300D7589B /* XXESchoolNotificationDetailViewController.m */,
-				0480A0991D87ED2300D7589B /* XXESchoolNotificationDetailViewController.xib */,
 				0480A09C1D87ED3400D7589B /* XXESystemNotificationDetailViewController.h */,
 				0480A09D1D87ED3400D7589B /* XXESystemNotificationDetailViewController.m */,
-				0480A09E1D87ED3400D7589B /* XXESystemNotificationDetailViewController.xib */,
 				04530C611D88E7B500620105 /* XXEAuditAndReleaseViewController.h */,
 				04530C621D88E7B500620105 /* XXEAuditAndReleaseViewController.m */,
 				04530C641D891E9D00620105 /* XXEAuditDetailInfoViewController.h */,
 				04530C651D891E9D00620105 /* XXEAuditDetailInfoViewController.m */,
-				04530C661D891E9D00620105 /* XXEAuditDetailInfoViewController.xib */,
 				04530C6C1D891ED000620105 /* XXEReleaseDetailInfoViewController.h */,
 				04530C6D1D891ED000620105 /* XXEReleaseDetailInfoViewController.m */,
-				04530C6E1D891ED000620105 /* XXEReleaseDetailInfoViewController.xib */,
 				04530C711D891EE800620105 /* XXEReleaseViewController.h */,
 				04530C721D891EE800620105 /* XXEReleaseViewController.m */,
 				04530C731D891EE800620105 /* XXEReleaseViewController.xib */,
@@ -4496,7 +4482,6 @@
 			children = (
 				04BB39E01D74742A00AA5C5C /* XXEHomeworkTableViewCell.h */,
 				04BB39E11D74742A00AA5C5C /* XXEHomeworkTableViewCell.m */,
-				04BB39E21D74742A00AA5C5C /* XXEHomeworkTableViewCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -6477,7 +6462,6 @@
 				9E5E23A41D90CC04008B1AAF /* Like@2x.png in Resources */,
 				9E8E09311DE31AAA00B0A942 /* HZQDatePickerView.xib in Resources */,
 				043596A61DAA458100F85DAE /* rcim3.png in Resources */,
-				04530C681D891E9D00620105 /* XXEAuditDetailInfoViewController.xib in Resources */,
 				04F216971D7671BB005C2EBF /* goback_back_orange_on@2x.png in Resources */,
 				9E5E23981D90CC04008B1AAF /* AlbumAddBtn@2x.png in Resources */,
 				9E2F7F6E1D73D24B00DD9CD1 /* UMSCommentInputControlleriPad.xib in Resources */,
@@ -6534,7 +6518,6 @@
 				9E2F7F6F1D73D24B00DD9CD1 /* UMShareEditViewController.xib in Resources */,
 				9E8E095D1DE31AAB00B0A942 /* XXETeacherTableViewCell.xib in Resources */,
 				043596B01DAA458100F85DAE /* FriendApplicationTableViewCell.xib in Resources */,
-				04BB3A411D74742B00AA5C5C /* XXEHomeworkTableViewCell.xib in Resources */,
 				9E2F7F811D73D24B00DD9CD1 /* ios-social-sdk-comment-quick.html in Resources */,
 				0435969B1DAA458100F85DAE /* faqiqunliao@2x.png in Resources */,
 				049998161D9BD5E7001EA07F /* XXEClassManagerClassReleaseViewController.xib in Resources */,
@@ -6557,7 +6540,6 @@
 				04520C681DB8924E00524FFD /* XXEXingClassRoomTeacherListTableViewCell.xib in Resources */,
 				9E5E23E71D90CD04008B1AAF /* YDEmojiCell.xib in Resources */,
 				043596A71DAA458100F85DAE /* rcim4.png in Resources */,
-				04530C701D891ED000620105 /* XXEReleaseDetailInfoViewController.xib in Resources */,
 				9E03CFE71D9268E50083308C /* XXEMessageHistoryCell.xib in Resources */,
 				9E5E23A71D90CC04008B1AAF /* LikeCmtBg@3x.png in Resources */,
 				0462FA2D1DC3433700C67BA9 /* XXETransactionRecordsTableViewCell.xib in Resources */,
@@ -6584,10 +6566,8 @@
 				0485FD361D82C60B0077E10B /* XXEBlackListTableViewCell.xib in Resources */,
 				9E7EF21D1D799453003A06E1 /* album_icon.png in Resources */,
 				9E5E23A01D90CC04008B1AAF /* AlbumOperateMoreHL@3x.png in Resources */,
-				0480A09B1D87ED2300D7589B /* XXESchoolNotificationDetailViewController.xib in Resources */,
 				9E5E23A31D90CC04008B1AAF /* Camera@3x.png in Resources */,
 				9E2F7F7D1D73D24B00DD9CD1 /* README.txt in Resources */,
-				0480A0A01D87ED3400D7589B /* XXESystemNotificationDetailViewController.xib in Resources */,
 				043C80A51D867B52004F1B85 /* XXEWhoCanSeeMyNameResultTableViewCell.xib in Resources */,
 				04F2169F1D7671BB005C2EBF /* images-7.jpeg in Resources */,
 				9E2F7F891D73D24B00DD9CD1 /* markdown.css in Resources */,

@@ -1,0 +1,35 @@
+dependencies: \
+  /Users/mac/Documents/teacher/teacher/HomePage/XXEStore/Controller/XXEStoreBuyFlowerbasketViewController.m \
+  /Users/mac/Documents/teacher/teacher/Others/PrefixHeader.pch \
+  /Users/mac/Documents/teacher/teacher/XXEHelper/UIView+XXExtension.h \
+  /Users/mac/Documents/teacher/teacher/Others/MacroDefine.h \
+  /Users/mac/Documents/teacher/teacher/XXEHelper/UIFont+XXExtension.h \
+  /Users/mac/Documents/teacher/teacher/XXEHelper/UITextField+XXExtension.h \
+  /Users/mac/Documents/teacher/teacher/XXEHelper/UIButton+XXExtension.h \
+  /Users/mac/Documents/teacher/teacher/ThirdLibrary/KTActionSheet/KTActionSheet.h \
+  /Users/mac/Documents/teacher/teacher/XXEHelper/UILabel+XXExtension.h \
+  /Users/mac/Documents/teacher/teacher/ThirdLibrary/WJCommboxView/WJCommboxView.h \
+  /Users/mac/Documents/teacher/teacher/Others/XXEHeaderApi.h \
+  /Users/mac/Documents/teacher/teacher/LoginAndRegister/LoginAndRegisterApi/LoginRegisterApi.h \
+  /Users/mac/Documents/teacher/teacher/XXETools/XXETool.h \
+  /Users/mac/Documents/teacher/teacher/LoginAndRegister/Model/XXEUserInfo.h \
+  /Users/mac/Documents/teacher/teacher/HomePage/Controller/XXEHomePageHeader.h \
+  /Users/mac/Documents/teacher/teacher/FriendCirclePage/FriendCircleHeader.h \
+  /Users/mac/Documents/teacher/teacher/MySelfPage/XXEMyselfPageHeader.h \
+  /Users/mac/Documents/teacher/teacher/XXETools/StringHeight.h \
+  /Users/mac/Documents/teacher/teacher/FriendCirclePage/Model/XXECommentModel.h \
+  /Users/mac/Documents/teacher/teacher/HomePage/Controller/aaaaaaa/WZYHttpTool.h \
+  /Users/mac/Documents/teacher/teacher/HomePage/XXEStore/Controller/XXEStoreBuyFlowerbasketViewController.h \
+  /Users/mac/Documents/teacher/teacher/BasePage/Controller/XXEBaseViewController.h \
+  /Users/mac/Documents/teacher/teacher/HomePage/XXEStore/Controller/XXEStoreSentFlowerbasketToOtherViewController.h \
+  /Users/mac/Documents/teacher/teacher/ThirdLibrary/UMengSocialCOM/umeng_ios_social_sdk_5.2.1_arm64_custom/UMSocial_Sdk_5.2.1/Header/UMSocial.h \
+  /Users/mac/Documents/teacher/teacher/ThirdLibrary/UMengSocialCOM/umeng_ios_social_sdk_5.2.1_arm64_custom/UMSocial_Sdk_5.2.1/Header/UMSocialData.h \
+  /Users/mac/Documents/teacher/teacher/ThirdLibrary/UMengSocialCOM/umeng_ios_social_sdk_5.2.1_arm64_custom/UMSocial_Sdk_5.2.1/Header/UMSocialSnsData.h \
+  /Users/mac/Documents/teacher/teacher/ThirdLibrary/UMengSocialCOM/umeng_ios_social_sdk_5.2.1_arm64_custom/UMSocial_Sdk_5.2.1/Header/UMSocialDataService.h \
+  /Users/mac/Documents/teacher/teacher/ThirdLibrary/UMengSocialCOM/umeng_ios_social_sdk_5.2.1_arm64_custom/UMSocial_Sdk_5.2.1/Header/UMSocialControllerService.h \
+  /Users/mac/Documents/teacher/teacher/ThirdLibrary/UMengSocialCOM/umeng_ios_social_sdk_5.2.1_arm64_custom/UMSocial_Sdk_5.2.1/Header/UMSocialControllerServiceComment.h \
+  /Users/mac/Documents/teacher/teacher/ThirdLibrary/UMengSocialCOM/umeng_ios_social_sdk_5.2.1_arm64_custom/UMSocial_Sdk_5.2.1/Header/UMSocialAccountManager.h \
+  /Users/mac/Documents/teacher/teacher/ThirdLibrary/UMengSocialCOM/umeng_ios_social_sdk_5.2.1_arm64_custom/UMSocial_Sdk_5.2.1/Header/UMSocialSnsPlatformManager.h \
+  /Users/mac/Documents/teacher/teacher/ThirdLibrary/UMengSocialCOM/umeng_ios_social_sdk_5.2.1_arm64_custom/UMSocial_Sdk_5.2.1/Header/UMSocialSnsService.h \
+  /Users/mac/Documents/teacher/teacher/ThirdLibrary/UMengSocialCOM/umeng_ios_social_sdk_5.2.1_arm64_custom/UMSocial_Sdk_5.2.1/Header/UMSocialBar.h \
+  /Users/mac/Documents/teacher/teacher/ThirdLibrary/UMengSocialCOM/umeng_ios_social_sdk_5.2.1_arm64_custom/UMSocial_Sdk_5.2.1/Header/UMSocialConfig.h

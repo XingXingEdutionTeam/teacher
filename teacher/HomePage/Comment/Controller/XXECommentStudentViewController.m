@@ -321,8 +321,14 @@ AFHTTPRequestOperationManager *mgr =[AFHTTPRequestOperationManager manager];
 
 - (void)textViewDidChange:(UITextView *)textView{
     if (textView == _contentTextField) {
-        self.contentNumLabel.text=[NSString stringWithFormat:@"%lu/200",(unsigned long)textView.text.length];
-        conStr = textView.text;
+//        self.contentNumLabel.text=[NSString stringWithFormat:@"%lu/200",(unsigned long)textView.text.length];
+        if (_contentTextField.text.length <= 200) {
+            _contentNumLabel.text=[NSString stringWithFormat:@"%lu/200",(unsigned long)textView.text.length];
+        }else{
+            [self showHudWithString:@"最多可输入200个字符"];
+            _contentTextField.text = [_contentTextField.text substringToIndex:200];
+        }
+        conStr = _contentTextField.text;
     }
     
     

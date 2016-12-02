@@ -13,7 +13,7 @@
 #import "XXERecipePicModify.h"
 #import "XXERecipeViewController.h"
 
-@interface XXERecipeModifyViewController ()
+@interface XXERecipeModifyViewController ()<UITextViewDelegate>
 {
     //图标
     NSString *iconStr;
@@ -50,6 +50,7 @@
     }
    mealNameStr = @"";
     url_groupStr = @"";
+    _contentTextView.delegate = self;
     [self createContent];
 }
 
@@ -92,6 +93,19 @@
     pickerView.controller = self;
     
     [self.upPicImageView addSubview:pickerView];
+}
+
+
+- (void)textViewDidChange:(UITextView *)textView{
+    if (textView == _contentTextView) {
+        
+        if (_contentTextView.text.length <= 50) {
+            _numLabel.text=[NSString stringWithFormat:@"%lu/50",(unsigned long)textView.text.length];
+        }else{
+            [self showHudWithString:@"最多可输入50个字符"];
+            _contentTextView.text = [_contentTextView.text substringToIndex:50];
+        }
+    }
 }
 
 

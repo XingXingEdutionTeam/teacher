@@ -1,0 +1,30 @@
+dependencies: \
+  /Users/mac/Documents/teacher/teacher/MySelfPage/Controller/XXEMySelfInfoAlbumViewController.m \
+  /Users/mac/Documents/teacher/teacher/Others/PrefixHeader.pch \
+  /Users/mac/Documents/teacher/teacher/XXEHelper/UIView+XXExtension.h \
+  /Users/mac/Documents/teacher/teacher/Others/MacroDefine.h \
+  /Users/mac/Documents/teacher/teacher/XXEHelper/UIFont+XXExtension.h \
+  /Users/mac/Documents/teacher/teacher/XXEHelper/UITextField+XXExtension.h \
+  /Users/mac/Documents/teacher/teacher/XXEHelper/UIButton+XXExtension.h \
+  /Users/mac/Documents/teacher/teacher/ThirdLibrary/KTActionSheet/KTActionSheet.h \
+  /Users/mac/Documents/teacher/teacher/XXEHelper/UILabel+XXExtension.h \
+  /Users/mac/Documents/teacher/teacher/ThirdLibrary/WJCommboxView/WJCommboxView.h \
+  /Users/mac/Documents/teacher/teacher/Others/XXEHeaderApi.h \
+  /Users/mac/Documents/teacher/teacher/LoginAndRegister/LoginAndRegisterApi/LoginRegisterApi.h \
+  /Users/mac/Documents/teacher/teacher/XXETools/XXETool.h \
+  /Users/mac/Documents/teacher/teacher/LoginAndRegister/Model/XXEUserInfo.h \
+  /Users/mac/Documents/teacher/teacher/HomePage/Controller/XXEHomePageHeader.h \
+  /Users/mac/Documents/teacher/teacher/FriendCirclePage/FriendCircleHeader.h \
+  /Users/mac/Documents/teacher/teacher/MySelfPage/XXEMyselfPageHeader.h \
+  /Users/mac/Documents/teacher/teacher/XXETools/StringHeight.h \
+  /Users/mac/Documents/teacher/teacher/FriendCirclePage/Model/XXECommentModel.h \
+  /Users/mac/Documents/teacher/teacher/HomePage/Controller/aaaaaaa/WZYHttpTool.h \
+  /Users/mac/Documents/teacher/teacher/MySelfPage/Controller/XXEMySelfInfoAlbumViewController.h \
+  /Users/mac/Documents/teacher/teacher/BasePage/Controller/XXEBaseViewController.h \
+  /Users/mac/Documents/teacher/teacher/HomePage/XXEHomeLogo/View/XXESchoolAlbumCollectionViewCell.h \
+  /Users/mac/Documents/teacher/teacher/HomePage/XXEHomeLogo/Model/XXESchoolAlbumModel.h \
+  /Users/mac/Documents/teacher/teacher/HomePage/XXEHomeLogo/Controller/XXESchoolUpPicViewController.h \
+  /Users/mac/Documents/teacher/teacher/MySelfPage/Model/XXEMySelfInfoAlbumModel.h \
+  /Users/mac/Documents/teacher/teacher/HomePage/XXEImageBrowsing/Controlller/XXEImageBrowsingViewController.h \
+  /Users/mac/Documents/teacher/teacher/MySelfPage/Api/XXEMyselfInfoAlbumDeletePicApi.h \
+  /Users/mac/Documents/teacher/teacher/MySelfPage/Api/XXEMyselfInfoAlbumPicApi.h
