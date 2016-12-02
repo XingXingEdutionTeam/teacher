@@ -696,6 +696,10 @@
 		9E2F7F971D73D44800DD9CD1 /* libstdc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E2F7F961D73D44800DD9CD1 /* libstdc++.tbd */; };
 		9E2F7F991D73D45200DD9CD1 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E2F7F981D73D45200DD9CD1 /* libz.tbd */; };
 		9E2F7F9B1D74272000DD9CD1 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E2F7F9A1D74272000DD9CD1 /* CoreLocation.framework */; };
+		9E30D49B1DF115AA00DF3F3E /* CoreDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E30D49A1DF115AA00DF3F3E /* CoreDataManager.m */; };
+		9E30D4C31DF15C6300DF3F3E /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E30D4C21DF15C6300DF3F3E /* CoreData.framework */; };
+		9E30D4C81DF15F5900DF3F3E /* SystemMsg.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9E30D4C61DF15F5900DF3F3E /* SystemMsg.xcdatamodeld */; };
+		9E30D4D21DF1600B00DF3F3E /* SystemModel+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E30D4D01DF1600B00DF3F3E /* SystemModel+CoreDataProperties.m */; };
 		9E3AAFE61DEC502B00E04C6C /* XXEStoreGoodClassApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E3AAF8E1DEC502B00E04C6C /* XXEStoreGoodClassApi.m */; };
 		9E3AAFE71DEC502B00E04C6C /* XXEStoreStoreApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E3AAF901DEC502B00E04C6C /* XXEStoreStoreApi.m */; };
 		9E3AAFE81DEC502B00E04C6C /* XXESotreGoodsCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E3AAF931DEC502B00E04C6C /* XXESotreGoodsCollectionViewController.m */; };
@@ -2231,6 +2235,14 @@
 		9E2F7F961D73D44800DD9CD1 /* libstdc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libstdc++.tbd"; path = "usr/lib/libstdc++.tbd"; sourceTree = SDKROOT; };
 		9E2F7F981D73D45200DD9CD1 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		9E2F7F9A1D74272000DD9CD1 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		9E30D4991DF115AA00DF3F3E /* CoreDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreDataManager.h; sourceTree = "<group>"; };
+		9E30D49A1DF115AA00DF3F3E /* CoreDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoreDataManager.m; sourceTree = "<group>"; };
+		9E30D4C21DF15C6300DF3F3E /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		9E30D4C71DF15F5900DF3F3E /* SystemMsg.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = SystemMsg.xcdatamodel; sourceTree = "<group>"; };
+		9E30D4CD1DF1600B00DF3F3E /* SystemModel+CoreDataClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SystemModel+CoreDataClass.h"; sourceTree = "<group>"; };
+		9E30D4CE1DF1600B00DF3F3E /* SystemModel+CoreDataClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SystemModel+CoreDataClass.m"; sourceTree = "<group>"; };
+		9E30D4CF1DF1600B00DF3F3E /* SystemModel+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SystemModel+CoreDataProperties.h"; sourceTree = "<group>"; };
+		9E30D4D01DF1600B00DF3F3E /* SystemModel+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SystemModel+CoreDataProperties.m"; sourceTree = "<group>"; };
 		9E3AAF8D1DEC502B00E04C6C /* XXEStoreGoodClassApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXEStoreGoodClassApi.h; sourceTree = "<group>"; };
 		9E3AAF8E1DEC502B00E04C6C /* XXEStoreGoodClassApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXEStoreGoodClassApi.m; sourceTree = "<group>"; };
 		9E3AAF8F1DEC502B00E04C6C /* XXEStoreStoreApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXEStoreStoreApi.h; sourceTree = "<group>"; };
@@ -2755,6 +2767,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9E30D4C31DF15C6300DF3F3E /* CoreData.framework in Frameworks */,
 				9E65A7441DF0017B002BAE0A /* libresolv.tbd in Frameworks */,
 				9E65A7421DF0015F002BAE0A /* UserNotifications.framework in Frameworks */,
 				9E2F7F911D73D42300DD9CD1 /* CoreGraphics.framework in Frameworks */,
@@ -5051,6 +5064,28 @@
 			path = UMSocial_Sdk_Instructions;
 			sourceTree = "<group>";
 		};
+		9E30D4851DF10CCC00DF3F3E /* CoreDataManager */ = {
+			isa = PBXGroup;
+			children = (
+				9E30D4B81DF1572000DF3F3E /* SyetemModel */,
+				9E30D4991DF115AA00DF3F3E /* CoreDataManager.h */,
+				9E30D49A1DF115AA00DF3F3E /* CoreDataManager.m */,
+			);
+			path = CoreDataManager;
+			sourceTree = "<group>";
+		};
+		9E30D4B81DF1572000DF3F3E /* SyetemModel */ = {
+			isa = PBXGroup;
+			children = (
+				9E30D4CD1DF1600B00DF3F3E /* SystemModel+CoreDataClass.h */,
+				9E30D4CE1DF1600B00DF3F3E /* SystemModel+CoreDataClass.m */,
+				9E30D4CF1DF1600B00DF3F3E /* SystemModel+CoreDataProperties.h */,
+				9E30D4D01DF1600B00DF3F3E /* SystemModel+CoreDataProperties.m */,
+				9E30D4C61DF15F5900DF3F3E /* SystemMsg.xcdatamodeld */,
+			);
+			path = SyetemModel;
+			sourceTree = "<group>";
+		};
 		9E3AAF8B1DEC502B00E04C6C /* XXEStore */ = {
 			isa = PBXGroup;
 			children = (
@@ -5226,6 +5261,7 @@
 		9E4813811D504D0900C614AC /* teacher */ = {
 			isa = PBXGroup;
 			children = (
+				9E30D4851DF10CCC00DF3F3E /* CoreDataManager */,
 				046690AD1DC8464D0043F066 /* teacher.entitlements */,
 				9E4813851D504D0900C614AC /* AppDelegate.h */,
 				9E4813861D504D0900C614AC /* AppDelegate.m */,
@@ -6265,6 +6301,7 @@
 		C5E587A04C107257AA453603 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				9E30D4C21DF15C6300DF3F3E /* CoreData.framework */,
 				9E65A7431DF0017B002BAE0A /* libresolv.tbd */,
 				9E65A7411DF0015F002BAE0A /* UserNotifications.framework */,
 				9E65A73F1DF00101002BAE0A /* CoreFoundation.framework */,
@@ -6840,6 +6877,7 @@
 				9E3AAFF11DEC502B00E04C6C /* XXEStorePayViewController.m in Sources */,
 				0445A3E41D65E8CA00C3A4CA /* FSPhotoAssetsModel.m in Sources */,
 				044DEBFC1D9027D200DE101A /* XXEStudentManagerViewController1.m in Sources */,
+				9E30D4C81DF15F5900DF3F3E /* SystemMsg.xcdatamodeld in Sources */,
 				0485FD141D825A740077E10B /* XXEMyselfInfoCollectionCourseApi.m in Sources */,
 				9E5E23B21D90CC04008B1AAF /* DFLineCellManager.m in Sources */,
 				9EEA0E2E1D6E83550070C8C3 /* TAAnimatedDotView.m in Sources */,
@@ -7141,6 +7179,7 @@
 				043C80A41D867B52004F1B85 /* XXEWhoCanSeeMyNameResultTableViewCell.m in Sources */,
 				044DEC081D910A7400DE101A /* XXEFamilyManagerViewController1.m in Sources */,
 				043301291D62BDD000722DE2 /* XXEManagerAndHeadmasterViewController.m in Sources */,
+				9E30D4D21DF1600B00DF3F3E /* SystemModel+CoreDataProperties.m in Sources */,
 				048754911D5C0BF200F680C5 /* XXEAccountManagerApi.m in Sources */,
 				048754951D5C0BF200F680C5 /* XXEFlowerbasketWithdrawCashApi.m in Sources */,
 				9EB2E9421D58934C004809D3 /* UITextField+XXExtension.m in Sources */,
@@ -7156,6 +7195,7 @@
 				04547B281DAB35840059F3F1 /* XXERongCloudFriendRequestListModel.m in Sources */,
 				04947CBC1DC0CE3A008A351F /* BCRefundStatusResp.m in Sources */,
 				047AC9391DC732EA001891DE /* XXESchoolTimetableTraditionApi.m in Sources */,
+				9E30D49B1DF115AA00DF3F3E /* CoreDataManager.m in Sources */,
 				9EFDC80A1D54848A005556AF /* UIFont+XXExtension.m in Sources */,
 				9E8E094C1DE31AAA00B0A942 /* XXEVerifySMSApi.m in Sources */,
 				04947CB01DC0CE3A008A351F /* BCQueryBillByIdResp.m in Sources */,
@@ -7779,6 +7819,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		9E30D4C61DF15F5900DF3F3E /* SystemMsg.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				9E30D4C71DF15F5900DF3F3E /* SystemMsg.xcdatamodel */,
+			);
+			currentVersion = 9E30D4C71DF15F5900DF3F3E /* SystemMsg.xcdatamodel */;
+			path = SystemMsg.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 9E4813771D504D0900C614AC /* Project object */;
 }
