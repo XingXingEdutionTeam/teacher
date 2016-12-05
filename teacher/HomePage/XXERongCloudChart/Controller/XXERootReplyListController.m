@@ -15,6 +15,8 @@
 #import "XXERongCloudJudgePositionApi.h"
 #import "XXERongCloudAddFriendRequestApi.h"
 #import "SVProgressHUD.h"
+#import "XXERongCloudAddFriendsListViewController.h"
+#import "KxMenu.h"
 
 @interface XXERootReplyListController ()<RCIMReceiveMessageDelegate,RCIMConnectionStatusDelegate,UIAlertViewDelegate,UITableViewDataSource,UITableViewDelegate>
 {
@@ -76,7 +78,7 @@
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     
-    
+    self.navigationController.navigationBarHidden = NO;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(deleteFriend:) name:@"delete" object:nil];
     
     [[XXERCDataManager shareManager] refreshBadgeValue];
@@ -190,8 +192,45 @@
     self.navigationController.title=@"会话列表";
     self.edgesForExtendedLayout = UIRectEdgeNone;
     self.conversationListTableView.tableFooterView = [UIView new];
-
+    
+    [self  setNavigation];
 }
+
+- (void)setNavigation {
+    UIButton*rightButton = [[UIButton alloc]initWithFrame:CGRectMake(0,0,22,22)];
+    [rightButton setImage:[UIImage imageNamed:@"rcim3.png"]forState:UIControlStateNormal];
+    [rightButton addTarget:self action:@selector(showMenu:)forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem*rightItem = [[UIBarButtonItem alloc]initWithCustomView:rightButton];
+    self.tabBarController.navigationItem.rightBarButtonItem= rightItem;
+    
+    self.tabBarController.navigationItem.title=@"聊天";
+}
+
+#pragma mark - 导航栏的按钮点击
+- (void)showMenu:(UIButton *)sender
+{
+    NSArray *menuItems = @[[KxMenuItem menuItem:@"添加好友" image:[UIImage imageNamed:@"tianjiahaoyou"] target:self action:@selector(pushAddFriend:)]];//[KxMenuItem menuItem:@"发起群聊" image:[UIImage imageNamed:@"faqiqunliao"] target:self action:@selector(pushGroupChat:)],
+    CGRect targetFrame = self.tabBarController.navigationItem.rightBarButtonItem.customView.frame;
+    targetFrame.origin.y = targetFrame.origin.y +15;
+    [KxMenu showMenuInView:self.tabBarController.navigationController.navigationBar.superview fromRect:targetFrame menuItems:menuItems];
+}
+
+
+//#pragma mark - 发起群聊---添加好友
+//- (void)pushGroupChat:(UIButton *)sender
+//{
+//    NSLog(@"发起群聊");
+//
+//}
+
+- (void)pushAddFriend:(UIButton *)sender
+{
+    //    NSLog(@"添加好友");
+    XXERongCloudAddFriendsListViewController *rongCloudAddFriendsListVC = [[XXERongCloudAddFriendsListViewController alloc] init];
+    
+    [self.navigationController pushViewController:rongCloudAddFriendsListVC animated:YES];
+}
+
 #pragma mark
 #pragma mark 禁止右滑删除
 -(BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath{

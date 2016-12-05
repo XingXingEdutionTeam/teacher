@@ -54,6 +54,7 @@
 
 #import "XXENewCourseView.h"
 
+#import "AppDelegate.h"
 
 @interface XXEHomePageViewController ()<XXEHomePageHeaderViewDelegate,XXEHomePageMiddleViewDelegate,XXEHomePageBottomViewDelegate>
 {
@@ -166,6 +167,12 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(remoteNotification:) name:kRemoteNotification object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(systemMessage:) name:kSystemMessage object:nil];
+    
     self.view.backgroundColor = XXEBackgroundColor;
     self.navigationController.navigationBarHidden = YES;
     //新手 教程
@@ -173,8 +180,25 @@
     
     //获取数据
     [self setupHomePageRequeue];
-    
+
 }
+
+- (void)remoteNotification:(NSNotification *)notification {
+//    NSString *type = notification.userInfo[@"type"];
+//    if ([type isEqualToString:@"1"] || [type isEqualToString:@"2"] ||[type isEqualToString:@"4"] ) {
+//    }else if ([type isEqualToString:@"3"]) {
+//        
+//    }
+    [self pushToXXENotificationViewController];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kRemoteNotification object:nil];
+}
+
+- (void)systemMessage:(NSNotification *)notification {
+    self.middleView.systemNotificationBadgeView.hidden = NO;
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kSystemMessage object:nil];
+}
+
 /** 这两个方法都可以,改变当前控制器的电池条颜色 */
 -(UIStatusBarStyle)preferredStatusBarStyle
 {
@@ -527,14 +551,17 @@
 }
 
 - (void)homeMiddleFourButtonClick{
+    [self pushToXXENotificationViewController];
+}
+
+- (void)pushToXXENotificationViewController {
     NSLog(@"-----  通知 ---- ");
     XXENotificationViewController *notificationVC = [[XXENotificationViewController alloc] init];
     notificationVC.schoolId = self.schoolHomeId;
     notificationVC.classId = self.classHomeId;
-    
+    self.middleView.systemNotificationBadgeView.hidden = YES;
     [self.navigationController pushViewController:notificationVC animated:YES];
 }
-
 
 #pragma mark - 获取数据
 - (void)setupHomePageRequeue
@@ -549,6 +576,9 @@
         homeUserId = USER_ID;
     }
 //    NSLog(@"%@%@",strngXid,homeUserId);
+    
+    //远程推送跳转
+    AppDelegate *appdelegate = (AppDelegate*)[UIApplication sharedApplication].delegate;
     
     NSLog(@"%@%@",strngXid,homeUserId);
     XXEHomePageApi *homePageApi = [[XXEHomePageApi alloc]initWithHomePageXid:strngXid UserType:@"2" UserId:homeUserId];
@@ -593,6 +623,8 @@
                 [self.schoolModelDatasource addObject:self.classDatasource];
                 [self homePageBottomViewText:self.arrayClass[0]];
                 NSLog(@"班级的数组%@",self.classDatasource);
+                
+                
             }
         } else {
             [self showHudWithString:@"数据请求失败" forSecond:1.f];
@@ -600,6 +632,13 @@
                 //创建下拉选择框
         [self setUpDropDownSelection];
         [self hideHud];
+        
+        
+        if (appdelegate.userInfo) {
+            [self pushToXXENotificationViewController];
+        }
+        appdelegate.userInfo = nil;
+        
     } failure:^(__kindof YTKBaseRequest *request) {
         [self showHudWithString:@"数据请求失败" forSecond:1.f];
     }];

@@ -39,6 +39,8 @@
 /** 第四个通知按钮 */
 @property (nonatomic, strong)UIButton *homeMiddleFourButton;
 
+@property (nonatomic, strong)UIView *systemNotificationBadgeView;
+
 /** 给屏幕中间数据赋值 */
 - (void)configCellMiddleWithInfo:(XXEHomePageModel *)homeModel;
 

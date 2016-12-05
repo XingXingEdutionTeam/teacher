@@ -11,9 +11,6 @@
 #import <RongIMKit/RongIMKit.h>
 #import "XXRootChatETabBarController.h"
 #import "XXERCDataManager.h"
-#import "SystemModel+CoreDataClass.h"
-#import "SystemModel+CoreDataProperties.h"
-
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
@@ -23,13 +20,8 @@
 
 @property(nonatomic,retain) NSMutableArray *friendsArray;
 @property(nonatomic,retain) NSMutableArray *groupsArray;
-
-@property (readonly, strong, nonatomic) NSManagedObjectContext *managedObjectContext;
-@property (readonly, strong, nonatomic) NSManagedObjectModel *managedObjectModel;
-@property (readonly, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
-
-- (void)saveContext;
-- (NSURL *)applicationDocumentsDirectory;
+@property (nonatomic,assign) BOOL isLaunchedByNotification;
+@property (nonatomic, copy) NSDictionary *userInfo;
 
 /// func
 + (AppDelegate* )shareAppDelegate;

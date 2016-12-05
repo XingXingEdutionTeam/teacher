@@ -298,21 +298,19 @@ static NSString *const RootFriendList = @"RootFriendList";
 #pragma mark - 导航栏的按钮点击
 - (void)showMenu:(UIButton *)sender
 {
-    NSArray *menuItems = @[[KxMenuItem menuItem:@"发起群聊" image:[UIImage imageNamed:@"faqiqunliao"] target:self action:@selector(pushGroupChat:)],
-                           [KxMenuItem menuItem:@"添加好友" image:[UIImage imageNamed:@"tianjiahaoyou"] target:self action:@selector(pushAddFriend:)],
-                           ];
+    NSArray *menuItems = @[[KxMenuItem menuItem:@"添加好友" image:[UIImage imageNamed:@"tianjiahaoyou"] target:self action:@selector(pushAddFriend:)]];//[KxMenuItem menuItem:@"发起群聊" image:[UIImage imageNamed:@"faqiqunliao"] target:self action:@selector(pushGroupChat:)],
     CGRect targetFrame = self.tabBarController.navigationItem.rightBarButtonItem.customView.frame;
     targetFrame.origin.y = targetFrame.origin.y +15;
     [KxMenu showMenuInView:self.tabBarController.navigationController.navigationBar.superview fromRect:targetFrame menuItems:menuItems];
 }
 
 
-#pragma mark - 发起群聊---添加好友
-- (void)pushGroupChat:(UIButton *)sender
-{
-    NSLog(@"发起群聊");
-    
-}
+//#pragma mark - 发起群聊---添加好友
+//- (void)pushGroupChat:(UIButton *)sender
+//{
+//    NSLog(@"发起群聊");
+//    
+//}
 
 - (void)pushAddFriend:(UIButton *)sender
 {

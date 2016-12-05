@@ -691,9 +691,10 @@
 		9E2F7F971D73D44800DD9CD1 /* libstdc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E2F7F961D73D44800DD9CD1 /* libstdc++.tbd */; };
 		9E2F7F991D73D45200DD9CD1 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E2F7F981D73D45200DD9CD1 /* libz.tbd */; };
 		9E2F7F9B1D74272000DD9CD1 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E2F7F9A1D74272000DD9CD1 /* CoreLocation.framework */; };
-		9E30D49B1DF115AA00DF3F3E /* CoreDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E30D49A1DF115AA00DF3F3E /* CoreDataManager.m */; };
 		9E30D4C31DF15C6300DF3F3E /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E30D4C21DF15C6300DF3F3E /* CoreData.framework */; };
-		9E30D4C81DF15F5900DF3F3E /* SystemMsg.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9E30D4C61DF15F5900DF3F3E /* SystemMsg.xcdatamodeld */; };
+		9E30D4D91DF4FBE200DF3F3E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E30D4D81DF4FBE200DF3F3E /* AppDelegate.m */; };
+		9E30D4DD1DF4FE5600DF3F3E /* FMDBManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E30D4DC1DF4FE5600DF3F3E /* FMDBManager.m */; };
+		9E30D4E01DF4FF3200DF3F3E /* SysMsgModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E30D4DF1DF4FF3200DF3F3E /* SysMsgModel.m */; };
 		9E3AAFE61DEC502B00E04C6C /* XXEStoreGoodClassApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E3AAF8E1DEC502B00E04C6C /* XXEStoreGoodClassApi.m */; };
 		9E3AAFE71DEC502B00E04C6C /* XXEStoreStoreApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E3AAF901DEC502B00E04C6C /* XXEStoreStoreApi.m */; };
 		9E3AAFE81DEC502B00E04C6C /* XXESotreGoodsCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E3AAF931DEC502B00E04C6C /* XXESotreGoodsCollectionViewController.m */; };
@@ -741,7 +742,6 @@
 		9E3AB0121DEC502B00E04C6C /* XXEStoreSentFlowerbasketToOtherHistoryTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9E3AAFE31DEC502B00E04C6C /* XXEStoreSentFlowerbasketToOtherHistoryTableViewCell.xib */; };
 		9E3AB0131DEC502B00E04C6C /* ZQCountDownView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E3AAFE51DEC502B00E04C6C /* ZQCountDownView.m */; };
 		9E4813841D504D0900C614AC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E4813831D504D0900C614AC /* main.m */; };
-		9E4813871D504D0900C614AC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E4813861D504D0900C614AC /* AppDelegate.m */; };
 		9E48138D1D504D0900C614AC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9E48138B1D504D0900C614AC /* Main.storyboard */; };
 		9E48138F1D504D0900C614AC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9E48138E1D504D0900C614AC /* Assets.xcassets */; };
 		9E4813921D504D0900C614AC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9E4813901D504D0900C614AC /* LaunchScreen.storyboard */; };
@@ -2224,10 +2224,13 @@
 		9E2F7F961D73D44800DD9CD1 /* libstdc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libstdc++.tbd"; path = "usr/lib/libstdc++.tbd"; sourceTree = SDKROOT; };
 		9E2F7F981D73D45200DD9CD1 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		9E2F7F9A1D74272000DD9CD1 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
-		9E30D4991DF115AA00DF3F3E /* CoreDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreDataManager.h; sourceTree = "<group>"; };
-		9E30D49A1DF115AA00DF3F3E /* CoreDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoreDataManager.m; sourceTree = "<group>"; };
 		9E30D4C21DF15C6300DF3F3E /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
-		9E30D4C71DF15F5900DF3F3E /* SystemMsg.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = SystemMsg.xcdatamodel; sourceTree = "<group>"; };
+		9E30D4D71DF4FBE200DF3F3E /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		9E30D4D81DF4FBE200DF3F3E /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		9E30D4DB1DF4FE5600DF3F3E /* FMDBManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDBManager.h; sourceTree = "<group>"; };
+		9E30D4DC1DF4FE5600DF3F3E /* FMDBManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDBManager.m; sourceTree = "<group>"; };
+		9E30D4DE1DF4FF3200DF3F3E /* SysMsgModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SysMsgModel.h; sourceTree = "<group>"; };
+		9E30D4DF1DF4FF3200DF3F3E /* SysMsgModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SysMsgModel.m; sourceTree = "<group>"; };
 		9E3AAF8D1DEC502B00E04C6C /* XXEStoreGoodClassApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXEStoreGoodClassApi.h; sourceTree = "<group>"; };
 		9E3AAF8E1DEC502B00E04C6C /* XXEStoreGoodClassApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXEStoreGoodClassApi.m; sourceTree = "<group>"; };
 		9E3AAF8F1DEC502B00E04C6C /* XXEStoreStoreApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXEStoreStoreApi.h; sourceTree = "<group>"; };
@@ -2316,8 +2319,6 @@
 		9E3AAFE51DEC502B00E04C6C /* ZQCountDownView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZQCountDownView.m; sourceTree = "<group>"; };
 		9E48137F1D504D0900C614AC /* teacher.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = teacher.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9E4813831D504D0900C614AC /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		9E4813851D504D0900C614AC /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		9E4813861D504D0900C614AC /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		9E48138C1D504D0900C614AC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		9E48138E1D504D0900C614AC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = ../Assets.xcassets; sourceTree = "<group>"; };
 		9E4813911D504D0900C614AC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -5044,22 +5045,24 @@
 			path = UMSocial_Sdk_Instructions;
 			sourceTree = "<group>";
 		};
-		9E30D4851DF10CCC00DF3F3E /* CoreDataManager */ = {
+		9E30D4D61DF4FBE200DF3F3E /* AppDelegate */ = {
 			isa = PBXGroup;
 			children = (
-				9E30D4B81DF1572000DF3F3E /* SyetemModel */,
-				9E30D4991DF115AA00DF3F3E /* CoreDataManager.h */,
-				9E30D49A1DF115AA00DF3F3E /* CoreDataManager.m */,
+				9E30D4D71DF4FBE200DF3F3E /* AppDelegate.h */,
+				9E30D4D81DF4FBE200DF3F3E /* AppDelegate.m */,
 			);
-			path = CoreDataManager;
+			path = AppDelegate;
 			sourceTree = "<group>";
 		};
-		9E30D4B81DF1572000DF3F3E /* SyetemModel */ = {
+		9E30D4DA1DF4FE2500DF3F3E /* FMDBManager */ = {
 			isa = PBXGroup;
 			children = (
-				9E30D4C61DF15F5900DF3F3E /* SystemMsg.xcdatamodeld */,
+				9E30D4DB1DF4FE5600DF3F3E /* FMDBManager.h */,
+				9E30D4DC1DF4FE5600DF3F3E /* FMDBManager.m */,
+				9E30D4DE1DF4FF3200DF3F3E /* SysMsgModel.h */,
+				9E30D4DF1DF4FF3200DF3F3E /* SysMsgModel.m */,
 			);
-			path = SyetemModel;
+			path = FMDBManager;
 			sourceTree = "<group>";
 		};
 		9E3AAF8B1DEC502B00E04C6C /* XXEStore */ = {
@@ -5237,10 +5240,9 @@
 		9E4813811D504D0900C614AC /* teacher */ = {
 			isa = PBXGroup;
 			children = (
-				9E30D4851DF10CCC00DF3F3E /* CoreDataManager */,
+				9E30D4DA1DF4FE2500DF3F3E /* FMDBManager */,
+				9E30D4D61DF4FBE200DF3F3E /* AppDelegate */,
 				046690AD1DC8464D0043F066 /* teacher.entitlements */,
-				9E4813851D504D0900C614AC /* AppDelegate.h */,
-				9E4813861D504D0900C614AC /* AppDelegate.m */,
 				9E8E08AF1DE31AAA00B0A942 /* LoginAndRegister */,
 				9E4813B51D50695200C614AC /* BasePage */,
 				9E4813BE1D50695200C614AC /* HomePage */,
@@ -6848,7 +6850,6 @@
 				9E3AAFF11DEC502B00E04C6C /* XXEStorePayViewController.m in Sources */,
 				0445A3E41D65E8CA00C3A4CA /* FSPhotoAssetsModel.m in Sources */,
 				044DEBFC1D9027D200DE101A /* XXEStudentManagerViewController1.m in Sources */,
-				9E30D4C81DF15F5900DF3F3E /* SystemMsg.xcdatamodeld in Sources */,
 				0485FD141D825A740077E10B /* XXEMyselfInfoCollectionCourseApi.m in Sources */,
 				9E5E23B21D90CC04008B1AAF /* DFLineCellManager.m in Sources */,
 				9EEA0E2E1D6E83550070C8C3 /* TAAnimatedDotView.m in Sources */,
@@ -6903,6 +6904,7 @@
 				047AC93C1DC7339E001891DE /* XXESchoolTimetableTimeApi.m in Sources */,
 				046E13021DBDA86D00FCBE49 /* XXEXingClassRoomCourseDetailInfoViewController.m in Sources */,
 				9E3AAFF41DEC502B00E04C6C /* XXEStoreRootViewController.m in Sources */,
+				9E30D4D91DF4FBE200DF3F3E /* AppDelegate.m in Sources */,
 				04DE86201D9386270062BF18 /* XXECourseManagerClassModel1.m in Sources */,
 				9E8E097B1DE5C3B400B0A942 /* XXECourseOrderDetailViewController.m in Sources */,
 				9EB63A751DD5B17D003C4DEC /* StringHeight.m in Sources */,
@@ -6933,6 +6935,7 @@
 				04530C6F1D891ED000620105 /* XXEReleaseDetailInfoViewController.m in Sources */,
 				04BA0CFE1D9CB62900B4AAD9 /* XXEClassManagerSettingClassTimeViewController.m in Sources */,
 				044DEBDF1D8FD31000DE101A /* XXEClassManagerViewController.m in Sources */,
+				9E30D4E01DF4FF3200DF3F3E /* SysMsgModel.m in Sources */,
 				0472676A1DCAD1CC00E32DFC /* XXESchoolTimetableTimeLineApi.m in Sources */,
 				9E50F4061D5B13B400FA6594 /* XXEHomePageClassModel.m in Sources */,
 				9E5E23B51D90CC04008B1AAF /* DFLikeCommentToolbar.m in Sources */,
@@ -7156,7 +7159,6 @@
 				04BB3A161D74742B00AA5C5C /* XXESchoolPicApi.m in Sources */,
 				04F2168F1D7671BB005C2EBF /* NSObject+DataSecurity.m in Sources */,
 				043C80C51D86BFCC004F1B85 /* XXEXingCommunityBabyCommunityViewController.m in Sources */,
-				9E4813871D504D0900C614AC /* AppDelegate.m in Sources */,
 				044DEBB91D8F95F700DE101A /* XXEMyselfInfoGetSchoolProviceApi.m in Sources */,
 				9E4813DA1D50783000C614AC /* XXEHomePageViewController.m in Sources */,
 				9EB2E93F1D5889B9004809D3 /* UILabel+XXExtension.m in Sources */,
@@ -7165,7 +7167,6 @@
 				04547B281DAB35840059F3F1 /* XXERongCloudFriendRequestListModel.m in Sources */,
 				04947CBC1DC0CE3A008A351F /* BCRefundStatusResp.m in Sources */,
 				047AC9391DC732EA001891DE /* XXESchoolTimetableTraditionApi.m in Sources */,
-				9E30D49B1DF115AA00DF3F3E /* CoreDataManager.m in Sources */,
 				9EFDC80A1D54848A005556AF /* UIFont+XXExtension.m in Sources */,
 				9E8E094C1DE31AAA00B0A942 /* XXEVerifySMSApi.m in Sources */,
 				04947CB01DC0CE3A008A351F /* BCQueryBillByIdResp.m in Sources */,
@@ -7342,6 +7343,7 @@
 				9E8E093D1DE31AAA00B0A942 /* XXERegisterSecondViewController.m in Sources */,
 				044349CF1D79212B00DD8CCE /* XXEStudentSignInTableViewCell.m in Sources */,
 				04947CDC1DC1F198008A351F /* XXEModifyCodeApi.m in Sources */,
+				9E30D4DD1DF4FE5600DF3F3E /* FMDBManager.m in Sources */,
 				04F216C81D76ECFD005C2EBF /* XXESchoolCourseModel.m in Sources */,
 				044DEBC41D8FD19A00DE101A /* XXEManagerTeacherViewController.m in Sources */,
 				0485FD311D82C5050077E10B /* XXEBlackListApi.m in Sources */,
@@ -7789,19 +7791,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCVersionGroup section */
-		9E30D4C61DF15F5900DF3F3E /* SystemMsg.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				9E30D4C71DF15F5900DF3F3E /* SystemMsg.xcdatamodel */,
-			);
-			currentVersion = 9E30D4C71DF15F5900DF3F3E /* SystemMsg.xcdatamodel */;
-			path = SystemMsg.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-/* End XCVersionGroup section */
 	};
 	rootObject = 9E4813771D504D0900C614AC /* Project object */;
 }
