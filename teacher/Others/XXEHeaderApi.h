@@ -11,6 +11,10 @@
 
 #define JPushAppKey @"4246476d42da75a98d9e01f2"
 
+#define kRemoteNotification @"remoteNotification" //远程推送通知
+#define kSystemMessage @"systemMessage" //系统消息通知
+
+
 //访客登录XID不变
 #define XID  @"18886389"
 #define APPKEY  @"U3k8Dgj7e934bh5Y"

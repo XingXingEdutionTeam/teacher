@@ -118,7 +118,9 @@
 
 - (void)createAllPhoneNumDataSource{
     for (NSArray *phoneArray in _dataArray) {
-        
+        if (phoneArray == nil) {
+            return;
+        }
         for (JXPersonInfo *pInfo in phoneArray) {
             NSString *phoneStr = [pInfo.phone[0] allObjects][0];
             if (phoneStr.length == 11) {

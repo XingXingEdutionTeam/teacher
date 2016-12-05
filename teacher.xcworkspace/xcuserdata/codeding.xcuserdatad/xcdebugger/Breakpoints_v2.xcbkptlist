@@ -345,14 +345,14 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "teacher/CoreDataManager/CoreDataManager.m"
-            timestampString = "502363519.636022"
+            filePath = "teacher/CoreDataManager/SyetemModel/SystemModel+CoreDataProperties.h"
+            timestampString = "502545787.98577"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "35"
-            endingLineNumber = "35"
-            landmarkName = "-saveDataWithEntity:type:"
-            landmarkType = "7">
+            startingLineNumber = "21"
+            endingLineNumber = "21"
+            landmarkName = "notice_id"
+            landmarkType = "24">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

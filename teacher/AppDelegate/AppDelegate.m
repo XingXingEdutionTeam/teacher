@@ -35,18 +35,23 @@
 #endif
 
 #import <AudioToolbox/AudioToolbox.h>
-#import "CoreDataManager.h"
+
+#import "FMDBManager.h"
+
+#import <NotificationCenter/NotificationCenter.h>
+
 
 @interface AppDelegate ()<JPUSHRegisterDelegate>
 
 @end
 
 @implementation AppDelegate
-@synthesize managedObjectContext = __managedObjectContext;
-@synthesize managedObjectModel = __managedObjectModel;
-@synthesize persistentStoreCoordinator = __persistentStoreCoordinator;
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
+    
+    
+    [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
     //初始化应用,appKey appSecret 从后天获取
     [SMSSDK registerApp:FreeSMSAPPKey withSecret:FreeSMSAPPSecret];
     //初始化友盟分享 与登录
@@ -64,25 +69,6 @@
     //隐藏没有安装的APP图标
     [UMSocialConfig hiddenNotInstallPlatforms:@[UMShareToQQ,UMShareToQzone,UMShareToWechatTimeline,UMShareToWechatSession]];
     
-    
-//    self.window = [[UIWindow alloc]init];
-//    self.window.frame = [UIScreen mainScreen].bounds;
-//    //测试界面 --------------------------
-//    XXELoginViewController *loginVC = [[XXELoginViewController alloc]init];
-////    XXEStarImageViewController *startVC = [[XXEStarImageViewController alloc]init];
-//    XXENavigationViewController *navi = [[XXENavigationViewController alloc]initWithRootViewController:loginVC];
-//    
-//    self.window.rootViewController = navi;
-//    
-//    
-////    XXETabBarControllerConfig *tabBarControllerConfig = [[XXETabBarControllerConfig alloc]init];
-////    [self.window setRootViewController:tabBarControllerConfig.tabBarController];
-//    [self.window makeKeyAndVisible];
-    
-    //加入启动图
-//    [self setupControllers];
-    
-    
     //支付
     [BeeCloud initWithAppID:@"a2c64858-7c9c-4fd2-b2f8-2c58f853d47f" andAppSecret:@"fc8fe808-d180-48e7-99ba-54b42d3c725d"];
     [BeeCloud initWeChatPay:@"wxed731a36270b5a4f"];
@@ -96,10 +82,13 @@
     //初始化JPush
     [self initJPushWith:launchOptions];
     
-    //设置genshir
+    NSDictionary* remoteNotification = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
+    self.userInfo = remoteNotification;
+    //设置根视图控制器
     [self toMainAPP];
     
     [self loadStarView];
+    
     
 //    //获取deviceToken
 //    
@@ -269,9 +258,9 @@
  */
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
+    
     [UMSocialSnsService applicationDidBecomeActive];
 }
-
 
 - (void)applicationWillResignActive:(UIApplication *)application {
     
@@ -282,14 +271,21 @@
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
+    [[NSUserDefaults standardUserDefaults] setObject:@"NO" forKey:@"isActiveStatus"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
+    [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
+    
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
 }
 
+- (void)applicationWillTerminate:(UIApplication *)application {
+    
+}
 
 //- (void)applicationWillTerminate:(UIApplication *)application {
 //    // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
@@ -361,7 +357,7 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
     if([notification.request.trigger isKindOfClass:[UNPushNotificationTrigger class]]) {
         [JPUSHService handleRemoteNotification:userInfo];
         AudioServicesPlayAlertSound(1007);
-        [self saveToCoreDataWithData:userInfo];
+        [self saveFMDBWithUserInfo:userInfo];
     }
     completionHandler(UNNotificationPresentationOptionAlert); // 需要执行这个方法，选择是否提醒用户，有Badge、Sound、Alert三种类型可以选择设置
 }
@@ -372,8 +368,16 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
     NSDictionary * userInfo = response.notification.request.content.userInfo;
     if([response.notification.request.trigger isKindOfClass:[UNPushNotificationTrigger class]]) {
         [JPUSHService handleRemoteNotification:userInfo];
+        //判断是否从后台进入
+        if ([[[NSUserDefaults standardUserDefaults] valueForKey:@"isActiveStatus"] isEqualToString:@"NO"]) { //不是从后台进入
+            
+        }else {
+            [[NSUserDefaults standardUserDefaults] setObject:@"YES" forKey:@"isActiveStatus"];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+        }
+        
         AudioServicesPlayAlertSound(1007);
-        [self saveToCoreDataWithData:userInfo];
+        [self saveFMDBWithUserInfo:userInfo];
     }
     completionHandler();  // 系统要求执行这个方法
 }
@@ -383,10 +387,40 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
     // Required, iOS 7 Support
     [JPUSHService handleRemoteNotification:userInfo];
     completionHandler(UIBackgroundFetchResultNewData);
-    AudioServicesPlayAlertSound(1007);
-    [self saveToCoreDataWithData:userInfo];
     
-//    AudioServicesPlaySystemSound(1007);
+    if ([UIApplication sharedApplication].applicationState == UIApplicationStateActive) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:kSystemMessage object:nil userInfo:userInfo];
+        AudioServicesPlayAlertSound(1007);
+    }else if ([UIApplication sharedApplication].applicationState == UIApplicationStateBackground) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:kRemoteNotification object:nil userInfo:userInfo];
+    }else if ([UIApplication sharedApplication].applicationState == UIApplicationStateInactive) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:kRemoteNotification object:nil userInfo:userInfo];
+    }
+    
+    
+    
+    [self saveFMDBWithUserInfo:userInfo];
+    
+    
+    //订阅展示视图消息，将直接打开某个分支视图
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(presentView:) name:@"PresentView" object:nil];
+//    //弹出消息框提示用户有订阅通知消息。主要用于用户在使用应用时，弹出提示框
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showNotification:) name:@"Notification" object:nil];
+}
+
+- (void)saveFMDBWithUserInfo:(NSDictionary *)userInfo {
+    [JPUSHService setBadge:0];
+    [[FMDBManager shareDataBase] createSystemMsgListTable];
+    
+    SysMsgModel *model = [[SysMsgModel alloc] init];
+    model.alert = userInfo[@"aps"][@"alert"];
+    model.sound = userInfo[@"aps"][@"sound"];
+    model.badge = userInfo[@"aps"][@"badge"];
+    model.type = userInfo[@"type"];
+    model.notice_id = userInfo[@"notice_id"];
+    [[FMDBManager shareDataBase] insertWithSysmodel:model];
+    
+    NSLog(@"%@",[[FMDBManager shareDataBase] selectedSysmodel]);
 }
 
 //- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
@@ -395,101 +429,5 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
 //    [JPUSHService handleRemoteNotification:userInfo];
 //}
 
-//MARK: - coredata
-- (void)applicationWillTerminate:(UIApplication *)application
-{
-    [self saveContext];
-}
-
-
-- (void)saveContext
-{
-    NSError *error = nil;
-    NSManagedObjectContext *managedObjectContext = self.managedObjectContext;
-    if (managedObjectContext != nil) {
-        if ([managedObjectContext hasChanges] && ![managedObjectContext save:&error]) {
-            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-            abort();
-        }
-    }
-}
-
-//Documents目录路径
-- (NSURL *)applicationDocumentsDirectory
-{
-    return [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
-}
-
-//被管理的数据上下文
-//初始化的后，必须设置持久化存储助理
-- (NSManagedObjectContext *)managedObjectContext
-{
-    if (__managedObjectContext != nil) {
-        return __managedObjectContext;
-    }
-    NSPersistentStoreCoordinator *coordinator = [self persistentStoreCoordinator];
-    if (coordinator != nil) {
-        __managedObjectContext = [[NSManagedObjectContext alloc] init];
-        [__managedObjectContext setPersistentStoreCoordinator:coordinator];
-    }
-    return __managedObjectContext;
-}
-
-
-//被管理的数据模型
-//初始化必须依赖.momd文件路径，而.momd文件由.xcdatamodeld文件编译而来
-- (NSManagedObjectModel *)managedObjectModel
-{
-    if (__managedObjectModel != nil) {
-        return __managedObjectModel;
-    }
-    NSURL *modelURL = [[NSBundle mainBundle] URLForResource:@"SystemMsg" withExtension:@"momd"];
-    __managedObjectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
-    return __managedObjectModel;
-}
-
-//持久化存储助理
-- (NSPersistentStoreCoordinator *)persistentStoreCoordinator
-{
-    if (__persistentStoreCoordinator != nil) {
-        return __persistentStoreCoordinator;
-    }
-    NSURL *storeURL = [[self applicationDocumentsDirectory] URLByAppendingPathComponent:@"TestApp.sqlite"];
-    
-    NSError *error;
-    __persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[self managedObjectModel]];
-    
-    if (![__persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:nil error:&error]) {
-        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-        abort();
-    }
-    return __persistentStoreCoordinator;
-}
-
-//MARK: - 存入coreData
--(void)saveToCoreDataWithData:(NSDictionary*)sysMsg {
-//    SystemModel *model = [[SystemModel alloc] initWithContext:self.managedObjectContext];
-////
-//    NSDictionary *dict = @{
-//                           @"alert":sysMsg[@"aps"][@"badge"],
-//                           @"sound":sysMsg[@"aps"][@"sound"],
-//                           @"badge":sysMsg[@"aps"][@"badge"],
-//                           @"type":sysMsg[@"type"],
-//                           @"notice_id":sysMsg[@"notice_id"]
-//                           };
-//    
-//    model.alert = @"qq";
-////
-//////    [model.alert setValue:dict forKey:@"alert"];
-//    model.alert = sysMsg[@"aps"][@"alert"];
-//    model.badge = sysMsg[@"aps"][@"badge"];
-//    model.sound = sysMsg[@"aps"][@"sound"];
-//    model.type = sysMsg[@"type"];
-//    model.notice_id = sysMsg[@"notice_id"];
-//    
-//    [[CoreDataManager sharedManager] saveDataWithEntity:kSystemModelEntity type:model];
-//    
-//    NSLog(@"%@", [[CoreDataManager sharedManager] getDataWithEntity:kSystemModelEntity]);
-}
 
 @end

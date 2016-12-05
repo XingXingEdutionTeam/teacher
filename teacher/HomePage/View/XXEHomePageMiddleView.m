@@ -51,6 +51,7 @@
        make.width.mas_equalTo(96.25 *kScreenRatioWidth);
     }];
     
+    UIImage *notificationIcon = [UIImage imageNamed:@"home_tongzhi"];
     self.homeMiddleFourButton = [UIButton creatHomePageImage:@"home_tongzhi" title:@"" target:self action:@selector(homeMiddleFourButtonClick:)];
     [self addSubview:self.homeMiddleFourButton];
     [self.homeMiddleFourButton mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -58,6 +59,20 @@
         make.centerY.equalTo(weakSelf.mas_centerY);
         make.width.mas_equalTo(76.25 *kScreenRatioWidth);
     }];
+    
+    self.systemNotificationBadgeView = [[UIView alloc] init];
+    self.systemNotificationBadgeView.backgroundColor = [UIColor redColor];
+    self.systemNotificationBadgeView.layer.cornerRadius = 4;
+    self.systemNotificationBadgeView.layer.masksToBounds = YES;
+    [self addSubview:self.systemNotificationBadgeView];
+    [self.systemNotificationBadgeView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(self.homeMiddleFourButton).offset(notificationIcon.size.width / 2 + 6);
+        make.centerY.equalTo(self.homeMiddleFourButton).offset(-notificationIcon.size.height/2);
+        make.width.mas_equalTo(8);
+        make.height.mas_equalTo(8);
+    }];
+    self.systemNotificationBadgeView.hidden = YES;
+    
 }
 
 #pragma mark - 给视图赋值

@@ -11,5 +11,6 @@
 @interface XXEHomePageViewController : XXEBaseViewController
 
 @property (nonatomic, copy)NSString *xinxgixng;
+@property(nonatomic ,copy)NSDictionary *remoteUserInfo;
 
 @end

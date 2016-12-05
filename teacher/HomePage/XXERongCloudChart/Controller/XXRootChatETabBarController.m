@@ -43,7 +43,7 @@
     UITabBarItem *friendsListItem = [[UITabBarItem alloc]initWithTitle:@"会话列表" image:[UIImage imageNamed:@"rcim1"] selectedImage:[[UIImage imageNamed:@"rcim1"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
     rootReplyListVC.tabBarItem = friendsListItem;
     
-    self.viewControllers = @[rootFriendListVC,rootReplyListVC];
+    self.viewControllers = @[rootReplyListVC,rootFriendListVC];
     self.tabBar.backgroundColor =[UIColor whiteColor];
     
     if ([[UIDevice currentDevice].systemVersion floatValue]<8.0) {
