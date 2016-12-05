@@ -22,6 +22,8 @@
     
     UIImageView *placeholderImageView;
     
+    NSString *condit;
+    
     NSString *parameterXid;
     NSString *parameterUser_Id;
 }
@@ -34,12 +36,15 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
 
-   
+
+    if (condit == nil) {
+        condit = @"0";
+    }
     
-//    NSString *str = [DEFAULTS objectForKey:@"StoreGoodsCondit"];
-//     NSLog(@"bbbb %@", str);
+//    NSLog(@"condit === %@", condit);
     
-    [self  fetchNetData:@"0"];
+    [self  fetchNetData:condit];
+
 }
 
 
@@ -49,6 +54,7 @@
     self.view.backgroundColor = XXEBackgroundColor;
     
     self.title = @"订单列表";
+    _firstStr = @"first";
     if ([XXEUserInfo user].login){
         parameterXid = [XXEUserInfo user].xid;
         parameterUser_Id = [XXEUserInfo user].user_id;
@@ -84,13 +90,9 @@
         _listVCQueue=[[NSMutableDictionary alloc] init];
     }
     
-    NSString *condit = [NSString stringWithFormat:@"%ld", seg.selectedSegmentIndex];
+    condit = [NSString stringWithFormat:@"%ld", seg.selectedSegmentIndex];
 //    NSLog(@"condit : %@", condit);
-    
-    [DEFAULTS setObject:condit forKey:@"StoreGoodsCondit"];
-    [DEFAULTS synchronize];
-    
-    
+
     [self fetchNetData:condit];
     
 }
@@ -227,22 +229,6 @@
     cell.orderCodeLabel.text = [NSString stringWithFormat:@"订单编号:%@", model.order_index];
     cell.moneyLabel.text = model.exchange_price;
     cell.timeLabel.text = [XXETool dateStringFromNumberTimer:model.date_tm];
-    //0:待付款 1:待发货 2:待收货 3:完成 10:退货中  11:退货驳回  12:退货完成
-    if ([model.condit integerValue] == 0) {
-        cell.noteLabel.text = @"待付款";
-    }else if ([model.condit integerValue] == 1) {
-        cell.noteLabel.text = @"待发货";
-    }else if ([model.condit integerValue] == 2) {
-        cell.noteLabel.text = @"待收货";
-    }else if ([model.condit integerValue] == 3) {
-        cell.noteLabel.text = @"完成";
-    }else if ([model.condit integerValue] == 10) {
-        cell.noteLabel.text = @"退货中";
-    }else if ([model.condit integerValue] == 11) {
-        cell.noteLabel.text = @"退货驳回";
-    }else if ([model.condit integerValue] == 12) {
-        cell.noteLabel.text = @"退货完成";
-    }
 
     return cell;
 }

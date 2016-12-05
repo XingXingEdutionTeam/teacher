@@ -77,7 +77,7 @@
     }else if (button.tag == 103){
         //商城订单
         XXEStoreGoodsListViewController *storeGoodsListVC = [[XXEStoreGoodsListViewController alloc] init];
-        
+//        storeGoodsListVC.firstStr = @" ";
         [self.navigationController pushViewController:storeGoodsListVC animated:YES];
     }
 

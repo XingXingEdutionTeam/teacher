@@ -23,7 +23,9 @@
     UITableView *_myTableView;
     UISegmentedControl *segementedControl;
     //学校通知 a=0; 系统通知 a=1;
-    NSInteger a;
+//    NSInteger a;
+    NSString *condit;
+    
     //学校通知 数据
     NSMutableArray *_schoolDataSourceArray;
     //系统通知 数据
@@ -51,6 +53,29 @@
     
     [super viewWillAppear:animated];
     
+    if (_schoolDataSourceArray.count != 0) {
+        [_schoolDataSourceArray removeAllObjects];
+    }
+    
+    if (_systemDataSourecArray.count != 0) {
+        [_systemDataSourecArray removeAllObjects];
+    }
+    
+    schoolPage = 0;
+    systemPage = 0;
+    if (condit == nil) {
+        condit = @"0";
+    }
+
+//    if ([condit integerValue] == 0) {
+//        //        a = 0;
+//        [self fetchSchoolNetData];
+//        
+//    }else if ([condit integerValue] == 1){
+//        //        a = 1;
+//        [self fetchSystemNetData];
+//    }
+    
     [_myTableView reloadData];
     
 }
@@ -76,16 +101,14 @@
         parameterUser_Id = USER_ID;
     }
     
-    schoolPage = 0;
-    systemPage = 0;
 
+//    a = 0;
+    condit = @"0";
     
     position = [DEFAULTS objectForKey:@"POSITION"];
     
     self.navigationController.navigationBar.backgroundColor = XXEColorFromRGB(0, 170, 42);
-    self.navigationController.navigationBarHidden = NO;
-    a = 0;
-    
+    self.navigationController.navigationBarHidden = NO;    
 
     UIButton *rightBtn =[UIButton createButtonWithFrame:CGRectMake(0, 0, 22, 22) backGruondImageName:@"home_notification_release_icon44x44" Target:self Action:@selector(rightBtnClick:) Title:@""];
     UIBarButtonItem *sentItem =[[UIBarButtonItem alloc]initWithCustomView:rightBtn];
@@ -124,13 +147,14 @@
 }
 
 - (void)controlPressed:(UISegmentedControl *)segment{
-    NSInteger seletedIndex = [segment selectedSegmentIndex];
-    if (seletedIndex == 0) {
-        a = 0;
+//    NSInteger index = segment.selectedSegmentIndex;
+   condit = [NSString stringWithFormat:@"%ld", segment.selectedSegmentIndex];
+    if ([condit integerValue] == 0) {
+//        a = 0;
         [self fetchSchoolNetData];
         
-    }else if (seletedIndex == 1){
-        a = 1;
+    }else if ([condit integerValue] == 1){
+//        a = 1;
         [self fetchSystemNetData];
     }
 }
@@ -146,10 +170,12 @@
  */
     NSString *pageStr = [NSString stringWithFormat:@"%ld", schoolPage];
     
+//    NSLog(@"pageStr === %@", pageStr);
+    
     XXESchoolNotificationApi *schoolNotificationApi = [[XXESchoolNotificationApi alloc] initWithXid:parameterXid user_id:parameterUser_Id class_id:_classId school_id:_schoolId position:position page:pageStr];
     [schoolNotificationApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         
-        //        NSLog(@"2222---   %@", request.responseJSONObject);
+//        NSLog(@"2222---   %@", request.responseJSONObject);
         
         NSString *codeStr = [NSString stringWithFormat:@"%@", request.responseJSONObject[@"code"]];
         
@@ -214,11 +240,14 @@
     [self removePlaceholderImageView];
     
     NSMutableArray *dataArray = [[NSMutableArray alloc] init];
-    if (a == 0) {
+    if ([condit integerValue] == 0) {
         dataArray = _schoolDataSourceArray;
-    }else if (a == 1){
+    }else if ([condit integerValue] == 1){
         dataArray = _systemDataSourecArray;
     }
+    
+//    NSLog(@"dataArray.count === %ld", dataArray.count);
+    
     
     if (dataArray.count == 0) {
         _myTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -226,7 +255,7 @@
         [self createPlaceholderView];
         
     }else{
-        
+//        [_myTableView reloadData];
     }
     
     [_myTableView reloadData];
@@ -269,10 +298,10 @@
 }
 
 -(void)loadNewData{
-    if (a == 0) {
+    if ([condit integerValue] == 0) {
         schoolPage ++;
         [self fetchSchoolNetData];
-    }else if (a == 1){
+    }else if ([condit integerValue] == 1){
         systemPage ++;
         [self fetchSystemNetData];
     }
@@ -284,10 +313,10 @@
 }
 
 - (void)loadFooterNewData{
-    if (a == 0) {
+    if ([condit integerValue] == 0) {
         schoolPage ++;
         [self fetchSchoolNetData];
-    }else if (a == 1){
+    }else if ([condit integerValue] == 1){
         systemPage ++;
         [self fetchSystemNetData];
     }
@@ -307,9 +336,9 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     NSMutableArray *dataArray = [[NSMutableArray alloc] init];
-    if (a == 0) {
+    if ([condit integerValue] == 0) {
         dataArray = _schoolDataSourceArray;
-    }else if (a == 1){
+    }else if ([condit integerValue] == 1){
         dataArray = _systemDataSourecArray;
     }
     return dataArray.count;
@@ -325,7 +354,7 @@
         cell = [[[NSBundle mainBundle] loadNibNamed:@"XXERedFlowerSentHistoryTableViewCell" owner:self options:nil]lastObject];
     }
     
-    if (a == 0) {
+    if ([condit integerValue] == 0) {
         XXESchoolNotificationModel * model = _schoolDataSourceArray[indexPath.row];
         cell.iconImageView.layer.cornerRadius =cell.iconImageView.bounds.size.width/2;
         cell.iconImageView.layer.masksToBounds =YES;
@@ -334,7 +363,7 @@
         cell.contentLabel.text = model.title;
         
         cell.timeLabel.text = [XXETool dateStringFromNumberTimer:model.date_tm];
-    }else if (a == 1){
+    }else if ([condit integerValue] == 1){
         XXESystemNotificationModel *model = _systemDataSourecArray[indexPath.row];
         cell.iconImageView.layer.cornerRadius =cell.iconImageView.bounds.size.width/2;
         cell.iconImageView.layer.masksToBounds =YES;
@@ -364,7 +393,7 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    switch (a) {
+    switch ([condit integerValue]) {
         case 0:
         {
             XXESchoolNotificationDetailViewController *schoolNotificationDetailVC =[[XXESchoolNotificationDetailViewController alloc]init];

@@ -66,9 +66,7 @@
     }
     goodDetailInfoDic = [[NSDictionary alloc] init];
     picArray = [[NSMutableArray alloc] init];
-    
 
-    
     //获取 商品 具体 信息
     [self fetchGoodDetailInfo];
     

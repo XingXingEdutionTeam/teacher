@@ -141,7 +141,6 @@
     
     if (textField == _timeTextField) {
         [self setupDateView:DateTypeOfStart];
-        [self.view endEditing:YES];
     }
     
 }
@@ -516,6 +515,11 @@
     }
 }
 
+
+- (BOOL)textViewShouldEndEditing:(UITextView *)textView{
+
+    return [textView resignFirstResponder];
+}
 
 
 - (void)didReceiveMemoryWarning {

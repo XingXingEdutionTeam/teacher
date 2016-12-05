@@ -210,9 +210,19 @@
 
 
 - (void)textViewDidChange:(UITextView *)textView{
+//    if (textView == _replyTextField) {
+//        self.replyNumLabel.text=[NSString stringWithFormat:@"%lu/200",(unsigned long)textView.text.length];
+//        replyStr = textView.text;
+//    }
     if (textView == _replyTextField) {
-        self.replyNumLabel.text=[NSString stringWithFormat:@"%lu/200",(unsigned long)textView.text.length];
-        replyStr = textView.text;
+        
+        if (_replyTextField.text.length <= 200) {
+            self.replyNumLabel.text=[NSString stringWithFormat:@"%lu/200",(unsigned long)textView.text.length];
+        }else{
+            [self showHudWithString:@"最多可输入200个字符"];
+            _replyTextField.text = [_replyTextField.text substringToIndex:200];
+        }
+        replyStr = _replyTextField.text;
     }
     
     

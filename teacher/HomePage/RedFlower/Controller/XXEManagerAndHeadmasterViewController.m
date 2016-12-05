@@ -265,14 +265,18 @@
 
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    
     XXEChiefAndTeacherModel *model = _dataSourceArray[indexPath.section][indexPath.row];
-    //选中 宝贝 头像/名称/id
-    _selectedBabyInfoArr = [[NSMutableArray alloc] initWithObjects:model.head_img, model.tname, model.baby_id, model.school_id, model.class_id, nil];
     
-    self.ReturnArrayBlock(_selectedBabyInfoArr);
-    
-    [self.navigationController popViewControllerAnimated:YES];
+    if ([_didSelectBabyIdArray containsObject:model.baby_id]) {
+        [self showString:@"该宝贝已选中,请重新选择赠送对象!" forSecond:1.5];
+    }else{
+        //选中 宝贝 头像/名称/id
+        _selectedBabyInfoArr = [[NSMutableArray alloc] initWithObjects:model.head_img, model.tname, model.baby_id, model.school_id, model.class_id, nil];
+        
+        self.ReturnArrayBlock(_selectedBabyInfoArr);
+        
+        [self.navigationController popViewControllerAnimated:YES];
+    }
     
 }
 

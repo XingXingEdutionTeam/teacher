@@ -28,13 +28,14 @@
 @implementation HZQDatePickerView
 
 + (HZQDatePickerView *)instanceDatePickerView
-{
+{   
     NSArray* nibView =  [[NSBundle mainBundle] loadNibNamed:@"HZQDatePickerView" owner:nil options:nil];
     return [nibView objectAtIndex:0];
 }
 
 - (void)awakeFromNib
 {
+    
     self.backgVIew.layer.cornerRadius = 5;
     self.backgVIew.layer.borderWidth = 1;
     self.backgVIew.layer.borderColor = [[UIColor clearColor] CGColor];
@@ -70,6 +71,8 @@
     NSDate *selected = [self.datePickerView date];
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+//    [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+    
     NSString *currentOlderOneDateStr = [dateFormatter stringFromDate:selected];
     return currentOlderOneDateStr;
 }

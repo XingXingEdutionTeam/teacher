@@ -81,7 +81,7 @@
     CGFloat scopeCommboxWidth = 280 * kScreenRatioWidth;
     CGFloat scopeCommboxHeight = 30 * kScreenRatioHeight;
     CGFloat scopeCommboxX = 90 * kScreenRatioWidth;
-    CGFloat scopeCommboxY = _scopeView.frame.origin.y + (40 - scopeCommboxHeight) / 2;
+    CGFloat scopeCommboxY = _scopeView.frame.origin.y + (40 * kScreenRatioHeight - scopeCommboxHeight) / 2;
 
     _scopeCommbox = [[WJCommboxView alloc] initWithFrame:CGRectMake(scopeCommboxX, scopeCommboxY, scopeCommboxWidth, scopeCommboxHeight)];
     CGRect rect1 = _scopeCommbox.textField.frame;
@@ -113,7 +113,7 @@
     CGFloat auditorCommboxWidth = 280 * kScreenRatioWidth;
     CGFloat auditorCommboxHeight = 30 * kScreenRatioHeight;
     CGFloat auditorCommboxX = 90 * kScreenRatioWidth;
-    CGFloat auditorCommboxY = _auditView.frame.origin.y + (40 - auditorCommboxHeight) / 2;
+    CGFloat auditorCommboxY = _auditView.frame.origin.y + (40 * kScreenRatioHeight - auditorCommboxHeight) / 2;
 
     _auditorCommbox = [[WJCommboxView alloc] initWithFrame:CGRectMake(auditorCommboxX, auditorCommboxY, auditorCommboxWidth, auditorCommboxHeight)];
     CGRect rect2 = _auditorCommbox.textField.frame;
@@ -227,7 +227,7 @@
 
 - (void)getAuditorInfo{
     
-    NSLog(@"%@ --- %@ ---- %@ ----%@ ---- %@  == %@", parameterXid, parameterUser_Id, _schoolId, _classId, notice_type, position);
+//    NSLog(@"%@ --- %@ ---- %@ ----%@ ---- %@  == %@", parameterXid, parameterUser_Id, _schoolId, _classId, notice_type, position);
     
     XXEAuditorApi *auditorApi = [[XXEAuditorApi alloc] initWithXid:parameterXid user_id:parameterUser_Id school_id:_schoolId class_id:_classId position:position notice_type:notice_type];
     [auditorApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
