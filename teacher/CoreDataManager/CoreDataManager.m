@@ -52,12 +52,17 @@
     NSError *error;
     NSArray *datas = [managedContext executeFetchRequest:fetchRequest error:&error];
     for (int i = 0; i < datas.count; i+=1) {
-        SystemModel *model = [[SystemModel alloc] init];
-        model.alert = [datas[i] valueForKey:@"alert"];
-        model.sound = [datas[i] valueForKey:@"sound"];
-        model.badge = [datas[i] valueForKey:@"badge"];
-        model.type = [datas[i] valueForKey:@"type"];
-        model.notice_id = [datas[i] valueForKey:@"notice_id"];
+        SystemModel *model = [NSEntityDescription insertNewObjectForEntityForName:@"SystemModel" inManagedObjectContext:managedContext];
+        [model.alert setValue:datas[i] forKey:@"alert"];
+        [model.sound setValue:datas[i] forKey:@"sound"];
+        [model.badge setValue:datas[i] forKey:@"badge"];
+        [model.type setValue:datas[i] forKey:@"type"];
+        [model.notice_id setValue:datas[i] forKey:@"notice_id"];
+//        model.alert = [datas[i] valueForKey:@"alert"];
+//        model.sound = [datas[i] valueForKey:@"sound"];
+//        model.badge = [datas[i] valueForKey:@"badge"];
+//        model.type = [datas[i] valueForKey:@"type"];
+//        model.notice_id = [datas[i] valueForKey:@"notice_id"];
         [systemModels addObject:model];
     }
     

@@ -468,28 +468,33 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
 
 //MARK: - 存入coreData
 -(void)saveToCoreDataWithData:(NSDictionary*)sysMsg {
-//    SystemModel *model = [[SystemModel alloc] initWithContext:self.managedObjectContext];
-////
-//    NSDictionary *dict = @{
-//                           @"alert":sysMsg[@"aps"][@"badge"],
-//                           @"sound":sysMsg[@"aps"][@"sound"],
-//                           @"badge":sysMsg[@"aps"][@"badge"],
-//                           @"type":sysMsg[@"type"],
-//                           @"notice_id":sysMsg[@"notice_id"]
-//                           };
-//    
-//    model.alert = @"qq";
-////
-//////    [model.alert setValue:dict forKey:@"alert"];
+    SystemModel *model = [NSEntityDescription insertNewObjectForEntityForName:@"SystemModel" inManagedObjectContext:self.managedObjectContext];
+    //
+    NSDictionary *dict = @{
+                           @"alert":sysMsg[@"aps"][@"badge"],
+                           @"sound":sysMsg[@"aps"][@"sound"],
+                           @"badge":sysMsg[@"aps"][@"badge"],
+                           @"type":sysMsg[@"type"],
+                           @"notice_id":sysMsg[@"notice_id"]
+                           };
+//    [model setValue:dict forKey:@"alert"];
+    
+    [model.alert setValue:dict forKey:@"alert"];
+    [model.badge setValue:dict forKey:@"badge"];
+    [model.sound setValue:dict forKey:@"sound"];
+    [model.type setValue:dict forKey:@"type"];
+    [model.notice_id setValue:dict forKey:@"notice_id"];
+//
+////    [model.alert setValue:dict forKey:@"alert"];
 //    model.alert = sysMsg[@"aps"][@"alert"];
 //    model.badge = sysMsg[@"aps"][@"badge"];
 //    model.sound = sysMsg[@"aps"][@"sound"];
 //    model.type = sysMsg[@"type"];
 //    model.notice_id = sysMsg[@"notice_id"];
-//    
-//    [[CoreDataManager sharedManager] saveDataWithEntity:kSystemModelEntity type:model];
-//    
-//    NSLog(@"%@", [[CoreDataManager sharedManager] getDataWithEntity:kSystemModelEntity]);
+    
+    [[CoreDataManager sharedManager] saveDataWithEntity:kSystemModelEntity type:model];
+    
+    NSLog(@"%@", [[CoreDataManager sharedManager] getDataWithEntity:kSystemModelEntity]);
 }
 
 @end

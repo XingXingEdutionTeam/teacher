@@ -694,7 +694,6 @@
 		9E30D49B1DF115AA00DF3F3E /* CoreDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E30D49A1DF115AA00DF3F3E /* CoreDataManager.m */; };
 		9E30D4C31DF15C6300DF3F3E /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E30D4C21DF15C6300DF3F3E /* CoreData.framework */; };
 		9E30D4C81DF15F5900DF3F3E /* SystemMsg.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9E30D4C61DF15F5900DF3F3E /* SystemMsg.xcdatamodeld */; };
-		9E30D4D21DF1600B00DF3F3E /* SystemModel+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E30D4D01DF1600B00DF3F3E /* SystemModel+CoreDataProperties.m */; };
 		9E3AAFE61DEC502B00E04C6C /* XXEStoreGoodClassApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E3AAF8E1DEC502B00E04C6C /* XXEStoreGoodClassApi.m */; };
 		9E3AAFE71DEC502B00E04C6C /* XXEStoreStoreApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E3AAF901DEC502B00E04C6C /* XXEStoreStoreApi.m */; };
 		9E3AAFE81DEC502B00E04C6C /* XXESotreGoodsCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E3AAF931DEC502B00E04C6C /* XXESotreGoodsCollectionViewController.m */; };
@@ -2229,10 +2228,6 @@
 		9E30D49A1DF115AA00DF3F3E /* CoreDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoreDataManager.m; sourceTree = "<group>"; };
 		9E30D4C21DF15C6300DF3F3E /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		9E30D4C71DF15F5900DF3F3E /* SystemMsg.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = SystemMsg.xcdatamodel; sourceTree = "<group>"; };
-		9E30D4CD1DF1600B00DF3F3E /* SystemModel+CoreDataClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SystemModel+CoreDataClass.h"; sourceTree = "<group>"; };
-		9E30D4CE1DF1600B00DF3F3E /* SystemModel+CoreDataClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SystemModel+CoreDataClass.m"; sourceTree = "<group>"; };
-		9E30D4CF1DF1600B00DF3F3E /* SystemModel+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SystemModel+CoreDataProperties.h"; sourceTree = "<group>"; };
-		9E30D4D01DF1600B00DF3F3E /* SystemModel+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SystemModel+CoreDataProperties.m"; sourceTree = "<group>"; };
 		9E3AAF8D1DEC502B00E04C6C /* XXEStoreGoodClassApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXEStoreGoodClassApi.h; sourceTree = "<group>"; };
 		9E3AAF8E1DEC502B00E04C6C /* XXEStoreGoodClassApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXEStoreGoodClassApi.m; sourceTree = "<group>"; };
 		9E3AAF8F1DEC502B00E04C6C /* XXEStoreStoreApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXEStoreStoreApi.h; sourceTree = "<group>"; };
@@ -5062,10 +5057,6 @@
 		9E30D4B81DF1572000DF3F3E /* SyetemModel */ = {
 			isa = PBXGroup;
 			children = (
-				9E30D4CD1DF1600B00DF3F3E /* SystemModel+CoreDataClass.h */,
-				9E30D4CE1DF1600B00DF3F3E /* SystemModel+CoreDataClass.m */,
-				9E30D4CF1DF1600B00DF3F3E /* SystemModel+CoreDataProperties.h */,
-				9E30D4D01DF1600B00DF3F3E /* SystemModel+CoreDataProperties.m */,
 				9E30D4C61DF15F5900DF3F3E /* SystemMsg.xcdatamodeld */,
 			);
 			path = SyetemModel;
@@ -7159,7 +7150,6 @@
 				043C80A41D867B52004F1B85 /* XXEWhoCanSeeMyNameResultTableViewCell.m in Sources */,
 				044DEC081D910A7400DE101A /* XXEFamilyManagerViewController1.m in Sources */,
 				043301291D62BDD000722DE2 /* XXEManagerAndHeadmasterViewController.m in Sources */,
-				9E30D4D21DF1600B00DF3F3E /* SystemModel+CoreDataProperties.m in Sources */,
 				048754911D5C0BF200F680C5 /* XXEAccountManagerApi.m in Sources */,
 				048754951D5C0BF200F680C5 /* XXEFlowerbasketWithdrawCashApi.m in Sources */,
 				9EB2E9421D58934C004809D3 /* UITextField+XXExtension.m in Sources */,
