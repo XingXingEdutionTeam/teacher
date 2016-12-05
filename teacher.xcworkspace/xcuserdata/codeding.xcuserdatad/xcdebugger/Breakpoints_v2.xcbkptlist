@@ -299,7 +299,6 @@
             continueAfterRunningActions = "No"
             filePath = "teacher/HomePage/XXEStore/Controller/XXEStoreGoodsOrderDetailViewController.m"
             timestampString = "501766002.46859"
-<<<<<<< HEAD
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "146"
@@ -337,13 +336,22 @@
             startingLineNumber = "387"
             endingLineNumber = "387"
             landmarkName = "-recordTheVerifyCodeNum"
-=======
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "teacher/CoreDataManager/CoreDataManager.m"
+            timestampString = "502363519.636022"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "146"
-            endingLineNumber = "146"
-            landmarkName = "-buttonClick:"
->>>>>>> wzy
+            startingLineNumber = "35"
+            endingLineNumber = "35"
+            landmarkName = "-saveDataWithEntity:type:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

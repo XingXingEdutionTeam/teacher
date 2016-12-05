@@ -231,6 +231,7 @@
             
             chiefAndTeacherVC.schoolId = _schoolId;
             chiefAndTeacherVC.classId = _classId;
+            chiefAndTeacherVC.didSelectBabyIdArray = _selectedBabyInfoArray;
             //返回 数组 头像、名称、id、课程
             [chiefAndTeacherVC returnArray:^(NSMutableArray *selectedBabyInfoArray) {
                 
@@ -241,6 +242,7 @@
             //如果是管理员 或者 校长身份
             XXEManagerAndHeadmasterViewController *managerAndHeadmasterVC = [[XXEManagerAndHeadmasterViewController alloc] init];
             managerAndHeadmasterVC.schoolId = _schoolId;
+            managerAndHeadmasterVC.didSelectBabyIdArray = didSelectBabyIdArray;
             
             //返回 数组 头像、名称、id、课程
             [managerAndHeadmasterVC returnArray:^(NSMutableArray *selectedBabyInfoArray) {
@@ -276,27 +278,32 @@
 //        self.nameLabel.text=labelStr;
         seletedBabyNameLabel.text = labelStr;
         
-        //宝贝 id
-        [didSelectBabyIdArray addObject:selectedBabyInfoArray[2]];
-        NSMutableString *tidStr = [NSMutableString string];
-        
-        for (int j = 0; j < didSelectBabyIdArray.count; j ++) {
-            NSString *str = didSelectBabyIdArray[j];
+        //宝贝 id  //注意 去重
+//        if ([didSelectBabyIdArray containsObject:selectedBabyInfoArray[2]]) {
+//            [self showString:@"已选中该宝贝,请重新选择!" forSecond:1.5];
+//        }else{
+            [didSelectBabyIdArray addObject:selectedBabyInfoArray[2]];
+            NSMutableString *tidStr = [NSMutableString string];
             
-            if (j != didSelectBabyIdArray.count - 1) {
-                [tidStr appendFormat:@"%@,", str];
-            }else{
-                [tidStr appendFormat:@"%@", str];
+            for (int j = 0; j < didSelectBabyIdArray.count; j ++) {
+                NSString *str = didSelectBabyIdArray[j];
+                
+                if (j != didSelectBabyIdArray.count - 1) {
+                    [tidStr appendFormat:@"%@,", str];
+                }else{
+                    [tidStr appendFormat:@"%@", str];
+                }
             }
-        }
+            
+            babyIdStr = tidStr;
+            
+            //每一维数组含baby_id,school_id,class_id (请使用孩子列表获得的数据)
+            NSDictionary *dic = [[NSDictionary alloc]init];
+            dic = @{@"baby_id": selectedBabyInfoArray[2], @"school_id":selectedBabyInfoArray[3] , @"class_id":selectedBabyInfoArray[4] };
+            [submitBabyInfoArray addObject:dic];
+//        }
         
-        babyIdStr = tidStr;
-        
-        //每一维数组含baby_id,school_id,class_id (请使用孩子列表获得的数据)
-        NSDictionary *dic = [[NSDictionary alloc]init];
-        dic = @{@"baby_id": selectedBabyInfoArray[2], @"school_id":selectedBabyInfoArray[3] , @"class_id":selectedBabyInfoArray[4] };
-        [submitBabyInfoArray addObject:dic];
-        
+    
     }else{
         
         [self showHudWithString:@"小红花数量不足!" forSecond:1.5];

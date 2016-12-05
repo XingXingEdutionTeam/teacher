@@ -24,6 +24,8 @@
     NSString *url_groupStr;
     NSString *parameterXid;
     NSString *parameterUser_Id;
+    //键盘监听手势
+    UITapGestureRecognizer *_gesture;
 }
 
 @property(nonatomic,strong)WJCommboxView *courseCombox;
@@ -58,9 +60,32 @@
     _teacherCourseStr = @"";
     url_groupStr = @"";
     
+//    //添加点击收起键盘手势
+//    _gesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hidesKeyboard)];
+//    _gesture.enabled = NO;//最开始手势设为no
+//    [self.view addGestureRecognizer:_gesture];
+    
+    //键盘监听
+//    [[NSNotificationCenter defaultCenter] addObserver:self
+//                                             selector:@selector(keyboardWillShow)
+//                                                 name:UIKeyboardWillShowNotification
+//                                               object:nil];
+    
     [self getCourseInfo];
 
 }
+
+
+
+////监听方法
+//- (void)keyboardWillShow {
+//    _gesture.enabled = YES;
+//}
+////隐藏键盘
+//- (void)hidesKeyboard{
+//    [self.view endEditing:YES];
+//    _gesture.enabled = NO;
+//}
 
 
 - (void)viewDidLoad {
@@ -84,7 +109,7 @@
 - (void)textFieldTextChange:(UITextField *)textField{
     if (textField == _subjectTextField) {
         
-        NSLog(@"_subjectTextField.text.length == %lu", _subjectTextField.text.length);
+//        NSLog(@"_subjectTextField.text.length == %lu", _subjectTextField.text.length);
         
         if (_subjectTextField.text.length > 15) {
             [self showHudWithString:@"最多可输入15个字符"];
@@ -178,13 +203,17 @@
 
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField{
-
+    
+    
     if (textField == _submitTextField) {
+        
         [self setupDateView:DateTypeOfStart];
-        [self.view endEditing:YES];
+                
     }
 
 }
+
+
 
 - (void)setupDateView:(DateType)type {
     
@@ -399,6 +428,16 @@
     
     
 }
+
+- (BOOL)textViewShouldEndEditing:(UITextView *)textView{
+    return [textView resignFirstResponder];
+}
+
+- (void)textViewDidEndEditing:(UITextView *)textView{
+    [self.view endEditing:YES];
+
+}
+
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
     [self.view endEditing:YES];
 }

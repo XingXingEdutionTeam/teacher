@@ -35,6 +35,8 @@
     NSString *jsonString;
     //添加 照片
     FSImagePickerView *pickerView;
+    //身份
+    NSString *position;
     
     NSString *conStr;
     
@@ -61,6 +63,8 @@
     
     url_groupStr = @"";
     conStr = @"";
+    
+    position = [DEFAULTS objectForKey:@"POSITION"];
     
     if ([XXEUserInfo user].login){
         parameterXid = [XXEUserInfo user].xid;
@@ -135,57 +139,79 @@
 
 
 - (IBAction)addButtonClick:(UIButton *)sender {
-    
-    //    //如果是 主任 或者 老师身份
-//        XXEChiefAndTeacherViewController *chiefAndTeacherVC = [[XXEChiefAndTeacherViewController alloc] init];
-//    
-//        chiefAndTeacherVC.schoolId = _schoolId;
-//        chiefAndTeacherVC.classId = _classId;
-//    
-//        [self.navigationController pushViewController:chiefAndTeacherVC animated:YES];
-    
+    //一次 最多 可 给4个孩子 点评
+    if (didSelectBabyNameArray.count == 4) {
+        
+        [self showHudWithString:@"一次最多可给4个孩子点评"];
+    }else{
+      if ([position isEqualToString:@"1"] || [position isEqualToString:@"2"]) {
+        //如果是 主任 或者 老师身份
+        XXEChiefAndTeacherViewController *chiefAndTeacherVC = [[XXEChiefAndTeacherViewController alloc] init];
+
+        chiefAndTeacherVC.schoolId = _schoolId;
+        chiefAndTeacherVC.classId = _classId;
+        chiefAndTeacherVC.didSelectBabyIdArray = _selectedBabyInfoArray;
+        //返回 数组 头像、名称、id、课程
+        [chiefAndTeacherVC returnArray:^(NSMutableArray *selectedBabyInfoArray) {
+            
+            [self updateBasketNum:selectedBabyInfoArray];
+        }];
+        [self.navigationController pushViewController:chiefAndTeacherVC animated:YES];
+    }else if ([position isEqualToString:@"3"] || [position isEqualToString:@"4"]) {
     //如果是管理员 或者 校长身份
-    
     XXEManagerAndHeadmasterViewController *managerAndHeadmasterVC = [[XXEManagerAndHeadmasterViewController alloc] init];
     managerAndHeadmasterVC.schoolId = _schoolId;
-    
+    managerAndHeadmasterVC.didSelectBabyIdArray = didSelectBabyIdArray;
+        
     //返回 数组 头像、名称、id、课程
     [managerAndHeadmasterVC returnArray:^(NSMutableArray *selectedBabyInfoArray) {
-        _selectedBabyInfoArray = [NSMutableArray arrayWithArray:selectedBabyInfoArray];
-
-            //宝贝 头像
-            [dynamicScrollView addImageView:[NSString stringWithFormat:@"%@%@",kXXEPicURL, selectedBabyInfoArray[0] ]];
-            
-            //宝贝 名字
-            [didSelectBabyNameArray addObject:selectedBabyInfoArray[1]];
-            NSMutableString *labelStr=[NSMutableString string];
-            for (NSString * str in didSelectBabyNameArray ) {
-                [labelStr appendString:str];
-                [labelStr appendString:@"  "];
-            }
-            self.nameLabel.text=labelStr;
-            
-            //宝贝 id
-            [didSelectBabyIdArray addObject:selectedBabyInfoArray[2]];
-            NSMutableString *tidStr = [NSMutableString string];
-            
-            for (int j = 0; j < didSelectBabyIdArray.count; j ++) {
-                NSString *str = didSelectBabyIdArray[j];
-                
-                if (j != didSelectBabyIdArray.count - 1) {
-                    [tidStr appendFormat:@"%@,", str];
-                }else{
-                    [tidStr appendFormat:@"%@", str];
-                }
-            }
-            
-            babyIdStr = tidStr;
+        
+        NSLog(@"---- %@", selectedBabyInfoArray);
+        [self updateBasketNum:selectedBabyInfoArray];
+        
     }];
     
     [self.navigationController pushViewController:managerAndHeadmasterVC animated:YES];
 
+    }
+        
+    }
+}
+
+- (void)updateBasketNum:(NSMutableArray *)selectedBabyInfoArray{
+    
+    _selectedBabyInfoArray = [NSMutableArray arrayWithArray:selectedBabyInfoArray];
+    
+   //宝贝 头像
+   [dynamicScrollView addImageView:[NSString stringWithFormat:@"%@%@",kXXEPicURL, selectedBabyInfoArray[0] ]];
+    
+   //宝贝 名字
+    [didSelectBabyNameArray addObject:selectedBabyInfoArray[1]];
+    NSMutableString *labelStr=[NSMutableString string];
+    for (NSString * str in didSelectBabyNameArray ) {
+        [labelStr appendString:str];
+        [labelStr appendString:@"  "];
+    }
+    self.nameLabel.text=labelStr;
+    
+    //宝贝 id
+    [didSelectBabyIdArray addObject:selectedBabyInfoArray[2]];
+    NSMutableString *tidStr = [NSMutableString string];
+    
+    for (int j = 0; j < didSelectBabyIdArray.count; j ++) {
+        NSString *str = didSelectBabyIdArray[j];
+    
+        if (j != didSelectBabyIdArray.count - 1) {
+            [tidStr appendFormat:@"%@,", str];
+        }else{
+            [tidStr appendFormat:@"%@", str];
+        }
+    }
+                
+    babyIdStr = tidStr;
     
 }
+
 
 - (IBAction)certenButtonClick:(UIButton *)sender {
     

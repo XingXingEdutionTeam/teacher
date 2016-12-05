@@ -26,6 +26,9 @@
     UILabel *addressLabel;
     NSString *address_id;
     
+    //留言字数 label
+    UILabel *numLabel;
+    
     //下部 背景
     UIView *downBgView;
     
@@ -254,11 +257,18 @@
     messageTextView = [[UITextView alloc] initWithFrame:CGRectMake(10, messageTitleLabel.frame.origin.y + messageTitleLabel.height, KScreenWidth - 20, 50)];
     messageTextView.layer.borderColor = XXEBackgroundColor.CGColor;
     messageTextView.layer.borderWidth = 1;
+    messageTextView.delegate = self;
 //    messageTextView.backgroundColor = [UIColor yellowColor];
     [downBgView addSubview:messageTextView];
     
+    //留言字数
+    numLabel = [UILabel createLabelWithFrame:CGRectMake(KScreenWidth - 70, messageTextView.frame.origin.y + messageTextView.height + 5, 50, 20) Font:12 Text:@"0/200"];
+    numLabel.textColor = [UIColor lightGrayColor];
+    [downBgView addSubview:numLabel];
+    
+    
     //合计 钱 title
-    UILabel *moneyTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(30 * kScreenRatioWidth, messageTextView.frame.origin.y + messageTextView.height + 10, 40, 20)];
+    UILabel *moneyTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(30 * kScreenRatioWidth, messageTextView.frame.origin.y + messageTextView.height + 40, 40, 20)];
     moneyTitleLabel.text = @"合计:";
 //    moneyTitleLabel.backgroundColor = [UIColor whiteColor];
     [downBgView addSubview:moneyTitleLabel];
@@ -373,6 +383,19 @@
     
 }
 
+
+- (void)textViewDidChange:(UITextView *)textView{
+    if (textView == messageTextView) {
+        
+        if (messageTextView.text.length <= 200) {
+            numLabel.text=[NSString stringWithFormat:@"%lu/200",(unsigned long)textView.text.length];
+        }else{
+            [self showHudWithString:@"最多可输入200个字符"];
+            messageTextView.text = [messageTextView.text substringToIndex:200];
+        }
+//        conStr = messageTextView.text;
+    }
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

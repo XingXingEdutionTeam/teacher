@@ -30,6 +30,18 @@
 
 @implementation XXESotreGoodsCollectionViewController
 
+- (void)viewWillAppear:(BOOL)animated{
+    
+    [super viewWillAppear:animated];
+    
+    //    page = 0;
+    [self fetchNetData];
+    
+    [_myTableView reloadData];
+    
+}
+
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = XXEBackgroundColor;
@@ -43,7 +55,7 @@
         parameterUser_Id = USER_ID;
     }
     
-    [self fetchNetData];
+//    [self fetchNetData];
     
     [self createTableView];
     
@@ -74,6 +86,10 @@
             NSArray *modelArray = [[NSArray alloc] init];
             
             modelArray = [XXESotreGoodsCollectionModel parseResondsData:responseObj[@"data"]];
+            
+            if (_dataSourceArray.count != 0) {
+                [_dataSourceArray removeAllObjects];
+            }
             
             [_dataSourceArray addObjectsFromArray:modelArray];
             

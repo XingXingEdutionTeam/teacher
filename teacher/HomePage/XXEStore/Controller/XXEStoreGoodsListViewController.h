@@ -10,4 +10,6 @@
 
 @interface XXEStoreGoodsListViewController : XXEBaseViewController
 
+@property (nonatomic, copy) NSString *firstStr;
+
 @end

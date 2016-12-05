@@ -229,6 +229,7 @@
             [self.classAllArray[i] addObject:string];
         }
         self.homeClassView.dataArray = self.classAllArray[0];
+        [self.homeClassView.listTableView reloadData];
     }
 
     self.homeClassView.textField.text = model1.class_name;

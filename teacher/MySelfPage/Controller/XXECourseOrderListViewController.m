@@ -34,6 +34,21 @@
 
 @implementation XXECourseOrderListViewController
 
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    
+    if (condit == nil) {
+        condit = @"0";
+    }
+    
+    //    NSLog(@"condit === %@", condit);
+    
+    [self  fetchNetData:condit];
+
+}
+
+
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = XXEBackgroundColor;
@@ -53,7 +68,7 @@
     
     [self createTableView];
     
-    [self  fetchNetData:@"0"];
+//    [self  fetchNetData:@"0"];
     
 }
 
@@ -206,20 +221,20 @@
     
     cell.titleLabel.text = model.course_name;
     cell.schoolLabel.text = model.school_name;
-    //0:待支付 1:已支付 2:待评价 3:已评价
-    if ([condit integerValue] == 0) {
-        cell.stateLabel.text = @"待支付";
-        cell.stateLabel.textColor = [UIColor redColor];
-    }else if ([condit integerValue] == 1) {
-        cell.stateLabel.text = @"已支付";
-        cell.stateLabel.textColor = [UIColor lightGrayColor];
-    }else if ([condit integerValue] == 2) {
-        cell.stateLabel.text = @"待评价";
-        cell.stateLabel.textColor = [UIColor redColor];
-    }else if ([condit integerValue] == 3) {
-        cell.stateLabel.text = @"已评价";
-        cell.stateLabel.textColor = [UIColor lightGrayColor];
-    }
+//    //0:待支付 1:已支付 2:待评价 3:已评价
+//    if ([condit integerValue] == 0) {
+//        cell.stateLabel.text = @"待支付";
+//        cell.stateLabel.textColor = [UIColor redColor];
+//    }else if ([condit integerValue] == 1) {
+//        cell.stateLabel.text = @"已支付";
+//        cell.stateLabel.textColor = [UIColor lightGrayColor];
+//    }else if ([condit integerValue] == 2) {
+//        cell.stateLabel.text = @"待评价";
+//        cell.stateLabel.textColor = [UIColor redColor];
+//    }else if ([condit integerValue] == 3) {
+//        cell.stateLabel.text = @"已评价";
+//        cell.stateLabel.textColor = [UIColor lightGrayColor];
+//    }
     return cell;
 }
 

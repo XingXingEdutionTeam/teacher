@@ -21,7 +21,8 @@
     UITableView *_myTableView;
     UISegmentedControl *segementedControl;
     //审核 a=0; 发布 a=1;
-    NSInteger a;
+//    NSInteger a;
+    NSString *condit;
     //审核 数据
     NSMutableArray *_auditDataSourceArray;
     //发布 数据
@@ -43,9 +44,18 @@
 @implementation XXEAuditAndReleaseViewController
 
 - (void)viewWillAppear:(BOOL)animated{
-    
     [super viewWillAppear:animated];
 
+    if (_auditDataSourceArray.count != 0 ) {
+        [_auditDataSourceArray removeAllObjects];
+    }
+    if (_releaseDataSourecArray.count != 0) {
+        [_releaseDataSourecArray removeAllObjects];
+    }
+    
+    auditPage = 0;
+    releasePage = 0;
+    
     
     [_myTableView reloadData];
     
@@ -73,10 +83,9 @@
         parameterUser_Id = USER_ID;
     }
     
-    auditPage = 0;
-    releasePage = 0;
-    a = 0;
-    
+
+//    a = 0;
+    condit = @"0";
     UIButton *rightBtn =[UIButton createButtonWithFrame:CGRectMake(0, 0, 22, 22) backGruondImageName:@"comment_request_icon" Target:self Action:@selector(rightBtnClick:) Title:@""];
     UIBarButtonItem *sentItem =[[UIBarButtonItem alloc]initWithCustomView:rightBtn];
     self.navigationItem.rightBarButtonItem =sentItem;
@@ -112,13 +121,15 @@
 }
 
 - (void)controlPressed:(UISegmentedControl *)segment{
-    NSInteger seletedIndex = [segment selectedSegmentIndex];
-    if (seletedIndex == 0) {
-        a = 0;
+//    NSInteger seletedIndex = [segment selectedSegmentIndex];
+    
+    condit = [NSString stringWithFormat:@"%ld", segment.selectedSegmentIndex];
+    if ([condit integerValue] == 0) {
+//        a = 0;
         [self fetchAuditNetData];
         
-    }else if (seletedIndex == 1){
-        a = 1;
+    }else if ([condit integerValue] == 1){
+//        a = 1;
         [self fetchReleaseNetData];
     }
 }
@@ -140,14 +151,14 @@
      */
     NSString *pageStr = [NSString stringWithFormat:@"%ld", auditPage];
     
-    NSLog(@"%@--- %@ --- %@ --- %@ -- %@", parameterXid, parameterUser_Id, _schoolId, _classId, pageStr);
+//    NSLog(@"%@--- %@ --- %@ --- %@ -- %@", parameterXid, parameterUser_Id, _schoolId, _classId, pageStr);
     
     XXEAuditAndReleaseApi *auditAndReleaseApi = [[XXEAuditAndReleaseApi alloc] initWithXid:parameterXid user_id:parameterUser_Id school_id:_schoolId class_id:_classId request_type:@"1" page:pageStr];
     [auditAndReleaseApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
 //        if (_auditDataSourceArray.count != 0) {
 //            [_auditDataSourceArray removeAllObjects];
 //        }
-    NSLog(@"2222---   %@", request.responseJSONObject);
+//    NSLog(@"2222---   %@", request.responseJSONObject);
         
         NSString *codeStr = [NSString stringWithFormat:@"%@", request.responseJSONObject[@"code"]];
         
@@ -182,12 +193,14 @@
      page		//页码,起始页1,不传值默认1
      */
     NSString *pageStr = [NSString stringWithFormat:@"%ld", releasePage];
+    
+//    NSLog(@"releasePage --- %@", pageStr);
     XXEAuditAndReleaseApi *auditAndReleaseApi = [[XXEAuditAndReleaseApi alloc] initWithXid:parameterXid user_id:parameterUser_Id school_id:_schoolId class_id:_classId request_type:@"2" page:pageStr];
     [auditAndReleaseApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
 //        if (_releaseDataSourecArray.count != 0) {
 //            [_releaseDataSourecArray removeAllObjects];
 //        }
-        //        NSLog(@"2222---   %@", request.responseJSONObject);
+//                NSLog(@"99999---   %@", request.responseJSONObject);
         NSDictionary *dic = request.responseJSONObject;
         
         NSString *codeStr = [NSString stringWithFormat:@"%@", dic[@"code"]];
@@ -219,10 +232,14 @@
 //    NSLog(@"%@ --- %@ ", _auditDataSourceArray, _releaseDataSourecArray);
     
     NSMutableArray *dataArray = [[NSMutableArray alloc] init];
-    if (a == 0) {
+    if ([condit integerValue] == 0) {
         dataArray = _auditDataSourceArray;
-    }else if (a == 1){
+    }else if ([condit integerValue] == 1){
         dataArray = _releaseDataSourecArray;
+    }
+    
+    if (dataArray.count != 0) {
+       NSLog(@"dataArray[0] == %@", dataArray[0]);
     }
     
     if (dataArray.count == 0) {
@@ -274,10 +291,10 @@
 }
 
 -(void)loadNewData{
-    if (a == 0) {
+    if ([condit integerValue] == 0) {
         auditPage ++;
         [self fetchAuditNetData];
-    }else if (a == 1){
+    }else if ([condit integerValue] == 1){
         releasePage ++;
         [self fetchReleaseNetData];
     }
@@ -290,10 +307,10 @@
 }
 
 - (void)loadFooterNewData{
-    if (a == 0) {
+    if ([condit integerValue] == 0) {
         auditPage ++;
         [self fetchAuditNetData];
-    }else if (a == 1){
+    }else if ([condit integerValue] == 1){
         releasePage ++;
         [self fetchReleaseNetData];
     }
@@ -313,9 +330,9 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     NSMutableArray *dataArray = [[NSMutableArray alloc] init];
-    if (a == 0) {
+    if ([condit integerValue] == 0) {
         dataArray = _auditDataSourceArray;
-    }else if (a == 1){
+    }else if ([condit integerValue] == 1){
         dataArray = _releaseDataSourecArray;
     }
     return dataArray.count;
@@ -331,14 +348,15 @@
         cell = [[[NSBundle mainBundle] loadNibNamed:@"XXECommentRequestTableViewCell" owner:self options:nil]lastObject];
     }
     
-    //[condit] => 1	//0:未审核  1:已审核  2:未通过
-    if (a == 0) {
+    
+    if ([condit integerValue] == 0) {
         XXEAuditAndReleaseModel * model = _auditDataSourceArray[indexPath.row];
         cell.iconImageView.layer.cornerRadius =cell.iconImageView.bounds.size.width/2;
         cell.iconImageView.layer.masksToBounds =YES;
         [cell.iconImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",kXXEPicURL,model.school_logo]] placeholderImage:[UIImage imageNamed:@""]];
         cell.nameLabel.text = model.school_name;
         cell.contentLabel.text = model.title;
+        //[condit] => 1	//0:未审核  1:已审核  2:未通过
         if ([model.condit isEqualToString:@"0"]) {
             cell.stateImageView.image = [UIImage imageNamed:@"daishenghe"];
         }else if ([model.condit isEqualToString:@"1"]) {
@@ -349,7 +367,7 @@
         
         
         cell.timeLabel.text = [XXETool dateStringFromNumberTimer:model.date_tm];
-    }else if (a == 1){
+    }else if ([condit integerValue] == 1){
         XXEAuditAndReleaseModel *model = _releaseDataSourecArray[indexPath.row];
         cell.iconImageView.layer.cornerRadius =cell.iconImageView.bounds.size.width/2;
         cell.iconImageView.layer.masksToBounds =YES;
@@ -385,16 +403,16 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    switch (a) {
+    switch ([condit integerValue]) {
         case 0:
         {
             //审核 详情
             XXEAuditDetailInfoViewController *auditDetailInfoVC =[[XXEAuditDetailInfoViewController alloc]init];
             XXEAuditAndReleaseModel *model = _auditDataSourceArray[indexPath.row];
             
-//            auditDetailInfoVC.subjectStr = model.title;
-//            auditDetailInfoVC.contentStr = model.con;
-//            auditDetailInfoVC.notice_id = model.notice_id;
+            auditDetailInfoVC.subjectStr = model.title;
+            auditDetailInfoVC.contentStr = model.con;
+            auditDetailInfoVC.notice_id = model.notice_id;
             [self.navigationController pushViewController:auditDetailInfoVC animated:YES];
         }
             break;

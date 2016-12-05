@@ -23,7 +23,7 @@
 
 
 
-@interface XXEStoreAddUserAddressViewController ()<UIAlertViewDelegate, LMComBoxViewDelegate>
+@interface XXEStoreAddUserAddressViewController ()<UIAlertViewDelegate, LMComBoxViewDelegate, UITextFieldDelegate>
 {
     LMContainsLMComboxScrollView *bgScrollView;
     NSMutableDictionary *addressDict;   //地址选择字典
@@ -90,7 +90,7 @@
     }
     
     
-    NSLog(@"_defaultAddress === %@", _defaultAddress);
+//    NSLog(@"_defaultAddress === %@", _defaultAddress);
     
     
 }
@@ -163,6 +163,8 @@
     
     nameText = [[UITextField alloc] initWithFrame:CGRectMake(CGRectGetMaxX(consignee.frame) + Kmarg, Kmarg, kWidth - CGRectGetMaxX(consignee.frame) - KLabelX *2, KLabelH)];
     nameText.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
+    nameText.delegate = self;
+    [nameText addTarget:self action:@selector(nameTextFieldTextChange:) forControlEvents:UIControlEventEditingChanged];
     
     [bgScrollView addSubview:nameText];
     
@@ -177,7 +179,9 @@
     
     phoneText = [[UITextField alloc] initWithFrame:CGRectMake(CGRectGetMaxX(consignee.frame) + Kmarg, CGRectGetMaxY(view1.frame) + Kmarg, kWidth - CGRectGetMaxX(consignee.frame) - KLabelX *2, KLabelH)];
     phoneText.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
+    phoneText.delegate = self;
     phoneText.keyboardType=UIKeyboardTypeNumberPad;
+    [nameText addTarget:self action:@selector(phoneTextFieldTextChange:) forControlEvents:UIControlEventEditingChanged];
     [bgScrollView addSubview:phoneText];
     
     UIView *view2 = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(phoneText.frame) + Kmarg, kWidth, 1)];
@@ -241,7 +245,8 @@
     
     if (_isModify == YES) {
         //修改  后 的保存
-        [saveBtn addTarget:self action:@selector(modifySaveButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+        saveBtn.hidden = YES;
+//        [saveBtn addTarget:self action:@selector(modifySaveButtonClick:) forControlEvents:UIControlEventTouchUpInside];
     }else{
         //新增 地址 的保存
         [saveBtn addTarget:self action:@selector(addNewAddressSaveButtonClick:) forControlEvents:UIControlEventTouchUpInside];
@@ -287,15 +292,78 @@
     [bgScrollView addSubview:removeBtn];
 }
 
-
-#pragma mark ========= 修改  后 的保存 =======
-- (void)modifySaveButtonClick:(UIButton *)button{
-    if (_defaultAddress != nil) {
-         [self addAddress:_defaultAddress];
+#pragma mark ====== textField  方法 =======
+//姓名
+- (void) nameTextFieldTextChange:(UITextField *)textField{
+    if (textField == nameText) {
+        
+        NSLog(@"nameText.text.length == %lu", nameText.text.length);
+        
+        if (nameText.text.length > 15) {
+            [self showHudWithString:@"最多可输入15个字符"];
+            nameText.text = [nameText.text substringToIndex:15];
+        }
     }
+    
 }
 
+//电话
+- (void)phoneTextFieldTextChange:(UITextField *)textField{
 
+    if (textField == phoneText) {
+        
+        NSLog(@"phoneText.text.length == %lu", phoneText.text.length);
+        
+        if (phoneText.text.length >= 11) {
+            [self showString:@"请输入11位手机号码" forSecond:1.5];
+            
+        }else{
+        
+        //判断是否是电话号
+            if ([self isChinaMobile:phoneText.text] == NO) {
+                [self showString:@"请输入11位手机号码" forSecond:1.5];
+            }else{
+                phoneText.text = @"";
+            }
+        }
+    }
+
+}
+
+#pragma mark ======= 判断 是否 是 手机号码 ==============
+- (BOOL)isChinaMobile:(NSString *)phoneNum{
+    BOOL isChinaMobile = NO;
+    
+    NSString *CM = @"(^1(3[4-9]|4[7]|5[0-27-9]|7[8]|8[2-478])\\d{8}$)|(^1705\\d{7}$)";
+    NSPredicate *regextestcm = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", CM];
+    if([regextestcm evaluateWithObject:phoneNum] == YES){
+        isChinaMobile = YES;
+        //        NSLog(@"中国移动");
+    }
+    
+    NSString *CU = @"(^1(3[0-2]|4[5]|5[56]|7[6]|8[56])\\d{8}$)|(^1709\\d{7}$)";
+    NSPredicate *regextestcu = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", CU];
+    if([regextestcu evaluateWithObject:phoneNum] == YES){
+        isChinaMobile = YES;
+        //        NSLog(@"中国联通");
+    }
+    
+    NSString *CT = @"(^1(33|53|77|8[019])\\d{8}$)|(^1700\\d{7}$)";
+    NSPredicate *regextestct = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", CT];
+    if([regextestct evaluateWithObject:phoneNum] == YES){
+        isChinaMobile = YES;
+        //        NSLog(@"中国电信");
+    }
+    return isChinaMobile;
+}
+
+#pragma mark -------------- 判断 是否是邮箱 ---------------
+- (BOOL)validateEmail:(NSString *)email
+{
+    NSString *emailRegex = @"[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}";
+    NSPredicate *emailTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", emailRegex];
+    return [emailTest evaluateWithObject:email];
+}
 
 #pragma mark ---------- 新增 地址 的保存 且不设为默认地址----------
 - (void)addNewAddressSaveButtonClick:(UIButton *)button{
@@ -321,45 +389,66 @@
 #pragma mark ============= 保存用户地址 ===============
 - (void)addAddress:(NSString *)defaultAddress
 {
-    NSString *urlStr = @"http://www.xingxingedu.cn/Global/add_shopping_address";
     
-
-    NSLog(@"selectedProvince === %@", selectedProvince);
+    if ([selectedProvince isEqualToString:@""]) {
+        [self showString:@"请完善省" forSecond:1.5];
+    }else if ([selectedCity isEqualToString:@""]){
+        [self showString:@"请完善市" forSecond:1.5];
+    }else if ([selectedArea isEqualToString:@""]){
+        [self showString:@"请完善区" forSecond:1.5];
+    }else if ([addressText.text isEqualToString:@""]){
+        [self showString:@"请完善详细地址" forSecond:1.5];
+    }else if([nameText.text isEqualToString:@""]){
+        [self showString:@"请完善姓名" forSecond:1.5];
+    }else if ([phoneText.text isEqualToString:@""]){
+        [self showString:@"请完善电话" forSecond:1.5];
+    }else if([self isChinaMobile:phoneText.text] == NO){
+        [self showString:@"请输入正确的电话号码" forSecond:1.5];
+    }else if ([mailText.text isEqualToString:@""]){
+        [self showString:@"请完善邮箱" forSecond:1.5];
+    }else  if([self validateEmail:mailText.text] == NO){
+        [self showString:@"请输入正确的邮箱" forSecond:1.5];
+    }else{
     
-    NSDictionary *params = @{@"appkey":APPKEY,
-                           @"backtype":BACKTYPE,
-                           @"xid":parameterXid,
-                           @"user_id":parameterUser_Id,
-                           @"user_type":USER_TYPE,
-                           @"province":selectedProvince,
-                           @"city":selectedCity,
-                           @"district":selectedArea,
-                           @"address":addressText.text,
-                           @"name":nameText.text,
-                           @"phone":phoneText.text,
-                           @"zip_code":mailText.text,
-                           @"selected":defaultAddress,
-                           };
+        NSString *urlStr = @"http://www.xingxingedu.cn/Global/add_shopping_address";
+        //    NSLog(@"selectedProvince === %@", selectedProvince);
+        
+        NSDictionary *params = @{@"appkey":APPKEY,
+                                 @"backtype":BACKTYPE,
+                                 @"xid":parameterXid,
+                                 @"user_id":parameterUser_Id,
+                                 @"user_type":USER_TYPE,
+                                 @"province":selectedProvince,
+                                 @"city":selectedCity,
+                                 @"district":selectedArea,
+                                 @"address":addressText.text,
+                                 @"name":nameText.text,
+                                 @"phone":phoneText.text,
+                                 @"zip_code":mailText.text,
+                                 @"selected":defaultAddress,
+                                 };
         NSLog(@"params == %@",params);
+        
+        [WZYHttpTool post:urlStr params:params success:^(id responseObj) {
+            
+            NSLog(@"结果===== %@", responseObj);
+            
+            if ([responseObj[@"code"] integerValue] == 1) {
+                
+                [self showString:@"添加成功" forSecond:1.5];
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    [self.navigationController popViewControllerAnimated:YES];
+                });
+            }
+            
+            
+        } failure:^(NSError *error) {
+            //
+            [self showString:@"网络不通,请检查网络" forSecond:1.5];
+        }];
+
+    }
     
-    [WZYHttpTool post:urlStr params:params success:^(id responseObj) {
-        
-        NSLog(@"结果===== %@", responseObj);
-        
-        if ([responseObj[@"code"] integerValue] == 1) {
-
-            [self showString:@"添加成功" forSecond:1.5];
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-           [self.navigationController popViewControllerAnimated:YES];
-        });
-        }
-        
-        
-    } failure:^(NSError *error) {
-        //
-        [self showString:@"网络不通,请检查网络" forSecond:1.5];
-    }];
-
  }
 //解析全国省市区信息
 -(void)resolveCity{
@@ -553,7 +642,6 @@
         return;
     }
     
-    NSLog(@"_defaultAddress == %@", _defaultAddress);
     
     if (_defaultAddress == nil) {
         //新增 地址

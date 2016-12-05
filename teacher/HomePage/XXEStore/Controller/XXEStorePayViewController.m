@@ -32,6 +32,9 @@
     //
     NSMutableArray *seleteButtonArray;
     
+    //判断是否支付成功过
+    BOOL isPaySuccess;
+    
     NSString *parameterXid;
     NSString *parameterUser_Id;
 }
@@ -51,6 +54,7 @@
     }
     coinAble = _dict[@"user_coin_able"];
     seleteButtonArray = [[NSMutableArray alloc] init];
+    isPaySuccess = NO;
     
     //输出BOOL值的方法：
 //    NSLog(@"%@", _onlyXingCoin ?@"YES":@"NO");
@@ -250,12 +254,18 @@
         }
     }else if (buttonTag == 101){
     //微信 支付
-         [self doPay:PayChannelWxApp];
-    
+        if (isPaySuccess == YES) {
+            [self showString:@"该订单您已支付过" forSecond:1.5];
+        }else{
+        [self doPay:PayChannelWxApp];
+        }
     }else if (buttonTag == 102){
         //支付宝 支付
+        if (isPaySuccess == YES) {
+            [self showString:@"该订单您已支付过" forSecond:1.5];
+        }else{
         [self doPay:PayChannelAliApp];
-        
+        }
     }
 }
 
@@ -284,7 +294,7 @@
                              };
     
     [WZYHttpTool post:urlStr params:params success:^(id responseObj) {
-        //
+        
 //        NSLog(@"纯猩币支付 ==== %@", responseObj);
         
         NSString *codeStr = responseObj[@"code"];
@@ -462,6 +472,8 @@
         if ([codeStr integerValue] == 1) {
             
             LSSAlertView *alert = [[LSSAlertView alloc] initWithTitle:resp.resultMsg message:@"支付成功!"  picImage:@"paysuccess_icon120x120"  sureBtn:@"查看订单" cancleBtn:@"现在离开"];
+            
+            isPaySuccess = YES;
             alert.returnIndex = ^(NSInteger index){
                 if (index == 0) {
                     

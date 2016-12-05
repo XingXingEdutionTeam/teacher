@@ -9,7 +9,7 @@
 //
 
 #import "XXEHomeworkDetailInfoViewController.h"
-#import "XXERedFlowerDetialTableViewCell.h"
+#import "XXERedFlowerDetialInfoTableViewCell.h"
 #import "XXEHomeworkDetailInfoApi.h"
 #import "XXEImageBrowsingViewController.h"
 
@@ -31,6 +31,9 @@
     CGFloat picWidth;
     //照片墙 照片 高
     CGFloat picHeight;
+    
+    CGFloat maxWidth;
+    
     NSString *parameterXid;
     NSString *parameterUser_Id;
     
@@ -125,10 +128,10 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
     static NSString *identifier = @"cell";
-    XXERedFlowerDetialTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+    XXERedFlowerDetialInfoTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
     
     if (cell == nil) {
-        cell = [[[NSBundle mainBundle] loadNibNamed:@"XXERedFlowerDetialTableViewCell" owner:self options:nil]lastObject];
+        cell = [[XXERedFlowerDetialInfoTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
     }
     
     cell.iconImageView.image = [UIImage imageNamed:picArray[indexPath.row]];
@@ -136,6 +139,13 @@
     
     if (contentArray.count != 0) {
         cell.contentLabel.text = contentArray[indexPath.row];
+        cell.contentLabel.numberOfLines = 0;
+        maxWidth = cell.contentLabel.width;
+        CGFloat height = [StringHeight contentSizeOfString:contentArray[indexPath.row] maxWidth:maxWidth fontSize:14];
+        
+        CGSize size = cell.contentLabel.size;
+        size.height = height;
+        cell.contentLabel.size = size;
     }
 
     if (indexPath.row == 3) {
@@ -165,6 +175,8 @@
             CGFloat buttonY = 44 + (picHeight + margin) * buttonRow;
             
             UIImageView *pictureImageView = [[UIImageView alloc] initWithFrame:CGRectMake(buttonX, buttonY, picWidth, picHeight)];
+            pictureImageView.contentMode = UIViewContentModeScaleAspectFill;
+            pictureImageView.clipsToBounds = YES;
             
             [pictureImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", kXXEPicURL, _picWallArray[i]]]];
             pictureImageView.tag = 20 + i;
@@ -199,7 +211,10 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    if (indexPath.row==3) {
+    if (indexPath.row == 2) {
+        CGFloat height = [StringHeight contentSizeOfString:contentArray[indexPath.row] maxWidth:maxWidth fontSize:14];
+        return height + 20;
+    }else if (indexPath.row==3) {
         return 44 + picRow * picHeight;
     }
     else{
