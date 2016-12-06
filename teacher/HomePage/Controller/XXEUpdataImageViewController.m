@@ -105,46 +105,42 @@
     }else if (self.photoDatasource.count == 0) {
         [self hideHud];
         [self showString:@"请选择相片" forSecond:1.f];
-    }
-    NSString *strngXid;
-    NSString *albumUserId;
-    if ([XXEUserInfo user].login) {
-        strngXid = [XXEUserInfo user].xid;
-        albumUserId = [XXEUserInfo user].user_id;
-    }else {
-        strngXid = XID;
-        albumUserId = USER_ID;
-    }
-    
-    
-    NSMutableArray *arr = [NSMutableArray array];
-    
-//    NSLog(@"%@ --- %@ --- %@ ----", _myAlbumUpSchoolId, _myAlbumUpClassId, _albumID);
-    
-    
-    for (int i =0; i < self.photoDatasource.count; i++) {
-        XXEMyselfAblumUpDataApi *updataApi = [[XXEMyselfAblumUpDataApi alloc]initWithAblumSchoolId:self.myAlbumUpSchoolId ClassId:self.myAlbumUpClassId AblumId:self.albumID ImageArray:self.photoDatasource[i] UserXid:strngXid UserId:albumUserId];
-        [arr addObject:updataApi];
-    }
-    
-//    NSLog(@"相册  -- %@", arr);
-    YTKBatchRequest *bathRequest = [[YTKBatchRequest alloc]initWithRequestArray:arr];
-    [bathRequest startWithCompletionBlockWithSuccess:^(YTKBatchRequest *batchRequest) {
-        NSLog(@"----%@",bathRequest);
-//        NSArray *array = bathRequest.requestArray;
-//        XXEMyselfAblumUpDataApi *api1 = (XXEMyselfAblumUpDataApi *)array[0];
-//        NSLog(@"信息%@",api1.responseJSONObject);
-//        XXEMyselfAblumUpDataApi *api2 = (XXEMyselfAblumUpDataApi *)array[1];
-//        NSLog(@"信息%@",api2.responseJSONObject);
-//        XXEMyselfAblumUpDataApi *api3 = (XXEMyselfAblumUpDataApi *)array[2];
-//        NSLog(@"信息%@",api3.responseJSONObject);
-
-        [self hideHud];
-        [self.navigationController popViewControllerAnimated:YES];
+    }else{
+        NSString *strngXid;
+        NSString *albumUserId;
+        if ([XXEUserInfo user].login) {
+            strngXid = [XXEUserInfo user].xid;
+            albumUserId = [XXEUserInfo user].user_id;
+        }else {
+            strngXid = XID;
+            albumUserId = USER_ID;
+        }
         
-    } failure:^(YTKBatchRequest *batchRequest) {
-        [self showHudWithString:@"上传失败" forSecond:1.f];
-    }];
+        NSMutableArray *arr = [NSMutableArray array];
+        
+        //    NSLog(@"%@ --- %@ --- %@ ----", _myAlbumUpSchoolId, _myAlbumUpClassId, _albumID);
+        
+        NSLog(@"数组 %@", _photoDatasource);
+        
+        
+        for (int i =0; i < self.photoDatasource.count; i++) {
+            XXEMyselfAblumUpDataApi *updataApi = [[XXEMyselfAblumUpDataApi alloc]initWithAblumSchoolId:self.myAlbumUpSchoolId ClassId:self.myAlbumUpClassId AblumId:self.albumID ImageArray:self.photoDatasource[i] UserXid:strngXid UserId:albumUserId];
+            [arr addObject:updataApi];
+        }
+        
+        //    NSLog(@"相册  -- %@", arr);
+        YTKBatchRequest *bathRequest = [[YTKBatchRequest alloc]initWithRequestArray:arr];
+        [bathRequest startWithCompletionBlockWithSuccess:^(YTKBatchRequest *batchRequest) {
+            //        NSLog(@"----%@",bathRequest);
+            
+            [self hideHud];
+            [self.navigationController popViewControllerAnimated:YES];
+            
+        } failure:^(YTKBatchRequest *batchRequest) {
+            [self showHudWithString:@"上传失败" forSecond:1.f];
+        }];
+    }
+    
 }
 
 

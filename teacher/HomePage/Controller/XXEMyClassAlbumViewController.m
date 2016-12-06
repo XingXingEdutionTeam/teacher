@@ -146,6 +146,7 @@ static NSString * IdentifierCELL = @"IdentifierCELL";
     contentVC.albumTeacherXID  = self.myAlbumTeacherId;
     contentVC.myAlbumUpSchoolId = self.myAlbumSchoolId;
     contentVC.myAlbumUpClassId = self.myAlbumClassId;
+    contentVC.fromFlagStr = @"fromMyselfAlbum";
     contentVC.datasource = self.datasource;
     NSLog(@"%@",contentVC.contentModel);
     [self.navigationController pushViewController:contentVC animated:YES];

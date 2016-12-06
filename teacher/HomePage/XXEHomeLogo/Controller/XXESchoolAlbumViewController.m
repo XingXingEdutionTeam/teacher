@@ -68,7 +68,8 @@
     }
     pic_id_str = @"";
     
-    
+    position = [DEFAULTS objectForKey:@"POSITION"];
+
     editButton.selected = YES;
     deleteButton.selected = YES;
     _seletedModelArray = [[NSMutableArray alloc] init];
@@ -103,8 +104,6 @@
     self.view.backgroundColor = UIColorFromRGB(229, 232, 233);
     
     self.title = @"相   册";
-    
-    
     [self.myCollcetionView registerNib:[UINib nibWithNibName:NSStringFromClass([XXESchoolAlbumCollectionViewCell class]) bundle:nil] forCellWithReuseIdentifier:NSStringFromClass([XXESchoolAlbumCollectionViewCell class])];
     
 }
@@ -112,7 +111,7 @@
 #pragma Mark  -------- settingNavgiationBar -------
 - (void)settingNavgiationBar{
 
-    if ([self.position isEqualToString:@"3"] || [self.position isEqualToString:@"4"]) {
+    if ([position isEqualToString:@"3"] || [position isEqualToString:@"4"]) {
         //设置 navigationBar 右边 赠送
         editButton = [UIButton buttonWithType:UIButtonTypeCustom];
         editButton.frame = CGRectMake(330, 5, 40, 22);
@@ -127,6 +126,7 @@
 #pragma mark ========== 右上角 编辑 按钮 editButtonCick ===========
 - (void)editButtonCick:(UIButton *)button{
 //    NSLog(@"-----  editButtonCick ----");
+//    NSLog(@"button.selected === %@", button.selected == YES ? @YES : @NO);
     button.selected = !button.selected;
     bottomView.hidden = !editButton.selected;
     
@@ -229,11 +229,15 @@
 - (void)deleteButtonClick:(UIButton *)button{
 
     //self.selectedIndexSet
+    
+//    NSLog(@"学校相册 %@", self.selectedIndexSet);
+    
     NSMutableArray *allIndexArray = [[NSMutableArray alloc] init];
     NSArray *seletedIndexArray = [[NSArray alloc] init];
     for (int i = 0; i < _dataSourceArray.count; i++) {
         [allIndexArray addObject:[NSString stringWithFormat:@"%d", i]];
     }
+    
    seletedIndexArray = [allIndexArray objectsAtIndexes:_selectedIndexSet];
     
     if ([seletedIndexArray count] != 0) {
@@ -284,7 +288,7 @@
     }
 
     
-    XXEDeleteSchoolPicApi *deleteSchoolPicApi = [[XXEDeleteSchoolPicApi alloc] initWithXid:parameterXid user_id:parameterUser_Id school_id:_schoolId position:_position pic_id_str:pic_id_str];
+    XXEDeleteSchoolPicApi *deleteSchoolPicApi = [[XXEDeleteSchoolPicApi alloc] initWithXid:parameterXid user_id:parameterUser_Id school_id:_schoolId position:position pic_id_str:pic_id_str];
     [deleteSchoolPicApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
 //                NSLog(@"2222---   %@", request.responseJSONObject);
         NSString *codeStr = [NSString stringWithFormat:@"%@", request.responseJSONObject[@"code"]];
@@ -293,7 +297,7 @@
             [self showHudWithString:@"删除成功!" forSecond:1.5];
             
             [_dataSourceArray removeObjectsInArray:_seletedModelArray];
-            
+            [_selectedIndexSet removeAllIndexes];
             [_myCollcetionView reloadData];
 //            [self updateButtonTitle];
         }else{
@@ -355,23 +359,6 @@
 
 }
 
-////相册 有数据 和 无数据 进行判断
-//- (void)customContent{
-//        // 1、无数据的时候
-//    if (_dataSourceArray.count == 0) {
-//        UIImage *myImage = [UIImage imageNamed:@"all_placeholder"];
-//        CGFloat myImageWidth = myImage.size.width;
-//        CGFloat myImageHeight = myImage.size.height;
-//        
-//        UIImageView *myImageView = [[UIImageView alloc] initWithFrame:CGRectMake(KScreenWidth / 2 - myImageWidth / 2, (KScreenHeight - 64 - 49) / 2 - myImageHeight / 2, myImageWidth, myImageHeight)];
-//        myImageView.image = myImage;
-//        [self.view addSubview:myImageView];
-//    }else{
-//        //2、有数据的时候
-//        [self createCollectionView];
-//    }
-//    
-//}
 // 有数据 和 无数据 进行判断
 - (void)customContent{
     // 如果 有占位图 先 移除
@@ -456,7 +443,8 @@
 
         XXESchoolAlbumModel *model = _dataSourceArray[indexPath.item];
     [cell.schoolImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",kXXEPicURL,model.pic]] placeholderImage:[UIImage imageNamed:@""]];
-    
+    cell.schoolImageView.contentMode = UIViewContentModeScaleAspectFill;
+    cell.schoolImageView.clipsToBounds = YES;
     cell.model = model;
     cell.disabled = [self.disabledContactIds containsObject:model.schoolPicId];
     

@@ -32,5 +32,7 @@
 @property (nonatomic, strong) NSSet *disabledContactIds;
 @property (nonatomic, strong) id<XXEAlbumContentViewControllerDelegate>delegate;
 
+@property (nonatomic, copy) NSString *fromFlagStr;
+
 
 @end

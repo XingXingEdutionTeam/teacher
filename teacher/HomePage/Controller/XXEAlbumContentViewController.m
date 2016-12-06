@@ -16,6 +16,7 @@
 #import "XXEAlbumShowViewController.h"
 #import "XXEUpdataImageViewController.h"
 #import "XXEDeleteClassPicApi.h"
+#import "XXESchoolUpPicViewController.h"
 
 
 @class XXEMySelfAlbumModel;
@@ -32,6 +33,11 @@
     UIButton *upButton;
     //要删除 图片 的id
     NSString *pic_id_str;
+    
+    UIImageView *placeholderImageView;
+    
+    NSString *parameterXid;
+    NSString *parameterUser_Id;
 }
 
 @property (nonatomic, strong)UICollectionView *myCollcetionView;
@@ -110,18 +116,30 @@ static NSString *headerCell = @"HEADERCELL";
     [super viewWillAppear:animated];
     self.view.backgroundColor = XXEBackgroundColor;
     self.navigationController.navigationBarHidden = NO;
-//    bottomView.hidden = !editButton.selected;
     [[UINavigationBar appearance]setTintColor:[UIColor whiteColor]];
     
     editButton.selected = YES;
     deleteButton.selected = YES;
     _seletedModelArray = [[NSMutableArray alloc] init];
-    //下面 bottom
-    [self createBottomView];
-    //设置 navgiationBar
-    [self settingNavgiationBar];
+    _selectedIndexSet = [NSMutableIndexSet indexSet];
+    
+    [self updateSelections];
+
+    
+    //只可编辑自己的相册
+    if ([_fromFlagStr isEqualToString:@"fromMyselfAlbum"]) {
+        //设置 navgiationBar
+        [self settingNavgiationBar];
+
+    }
+    
     ///获取数据
     [self setupAlbumContentRequeue];
+    
+    [_myCollcetionView reloadData];
+    
+    //下面 bottom
+    [self createBottomView];
 }
 -(UIStatusBarStyle)preferredStatusBarStyle
 {
@@ -131,13 +149,17 @@ static NSString *headerCell = @"HEADERCELL";
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationItem.title = _contentModel.album_name;
-    _selectedIndexSet = [NSMutableIndexSet indexSet];
-    _seletedModelArray = [[NSMutableArray alloc] init];
     
-    editButton.selected = YES;
+    if ([XXEUserInfo user].login){
+        parameterXid = [XXEUserInfo user].xid;
+        parameterUser_Id = [XXEUserInfo user].user_id;
+    }else{
+        parameterXid = XID;
+        parameterUser_Id = USER_ID;
+    }
+
     
-    //创建试图
-    [self creatCollectionView];
+
 }
 
 #pragma mark - 设置页面
@@ -165,8 +187,7 @@ static NSString *headerCell = @"HEADERCELL";
     self.myCollcetionView.allowsMultipleSelection = YES;
     
     [self.myCollcetionView registerNib:[UINib nibWithNibName:@"XXEContentAlbumCollectionCell" bundle:nil] forCellWithReuseIdentifier:identifierCell];
-    
-//    [self.myCollcetionView registerClass:[XXECollectionHeaderReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:headerCell];
+
     [self.view addSubview:self.myCollcetionView];
 }
 
@@ -174,6 +195,7 @@ static NSString *headerCell = @"HEADERCELL";
     bottomView = [[UIView alloc] initWithFrame:CGRectMake(0, KScreenHeight - 64 - 49, KScreenWidth, 49)];
     bottomView.backgroundColor = [UIColor whiteColor];
     bottomView.hidden = YES;
+    
     [self.view addSubview:bottomView];
     bottomView.userInteractionEnabled =YES;
     
@@ -234,7 +256,7 @@ static NSString *headerCell = @"HEADERCELL";
 {
     XXEContentAlbumCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:identifierCell forIndexPath:indexPath];
     XXEAlbumDetailsModel *model = self.datasourceA[indexPath.item];
-//    NSLog(@"相片的地址:%@",model.pic);
+//    NSLog(@"相片的地址:%@ ===== %ld",model.pic, indexPath.item);
     NSString *string = [NSString stringWithFormat:@"%@%@",kXXEPicURL,model.pic];
     
     [cell configterContentAblumCellPicURl:string];
@@ -247,18 +269,6 @@ static NSString *headerCell = @"HEADERCELL";
 {
     return UIEdgeInsetsMake(10, 10, 10, 10);
 }
-////头视图
-//- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
-//{
-//    if ([kind isEqualToString:UICollectionElementKindSectionHeader]) {
-//        XXECollectionHeaderReusableView *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:headerCell forIndexPath:indexPath];
-//        headerView.title =  self.timesDatasource[indexPath.section];
-//        headerView.backgroundColor = [UIColor lightGrayColor];
-//        return headerView;
-//    } else {
-//        return nil;
-//    }
-//}
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section{
     
@@ -267,25 +277,32 @@ static NSString *headerCell = @"HEADERCELL";
 
 #pragma mark - actionButton
 - (void)editButtonCick:(UIButton *)button{
-    //    NSLog(@"-----  editButtonCick ----");
+//    NSLog(@"button.selected === %@", button.selected == YES ? @YES : @NO);
+
     button.selected = !button.selected;
-    bottomView.hidden = !editButton.selected;
+//    bottomView.hidden = !editButton.selected;
     if (editButton.selected == YES) {
+        bottomView.hidden = NO;
         _myCollcetionView.frame = CGRectMake(0, 0, KScreenWidth, KScreenHeight - 64 - 49);
     }else if (editButton.selected == NO){
+        bottomView.hidden = YES;
+        [_myCollcetionView reloadData];
         _myCollcetionView.frame = CGRectMake(0, 0, KScreenWidth, KScreenHeight - 64);
     }
     
+//    NSLog(@"bottomView.hidden === %@", bottomView.hidden == YES ? @YES : @NO);
 }
 
 #pragma mark - ---------------------上传 照片----------------
 - (void)upButtonClick:(UIButton *)upBtn{
     NSLog(@"上传图片");
+
     XXEUpdataImageViewController *updataVC = [[XXEUpdataImageViewController alloc]init];
     updataVC.datasource = self.datasource ;
     updataVC.myAlbumUpSchoolId = self.myAlbumUpSchoolId;
     updataVC.myAlbumUpClassId = self.myAlbumUpClassId;
     [self.navigationController pushViewController:updataVC animated:YES];
+
 }
 
 #pragma mark ----------------全选 -------------------
@@ -336,11 +353,16 @@ static NSString *headerCell = @"HEADERCELL";
     }
     seletedIndexArray = [allIndexArray objectsAtIndexes:_selectedIndexSet];
     
-    for (NSString *str in seletedIndexArray) {
-        NSInteger t = [str integerValue];
-        
-        [_seletedModelArray addObject:_datasourceA[t]];
+    if ([seletedIndexArray count] != 0) {
+        for (NSString *str in seletedIndexArray) {
+            NSInteger t = [str integerValue];
+            
+            [_seletedModelArray addObject:_datasourceA[t]];
+        }
+    }else{
+       [self showHudWithString:@"请选择要删除的图片!" forSecond:1.5];
     }
+
 
     //    NSLog(@"=====  deleteButtonClick =====");
     button.selected = !button.selected;
@@ -381,20 +403,11 @@ static NSString *headerCell = @"HEADERCELL";
     }
 
     
-    NSLog(@"%@",self.seletedModelArray);
-    NSString *strngXid;
-    NSString *homeUserId;
-    if ([XXEUserInfo user].login) {
-        strngXid = [XXEUserInfo user].xid;
-        homeUserId = [XXEUserInfo user].user_id;
-    }else {
-        strngXid = XID;
-        homeUserId = USER_ID;
-    }
+//    NSLog(@"%@",self.seletedModelArray);
     
 //    for (int i=0; i<self.seletedModelArray.count; i++) {
 //       XXEAlbumDetailsModel *model = self.seletedModelArray[i];
-    XXEDeleteClassPicApi *deleteApi = [[XXEDeleteClassPicApi alloc]initWithDeleteUserXid:strngXid UserID:homeUserId PicId:pic_id_str];
+    XXEDeleteClassPicApi *deleteApi = [[XXEDeleteClassPicApi alloc]initWithDeleteUserXid:parameterXid UserID:parameterUser_Id PicId:pic_id_str];
         [deleteApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
 //            NSLog(@"%@",request.responseJSONObject);
 //            NSLog(@"%@",[request.responseJSONObject objectForKey:@"msg"]);
@@ -403,10 +416,9 @@ static NSString *headerCell = @"HEADERCELL";
                 [self showHudWithString:@"删除成功!" forSecond:1.5];
                 
                 [_datasourceA removeObjectsInArray:_seletedModelArray];
-                
+                [_selectedIndexSet removeAllIndexes];
                 [_myCollcetionView reloadData];
-//                editButton.selected = NO;
-                //            [self updateButtonTitle];
+
             }else{
                 [self showHudWithString:@"删除失败!" forSecond:1.5];
             }
@@ -416,56 +428,95 @@ static NSString *headerCell = @"HEADERCELL";
         }];
 //    }
     //重新获取数据
-    [self setupAlbumContentRequeue];
+//    [self setupAlbumContentRequeue];
 }
 
 
-#pragma mark - 获取数据
+#pragma mark - 获取相册 图片 数据 ===========
 - (void)setupAlbumContentRequeue
 {
-    NSString *strngXid;
-    NSString *homeUserId;
-    if ([XXEUserInfo user].login) {
-        strngXid = [XXEUserInfo user].xid;
-        homeUserId = [XXEUserInfo user].user_id;
-    }else {
-        strngXid = XID;
-        homeUserId = USER_ID;
-    }
     
-    XXEAlbumContentApi *contentApi = [[XXEAlbumContentApi alloc]initWithAlbumContentAlbumId:self.contentModel.album_id UserXid:strngXid UserId:homeUserId];
+//    NSLog(@"%@==== %@ ==== %@ =====", self.contentModel.album_id, parameterXid, parameterUser_Id);
+    
+    XXEAlbumContentApi *contentApi = [[XXEAlbumContentApi alloc]initWithAlbumContentAlbumId:self.contentModel.album_id UserXid:parameterXid UserId:parameterUser_Id];
     NSLog(@"%@",self.contentModel.album_id);
     
     [contentApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
 //        NSLog(@"总的%@",request.responseJSONObject);
-        NSDictionary *data = [request.responseJSONObject objectForKey:@"data"];
-//        NSLog(@"data:%@",data);
-        [self.timesDatasource removeAllObjects];
-        [self.originalDatasource removeAllObjects];
-        [self.itemDatasource removeAllObjects];
-        [self.datasourceA removeAllObjects];
         
-        for (NSString *timeStr in data) {
-            NSString *newTime = [XXETool dateStringFromNumberTimer:timeStr];
-            [self.timesDatasource addObject:newTime];
-            [self.originalDatasource addObject:timeStr];
-        }
+        NSString *codeStr = [NSString stringWithFormat:@"%@", request.responseJSONObject[@"code"]];
         
-        for (int i = 0; i<self.originalDatasource.count; i++) {
-            NSMutableArray *arr = [[NSMutableArray alloc]initWithArray:[data objectForKey:self.originalDatasource[i]]];
+        if ([codeStr isEqualToString:@"1"]) {
+            NSDictionary *data = [request.responseJSONObject objectForKey:@"data"];
             
-            for (int j =0; j<arr.count; j++) {
-                XXEAlbumDetailsModel *model = [[XXEAlbumDetailsModel alloc]initWithDictionary:arr[j] error:nil];
-                [self.datasourceA addObject:model];
+            
+            //        NSLog(@"data:%@",data);
+            [self.timesDatasource removeAllObjects];
+            [self.originalDatasource removeAllObjects];
+            [self.itemDatasource removeAllObjects];
+            [self.datasourceA removeAllObjects];
+            
+            for (NSString *timeStr in data) {
+                NSString *newTime = [XXETool dateStringFromNumberTimer:timeStr];
+                [self.timesDatasource addObject:newTime];
+                [self.originalDatasource addObject:timeStr];
             }
+            
+            for (int i = 0; i<self.originalDatasource.count; i++) {
+                NSMutableArray *arr = [[NSMutableArray alloc]initWithArray:[data objectForKey:self.originalDatasource[i]]];
+                
+                for (int j =0; j<arr.count; j++) {
+                    XXEAlbumDetailsModel *model = [[XXEAlbumDetailsModel alloc]initWithDictionary:arr[j] error:nil];
+                    [self.datasourceA addObject:model];
+                }
+            }
+        
         }
-        NSLog(@"所有对象%@",self.datasourceA);
-        [self.myCollcetionView reloadData];
+
+        [self customContent];
+
     } failure:^(__kindof YTKBaseRequest *request) {
         [self showString:@"照片数据请求失败" forSecond:1.f];
     }];
 }
 
+// 有数据 和 无数据 进行判断
+- (void)customContent{
+    // 如果 有占位图 先 移除
+    [self removePlaceholderImageView];
+    
+    if (_datasourceA.count == 0) {
+        // 1、无数据的时候
+        [self createPlaceholderView];
+        
+    }else{
+        //2、有数据的时候
+        [self creatCollectionView];
+    }
+    
+    [_myCollcetionView reloadData];
+    
+}
+
+
+//没有 数据 时,创建 占位图
+- (void)createPlaceholderView{
+    // 1、无数据的时候
+    UIImage *myImage = [UIImage imageNamed:@"all_placeholder"];
+    CGFloat myImageWidth = myImage.size.width;
+    CGFloat myImageHeight = myImage.size.height;
+    
+    placeholderImageView = [[UIImageView alloc] initWithFrame:CGRectMake(kWidth / 2 - myImageWidth / 2, (kHeight - 64 - 49) / 2 - myImageHeight / 2, myImageWidth, myImageHeight)];
+    placeholderImageView.image = myImage;
+    [self.view addSubview:placeholderImageView];
+}
+
+//去除 占位图
+- (void)removePlaceholderImageView{
+    if (placeholderImageView != nil) {
+        [placeholderImageView removeFromSuperview];
+    }
+}
 
 #pragma mark ------- ++++++ ====== 全选/反选 ======= ++++++++ ----------
 
@@ -538,14 +589,16 @@ static NSString *headerCell = @"HEADERCELL";
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     //    NSLog(@"%@",editButton.selected ? @"YES":@"NO");
     //        XXESchoolAlbumModel *picModel = _dataSourceArray[indexPath.item];
+    XXEContentAlbumCollectionCell *cell = (XXEContentAlbumCollectionCell*)[collectionView cellForItemAtIndexPath:indexPath];
     if (editButton.selected == YES) {
+        //显示 勾选
+        cell.checkImageView.hidden = NO;
         [self.selectedIndexSet addIndex:indexPath.item];
         [self updateToggleSelectionButton];
     }else if(editButton.selected == NO){
-//        XXEAlbumShowViewController *showVC = [[XXEAlbumShowViewController alloc]init];
-//        showVC.detailsModel = self.datasourceA[indexPath.item];
-//        showVC.showAlbumXid = self.albumTeacherXID;
-//        [self.navigationController pushViewController:showVC animated:YES];
+        //不显示 勾选
+        cell.checkImageView.hidden = YES;
+
         XXESchoolAlbumShowViewController *showVC = [[XXESchoolAlbumShowViewController alloc]init];
         
         NSMutableArray *picArr = [[NSMutableArray alloc] init];
@@ -564,7 +617,7 @@ static NSString *headerCell = @"HEADERCELL";
 
 - (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath {
     [self.selectedIndexSet removeIndex:indexPath.item];
-    
+
     [self updateToggleSelectionButton];
 }
 

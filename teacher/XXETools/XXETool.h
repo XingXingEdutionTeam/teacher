@@ -21,6 +21,7 @@
 + (int)queryWeekday;
 
 +(UIButton *)createButtonFrame:(CGRect)frame unseletedImageName:(NSString *)unseletedImageName seletedImageName:(NSString *)seletedImageName title:(NSString *)title unseletedTitleColor:(UIColor *)unseletedTitleColor seletedTitleColor:(UIColor *)seletedTitleColor font:(UIFont *)font target:(id)target action:(SEL)action;
-
+//功能待完善 提示框
++ (void)showAlertView;
 
 @end

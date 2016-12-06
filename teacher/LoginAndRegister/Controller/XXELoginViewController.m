@@ -339,7 +339,7 @@
     }];
     
     //游客登录
-    UIButton *guestButton = [self creatButtonFrame:CGRectMake(0, 0, 24, 25) title:@"游客登录" titleColor:[UIColor colorWithRed:0/255.f green:170/255.0 blue:42/255.0 alpha:1.0] font:[UIFont systemFontOfSize:13] target:self action:@selector(guestButtonClick:)];
+    UIButton *guestButton = [self creatButtonFrame:CGRectMake(0, 0, 24, 25) title:@"访客登录" titleColor:[UIColor colorWithRed:0/255.f green:170/255.0 blue:42/255.0 alpha:1.0] font:[UIFont systemFontOfSize:13] target:self action:@selector(guestButtonClick:)];
     [self.view addSubview:guestButton];
     
     [guestButton mas_remakeConstraints:^(MASConstraintMaker *make) {
@@ -557,7 +557,7 @@
         NSDictionary *data = [request.responseJSONObject objectForKey:@"data"];
         NSString *code = [request.responseJSONObject objectForKey:@"code"];
         NSString *msg = [request.responseJSONObject objectForKey:@"msg"];
-        NSLog(@"%@",msg);
+//        NSLog(@"%@",msg);
         if ([code intValue]==1) {
             [self LoginSetupUserInfoDict:data SnsAccessToken:@"" LoginType:@"10"];
             XXETabBarControllerConfig *tabBarControllerConfig = [[XXETabBarControllerConfig alloc]init];

@@ -93,14 +93,14 @@
     if (model.count == 1) {
         self.titleLabel.text = @"新";
         [self.LeftImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",kXXEPicURL,model[0]]] placeholderImage:[UIImage imageNamed:@"album_icon"]];
+        self.MiddleImageView.image = [UIImage imageNamed:@""];
+        self.rightImageView.image = [UIImage imageNamed:@""];
     }else if(model.count == 2){
         self.titleLabel.text = @"新";
         [self.LeftImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",kXXEPicURL,model[0]]] placeholderImage:[UIImage imageNamed:@"album_icon"]];
-//        [self.MiddleImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",kXXEPicURL,model[1]]] placeholderImage:[UIImage imageNamed:@"album_icon"]];
-//        [self.rightImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",kXXEPicURL,model[2]]] placeholderImage:[UIImage imageNamed:@"album_icon"]];
-//        [self.MiddleImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",kXXEPicURL,model[1]]]];
-//        [self.rightImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",kXXEPicURL,model[2]]]];
+
         [self.MiddleImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",kXXEPicURL,model[1]]] placeholderImage:[UIImage imageNamed:@"album_icon"]];
+        self.rightImageView.image = [UIImage imageNamed:@""];
     }else if(model.count == 3){
         self.titleLabel.text = @"新";
         NSLog(@"%lu",(unsigned long)model.count);

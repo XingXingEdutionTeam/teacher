@@ -21,5 +21,9 @@
 //判断 来源 (即判断 上传 的是 什么照片 或者 视频)
 @property (nonatomic, copy) NSString *flagStr;
 
+/** 上传首页班级相册 时候 会用到   相册ID */
+@property (nonatomic, strong)NSString *albumID;
+
+
 
 @end

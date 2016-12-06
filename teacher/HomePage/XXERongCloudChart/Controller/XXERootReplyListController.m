@@ -72,57 +72,57 @@
     [super viewWillAppear:animated];
     
     self.navigationController.navigationBarHidden = NO;
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(deleteFriend:) name:@"delete" object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(deleteFriend:) name:@"delete" object:nil];
     
     [[XXERCDataManager shareManager] refreshBadgeValue];
     [self.conversationListTableView reloadData];
 
 }
 
-- (void)deleteFriend:(NSNotification *)noti{
-//    NSLog(@" -- %@", noti.userInfo[@"DeleteXid"]);
-    
-    deleteXid = noti.userInfo[@"DeleteXid"];
-    if (deleteXid != nil && self.conversationListDataSource.count != 0) {
-        
-//        NSLog(@"self.conversationListDataSource -- %@", self.conversationListDataSource);
-        
-        for (RCConversationModel *model in self.conversationListDataSource) {
-            if ([model.targetId isEqualToString:deleteXid]) {
-                
-                replyListArray = [NSMutableArray arrayWithArray:self.conversationListDataSource];
-                
-                NSInteger index = [self.conversationListDataSource indexOfObject:model];
-                
-                [[RCIMClient sharedRCIMClient] removeConversation:model.conversationType targetId:model.targetId];
-                [replyListArray removeObjectAtIndex:index];
-                
-                
-                self.conversationListDataSource = replyListArray;
-                NSLog(@"nnnn %@", self.conversationListDataSource);
-                
-                [self.conversationListTableView reloadData];
-                [[XXERCDataManager shareManager] refreshBadgeValue];
-                
-            }
-        }
-    }
-
-}
-
-
-- (BOOL)removeConversation:(RCConversationType)conversationType
-                  targetId:(NSString *)targetId{
-
-    return YES;
-}
+//- (void)deleteFriend:(NSNotification *)noti{
+////    NSLog(@" -- %@", noti.userInfo[@"DeleteXid"]);
+//    
+//    deleteXid = noti.userInfo[@"DeleteXid"];
+//    if (deleteXid != nil && self.conversationListDataSource.count != 0) {
+//        
+////        NSLog(@"self.conversationListDataSource -- %@", self.conversationListDataSource);
+//        
+//        for (RCConversationModel *model in self.conversationListDataSource) {
+//            if ([model.targetId isEqualToString:deleteXid]) {
+//                
+//                replyListArray = [NSMutableArray arrayWithArray:self.conversationListDataSource];
+//                
+//                NSInteger index = [self.conversationListDataSource indexOfObject:model];
+//                
+//                [[RCIMClient sharedRCIMClient] removeConversation:model.conversationType targetId:model.targetId];
+//                [replyListArray removeObjectAtIndex:index];
+//                
+//                
+//                self.conversationListDataSource = replyListArray;
+//                NSLog(@"nnnn %@", self.conversationListDataSource);
+//                
+//                [self.conversationListTableView reloadData];
+//                [[XXERCDataManager shareManager] refreshBadgeValue];
+//                
+//            }
+//        }
+//    }
+//
+//}
 
 
+//- (BOOL)removeConversation:(RCConversationType)conversationType
+//                  targetId:(NSString *)targetId{
+//
+//    return YES;
+//}
 
-- (void)dealloc{
 
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"delete" object:nil];
-}
+
+//- (void)dealloc{
+//
+//    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"delete" object:nil];
+//}
 
 /*!
  接收消息的回调方法
@@ -134,7 +134,7 @@
     for (RCUserInfo *userInfo in [AppDelegate shareAppDelegate].friendsArray) {
         if ([message.senderUserId isEqualToString:userInfo.userId]) {
     
-            NSLog(@" onRCIMReceiveMessage %@",message.content);
+//            NSLog(@" onRCIMReceiveMessage %@",message.content);
             [[XXERCDataManager shareManager] refreshBadgeValue];
             [self.conversationListTableView reloadData];
         }
@@ -289,7 +289,7 @@
     XXERongCloudJudgePositionApi *rongCloudJudgePositionApi = [[XXERongCloudJudgePositionApi alloc] initWithXid:parameterXid user_id:parameterUser_Id other_xid:otherXid];
     [rongCloudJudgePositionApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         
-                      NSLog(@"2222---   %@", request.responseJSONObject);
+//        NSLog(@"2222---   %@", request.responseJSONObject);
         NSString *codeStr = [NSString stringWithFormat:@"%@", request.responseJSONObject[@"code"]];
         /*
          ★其他结果需提醒用户
@@ -436,13 +436,13 @@
 
 -(RCConversationBaseCell *)rcConversationListTableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
-//        NSLog(@"KKKK%@", self.conversationListDataSource);
+        NSLog(@"KKKK%@", self.conversationListDataSource);
     XXERCCustomCellTableViewCell *cell = (XXERCCustomCellTableViewCell *)[[XXERCCustomCellTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"XXERCCustomCellTableViewCell"];
     
     if (self.conversationListDataSource.count && indexPath.row < self.conversationListDataSource.count) {
         RCConversationModel *model = self.conversationListDataSource[indexPath.row];
 //     NSString *flagStr = @"0";
-//NSLog(@"[AppDelegate shareAppDelegate].friendsArray  -----====--  %@", [AppDelegate shareAppDelegate].friendsArray);
+NSLog(@"[AppDelegate shareAppDelegate].friendsArray  -----====--  %@", [AppDelegate shareAppDelegate].friendsArray);
         for (RCUserInfo *userInfo in [AppDelegate shareAppDelegate].friendsArray) {
             if ([model.targetId isEqualToString:userInfo.userId]) {
 //                flagStr = @"1";
@@ -451,10 +451,12 @@
                 NSLog(@"头像   %@", userInfo.portraitUri);
                 NSLog(@"id     %@", userInfo.userId);
                 
-                [[XXERCDataManager shareManager] getUserInfoWithUserId:model.targetId completion:^(RCUserInfo *userInfo) {
-                    
+//                RCUserInfo *aUserInfo =[[RCUserInfo alloc]initWithUserId:userInfo.userId name:userInfo.name portrait:userInfo.portraitUri QQ:nil sex:nil age:dic[@"age"]];
+                
+//                [[XXERCDataManager shareManager] getUserInfoWithUserId:model.targetId completion:^(RCUserInfo *userInfo) {
+                
                     //            NSLog(@"rcConversationListTableView 名字 ＝ %@  ID ＝ %@ 头像 = %@",userInfo.name,userInfo.userId, userInfo.portraitUri);
-                }];
+//                }];
                 
                 //======================= 时间 ==================
                 NSDate *date = [NSDate dateWithTimeIntervalSince1970:model.receivedTime/1000];
@@ -580,6 +582,8 @@
     //处理好友请求
     RCMessage *message = notification.object;
     
+//    NSLog(@"message == %@", message.objectN);
+    
     if ([message.content isMemberOfClass:[RCMessageContent class]]) {
         if (message.conversationType == ConversationType_PRIVATE) {
             NSLog(@"好友消息要发系统消息！！！");
@@ -590,6 +594,7 @@
         customModel.conversationModelType = RC_CONVERSATION_MODEL_TYPE_CUSTOMIZATION;
         customModel.senderUserId = message.senderUserId;
         customModel.lastestMessage = message.content;
+        
         dispatch_async(dispatch_get_main_queue(), ^{
             //调用父类刷新未读消息数
             [blockSelf_ refreshConversationTableViewWithConversationModel:customModel];
@@ -633,7 +638,7 @@
         });
     }
     [[XXERCDataManager shareManager] getUserInfoWithUserId:message.senderUserId completion:^(RCUserInfo *userInfo) {
-//        NSLog(@"didReceiveMessageNotification 名字 ＝ %@  ID ＝ %@",userInfo.name,userInfo.userId);
+        NSLog(@"didReceiveMessageNotification 名字 ＝ %@  ID ＝ %@",userInfo.name,userInfo.userId);
     }];
     [self refreshConversationTableViewIfNeeded];
 }
@@ -646,17 +651,22 @@
 
 - (void)showEmptyConversationView{
     // 1、无数据的时候
-    UIImage *myImage = [UIImage imageNamed:@"all_placeholder"];
-    CGFloat myImageWidth = myImage.size.width;
-    CGFloat myImageHeight = myImage.size.height;
     
-    if (self.placeholderImageView) {
-        [self.placeholderImageView removeFromSuperview];
-    }
+//    if (self.placeholderImageView) {
+//        [self.placeholderImageView removeFromSuperview];
+//    }
     
-    self.placeholderImageView = [[UIImageView alloc] initWithFrame:CGRectMake(kWidth / 2 - myImageWidth / 2, (kHeight - 64 - 49) / 2 - myImageHeight / 2, myImageWidth, myImageHeight)];
-    self.placeholderImageView.image = myImage;
-    [self.view addSubview:self.placeholderImageView];
+//    self.placeholderImageView = [[UIImageView alloc] initWithFrame:CGRectMake(kWidth / 2 - myImageWidth / 2, (kHeight - 64 - 49) / 2 - myImageHeight / 2, myImageWidth, myImageHeight)];
+//    self.placeholderImageView.image = myImage;
+//    [self.view addSubview:self.placeholderImageView];
+    
+//    UIImage *myImage = [UIImage imageNamed:@"all_placeholder"];
+//    CGFloat myImageWidth = myImage.size.width;
+//    CGFloat myImageHeight = myImage.size.height;
+//    
+//   UIImageView *placeholderImageView = [[UIImageView alloc] initWithFrame:CGRectMake(kWidth / 2 - myImageWidth / 2, (kHeight - 64 - 49) / 2 - myImageHeight / 2, myImageWidth, myImageHeight)];
+//    placeholderImageView.image = myImage;
+//    [self.view addSubview:placeholderImageView];
 }
 
 #pragma mark 删除会话的回调

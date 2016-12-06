@@ -236,7 +236,7 @@
         XXESchoolAlbumViewController *albumVC = [[XXESchoolAlbumViewController alloc] init];
         albumVC.flagStr = @"formSchoolInfo";
         albumVC.schoolId = _schoolId;
-        albumVC.position = _position;
+//        albumVC.position = position;
         [self.navigationController pushViewController:albumVC animated:YES];
         //11 视频
     }else if (indexPath.row == 11){

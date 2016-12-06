@@ -74,21 +74,26 @@ static NSString * OTherCELL = @"OTHERCELL";
         albumUserId = USER_ID;
     }
     
-    NSLog(@"老师ID%@ 学校%@ 班级%@",self.otherTeacherId,self.otherSchoolId,self.otherClassId);
+//    NSLog(@"老师ID%@ 学校%@ 班级%@",self.otherTeacherId,self.otherSchoolId,self.otherClassId);
     
     //真实环境
         XXEMyselfAblumApi *myselfAblum = [[XXEMyselfAblumApi alloc]initWithMyselfAblumSchoolId:self.otherSchoolId ClassId:self.otherClassId TeacherId:self.otherTeacherId AlbumXid:strngXid AlbumUserId:albumUserId];
     [myselfAblum startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         
-        NSArray *data = [request.responseJSONObject objectForKey:@"data"];
-        if ([request.responseJSONObject isKindOfClass:[NSArray class]]) {
-            for (int i =0; i < data.count; i++) {
-                XXEMySelfAlbumModel *model = [[XXEMySelfAlbumModel alloc]initWithDictionary:data[i] error:nil];
-                [self.datasource addObject:model];
-            }
-        }
+//        NSLog(@" hhhh === %@", request.responseJSONObject);
         
-        NSLog(@"%@",self.datasource);
+        if ([request.responseJSONObject[@"code"] integerValue] == 1) {
+            
+            NSArray *picArray = [NSArray arrayWithArray:request.responseJSONObject[@"data"]];
+            if (picArray.count != 0) {
+                for (int i =0; i < picArray.count; i++) {
+                XXEMySelfAlbumModel *model = [[XXEMySelfAlbumModel alloc]initWithDictionary:picArray[i] error:nil];
+                    [self.datasource addObject:model];
+                }
+            }
+            
+        }
+
         [self.otherTeacherTableView reloadData];
         
     } failure:^(__kindof YTKBaseRequest *request) {
@@ -113,17 +118,18 @@ static NSString * OTherCELL = @"OTHERCELL";
 {
     XXEMyClassAlbumTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:OTherCELL forIndexPath:indexPath];
     XXEMySelfAlbumModel *model = self.datasource[indexPath.row];
-    NSLog(@"显示的Model:%@",model);
+//    NSLog(@"显示的Model:%@",model);
     [cell configerGetClassAlubmMessage:model];
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"===相册的详情=====");
+//    NSLog(@"===相册的详情=====");
     XXEAlbumContentViewController *contentVC = [[XXEAlbumContentViewController alloc]init];
     contentVC.contentModel = self.datasource[indexPath.row];
     contentVC.albumTeacherXID  = self.otherTeacherId;
+    contentVC.fromFlagStr = @"fromOtherAlbum";
     NSLog(@"%@",contentVC.contentModel);
     [self.navigationController pushViewController:contentVC animated:YES];
 }
