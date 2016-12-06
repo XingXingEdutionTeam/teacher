@@ -99,7 +99,7 @@ static NSString *const IdentifierCell = @"classAlbunCell";
     [self.headDatasource removeAllObjects];
     XXEClassAlbumApi *classApi = [[XXEClassAlbumApi alloc]initWithClassAlbumSchoolID:self.schoolID classID:self.classID UserXId:strngXid UserID:albumUserId];
     [classApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
-        NSLog(@"%@",request.responseJSONObject);
+//        NSLog(@"bbbb 相册 ****** %@",request.responseJSONObject);
         
         NSString *code = [request.responseJSONObject objectForKey:@"code"];
         if ([code intValue]==1) {
@@ -174,12 +174,15 @@ static NSString *const IdentifierCell = @"classAlbunCell";
     XXEClassAlbumTableViewCell *cell = (XXEClassAlbumTableViewCell*) [tableView dequeueReusableCellWithIdentifier:IdentifierCell];
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     if (self.imageViewDatasource.count ==0) {
-        
+    
     }else{
     NSArray *model = self.imageViewDatasource[indexPath.section];
-    NSLog(@"---------%@",self.imageViewDatasource);
+//    NSLog(@"---------%@",self.imageViewDatasource);
+//        NSLog(@"model ==== %@", model);
         [cell getTheImageViewData:model];
     }
+    
+    
     return cell;
 }
 
@@ -203,7 +206,7 @@ static NSString *const IdentifierCell = @"classAlbunCell";
         myClassVC.myAlbumClassId=self.classID;
         myClassVC.myAlbumSchoolId=self.schoolID;
         myClassVC.myAlbumTeacherId = self.teacherDatasource[indexPath.section];
-        NSLog(@"%@ %@ %@",myClassVC.myAlbumSchoolId,myClassVC.myAlbumClassId,myClassVC.myAlbumTeacherId);
+//        NSLog(@"%@ %@ %@",myClassVC.myAlbumSchoolId,myClassVC.myAlbumClassId,myClassVC.myAlbumTeacherId);
     [self.navigationController pushViewController:myClassVC animated:YES];
         
     }
@@ -212,7 +215,7 @@ static NSString *const IdentifierCell = @"classAlbunCell";
         otherVC.otherClassId=self.classID;
         otherVC.otherSchoolId=self.schoolID;
         otherVC.otherTeacherId = self.teacherDatasource[indexPath.section];
-        NSLog(@"%@ %@ %@",otherVC.otherSchoolId,otherVC.otherClassId,otherVC.otherTeacherId);
+//        NSLog(@"%@ %@ %@",otherVC.otherSchoolId,otherVC.otherClassId,otherVC.otherTeacherId);
         [self.navigationController pushViewController:otherVC animated:YES];
     }
         

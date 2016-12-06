@@ -13,8 +13,14 @@
 #import "MBProgressHUD.h"
 #import "WJCommboxView.h"
 #import "YTKBatchRequest.h"
+//上传学校相册
 #import "XXESchoolUpPicApi.h"
+//上传 我的 我的相册
 #import "XXEMyselfInfoAlbumUploadPicApi.h"
+//上传 首页 班级相册
+#import "XXEMyselfAblumUpDataApi.h"
+
+
 
 
 @interface XXESchoolUpPicViewController ()<ZYQAssetPickerControllerDelegate,UINavigationControllerDelegate,UIScrollViewDelegate>
@@ -84,6 +90,13 @@
             [arr addObject:myselfInfoAlbumUploadPicApi];
             
         }
+//        else if ([_flagStr isEqualToString:@"fromHomePageAlbum"]){
+//        //fromHomePageAlbum
+//            XXEMyselfAblumUpDataApi *updataApi = [[XXEMyselfAblumUpDataApi alloc]initWithAblumSchoolId:_schoolId ClassId:_classId AblumId:self.albumID ImageArray:self.photoDatasource[i] UserXid:strngXid UserId:albumUserId];
+//            [arr addObject:updataApi];
+//  
+//        
+//        }
     }
     
     YTKBatchRequest *bathRequest = [[YTKBatchRequest alloc]initWithRequestArray:arr];

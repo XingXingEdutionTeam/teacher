@@ -67,7 +67,9 @@
 - (void)configterContentAblumCellPicURl:(NSString *)picUrl
 {
     NSURL *url = [NSURL URLWithString:picUrl];
-    [self.myImageView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@""]];
+    [self.myImageView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"album_icon"]];
+    self.myImageView.contentMode = UIViewContentModeScaleAspectFill;
+    self.myImageView.clipsToBounds = YES;
 }
 
 @end

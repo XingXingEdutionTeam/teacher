@@ -22,7 +22,7 @@
 @property (nonatomic, strong) NSString *schoolId;
 @property (nonatomic, strong) NSString *classId;
 @property (nonatomic, copy) NSString *flagStr;
-@property (nonatomic, copy) NSString *position;
+//@property (nonatomic, copy) NSString *position;
 
 @property (nonatomic, strong) NSSet *selectedContactIds;
 @property (nonatomic, strong) NSSet *disabledContactIds;

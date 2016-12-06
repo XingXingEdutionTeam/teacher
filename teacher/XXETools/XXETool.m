@@ -104,4 +104,20 @@
     return btn;
 }
 
+//MARK: - 提示框
++ (void)showAlertView:(UIViewController *)vc{
+    //初始化提示框；
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"提示" message:@"该功能暂没开放, 尽情期待!" preferredStyle:  UIAlertControllerStyleAlert];
+    
+    [alert addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        //点击按钮的响应事件；
+    }]];
+    
+    //弹出提示框；
+    [vc presentViewController:alert animated:true completion:nil];
+}
+
+
+
+
 @end

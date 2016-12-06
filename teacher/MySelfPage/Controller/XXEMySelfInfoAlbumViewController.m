@@ -72,6 +72,8 @@
     _seletedModelArray = [[NSMutableArray alloc] init];
     _selectedIndexSet = [NSMutableIndexSet indexSet];
     
+    [self updateSelections];
+    
     //初始化数据源
     [self fetchNetData];
 
@@ -101,8 +103,6 @@
     self.view.backgroundColor = UIColorFromRGB(229, 232, 233);
     
     self.title = @"相   册";
-    
-    
     
     [self.myCollcetionView registerNib:[UINib nibWithNibName:NSStringFromClass([XXESchoolAlbumCollectionViewCell class]) bundle:nil] forCellWithReuseIdentifier:NSStringFromClass([XXESchoolAlbumCollectionViewCell class])];
     
@@ -220,7 +220,7 @@
 }
 
 
-#pragma mark ------- ++++++ ====== 全选/反选 ======= ++++++++ ----------
+#pragma mark ------- ++++++ ====== 全选/反选 ======-----
 
 - (void)updateSelections {
     if (!self.selectedContactIds || ![self.selectedContactIds count]) {
@@ -275,7 +275,9 @@
 #pragma mark ----------------删除 -------------------
 - (void)deleteButtonClick:(UIButton *)button{
 
-    //self.selectedIndexSet
+    //
+//    NSLog(@"self.selectedIndexSet === %@", self.selectedIndexSet);
+    
     NSMutableArray *allIndexArray = [[NSMutableArray alloc] init];
     NSArray *seletedIndexArray = [[NSArray alloc] init];
     for (int i = 0; i < _dataSourceArray.count; i++) {
@@ -340,7 +342,7 @@
             [self showHudWithString:@"删除成功!" forSecond:1.5];
             
             [_dataSourceArray removeObjectsInArray:_seletedModelArray];
-            
+            [self.selectedIndexSet removeAllIndexes];
             [_myCollcetionView reloadData];
 //            editButton.selected = NO;
 //            [self updateButtonTitle];
@@ -373,7 +375,7 @@
     [myselfInfoAlbumPicApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         _dataSourceArray = [[NSMutableArray alloc] init];
         picWallArray = [[NSMutableArray alloc] init];
-//                NSLog(@"2222---   %@", request.responseJSONObject);
+//        NSLog(@"2222---   %@", request.responseJSONObject);
         
         NSString *codeStr = [NSString stringWithFormat:@"%@", request.responseJSONObject[@"code"]];
         
@@ -463,6 +465,7 @@
     //    设置代理
     self.myCollcetionView.dataSource = self;
     self.myCollcetionView.delegate = self;
+    self.myCollcetionView.allowsMultipleSelection = YES;
     
     [self.view addSubview:self.myCollcetionView];
     
@@ -485,7 +488,10 @@
     XXESchoolAlbumCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:identifier forIndexPath:indexPath];
     
     XXESchoolAlbumModel *model = _dataSourceArray[indexPath.item];
+    
     [cell.schoolImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",kXXEPicURL,model.pic]] placeholderImage:[UIImage imageNamed:@""]];
+    cell.schoolImageView.contentMode = UIViewContentModeScaleAspectFill;
+    cell.schoolImageView.clipsToBounds = YES;
 
     cell.model = model;
     if ([self.disabledContactIds count] != 0) {
@@ -504,8 +510,6 @@
 #pragma mark PickerViewDelegate
 
 - (BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    NSLog(@"7777777");
-    
     if ([self.disabledContactIds count]) {
         NSInteger item = indexPath.item;
         XXESchoolAlbumModel *contact = _dataSourceArray[item];
@@ -516,7 +520,7 @@
 
 - (BOOL)collectionView:(UICollectionView *)collectionView shouldDeselectItemAtIndexPath:(NSIndexPath *)indexPath {
     
-    NSLog(@"888888");
+//    NSLog(@"888888");
     
     if ([self.disabledContactIds count]) {
         NSInteger item = indexPath.item;
@@ -529,14 +533,14 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     
-    NSLog(@"99999");
+//    NSLog(@"99999");
     
     XXESchoolAlbumCollectionViewCell *cell = (XXESchoolAlbumCollectionViewCell *)[_myCollcetionView cellForItemAtIndexPath:indexPath];
     if (editButton.selected == YES) {
 
         cell.checkImageView.hidden = NO;
         [self.selectedIndexSet addIndex:indexPath.item];
-
+        
         [self updateToggleSelectionButton];
     }else{
         
@@ -556,7 +560,7 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath {
     
-    NSLog(@"101010101");
+//    NSLog(@"101010101");
     
     [self.selectedIndexSet removeIndex:indexPath.item];
     
