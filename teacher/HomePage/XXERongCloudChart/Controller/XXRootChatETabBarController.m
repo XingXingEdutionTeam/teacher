@@ -13,8 +13,13 @@
 #import "RCUserInfo+XXEAddition.h"
 #import <RongIMKit/RongIMKit.h>
 #import "XXERCDataManager.h"
+#import "XXERootFriendListApi.h"
+#import "AppDelegate.h"
 
-@interface XXRootChatETabBarController ()
+@interface XXRootChatETabBarController (){
+    NSString *parameterXid;
+    NSString *parameterUser_Id;
+}
 
 @end
 
@@ -22,11 +27,52 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    if ([XXEUserInfo user].login){
+        parameterXid = [XXEUserInfo user].xid;
+        parameterUser_Id = [XXEUserInfo user].user_id;
+    }else{
+        parameterXid = XID;
+        parameterUser_Id = USER_ID;
+    }
+//    [self setContent];
+//    [self setRongCloud];
     
-    [self setContent];
-    [self setRongCloud];
+    [self rootFriendListServerDataPageNumber];
+}
+
+- (void)rootFriendListServerDataPageNumber
+{
     
-    
+    XXERootFriendListApi *rootFriendListApi = [[XXERootFriendListApi alloc]initWithRootFriendListUserXid:parameterXid UserId:parameterUser_Id];
+    [rootFriendListApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
+        //        NSLog(@"%@",request.responseJSONObject);
+        
+        NSString *code = [request.responseJSONObject objectForKey:@"code"];
+        if ([code integerValue]== 1) {
+            NSArray *data = [request.responseJSONObject objectForKey:@"data"];
+            for (NSDictionary *dic in data) {
+                //                0 :表示 自己 头像 ，需要添加 前缀
+                //                1 :表示 第三方 头像 ，不需要 添加 前缀
+                //判断是否是第三方头像
+                NSString * head_img;
+                if([[NSString stringWithFormat:@"%@",dic[@"head_img_type"]]isEqualToString:@"0"]){
+                    head_img=[kXXEPicURL stringByAppendingString:dic[@"head_img"]];
+                }else{
+                    head_img=dic[@"head_img"];
+                }
+                
+                RCUserInfo *aUserInfo =[[RCUserInfo alloc]initWithUserId:dic[@"xid"] name:dic[@"nickname"] portrait:head_img];
+                [[AppDelegate shareAppDelegate].friendsArray addObject:aUserInfo];
+                
+            }
+            [self setContent];
+            [self setRongCloud];
+        }
+        
+        
+    } failure:^(__kindof YTKBaseRequest *request) {
+        
+    }];
 }
 
 - (void)setContent{

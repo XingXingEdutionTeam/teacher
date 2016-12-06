@@ -377,7 +377,7 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
         }
         
         AudioServicesPlayAlertSound(1007);
-        [self saveFMDBWithUserInfo:userInfo];
+//        [self saveFMDBWithUserInfo:userInfo];
     }
     completionHandler();  // 系统要求执行这个方法
 }
@@ -399,7 +399,7 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
     
     
     
-    [self saveFMDBWithUserInfo:userInfo];
+//    [self saveFMDBWithUserInfo:userInfo];
     
     
     //订阅展示视图消息，将直接打开某个分支视图

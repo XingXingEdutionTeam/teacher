@@ -37,6 +37,7 @@
 
 @property (nonatomic,assign) BOOL isClick;
 
+@property(nonatomic ,strong) UIImageView *placeholderImageView;
 
 - (void) updateBadgeValueForTabBarItem;
 
@@ -56,12 +57,6 @@
 {
     self = [super init];
     if (self) {
-        [self setConversationAvatarStyle:RC_USER_AVATAR_CYCLE];
-        [self setDisplayConversationTypes:@[@(ConversationType_PRIVATE),@(ConversationType_DISCUSSION),@(ConversationType_GROUP),@(ConversationType_CHATROOM)]];
-        [RCIM sharedRCIM].receiveMessageDelegate = self;
-        [RCIM sharedRCIM].connectionStatusDelegate = self;
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(didReceiveMessageNotification:)name:RCKitDispatchMessageNotification object:nil];
         
     }
     return self;
@@ -69,9 +64,7 @@
 -(id)initWithCoder:(NSCoder *)aDecoder{
     self =[super initWithCoder:aDecoder];
     if (self) {
-        //设置要显示的会话类型
-        [self setDisplayConversationTypes:@[@(ConversationType_PRIVATE),@(ConversationType_DISCUSSION),@(ConversationType_GROUP),@(ConversationType_CHATROOM)]];
-        [self setConversationAvatarStyle:RC_USER_AVATAR_CYCLE];
+       
     }
     return self;
 }
@@ -181,6 +174,18 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
+    [self setConversationAvatarStyle:RC_USER_AVATAR_CYCLE];
+    [self setDisplayConversationTypes:@[@(ConversationType_PRIVATE),@(ConversationType_DISCUSSION),@(ConversationType_GROUP),@(ConversationType_CHATROOM)]];
+    [RCIM sharedRCIM].receiveMessageDelegate = self;
+    [RCIM sharedRCIM].connectionStatusDelegate = self;
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(didReceiveMessageNotification:)name:RCKitDispatchMessageNotification object:nil];
+    
+    
+    //设置要显示的会话类型
+    [self setDisplayConversationTypes:@[@(ConversationType_PRIVATE),@(ConversationType_DISCUSSION),@(ConversationType_GROUP),@(ConversationType_CHATROOM)]];
+    [self setConversationAvatarStyle:RC_USER_AVATAR_CYCLE];
+    
     if ([XXEUserInfo user].login){
         parameterXid = [XXEUserInfo user].xid;
         parameterUser_Id = [XXEUserInfo user].user_id;
@@ -557,12 +562,14 @@
             }
         }
         
+        if (self.placeholderImageView) {
+            [self.placeholderImageView removeFromSuperview];
+        }
         return cell;
     }else{
         
         return nil;
     }
-    
     
 }
 
@@ -634,8 +641,6 @@
 #pragma &&&&&&&&&&&&&& 显示 消息 条数 &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-
-
     return  self.conversationListDataSource.count;
 }
 
@@ -645,9 +650,13 @@
     CGFloat myImageWidth = myImage.size.width;
     CGFloat myImageHeight = myImage.size.height;
     
-   UIImageView *placeholderImageView = [[UIImageView alloc] initWithFrame:CGRectMake(kWidth / 2 - myImageWidth / 2, (kHeight - 64 - 49) / 2 - myImageHeight / 2, myImageWidth, myImageHeight)];
-    placeholderImageView.image = myImage;
-    [self.view addSubview:placeholderImageView];
+    if (self.placeholderImageView) {
+        [self.placeholderImageView removeFromSuperview];
+    }
+    
+    self.placeholderImageView = [[UIImageView alloc] initWithFrame:CGRectMake(kWidth / 2 - myImageWidth / 2, (kHeight - 64 - 49) / 2 - myImageHeight / 2, myImageWidth, myImageHeight)];
+    self.placeholderImageView.image = myImage;
+    [self.view addSubview:self.placeholderImageView];
 }
 
 #pragma mark 删除会话的回调

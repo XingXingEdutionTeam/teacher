@@ -112,6 +112,7 @@
 /** 判断身份 */
 @property (nonatomic, copy)NSString *identifyCard;
 
+@property(nonatomic , assign) int unreadMessageCount;
 
 @end
 
@@ -173,6 +174,9 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(systemMessage:) name:kSystemMessage object:nil];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(didReceiveMessageNotification:)name:RCKitDispatchMessageNotification object:nil];
+    
     self.view.backgroundColor = XXEBackgroundColor;
     self.navigationController.navigationBarHidden = YES;
     //新手 教程
@@ -197,6 +201,14 @@
 - (void)systemMessage:(NSNotification *)notification {
     self.middleView.systemNotificationBadgeView.hidden = NO;
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kSystemMessage object:nil];
+}
+
+- (void)didReceiveMessageNotification:(NSNotification *)notification {
+    
+    if (self.bottomView.chatBadgeView.hidden == YES) {
+        self.bottomView.chatBadgeView.hidden = NO;
+    }
+    
 }
 
 /** 这两个方法都可以,改变当前控制器的电池条颜色 */
@@ -269,11 +281,10 @@
 - (void)bottomViewShowPosition:(NSString *)position
 {
     [self.bottomView removeFromSuperview];
-    XXEHomePageBottomView *bottomView = [[XXEHomePageBottomView alloc]initWithFrame:CGRectMake(0, self.middleView.frame.origin.y+43*kScreenRatioHeight+1, KScreenWidth, 296*kScreenRatioHeight)];
-    [bottomView configBottomViewButton:self.userPosition];
-    self.bottomView = bottomView;
-    bottomView.delegate = self;
-    [self.view addSubview:bottomView];
+    self.bottomView = [[XXEHomePageBottomView alloc]initWithFrame:CGRectMake(0, self.middleView.frame.origin.y+43*kScreenRatioHeight+1, KScreenWidth, 296*kScreenRatioHeight)];
+    [self.bottomView configBottomViewButton:self.userPosition];
+    self.bottomView.delegate = self;
+    [self.view addSubview:self.bottomView];
 }
 
 - (void)commboxAction2:(NSNotification *)notif{
@@ -1126,6 +1137,7 @@
     [[NSNotificationCenter defaultCenter]removeObserver:self];
     [self.homeSchoolView.textField removeObserver:self forKeyPath:@"text"];
     [self.homeClassView.textField removeObserver:self forKeyPath:@"text"];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:RCKitDispatchMessageNotification object:nil];
 }
 
 - (void)viewWillDisappear:(BOOL)animated{

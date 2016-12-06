@@ -18,6 +18,8 @@
 
 @interface XXEHomePageBottomView : UIView
 
+@property(nonatomic , strong) UIView *chatBadgeView;
+
 @property (nonatomic, weak)id<XXEHomePageBottomViewDelegate>delegate;
 
 /** 给试图赋值 */
