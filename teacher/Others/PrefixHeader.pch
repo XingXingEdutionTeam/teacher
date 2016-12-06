@@ -37,5 +37,6 @@
 
 #import "WZYHttpTool.h"
 #import "StringHeight.h"
+#import "NSString+ImgURL.h"
 
 #endif /* PrefixHeader_pch */

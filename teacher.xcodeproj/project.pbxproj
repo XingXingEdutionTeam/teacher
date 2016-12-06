@@ -948,6 +948,7 @@
 		9EBDB5471D61CCC500A2F252 /* XXEAlbumContentApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EBDB5461D61CCC500A2F252 /* XXEAlbumContentApi.m */; };
 		9EBDB54D1D61D4D900A2F252 /* XXEContentAlbumCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EBDB54C1D61D4D900A2F252 /* XXEContentAlbumCollectionViewCell.m */; };
 		9EBDB5501D61DB2400A2F252 /* XXECollectionHeaderReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EBDB54F1D61DB2400A2F252 /* XXECollectionHeaderReusableView.m */; };
+		9EC0EBB01DF69D7D007AD918 /* NSString+ImgURL.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EC0EBAF1DF69D7D007AD918 /* NSString+ImgURL.m */; };
 		9ED146FC1D597D420049D2AA /* WJCommboxView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9ED146FB1D597D420049D2AA /* WJCommboxView.m */; };
 		9ED146FF1D597DB40049D2AA /* XXEHomePageHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9ED146FE1D597DB40049D2AA /* XXEHomePageHeaderView.m */; };
 		9ED147021D59A9BF0049D2AA /* ProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9ED147011D59A9BF0049D2AA /* ProgressView.m */; };
@@ -2684,6 +2685,8 @@
 		9EBDB54C1D61D4D900A2F252 /* XXEContentAlbumCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXEContentAlbumCollectionViewCell.m; sourceTree = "<group>"; };
 		9EBDB54E1D61DB2400A2F252 /* XXECollectionHeaderReusableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXECollectionHeaderReusableView.h; sourceTree = "<group>"; };
 		9EBDB54F1D61DB2400A2F252 /* XXECollectionHeaderReusableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXECollectionHeaderReusableView.m; sourceTree = "<group>"; };
+		9EC0EBAE1DF69D7D007AD918 /* NSString+ImgURL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+ImgURL.h"; sourceTree = "<group>"; };
+		9EC0EBAF1DF69D7D007AD918 /* NSString+ImgURL.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+ImgURL.m"; sourceTree = "<group>"; };
 		9ED146FA1D597D420049D2AA /* WJCommboxView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WJCommboxView.h; sourceTree = "<group>"; };
 		9ED146FB1D597D420049D2AA /* WJCommboxView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WJCommboxView.m; sourceTree = "<group>"; };
 		9ED146FD1D597DB40049D2AA /* XXEHomePageHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXEHomePageHeaderView.h; sourceTree = "<group>"; };
@@ -5644,6 +5647,8 @@
 				9E8E09631DE3E7F800B0A942 /* RuningView.swift */,
 				9E8E09821DE5C65900B0A942 /* WZYTextView.h */,
 				9E8E09831DE5C66200B0A942 /* WZYTextView.m */,
+				9EC0EBAE1DF69D7D007AD918 /* NSString+ImgURL.h */,
+				9EC0EBAF1DF69D7D007AD918 /* NSString+ImgURL.m */,
 			);
 			path = XXETools;
 			sourceTree = "<group>";
@@ -7058,6 +7063,7 @@
 				044DEC291D91367200DE101A /* XXETeacherManagerAgreeApi.m in Sources */,
 				04520C621DB88DFB00524FFD /* XXEXingClassRoomSchoolListApi.m in Sources */,
 				044BFDE51DACACB300E1EB4D /* PRTween.m in Sources */,
+				9EC0EBB01DF69D7D007AD918 /* NSString+ImgURL.m in Sources */,
 				9E03CFF11D92A8930083308C /* XXEMessageListNewController.m in Sources */,
 				044DEC231D91360400DE101A /* XXETeacherManagerViewController.m in Sources */,
 				048754A21D5C0BF200F680C5 /* XXEAccountManagerModel.m in Sources */,

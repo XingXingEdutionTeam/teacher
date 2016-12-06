@@ -61,6 +61,22 @@
         button.backgroundColor = [UIColor whiteColor];
         button.frame = CGRectMake(buttonX, buttonY, buttonWidth, buttonHeight);
         NSString *string;
+        
+        if (i == 4) {
+            self.chatBadgeView = [[UIView alloc] init];
+            self.chatBadgeView.layer.cornerRadius = 4;
+            self.chatBadgeView.layer.masksToBounds = YES;
+            self.chatBadgeView.backgroundColor = [UIColor redColor];
+            [button addSubview:self.chatBadgeView];
+            [self.chatBadgeView mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.top.equalTo(button).offset(2.5 + 2);
+                make.trailing.equalTo(button).offset(-2.5 - 7);
+                make.width.mas_equalTo(8);
+                make.height.mas_equalTo(8);
+            }];
+            self.chatBadgeView.hidden = YES;
+        }
+        
         if (num == 12) {
             string = [NSString stringWithFormat:@"home_%d_click",i+1];
         }else if (num == 11){
