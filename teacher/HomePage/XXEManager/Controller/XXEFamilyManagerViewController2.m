@@ -28,6 +28,8 @@
     NSMutableArray *classModelArray;
     //学生家人 model 数组
     NSMutableArray *familyModelArray;
+    //占位图
+    UIImageView *placeholderImageView;
     
     UIButton *arrowButton;
     NSString *parameterXid;
@@ -110,29 +112,66 @@
     
 }
 
-
-
 // 有数据 和 无数据 进行判断
 - (void)customContent{
+    // 如果 有占位图 先 移除
+    [self removePlaceholderImageView];
     
     if (classModelArray.count == 0) {
-        
         _myTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-        
         // 1、无数据的时候
-        UIImage *myImage = [UIImage imageNamed:@"all_placeholder"];
-        CGFloat myImageWidth = myImage.size.width;
-        CGFloat myImageHeight = myImage.size.height;
-        
-        UIImageView *myImageView = [[UIImageView alloc] initWithFrame:CGRectMake(KScreenWidth / 2 - myImageWidth / 2, (KScreenHeight - 64 - 49) / 2 - myImageHeight / 2, myImageWidth, myImageHeight)];
-        myImageView.image = myImage;
-        [self.view addSubview:myImageView];
+        [self createPlaceholderView];
         
     }else{
         //2、有数据的时候
     }
+    
     [_myTableView reloadData];
+    
 }
+
+
+//没有 数据 时,创建 占位图
+- (void)createPlaceholderView{
+    // 1、无数据的时候
+    UIImage *myImage = [UIImage imageNamed:@"all_placeholder"];
+    CGFloat myImageWidth = myImage.size.width;
+    CGFloat myImageHeight = myImage.size.height;
+    
+    placeholderImageView = [[UIImageView alloc] initWithFrame:CGRectMake(kWidth / 2 - myImageWidth / 2, (kHeight - 64 - 49) / 2 - myImageHeight / 2, myImageWidth, myImageHeight)];
+    placeholderImageView.image = myImage;
+    [self.view addSubview:placeholderImageView];
+}
+
+//去除 占位图
+- (void)removePlaceholderImageView{
+    if (placeholderImageView != nil) {
+        [placeholderImageView removeFromSuperview];
+    }
+}
+
+
+//// 有数据 和 无数据 进行判断
+//- (void)customContent{
+//    
+//    if (classModelArray.count == 0) {
+//        
+//        _myTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+//        
+//        // 1、无数据的时候
+//        UIImage *myImage = [UIImage imageNamed:@"all_placeholder"];
+//        CGFloat myImageWidth = myImage.size.width;
+//        CGFloat myImageHeight = myImage.size.height;
+//        
+//        UIImageView *myImageView = [[UIImageView alloc] initWithFrame:CGRectMake(KScreenWidth / 2 - myImageWidth / 2, (KScreenHeight - 64 - 49) / 2 - myImageHeight / 2, myImageWidth, myImageHeight)];
+//        myImageView.image = myImage;
+//        [self.view addSubview:myImageView];
+//        
+//    }else{
+//        //2、有数据的时候
+//    }
+//    [_myTableView reloadData];
+//}
 
 
 - (void)createTableView{
