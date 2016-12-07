@@ -21,9 +21,9 @@
 @property (nonatomic, strong)UITextField *registerVerificationTextField;
 @property (nonatomic, strong)UIButton *button;
 /** 用户名 */
-@property (nonatomic, copy)NSString *registerUserName;
+//@property (nonatomic, copy)NSString *registerUserName;
 /** 验证码 */
-@property (nonatomic, copy)NSString *registerVerifi;
+//@property (nonatomic, copy)NSString *registerVerifi;
 
 /** 验证码按钮 */
 @property (nonatomic, strong)UIButton *verificationButton;
@@ -74,7 +74,7 @@
     //创建上面的提示
     UILabel *label = [[UILabel alloc]init];
     label.text = @"请输入你的手机号";
-    label.font = [UIFont systemWithIphone6P:14 Iphone6:12 Iphone5:10 Iphone4:8];
+    label.font = [UIFont systemFontOfSize:12 * kScreenRatioWidth];
     label.textColor = XXEColorFromRGB(204, 204, 204);
     [self.view addSubview:label];
     
@@ -225,13 +225,13 @@
         return [self isChinaMobile:text];
     }] subscribeNext:^(id x) {
         NSLog(@"%@",x);
-        self.registerUserName = x;
+//        self.registerUserName = x;
     } ];
     
     [[self.registerVerificationTextField.rac_textSignal filter:^BOOL(id value) {
         return value;
     }] subscribeNext:^(id x) {
-        self.registerVerifi = x;
+//        self.registerVerifi = x;
     }];
 }
 
@@ -323,23 +323,21 @@
 //    [self.navigationController pushViewController:registerSecondVC animated:YES];
 }
 
-
-
-#warning ================ 注册 测试  ===================
 #pragma mark - 验证验证码对不对
 -(void)verifyNumberISRight
 {
-//    NSLog(@"电话号码%@ 验证码%@",self.registerUserName,self.registerVerifi);
-    [SMSSDK commitVerificationCode:self.registerVerifi phoneNumber:self.registerUserName zone:@"86" result:^(NSError *error) {
+    NSLog(@"电话号码%@ 验证码%@",self.registerUerTextField.text,self.registerVerificationTextField.text);
+    [SMSSDK commitVerificationCode:self.registerVerificationTextField.text phoneNumber:self.registerUerTextField.text zone:@"86" result:^(NSError *error) {
         if (error) {
+            NSLog(@"%@", error);
             [self showString:@"验证码错误" forSecond:1.f];
         }else {
-            XXERegisterSecondViewController *registerSecondVC = [[XXERegisterSecondViewController alloc]init];
-            registerSecondVC.userPhoneNum = self.registerUserName;
-            registerSecondVC.login_type = @"1";
-            [self.navigationController pushViewController:registerSecondVC animated:YES];
         }
     }];
+    XXERegisterSecondViewController *registerSecondVC = [[XXERegisterSecondViewController alloc]init];
+    registerSecondVC.userPhoneNum = self.registerUerTextField.text;
+    registerSecondVC.login_type = @"1";
+    [self.navigationController pushViewController:registerSecondVC animated:YES];
 }
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
@@ -379,7 +377,7 @@
 - (void)getVerificationNumber
 {
    //短信验证码
-    [SMSSDK getVerificationCodeByMethod:SMSGetCodeMethodSMS phoneNumber:self.registerUserName zone:@"86" customIdentifier:nil result:^(NSError *error) {
+    [SMSSDK getVerificationCodeByMethod:SMSGetCodeMethodSMS phoneNumber:self.registerUerTextField.text zone:@"86" customIdentifier:nil result:^(NSError *error) {
         if (!error) {
             
             //记录次数

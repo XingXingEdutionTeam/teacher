@@ -32,6 +32,11 @@
 #import "XXELoginViewController.h"
 #import "XXERegisterPicApi.h"
 #import "XXEUserInfo.h"
+#import "XXESearchAccurateApi.h"
+#import "SchoolModel.h"
+#import "MBProgressHUD.h"
+
+
 #define awayX 20
 @interface XXERegisterHeadMasterViewController ()<UISearchBarDelegate,UITableViewDelegate,UITableViewDataSource,XXESearchSchoolMessageDelegate,UITextFieldDelegate>{
     UIButton *landBtn;
@@ -186,7 +191,7 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
     [super viewDidLoad];
     
     [self LnitializeTheParameter];
-    [self commBoxInfo];
+//    [self commBoxInfo];
     
     self.isHave = NO;
     
@@ -212,9 +217,12 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
 {
     NSLog(@"用户头像%@",self.userAvatarImage);
     
+    MBProgressHUD *hub = [MBProgressHUD showHUDAddedTo:self.view animated:true];
+    
     if (self.userAvatarImage != nil) {
         XXERegisterPicApi *headPicApi = [[XXERegisterPicApi alloc]initUpLoadRegisterPicFileType:@"1" PageOrigin:@"1" UploadFormat:@"1" UIImageHead:self.userAvatarImage];
         [headPicApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
+            [hub hide:YES];
             NSString *code = [request.responseJSONObject objectForKey:@"code"];
             if ([code intValue]== 1) {
                 NSString *avatar = [request.responseJSONObject objectForKey:@"data"];
@@ -224,10 +232,12 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
             NSLog(@"%@",[request.responseJSONObject objectForKey:@"msg"]);
             
         } failure:^(__kindof YTKBaseRequest *request) {
-            
+            [hub hide:YES];
         }];
     }else{
-        
+        //设置默认头像
+        self.theEndUserAvatarImage = kDefaultAvatarUrl;
+        [hub hide:YES];
     }
     
 }
@@ -267,7 +277,7 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.row == 5) {
-        return 125*kScreenRatioHeight;
+        return 140*kScreenRatioHeight;
     }else {
         return 45*kScreenRatioHeight;
     }
@@ -282,6 +292,7 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
         XXETeacherTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:IdentifierCELL forIndexPath:indexPath];
         cell.teacherRegisLabel.text = [_titleArr objectAtIndex:indexPath.row];
         cell.teacherRegisTextField.placeholder = [_titleTextArr objectAtIndex:indexPath.row];
+        cell.teacherRegisTextField.tag = 100 + indexPath.row;
         return cell;
     }
 }
@@ -293,7 +304,7 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
     switch (indexPath.row) {
         case 0:{
             self.teacherCell = [self cellAtIndexRow:0 andAtSection:0 Message:@""];
-                [self tureOrFalseCellClick:YES Tag:100];
+                [self tureOrFalseCellClick:YES];
             break;
         }
         case 1:{
@@ -302,7 +313,16 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
             [schoolType showCityView:^(NSString *proviceStr) {
                 
                 self.teacherCell = [self cellAtIndexRow:1 andAtSection:0 Message:[NSString  stringWithFormat:@"%@",proviceStr]];
-                self.theEndSchoolType = proviceStr;
+                
+                if ([proviceStr isEqualToString:@"幼儿园"]) {
+                    self.theEndSchoolType = @"1";
+                }else if([proviceStr isEqualToString:@"小学"]) {
+                    self.theEndSchoolType = @"2";
+                }else if([proviceStr isEqualToString:@"中学"]) {
+                    self.theEndSchoolType = @"3";
+                }else if ([proviceStr isEqualToString:@"培训机构"]) {
+                    self.theEndSchoolType = @"4";
+                }
             }];
             break;
         }
@@ -321,13 +341,13 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
         }
         case 3:{
             self.teacherCell = [self cellAtIndexRow:3 andAtSection:0 Message:@""];
-            [self tureOrFalseCellClick:YES Tag:103];
+            [self tureOrFalseCellClick:YES];
              NSLog(@"详细地点%@",self.teacherCell.teacherRegisTextField.text);
             break;
         }
         case 4:{
             self.teacherCell = [self cellAtIndexRow:4 andAtSection:0 Message:@""];
-            [self tureOrFalseCellClick:YES Tag:104];
+            [self tureOrFalseCellClick:YES];
             
              NSLog(@"电话%@",self.teacherCell.teacherRegisTextField.text);
             break;
@@ -335,12 +355,12 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
         case 6:{
                self.teacherCell = [self cellAtIndexRow:6 andAtSection:0 Message:@"平台审核"];
             self.theEndReviewerId = @"0";
-            [self tureOrFalseCellClick:NO Tag:106];
+            [self tureOrFalseCellClick:NO];
             break;
         }
         case 7:{
             self.teacherCell = [self cellAtIndexRow:7 andAtSection:0 Message:@""];
-            [self tureOrFalseCellClick:YES Tag:107];
+            [self tureOrFalseCellClick:YES];
 
              NSLog(@"蛇和好%@",self.teacherCell.teacherRegisTextField.text);
             break;
@@ -351,10 +371,10 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
 }
 
 #pragma mark - 判断单元格能不能点击
-- (void)tureOrFalseCellClick:(BOOL)click Tag:(NSInteger)tags
+- (void)tureOrFalseCellClick:(BOOL)click
 {
     self.teacherCell.teacherRegisTextField.enabled = click;
-    self.teacherCell.teacherRegisTextField.tag = tags;
+//    self.teacherCell.teacherRegisTextField.tag = tags;
     self.teacherCell.teacherRegisTextField.delegate = self;
 }
 
@@ -366,6 +386,11 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
         case 100:
             NSLog(@"%@",textField.text);
             self.schoolName = textField.text;
+            
+            if (textField.text.length == 0) {
+                return;
+            }
+            [self checkSchoolRequestWithSchoolName:textField.text];
             break;
         case 103:
             NSLog(@"%@",textField.text);
@@ -383,6 +408,68 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
             break;
     }
 }
+
+//MARK: - 验证学校网络请求
+- (void)checkSchoolRequestWithSchoolName:(NSString*)schoolName {
+    MBProgressHUD *hub = [MBProgressHUD showHUDAddedTo:self.view animated:true];
+    hub.labelText = @"正在验证学校";
+    
+    UITextField *schoolNameTF = (UITextField *)[self.view viewWithTag:100];
+    UITextField *schoolTypeTF = (UITextField *)[self.view viewWithTag:101];
+    UITextField *schoolLocationTF = (UITextField *)[self.view viewWithTag:102];
+    UITextField *schoolDetailAddressTF = (UITextField *)[self.view viewWithTag:103];
+    UITextField *telTF = (UITextField *)[self.view viewWithTag:104];
+    XXESearchAccurateApi *api = [[XXESearchAccurateApi alloc] initWithRegisterSearchSchoolName:schoolName];
+    [api startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
+        
+        [hub hide:YES];
+        
+        
+        NSString *code = [NSString stringWithFormat:@"%@", request.responseJSONObject[@"code"]];
+        if ([code isEqualToString:@"3"]) {
+            [self showString:@"未找到该学校" forSecond:1.f];
+            schoolTypeTF.text = @"";
+            schoolLocationTF.text = @"";
+            schoolDetailAddressTF.text = @"";
+            telTF.text = @"";
+            return;
+        }
+        
+         [self showString:@"验证成功" forSecond:1.f];
+        NSDictionary *dict = request.responseJSONObject[@"data"][0];
+        SchoolModel *model = [SchoolModel SchoolModelWithDictionary:dict];
+        self.theEndSchoolId = model.schoolId;
+        schoolNameTF.text = model.schoolName;
+        self.schoolName = model.schoolName;
+        schoolTypeTF.text = model.schoolType;
+        if ([model.schoolType isEqualToString:@"幼儿园"]) {
+            self.theEndSchoolType = @"1";
+        }else if([model.schoolType isEqualToString:@"小学"]) {
+            self.theEndSchoolType = @"2";
+        }else if([model.schoolType isEqualToString:@"中学"]) {
+            self.theEndSchoolType = @"3";
+        }else if ([model.schoolType isEqualToString:@"培训机构"]) {
+            self.theEndSchoolType = @"4";
+        }
+        schoolLocationTF.text = [NSString stringWithFormat:@"%@ %@ %@", model.province,model.city,model.district];
+        self.schoolProvince = model.province;
+        self.schoolCity = model.city;
+        self.schoolDistrict = model.district;
+        schoolDetailAddressTF.text = model.address;
+        self.schoolAddrss = model.address;
+        telTF.text = model.tel;
+        self.schoolTel = model.tel;
+        
+    } failure:^(__kindof YTKBaseRequest *request) {
+        [hub hide:YES];
+        [self showString:@"未找到该学校" forSecond:1.f];
+        schoolTypeTF.text = @"";
+        schoolLocationTF.text = @"";
+        schoolDetailAddressTF.text = @"";
+        telTF.text = @"";
+    }];
+}
+
 
 
 //获取tableView的cell
@@ -404,7 +491,7 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
     //    //选择图片
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
     layout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
-    FSImagePickerView *picker = [[FSImagePickerView alloc] initWithFrame:CGRectMake(20, 310*kScreenRatioHeight, KScreenWidth -  40, 70*kScreenRatioHeight) collectionViewLayout:layout];
+    FSImagePickerView *picker = [[FSImagePickerView alloc] initWithFrame:CGRectMake(20, 325*kScreenRatioHeight, KScreenWidth -  40, 70*kScreenRatioHeight) collectionViewLayout:layout];
     self.picker = picker;
     picker.backgroundColor = UIColorFromRGB(255, 255, 255);
     picker.showsHorizontalScrollIndicator = NO;
@@ -456,8 +543,8 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
     [self getIdCardPhotoImage];
     }
     
-    NSLog(@"登录类型%@ 电话号码%@ 密码%@ 用户姓名%@ 用户身份证%@ 年龄%@ 性别%@ 用户身份%@ 用户头像%@",self.login_type,self.userPhoneNum,self.userPassword,self.userName,self.userIDCarNum,self.userAge,self.userSex,self.userIdentifier,self.userAvatarImage);
-    NSLog(@"邀请码%@ 学校详细地址%@ 学校电话%@ 学校ID%@ 学校类型%@ 学校名字%@ 学校省%@ 学校市%@ 学校区%@ 审核人%@",self.theEndInviteCode,self.schoolAddrss,self.schoolTel,self.theEndSchoolId,self.theEndSchoolType,self.schoolName,self.schoolProvince,self.schoolCity,self.schoolDistrict,self.theEndReviewerId);
+//    NSLog(@"登录类型%@ 电话号码%@ 密码%@ 用户姓名%@ 用户身份证%@ 年龄%@ 性别%@ 用户身份%@ 用户头像%@",self.login_type,self.userPhoneNum,self.userPassword,self.userName,self.userIDCarNum,self.userAge,self.userSex,self.userIdentifier,self.userAvatarImage);
+//    NSLog(@"邀请码%@ 学校详细地址%@ 学校电话%@ 学校ID%@ 学校类型%@ 学校名字%@ 学校省%@ 学校市%@ 学校区%@ 审核人%@",self.theEndInviteCode,self.schoolAddrss,self.schoolTel,self.theEndSchoolId,self.theEndSchoolType,self.schoolName,self.schoolProvince,self.schoolCity,self.schoolDistrict,self.theEndReviewerId);
 }
 
 #pragma mark - 获取证件图片
@@ -682,15 +769,15 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
     
     //搜索结果 重新赋值后 不能再手动更改
     //学校名称
-    [self tureOrFalseCellClick:NO Tag:100];
+    [self tureOrFalseCellClick:NO];
     //学校类型
-    [self tureOrFalseCellClick:NO Tag:101];
+    [self tureOrFalseCellClick:NO];
     //学校地址
-    [self tureOrFalseCellClick:NO Tag:102];
+    [self tureOrFalseCellClick:NO];
     //详细地址
-    [self tureOrFalseCellClick:NO Tag:103];
+    [self tureOrFalseCellClick:NO];
     //联系方式
-    [self tureOrFalseCellClick:NO Tag:104];
+    [self tureOrFalseCellClick:NO];
     
     //获取审核人
     [self setupReviewerMessage:model.schoolId];

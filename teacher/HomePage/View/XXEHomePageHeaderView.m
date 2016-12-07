@@ -48,8 +48,8 @@
 - (void)configCellWithInfo:(XXEHomePageModel *)homePageModel
 {
     _homePageModel = homePageModel;
-    NSString *schoolUrl = [NSString stringWithFormat:@"%@%@",kXXEPicURL,homePageModel.school_logo];
-    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:schoolUrl]];
+    NSString *schoolLogoUrl = [NSString stringWithFormat:@"%@%@",kXXEPicURL,homePageModel.school_logo];
+    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:schoolLogoUrl]];
     [self.homePageLeftButton setImage:[UIImage imageWithData:data] forState:UIControlStateNormal];
     
     NSString *stringImage;

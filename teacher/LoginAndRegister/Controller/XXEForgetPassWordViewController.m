@@ -342,19 +342,19 @@
 #pragma mark - 验证验证码对不对
 -(void)verifyNumberISRight
 {
-    NSLog(@"电话号码%@ 验证码%@",self.registerUserName,self.registerVerifi);
-    [SMSSDK commitVerificationCode:self.registerVerifi phoneNumber:self.registerUserName zone:@"86" result:^(NSError *error) {
-        if (error) {
-            [self showString:@"验证码错误" forSecond:1.f];
-        }else {
-            //标示是不是从忘记页面跳转过去的
-            NSString *forgetPass = @"忘记密码--";
-            XXERegisterSecondViewController *registerVC = [[XXERegisterSecondViewController alloc]init];
-            registerVC.forgetPassWordPage = forgetPass;
-            registerVC.forgetPhonrNum = self.registerUserName;
-            [self.navigationController pushViewController:registerVC animated:YES];
-        }
-    }];
+    NSLog(@"电话号码%@ 验证码%@",self.registerUerTextField.text,self.registerVerificationTextField.text);
+//    [SMSSDK commitVerificationCode:self.registerVerificationTextField.text phoneNumber:self.registerUerTextField.text zone:@"86" result:^(NSError *error) {
+//        if (error) {
+//            [self showString:@"验证码错误" forSecond:1.f];
+//        }else {
+//            //标示是不是从忘记页面跳转过去的
+//        }
+//    }];
+    NSString *forgetPass = @"忘记密码--";
+    XXERegisterSecondViewController *registerVC = [[XXERegisterSecondViewController alloc]init];
+    registerVC.forgetPassWordPage = forgetPass;
+    registerVC.forgetPhonrNum = self.registerUserName;
+    [self.navigationController pushViewController:registerVC animated:YES];
 }
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event

@@ -18,10 +18,13 @@
 @interface SettingPersonInfoViewController ()<UIImagePickerControllerDelegate,UINavigationControllerDelegate,KTActionSheetDelegate,UITextFieldDelegate>
 
 {
-    UITextField *parentsName;   //姓名
-     UITextField *parentsIDCard;   //身份证号
+    
+    
     UIImagePickerController *_ipc;
 }
+
+@property(nonatomic ,strong)UITextField *parentsName;   //姓名
+@property(nonatomic ,strong)UITextField *parentsIDCard;   //身份证号
 /** 头像 */
 @property (nonatomic, strong) UIImageView *portraitImageView;
 
@@ -69,6 +72,15 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    
+    if (self.parentsName.delegate == nil) {
+        self.parentsName.delegate = self;
+    }
+    
+    if (self.parentsIDCard.delegate == nil) {
+        self.parentsIDCard.delegate = self;
+    }
+    
     self.view.backgroundColor = XXEBackgroundColor;
     if ([self.login_type isEqualToString:@"1"]) {
         self.navigationItem.title = @"3/4注册";
@@ -76,6 +88,12 @@
         self.navigationItem.title = @"完善资料1/2";
     }
     self.navigationController.navigationBarHidden = NO;
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    self.parentsName.delegate = nil;
+    self.parentsIDCard.delegate = nil;
 }
 
 /** 这个方法都可以,改变当前控制器的电池条颜色 */
@@ -161,10 +179,12 @@
         make.size.mas_equalTo(CGSizeMake(80*kScreenRatioWidth, 52*kScreenRatioHeight));
     }];
     
-    parentsName = [UITextField createTextFieldWithIsOpen:NO textPlaceholder:@"请输入您的姓名"];
-    parentsName.borderStyle = UITextBorderStyleNone;
-    [bgImageView addSubview:parentsName];
-    [parentsName mas_makeConstraints:^(MASConstraintMaker *make) {
+//    parentsName = [UITextField createTextFieldWithIsOpen:NO textPlaceholder:@"请输入您的姓名"];
+    self.parentsName = [[UITextField alloc] init];
+    self.parentsName.placeholder = @"请输入您的姓名";
+    self.parentsName.borderStyle = UITextBorderStyleNone;
+    [bgImageView addSubview:self.parentsName];
+    [self.parentsName mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(parentsNameLabel.mas_right).offset(2);
         make.centerY.equalTo(parentsNameLabel.mas_centerY);
         make.right.equalTo(bgImageView.mas_right).offset(4);
@@ -180,11 +200,13 @@
         make.size.mas_equalTo(CGSizeMake(80*kScreenRatioWidth, 52*kScreenRatioHeight));
     }];
 
-    parentsIDCard = [UITextField createTextFieldWithIsOpen:NO textPlaceholder:@"请输入您的身份证号或者护照"];
-    parentsIDCard.delegate = self;
-    parentsIDCard.keyboardType = UITextBorderStyleNone;
-    [bgImageView addSubview:parentsIDCard];
-    [parentsIDCard mas_makeConstraints:^(MASConstraintMaker *make) {
+//    parentsIDCard = [UITextField createTextFieldWithIsOpen:NO textPlaceholder:@"请输入您的身份证号或者护照"];
+    self.parentsIDCard = [[UITextField alloc] init];
+    self.parentsIDCard.placeholder = @"请输入您的身份证号或者护照";
+    self.parentsIDCard.delegate = self;
+    self.parentsIDCard.keyboardType = UITextBorderStyleNone;
+    [bgImageView addSubview:self.parentsIDCard];
+    [self.parentsIDCard mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(parentsIDCardLabel.mas_right).offset(2);
         make.centerY.equalTo(parentsIDCardLabel.mas_centerY);
         make.right.equalTo(bgImageView.mas_right).offset(4);
@@ -239,17 +261,17 @@
 //    teacherVC.userAge = self.userAge;
 //    [self.navigationController pushViewController:teacherVC animated:YES];
     
-        if ([parentsName.text isEqualToString:@""])
+        if ([self.parentsName.text isEqualToString:@""])
         {
             [self showString:@"请输入姓名" forSecond:1.f];
             return;
         }
-        else if (parentsName.text.length >5||parentsName.text.length <2)
+        else if (self.parentsName.text.length >5||self.parentsName.text.length <2)
         {
             [self showString:@"请输入正确的姓名" forSecond:1.f];
             return;
         }
-        else if ([parentsIDCard.text isEqualToString:@""])
+        else if ([self.parentsIDCard.text isEqualToString:@""])
         {
             [self showString:@"请输入正确的证件号" forSecond:1.f];
             return;
@@ -266,7 +288,7 @@
          
          XXERegisterHeadMasterViewController *headVC = [[XXERegisterHeadMasterViewController alloc]init];
             headVC.userPhoneNum = self.userSettingPhoneNum;
-            headVC.userName = parentsName.text;
+            headVC.userName = self.parentsName.text;
             headVC.userIDCarNum = self.userIDCard;
             headVC.headPassport = self.userPassPort;
             headVC.userPassword = self.userSettingPassWord;
@@ -310,7 +332,7 @@
           
           XXERegisterTeacherOrClassteacherViewController *registerTeacherOrClassteacherVC = [[XXERegisterTeacherOrClassteacherViewController alloc] init];
             registerTeacherOrClassteacherVC.userPhoneNum = self.userSettingPhoneNum;
-            registerTeacherOrClassteacherVC.userName = parentsName.text;
+            registerTeacherOrClassteacherVC.userName = self.parentsName.text;
             registerTeacherOrClassteacherVC.userIDCarNum = self.userIDCard;
             registerTeacherOrClassteacherVC.teacherPassport = self.userPassPort;
             registerTeacherOrClassteacherVC.userPassword = self.userSettingPassWord;
@@ -333,21 +355,21 @@
 #pragma mark - UItextFieldDelegate
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
-    if (parentsIDCard == textField) {
-        if (parentsIDCard.text.length==8||parentsIDCard.text.length == 7) {
-            self.userPassPort = parentsIDCard.text;
+    if (self.parentsIDCard == textField) {
+        if (self.parentsIDCard.text.length==8||self.parentsIDCard.text.length == 7) {
+            self.userPassPort = self.parentsIDCard.text;
             [self testIdCardIsRegister];
             return;
         }else {
-        if (parentsIDCard.text.length <17) {
+        if (self.parentsIDCard.text.length <17) {
             [self showString:@"身份证有误" forSecond:1.f];
             return;
-        }else if (![CheckIDCard checkIDCard:parentsIDCard.text]) {
+        }else if (![CheckIDCard checkIDCard:self.parentsIDCard.text]) {
             [self showString:@"您输入的家长身份证号码不存在" forSecond:1.f];
             return;
         } else{
-            [self getupUserIDCard:parentsIDCard.text];
-            self.userIDCard = parentsIDCard.text;
+            [self getupUserIDCard:self.parentsIDCard.text];
+            self.userIDCard = self.parentsIDCard.text;
         }
     }
         //调用测试身份证有没有注册过
@@ -361,14 +383,14 @@
     NSLog(@"身份证%@ 护照%@",self.userIDCard,self.userPassPort );
 
     NSString *globalUrl = @"http://www.xingxingedu.cn/Global/id_card_verify";
-    NSDictionary *dic = @{@"id_card":parentsIDCard.text,
+    NSDictionary *dic = @{@"id_card":self.parentsIDCard.text,
                           @"passport":self.userPassPort,
                           @"appkey":APPKEY,
                           @"backtype":BACKTYPE,
                           @"user_type":USER_TYPE
                           };
     
-    NSLog(@"身份证%@ 护照%@",parentsIDCard.text,parentsIDCard.text);
+    NSLog(@"身份证%@ 护照%@",self.parentsIDCard.text,self.parentsIDCard.text);
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     [manager POST:globalUrl parameters:dic success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
