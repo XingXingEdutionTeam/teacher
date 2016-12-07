@@ -828,6 +828,8 @@
 		9E5E23FA1D90CD17008B1AAF /* XXEGoodUserModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E5E23F41D90CD17008B1AAF /* XXEGoodUserModel.m */; };
 		9E5E23FB1D90CD17008B1AAF /* XXELocationModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E5E23F61D90CD17008B1AAF /* XXELocationModel.m */; };
 		9E5E23FD1D90E5BE008B1AAF /* dian@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9E5E23FC1D90E5BE008B1AAF /* dian@2x.png */; };
+		9E6051481DF7F0B700D9FC8A /* SchoolModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E6051471DF7F0B700D9FC8A /* SchoolModel.m */; };
+		9E60514E1DF80AD000D9FC8A /* XXESearchAccurateApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E60514D1DF80AD000D9FC8A /* XXESearchAccurateApi.m */; };
 		9E65A73E1DF000A0002BAE0A /* jpush-ios-2.2.0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E65A73C1DF000A0002BAE0A /* jpush-ios-2.2.0.a */; };
 		9E65A7401DF00101002BAE0A /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E65A73F1DF00101002BAE0A /* CoreFoundation.framework */; };
 		9E65A7421DF0015F002BAE0A /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E65A7411DF0015F002BAE0A /* UserNotifications.framework */; };
@@ -2471,6 +2473,10 @@
 		9E5E23F51D90CD17008B1AAF /* XXELocationModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXELocationModel.h; sourceTree = "<group>"; };
 		9E5E23F61D90CD17008B1AAF /* XXELocationModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXELocationModel.m; sourceTree = "<group>"; };
 		9E5E23FC1D90E5BE008B1AAF /* dian@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dian@2x.png"; sourceTree = "<group>"; };
+		9E6051461DF7F0B700D9FC8A /* SchoolModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SchoolModel.h; sourceTree = "<group>"; };
+		9E6051471DF7F0B700D9FC8A /* SchoolModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SchoolModel.m; sourceTree = "<group>"; };
+		9E60514C1DF80AD000D9FC8A /* XXESearchAccurateApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXESearchAccurateApi.h; sourceTree = "<group>"; };
+		9E60514D1DF80AD000D9FC8A /* XXESearchAccurateApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXESearchAccurateApi.m; sourceTree = "<group>"; };
 		9E65A73C1DF000A0002BAE0A /* jpush-ios-2.2.0.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "jpush-ios-2.2.0.a"; sourceTree = "<group>"; };
 		9E65A73D1DF000A0002BAE0A /* JPUSHService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPUSHService.h; sourceTree = "<group>"; };
 		9E65A73F1DF00101002BAE0A /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
@@ -5919,6 +5925,15 @@
 			path = LikeCommentView;
 			sourceTree = "<group>";
 		};
+		9E6051451DF7F09C00D9FC8A /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				9E6051461DF7F0B700D9FC8A /* SchoolModel.h */,
+				9E6051471DF7F0B700D9FC8A /* SchoolModel.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		9E65A73B1DF000A0002BAE0A /* JPush-iOS-SDK-2.2.0 */ = {
 			isa = PBXGroup;
 			children = (
@@ -5986,6 +6001,7 @@
 		9E8E08B51DE31AAA00B0A942 /* RegisterController */ = {
 			isa = PBXGroup;
 			children = (
+				9E6051451DF7F09C00D9FC8A /* Model */,
 				9E8E08B61DE31AAA00B0A942 /* RegisterApi */,
 				9E8E08C51DE31AAA00B0A942 /* RegisterFourHeadmaster */,
 				9E8E08D31DE31AAA00B0A942 /* RegisterFourTeacher */,
@@ -6006,6 +6022,8 @@
 				9E8E08BC1DE31AAA00B0A942 /* XXERegisterPicApi.m */,
 				9E8E08BD1DE31AAA00B0A942 /* XXERegisterSearchSchoolApi.h */,
 				9E8E08BE1DE31AAA00B0A942 /* XXERegisterSearchSchoolApi.m */,
+				9E60514C1DF80AD000D9FC8A /* XXESearchAccurateApi.h */,
+				9E60514D1DF80AD000D9FC8A /* XXESearchAccurateApi.m */,
 				9E8E08BF1DE31AAA00B0A942 /* XXERegisterTeacherApi.h */,
 				9E8E08C01DE31AAA00B0A942 /* XXERegisterTeacherApi.m */,
 				9E8E08C11DE31AAA00B0A942 /* XXERegisterTeachOfTypeApi.h */,
@@ -6974,6 +6992,7 @@
 				9E5E23B71D90CC04008B1AAF /* MLClickColorLinkLabel.m in Sources */,
 				9E5E23D21D90CCD8008B1AAF /* MessageListDetailController.m in Sources */,
 				9EEA0E3D1D6ED6220070C8C3 /* ReportCell.m in Sources */,
+				9E6051481DF7F0B700D9FC8A /* SchoolModel.m in Sources */,
 				04947CC31DC0CE3A008A351F /* BCURLRequestSerialization.m in Sources */,
 				04547B551DAB6BA50059F3F1 /* JXPersonInfo.m in Sources */,
 				044B3A8D1D8E9E720014AB87 /* XXEMySelfInfoAlbumViewController.m in Sources */,
@@ -7214,6 +7233,7 @@
 				04520C671DB8924E00524FFD /* XXEXingClassRoomTeacherListTableViewCell.m in Sources */,
 				9E5E23B11D90CC04008B1AAF /* DFImageUnitView.m in Sources */,
 				04F216C41D76C0BA005C2EBF /* XXEStarRemarkTableViewCell.m in Sources */,
+				9E60514E1DF80AD000D9FC8A /* XXESearchAccurateApi.m in Sources */,
 				043596911DAA458100F85DAE /* PersonCenterViewController.m in Sources */,
 				044DEC051D90DFB000DE101A /* XXEClassModel.m in Sources */,
 				04BEAA101DC8833D0098757A /* XXESchoolTimetableModel.m in Sources */,

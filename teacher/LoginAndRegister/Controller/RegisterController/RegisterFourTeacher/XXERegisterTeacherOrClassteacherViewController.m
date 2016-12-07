@@ -884,6 +884,7 @@
 {
     
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [self.auditNameCombox.textField removeObserver:self forKeyPath:@"text" ];
     [self.schoolTypeCombox.textField removeObserver:self forKeyPath:@"text"];
     [self.gradeNameCombox.textField removeObserver:self forKeyPath:@"text"];
     [self.classNameCombox.textField removeObserver:self forKeyPath:@"text"];

@@ -9,6 +9,8 @@
 #ifndef XXEHeaderApi_h
 #define XXEHeaderApi_h
 
+#define kVersion @"1.0.0"
+
 #define JPushAppKey @"4246476d42da75a98d9e01f2"
 
 #define kRemoteNotification @"remoteNotification" //远程推送通知
@@ -21,6 +23,10 @@
 #define BACKTYPE @"json"
 #define USER_ID  @"1"
 #define USER_TYPE @"2"
+
+
+//默认头像
+#define kDefaultAvatarUrl @"app_upload/app_head_default.jpg"
 
 //友盟分享 猩猩教室校园端
 

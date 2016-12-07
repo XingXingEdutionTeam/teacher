@@ -231,6 +231,15 @@
 
 - (void)nextButtonClick:(UIButton *)sender
 {
+    if (self.passWordTextField.text.length < 6) {
+        [self showString:@"密码不能小于6位" forSecond:1.f];
+        return;
+    }else if (self.passWordTextField.text.length > 20) {
+        [self showString:@"密码不能大于20位" forSecond:1.f];
+        return;
+    }
+    
+    
     NSLog(@"----点击进入下一个个注册----");
     [self.passWordTextField resignFirstResponder];
     [self.confirmPassWordTextField resignFirstResponder];
