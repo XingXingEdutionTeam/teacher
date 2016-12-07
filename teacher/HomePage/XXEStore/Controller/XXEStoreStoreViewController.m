@@ -17,8 +17,6 @@
 #import "XXEXingCoinViewController.h"
 //猩币转赠
 #import "XXEStoreSentIconToOtherViewController.h"
-//花篮专区
-#import "XXEStoreBuyFlowerbasketViewController.h"
 //购买
 #import "XXEStorePerfectConsigneeAddressViewController.h"
 

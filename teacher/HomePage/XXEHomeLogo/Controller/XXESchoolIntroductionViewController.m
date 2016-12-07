@@ -240,10 +240,13 @@
         [self.navigationController pushViewController:albumVC animated:YES];
         //11 视频
     }else if (indexPath.row == 11){
-        XXESchoolVideoViewController *schoolVideoVC = [[XXESchoolVideoViewController alloc] init];
-        schoolVideoVC.position = _position;
+        [XXETool showAlertView];
+        return;
         
-        [self.navigationController pushViewController:schoolVideoVC animated:YES];
+//        XXESchoolVideoViewController *schoolVideoVC = [[XXESchoolVideoViewController alloc] init];
+//        schoolVideoVC.position = _position;
+//        
+//        [self.navigationController pushViewController:schoolVideoVC animated:YES];
         
       }
 }
