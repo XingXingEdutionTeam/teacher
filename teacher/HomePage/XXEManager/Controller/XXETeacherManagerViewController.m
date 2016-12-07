@@ -23,6 +23,8 @@
     //学生家人 model 数组
     NSMutableArray *familyModelArray;
     
+    UIImageView *placeholderImageView;
+    
     UIButton *arrowButton;
     NSString *parameterXid;
     NSString *parameterUser_Id;
@@ -106,28 +108,44 @@
 }
 
 
-
 // 有数据 和 无数据 进行判断
 - (void)customContent{
+    // 如果 有占位图 先 移除
+    [self removePlaceholderImageView];
     
     if (classModelArray.count == 0) {
-        
         _myTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-        
         // 1、无数据的时候
-        UIImage *myImage = [UIImage imageNamed:@"all_placeholder"];
-        CGFloat myImageWidth = myImage.size.width;
-        CGFloat myImageHeight = myImage.size.height;
-        
-        UIImageView *myImageView = [[UIImageView alloc] initWithFrame:CGRectMake(KScreenWidth / 2 - myImageWidth / 2, (KScreenHeight - 64 - 49) / 2 - myImageHeight / 2, myImageWidth, myImageHeight)];
-        myImageView.image = myImage;
-        [self.view addSubview:myImageView];
+        [self createPlaceholderView];
         
     }else{
         //2、有数据的时候
     }
+    
     [_myTableView reloadData];
+    
 }
+
+
+//没有 数据 时,创建 占位图
+- (void)createPlaceholderView{
+    // 1、无数据的时候
+    UIImage *myImage = [UIImage imageNamed:@"all_placeholder"];
+    CGFloat myImageWidth = myImage.size.width;
+    CGFloat myImageHeight = myImage.size.height;
+    
+    placeholderImageView = [[UIImageView alloc] initWithFrame:CGRectMake(kWidth / 2 - myImageWidth / 2, (kHeight - 64 - 49) / 2 - myImageHeight / 2, myImageWidth, myImageHeight)];
+    placeholderImageView.image = myImage;
+    [self.view addSubview:placeholderImageView];
+}
+
+//去除 占位图
+- (void)removePlaceholderImageView{
+    if (placeholderImageView != nil) {
+        [placeholderImageView removeFromSuperview];
+    }
+}
+
 
 
 - (void)createTableView{
@@ -218,7 +236,8 @@
      17.家长管理和教师管理,班级年级后面写上需要显示已审核的家人数,待审核人的人数
      18.家长管理和教师管理,待审核状态只有2个按钮,同意和拒绝,拒绝的时候需要提醒用户:是否不在接收此用户的申请
      19.家长管理和教师管理,审核通过的只有1个删除按钮
-     
+     教师端 管理中的 审核老师页面 审核同意接口 manage_teacher_agree_action
+     当code 等于 5时  需提醒用户  一个班级只允许一个班主任
      [condit] => 0 	 //0:待审核 1:审核通过
      */
     
@@ -296,8 +315,8 @@
             
             [self showHudWithString:@"审核通过!" forSecond:1.5];
             
-        }else{
-            
+        }else if([codeStr isEqualToString:@"5"]){
+            [self showString:@"一个班级只允许一个班主任" forSecond:1.5];
         }
         
         [self fetchNetData];

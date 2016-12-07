@@ -33,6 +33,7 @@
  [head_img_type] => 0
  
  baby_tname
+ baby_head_img
  )
  */
 @property (nonatomic, copy) NSString *collectionId;
@@ -58,6 +59,7 @@
 
 @property (nonatomic, copy) NSString *head_img_type;
 @property (nonatomic, copy) NSString *head_img;
+@property (nonatomic, copy) NSString *baby_head_img;
 
 + (NSArray*)parseResondsData:(id)respondObject;
 

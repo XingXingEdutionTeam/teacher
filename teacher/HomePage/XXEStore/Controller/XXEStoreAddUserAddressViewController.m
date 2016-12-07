@@ -271,7 +271,7 @@
             //不是 默认 地址
             [defaultBtn setTitle:@"设为默认" forState:UIControlStateNormal];
             defaultBtn.enabled = YES;
-            [defaultBtn addTarget:self action:@selector(defaultBtnClick) forControlEvents:UIControlEventTouchUpInside];
+            [defaultBtn addTarget:self action:@selector(F) forControlEvents:UIControlEventTouchUpInside];
         }
     }else{
         
@@ -405,9 +405,7 @@
     }else if([self isChinaMobile:phoneText.text] == NO){
         [self showString:@"请输入正确的电话号码" forSecond:1.5];
     }else if ([mailText.text isEqualToString:@""]){
-        [self showString:@"请完善邮箱" forSecond:1.5];
-    }else  if([self validateEmail:mailText.text] == NO){
-        [self showString:@"请输入正确的邮箱" forSecond:1.5];
+        [self showString:@"请完善邮编" forSecond:1.5];
     }else{
     
         NSString *urlStr = @"http://www.xingxingedu.cn/Global/add_shopping_address";

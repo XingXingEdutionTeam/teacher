@@ -206,12 +206,12 @@
      1 :表示 第三方 头像 ，不需要 添加 前缀
      //判断是否是第三方头像
      */
-    NSString *head_img = [kXXEPicURL stringByAppendingString:model.head_img];
+    NSString *head_img = [kXXEPicURL stringByAppendingString:model.baby_head_img];
     cell.iconImageView.layer.cornerRadius = cell.iconImageView.frame.size.width / 2;
     cell.iconImageView.layer.masksToBounds = YES;
     
     [cell.iconImageView sd_setImageWithURL:[NSURL URLWithString:head_img] placeholderImage:[UIImage imageNamed:@"headplaceholder"]];
-    cell.nameLabel.text = [NSString stringWithFormat:@"%@  %@",model.tname, model.com_con];
+    cell.nameLabel.text = [NSString stringWithFormat:@"%@  %@",model.baby_tname, model.com_con];
     cell.relationLabel.text = [NSString stringWithFormat:@"点评:  %@",model.com_con];
     
     cell.timeLabel.text = [XXETool dateStringFromNumberTimer:model.com_tm];
