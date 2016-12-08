@@ -13,15 +13,17 @@
     NSString *_user_type;
     NSString *_phone;
     NSString *_new_pass;
+    NSString *_action_type;
 }
 
-- (id)initWithForgetPassWordUserType:(NSString *)user_type Phone:(NSString *)phone NewPass:(NSString *)newPass
+- (id)initWithForgetPassWordUserType:(NSString *)user_type Phone:(NSString *)phone NewPass:(NSString *)newPass actionType:(NSString*)actionType
 {
     self = [super init];
     if (self) {
         _user_type = user_type;
         _phone = phone;
         _new_pass = newPass;
+        _action_type = actionType;
     }
     return self;
 }
@@ -41,6 +43,7 @@
     return @{@"user_type":_user_type,
              @"phone":_phone,
              @"new_pass":_new_pass,
+             @"action_type":_action_type,
              @"appkey":APPKEY,
              @"backtype":BACKTYPE
              };

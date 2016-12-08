@@ -49,11 +49,12 @@
     
     self.view.backgroundColor = XXEBackgroundColor;
     
-    self.title = @"修改密码";
     //修改登录密码  modifyLoginCode  /修改支付密码 modifyPayCode
     if ([_fromflagStr isEqualToString:@"modifyLoginCode"]) {
+        self.title = @"修改登录密码";
         action_type = @"1";
     }else if ([_fromflagStr isEqualToString:@"modifyPayCode"]){
+        self.title = @"修改支付密码";
         action_type = @"2";
     }
     
@@ -161,6 +162,12 @@
 - (void)forgetButtonClick{
     
     XXEForgetPassWordViewController *forgetVC = [[XXEForgetPassWordViewController alloc]init];
+    forgetVC.loginType = LoginSure;//是否已经登录
+    if ([action_type isEqualToString:@"1"]) {
+        forgetVC.passwordType = LoginPassword;
+    }else if ([action_type isEqualToString:@"2"]) {
+        forgetVC.passwordType = PayPassword;
+    }
 //    UIWindow *window = [UIApplication sharedApplication].keyWindow;
 //    XXENavigationViewController *navi = [[XXENavigationViewController alloc]initWithRootViewController:forgetVC];
 //    window.rootViewController = navi;

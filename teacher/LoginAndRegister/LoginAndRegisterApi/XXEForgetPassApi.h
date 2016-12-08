@@ -10,6 +10,6 @@
 
 @interface XXEForgetPassApi : YTKRequest
 
-- (id)initWithForgetPassWordUserType:(NSString *)user_type Phone:(NSString *)phone NewPass:(NSString *)newPass;
+- (id)initWithForgetPassWordUserType:(NSString *)user_type Phone:(NSString *)phone NewPass:(NSString *)newPass actionType:(NSString*)actionType;
 
 @end

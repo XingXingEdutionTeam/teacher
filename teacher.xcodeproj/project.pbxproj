@@ -826,6 +826,10 @@
 		9E5E23FD1D90E5BE008B1AAF /* dian@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9E5E23FC1D90E5BE008B1AAF /* dian@2x.png */; };
 		9E6051481DF7F0B700D9FC8A /* SchoolModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E6051471DF7F0B700D9FC8A /* SchoolModel.m */; };
 		9E60514E1DF80AD000D9FC8A /* XXESearchAccurateApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E60514D1DF80AD000D9FC8A /* XXESearchAccurateApi.m */; };
+		9E6051511DF8EE3C00D9FC8A /* ServiceManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E6051501DF8EE3C00D9FC8A /* ServiceManager.m */; };
+		9E6051541DF8EE9100D9FC8A /* UploadParam.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E6051531DF8EE9100D9FC8A /* UploadParam.m */; };
+		9E6051591DF8FB2000D9FC8A /* UpdatePopView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E6051581DF8FB2000D9FC8A /* UpdatePopView.m */; };
+		9E60515C1DF8FB4300D9FC8A /* WithoutCloseUpdatePopView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E60515B1DF8FB4300D9FC8A /* WithoutCloseUpdatePopView.m */; };
 		9E65A73E1DF000A0002BAE0A /* jpush-ios-2.2.0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E65A73C1DF000A0002BAE0A /* jpush-ios-2.2.0.a */; };
 		9E65A7401DF00101002BAE0A /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E65A73F1DF00101002BAE0A /* CoreFoundation.framework */; };
 		9E65A7421DF0015F002BAE0A /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E65A7411DF0015F002BAE0A /* UserNotifications.framework */; };
@@ -2465,6 +2469,14 @@
 		9E6051471DF7F0B700D9FC8A /* SchoolModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SchoolModel.m; sourceTree = "<group>"; };
 		9E60514C1DF80AD000D9FC8A /* XXESearchAccurateApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXESearchAccurateApi.h; sourceTree = "<group>"; };
 		9E60514D1DF80AD000D9FC8A /* XXESearchAccurateApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXESearchAccurateApi.m; sourceTree = "<group>"; };
+		9E60514F1DF8EE3C00D9FC8A /* ServiceManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServiceManager.h; sourceTree = "<group>"; };
+		9E6051501DF8EE3C00D9FC8A /* ServiceManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServiceManager.m; sourceTree = "<group>"; };
+		9E6051521DF8EE9100D9FC8A /* UploadParam.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UploadParam.h; sourceTree = "<group>"; };
+		9E6051531DF8EE9100D9FC8A /* UploadParam.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UploadParam.m; sourceTree = "<group>"; };
+		9E6051571DF8FB2000D9FC8A /* UpdatePopView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UpdatePopView.h; sourceTree = "<group>"; };
+		9E6051581DF8FB2000D9FC8A /* UpdatePopView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UpdatePopView.m; sourceTree = "<group>"; };
+		9E60515A1DF8FB4300D9FC8A /* WithoutCloseUpdatePopView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WithoutCloseUpdatePopView.h; sourceTree = "<group>"; };
+		9E60515B1DF8FB4300D9FC8A /* WithoutCloseUpdatePopView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WithoutCloseUpdatePopView.m; sourceTree = "<group>"; };
 		9E65A73C1DF000A0002BAE0A /* jpush-ios-2.2.0.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "jpush-ios-2.2.0.a"; sourceTree = "<group>"; };
 		9E65A73D1DF000A0002BAE0A /* JPUSHService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPUSHService.h; sourceTree = "<group>"; };
 		9E65A73F1DF00101002BAE0A /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
@@ -5045,6 +5057,7 @@
 		9E30D4D61DF4FBE200DF3F3E /* AppDelegate */ = {
 			isa = PBXGroup;
 			children = (
+				9E6051561DF8FAF900D9FC8A /* VersionPopView */,
 				9E30D4D71DF4FBE200DF3F3E /* AppDelegate.h */,
 				9E30D4D81DF4FBE200DF3F3E /* AppDelegate.m */,
 			);
@@ -5611,6 +5624,10 @@
 		9E4813C81D50695200C614AC /* XXETools */ = {
 			isa = PBXGroup;
 			children = (
+				9E60514F1DF8EE3C00D9FC8A /* ServiceManager.h */,
+				9E6051501DF8EE3C00D9FC8A /* ServiceManager.m */,
+				9E6051521DF8EE9100D9FC8A /* UploadParam.h */,
+				9E6051531DF8EE9100D9FC8A /* UploadParam.m */,
 				9EE3BA961D95106C00D420A7 /* UIColor+RCColor.h */,
 				9EE3BA971D95106C00D420A7 /* UIColor+RCColor.m */,
 				9EE3BA981D95106C00D420A7 /* UIImage+RCImage.h */,
@@ -5912,6 +5929,17 @@
 				9E6051471DF7F0B700D9FC8A /* SchoolModel.m */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		9E6051561DF8FAF900D9FC8A /* VersionPopView */ = {
+			isa = PBXGroup;
+			children = (
+				9E6051571DF8FB2000D9FC8A /* UpdatePopView.h */,
+				9E6051581DF8FB2000D9FC8A /* UpdatePopView.m */,
+				9E60515A1DF8FB4300D9FC8A /* WithoutCloseUpdatePopView.h */,
+				9E60515B1DF8FB4300D9FC8A /* WithoutCloseUpdatePopView.m */,
+			);
+			path = VersionPopView;
 			sourceTree = "<group>";
 		};
 		9E65A73B1DF000A0002BAE0A /* JPush-iOS-SDK-2.2.0 */ = {
@@ -6893,6 +6921,7 @@
 				04947CC11DC0CE3A008A351F /* BCNetworkReachabilityManager.m in Sources */,
 				9E2F7F171D7014F400DD9CD1 /* XXEHomeReportListApi.m in Sources */,
 				04BB3A1A1D74742B00AA5C5C /* XXESchoolAddressModifyViewController.m in Sources */,
+				9E6051541DF8EE9100D9FC8A /* UploadParam.m in Sources */,
 				9E3AAFF91DEC502B00E04C6C /* XXEStoreSentIconToOtherViewController.m in Sources */,
 				0485FCFD1D8247860077E10B /* XXEMyselfInfoCollectionPicModel.m in Sources */,
 				043301381D62C48300722DE2 /* XXEChiefAndTeacherApi.m in Sources */,
@@ -7042,6 +7071,7 @@
 				9E1671EA1D93B03B00463BBD /* XXEDeleteClassPicApi.m in Sources */,
 				04BB3A191D74742B00AA5C5C /* XXEHomeLogoRootViewController.m in Sources */,
 				04F2168E1D7671BB005C2EBF /* AlertViewWithBlockOrSEL.m in Sources */,
+				9E6051511DF8EE3C00D9FC8A /* ServiceManager.m in Sources */,
 				04BB3A3F1D74742B00AA5C5C /* XXEHomeworkModel.m in Sources */,
 				04BB3AA71D74743300AA5C5C /* XXEReplyTextInfoApi.m in Sources */,
 				9EBA6F7E1D5D7A9B001B45C3 /* XXEUpdataImageViewController.m in Sources */,
@@ -7180,6 +7210,7 @@
 				04A9DDA61D8158A500544782 /* XXEPermissionSettingViewController.m in Sources */,
 				9E7D8A0D1D58576D0099BE78 /* UIButton+XXExtension.m in Sources */,
 				04530C671D891E9D00620105 /* XXEAuditDetailInfoViewController.m in Sources */,
+				9E6051591DF8FB2000D9FC8A /* UpdatePopView.m in Sources */,
 				044349D31D79256B00DD8CCE /* XXEStudentSignInModel.m in Sources */,
 				04547B541DAB6BA50059F3F1 /* JXAddressBook.m in Sources */,
 				044DEBE51D8FD44E00DE101A /* XXEStudentManagerApi.m in Sources */,
@@ -7399,6 +7430,7 @@
 				9E3AAFFF1DEC502B00E04C6C /* XXEStoreGoodInfoModel.m in Sources */,
 				044B3A901D8E9FC60014AB87 /* XXEMySelfInfoAlbumModel.m in Sources */,
 				04BB3A471D74742B00AA5C5C /* XXERecipePicModify.m in Sources */,
+				9E60515C1DF8FB4300D9FC8A /* WithoutCloseUpdatePopView.m in Sources */,
 				9EDA725E1D8E9841006E5FB8 /* XXEDeleteCommentApi.m in Sources */,
 				0454C2991D9A599B00D32983 /* XXECourseManagerCourseModifyViewController.m in Sources */,
 				04BB3A2E1D74742B00AA5C5C /* XXESchoolUpPicViewController.m in Sources */,

@@ -27,6 +27,7 @@
 /** 验证码按钮 */
 @property (nonatomic, strong)UIButton *verificationButton;
 
+@property (nonatomic, copy)NSString *phone;
 
 @end
 
@@ -60,7 +61,7 @@
     self.view.backgroundColor = XXEBackgroundColor;
     self.navigationController.navigationBarHidden = NO;
 
-    self.navigationItem.title = @"1/2 忘记密码";
+    self.navigationItem.title = @"忘记密码";
     
 }
 /** 这两个方法都可以,改变当前控制器的电池条颜色 */
@@ -145,15 +146,39 @@
         make.size.mas_equalTo(CGSizeMake(22*kScreenRatioWidth, 24*kScreenRatioHeight));
     }];
     
-    [userImageView addSubview:self.registerUerTextField];
     [verificationImageView addSubview:self.registerVerificationTextField];
     
-    [self.registerUerTextField mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(userImageView.mas_centerY);
-        make.left.equalTo(userIconImageView.mas_right).offset(10*kScreenRatioWidth);
-        make.right.equalTo(userImageView.mas_right).offset(0);
-        make.height.mas_equalTo(41*kScreenRatioHeight);
-    }];
+    if (self.loginType == LoginNot) {
+        [userImageView addSubview:self.registerUerTextField];
+        [self.registerUerTextField mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.centerY.equalTo(userImageView.mas_centerY);
+            make.left.equalTo(userIconImageView.mas_right).offset(10*kScreenRatioWidth);
+            make.right.equalTo(userImageView.mas_right).offset(0);
+            make.height.mas_equalTo(41*kScreenRatioHeight);
+        }];
+    }else if (self.loginType == LoginSure) {
+        label.hidden = YES;
+        label1.hidden = YES;
+        label2.hidden = YES;
+        userImageView.hidden = YES;
+        NSRange range;
+        range.length = 4;
+        range.location = 3;
+        
+        UILabel *userNameLbl = [[UILabel alloc] init];
+        userNameLbl.font = [UIFont systemFontOfSize:15];
+        userNameLbl.textColor = UIColorFromHex(000);
+        userNameLbl.textAlignment = NSTextAlignmentCenter;
+        userNameLbl.text = [[XXEUserInfo user].account stringByReplacingCharactersInRange:range withString:@"****"];;
+        [self.view addSubview:userNameLbl];
+        [userNameLbl mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.centerX.equalTo(weakSelf.view);
+            make.top.equalTo(label.mas_bottom).offset(26*kScreenRatioHeight);
+            make.size.mas_equalTo(CGSizeMake(335*kScreenRatioWidth, 41*kScreenRatioHeight));
+        }];
+        
+    }
+    
     
     [self.registerVerificationTextField mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(verificationImageView.mas_centerY);
@@ -204,24 +229,11 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-    [button setTitle:@"返回" forState:UIControlStateNormal];
-    [button setImage:[UIImage imageNamed:@"navigationButtonReturn"] forState:UIControlStateNormal];
-    [button setImage:[UIImage imageNamed:@"navigationButtonReturn"] forState:UIControlStateHighlighted];
-    button.size = CGSizeMake(70, 30);
-    // 让按钮内部的所有内容左对齐
-    button.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-    //        [button sizeToFit];
-    // 让按钮的内容往左边偏移10
-    button.contentEdgeInsets = UIEdgeInsetsMake(0, -10, 0, 0);
-    button.titleEdgeInsets = UIEdgeInsetsMake(0, 5, 0, 0);
-    
-    [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-//    [button setTitleColor:[UIColor redColor] forState:UIControlStateHighlighted];
-    [button addTarget:self action:@selector(forgetPageBack) forControlEvents:UIControlEventTouchUpInside];
-    
-    // 修改导航栏左边的item
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:button];
+    if (self.loginType == LoginSure) {
+        
+    }else {
+        [self setLeftBarBtn];
+    }
     
     [[self.registerUerTextField.rac_textSignal filter:^BOOL(id value) {
         NSString *text = value;
@@ -240,6 +252,27 @@
 //    NSLog(@"获取验证码=======");
 }
 
+- (void)setLeftBarBtn {
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    [button setTitle:@"返回" forState:UIControlStateNormal];
+    [button setImage:[UIImage imageNamed:@"navigationButtonReturn"] forState:UIControlStateNormal];
+//    [button setImage:[UIImage imageNamed:@"navigationButtonReturn"] forState:UIControlStateHighlighted];
+    button.size = CGSizeMake(70, 30);
+    // 让按钮内部的所有内容左对齐
+    button.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+    //        [button sizeToFit];
+    // 让按钮的内容往左边偏移10
+    button.contentEdgeInsets = UIEdgeInsetsMake(0, -10, 0, 0);
+    button.titleEdgeInsets = UIEdgeInsetsMake(0, 5, 0, 0);
+    
+    [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    //    [button setTitleColor:[UIColor redColor] forState:UIControlStateHighlighted];
+    [button addTarget:self action:@selector(forgetPageBack) forControlEvents:UIControlEventTouchUpInside];
+    
+    // 修改导航栏左边的item
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:button];
+}
+
 #pragma mark - UItextFieldDelegate
 //- (void)textFieldDidEndEditing:(UITextField *)textField
 //{
@@ -256,9 +289,10 @@
 
 #pragma mark - 网络请求
 
-- (void)checkPhoneNumber
+- (void)checkPhoneNumberWithPhone:(NSString *)phone
 {
-    XXERegisterCheckApi *registerCheckApi = [[XXERegisterCheckApi alloc]initWithChechPhoneNumber:self.registerUerTextField.text];
+    
+    XXERegisterCheckApi *registerCheckApi = [[XXERegisterCheckApi alloc]initWithChechPhoneNumber:phone];
     [registerCheckApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         NSLog(@"电话可不可以用%@",request.responseJSONObject);
         NSDictionary *dic = request.responseJSONObject;
@@ -273,7 +307,7 @@
             self.registerVerificationTextField.enabled = YES;
             [self.verificationButton startWithTime:60 title:@"获取验证码" countDownTile:@"s后重新获取" mColor:XXEColorFromRGB(189, 210, 38) countColor:XXEColorFromRGB(204, 204, 204)];
             
-            [self getVerificationNumber];
+            [self getVerificationNumberWithPhone:phone];
 //            self.verificationButton.userInteractionEnabled = YES;
         } else{
             [self showString:@"请重新输入" forSecond:1.f];
@@ -308,22 +342,35 @@
 - (void)setupVerificationNumber:(UIButton *)sender
 {
     [self textFieldResignFirstResponder];
-    if ([self.registerUerTextField.text isEqualToString:@""]) {
-        [self showString:@"请输入手机号" forSecond:2];
-        return;
+    NSString *phone;
+    if (self.loginType == LoginNot) {
+        if ([self.registerUerTextField.text isEqualToString:@""]) {
+            [self showString:@"请输入手机号" forSecond:2];
+            return;
+        }
+        phone = self.registerUerTextField.text;
+    }else if (self.loginType == LoginSure) {
+        phone = [XXEUserInfo user].account;
     }
+    self.phone = phone;
+    [self checkPhoneNumberWithPhone:phone];
     
-    [self checkPhoneNumber];
     
 }
 
 - (void)nextButtonsClick:(UIButton *)sender
 {
     [self textFieldResignFirstResponder];
-    if ([self.registerUerTextField.text isEqualToString:@""]) {
-        [self showString:@"请输入手机号" forSecond:2];
-        return;
+    
+    if (self.loginType == LoginNot) {
+        if ([self.registerUerTextField.text isEqualToString:@""]) {
+            [self showString:@"请输入手机号" forSecond:2];
+            return;
+        }
+    }else if (self.loginType == LoginSure) {
+        
     }
+    
     
     if ([self.registerVerificationTextField.text isEqualToString:@""]) {
         [self showString:@"请输入验证码" forSecond:2];
@@ -343,7 +390,9 @@
 -(void)verifyNumberISRight
 {
     NSLog(@"电话号码%@ 验证码%@",self.registerUerTextField.text,self.registerVerificationTextField.text);
-//    [SMSSDK commitVerificationCode:self.registerVerificationTextField.text phoneNumber:self.registerUerTextField.text zone:@"86" result:^(NSError *error) {
+    
+    
+//    [SMSSDK commitVerificationCode:self.registerVerificationTextField.text phoneNumber:self.phone zone:@"86" result:^(NSError *error) {
 //        if (error) {
 //            [self showString:@"验证码错误" forSecond:1.f];
 //        }else {
@@ -352,8 +401,23 @@
 //    }];
     NSString *forgetPass = @"忘记密码--";
     XXERegisterSecondViewController *registerVC = [[XXERegisterSecondViewController alloc]init];
+    
+    if (self.passwordType == PayPassword) {
+        registerVC.passwordType = PayPassword;
+    }else if (self.passwordType == LoginPassword) {
+        registerVC.passwordType = LoginPassword;
+    }
+    
+    if (self.loginType == LoginSure) {
+        registerVC.loginType = LoginSure;
+        registerVC.forgetPhonrNum = [XXEUserInfo user].account;
+    }else if (self.loginType == LoginNot) {
+        registerVC.loginType = LoginNot;
+        registerVC.forgetPhonrNum = self.registerUserName;
+    }
+    
     registerVC.forgetPassWordPage = forgetPass;
-    registerVC.forgetPhonrNum = self.registerUserName;
+    
     [self.navigationController pushViewController:registerVC animated:YES];
 }
 
@@ -363,14 +427,14 @@
     [self.registerVerificationTextField resignFirstResponder];
 }
 
-- (void)getVerificationNumber
+- (void)getVerificationNumberWithPhone:(NSString*)phone
 {
     //短信验证码
-    [SMSSDK getVerificationCodeByMethod:SMSGetCodeMethodSMS phoneNumber:self.registerUserName zone:@"86" customIdentifier:nil result:^(NSError *error) {
+    [SMSSDK getVerificationCodeByMethod:SMSGetCodeMethodSMS phoneNumber:phone zone:@"86" customIdentifier:nil result:^(NSError *error) {
         if (!error) {
             
             //记录次数
-            [self recordTheVerifyCodeNum];
+            [self recordTheVerifyCodeNumWithPhone:phone];
         }else {
             [self showString:@"获取验证码失败" forSecond:1.f];
         }
@@ -378,9 +442,9 @@
 }
 
 #pragma mark - 获取验证码次数
-- (void)recordTheVerifyCodeNum
+- (void)recordTheVerifyCodeNumWithPhone:(NSString*)phone
 {
-    XXEVertifyTimesApi *timesApi = [[XXEVertifyTimesApi alloc]initWithVertifyTimesActionPage:@"2" PhoneNum:self.registerUserName];
+    XXEVertifyTimesApi *timesApi = [[XXEVertifyTimesApi alloc]initWithVertifyTimesActionPage:@"2" PhoneNum:phone];
     [timesApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         NSLog(@"%@",request.responseJSONObject);
         NSString *code = [request.responseJSONObject objectForKey:@"code"];

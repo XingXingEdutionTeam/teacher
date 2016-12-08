@@ -10,7 +10,7 @@
 
 @interface XXEForgetPassWordViewController : XXEBaseViewController
 
-
-
+@property(nonatomic ,assign) LoginType loginType;
+@property(nonatomic ,assign) PasswordType passwordType;
 
 @end

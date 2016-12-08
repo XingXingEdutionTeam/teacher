@@ -574,6 +574,8 @@
 - (void)forgetPassWordButtonClick:(UIButton *)sender
 {
     XXEForgetPassWordViewController *forgetVC = [[XXEForgetPassWordViewController alloc]init];
+    forgetVC.loginType = LoginNot;
+    forgetVC.passwordType = LoginPassword;
     UIWindow *window = [UIApplication sharedApplication].keyWindow;
     XXENavigationViewController *navi = [[XXENavigationViewController alloc]initWithRootViewController:forgetVC];
     window.rootViewController = navi;
@@ -723,6 +725,7 @@
 #pragma mark - 保存数据信息
 - (void)LoginSetupUserInfoDict:(NSDictionary *)data SnsAccessToken:(NSString *)accessToken LoginType:(NSString *)logintype
 {
+    NSString *phone = [NSString stringWithFormat:@"%@", [data objectForKey:@"phone"]];
     NSString *login_times = [data objectForKey:@"login_times"];
     NSString *nickname = [data objectForKey:@"nickname"];
     NSString *token = [data objectForKey:@"token"];
@@ -752,6 +755,8 @@
         [XXEUserInfo user].login = NO;
     }
     NSDictionary *userInfo = @{
+//                               @"account":
+                               @"phone": phone,
                                @"login_times":login_times,
                                @"nickname":nickname,
                                @"token":token,
