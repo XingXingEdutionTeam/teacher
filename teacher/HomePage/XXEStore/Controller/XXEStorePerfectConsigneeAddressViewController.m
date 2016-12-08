@@ -108,20 +108,27 @@
                     
                     nameLabel.text = defaultAddressDict[@"name"];
                     phoneLabel.text = defaultAddressDict[@"phone"];
-                    addressLabel.text = defaultAddressDict[@"address"];
+                    /*
+                     [province] => 上海市
+                     [city] => 上海市
+                     [district] => 浦东新区
+                     [address] => 巨峰路1058弄新紫茂国际3号楼1607号
+                     */
+                    addressLabel.text = [NSString stringWithFormat:@"%@ %@ %@ %@", defaultAddressDict[@"province"], defaultAddressDict[@"city"], defaultAddressDict[@"district"],
+                        defaultAddressDict[@"address"]];
                     address_id = defaultAddressDict[@"id"];
                 }
             }
             
         }else{
         
-            [self showHudWithString:@"请点进下个界面进行添加"];
+            [self showString:@"请点进下个界面添加收货信息" forSecond:1.5];
         }
         
         
     } failure:^(NSError *error) {
         //
-        [self showHudWithString:@"获取数据失败!"];
+        [self showString:@"获取数据失败!" forSecond:1.5];
     }];
     
 
@@ -372,7 +379,11 @@
             storePayVC.order_id = daizhifuOrderDictInfo[@"order_id"];
             
             [self.navigationController pushViewController:storePayVC animated:YES];
+        }else if([responseObj[@"code"]  integerValue] == 7){
+            
+            [self showString:@"您猩币不足" forSecond:1.5];
         }
+
         
     } failure:^(NSError *error) {
         //

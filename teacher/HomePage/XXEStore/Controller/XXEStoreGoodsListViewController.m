@@ -21,7 +21,7 @@
     NSMutableArray *_dataSourceArray;
     
     UIImageView *placeholderImageView;
-    
+    //订单 状态
     NSString *condit;
     
     NSString *parameterXid;
@@ -98,7 +98,7 @@
 }
 
 
-- (void)fetchNetData:(NSString *)condit{
+- (void)fetchNetData:(NSString *)conditStr{
     /*
      【猩猩商城--我的订单(5个标签)】
      接口类型:1
@@ -119,7 +119,7 @@
                              @"xid":parameterXid,
                              @"user_id":parameterUser_Id,
                              @"user_type":USER_TYPE,
-                             @"condit":condit
+                             @"condit":conditStr
                              };
     
     [WZYHttpTool post:urlStr params:params success:^(id responseObj) {

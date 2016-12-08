@@ -44,6 +44,8 @@
     // 创建一个用来引用计时器对象的属性
     NSTimer *timer;
     
+    UIImageView *placeholderImageView;
+    
     //本周推荐
     UIImageView *weekrecommend;
     
@@ -121,27 +123,42 @@
 
 // 有数据 和 无数据 进行判断
 - (void)customContent{
+    // 如果 有占位图 先 移除
+    [self removePlaceholderImageView];
     
     if (_dataSourceArray.count == 0) {
-        
         _myTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-        
         // 1、无数据的时候
-        UIImage *myImage = [UIImage imageNamed:@"all_placeholder"];
-        CGFloat myImageWidth = myImage.size.width;
-        CGFloat myImageHeight = myImage.size.height;
-        
-        UIImageView *myImageView = [[UIImageView alloc] initWithFrame:CGRectMake(KScreenWidth / 2 - myImageWidth / 2, (KScreenHeight - 64 - 49) / 2 - myImageHeight / 2, myImageWidth, myImageHeight)];
-        myImageView.image = myImage;
-        [self.view addSubview:myImageView];
+        [self createPlaceholderView];
         
     }else{
         //2、有数据的时候
-        [_myTableView reloadData];
-        
     }
+    
     [_myTableView reloadData];
+    
 }
+
+
+//没有 数据 时,创建 占位图
+- (void)createPlaceholderView{
+    // 1、无数据的时候
+    UIImage *myImage = [UIImage imageNamed:@"all_placeholder"];
+    CGFloat myImageWidth = myImage.size.width;
+    CGFloat myImageHeight = myImage.size.height;
+    
+    placeholderImageView = [[UIImageView alloc] initWithFrame:CGRectMake(kWidth / 2 - myImageWidth / 2, (kHeight - 64 - 49) / 2 - myImageHeight / 2, myImageWidth, myImageHeight)];
+    placeholderImageView.image = myImage;
+    [self.view addSubview:placeholderImageView];
+}
+
+//去除 占位图
+- (void)removePlaceholderImageView{
+    if (placeholderImageView != nil) {
+        [placeholderImageView removeFromSuperview];
+    }
+}
+
 
 
 #pragma mark ########### 创建 最下层 bgScrollView ###
@@ -356,7 +373,7 @@
 
 #pragma mark $$$$$$$$$$$$ 创建 下部 tableView $$$$$$$$
 - (void)createTableView{
-    _myTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 230 * kScreenRatioHeight, KScreenWidth, 360 * kScreenRatioHeight)];
+    _myTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 230 * kScreenRatioHeight, KScreenWidth, 320 * kScreenRatioHeight)];
     
     _myTableView.dataSource = self;
     _myTableView.delegate = self;
