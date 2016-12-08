@@ -50,6 +50,9 @@
 
 //16>10
 #define UIColorFromHex(hex) [UIColor colorWithRed:((float)((hex & 0xFF0000) >> 16))/255.0 green:((float)((hex & 0xFF00) >> 8))/255.0 blue:((float)(hex & 0xFF))/255.0 alpha:1.0]
+
+#define RGB_HEX(hex) RGBA((float)((hex & 0xFF0000) >> 16),(float)((hex & 0xFF00) >> 8),(float)(hex & 0xFF),1.f)
+
 //rgb颜色转换
 #define is_IOS_7 [[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0
 #define WinWidth [UIScreen mainScreen].bounds.size.width

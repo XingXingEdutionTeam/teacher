@@ -40,6 +40,16 @@
 
 #import <NotificationCenter/NotificationCenter.h>
 
+#import "ServiceManager.h"
+
+#import "UpdatePopView.h"
+#import "WithoutCloseUpdatePopView.h"
+
+//MARK - appstore链接
+NSMutableString *appStoreURL;
+
+//MARK - 当前系统版本号 规定为三位数整数 如: 1.0.0 为100
+static int currentVersion = 100;
 
 @interface AppDelegate ()<JPUSHRegisterDelegate>
 
@@ -89,6 +99,7 @@
     
     [self loadStarView];
     
+    [self showUpdatePopView];
     
 //    //获取deviceToken
 //    
@@ -116,6 +127,73 @@
 //    NSDictionary *remoteNotificationUserInfo = launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey];
 //    NSLog(@"%@", remoteNotificationUserInfo);
     return YES;
+}
+
+//MARK: - 版本更新提示框
+- (void)showUpdatePopView {
+    
+    [[ServiceManager sharedInstance] requestWithURLString:CheckoutVersionURL parameters:nil type:HttpRequestTypeGet success:^(id responseObject) {
+        
+        if ([responseObject[@"code"] integerValue] == 1) {
+            extern NSMutableString *appStoreURL;
+            appStoreURL = responseObject[@"data"][@"url"];
+            int nowVersion = [responseObject[@"data"][@"now_version"] intValue];
+            int allowVersion = [responseObject[@"data"][@"allow_version"] intValue];// 支持最低版本号
+            
+            if (currentVersion < nowVersion) {//更新
+                if (currentVersion < allowVersion) {//强制更新
+                    [self mustJumpToAppStoreWithNowVerson:nowVersion appStoreURL:appStoreURL];
+                    return;
+                }
+                [self jumpToAppStoreWithNowVerson:nowVersion appStoreURL:appStoreURL];
+            }else if (currentVersion > nowVersion){ //苹果审核中
+                //code...
+            }
+        }
+        
+    } failure:^(NSError *error) {
+        
+    }];
+}
+
+//MARK: - 强制跳转AppStore
+- (void)mustJumpToAppStoreWithNowVerson:(int)nowVersion appStoreURL:(NSString*)appStoreURL {
+    NSString *versionText = [NSString stringWithFormat:@"%d", nowVersion];
+    WithoutCloseUpdatePopView *withoutClosePopView = [WithoutCloseUpdatePopView convenicenWithTitle:versionText];
+    [self.window addSubview:withoutClosePopView];
+    //button点击方法
+    //    __weak typeof (UpdatePopView) *weakPopView = popView;
+    [withoutClosePopView clickUpdateBtn:^{
+        NSURL * url = [NSURL URLWithString:appStoreURL];
+        if ([[UIApplication sharedApplication] canOpenURL:url])
+        {
+            [[UIApplication sharedApplication] openURL:url];
+        }
+        else
+        {
+            NSLog(@"can not open");
+        }
+    }];
+}
+
+//MARK: - 跳转AppStore
+- (void)jumpToAppStoreWithNowVerson:(int)nowVersion appStoreURL:(NSString*)appStoreURL {
+    NSString *versionText = [NSString stringWithFormat:@"%d", nowVersion];
+    UpdatePopView *popView = [UpdatePopView convenicenWithTitle:versionText];
+    [self.window addSubview:popView];
+    //button点击方法
+//    __weak typeof (UpdatePopView) *weakPopView = popView;
+    [popView clickUpdateBtn:^{
+        NSURL * url = [NSURL URLWithString:appStoreURL];
+        if ([[UIApplication sharedApplication] canOpenURL:url])
+        {
+            [[UIApplication sharedApplication] openURL:url];
+        }
+        else
+        {
+            NSLog(@"can not open");
+        }
+    }];
 }
 
 // 添加初始化APNs代码

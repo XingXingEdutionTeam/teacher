@@ -42,7 +42,7 @@
     self.view.backgroundColor = XXEBackgroundColor;
     if ([self.forgetPassWordPage isEqualToString:@"忘记密码--"]) {
 
-    self.navigationItem.title = @"2/2 找回密码";
+    self.navigationItem.title = @"找回密码";
 
     }else{
         self.navigationItem.title = @"2/4注册";
@@ -266,7 +266,14 @@
 #pragma mark - 重新设置密码的网路请求
 - (void)setupAgainForgetPassWord
 {
-    XXEForgetPassApi *forgetPassApi = [[XXEForgetPassApi alloc]initWithForgetPassWordUserType:@"2" Phone:self.forgetPhonrNum NewPass:self.confirmPassWordTextField.text];
+    NSString *actionType;
+    if (self.passwordType == PayPassword) {
+        actionType = @"2";
+    }else if (self.passwordType == LoginPassword) {
+        actionType = @"1";
+    }
+    
+    XXEForgetPassApi *forgetPassApi = [[XXEForgetPassApi alloc]initWithForgetPassWordUserType:@"2" Phone:self.forgetPhonrNum NewPass:self.confirmPassWordTextField.text actionType:actionType];
     [forgetPassApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         
         NSLog(@"%@",request.responseJSONObject);
@@ -275,10 +282,20 @@
         if ([code intValue]==1) {
             [self showString:@"密码更改成功" forSecond:2.f];
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2*NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                XXELoginViewController *loginVC = [[XXELoginViewController alloc]init];
-                UIWindow *window = [UIApplication sharedApplication].keyWindow;
-                window.rootViewController = loginVC;
-                [self.view removeFromSuperview];
+                
+//                XXELoginViewController *loginVC = [[XXELoginViewController alloc]init];
+//                UIWindow *window = [UIApplication sharedApplication].keyWindow;
+//                window.rootViewController = loginVC;
+//                [self.view removeFromSuperview];
+                
+                if (self.loginType == LoginNot) {
+                    XXELoginViewController *loginVC = [[XXELoginViewController alloc]init];
+                    UIWindow *window = [UIApplication sharedApplication].keyWindow;
+                    window.rootViewController = loginVC;
+                    [self.view removeFromSuperview];
+                }else if (self.loginType == LoginSure) {
+                    [self.navigationController popToRootViewControllerAnimated:true];
+                }
             });
             
         }else{

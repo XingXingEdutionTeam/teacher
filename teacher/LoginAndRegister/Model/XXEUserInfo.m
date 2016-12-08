@@ -46,7 +46,7 @@ static NSString *userInfo_key = @"teacherInfo";
             [self setupUserInfoWithUserInfo:userInfo];
         }
         else {
-//            _account = nil;
+            _account = nil;
             _user_head_img = nil;
             _nickname = nil;
             _user_type = nil;
@@ -70,7 +70,7 @@ static NSString *userInfo_key = @"teacherInfo";
 
 - (void)setupUserInfoWithUserInfo:(NSDictionary *)userInfo
 {
-//    _account = userInfo[@"account"];
+    _account = userInfo[@"phone"];
     
     _user_head_img = userInfo[@"user_head_img"];
     _nickname = userInfo[@"nickname"];
@@ -95,7 +95,7 @@ static NSString *userInfo_key = @"teacherInfo";
 {
     if (self.xid) {
         NSDictionary *userInfo = @{
-//                                   @"account":self.account,
+                                   @"account":self.account,
                                    @"user_head_img":self.user_head_img,
                                    @"nickname":self.nickname,
                                    @"user_type":self.user_type,

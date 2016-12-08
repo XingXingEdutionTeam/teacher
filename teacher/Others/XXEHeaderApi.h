@@ -33,6 +33,8 @@
 #define XXEYouMengAppKey @"57c01a13f43e48118e000e55"
 
 
+//版本号
+#define CheckoutVersionURL @"http://www.xingxingedu.cn/Teacher/versionCheck"
 //登录
 #define XXELoginUrl @"http://www.xingxingedu.cn/Teacher/login"
 //忘记密码

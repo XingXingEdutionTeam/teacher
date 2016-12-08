@@ -18,6 +18,7 @@
 #import "XXERootFriendListController.h"
 #import "XXEMySelfInfoApi.h"
 #import "XXECourseOrderListViewController.h"
+#import "XXEFriendMyCircleViewController.h"
 
 @interface XXEMySelfPageViewController ()<UITableViewDelegate, UITableViewDataSource>
 {
@@ -477,6 +478,10 @@
         
     }else if (indexPath.row == 5){
         //@"我的圈子"
+        XXEFriendMyCircleViewController *myCircle = [[XXEFriendMyCircleViewController alloc] init];
+        myCircle.rootChat = @"my";
+        myCircle.otherXid = [XXEUserInfo user].xid;
+        [self.navigationController pushViewController:myCircle animated:YES];
         
     }else if (indexPath.row == 6){
         //@"我的黑名单"
