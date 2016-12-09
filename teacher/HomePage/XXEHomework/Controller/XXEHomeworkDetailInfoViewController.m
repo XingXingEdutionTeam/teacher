@@ -215,7 +215,7 @@
         CGFloat height = [StringHeight contentSizeOfString:contentArray[indexPath.row] maxWidth:maxWidth fontSize:14];
         return height + 20;
     }else if (indexPath.row==3) {
-        return 44 + picRow * picHeight;
+        return 44 + picRow * (picHeight + 10);
     }
     else{
         return 44;

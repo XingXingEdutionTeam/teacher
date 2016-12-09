@@ -268,6 +268,7 @@
     _schoolTypeCombox.textField.placeholder = @"学校类型";
     _schoolTypeCombox.textField.textAlignment = NSTextAlignmentCenter;
     _schoolTypeCombox.dataArray = _schoolTypeArr;
+    _schoolTypeCombox.textField.enabled = NO;
     [_schoolTypeCombox.textField addObserver:self forKeyPath:@"text" options:NSKeyValueObservingOptionNew context:@"11"];
     [self.view addSubview:_schoolTypeCombox];
     

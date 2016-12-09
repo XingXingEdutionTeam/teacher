@@ -316,13 +316,26 @@
         self.userPosition = @"2";
         [self bottomViewShowPosition:self.userPosition];
     }else{
+//        NSLog(@"text === %@", text);
+
+//        NSLog(@"self.classDatasource === %@", self.classDatasource);
+        
+        for (XXEHomePageClassModel *classModel in self.classDatasource) {
+            if ([classModel.class_name isEqualToString:text]) {
+                self.classHomeId = classModel.class_id;
+            }
+        }
+        
+//        NSLog(@"self.classHomeId == %@", self.classHomeId);
+        
+        [DEFAULTS setObject:self.classHomeId forKey:@"CLASS_ID"];
+        [DEFAULTS synchronize];
+        
         self.userPosition = @"1";
         [self bottomViewShowPosition:self.userPosition];
     }
     
 //    NSLog(@"----- *** ----- %@", self.userPosition);
-    
-    
     [DEFAULTS setObject:self.userPosition forKey:@"POSITION"];
     [DEFAULTS synchronize];
 }
@@ -701,7 +714,7 @@
                 XXEClassAlbumViewController *classAlbumVC = [[XXEClassAlbumViewController alloc]init];
                 classAlbumVC.schoolID = self.schoolHomeId;
                 classAlbumVC.classID = self.classHomeId;
-                NSLog(@"%@ == %@",self.schoolHomeId,self.classHomeId);
+//                NSLog(@"%@ == %@",self.schoolHomeId,self.classHomeId);
                 [self.navigationController pushViewController:classAlbumVC animated:YES];
             break;
         }

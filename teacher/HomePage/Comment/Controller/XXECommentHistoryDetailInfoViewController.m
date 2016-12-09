@@ -131,7 +131,7 @@
         cell.contentLabel.text = contentArray[indexPath.row];
         
         maxWidth = cell.contentLabel.width;
-        CGFloat height = [StringHeight contentSizeOfString:contentArray[indexPath.row] maxWidth:maxWidth fontSize:14];
+        CGFloat height = [StringHeight contentSizeOfString:contentArray[indexPath.row] maxWidth:maxWidth fontSize:14 * kScreenRatioWidth];
         
         CGSize size = cell.contentLabel.size;
         size.height = height;
@@ -176,6 +176,8 @@
             CGFloat buttonY = 44 + (picHeight + margin) * buttonRow;
             
             UIImageView *pictureImageView = [[UIImageView alloc] initWithFrame:CGRectMake(buttonX + 5, buttonY, picWidth, picHeight)];
+            pictureImageView.contentMode = UIViewContentModeScaleAspectFill;
+            pictureImageView.clipsToBounds = YES;
             
             NSString *str = [NSString stringWithFormat:@"%@%@", kXXEPicURL, _picWallArray[i]];
             [pictureImageView sd_setImageWithURL:[NSURL URLWithString:str]];
@@ -220,7 +222,7 @@
     }
     
     if (indexPath.row == t - 1) {
-        CGFloat height = [StringHeight contentSizeOfString:contentArray[indexPath.row] maxWidth:maxWidth fontSize:14];
+        CGFloat height = [StringHeight contentSizeOfString:contentArray[indexPath.row] maxWidth:maxWidth fontSize:14 * kScreenRatioWidth];
         return height + 20;
     }
 

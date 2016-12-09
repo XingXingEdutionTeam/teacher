@@ -13,5 +13,6 @@
 @property (weak, nonatomic) IBOutlet UITextField *teacherRegisTextField;
 
 
+//@property (weak, nonatomic) IBOutlet UILabel *schoolNameLabel;
 
 @end

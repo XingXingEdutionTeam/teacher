@@ -19,11 +19,11 @@
  province = "\U4e0a\U6d77\U5e02";
  }
  */
-@property (nonatomic, copy) NSString *name;
-@property (nonatomic, copy) NSString *graduateInstitutionId;
-@property (nonatomic, copy) NSString *province;
-@property (nonatomic, copy) NSString *city;
-@property (nonatomic, copy) NSString *district;
+@property (nonatomic, copy) NSString<Optional> *name;
+@property (nonatomic, copy) NSString<Optional> *graduateInstitutionId;
+@property (nonatomic, copy) NSString<Optional> *province;
+@property (nonatomic, copy) NSString<Optional> *city;
+@property (nonatomic, copy) NSString<Optional> *district;
 
 
 + (NSArray*)parseResondsData:(id)respondObject;

@@ -99,11 +99,19 @@
     //创建 上部分 内容
     [self createUpContent];
     
-    //创建 中间  内容
-    [self createMiddleContent];
-    
-    //创建 下部分 内容
-    [self createDownContent];
+    CGFloat buttonY = 0.00;
+    if ([detailInfoDict[@"type"] integerValue] == 1) {
+        //实物
+        //创建 中间  内容
+        [self createMiddleContent];
+        //创建 下部分 内容
+        [self createDownContent];
+        
+        buttonY = downBgView.frame.origin.y + downBgView.height;
+    }else if ([detailInfoDict[@"type"] integerValue] == 2){
+        //虚拟
+        buttonY = upBgView.frame.origin.y + upBgView.height;
+    }
     
     
     if ([detailInfoDict[@"condit"] integerValue] == 0 || [detailInfoDict[@"condit"] integerValue] == 2){
@@ -117,7 +125,7 @@
         CGFloat buttonH = 42 * kScreenRatioHeight;
         
         for (int h = 0; h < 2; h ++) {
-            UIButton *button = [UIButton createButtonWithFrame:CGRectMake(buttonX, downBgView.frame.origin.y + downBgView.height + 10 + (buttonH + 10) * h, buttonW, buttonH) backGruondImageName:@"login_green" Target:self Action:@selector(buttonClick:) Title:@""];
+            UIButton *button = [UIButton createButtonWithFrame:CGRectMake(buttonX, buttonY + 10 + (buttonH + 10) * h, buttonW, buttonH) backGruondImageName:@"login_green" Target:self Action:@selector(buttonClick:) Title:@""];
             [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
             button.titleLabel.font = [UIFont systemWithIphone6P:20 Iphone6:18 Iphone5:16 Iphone4:14];
             
