@@ -321,7 +321,7 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
             
         }];
     }else{
-        
+        self.theEndUserAvatarImage = kDefaultAvatarUrl;
     }
     
 }

@@ -15,12 +15,14 @@
 - (void)commentInputView:(YDCommentInputView *)anInputView onSendText:(NSString *)aText;
 - (void)didInputAtFromCommentInputView:(YDCommentInputView *)anInputView;
 - (void)didHideCommentInputView:(YDCommentInputView *)anInputView;
+//- (void)didReturnBtn;
 @end
 
 @interface YDCommentInputView : UIView
-<UITextFieldDelegate>
+<UITextViewDelegate>
 @property (weak, nonatomic) id<YDCommentInputViewDelegate> delegate;
-@property (weak, nonatomic) IBOutlet UITextField *commentInputTextField;
+@property (weak, nonatomic) IBOutlet UITextView *commentInputTextField;
+//@property (weak, nonatomic) IBOutlet UITextField *commentInputTextField;
 @property (weak, nonatomic) IBOutlet UIView *bgView;
 @property (weak, nonatomic) IBOutlet UIView *inputBar;
 @property (weak, nonatomic) IBOutlet UIPageControl *pageControl;

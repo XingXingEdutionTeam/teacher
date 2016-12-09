@@ -183,6 +183,7 @@
     self.parentsName = [[UITextField alloc] init];
     self.parentsName.placeholder = @"请输入您的姓名";
     self.parentsName.borderStyle = UITextBorderStyleNone;
+    self.parentsName.font = [UIFont systemFontOfSize:15 * kScreenRatioWidth];
     [bgImageView addSubview:self.parentsName];
     [self.parentsName mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(parentsNameLabel.mas_right).offset(2);
@@ -202,6 +203,7 @@
 
 //    parentsIDCard = [UITextField createTextFieldWithIsOpen:NO textPlaceholder:@"请输入您的身份证号或者护照"];
     self.parentsIDCard = [[UITextField alloc] init];
+    self.parentsIDCard.font = [UIFont systemFontOfSize:15 * kScreenRatioWidth];
     self.parentsIDCard.placeholder = @"请输入您的身份证号或者护照";
     self.parentsIDCard.delegate = self;
     self.parentsIDCard.keyboardType = UITextBorderStyleNone;

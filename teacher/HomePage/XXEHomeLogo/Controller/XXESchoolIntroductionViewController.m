@@ -20,6 +20,7 @@
 #import "XXESchoolIntroductionDetailViewController.h"
 #import "XXESchoolAlbumViewController.h"
 #import "XXESchoolVideoViewController.h"
+#import "SystemPopView.h"
 
 
 @interface XXESchoolIntroductionViewController ()<UITableViewDataSource, UITableViewDelegate>
@@ -47,7 +48,7 @@
 }
 
 - (void)createTableView{
-    _myTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, KScreenWidth, KScreenHeight - 120 * kScreenRatioHeight - 64 * kScreenRatioWidth) style:UITableViewStyleGrouped];
+    _myTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, KScreenWidth, KScreenHeight - 120 - 64) style:UITableViewStyleGrouped];
     
     _myTableView.dataSource = self;
     _myTableView.delegate = self;
@@ -240,8 +241,9 @@
         [self.navigationController pushViewController:albumVC animated:YES];
         //11 视频
     }else if (indexPath.row == 11){
-        [XXETool showAlertView];
-        return;
+        [SystemPopView showSystemPopViewWithTitle:@"此功能暂未开放,敬请期待" vc:self];
+//        [XXETool showAlertView];
+//        return;
         
 //        XXESchoolVideoViewController *schoolVideoVC = [[XXESchoolVideoViewController alloc] init];
 //        schoolVideoVC.position = _position;

@@ -23,6 +23,7 @@
 #import "XXEMySelfInfoAlbumViewController.h"
 #import "XXEMyselfInfoGraduateInstitutionsViewController.h"
 #import "AppDelegate.h"
+#import "SystemPopView.h"
 
 #define ORIGINAL_MAX_WIDTH 640.0f
 
@@ -771,6 +772,12 @@
 
 //修改密码
 - (void)modifyCodeButtonClick{
+    
+    if ([[XXEUserInfo user].account isEqualToString:@""]) {
+        [SystemPopView showSystemPopViewWithTitle:@"请先绑定手机号" vc:self];
+        return;
+    }
+    
     modifyActionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"修改登录密码", @"修改支付密码" , nil];
     modifyActionSheet.actionSheetStyle = UIActionSheetStyleDefault;
     

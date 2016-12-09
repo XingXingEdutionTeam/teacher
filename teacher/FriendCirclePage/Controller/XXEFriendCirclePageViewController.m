@@ -46,7 +46,6 @@
 
 @property(nonatomic ,assign) BOOL isMaxLoading;
 
-
 @end
 
 @implementation XXEFriendCirclePageViewController
@@ -104,8 +103,14 @@
     [self setupFriendCircleMessagePage: _page];
     
     self.delegate = self;
+    
+    self.tableView.hidden = YES;
 }
 
+//MARK: - 设置无数据视图
+- (void)noFriendCircleData {
+    
+}
 
 #pragma mark - 下拉刷新 与上拉加载更多
 - (void)refresh
@@ -145,6 +150,8 @@
     __weak __typeof(self)weakSelf = self;
     XXEFriendCircleApi *friendCircleApi = [[XXEFriendCircleApi alloc]initWithFriendCircleXid:parameterXid CircleUserId:parameterUser_Id PageNumber:pageNum];
     [friendCircleApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
+        
+        weakSelf.tableView.hidden = NO;
         NSString *code = [request.responseJSONObject objectForKey:@"code"];
         
         if ([code intValue]==1 && [[request.responseJSONObject objectForKey:@"data"] isKindOfClass:[NSDictionary class]]) {
