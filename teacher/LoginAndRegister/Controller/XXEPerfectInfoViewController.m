@@ -95,9 +95,9 @@ static NSString *IdentifierMessPerCELL = @"TeacherMessCell";
     //初始化所有的信息
     [self initializationParame];
     
-    _titleArr = @[@"毕业院校:",@"学校地址:",@"所学专业:",@"教学年限:",@"从教经历:",@"教学感悟"];
+    _titleArr = @[@"毕业院校:",@"所学专业:",@"教学年限:",@"从教经历:",@"教学感悟"];
     
-    _titleTextArr = @[@"请选择学校名称",@"填写学校地址",@"专业信息",@"教龄",@"",@""];
+    _titleTextArr = @[@"请点击搜索按钮,选择毕业院校",@"请输入所学专业",@"教龄",@"",@""];
     NSArray *array = @[@"1年",@"2年",@"3年",@"4年",@"5年",@"6年",@"7年",@"8年",@"9年",@"10年",@"11年",@"12年",@"13年",@"14年",@"15年",@"16年",@"17年",@"18年",@"19年",@"20年",@"21年",@"22年",@"23年",@"年24",@"25年",@"26年",@"27年",@"28年",@"29年",@"30年",@"31年",@"32年",@"33年",@"34年",@"35年",@"36年",@"37年",@"38年",@"39年",@"40年",@"41年",@"42年",@"43年",@"44年",@"45年",@"46年",@"47年",@"48年",@"49年",@"50年",@"51年",@"52年",@"53年",@"54年",@"55年",@"56年",@"57年",@"58年",@"59年",@"60年"];
     _perFectYear = [array copy];
     
@@ -115,8 +115,8 @@ static NSString *IdentifierMessPerCELL = @"TeacherMessCell";
     self.perfectLift = @"";
     self.perfectExperYear = @"";
     self.perfectSpecialty = @"";
+    self.perfectCell = [self cellAtIndexRow:1 andAtSection:0 Message:@""];
     self.perfectCell = [self cellAtIndexRow:2 andAtSection:0 Message:@""];
-    self.perfectCell = [self cellAtIndexRow:3 andAtSection:0 Message:@""];
 }
 
 #pragma mark - UITableViewDelegate  UITableViewDatasource
@@ -127,7 +127,7 @@ static NSString *IdentifierMessPerCELL = @"TeacherMessCell";
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row == 4 || indexPath.row == 5) {
+    if (indexPath.row == 3 || indexPath.row == 4) {
         return 132*kScreenRatioHeight;
     }else {
         return 53*kScreenRatioHeight;
@@ -141,7 +141,12 @@ static NSString *IdentifierMessPerCELL = @"TeacherMessCell";
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row == 4 || indexPath.row== 5) {
+//    if (indexPath.row == 0 || indexPath.row == 1 || indexPath.row == 2) {
+        _perfectTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+//    }
+    
+
+    if (indexPath.row == 3 || indexPath.row== 4) {
         XXEPerfectInfoViewCell *cell = [tableView dequeueReusableCellWithIdentifier:IdentifierMessPerCELL forIndexPath:indexPath];
         cell.perFectLabel.text = [_titleArr objectAtIndex:indexPath.row];
         
@@ -161,25 +166,25 @@ static NSString *IdentifierMessPerCELL = @"TeacherMessCell";
 {
     [self.view endEditing:YES];
     switch (indexPath.row) {
-        case 2:{
-            self.perfectCell = [self cellAtIndexRow:2 andAtSection:0 Message:@""];
+        case 1:{
+            self.perfectCell = [self cellAtIndexRow:1 andAtSection:0 Message:@""];
             [self tureOrFalseCellClick:YES Tag:200];
             break;
         }
-        case 3:{
+        case 2:{
             XXESelectMessageView *perfectYear = [[XXESelectMessageView alloc]initWithTWFrame:self.view.bounds TWselectCityTitle:@"教学年限" MessageArray:_perFectYear];
             [perfectYear showCityView:^(NSString *proviceStr) {
-                self.perfectCell = [self cellAtIndexRow:3 andAtSection:0 Message:proviceStr];
+                self.perfectCell = [self cellAtIndexRow:2 andAtSection:0 Message:proviceStr];
                 self.perfectExperYear = proviceStr;
             }];
         }
-        case 4:{
-            self.perfectInfoCell = [self cellInfoAtIndexRow:4 andAtSection:0 Message:@""];
+        case 3:{
+            self.perfectInfoCell = [self cellInfoAtIndexRow:3 andAtSection:0 Message:@""];
             [self tureOrFalseInfoCellClick:YES Tag:400];
             break;
         }
-        case 5:{
-            self.perfectInfoCell = [self cellInfoAtIndexRow:5 andAtSection:0 Message:@""];
+        case 4:{
+            self.perfectInfoCell = [self cellInfoAtIndexRow:4 andAtSection:0 Message:@""];
             [self tureOrFalseInfoCellClick:YES Tag:500];
             break;
         }
@@ -240,9 +245,9 @@ static NSString *IdentifierMessPerCELL = @"TeacherMessCell";
 {
     NSLog(@"%@",model);
     NSLog(@"%@",model.schoolName);
-    NSString *schoolAdd = [NSString stringWithFormat:@"%@%@%@",model.schoolProvince,model.schoolCity,model.schoolDistrict];
+//    NSString *schoolAdd = [NSString stringWithFormat:@"%@%@%@",model.schoolProvince,model.schoolCity,model.schoolDistrict];
     self.perfectCell = [self cellAtIndexRow:0 andAtSection:0 Message:model.schoolName];
-    self.perfectCell = [self cellAtIndexRow:1 andAtSection:0 Message:schoolAdd];
+//    self.perfectCell = [self cellAtIndexRow:1 andAtSection:0 Message:schoolAdd];
     self.perfectSchoolId = model.schoolId;
 }
 

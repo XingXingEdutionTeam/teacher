@@ -217,7 +217,7 @@
     cell.contentLabel.text = contentArray[indexPath.row];
     
     maxWidth = cell.contentLabel.width;
-    CGFloat height = [StringHeight contentSizeOfString:contentArray[indexPath.row] maxWidth:maxWidth fontSize:14];
+    CGFloat height = [StringHeight contentSizeOfString:contentArray[indexPath.row] maxWidth:maxWidth fontSize:14 * kScreenRatioWidth];
     
     CGSize size = cell.contentLabel.size;
     size.height = height;
@@ -250,7 +250,8 @@
             CGFloat buttonY = 40 + (picHeight + margin) * buttonRow;
             
             UIImageView *pictureImageView = [[UIImageView alloc] initWithFrame:CGRectMake(buttonX, buttonY, picWidth, picHeight)];
-            
+            pictureImageView.contentMode = UIViewContentModeScaleAspectFill;
+            pictureImageView.clipsToBounds = YES;
             [pictureImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", kXXEPicURL, _picWallArray[i]]]];
             pictureImageView.tag = 20 + i;
             pictureImageView.userInteractionEnabled = YES;
@@ -285,10 +286,10 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
 
     if (indexPath.row == 4) {
-    CGFloat height = [StringHeight contentSizeOfString:contentArray[indexPath.row] maxWidth:maxWidth fontSize:14];
+    CGFloat height = [StringHeight contentSizeOfString:contentArray[indexPath.row] maxWidth:maxWidth fontSize:14 * kScreenRatioWidth];
         return height + 20;
     }else if (indexPath.row==5) {
-        return 44 + picRow * picHeight;
+        return 44 + picRow * (picHeight + 10);
     } else{
         return 44;
     }

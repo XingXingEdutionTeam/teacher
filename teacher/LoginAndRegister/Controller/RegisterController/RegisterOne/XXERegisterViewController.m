@@ -302,6 +302,7 @@
 - (void)nextButtonsClick:(UIButton *)sender
 {
     [self textFieldResignFirstResponder];
+    
     if ([self.registerUerTextField.text isEqualToString:@""]) {
         [self showString:@"请输入手机号" forSecond:1.f];
         return;
@@ -334,6 +335,7 @@
         }else {
         }
     }];
+    
     XXERegisterSecondViewController *registerSecondVC = [[XXERegisterSecondViewController alloc]init];
     registerSecondVC.userPhoneNum = self.registerUerTextField.text;
     registerSecondVC.login_type = @"1";

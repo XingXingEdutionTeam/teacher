@@ -683,6 +683,7 @@
             NSString * logintimes = [data objectForKey:@"login_times"];
             [self LoginSetupUserInfoDict:data SnsAccessToken:accessToken LoginType:logintype];
             NSLog(@"%@",logintimes);
+#warning wzy   =======  完善 学校 信息 =========
             if ([logintimes integerValue]==1 ) {
                 XXEPerfectInfoViewController *perfecVC = [[XXEPerfectInfoViewController alloc]init];
                 XXENavigationViewController *navi = [[XXENavigationViewController alloc]initWithRootViewController:perfecVC];
@@ -700,7 +701,7 @@
                     
                 });
             }
-            
+        
         }else{
             //进入注册的第三个
             SettingPersonInfoViewController *settingVC = [[SettingPersonInfoViewController alloc]init];

@@ -16,12 +16,10 @@
  http://www.xingxingedu.cn/Teacher/get_university
  传参:
  	province	//省
-	city		//市
-	district	//区
 	search_words	//搜索关键词
   注:每个参数都是可选的
  */
 
-- (instancetype)initWithXid:(NSString *)xid  user_id:(NSString *)user_id province:(NSString *)province city:(NSString *)city district:(NSString *)district search_words:(NSString *)search_words;
+- (instancetype)initWithXid:(NSString *)xid  user_id:(NSString *)user_id province:(NSString *)province search_words:(NSString *)search_words;
 
 @end
