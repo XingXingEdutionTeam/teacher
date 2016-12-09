@@ -13,6 +13,7 @@
 #import "XXERegisterSecondViewController.h"
 #import "XXELoginViewController.h"
 #import "XXENavigationViewController.h"
+#import "SystemPopView.h"
 
 @interface XXEForgetPassWordViewController ()<UITextFieldDelegate>
 

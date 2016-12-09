@@ -23,12 +23,18 @@ static const CGFloat kNumberOfLinePerPage = 3;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillChangeFrame:) name:UIKeyboardWillChangeFrameNotification object:nil];
     self.commentInputTextField.returnKeyType = UIReturnKeySend;
     self.commentInputTextField.delegate = self;
-    [self.commentInputTextField addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+//    [self.commentInputTextField addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
     
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
     [self.bgView addGestureRecognizer:tapGesture];
     
     [self.collectionView registerNib:[UINib nibWithNibName:@"YDEmojiCell"bundle:nil] forCellWithReuseIdentifier:@"YDEmojiCell"];
+    
+    _commentInputTextField.layer.borderWidth = 0.5;
+    _commentInputTextField.layer.cornerRadius = 15;
+    _commentInputTextField.layer.borderColor = [UIColor lightGrayColor].CGColor;
+    _commentInputTextField.font = [UIFont systemFontOfSize:15];
+    
     [self initEmojiDataSource];
 }
 
@@ -66,7 +72,7 @@ static const CGFloat kNumberOfLinePerPage = 3;
     self.inputBottomViewHeight = 0;
     [self.commentInputTextField resignFirstResponder];
     self.commentInputTextField.text = @"";
-    self.commentInputTextField.placeholder = nil;
+//    self.commentInputTextField.placeholder = nil;
     CGRect rect = self.frame;
     rect.origin.y = [ViewUtil screenHeight];
     [UIView animateWithDuration:0.3 animations:^{
@@ -78,26 +84,45 @@ static const CGFloat kNumberOfLinePerPage = 3;
     }
 }
 
-#pragma mark - UITextFieldDelegate
-- (BOOL)textFieldShouldReturn:(UITextField *)textField
-{
-    if (textField.text.length > 0) {
-        if ([self.delegate respondsToSelector:@selector(commentInputView:onSendText:)]) {
-            NSString *content = self.commentInputTextField.text;
-            [self hideInputView];
-            [self.delegate commentInputView:self onSendText:content];
-        } else {
-            [self hideInputView];
+#pragma mark - UITextViewDelegate
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text; {
+    
+    if ([@"\n" isEqualToString:text] == YES) {
+
+        if (textView.text.length > 0) {
+            if ([self.delegate respondsToSelector:@selector(commentInputView:onSendText:)]) {
+                NSString *content = self.commentInputTextField.text;
+                [self hideInputView];
+                [self.delegate commentInputView:self onSendText:content];
+            } else {
+                [self hideInputView];
+            }
         }
+        
+        //        [self sendComment];
+        return NO;
     }
     return YES;
 }
+//- (BOOL)textFieldShouldReturn:(UITextField *)textField
+//{
+//    if (textField.text.length > 0) {
+//        if ([self.delegate respondsToSelector:@selector(commentInputView:onSendText:)]) {
+//            NSString *content = self.commentInputTextField.text;
+//            [self hideInputView];
+//            [self.delegate commentInputView:self onSendText:content];
+//        } else {
+//            [self hideInputView];
+//        }
+//    }
+//    return YES;
+//}
 
-- (void)textFieldDidChange:(UITextField *)aTextField
-{
-    if (aTextField.text.length > 0) {
-    }
-}
+//- (void)textFieldDidChange:(UITextField *)aTextField
+//{
+//    if (aTextField.text.length > 0) {
+//    }
+//}
 
 #pragma mark - UICollectionView Delegate/Datasource
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView

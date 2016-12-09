@@ -19,9 +19,25 @@ public class RuningXX: UIView {//加载动画效果
     
     let kScreenWidth = UIScreen.main.bounds.width
     let kScreenHeight = UIScreen.main.bounds.height
-    
     var runingBackView: RuningView!
     let backWh: CGFloat = 75
+    
+    func showRuningWithTabbar() {
+        self.frame = UIScreen.main.bounds
+        self.backgroundColor = UIColor.clear
+        if self.runingBackView == nil{
+            runingBackView = RuningView(frame: CGRect(x: 0, y: 64, width: kScreenWidth, height: kScreenHeight - 64 - 44))
+            runingBackView.backgroundColor = UIColor.white
+            //            runingBackView = RuningView(frame: CGRect(x: (UIScreen.main.bounds.width - backWh)/2, y: (UIScreen.main.bounds.height - backWh)/2, width: backWh, height: backWh))
+            //            runingBackView.backgroundColor = UIColor.black.withAlphaComponent(0.65)
+            //            runingBackView.setWane(12)
+            self.addSubview(runingBackView)
+        }
+        self.runingBackView.runingImgView.startAnimating()
+        let window: AnyObject? = UIApplication.shared.windows[1]
+        window?.addSubview(self)
+    }
+    
     func showRuning(){
         self.frame = UIScreen.main.bounds
         self.backgroundColor = UIColor.clear

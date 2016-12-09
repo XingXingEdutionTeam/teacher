@@ -12,6 +12,7 @@
 @implementation XXEIdentityListViewCell
 
 - (void)awakeFromNib {
+    [super awakeFromNib];
     // Initialization code
 }
 
@@ -19,6 +20,7 @@
 {
     NSString *schoolPic = [NSString stringWithFormat:@"%@%@",kXXEPicURL,model.school_logo];
     [self.identitySchoolImageView sd_setImageWithURL:[NSURL URLWithString:schoolPic]];
+    self.identitySchoolNameLabel.text = model.school_name;
     self.identityClassNameLabel.text = model.class_name;
     self.identityTeacheCourseLabel.text = model.teach_course;
     if ([model.condit isEqualToString:@"0"]) {

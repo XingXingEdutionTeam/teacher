@@ -40,4 +40,6 @@
 #import "NSString+ImgURL.h"
 #import "UIImage+RCImage.h"
 
+#import "NSDictionary+decription.h"
+#import "NSArray+decription.h"
 #endif /* PrefixHeader_pch */

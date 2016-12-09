@@ -447,7 +447,7 @@ XXECommentModel* comment;
 //        UILabel *replyUserNick = [_tableView viewWithTag:10000];
         //回复评论
         self.message = ReplyCommentsMessage;
-        self.commentInputView.commentInputTextField.placeholder = [NSString stringWithFormat:@"回复%@",comment.commentNicknName];
+//        self.commentInputView.commentInputTextField.placeholder = [NSString stringWithFormat:@"回复%@",comment.commentNicknName];
         [self.commentInputView showInputView];
     }
     

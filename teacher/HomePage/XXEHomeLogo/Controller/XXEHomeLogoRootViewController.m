@@ -17,6 +17,7 @@
 #import "XXEHomeLogoApi.h"
 #import "XXEGlobalDecollectApi.h"
 #import "XXEGlobalCollectApi.h"
+#import "SystemPopView.h"
 
 
 @interface XXEHomeLogoRootViewController ()<UIScrollViewDelegate>

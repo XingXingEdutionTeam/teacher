@@ -21,7 +21,7 @@
 
 
 
-@interface XXERegisterTeacherOrClassteacherViewController ()<XXESearchSchoolMessageDelegate>
+@interface XXERegisterTeacherOrClassteacherViewController ()<XXESearchSchoolMessageDelegate, UITextFieldDelegate>
 {
    //上 bgView
     UIView *upBgView;
@@ -150,14 +150,14 @@
                 
             }
             
-//            NSLog(@"%@",request.responseJSONObject);
-//            NSLog(@"%@",[request.responseJSONObject objectForKey:@"msg"]);
+            NSLog(@"%@",request.responseJSONObject);
+            NSLog(@"%@",[request.responseJSONObject objectForKey:@"msg"]);
             
         } failure:^(__kindof YTKBaseRequest *request) {
             
         }];
     }else{
-        
+        self.theEndUserAvatarImage = kDefaultAvatarUrl;
     }
     
 }
@@ -436,12 +436,24 @@
     //邀请码
    codeTextField = [[UITextField alloc] initWithFrame:CGRectMake(90 * kScreenRatioWidth, 40 + 5, KScreenWidth - 120, 30)];
     codeTextField.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
+    codeTextField.delegate = self;
     codeTextField.borderStyle = UITextBorderStyleRoundedRect;
     codeTextField.textAlignment = NSTextAlignmentCenter;
     [downBgView addSubview:codeTextField];
 
 }
 
+- (void)textFieldDidBeginEditing:(UITextField *)textField {
+    [UIView animateWithDuration:0.3 animations:^{
+        self.view.transform = CGAffineTransformMakeTranslation(0, -212);
+    }];
+}
+
+- (void)textFieldDidEndEditing:(UITextField *)textField {
+    [UIView animateWithDuration:0.3 animations:^{
+        self.view.transform = CGAffineTransformIdentity;
+    }];
+}
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context{
     

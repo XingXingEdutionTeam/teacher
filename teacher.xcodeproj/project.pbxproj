@@ -915,6 +915,9 @@
 		9E9B4C7A1D633C8400983F5E /* XXEFriendCircleApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E9B4C791D633C8400983F5E /* XXEFriendCircleApi.m */; };
 		9E9FAF191D5DBD1500C15AD5 /* XXEMyselfAblumAddApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E9FAF181D5DBD1500C15AD5 /* XXEMyselfAblumAddApi.m */; };
 		9E9FAF1C1D5DC09800C15AD5 /* XXEOtherTeacherAlbumViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E9FAF1B1D5DC09800C15AD5 /* XXEOtherTeacherAlbumViewController.m */; };
+		9EB08BA71DFA482B00F9FEB7 /* NSDictionary+decription.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EB08BA61DFA482B00F9FEB7 /* NSDictionary+decription.m */; };
+		9EB08BAA1DFA484B00F9FEB7 /* NSArray+decription.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EB08BA91DFA484B00F9FEB7 /* NSArray+decription.m */; };
+		9EB08BAD1DFA8A1200F9FEB7 /* SystemPopView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EB08BAC1DFA8A1200F9FEB7 /* SystemPopView.m */; };
 		9EB2E93F1D5889B9004809D3 /* UILabel+XXExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EB2E93E1D5889B9004809D3 /* UILabel+XXExtension.m */; };
 		9EB2E9421D58934C004809D3 /* UITextField+XXExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EB2E9411D58934C004809D3 /* UITextField+XXExtension.m */; };
 		9EB63A751DD5B17D003C4DEC /* StringHeight.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EB63A741DD5B17D003C4DEC /* StringHeight.m */; };
@@ -2627,6 +2630,12 @@
 		9E9FAF181D5DBD1500C15AD5 /* XXEMyselfAblumAddApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXEMyselfAblumAddApi.m; sourceTree = "<group>"; };
 		9E9FAF1A1D5DC09800C15AD5 /* XXEOtherTeacherAlbumViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXEOtherTeacherAlbumViewController.h; sourceTree = "<group>"; };
 		9E9FAF1B1D5DC09800C15AD5 /* XXEOtherTeacherAlbumViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXEOtherTeacherAlbumViewController.m; sourceTree = "<group>"; };
+		9EB08BA51DFA482B00F9FEB7 /* NSDictionary+decription.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+decription.h"; sourceTree = "<group>"; };
+		9EB08BA61DFA482B00F9FEB7 /* NSDictionary+decription.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+decription.m"; sourceTree = "<group>"; };
+		9EB08BA81DFA484B00F9FEB7 /* NSArray+decription.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+decription.h"; sourceTree = "<group>"; };
+		9EB08BA91DFA484B00F9FEB7 /* NSArray+decription.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+decription.m"; sourceTree = "<group>"; };
+		9EB08BAB1DFA8A1200F9FEB7 /* SystemPopView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SystemPopView.h; sourceTree = "<group>"; };
+		9EB08BAC1DFA8A1200F9FEB7 /* SystemPopView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SystemPopView.m; sourceTree = "<group>"; };
 		9EB2E93D1D5889B9004809D3 /* UILabel+XXExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UILabel+XXExtension.h"; sourceTree = "<group>"; };
 		9EB2E93E1D5889B9004809D3 /* UILabel+XXExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UILabel+XXExtension.m"; sourceTree = "<group>"; };
 		9EB2E9401D58934C004809D3 /* UITextField+XXExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITextField+XXExtension.h"; sourceTree = "<group>"; };
@@ -5652,6 +5661,12 @@
 				9E8E09831DE5C66200B0A942 /* WZYTextView.m */,
 				9EC0EBAE1DF69D7D007AD918 /* NSString+ImgURL.h */,
 				9EC0EBAF1DF69D7D007AD918 /* NSString+ImgURL.m */,
+				9EB08BA51DFA482B00F9FEB7 /* NSDictionary+decription.h */,
+				9EB08BA61DFA482B00F9FEB7 /* NSDictionary+decription.m */,
+				9EB08BA81DFA484B00F9FEB7 /* NSArray+decription.h */,
+				9EB08BA91DFA484B00F9FEB7 /* NSArray+decription.m */,
+				9EB08BAB1DFA8A1200F9FEB7 /* SystemPopView.h */,
+				9EB08BAC1DFA8A1200F9FEB7 /* SystemPopView.m */,
 			);
 			path = XXETools;
 			sourceTree = "<group>";
@@ -6948,6 +6963,7 @@
 				0480A09F1D87ED3400D7589B /* XXESystemNotificationDetailViewController.m in Sources */,
 				04BB3A991D74743300AA5C5C /* XXEBabyFamilyInfoDetailViewController.m in Sources */,
 				04BB3A331D74742B00AA5C5C /* XXESchoolAlbumCollectionViewCell.m in Sources */,
+				9EB08BAD1DFA8A1200F9FEB7 /* SystemPopView.m in Sources */,
 				043C80B31D86B641004F1B85 /* XXEXingCommunityViewController.m in Sources */,
 				0485FCFA1D8246C10077E10B /* XXEMyselfInfoCollectionPicApi.m in Sources */,
 				9EBA6F551D5CADBA001B45C3 /* SSVideoPlaySlider.m in Sources */,
@@ -7134,6 +7150,7 @@
 				048F587A1D5C5402002E4855 /* XXEXingCoinViewController.m in Sources */,
 				044DEBF61D900C6D00DE101A /* XXEStudentManagerMoveApi.m in Sources */,
 				04BB3A4A1D74742B00AA5C5C /* XXERecipeDetailViewController.m in Sources */,
+				9EB08BAA1DFA484B00F9FEB7 /* NSArray+decription.m in Sources */,
 				044DEC4B1D92741500DE101A /* XXECourseManagerCourseToAuditViewController.m in Sources */,
 				9E5E23AB1D90CC04008B1AAF /* DFBaseUserLineCell.m in Sources */,
 				043596B11DAA458100F85DAE /* FriendCell.m in Sources */,
@@ -7370,6 +7387,7 @@
 				0480A08B1D87DC5800D7589B /* XXESystemNotificationApi.m in Sources */,
 				9E8E095A1DE31AAB00B0A942 /* XXETeacherMessTableViewCell.m in Sources */,
 				044DEC321D91385800DE101A /* XXETeacherManagerPersonInfoModel.m in Sources */,
+				9EB08BA71DFA482B00F9FEB7 /* NSDictionary+decription.m in Sources */,
 				04BB3A3D1D74742B00AA5C5C /* XXEHomeworkViewController.m in Sources */,
 				9E8E09451DE31AAA00B0A942 /* XXEPerfectInfoViewController.m in Sources */,
 				043C80B91D86BC3C004F1B85 /* XXEXingCommunityPrimaryViewController.m in Sources */,

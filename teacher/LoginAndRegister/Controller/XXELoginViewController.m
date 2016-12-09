@@ -593,7 +593,7 @@
             self.login_type = @"2";
             NSDictionary *dict = [UMSocialAccountManager socialAccountDictionary];
             UMSocialAccountEntity *snsAccount = [[UMSocialAccountManager socialAccountDictionary] valueForKey:snsPlatform.platformName];
-            self.qqLoginToken = snsAccount.unionId;
+            self.qqLoginToken = snsAccount.usid;
             self.thirdNickName = snsAccount.userName;
             self.thirdHeadImage = snsAccount.iconURL;
 //            [self getAddInfomationMessage:snsAccount LoginType:self.login_type];
