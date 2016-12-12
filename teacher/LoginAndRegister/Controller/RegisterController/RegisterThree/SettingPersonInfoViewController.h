@@ -42,5 +42,5 @@
 /** 支付宝Token */
 @property (nonatomic, copy)NSString *aliPayToken;
 
-
+@property(nonatomic ,strong)NSString *whereFromController;
 @end
