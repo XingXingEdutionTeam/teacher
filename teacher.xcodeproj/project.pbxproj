@@ -912,6 +912,7 @@
 		9E8E098B1DE5C82600B0A942 /* XXECourseOrderListViewTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E8E09891DE5C82600B0A942 /* XXECourseOrderListViewTableViewCell.m */; };
 		9E8E098C1DE5C82600B0A942 /* XXECourseOrderListViewTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9E8E098A1DE5C82600B0A942 /* XXECourseOrderListViewTableViewCell.xib */; };
 		9E8E098F1DE5C8EF00B0A942 /* XXECourseOrderListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E8E098E1DE5C8EF00B0A942 /* XXECourseOrderListModel.m */; };
+		9E8EC9ED1DFEA7FC008481B3 /* EmptyView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E8EC9EC1DFEA7FC008481B3 /* EmptyView.m */; };
 		9E9B4C7A1D633C8400983F5E /* XXEFriendCircleApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E9B4C791D633C8400983F5E /* XXEFriendCircleApi.m */; };
 		9E9FAF191D5DBD1500C15AD5 /* XXEMyselfAblumAddApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E9FAF181D5DBD1500C15AD5 /* XXEMyselfAblumAddApi.m */; };
 		9E9FAF1C1D5DC09800C15AD5 /* XXEOtherTeacherAlbumViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E9FAF1B1D5DC09800C15AD5 /* XXEOtherTeacherAlbumViewController.m */; };
@@ -2624,6 +2625,8 @@
 		9E8E098A1DE5C82600B0A942 /* XXECourseOrderListViewTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XXECourseOrderListViewTableViewCell.xib; sourceTree = "<group>"; };
 		9E8E098D1DE5C8E500B0A942 /* XXECourseOrderListModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XXECourseOrderListModel.h; sourceTree = "<group>"; };
 		9E8E098E1DE5C8EF00B0A942 /* XXECourseOrderListModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXECourseOrderListModel.m; sourceTree = "<group>"; };
+		9E8EC9EB1DFEA7FC008481B3 /* EmptyView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmptyView.h; sourceTree = "<group>"; };
+		9E8EC9EC1DFEA7FC008481B3 /* EmptyView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmptyView.m; sourceTree = "<group>"; };
 		9E9B4C781D633C8400983F5E /* XXEFriendCircleApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXEFriendCircleApi.h; sourceTree = "<group>"; };
 		9E9B4C791D633C8400983F5E /* XXEFriendCircleApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXEFriendCircleApi.m; sourceTree = "<group>"; };
 		9E9FAF171D5DBD1500C15AD5 /* XXEMyselfAblumAddApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXEMyselfAblumAddApi.h; sourceTree = "<group>"; };
@@ -5667,6 +5670,8 @@
 				9EB08BA91DFA484B00F9FEB7 /* NSArray+decription.m */,
 				9EB08BAB1DFA8A1200F9FEB7 /* SystemPopView.h */,
 				9EB08BAC1DFA8A1200F9FEB7 /* SystemPopView.m */,
+				9E8EC9EB1DFEA7FC008481B3 /* EmptyView.h */,
+				9E8EC9EC1DFEA7FC008481B3 /* EmptyView.m */,
 			);
 			path = XXETools;
 			sourceTree = "<group>";
@@ -6974,6 +6979,7 @@
 				04BB3A1D1D74742B00AA5C5C /* XXESchoolCertificateModifyViewController.m in Sources */,
 				04947CD91DC1C981008A351F /* XXECommentDeleteApi.m in Sources */,
 				04BB3A0F1D74742A00AA5C5C /* XXEModifyCharacterApi.m in Sources */,
+				9E8EC9ED1DFEA7FC008481B3 /* EmptyView.m in Sources */,
 				04947CC51DC0CE3A008A351F /* BCURLSessionManager.m in Sources */,
 				9E4FF35E1D766F54005E3C94 /* WZYHttpTool.m in Sources */,
 				0445A3E51D65E8CA00C3A4CA /* FSPhotoBrowserViewController.m in Sources */,

@@ -204,7 +204,7 @@
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
     [button setTitle:@"返回" forState:UIControlStateNormal];
     [button setImage:[UIImage imageNamed:@"navigationButtonReturn"] forState:UIControlStateNormal];
-    [button setImage:[UIImage imageNamed:@"navigationButtonReturn"] forState:UIControlStateHighlighted];
+//    [button setImage:[UIImage imageNamed:@"navigationButtonReturn"] forState:UIControlStateHighlighted];
     button.size = CGSizeMake(70, 30);
     // 让按钮内部的所有内容左对齐
     button.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
@@ -214,7 +214,7 @@
     button.titleEdgeInsets = UIEdgeInsetsMake(0, 5, 0, 0);
     
     [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [button setTitleColor:[UIColor redColor] forState:UIControlStateHighlighted];
+//    [button setTitleColor:[UIColor redColor] forState:UIControlStateHighlighted];
     [button addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
     
     // 修改导航栏左边的item

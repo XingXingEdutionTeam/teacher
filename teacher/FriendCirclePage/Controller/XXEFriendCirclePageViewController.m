@@ -153,11 +153,22 @@
         
         weakSelf.tableView.hidden = NO;
         NSString *code = [request.responseJSONObject objectForKey:@"code"];
+        NSDictionary *data = [request.responseJSONObject objectForKey:@"data"];
+        
+        if (data == NULL) {
+            
+            EmptyView *empty = [EmptyView conveniceWithTitle:@"您目前正在审核中,暂时无法查看圈子" frame:self.tableView.frame];
+            self.tableView.backgroundView = empty;
+        }else {
+            if (self.tableView.backgroundView) {
+                self.tableView.backgroundView = nil;
+            }
+        }
+        
         
         if ([code intValue]==1 && [[request.responseJSONObject objectForKey:@"data"] isKindOfClass:[NSDictionary class]]) {
             NSInteger maxPage = [[[request.responseJSONObject objectForKey:@"data"] objectForKey:@"max_page"] integerValue];
             [weakSelf detelAllSource];
-            NSDictionary *data = [request.responseJSONObject objectForKey:@"data"];
             NSDictionary *userInfo = [data objectForKey:@"user_info"];
             XXECircleUserModel *Usermodel = [[XXECircleUserModel alloc]initWithDictionary:userInfo error:nil];
             [weakSelf.headerDatasource addObject:Usermodel];
@@ -492,7 +503,7 @@
 //                NSLog(@"小%@ 大%@",textImageItem.srcImages,textImageItem.thumbImages);
             }
             textImageItem.location = location;
-             [self addItemTop:textImageItem];
+            [self addItemTop:textImageItem];
             //获取朋友圈信息
             [self setupFriendCircleMessagePage:1];
         }else{

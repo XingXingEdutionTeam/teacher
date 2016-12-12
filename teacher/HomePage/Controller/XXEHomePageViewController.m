@@ -223,14 +223,13 @@
     NSUserDefaults *first = [NSUserDefaults standardUserDefaults];
     NSString *isFirst = [first objectForKey:@"isFirst"];
     
-    if (!isFirst) {
+    if ([isFirst isEqualToString:@"firstEnterApp"]) {
         UIWindow *window = [[UIApplication sharedApplication] windows][1];
         XXENewCourseView *newCourseView = [[XXENewCourseView alloc] init];
         [window addSubview:newCourseView];
     }
     
-    isFirst = @"NO";
-    [first setObject:isFirst  forKey:@"isFirst"];
+    [first setObject:@"noFirstEnterApp"  forKey:@"isFirst"];
     [first synchronize];
 }
 
