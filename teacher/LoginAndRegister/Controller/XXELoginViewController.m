@@ -610,7 +610,7 @@
             self.login_type = @"3";
             NSDictionary *dict = [UMSocialAccountManager socialAccountDictionary];
             UMSocialAccountEntity *snsAccount = [[UMSocialAccountManager socialAccountDictionary]valueForKey:snsPlatform.platformName];
-            self.weixinLoginToken = snsAccount.unionId;
+            self.weixinLoginToken = snsAccount.usid;
             self.thirdNickName = snsAccount.userName;
             self.thirdHeadImage = snsAccount.iconURL;
             
@@ -662,7 +662,7 @@
 //    token = 2.00dhfvICzOGjWE6c1874530acQJx6B
 //            2.00dhfvICzOGjWE6c1874530acQJx6B
     //调用登录接口
-    [self loginInterFaceApiSnsAccount:snsAccount.unionId LoginTYpe:loginType];
+    [self loginInterFaceApiSnsAccount:snsAccount.usid LoginTYpe:loginType];
 }
 
 #pragma mark - 登录接口

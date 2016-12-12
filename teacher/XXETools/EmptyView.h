@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface EmptyView : UIView
-
++ (EmptyView*)conveniceWithTitle:(NSString *)title frame:(CGRect)frame;
 @end
