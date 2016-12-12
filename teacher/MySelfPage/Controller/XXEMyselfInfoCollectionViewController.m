@@ -79,15 +79,15 @@
     [contentScrollView setContentOffset:CGPointMake(row*screenWidth, contentScrollView.contentOffset.y)  animated:NO];
 }
 
+
 #pragma mark scrollViewDelegate
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
     //用scrollView的滑动大小与屏幕宽度取整数 得到滑动的页数
     [navSliderMenu selectAtRow:(int)((scrollView.contentOffset.x+screenWidth/2.f)/screenWidth) andDelegate:NO];
     //根据页数添加相应的视图
     [self addListVCWithIndex:(int)(scrollView.contentOffset.x/screenWidth)];
-    
 }
+
 #pragma mark -addVC
 
 - (void)addListVCWithIndex:(NSInteger)index {

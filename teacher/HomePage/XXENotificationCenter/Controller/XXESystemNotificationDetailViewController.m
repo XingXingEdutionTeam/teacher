@@ -16,7 +16,6 @@
     NSMutableArray *titleArray;
     NSMutableArray *contentArray;
     
-    
     //下部 downBgView
     UIView *downBgView;
     
