@@ -17,7 +17,7 @@
 @property (nonatomic, copy) NSString *xid;
 @property (nonatomic, copy) NSString *user_id;
 
-@property (nonatomic, copy) NSString *class_id;
+@property (nonatomic, copy, nullable) NSString *class_id;
 @property (nonatomic, copy) NSString *school_id;
 @property (nonatomic, copy) NSString *position;
 @property (nonatomic, copy) NSString *page;

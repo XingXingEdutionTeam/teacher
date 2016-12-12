@@ -253,6 +253,7 @@ double x_pi = 3.14159265358979324 * 3000.0 / 180.0;
 //    }
     if (indexPath.row==0) {
         cell.textLabel.text =@"不显示位置";
+        cell.selectionStyle = NO;
     }
     else{
         XXELocationModel *model = self.locationDatasource[indexPath.row - 1]
@@ -270,9 +271,8 @@ double x_pi = 3.14159265358979324 * 3000.0 / 180.0;
     else{
         XXELocationModel *model = self.locationDatasource[indexPath.row - 1];
         localText = model.name;
-        
+        [self.navigationController popViewControllerAnimated:YES];
     }
-    [self.navigationController popViewControllerAnimated:YES];
 }
 - (void)returnText:(ReturnTextBlock)block{
     self.returnTextBlock =block;

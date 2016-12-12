@@ -692,14 +692,14 @@
                 [self.view removeFromSuperview];
             }else{
                 
-                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3*NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                    
-                    XXETabBarControllerConfig *tabBarControllerConfig = [[XXETabBarControllerConfig alloc]init];
-                    UIWindow *window = [UIApplication sharedApplication].keyWindow;
-                    window.rootViewController = tabBarControllerConfig;
-                    [self.view removeFromSuperview];
-                    
-                });
+                XXETabBarControllerConfig *tabBarControllerConfig = [[XXETabBarControllerConfig alloc]init];
+                UIWindow *window = [UIApplication sharedApplication].keyWindow;
+                window.rootViewController = tabBarControllerConfig;
+                [self.view removeFromSuperview];
+//                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3*NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//                    
+//                    
+//                });
             }
         
         }else{
@@ -714,7 +714,14 @@
             settingVC.weixinToken = self.weixinLoginToken;
             settingVC.sinaToken = self.sinaLoginToken;
             settingVC.aliPayToken = self.aliPayLoginToken;
-            [self.navigationController pushViewController:settingVC animated:YES];
+            settingVC.whereFromController = @"loginVC";
+            UINavigationController *navi = [[UINavigationController alloc] initWithRootViewController:settingVC];
+            UIColor *color = [UIColor whiteColor];
+            NSDictionary * dict=[NSDictionary dictionaryWithObject:color forKey:NSForegroundColorAttributeName];
+            navi.navigationBar.titleTextAttributes = dict;
+//
+            [self presentViewController:navi animated:true completion:nil];
+//            [self.navigationController pushViewController:navi animated:YES];
         }
     
     } failure:^(__kindof YTKBaseRequest *request) {
