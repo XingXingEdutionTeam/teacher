@@ -492,7 +492,7 @@
 //                NSLog(@"小%@ 大%@",textImageItem.srcImages,textImageItem.thumbImages);
             }
             textImageItem.location = location;
-             [self addItemTop:textImageItem];
+            [self addItemTop:textImageItem];
             //获取朋友圈信息
             [self setupFriendCircleMessagePage:1];
         }else{

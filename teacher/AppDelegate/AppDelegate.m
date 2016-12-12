@@ -246,9 +246,9 @@ static int currentVersion = 100;
     
     XXELoginViewController *loginVC = [[XXELoginViewController alloc]init];
     XXENavigationViewController *navi = [[XXENavigationViewController alloc] initWithRootViewController:loginVC];
-    XXETabBarControllerConfig *tarVC = [[XXETabBarControllerConfig alloc] init];
     
     if ([XXEUserInfo user].login){
+        XXETabBarControllerConfig *tarVC = [[XXETabBarControllerConfig alloc] init];
         initViewController = tarVC;
     }else{
         initViewController = navi;
@@ -265,39 +265,48 @@ static int currentVersion = 100;
     NSString *isFirst = [first objectForKey:@"isFirst"];
     if (!isFirst) {
         [self setupControllers];
+        [first setObject:@"firstEnterApp" forKey:@"isFirst"];
     }
-    
 }
 
 - (void)setupControllers
 {
     
-    NSString *key = @"CFBundleShortVersionString";
-    NSString *lastVersion = [[NSUserDefaults standardUserDefaults]objectForKey:key];
-    //当前软件的版本号
-    NSString *currentVersion = [NSBundle mainBundle].infoDictionary[key];
-    NSLog(@"%@",currentVersion);
-    if (![currentVersion isEqualToString:lastVersion]) {//版本号相同:这次打开的和上次为同一个版本
-        XXEStarImageViewController *starImageViewController = [[XXEStarImageViewController alloc]init];
-        self.window = [[UIWindow alloc]init];
-        self.window.frame = [UIScreen mainScreen].bounds;
-        
-        self.window.rootViewController = starImageViewController;
-        
-        [self.window makeKeyAndVisible];
-        //将当前版本号存入沙盒
-        [[NSUserDefaults standardUserDefaults] setObject:currentVersion forKey:key];
-        [[NSUserDefaults standardUserDefaults] synchronize];
-    } else {
-        self.window = [[UIWindow alloc]init];
-        self.window.frame = [UIScreen mainScreen].bounds;
-        XXETabBarControllerConfig *tabBarControllerConfig = [[XXETabBarControllerConfig alloc]init];
-        self.window.rootViewController = tabBarControllerConfig;
-        [self.window makeKeyAndVisible];
-        //将当前版本号存入沙盒
-        [[NSUserDefaults standardUserDefaults] setObject:currentVersion forKey:key];
-        [[NSUserDefaults standardUserDefaults] synchronize];
-    }
+    XXEStarImageViewController *starImageViewController = [[XXEStarImageViewController alloc]init];
+    self.window = [[UIWindow alloc]init];
+    self.window.frame = [UIScreen mainScreen].bounds;
+    
+    self.window.rootViewController = starImageViewController;
+    
+    [self.window makeKeyAndVisible];
+
+    
+//    NSString *key = @"CFBundleShortVersionString";
+//    NSString *lastVersion = [[NSUserDefaults standardUserDefaults]objectForKey:key];
+//    //当前软件的版本号
+//    NSString *currentVersion = [NSBundle mainBundle].infoDictionary[key];
+//    NSLog(@"%@",currentVersion);
+//    if (![currentVersion isEqualToString:lastVersion]) {//版本号相同:这次打开的和上次为同一个版本
+////        XXEStarImageViewController *starImageViewController = [[XXEStarImageViewController alloc]init];
+////        self.window = [[UIWindow alloc]init];
+////        self.window.frame = [UIScreen mainScreen].bounds;
+////        
+////        self.window.rootViewController = starImageViewController;
+////        
+////        [self.window makeKeyAndVisible];
+//        //将当前版本号存入沙盒
+//        [[NSUserDefaults standardUserDefaults] setObject:currentVersion forKey:key];
+//        [[NSUserDefaults standardUserDefaults] synchronize];
+//    } else {
+//        self.window = [[UIWindow alloc]init];
+//        self.window.frame = [UIScreen mainScreen].bounds;
+//        XXETabBarControllerConfig *tabBarControllerConfig = [[XXETabBarControllerConfig alloc]init];
+//        self.window.rootViewController = tabBarControllerConfig;
+//        [self.window makeKeyAndVisible];
+//        //将当前版本号存入沙盒
+//        [[NSUserDefaults standardUserDefaults] setObject:currentVersion forKey:key];
+//        [[NSUserDefaults standardUserDefaults] synchronize];
+//    }
 }
 
 
@@ -435,7 +444,7 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
     if([notification.request.trigger isKindOfClass:[UNPushNotificationTrigger class]]) {
         [JPUSHService handleRemoteNotification:userInfo];
         AudioServicesPlayAlertSound(1007);
-        [self saveFMDBWithUserInfo:userInfo];
+//        [self saveFMDBWithUserInfo:userInfo];
     }
     completionHandler(UNNotificationPresentationOptionAlert); // 需要执行这个方法，选择是否提醒用户，有Badge、Sound、Alert三种类型可以选择设置
 }
