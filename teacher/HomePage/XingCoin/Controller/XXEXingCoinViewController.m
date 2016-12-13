@@ -28,6 +28,8 @@
     NSString *sign_coin;
     //明天签到将获得多少猩币
     NSString *next_sign_coin;
+    //中间 进度条
+    UIProgressView * progressView;
     
     //历史猩币数
     NSString *coin_total;
@@ -65,10 +67,12 @@
     self.navigationController.navigationBarHidden = NO;
     
     self.title = @"猩币签到";
-    
+    //创建 右边 历史 按钮
     UIButton *historyBtn =[UIButton createButtonWithFrame:CGRectMake(0, 0, 22, 22) backGruondImageName:@"home_flowerbasket_historyIcon44x44" Target:self Action:@selector(historyBtn) Title:@""];
     UIBarButtonItem *historyItem =[[UIBarButtonItem alloc]initWithCustomView:historyBtn];
     self.navigationItem.rightBarButtonItem =historyItem;
+    //创建 内容
+    [self createCheckInView];
     
 }
 
@@ -118,9 +122,8 @@
             
             [self showHudWithString:@"今天已签到!" forSecond:1];
         }
-
         
-        [self createCheckInView];
+        [self updateCheckInfo];
     } failure:^(__kindof YTKBaseRequest *request) {
         
         [self showString:@"请求失败" forSecond:1.f];
@@ -141,7 +144,7 @@
     
     CGFloat signDayLabelWidth = upBgImageView.frame.size.height - 10 * 2 * kScreenRatioHeight;
     CGFloat signDayLabelHeight = signDayLabelWidth;
-    signDayLabel =  [UILabel createLabelWithFrame:CGRectMake(20 * kScreenRatioWidth, 10 * kScreenRatioHeight, signDayLabelWidth, signDayLabelHeight) Font:16 Text:[NSString stringWithFormat:@"%@天", continued]];
+    signDayLabel =  [UILabel createLabelWithFrame:CGRectMake(20 * kScreenRatioWidth, 10 * kScreenRatioHeight, signDayLabelWidth, signDayLabelHeight) Font:16 Text:@""];
     signDayLabel.backgroundColor = XXEColorFromRGB(243, 183, 77);
     signDayLabel.layer.cornerRadius= signDayLabel.bounds.size.width/2;
     signDayLabel.layer.masksToBounds=YES;
@@ -149,24 +152,22 @@
     [upBgImageView addSubview:signDayLabel];
     
     //上面 右边 获得 多少个猩币
-    xingCoinLabel = [UILabel createLabelWithFrame:CGRectMake(upBgImageView.frame.size.width / 2 + 20 *kScreenRatioWidth, 20 * kScreenRatioHeight, upBgImageView.frame.size.width / 2 - 20 *kScreenRatioWidth, 20) Font:12 Text:[NSString stringWithFormat:@"获得%@猩币", sign_coin]];
+    xingCoinLabel = [UILabel createLabelWithFrame:CGRectMake(upBgImageView.frame.size.width / 2 + 20 *kScreenRatioWidth, 20 * kScreenRatioHeight, upBgImageView.frame.size.width / 2 - 20 *kScreenRatioWidth, 20) Font:12 Text:@""];
     [upBgImageView addSubview:xingCoinLabel];
     
     CGFloat xingCoinLabelBottom = xingCoinLabel.frame.origin.y + xingCoinLabel.frame.size.height;
     
     //上面 右边 明天签到将获得 多少猩币
-    tomorrowXingCoinLabel = [UILabel createLabelWithFrame:CGRectMake(upBgImageView.frame.size.width / 2, xingCoinLabelBottom + 10, upBgImageView.frame.size.width / 2, 20) Font:12 Text:[NSString stringWithFormat:@"明天签到将获得%@猩币", next_sign_coin]];
+    tomorrowXingCoinLabel = [UILabel createLabelWithFrame:CGRectMake(upBgImageView.frame.size.width / 2, xingCoinLabelBottom + 10, upBgImageView.frame.size.width / 2, 20) Font:12 Text:@""];
     [upBgImageView addSubview:tomorrowXingCoinLabel];
     
     
-    //中间 进度条
-    UIProgressView * progressView = [[UIProgressView alloc] initWithProgressViewStyle:UIProgressViewStyleDefault];
+   progressView = [[UIProgressView alloc] initWithProgressViewStyle:UIProgressViewStyleDefault];
     progressView.frame = CGRectMake(upBgImageView.frame.origin.x, upBgViewBottom + 20, upBgImageView.frame.size.width, 3);
     // 设置已过进度部分的颜色
     progressView.progressTintColor = XXEColorFromRGB(67, 181, 59);
     // 设置未过进度部分的颜色
     progressView.trackTintColor = XXEColorFromRGB(229, 229, 229);
-    progressView.progress = [coin_total floatValue] / [next_grade_coin floatValue] ;
     
     [self.view addSubview:progressView];
     CGFloat progressViewBottom = progressView.frame.origin.y + progressView.frame.size.height;
@@ -178,17 +179,6 @@
     [downBgImgView setImage:[UIImage imageNamed:@"home_xing_rule"]];
 
     [self.view addSubview:downBgImgView];
-
-    
-//    ysView = [[YSProgressView alloc] initWithFrame:CGRectMake(40, CGRectGetMaxY(bgView.frame) + 20, kWidth - 80, 2)];
-//    ysView.progressHeight = 2;
-//    ysView.progressTintColor = UIColorFromRGB(229, 229, 229);
-//    ysView.trackTintColor = UIColorFromRGB(67, 181, 59);
-//    [self.view addSubview:ysView];
-    
-//    UIImageView *bgRuleImgView = [[UIImageView alloc] initWithFrame:CGRectMake(25, CGRectGetMaxY(ysView.frame) + kLabelX, kWidth - 50, 20)];
-//    bgRuleImgView.image =  [UIImage imageNamed:@"guize"];
-//    [self.view addSubview:bgRuleImgView];
     
     UITextView *checkInText = [[UITextView alloc] initWithFrame:CGRectMake(20, CGRectGetMaxY(downBgImgView.frame) + 20, KScreenWidth - 40, KScreenHeight /3)];
     checkInText.text = @"  1.每周第一次签到获得5猩币，之后每天签到多增加5猩币,直至20猩币,如有签到中断,将会重新从5猩币开始获取.\n  2.签到签满1周额外获得10猩币,连续签满2周额外获得20猩币,连续签满3周额外获得30猩币,连续签满4周额外获得40猩币.\n";
@@ -218,6 +208,12 @@
     
 }
 
+- (void)updateCheckInfo{
 
+    signDayLabel.text = [NSString stringWithFormat:@"%@天", continued];
+    xingCoinLabel.text = [NSString stringWithFormat:@"获得%@猩币", sign_coin];
+    tomorrowXingCoinLabel.text = [NSString stringWithFormat:@"明天签到将获得%@猩币", next_sign_coin];
+    progressView.progress = [coin_total floatValue] / [next_grade_coin floatValue] ;
+}
 
 @end

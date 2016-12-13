@@ -615,6 +615,7 @@
 		04F216C81D76ECFD005C2EBF /* XXESchoolCourseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 04F216C71D76ECFD005C2EBF /* XXESchoolCourseModel.m */; };
 		04F216CC1D76F0CE005C2EBF /* XXESchoolCourseTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04F216CA1D76F0CE005C2EBF /* XXESchoolCourseTableViewCell.m */; };
 		04F216CD1D76F0CE005C2EBF /* XXESchoolCourseTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04F216CB1D76F0CE005C2EBF /* XXESchoolCourseTableViewCell.xib */; };
+		04F607141E0002ED000A82C8 /* XXEClassRoomCustomerServicesModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 04F607131E0002ED000A82C8 /* XXEClassRoomCustomerServicesModel.m */; };
 		04FB82681D7E6EB4003110B5 /* XXEMyselfInfoModifyEmailApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 04FB82671D7E6EB4003110B5 /* XXEMyselfInfoModifyEmailApi.m */; };
 		04FB826B1D7E7676003110B5 /* XXEMyselfInfoModifyTeachingFeelingApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 04FB826A1D7E7676003110B5 /* XXEMyselfInfoModifyTeachingFeelingApi.m */; };
 		04FB826E1D7E906F003110B5 /* XXEMyselfInfoTeachingExpericenceApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 04FB826D1D7E906F003110B5 /* XXEMyselfInfoTeachingExpericenceApi.m */; };
@@ -2095,6 +2096,8 @@
 		04F216C91D76F0CE005C2EBF /* XXESchoolCourseTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXESchoolCourseTableViewCell.h; sourceTree = "<group>"; };
 		04F216CA1D76F0CE005C2EBF /* XXESchoolCourseTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXESchoolCourseTableViewCell.m; sourceTree = "<group>"; };
 		04F216CB1D76F0CE005C2EBF /* XXESchoolCourseTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XXESchoolCourseTableViewCell.xib; sourceTree = "<group>"; };
+		04F607121E0002ED000A82C8 /* XXEClassRoomCustomerServicesModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXEClassRoomCustomerServicesModel.h; sourceTree = "<group>"; };
+		04F607131E0002ED000A82C8 /* XXEClassRoomCustomerServicesModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXEClassRoomCustomerServicesModel.m; sourceTree = "<group>"; };
 		04FB82661D7E6EB4003110B5 /* XXEMyselfInfoModifyEmailApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXEMyselfInfoModifyEmailApi.h; sourceTree = "<group>"; };
 		04FB82671D7E6EB4003110B5 /* XXEMyselfInfoModifyEmailApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXEMyselfInfoModifyEmailApi.m; sourceTree = "<group>"; };
 		04FB82691D7E7676003110B5 /* XXEMyselfInfoModifyTeachingFeelingApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXEMyselfInfoModifyTeachingFeelingApi.h; sourceTree = "<group>"; };
@@ -3571,6 +3574,8 @@
 				04520C721DB8BF0600524FFD /* XXEXingClassRoomCourseListModel.m */,
 				04520C741DB8CB1300524FFD /* XXEXingClassRoomSchoolListModel.h */,
 				04520C751DB8CB1300524FFD /* XXEXingClassRoomSchoolListModel.m */,
+				04F607121E0002ED000A82C8 /* XXEClassRoomCustomerServicesModel.h */,
+				04F607131E0002ED000A82C8 /* XXEClassRoomCustomerServicesModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -7240,6 +7245,7 @@
 				9ED9AB1A1D7EC0B100B63B53 /* XXEFriendCircleCommentApi.m in Sources */,
 				04BB3AA91D74743300AA5C5C /* XXECommentHistoryViewController.m in Sources */,
 				9E542DBC1D59C6A1002D7BC3 /* XXEHomePageBottomView.m in Sources */,
+				04F607141E0002ED000A82C8 /* XXEClassRoomCustomerServicesModel.m in Sources */,
 				049998111D9BCA7C001EA07F /* XXEClassManagerClassListModel.m in Sources */,
 				046E13191DBDB3A200FCBE49 /* XXEXingClassRoomTeacherCourseInfoViewController.m in Sources */,
 				9E5E23E61D90CD04008B1AAF /* YDEmojiCell.m in Sources */,
