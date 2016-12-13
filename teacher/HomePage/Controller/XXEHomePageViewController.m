@@ -56,6 +56,8 @@
 
 #import "AppDelegate.h"
 
+#import "SystemPopView.h"
+
 @interface XXEHomePageViewController ()<XXEHomePageHeaderViewDelegate,XXEHomePageMiddleViewDelegate,XXEHomePageBottomViewDelegate>
 {
 
@@ -113,6 +115,8 @@
 @property (nonatomic, copy)NSString *identifyCard;
 
 @property(nonatomic , assign) int unreadMessageCount;
+
+@property(nonatomic , assign)SchoolInfo schoolInfo;
 
 @end
 
@@ -533,6 +537,12 @@
 //顶部视图
 - (void)homePageLeftButtonClick
 {
+    //判断有无学校信息
+    if (self.schoolInfo == SchoolInfoNone) {
+        [SystemPopView showSystemPopViewWithTitle:@"您的身份正在审核,暂时无法查看该功能" vc:self];
+        return;
+    }
+    
     NSLog(@"---跳转到学校的详情页----");
     //logo
     XXEHomeLogoRootViewController *homeLogoRootVC = [[XXEHomeLogoRootViewController alloc] init];
@@ -583,6 +593,7 @@
     XXENotificationViewController *notificationVC = [[XXENotificationViewController alloc] init];
     notificationVC.schoolId = self.schoolHomeId;
     notificationVC.classId = self.classHomeId;
+    notificationVC.schoolInfo = self.schoolInfo;
     self.middleView.systemNotificationBadgeView.hidden = YES;
     [self.navigationController pushViewController:notificationVC animated:YES];
 }
@@ -626,6 +637,13 @@
             [self.classAllArray removeAllObjects];
             
             NSArray *schoolArray = [data objectForKey:@"school_info"];
+            
+            if (schoolArray.count == 0) {
+                self.schoolInfo = SchoolInfoNone;
+            }else {
+                self.schoolInfo = SchoolInfoHave;
+            }
+            
 //            NSLog(@"%@",schoolArray);
             for (int g = 0; g<schoolArray.count; g++) {
                 _arrayClass = [[NSMutableArray alloc] init];
@@ -680,6 +698,13 @@
 //下部视图点击相应的方法
 - (void)homeClassOneButtonClick:(NSInteger)tag
 {
+     //判断有无学校信息
+    if (self.schoolInfo == SchoolInfoNone) {
+        [SystemPopView showSystemPopViewWithTitle:@"您的身份正在审核,暂时无法查看该功能" vc:self];
+        return;
+    }
+    
+    
     if ([self.userPosition isEqualToString:@"1"] || [self.userPosition isEqualToString:@"2"]) {
         //教师/班主任
         [self xxe_homePageTeacherIdentifierNum:tag];

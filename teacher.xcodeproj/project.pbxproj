@@ -913,6 +913,8 @@
 		9E8E098C1DE5C82600B0A942 /* XXECourseOrderListViewTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9E8E098A1DE5C82600B0A942 /* XXECourseOrderListViewTableViewCell.xib */; };
 		9E8E098F1DE5C8EF00B0A942 /* XXECourseOrderListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E8E098E1DE5C8EF00B0A942 /* XXECourseOrderListModel.m */; };
 		9E8EC9ED1DFEA7FC008481B3 /* EmptyView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E8EC9EC1DFEA7FC008481B3 /* EmptyView.m */; };
+		9E8EC9F31DFFE7DE008481B3 /* SchoolNotificationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E8EC9F21DFFE7DE008481B3 /* SchoolNotificationViewController.m */; };
+		9E8EC9F61DFFE801008481B3 /* SysteamNotificationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E8EC9F51DFFE801008481B3 /* SysteamNotificationViewController.m */; };
 		9E9B4C7A1D633C8400983F5E /* XXEFriendCircleApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E9B4C791D633C8400983F5E /* XXEFriendCircleApi.m */; };
 		9E9FAF191D5DBD1500C15AD5 /* XXEMyselfAblumAddApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E9FAF181D5DBD1500C15AD5 /* XXEMyselfAblumAddApi.m */; };
 		9E9FAF1C1D5DC09800C15AD5 /* XXEOtherTeacherAlbumViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E9FAF1B1D5DC09800C15AD5 /* XXEOtherTeacherAlbumViewController.m */; };
@@ -2627,6 +2629,10 @@
 		9E8E098E1DE5C8EF00B0A942 /* XXECourseOrderListModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXECourseOrderListModel.m; sourceTree = "<group>"; };
 		9E8EC9EB1DFEA7FC008481B3 /* EmptyView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmptyView.h; sourceTree = "<group>"; };
 		9E8EC9EC1DFEA7FC008481B3 /* EmptyView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmptyView.m; sourceTree = "<group>"; };
+		9E8EC9F11DFFE7DE008481B3 /* SchoolNotificationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SchoolNotificationViewController.h; sourceTree = "<group>"; };
+		9E8EC9F21DFFE7DE008481B3 /* SchoolNotificationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SchoolNotificationViewController.m; sourceTree = "<group>"; };
+		9E8EC9F41DFFE801008481B3 /* SysteamNotificationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SysteamNotificationViewController.h; sourceTree = "<group>"; };
+		9E8EC9F51DFFE801008481B3 /* SysteamNotificationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SysteamNotificationViewController.m; sourceTree = "<group>"; };
 		9E9B4C781D633C8400983F5E /* XXEFriendCircleApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXEFriendCircleApi.h; sourceTree = "<group>"; };
 		9E9B4C791D633C8400983F5E /* XXEFriendCircleApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXEFriendCircleApi.m; sourceTree = "<group>"; };
 		9E9FAF171D5DBD1500C15AD5 /* XXEMyselfAblumAddApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXEMyselfAblumAddApi.h; sourceTree = "<group>"; };
@@ -3725,6 +3731,10 @@
 			children = (
 				0480A0831D87DC1400D7589B /* XXENotificationViewController.h */,
 				0480A0841D87DC1400D7589B /* XXENotificationViewController.m */,
+				9E8EC9F41DFFE801008481B3 /* SysteamNotificationViewController.h */,
+				9E8EC9F51DFFE801008481B3 /* SysteamNotificationViewController.m */,
+				9E8EC9F11DFFE7DE008481B3 /* SchoolNotificationViewController.h */,
+				9E8EC9F21DFFE7DE008481B3 /* SchoolNotificationViewController.m */,
 				0480A0971D87ED2300D7589B /* XXESchoolNotificationDetailViewController.h */,
 				0480A0981D87ED2300D7589B /* XXESchoolNotificationDetailViewController.m */,
 				0480A09C1D87ED3400D7589B /* XXESystemNotificationDetailViewController.h */,
@@ -6809,6 +6819,7 @@
 				04A9DDAD1D815A3500544782 /* XXEGlobalPermissionSettingApi.m in Sources */,
 				044DEC0B1D910A8500DE101A /* XXEFamilyManagerViewController2.m in Sources */,
 				04FB82681D7E6EB4003110B5 /* XXEMyselfInfoModifyEmailApi.m in Sources */,
+				9E8EC9F61DFFE801008481B3 /* SysteamNotificationViewController.m in Sources */,
 				9EBDB5501D61DB2400A2F252 /* XXECollectionHeaderReusableView.m in Sources */,
 				0480A08E1D87DC7000D7589B /* XXESchoolNotificationModel.m in Sources */,
 				9E8E092C1DE31AAA00B0A942 /* XXERegisterTeacherApi.m in Sources */,
@@ -7058,6 +7069,7 @@
 				043596AF1DAA458100F85DAE /* FriendApplicationTableViewCell.m in Sources */,
 				9E5E23B91D90CC04008B1AAF /* README.md in Sources */,
 				044BFDE61DACACB300E1EB4D /* PRTweenTimingFunctions.m in Sources */,
+				9E8EC9F31DFFE7DE008481B3 /* SchoolNotificationViewController.m in Sources */,
 				9E8E09491DE31AAA00B0A942 /* XXEForgetPassApi.m in Sources */,
 				04BB3A961D74743300AA5C5C /* XXEBabyFamilyInfoDetailApi.m in Sources */,
 				048754921D5C0BF200F680C5 /* XXEFlowerbasketApi.m in Sources */,

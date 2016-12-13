@@ -122,6 +122,11 @@
             return;
         }
         for (JXPersonInfo *pInfo in phoneArray) {
+            
+            if (pInfo.phone.count == 0) {
+                return;
+            }
+            
             NSString *phoneStr = [pInfo.phone[0] allObjects][0];
             if (phoneStr.length == 11) {
                 [allPhoneNumArray addObject:phoneStr];

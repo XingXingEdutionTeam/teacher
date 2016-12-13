@@ -28,9 +28,39 @@
 /** 页数 */
 @property (nonatomic, assign)NSInteger page;
 
+//空视图
+@property(nonatomic ,strong)EmptyView *empty;
+
+//网络连接错误
+@property(nonatomic ,strong)EmptyView *netErrorView;
+
 @end
 
 @implementation XXEFriendMyCircleViewController
+
+-(EmptyView *)empty {
+    if (!_empty) {
+        CGRect frame = CGRectMake(0, 0, KScreenWidth, KScreenHeight - 64 - 44);
+        _empty = [EmptyView conveniceWithTitle:@"您还没有发表内容" frame:frame];
+        [self.tableView addSubview:_empty];
+        _empty.hidden = YES;
+    }
+    
+    return _empty;
+}
+
+-(EmptyView *)netErrorView {
+    if (!_netErrorView) {
+        CGRect frame = CGRectMake(0, 0, KScreenWidth, KScreenHeight - 64 - 44);
+        _netErrorView = [EmptyView conveniceWithTitle:@"网络连接错误" frame:frame];
+        [self.tableView addSubview:_netErrorView];
+        _netErrorView.hidden = YES;
+    }
+    
+    return _netErrorView;
+}
+
+
 - (NSMutableArray *)headerMyCircleDatasource
 {
     if (!_headerMyCircleDatasource) {
@@ -127,6 +157,7 @@
 //    NSString *otherXid = [NSString stringWithFormat:@"%ld",(long)self.otherXid];
     
     NSString *page1 = [NSString stringWithFormat:@"%ld",(long)page];
+    self.netErrorView.hidden = YES;
     XXEFriendMyCircleApi *friendMyApi = [[XXEFriendMyCircleApi alloc]initWithChechFriendCircleOtherXid:_otherXid page:page1 UserId:homeUserId MyCircleXid:strngXid];
     [friendMyApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         
@@ -139,8 +170,15 @@
         NSLog(@"%@",request.responseJSONObject);
         NSLog(@"%@",[request.responseJSONObject objectForKey:@"msg"]);
         NSString *code = [request.responseJSONObject objectForKey:@"code"];
+        NSDictionary *data = [request.responseJSONObject objectForKey:@"data"];
+        
+        if ([data isEqual:@""]) {
+            self.empty.hidden = NO;
+        }else {
+            self.empty.hidden = YES;
+        }
+        
         if ([code intValue]==1) {// && [[request.responseJSONObject objectForKey:@"data"] isKindOfClass:[NSDictionary class]]
-            NSDictionary *data = [request.responseJSONObject objectForKey:@"data"];
             NSArray *listSS = [data objectForKey:@"ss"];
             NSLog(@"数组信息%@",listSS);
             NSLog(@"用户信息%@",[data objectForKey:@"user_info"]);
@@ -167,7 +205,7 @@
             [self endLoadMore];
         }
     } failure:^(__kindof YTKBaseRequest *request) {
-        
+        self.netErrorView.hidden = NO;
     }];
 }
 
