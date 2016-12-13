@@ -10,6 +10,11 @@
 
 @interface XXEBaseViewController : UIViewController
 
+typedef enum : NSUInteger {
+    SchoolInfoNone,
+    SchoolInfoHave,
+} SchoolInfo;
+
 /**
  *  已登录
  */

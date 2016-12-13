@@ -19,6 +19,7 @@
 #import "XXEMySelfInfoApi.h"
 #import "XXECourseOrderListViewController.h"
 #import "XXEFriendMyCircleViewController.h"
+#import "XXRootChatETabBarController.h"
 
 @interface XXEMySelfPageViewController ()<UITableViewDelegate, UITableViewDataSource>
 {
@@ -394,9 +395,9 @@
         //@"我的聊天"
         if([XXEUserInfo user].login){
             
-        WMConversationViewController *WMConversationVC = [[WMConversationViewController alloc] init];
-        
-        [self.navigationController pushViewController:WMConversationVC animated:NO];
+//        WMConversationViewController *WMConversationVC = [[WMConversationViewController alloc] init];
+            XXRootChatETabBarController *chatListVC = [[XXRootChatETabBarController alloc] init];
+        [self.navigationController pushViewController:chatListVC animated:NO];
     }else{
         
         [self showHudWithString:@"请用账号登录" forSecond:1.5];
@@ -411,6 +412,10 @@
         
     }else if (indexPath.row == 4){
         //@"我的圈子"
+        XXEFriendMyCircleViewController *myCircle = [[XXEFriendMyCircleViewController alloc] init];
+        myCircle.rootChat = @"my";
+        myCircle.otherXid = [XXEUserInfo user].xid;
+        [self.navigationController pushViewController:myCircle animated:YES];
         
     }else if (indexPath.row == 5){
         //@"我的黑名单"
@@ -463,9 +468,11 @@
         if([XXEUserInfo user].login){
         
         //@"我的聊天"
-        WMConversationViewController *WMConversationVC = [[WMConversationViewController alloc] init];
-        
-        [self.navigationController pushViewController:WMConversationVC animated:NO];
+//        WMConversationViewController *WMConversationVC = [[WMConversationViewController alloc] init];
+//        
+//        [self.navigationController pushViewController:WMConversationVC animated:NO];
+        XXRootChatETabBarController *chatListVC = [[XXRootChatETabBarController alloc] init];
+        [self.navigationController pushViewController:chatListVC animated:NO];
         }else{
         
             [self showHudWithString:@"请用账号登录" forSecond:1.5];

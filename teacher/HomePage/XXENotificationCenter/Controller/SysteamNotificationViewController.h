@@ -1,21 +1,17 @@
 //
-//  XXENotificationViewController.h
+//  SysteamNotificationViewController.h
 //  teacher
 //
-//  Created by Mac on 16/9/13.
+//  Created by codeDing on 16/12/13.
 //  Copyright © 2016年 XingXingEdu. All rights reserved.
 //
 
 #import "XXEBaseViewController.h"
 
-@interface XXENotificationViewController : XXEBaseViewController
-
+@interface SysteamNotificationViewController : XXEBaseViewController
 @property (nonatomic, copy) NSString *schoolId;
 
 @property (nonatomic, copy) NSString *classId;
 
 @property(nonatomic)SchoolInfo schoolInfo;
-
-//@property (nonatomic, copy) NSString *position;
-
 @end

@@ -35,6 +35,8 @@
         [self setupButtonNum:11];
     }else if ([position isEqualToString:@"4"]){
         [self setupButtonNum:10];
+    }else if (position == nil) {
+        [self setupButtonNum:10];
     }
 }
 
