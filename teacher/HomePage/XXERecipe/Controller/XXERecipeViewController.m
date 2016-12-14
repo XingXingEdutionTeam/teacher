@@ -352,11 +352,15 @@
 
 
 - (void)deleteButtonClick:(UIButton *)button{
+    if ([XXEUserInfo user].login) {
+        deleteSection = button.tag - 100;
+        //        NSLog(@"%ld", deleteSection);
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"删除这天的食谱信息" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"删除", nil];
+        [alert show];
+    }else{
+        [self showString:@"请用账号登录后查看" forSecond:1.5];
+    }
 
-    deleteSection = button.tag - 100;
-//        NSLog(@"%ld", deleteSection);
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"删除这天的食谱信息" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"删除", nil];
-    [alert show];
 }
 
 
@@ -422,23 +426,25 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    
-    XXERecipeDetailViewController *recipeDetailVC = [[XXERecipeDetailViewController alloc] init];
-
-    if ([mealPicDataSource[indexPath.section] count] != 0) {
-        recipeDetailVC.mealPicDataSource = mealPicDataSource[indexPath.section][indexPath.row];
+    if ([XXEUserInfo user].login) {
+        XXERecipeDetailViewController *recipeDetailVC = [[XXERecipeDetailViewController alloc] init];
+        
+        if ([mealPicDataSource[indexPath.section] count] != 0) {
+            recipeDetailVC.mealPicDataSource = mealPicDataSource[indexPath.section][indexPath.row];
+        }
+        
+        recipeDetailVC.titleStr = titleArray[indexPath.row];
+        recipeDetailVC.date_tm = dateArray[indexPath.section];
+        //    recipeDetailVC.contentStr = contentDataSource[indexPath.section][indexPath.row];
+        recipeDetailVC.cookbook_idStr = cookbook_idArray[indexPath.section];
+        
+        recipeDetailVC.schoolId = _schoolId;
+        recipeDetailVC.position = _position;
+        
+        [self.navigationController pushViewController:recipeDetailVC animated:YES];
+    }else{
+        [self showString:@"请用账号登录后查看" forSecond:1.5];
     }
-
-    recipeDetailVC.titleStr = titleArray[indexPath.row];
-    recipeDetailVC.date_tm = dateArray[indexPath.section];
-//    recipeDetailVC.contentStr = contentDataSource[indexPath.section][indexPath.row];
-    recipeDetailVC.cookbook_idStr = cookbook_idArray[indexPath.section];
-    
-    recipeDetailVC.schoolId = _schoolId;
-    recipeDetailVC.position = _position;
-    
-    [self.navigationController pushViewController:recipeDetailVC animated:YES];
-    
 }
 
 - (void)didReceiveMemoryWarning {

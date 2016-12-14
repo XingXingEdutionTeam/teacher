@@ -151,7 +151,7 @@
     }
     
     cell.textLabel.text = _dataSourceArray[indexPath.row];
-    cell.textLabel.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
+    cell.textLabel.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     
     return cell;

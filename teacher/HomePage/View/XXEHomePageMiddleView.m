@@ -25,7 +25,7 @@
     __weak typeof(self)weakSelf = self;
     
     self.homeMiddleFirstButton = [UIButton creatHomePageImage:@"home_flower" title:@":  15" target:self action:@selector(homeMiddleFirstButtonClick:)];
-    self.homeMiddleFirstButton.titleLabel.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
+    self.homeMiddleFirstButton.titleLabel.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];
     [self addSubview:self.homeMiddleFirstButton];
     [self.homeMiddleFirstButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(weakSelf.mas_left).offset(15);
@@ -34,7 +34,7 @@
     }];
     
     self.homeMiddleTwoButton = [UIButton creatHomePageImage:@"home_redflower" title:@":  12" target:self action:@selector(homeMiddleTwoButtonClick:)];
-    self.homeMiddleTwoButton.titleLabel.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
+    self.homeMiddleTwoButton.titleLabel.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];
     [self addSubview:self.homeMiddleTwoButton];
     [self.homeMiddleTwoButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(weakSelf.homeMiddleFirstButton.mas_right).offset(0);
@@ -43,7 +43,7 @@
     }];
     
     self.homeMiddleThreeButton = [UIButton creatHomePageImage:@"home_xid" title:@":  14" target:self action:@selector(homeMiddleThreeButtonClick:)];
-    self.homeMiddleThreeButton.titleLabel.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
+    self.homeMiddleThreeButton.titleLabel.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];
     [self addSubview:self.homeMiddleThreeButton];
     [self.homeMiddleThreeButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(weakSelf.homeMiddleTwoButton.mas_right).offset(5);

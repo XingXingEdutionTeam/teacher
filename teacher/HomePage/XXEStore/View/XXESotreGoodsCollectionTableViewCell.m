@@ -16,11 +16,11 @@
     [super awakeFromNib];
     // Initialization code
     
-    _nameLabel.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
+    _nameLabel.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];
     
-    _iconNumLabel.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
+    _iconNumLabel.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];
     
-    _dateLabel.font = [UIFont systemWithIphone6P:14 Iphone6:12 Iphone5:10 Iphone4:8];
+    _dateLabel.font = [UIFont systemFontOfSize:12 * kScreenRatioWidth];
 
     
 }

@@ -37,42 +37,42 @@
         _totalIconTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(kWidth - 100, 10, 60, 20)];
         _totalIconTitleLabel.text = @"合计猩币:";
         _totalIconTitleLabel.textColor = [UIColor lightGrayColor];
-        _totalIconTitleLabel.font = [UIFont systemWithIphone6P:14 Iphone6:12 Iphone5:10 Iphone4:8];
+        _totalIconTitleLabel.font = [UIFont systemFontOfSize:12 * kScreenRatioWidth];
         [self.contentView addSubview:_totalIconTitleLabel];
         
         _totalIconLabel = [[UILabel alloc] initWithFrame:CGRectMake(_totalIconTitleLabel.frame.origin.x + _totalIconTitleLabel.width , 10, 50, 20)];
         _totalIconLabel.textColor = UIColorFromRGB(244, 52, 139);
-        _totalIconLabel.font =  [UIFont systemWithIphone6P:14 Iphone6:12 Iphone5:10 Iphone4:8];
+        _totalIconLabel.font =  [UIFont systemFontOfSize:12 * kScreenRatioWidth];
         [self.contentView addSubview:_totalIconLabel];
         
         //订单编号
         _orderCodeLabel = [[UILabel alloc] initWithFrame:CGRectMake(100 * kScreenRatioWidth, _titleLabel.frame.origin.y + _titleLabel.height + 10, 150 * kScreenRatioWidth, 20)];
         _orderCodeLabel.textColor = [UIColor lightGrayColor];
-        _orderCodeLabel.font = [UIFont systemWithIphone6P:14 Iphone6:12 Iphone5:10 Iphone4:8];
+        _orderCodeLabel.font = [UIFont systemFontOfSize:12 * kScreenRatioWidth];
         [self.contentView addSubview:_orderCodeLabel];
         
         //合计 钱
         _moneyTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(KScreenWidth - 100 , _orderCodeLabel.frame.origin.y , 60, 20)];
         _moneyTitleLabel.text = @"合计:";
         _moneyTitleLabel.textColor = [UIColor lightGrayColor];
-        _moneyTitleLabel.font = [UIFont systemWithIphone6P:14 Iphone6:12 Iphone5:10 Iphone4:8];
+        _moneyTitleLabel.font = [UIFont systemFontOfSize:12 * kScreenRatioWidth];
         [self.contentView addSubview:_moneyTitleLabel];
         
         _moneyLabel = [[UILabel alloc] initWithFrame:CGRectMake(_moneyTitleLabel.frame.origin.x + _moneyTitleLabel.width, _moneyTitleLabel.frame.origin.y, 50, 20)];
         _moneyLabel.textColor = UIColorFromRGB(244, 52, 139);
-        _moneyLabel.font = [UIFont systemWithIphone6P:14 Iphone6:12 Iphone5:10 Iphone4:8];
+        _moneyLabel.font = [UIFont systemFontOfSize:12 * kScreenRatioWidth];
         [self.contentView addSubview:_moneyLabel];
         
         //下单时间
         _timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(100 * kScreenRatioWidth, _orderCodeLabel.frame.origin.y + _orderCodeLabel.height + 10, 150 * kScreenRatioWidth, 20)];
         _timeLabel.textColor = [UIColor lightGrayColor];
-        _timeLabel.font = [UIFont systemWithIphone6P:14 Iphone6:12 Iphone5:10 Iphone4:8];
+        _timeLabel.font = [UIFont systemFontOfSize:12 * kScreenRatioWidth];
         [self.contentView addSubview:_timeLabel];
         
         //note
         _noteLabel = [[UILabel alloc] initWithFrame:CGRectMake(KScreenWidth - 70, _timeLabel.frame.origin.y, 70, 20)];
         _noteLabel.textColor = [UIColor orangeColor];
-        _noteLabel.font = [UIFont systemWithIphone6P:14 Iphone6:12 Iphone5:10 Iphone4:8];
+        _noteLabel.font = [UIFont systemFontOfSize:12 * kScreenRatioWidth];
         [self.contentView addSubview:_noteLabel];
 
         

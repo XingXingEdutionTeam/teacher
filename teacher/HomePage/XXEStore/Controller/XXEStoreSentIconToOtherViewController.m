@@ -186,7 +186,7 @@
     UILabel *xingbiLabel =  [UILabel createLabelWithFrame:CGRectMake(KLabelX, CGRectGetMaxY(view2.frame) + 5, KLabelW, KLabelH) Font:16 Text:@"猩币数目:"];
     [bgView addSubview:xingbiLabel];
     moneyText = [[UITextField alloc] initWithFrame:CGRectMake(CGRectGetMaxX(xingbiLabel.frame) + KMarg, CGRectGetMaxY(view2.frame) + 5, kWidth - CGRectGetMaxX(xingbiLabel.frame) - KLabelX *2 , KLabelH)];
-    moneyText.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
+    moneyText.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];
     moneyText.placeholder = @"正在加载中...";
     moneyText.keyboardType=UIKeyboardTypeNumberPad;
     moneyText.borderStyle = UITextBorderStyleNone;

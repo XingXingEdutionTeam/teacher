@@ -87,17 +87,20 @@
 }
 
 
-
+#pragma mark ========= 赠送小红花 ===========
 - (void)sent:(UIButton *)button{
 
-    XXESentToPeopleViewController *sentToPeopleVC = [[XXESentToPeopleViewController alloc] init];
-    
-    sentToPeopleVC.schoolId = _schoolId;
-    sentToPeopleVC.classId = _classId;
-    sentToPeopleVC.basketNumStr = _flower_able;
-    sentToPeopleVC.position = _position;
-    [self.navigationController pushViewController:sentToPeopleVC animated:YES];
-    
+    if ([XXEUserInfo user].login) {
+        XXESentToPeopleViewController *sentToPeopleVC = [[XXESentToPeopleViewController alloc] init];
+        
+        sentToPeopleVC.schoolId = _schoolId;
+        sentToPeopleVC.classId = _classId;
+        sentToPeopleVC.basketNumStr = _flower_able;
+        sentToPeopleVC.position = _position;
+        [self.navigationController pushViewController:sentToPeopleVC animated:YES];
+    }else{
+        [self showString:@"请用账号登录后查看" forSecond:1.5];
+    }
 }
 
 - (void)fetchNetData{
@@ -261,9 +264,9 @@
     
 //    NSLog(@"课程  %@", model.teach_course);
     cell.titleLabel.text = [NSString stringWithFormat:@"%@ / %@ / %@", model.tname, model.teach_course, model.class_name];
-    cell.titleLabel.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
+    cell.titleLabel.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];
     cell.contentLabel.text = [NSString stringWithFormat:@"赠言:%@", model.con];
-    cell.contentLabel.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
+    cell.contentLabel.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];
     cell.timeLabel.text = [XXETool dateStringFromNumberTimer:model.date_tm];
     
     if([model.collect_condit isEqualToString:@"2"]){
@@ -310,21 +313,25 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-
-    XXERedFlowerDetialViewController *redFlowerDetialVC = [[XXERedFlowerDetialViewController alloc] init];
+    if ([XXEUserInfo user].login) {
+        XXERedFlowerDetialViewController *redFlowerDetialVC = [[XXERedFlowerDetialViewController alloc] init];
+        
+        XXERedFlowerSentHistoryModel *model = _dataSourceArray[indexPath.row];
+        redFlowerDetialVC.name = model.tname;
+        redFlowerDetialVC.time = [XXETool dateStringFromNumberTimer:model.date_tm];
+        redFlowerDetialVC.schoolName = model.school_name;
+        redFlowerDetialVC.className = model.class_name;
+        redFlowerDetialVC.course = model.teach_course;
+        redFlowerDetialVC.content = model.con;
+        redFlowerDetialVC.picWallArray = model.pic_arr;
+        redFlowerDetialVC.iconUrl = model.head_img;
+        redFlowerDetialVC.collect_conditStr =model.collect_condit;
+        redFlowerDetialVC.collect_id = model.collectionId;
+        [self.navigationController pushViewController:redFlowerDetialVC animated:YES];
+    }else{
+        [self showString:@"请用账号登录后查看" forSecond:1.5];
+    }
     
-    XXERedFlowerSentHistoryModel *model = _dataSourceArray[indexPath.row];
-    redFlowerDetialVC.name = model.tname;
-    redFlowerDetialVC.time = [XXETool dateStringFromNumberTimer:model.date_tm];
-    redFlowerDetialVC.schoolName = model.school_name;
-    redFlowerDetialVC.className = model.class_name;
-    redFlowerDetialVC.course = model.teach_course;
-    redFlowerDetialVC.content = model.con;
-    redFlowerDetialVC.picWallArray = model.pic_arr;
-    redFlowerDetialVC.iconUrl = model.head_img;
-    redFlowerDetialVC.collect_conditStr =model.collect_condit;
-    redFlowerDetialVC.collect_id = model.collectionId;
-    [self.navigationController pushViewController:redFlowerDetialVC animated:YES];
 
 }
 

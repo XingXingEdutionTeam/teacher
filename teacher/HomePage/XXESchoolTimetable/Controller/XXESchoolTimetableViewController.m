@@ -262,11 +262,15 @@
 
 - (void)addCourseButtonClick{
 //    NSLog(@"mmmmm" );
-    
-    XXESchoolTimetableAddCourseViewController *schoolTimetableAddCourseVC = [[XXESchoolTimetableAddCourseViewController alloc] init];
-    
-    
-    [self.navigationController pushViewController:schoolTimetableAddCourseVC animated:YES];
+    if ([XXEUserInfo user].login) {
+        XXESchoolTimetableAddCourseViewController *schoolTimetableAddCourseVC = [[XXESchoolTimetableAddCourseViewController alloc] init];
+        
+        
+        [self.navigationController pushViewController:schoolTimetableAddCourseVC animated:YES];
+    }else{
+        [self showString:@"请用账号登录后查看" forSecond:1.5];
+    }
+
 
 }
 
@@ -362,19 +366,24 @@
 }
 
 - (void)exchangeBtn:(UIButton *)button{
-//    NSLog(@"课程表 切换 模式");
-    if (button.selected == YES) {
-//        NSLog(@"11111111 === 传统 模式");
-        if (originalTimeArray.count != 0) {
-            [self fetchCourseInfoTraditionStyle:originalTimeArray[page]];
+    
+    if ([XXEUserInfo user].login) {
+        //    NSLog(@"课程表 切换 模式");
+        if (button.selected == YES) {
+            //        NSLog(@"11111111 === 传统 模式");
+            if (originalTimeArray.count != 0) {
+                [self fetchCourseInfoTraditionStyle:originalTimeArray[page]];
+            }
+        }else{
+            //        NSLog(@"222222 ---- 时间轴 模式");
+            if (originalTimeArray.count != 0) {
+                [self fetchCourseInfoTimeLineStyle:originalTimeArray[page]];
+            }
         }
+        button.selected = !button.selected;
     }else{
-//        NSLog(@"222222 ---- 时间轴 模式");
-        if (originalTimeArray.count != 0) {
-            [self fetchCourseInfoTimeLineStyle:originalTimeArray[page]];
-        }
+        [self showString:@"请用账号登录后查看" forSecond:1.5];
     }
-    button.selected = !button.selected;
 }
 
 - (void)commboxAction:(NSNotification *)notif{
@@ -825,48 +834,55 @@
 
 
 - (void)buttonClick:(UIButton *)button{
-//    NSLog(@"%ld", button.tag);
     
-    NSInteger i = button.tag - 1;
-
-    //注意 列 均是从 0 开始
-    //行
-    NSInteger buttonRow = i / 7;
-    
-    //列
-    NSInteger buttonLine = i % 7;
-    
-//    NSLog(@"行 %ld  --- 列 %ld ", buttonRow, buttonLine);
-    
-    XXESchoolTimetableCourseViewController *schoolTimetableCourseVC = [[XXESchoolTimetableCourseViewController alloc] init];
-    
-    schoolTimetableCourseVC.week_date = originalTimeArray[page];
-    
-    if (rightButton.selected == NO) {
-        //传统 模式
-        schoolTimetableCourseVC.courseDataArray = courseTraditionArray[buttonRow][buttonLine];
-    }else if (rightButton.selected == YES){
-        //时间轴 模式
-        if (buttonLine == 0) {
-            schoolTimetableCourseVC.courseDataArray = courseTimeArray[buttonRow][@"con"][@"monday"];
-        }else if (buttonLine == 1){
-            schoolTimetableCourseVC.courseDataArray = courseTimeArray[buttonRow][@"con"][@"tuesday"];
-        }else if (buttonLine == 2){
-            schoolTimetableCourseVC.courseDataArray = courseTimeArray[buttonRow][@"con"][@"wednesday"];
-        }else if (buttonLine == 3){
-            schoolTimetableCourseVC.courseDataArray = courseTimeArray[buttonRow][@"con"][@"thursday"];
-        }else if (buttonLine == 4){
-            schoolTimetableCourseVC.courseDataArray = courseTimeArray[buttonRow][@"con"][@"friday"];
-        }else if (buttonLine == 5){
-            schoolTimetableCourseVC.courseDataArray = courseTimeArray[buttonRow][@"con"][@"saturday"];
-        }else if (buttonLine == 6){
-            schoolTimetableCourseVC.courseDataArray = courseTimeArray[buttonRow][@"con"][@"sunday"];
+    if ([XXEUserInfo user].login) {
+        //    NSLog(@"%ld", button.tag);
+        
+        NSInteger i = button.tag - 1;
+        
+        //注意 列 均是从 0 开始
+        //行
+        NSInteger buttonRow = i / 7;
+        
+        //列
+        NSInteger buttonLine = i % 7;
+        
+        //    NSLog(@"行 %ld  --- 列 %ld ", buttonRow, buttonLine);
+        
+        XXESchoolTimetableCourseViewController *schoolTimetableCourseVC = [[XXESchoolTimetableCourseViewController alloc] init];
+        
+        schoolTimetableCourseVC.week_date = originalTimeArray[page];
+        
+        if (rightButton.selected == NO) {
+            //传统 模式
+            schoolTimetableCourseVC.courseDataArray = courseTraditionArray[buttonRow][buttonLine];
+        }else if (rightButton.selected == YES){
+            //时间轴 模式
+            if (buttonLine == 0) {
+                schoolTimetableCourseVC.courseDataArray = courseTimeArray[buttonRow][@"con"][@"monday"];
+            }else if (buttonLine == 1){
+                schoolTimetableCourseVC.courseDataArray = courseTimeArray[buttonRow][@"con"][@"tuesday"];
+            }else if (buttonLine == 2){
+                schoolTimetableCourseVC.courseDataArray = courseTimeArray[buttonRow][@"con"][@"wednesday"];
+            }else if (buttonLine == 3){
+                schoolTimetableCourseVC.courseDataArray = courseTimeArray[buttonRow][@"con"][@"thursday"];
+            }else if (buttonLine == 4){
+                schoolTimetableCourseVC.courseDataArray = courseTimeArray[buttonRow][@"con"][@"friday"];
+            }else if (buttonLine == 5){
+                schoolTimetableCourseVC.courseDataArray = courseTimeArray[buttonRow][@"con"][@"saturday"];
+            }else if (buttonLine == 6){
+                schoolTimetableCourseVC.courseDataArray = courseTimeArray[buttonRow][@"con"][@"sunday"];
+            }
+            
         }
         
+        
+        [self.navigationController pushViewController:schoolTimetableCourseVC animated:YES];   
+    }else{
+        [self showString:@"请用账号登录后查看" forSecond:1.5];
     }
     
-    
-    [self.navigationController pushViewController:schoolTimetableCourseVC animated:YES];
+
 }
 
 

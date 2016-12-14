@@ -71,6 +71,7 @@
         parameterXid = XID;
         parameterUser_Id = USER_ID;
     }
+    serviceModelArray = [[NSMutableArray alloc] init];
     
     [self getSubjectInfo:_course_id];
     [self createRightBar];
@@ -378,10 +379,14 @@
 
 //发起聊天
 - (void)clickchatBtn:(UIButton*)btn{
-
-    //先获取 客服 信息
-    [self getCustomerServicesInfo];
+    if ([XXEUserInfo user].login) {
+        //先获取 客服 信息
+        [self getCustomerServicesInfo];
     
+    }else{
+        
+        [self showHudWithString:@"请用账号登录" forSecond:1.5];
+    }
 }
 
 
@@ -403,11 +408,10 @@
                                  @"user_type":USER_TYPE,
                                  @"school_id":school_id
                                  };
-                NSLog(@"params === %@", params);
-        
+//           NSLog(@"params === %@", params);
         [WZYHttpTool post:urlStr params:params success:^(id responseObj) {
             //
-            NSLog(@"客服 信息 === %@", responseObj);
+//            NSLog(@"客服 信息 === %@", responseObj);
             
             if ([responseObj[@"code"] integerValue] == 1) {
                 
@@ -434,8 +438,7 @@
         }];
         
     }
-    
-    
+
 }
 
 - (void)createActionSheetAlert{

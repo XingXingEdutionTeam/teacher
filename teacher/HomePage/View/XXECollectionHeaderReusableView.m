@@ -23,7 +23,7 @@
     label.textColor = [UIColor whiteColor];
     label.textAlignment = NSTextAlignmentLeft;
     label.numberOfLines = 0;
-    label.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:8];
+    label.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];
     label.tag = 10;
     [self addSubview:label];
 }

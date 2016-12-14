@@ -76,7 +76,7 @@
     }];
     self.titleLabel = [[UILabel alloc]init];
     self.titleLabel.textColor = XXEGreenColor;
-    self.titleLabel.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
+    self.titleLabel.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];
     self.titleLabel.text = @"新";
     [self addSubview:self.titleLabel];
     [self.titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {

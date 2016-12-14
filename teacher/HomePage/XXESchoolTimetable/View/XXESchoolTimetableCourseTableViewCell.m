@@ -14,11 +14,12 @@
 
 - (void)awakeFromNib {
     
-    self.courseNameLabel.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
-    self.classLabel.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
-    self.teacherNameLabel.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
-    self.otherLabel.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
-    self.startTimeLabel.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
+    [super awakeFromNib];
+    self.courseNameLabel.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];
+    self.classLabel.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];
+    self.teacherNameLabel.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];
+    self.otherLabel.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];
+    self.startTimeLabel.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];
     
 
 }

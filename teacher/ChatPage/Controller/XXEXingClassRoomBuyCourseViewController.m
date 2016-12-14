@@ -109,11 +109,11 @@
     [subjectBgView addSubview:icon1];
     //科目标题
     UILabel *subjectLabel = [UILabel createLabelWithFrame:CGRectMake(icon1.frame.origin.x + icon1.frame.size.width + 5, 10, 40, 20) Font:14 Text:@"科目:"];
-    subjectLabel.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
+    subjectLabel.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];
     [subjectBgView addSubview:subjectLabel];
     //科目内容
     UILabel *subLabel = [UILabel createLabelWithFrame:CGRectMake(subjectLabel.frame.origin.x + subjectLabel.frame.size.width + 5, 10, KScreenWidth - 100, 20) Font:14 Text:_dict[@"course_name"]];
-    subLabel.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
+    subLabel.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];
     [subjectBgView addSubview:subLabel];
     
     //====================== 人数==================
@@ -127,11 +127,11 @@
     [peopleNumBgView addSubview:icon2];
     //人数 标题
     UILabel *numberLabel = [UILabel createLabelWithFrame:CGRectMake(icon2.frame.origin.x + icon2.frame.size.width + 5, 10, 40, 20) Font:14 Text:@"人数:"];
-    numberLabel.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
+    numberLabel.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];
     [peopleNumBgView addSubview:numberLabel];
     //人数 内容
     numTextField = [[UITextField alloc] initWithFrame:CGRectMake(numberLabel.frame.origin.x + numberLabel.frame.size.width + 5, 6, KScreenWidth - 100, 30)];
-    numTextField.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
+    numTextField.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];
     numTextField.delegate = self;
     numTextField.placeholder = @"请输入购买人数(1~4)";
     numTextField.text = @"1";
@@ -161,7 +161,7 @@
             [nameBgView addSubview:icon];
             //人数 标题
             UILabel *nameLabel = [UILabel createLabelWithFrame:CGRectMake(icon.frame.origin.x + icon.frame.size.width + 5, 10, 40, 20) Font:14 Text:@"人数:"];
-            nameLabel.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
+            nameLabel.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];
             [nameBgView addSubview:nameLabel];
             //人数 内容
             UITextField *nameTextField = [[UITextField alloc] initWithFrame:CGRectMake(nameLabel.frame.origin.x + nameLabel.frame.size.width + 5, 6, KScreenWidth - 100, 30)];
@@ -169,7 +169,7 @@
             nameTextField.delegate = self;
             nameTextField.tag = 1 + i;
 //            newStr = [NSString stringWithFormat:@"%@,%@", newStr, nameTextField.text];
-            nameTextField.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
+            nameTextField.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];
             [nameBgView addSubview:nameTextField];
         }
     
@@ -207,12 +207,12 @@
     [phoneBgView addSubview:icon3];
     //联系方式 标题
     UILabel *phoneLabel = [UILabel createLabelWithFrame:CGRectMake(icon3.frame.origin.x + icon3.frame.size.width + 5, 10, 40, 20) Font:14 Text:@"联系方式:"];
-    phoneLabel.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
+    phoneLabel.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];
     [phoneBgView addSubview:phoneLabel];
     //联系方式 内容
     phoneTextField = [[UITextField alloc] initWithFrame:CGRectMake(phoneLabel.frame.origin.x + phoneLabel.frame.size.width + 5, 6, KScreenWidth - 100, 30)];
     phoneTextField.placeholder = @"请输入联系方式";
-    phoneTextField.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
+    phoneTextField.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];
     phoneTextField.keyboardType = UIKeyboardTypeNumberPad;
     [phoneBgView addSubview:phoneTextField];
 
@@ -251,7 +251,7 @@
     coinTextField.delegate = self;
     coinTextField.textAlignment = NSTextAlignmentCenter;
     coinTextField.placeholder = @"兑换猩币数";
-    coinTextField.font = [UIFont systemWithIphone6P:14 Iphone6:12 Iphone5:10 Iphone4:8];
+    coinTextField.font = [UIFont systemFontOfSize:12 * kScreenRatioWidth];
     [payBgView addSubview:coinTextField];
     
     UIImage *btnImage = [[UIImage alloc] init];
@@ -286,7 +286,7 @@
     
     //================= 说明 ==========================
     UILabel *declareLabel = [UILabel createLabelWithFrame:CGRectMake(KScreenWidth / 3, 10 + 40 *3, KScreenWidth / 2, 20) Font:14 Text:@"特别说明:发票请到机构前台领取"];
-    declareLabel.font = [UIFont systemWithIphone6P:14 Iphone6:12 Iphone5:10 Iphone4:8];
+    declareLabel.font = [UIFont systemFontOfSize:12 * kScreenRatioWidth];
     [payBgView addSubview:declareLabel];
 
 

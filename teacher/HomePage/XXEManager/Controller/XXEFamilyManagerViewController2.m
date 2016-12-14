@@ -271,14 +271,14 @@
     if ([studentModel.condit isEqualToString:@"0"]) {
         _agreeBtn = [UIButton createButtonWithFrame:CGRectMake(245 * kScreenRatioWidth, 27, 50 * kScreenRatioWidth, 25 * kScreenRatioHeight) backGruondImageName:nil Target:self Action:@selector(onClickagreeBtn:) Title:@"同意"];
         [_agreeBtn setTitleColor:UIColorFromRGB(0, 170, 42) forState:UIControlStateNormal];
-        _agreeBtn.titleLabel.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
+        _agreeBtn.titleLabel.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];
         [_agreeBtn.layer setBorderColor:UIColorFromRGB(0, 170, 42).CGColor];
         [_agreeBtn.layer setBorderWidth:1];
         [_agreeBtn.layer setMasksToBounds:YES];
         
         _refuseBtn = [UIButton createButtonWithFrame:CGRectMake(300 * kScreenRatioWidth, 27, 50 * kScreenRatioWidth, 25 * kScreenRatioHeight) backGruondImageName:nil Target:self Action:@selector(onClickRefuseBtn:) Title:@"拒绝"];
         [_refuseBtn setTitleColor:UIColorFromRGB(0, 170, 42) forState:UIControlStateNormal];
-        _refuseBtn.titleLabel.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
+        _refuseBtn.titleLabel.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];
         [_refuseBtn.layer setBorderColor:UIColorFromRGB(0, 170, 42).CGColor];
         [_refuseBtn.layer setBorderWidth:1];
         [_refuseBtn.layer setMasksToBounds:YES];
@@ -291,7 +291,7 @@
     }else if ([studentModel.condit isEqualToString:@"1"]){
         _deletebtn = [UIButton createButtonWithFrame:CGRectMake(300 * kScreenRatioWidth, 27, 50 * kScreenRatioWidth, 25 * kScreenRatioHeight) backGruondImageName:nil Target:self Action:@selector(onClickDeleteBtn:) Title:@"删除"];
         [_deletebtn setTitleColor:UIColorFromRGB(0, 170, 42) forState:UIControlStateNormal];
-        _deletebtn.titleLabel.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
+        _deletebtn.titleLabel.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];
         [_deletebtn.layer setBorderColor:UIColorFromRGB(0, 170, 42).CGColor];
         [_deletebtn.layer setBorderWidth:1];
         [_deletebtn.layer setMasksToBounds:YES];

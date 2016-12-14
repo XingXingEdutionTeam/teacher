@@ -79,7 +79,7 @@
     }else if ([action_type integerValue] == 2){
         titleLabel.text = @"修改支付密码(原始支付密码为登录密码)";
     }
-    titleLabel.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
+    titleLabel.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];
     [self.view addSubview:titleLabel];
     
     //背景
@@ -108,21 +108,21 @@
     _oldCodeTextField = [[UITextField alloc] initWithFrame:CGRectMake(50 * kScreenRatioWidth, 10 * kScreenRatioHeight, textFieldWidth, textFieldHeight)];
     _oldCodeTextField.placeholder = @"请输入旧密码(6--20位字母或数字)";
     _oldCodeTextField.clearButtonMode = UITextFieldViewModeAlways;
-    _oldCodeTextField.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];;
+    _oldCodeTextField.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];;
     _oldCodeTextField.delegate = self;
     [modifyBgView addSubview:_oldCodeTextField];
 
     _nowCodeTextField1 = [[UITextField alloc] initWithFrame:CGRectMake(50 * kScreenRatioWidth, (10 + 30 + 10) * kScreenRatioHeight, textFieldWidth, textFieldHeight)];
     _nowCodeTextField1.placeholder = @"请输入新密码(6--20位字母或数字)";
     _nowCodeTextField1.clearButtonMode = UITextFieldViewModeAlways;
-    _nowCodeTextField1.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];;
+    _nowCodeTextField1.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];;
     _nowCodeTextField1.delegate = self;
     [modifyBgView addSubview:_nowCodeTextField1];
     
     _nowCodeTextField2 = [[UITextField alloc] initWithFrame:CGRectMake(50 * kScreenRatioWidth, (10 + 30 + 10 + 30 + 10) * kScreenRatioHeight, textFieldWidth, textFieldHeight)];
     _nowCodeTextField2.placeholder = @"请再次输入新密码(6--20位字母或数字)";
     _nowCodeTextField2.clearButtonMode = UITextFieldViewModeAlways;
-    _nowCodeTextField2.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];;
+    _nowCodeTextField2.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];;
     _nowCodeTextField2.delegate = self;
     [modifyBgView addSubview:_nowCodeTextField2];
 

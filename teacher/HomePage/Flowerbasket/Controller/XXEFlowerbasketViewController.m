@@ -87,11 +87,14 @@
 
 
 - (void)sent:(UIButton *)button{
-#warning 访客登录 不允许 提现-----------------------------
-    XXEAccountManagerViewController *XXEAccountManagerVC = [[XXEAccountManagerViewController alloc] init];
-    
-    [self.navigationController pushViewController:XXEAccountManagerVC animated:YES];
-    
+    if ([XXEUserInfo user].login) {
+        XXEAccountManagerViewController *XXEAccountManagerVC = [[XXEAccountManagerViewController alloc] init];
+        
+        [self.navigationController pushViewController:XXEAccountManagerVC animated:YES];
+    }else{
+        [self showString:@"请用账号登录后查看" forSecond:1.5];
+    }
+
 }
 
 - (void)fetchNetData{

@@ -85,7 +85,7 @@
     //    searchButton.titleLabel.textColor = [UIColor whiteColor];
     button.layer.masksToBounds = YES;
     button.layer.cornerRadius = 20*kScreenRatioWidth;
-    button.titleLabel.font = [UIFont systemWithIphone6P:17 Iphone6:15 Iphone5:13 Iphone4:12];
+    button.titleLabel.font = [UIFont systemFontOfSize:15 * kScreenRatioWidth];
     [button setImage:[UIImage imageNamed:image] forState:UIControlStateNormal];
     [button setTitle:title forState:UIControlStateNormal];
     [button addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];

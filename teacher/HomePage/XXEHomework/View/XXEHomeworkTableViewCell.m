@@ -64,13 +64,13 @@
         [self.contentView addSubview:_timeLabel];
         
         
-        _nameLabel.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
-        _courseLabel.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
-        _subjectLabel.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
-        _titleLabel1.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
-        _titleLabel2.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
-        _titleLabel3.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
-        _timeLabel.font = [UIFont systemWithIphone6P:14 Iphone6:12 Iphone5:10 Iphone4:8];
+        _nameLabel.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];
+        _courseLabel.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];
+        _subjectLabel.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];
+        _titleLabel1.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];
+        _titleLabel2.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];
+        _titleLabel3.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];
+        _timeLabel.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];
         
     }
     

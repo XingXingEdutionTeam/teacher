@@ -130,13 +130,13 @@
     
     //今日 信息
     titleTodayLabel = [UILabel createLabelWithFrame:CGRectMake(100 * kScreenRatioWidth, iconImageView.frame.origin.y + iconImageView.height + 10, 100 * kScreenRatioWidth, 20) Font:14 Text:@""];
-    titleTodayLabel.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
+    titleTodayLabel.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];
     titleTodayLabel.textAlignment = NSTextAlignmentCenter;
     titleTodayLabel.textColor = [UIColor whiteColor];
     [upBgView addSubview:titleTodayLabel];
     
     numTodayLabel = [UILabel createLabelWithFrame:CGRectMake(titleTodayLabel.frame.origin.x + titleTodayLabel.width + 5, titleTodayLabel.frame.origin.y, 50 * kScreenRatioWidth, 20) Font:14 Text:@""];
-    numTodayLabel.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
+    numTodayLabel.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];
     numTodayLabel.textColor = [UIColor whiteColor];
     [upBgView addSubview:numTodayLabel];
     
@@ -322,39 +322,39 @@
     //本月 信息
     numMonthLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 5, KScreenWidth / 3, 20)];
     numMonthLabel.textAlignment = NSTextAlignmentCenter;
-    numMonthLabel.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
+    numMonthLabel.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];
     numMonthLabel.textColor = [UIColor whiteColor];
     [middleBgView addSubview:numMonthLabel];
     
     titleMonthLabel = [[UILabel alloc] initWithFrame:CGRectMake(0,numMonthLabel.frame.origin.y + numMonthLabel.height,  KScreenWidth / 3, 20)];
     titleMonthLabel.textAlignment = NSTextAlignmentCenter;
-    titleMonthLabel.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
+    titleMonthLabel.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];
     titleMonthLabel.textColor = [UIColor whiteColor];
     [middleBgView addSubview:titleMonthLabel];
     
     //本年 信息
     numYearLabel = [[UILabel alloc] initWithFrame:CGRectMake(KScreenWidth / 3, 5, KScreenWidth / 3, 20)];
     numYearLabel.textAlignment = NSTextAlignmentCenter;
-    numYearLabel.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
+    numYearLabel.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];
     numYearLabel.textColor = [UIColor whiteColor];
     [middleBgView addSubview:numYearLabel];
     
     titleYearLabel = [[UILabel alloc] initWithFrame:CGRectMake(KScreenWidth / 3,numYearLabel.frame.origin.y + numYearLabel.height,  KScreenWidth / 3, 20)];
     titleYearLabel.textAlignment = NSTextAlignmentCenter;
-    titleYearLabel.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
+    titleYearLabel.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];
     titleYearLabel.textColor = [UIColor whiteColor];
     [middleBgView addSubview:titleYearLabel];
     
     //累计 信息
     numTotalLabel = [[UILabel alloc] initWithFrame:CGRectMake(KScreenWidth / 3 * 2, 5, KScreenWidth / 3, 20)];
     numTotalLabel.textAlignment = NSTextAlignmentCenter;
-    numTotalLabel.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
+    numTotalLabel.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];
     numTotalLabel.textColor = [UIColor whiteColor];
     [middleBgView addSubview:numTotalLabel];
     
     titleTotalLabel = [[UILabel alloc] initWithFrame:CGRectMake(KScreenWidth / 3 * 2, numTotalLabel.frame.origin.y + numTotalLabel.height, KScreenWidth / 3, 20)];
     titleTotalLabel.textAlignment = NSTextAlignmentCenter;
-    titleTotalLabel.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
+    titleTotalLabel.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];
     titleTotalLabel.textColor = [UIColor whiteColor];
     [middleBgView addSubview:titleTotalLabel];
     
@@ -449,7 +449,7 @@
         btn.backgroundColor = UIColorFromRGB(0, 170, 42);
         [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         btn.tag = 100 + i;
-        btn.titleLabel.font = [UIFont systemWithIphone6P:14 Iphone6:12 Iphone5:10 Iphone4:8];
+        btn.titleLabel.font = [UIFont systemFontOfSize:12 * kScreenRatioWidth];
         
         if ([selectionFlagStr isEqualToString:@"1"]) {
           if (i == 0) {

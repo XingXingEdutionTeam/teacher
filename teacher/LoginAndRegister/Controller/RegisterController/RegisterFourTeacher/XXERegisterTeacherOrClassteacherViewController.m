@@ -241,7 +241,7 @@
 
     for (int i = 0; i < 5; i++) {
         UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 5 + 40 * i, 70 * kScreenRatioWidth, 20)];
-        titleLabel.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
+        titleLabel.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];
         titleLabel.text = _titleArr[i];
         [upBgView addSubview:titleLabel];
         
@@ -309,7 +309,7 @@
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, KScreenWidth, 40)];
     titleLabel.numberOfLines = 0;
     titleLabel.text = @"请上传以下相关证明:工作证/教师资格证,如有疑问请拨打:021-60548858";
-    titleLabel.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
+    titleLabel.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];
     [middleBgView addSubview:titleLabel];
     
     //选择图片
@@ -417,7 +417,7 @@
     
     for (int i = 0; i < 2; i++) {
         UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 5 + 40 * i, 70 * kScreenRatioWidth, 20)];
-        titleLabel.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
+        titleLabel.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];
         titleLabel.text = titleArray[i];
         [downBgView addSubview:titleLabel];
         
@@ -436,7 +436,7 @@
     
     //邀请码
    codeTextField = [[UITextField alloc] initWithFrame:CGRectMake(90 * kScreenRatioWidth, 40 + 5, KScreenWidth - 120, 30)];
-    codeTextField.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
+    codeTextField.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];
     codeTextField.delegate = self;
     codeTextField.borderStyle = UITextBorderStyleRoundedRect;
     codeTextField.textAlignment = NSTextAlignmentCenter;

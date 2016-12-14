@@ -77,7 +77,7 @@
     
     //金额
     UILabel *moneyLabel = [[UILabel alloc] initWithFrame:CGRectMake(shoppingCart.frame.origin.x + shoppingCart.width + 20, 10, KScreenWidth - 50, 20)];
-    moneyLabel.font = [UIFont systemWithIphone6P:18 Iphone6:16 Iphone5:14 Iphone4:12];
+    moneyLabel.font = [UIFont systemFontOfSize:16 * kScreenRatioWidth];
     if (_dict) {
         if ([_dict[@"pay_price"] floatValue] == 0.000000) {
             _onlyXingCoin = YES;
@@ -101,7 +101,7 @@
     
     //订单号
     UILabel *orderCodeLabel = [[UILabel alloc] initWithFrame:CGRectMake(moneyLabel.frame.origin.x ,moneyLabel.frame.origin.y + moneyLabel.height + 10, KScreenWidth - 50, 20)];
-    orderCodeLabel.font = [UIFont systemWithIphone6P:14 Iphone6:12 Iphone5:10 Iphone4:8];
+    orderCodeLabel.font = [UIFont systemFontOfSize:12 * kScreenRatioWidth];
     orderCodeLabel.text = [NSString stringWithFormat:@"订单号:%@", _order_index];
     orderCodeLabel.textColor = [UIColor lightGrayColor];
     [orderBgView addSubview:orderCodeLabel];
@@ -127,7 +127,7 @@
     
     sureButton = [UIButton createButtonWithFrame:CGRectMake(buttonX, buttonY, buttonW, buttonH) backGruondImageName:@"zhifuaniu" Target:self Action:@selector(sureButtonClick:) Title:@""];
     
-    sureButton.titleLabel.font = [UIFont systemWithIphone6P:18 Iphone6:16 Iphone5:14 Iphone4:12];
+    sureButton.titleLabel.font = [UIFont systemFontOfSize:16 * kScreenRatioWidth];
     [sureButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     
 
@@ -151,12 +151,12 @@
     //标题
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(xingxingicon.frame.origin.x + xingxingicon.width + 20, 10, KScreenWidth - 50, 20)];
     titleLabel.text = @"猩币支付";
-    titleLabel.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
+    titleLabel.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];
     [payBgView addSubview:titleLabel];
     
     //说明
     noteLabel1 = [[UILabel alloc] initWithFrame:CGRectMake(titleLabel.frame.origin.x ,titleLabel.frame.origin.y + titleLabel.height + 10, KScreenWidth - 50, 20)];
-    noteLabel1.font = [UIFont systemWithIphone6P:12 Iphone6:10 Iphone5:8 Iphone4:6];
+    noteLabel1.font = [UIFont systemFontOfSize:10 * kScreenRatioWidth];
     [payBgView addSubview:noteLabel1];
 
     UIButton *selectButton = [UIButton createButtonWithFrame:CGRectMake(KScreenWidth - 50, 20, 25, 25) backGruondImageName:@"weixuan" Target:self Action:@selector(selectButtonClick:) Title:@""];
@@ -213,12 +213,12 @@
         //标题
         UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(xingxingicon.frame.origin.x + xingxingicon.width + 20, 10, KScreenWidth - 50, 20)];
         titleLabel.text = titleArray[i];
-        titleLabel.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
+        titleLabel.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];
         [cellBgView addSubview:titleLabel];
         
         //说明
         UILabel *noteLabel = [[UILabel alloc] initWithFrame:CGRectMake(titleLabel.frame.origin.x ,titleLabel.frame.origin.y + titleLabel.height + 10, KScreenWidth - 50, 20)];
-        noteLabel.font = [UIFont systemWithIphone6P:12 Iphone6:10 Iphone5:8 Iphone4:6];
+        noteLabel.font = [UIFont systemFontOfSize:10 * kScreenRatioWidth];
         noteLabel.text = noteArray[i];
         [cellBgView addSubview:noteLabel];
         

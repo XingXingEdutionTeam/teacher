@@ -59,9 +59,6 @@
     [super viewDidLoad];
  
     self.title = @"食谱详情";
-    
-
-
     [self createTableView];
     
 }
@@ -174,7 +171,7 @@
     
 //    NSLog(@"头部 == %lf", headerView.height);
     
-    _myTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, headerView.frame.origin.y + headerView.height + 5, KScreenWidth, KScreenHeight - 64 - headerView.height) style:UITableViewStyleGrouped];
+    _myTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, headerView.frame.origin.y + headerView.height, KScreenWidth, KScreenHeight - 64 - headerView.height) style:UITableViewStyleGrouped];
     
     _myTableView.dataSource = self;
     _myTableView.delegate = self;

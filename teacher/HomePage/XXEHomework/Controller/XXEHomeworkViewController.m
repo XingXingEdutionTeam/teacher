@@ -123,15 +123,18 @@
 }
 
 
-
+#pragma mark ========= 发布 作业 ==========
 - (void)issueBtnClick:(UIButton *)button{
-    
-    XXEHomeworkIssueViewController *homeworkIssueVC = [[XXEHomeworkIssueViewController alloc] init];
-    
-//    homeworkIssueVC.schoolId = _schoolId;
-//    homeworkIssueVC.classId = _classId;
-    
-    [self.navigationController pushViewController:homeworkIssueVC animated:YES];
+    if ([XXEUserInfo user].login) {
+        XXEHomeworkIssueViewController *homeworkIssueVC = [[XXEHomeworkIssueViewController alloc] init];
+        
+        //    homeworkIssueVC.schoolId = _schoolId;
+        //    homeworkIssueVC.classId = _classId;
+        
+        [self.navigationController pushViewController:homeworkIssueVC animated:YES];
+    }else{
+        [self showString:@"请用账号登录后查看" forSecond:1.5];
+    }
     
 }
 
@@ -439,16 +442,18 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    
-    if (_dataSourceArray.count != 0) {
-        XXEHomeworkModel *model = _dataSourceArray[indexPath.row];
-        
-        XXEHomeworkDetailInfoViewController *homeworkDetailInfoVC = [[XXEHomeworkDetailInfoViewController alloc] init];
-        homeworkDetailInfoVC.homeworkId = model.homeworkId;
-        [self.navigationController pushViewController:homeworkDetailInfoVC animated:YES];
+    if ([XXEUserInfo user].login) {
+        if (_dataSourceArray.count != 0) {
+            XXEHomeworkModel *model = _dataSourceArray[indexPath.row];
+            
+            XXEHomeworkDetailInfoViewController *homeworkDetailInfoVC = [[XXEHomeworkDetailInfoViewController alloc] init];
+            homeworkDetailInfoVC.homeworkId = model.homeworkId;
+            [self.navigationController pushViewController:homeworkDetailInfoVC animated:YES];
+        }
+  
+    }else{
+        [self showString:@"请用账号登录后查看" forSecond:1.5];
     }
-    
-
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context{

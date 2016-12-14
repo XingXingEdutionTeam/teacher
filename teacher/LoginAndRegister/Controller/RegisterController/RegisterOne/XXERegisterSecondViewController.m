@@ -62,7 +62,7 @@
     //创建上面的提示
     UILabel *label = [[UILabel alloc]init];
     label.text = @"请设置您的密码";
-    label.font = [UIFont systemWithIphone6P:14 Iphone6:12 Iphone5:10 Iphone4:8];
+    label.font = [UIFont systemFontOfSize:12 * kScreenRatioWidth];
     label.textAlignment = NSTextAlignmentCenter;
     label.textColor = XXEColorFromRGB(204, 204, 204);
     [self.view addSubview:label];
@@ -118,7 +118,7 @@
     
     UILabel *label3 = [[UILabel alloc]init];
     label3.text = @"输入密码";
-    label3.font = [UIFont systemWithIphone6P:17 Iphone6:15 Iphone5:12 Iphone4:11];
+    label3.font = [UIFont systemFontOfSize:15 * kScreenRatioWidth];
     label3.tintColor = XXEColorFromRGB(51, 51, 51);
     label3.textAlignment = NSTextAlignmentLeft;
     [passWordImageView addSubview:label3];
@@ -132,7 +132,7 @@
     
     UILabel *label4 = [[UILabel alloc]init];
     label4.text = @"确认密码";
-    label4.font = [UIFont systemWithIphone6P:17 Iphone6:15 Iphone5:12 Iphone4:11];
+    label4.font = [UIFont systemFontOfSize:15 * kScreenRatioWidth];
     label4.tintColor = XXEColorFromRGB(51, 51, 51);
     label4.textAlignment = NSTextAlignmentLeft;
     [confirmPassWordImageView addSubview:label4];

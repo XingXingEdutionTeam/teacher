@@ -15,6 +15,7 @@
 - (void)awakeFromNib {
     // Initialization code
     
+    [super awakeFromNib];
     //separateLine
     UIImage *backGroungImage =[UIImage imageNamed:@"separateLine"];
     [backGroungImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
@@ -27,15 +28,15 @@
     
     _distanceLabel.textColor = [UIColor redColor];
     
-    _nameLabel.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
+    _nameLabel.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];
     
-    _ageLabel.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
+    _ageLabel.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];
     
-    _scoreLabel.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
+    _scoreLabel.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];
     
-    _courseLabel.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
+    _courseLabel.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];
     
-    _teachTimeLabel.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
+    _teachTimeLabel.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];
     
     
 }

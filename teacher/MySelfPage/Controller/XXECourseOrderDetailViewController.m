@@ -130,9 +130,9 @@
         UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(40, 10 + 40 * i, 70, 20)];
         titleLabel.text = titleArray[i];
         if (i == 0) {
-            titleLabel.font = [UIFont systemWithIphone6P:18 Iphone6:16 Iphone5:14 Iphone4:12];
+            titleLabel.font = [UIFont systemFontOfSize:16 * kScreenRatioWidth];
         }else{
-        titleLabel.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
+        titleLabel.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];
         }
         [upBgView addSubview:titleLabel];
         
@@ -140,7 +140,7 @@
         UILabel *textLabel = [[UILabel alloc] initWithFrame:CGRectMake(120, 10 + 40 * i, KScreenWidth - 130, 20)];
         textLabel.text = textArray[i];
 
-        textLabel.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
+        textLabel.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];
 
         if (i == 2) {
             if ([_stateFlagStr integerValue] == 0 || [_stateFlagStr integerValue] == 2){
@@ -168,14 +168,14 @@
     //课程名称
     UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(90, coursePic.frame.origin.y, KScreenWidth - 100, 20)];
     nameLabel.text = detailInfoDict[@"course_name"];
-    nameLabel.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
+    nameLabel.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];
     [upBgView addSubview:nameLabel];
     
     //课程价格
     UILabel *priceLabel = [[UILabel alloc] initWithFrame:CGRectMake(90, nameLabel.frame.origin.y + nameLabel.height + 10, KScreenWidth - 100, 20)];
     priceLabel.text = [NSString stringWithFormat:@"¥:%@",detailInfoDict[@"original_price"]];
     priceLabel.textColor = [UIColor redColor];
-    priceLabel.font = [UIFont systemWithIphone6P:14 Iphone6:12 Iphone5:10 Iphone4:8];
+    priceLabel.font = [UIFont systemFontOfSize:12 * kScreenRatioWidth];
     [upBgView addSubview:priceLabel];
     
     //分割线
@@ -198,7 +198,7 @@
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(j * labelW, lineView2.frame.origin.y + 10, labelW, labelH)];
         label.textAlignment = NSTextAlignmentCenter;
         label.text = priceArray[j];
-        label.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
+        label.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];
         [upBgView addSubview: label];
     }
 }
@@ -210,7 +210,7 @@
     [self.view addSubview:downBgView];
     
     //title
-    NSMutableArray *titleArray = [[NSMutableArray alloc] initWithObjects:@"购买人:", @"上课学生:", @"联系方式:", nil];
+    NSMutableArray *textArray = [[NSMutableArray alloc] initWithObjects:@"购买人:", @"上课学生:", @"联系方式:", nil];
     //content
     //购买人
     NSString *buyer = [NSString stringWithFormat:@"%@", detailInfoDict[@"bought_tname"]];
@@ -223,13 +223,13 @@
     NSMutableArray *contentArray = [[NSMutableArray alloc] initWithObjects:buyer, student , phone, nil];
     for (int k = 0; k < 3; k ++) {
         UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 5 + 40 * k, 70, 20)];
-        titleLabel.text = titleArray[k];
-        titleLabel.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
+        titleLabel.text = textArray[k];
+        titleLabel.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];
         [downBgView addSubview:titleLabel];
         
         UILabel *contentLabel = [[UILabel alloc] initWithFrame:CGRectMake(90, 5 + 40 * k, KScreenWidth - 100, 20)];
         contentLabel.text = contentArray[k];
-        contentLabel.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
+        contentLabel.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];
         [downBgView addSubview:contentLabel];
     }
 

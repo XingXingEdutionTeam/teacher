@@ -160,24 +160,31 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
    
-    XXEClassAddressHeadermasterAndManagerModel *model = _dataSourceArray[indexPath.row];
-   
-    if ([self.headMasterAlbum isEqualToString:@"1"]) {
-        XXEClassAlbumViewController *classAlbumVC = [[XXEClassAlbumViewController alloc]init];
-        classAlbumVC.schoolID = self.schoolId;
-        classAlbumVC.classID = model.class_id;
-        classAlbumVC.userIdentifier = self.homeUserIdentifier;
-//        NSLog(@"%@ == %@",self.schoolId,model.class_id);
-        [self.navigationController pushViewController:classAlbumVC animated:YES];
-    }else{
-         XXEClassAddressEveryclassInfoViewController *classAddressEveryclassInfoVC = [[XXEClassAddressEveryclassInfoViewController alloc] init];
-        classAddressEveryclassInfoVC.schoolId = _schoolId;
-        classAddressEveryclassInfoVC.babyClassName = model.class_name;
-        classAddressEveryclassInfoVC.selectedClassId = model.class_id;
-        classAddressEveryclassInfoVC.fromFlagStr = _fromFlagStr;
+    if ([XXEUserInfo user].login) {
+        XXEClassAddressHeadermasterAndManagerModel *model = _dataSourceArray[indexPath.row];
         
-        [self.navigationController pushViewController:classAddressEveryclassInfoVC animated:YES];
+        if ([self.headMasterAlbum isEqualToString:@"1"]) {
+            XXEClassAlbumViewController *classAlbumVC = [[XXEClassAlbumViewController alloc]init];
+            classAlbumVC.schoolID = self.schoolId;
+            classAlbumVC.classID = model.class_id;
+            classAlbumVC.userIdentifier = self.homeUserIdentifier;
+            //        NSLog(@"%@ == %@",self.schoolId,model.class_id);
+            [self.navigationController pushViewController:classAlbumVC animated:YES];
+        }else{
+            XXEClassAddressEveryclassInfoViewController *classAddressEveryclassInfoVC = [[XXEClassAddressEveryclassInfoViewController alloc] init];
+            classAddressEveryclassInfoVC.schoolId = _schoolId;
+            classAddressEveryclassInfoVC.babyClassName = model.class_name;
+            classAddressEveryclassInfoVC.selectedClassId = model.class_id;
+            classAddressEveryclassInfoVC.fromFlagStr = _fromFlagStr;
+            
+            [self.navigationController pushViewController:classAddressEveryclassInfoVC animated:YES];
+        }
+
+    }else{
+        [self showString:@"请用账号登录后查看" forSecond:1.5];
     }
+
+    
 }
 
 

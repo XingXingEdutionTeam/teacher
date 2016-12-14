@@ -188,37 +188,43 @@ static NSString *const IdentifierCell = @"classAlbunCell";
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-     XXEClassAlbumTableViewCell * cell = [tableView cellForRowAtIndexPath:indexPath];
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
-    if (self.userIdentifier != nil) {
-        XXEOtherTeacherAlbumViewController *otherVC = [[XXEOtherTeacherAlbumViewController alloc]init];
-        otherVC.otherClassId=self.classID;
-        otherVC.otherSchoolId=self.schoolID;
-        otherVC.otherTeacherId = self.teacherDatasource[indexPath.section];
-        NSLog(@"%@ %@ %@",otherVC.otherSchoolId,otherVC.otherClassId,otherVC.otherTeacherId);
-        [self.navigationController pushViewController:otherVC animated:YES];
+    if ([XXEUserInfo user].login) {
+        XXEClassAlbumTableViewCell * cell = [tableView cellForRowAtIndexPath:indexPath];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        
+        if (self.userIdentifier != nil) {
+            XXEOtherTeacherAlbumViewController *otherVC = [[XXEOtherTeacherAlbumViewController alloc]init];
+            otherVC.otherClassId=self.classID;
+            otherVC.otherSchoolId=self.schoolID;
+            otherVC.otherTeacherId = self.teacherDatasource[indexPath.section];
+            NSLog(@"%@ %@ %@",otherVC.otherSchoolId,otherVC.otherClassId,otherVC.otherTeacherId);
+            [self.navigationController pushViewController:otherVC animated:YES];
+        }else{
+            
+            if (indexPath.row ==0 && indexPath.section==0) {
+                
+                XXEMyClassAlbumViewController *myClassVC = [[XXEMyClassAlbumViewController alloc]init];
+                myClassVC.myAlbumClassId=self.classID;
+                myClassVC.myAlbumSchoolId=self.schoolID;
+                myClassVC.myAlbumTeacherId = self.teacherDatasource[indexPath.section];
+                //        NSLog(@"%@ %@ %@",myClassVC.myAlbumSchoolId,myClassVC.myAlbumClassId,myClassVC.myAlbumTeacherId);
+                [self.navigationController pushViewController:myClassVC animated:YES];
+                
+            }
+            else{
+                XXEOtherTeacherAlbumViewController *otherVC = [[XXEOtherTeacherAlbumViewController alloc]init];
+                otherVC.otherClassId=self.classID;
+                otherVC.otherSchoolId=self.schoolID;
+                otherVC.otherTeacherId = self.teacherDatasource[indexPath.section];
+                //        NSLog(@"%@ %@ %@",otherVC.otherSchoolId,otherVC.otherClassId,otherVC.otherTeacherId);
+                [self.navigationController pushViewController:otherVC animated:YES];
+            }
+            
+        }
+ 
     }else{
-        
-    if (indexPath.row ==0 && indexPath.section==0) {
-    
-        XXEMyClassAlbumViewController *myClassVC = [[XXEMyClassAlbumViewController alloc]init];
-        myClassVC.myAlbumClassId=self.classID;
-        myClassVC.myAlbumSchoolId=self.schoolID;
-        myClassVC.myAlbumTeacherId = self.teacherDatasource[indexPath.section];
-//        NSLog(@"%@ %@ %@",myClassVC.myAlbumSchoolId,myClassVC.myAlbumClassId,myClassVC.myAlbumTeacherId);
-    [self.navigationController pushViewController:myClassVC animated:YES];
-        
-    }
-    else{
-        XXEOtherTeacherAlbumViewController *otherVC = [[XXEOtherTeacherAlbumViewController alloc]init];
-        otherVC.otherClassId=self.classID;
-        otherVC.otherSchoolId=self.schoolID;
-        otherVC.otherTeacherId = self.teacherDatasource[indexPath.section];
-//        NSLog(@"%@ %@ %@",otherVC.otherSchoolId,otherVC.otherClassId,otherVC.otherTeacherId);
-        [self.navigationController pushViewController:otherVC animated:YES];
-    }
-        
+        [self showString:@"请用账号登录后查看" forSecond:1.5];
     }
 }
 

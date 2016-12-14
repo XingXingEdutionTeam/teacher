@@ -9,6 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface UIFont (XXExtension)
-+ (UIFont *)systemWithIphone6P:(NSInteger)font6p Iphone6:(NSInteger)font6 Iphone5:(NSInteger)font5 Iphone4:(NSInteger)font4;
+//+ (UIFont *)systemWithIphone6P:(NSInteger)font6p Iphone6:(NSInteger)font6 Iphone5:(NSInteger)font5 Iphone4:(NSInteger)font4;
 
 @end

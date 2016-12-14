@@ -207,7 +207,7 @@
     UILabel *nowPriceLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, KScreenHeight / 2 + 10 * kScreenRatioHeight, KScreenWidth / 3, 20)];
     nowPriceLabel.text = [NSString stringWithFormat:@"￥ %@", goodDetailInfoDic[@"exchange_price"]];
     nowPriceLabel.textColor = UIColorFromRGB(244, 52, 139);
-    nowPriceLabel.font = [UIFont systemWithIphone6P:22 Iphone6:20 Iphone5:18 Iphone4:16];
+    nowPriceLabel.font = [UIFont systemFontOfSize:20 * kScreenRatioWidth];
     nowPriceLabel.textAlignment = NSTextAlignmentCenter;
     [self.view addSubview:nowPriceLabel];
     
@@ -216,7 +216,7 @@
     oldPriceLabel.text = [NSString stringWithFormat:@"原价:￥ %@", goodDetailInfoDic[@"price"]];
     oldPriceLabel.textColor = UIColorFromRGB(244, 52, 139);
     oldPriceLabel.textAlignment = NSTextAlignmentCenter;
-    oldPriceLabel.font = [UIFont systemWithIphone6P:14 Iphone6:12 Iphone5:10 Iphone4:8];
+    oldPriceLabel.font = [UIFont systemFontOfSize:12 * kScreenRatioWidth];
     [self.view addSubview:oldPriceLabel];
     
     //原价删除线
@@ -228,7 +228,7 @@
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(KScreenWidth / 2 - 10, KScreenHeight / 2 + 10 * kScreenRatioHeight, KScreenWidth / 2, 20)];
     titleLabel.numberOfLines = 0;
     titleLabel.text = goodDetailInfoDic[@"title"];
-    titleLabel.font = [UIFont systemWithIphone6P:18 Iphone6:16 Iphone5:14 Iphone4:12];
+    titleLabel.font = [UIFont systemFontOfSize:16 * kScreenRatioWidth];
     [self.view addSubview:titleLabel];
     
     //分割线
@@ -239,13 +239,13 @@
     //详情 title
     UILabel *detailLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, line4.frame.origin.y + 1 + 10, 60, 20)];
     detailLabel.text = @"商品详情";
-    detailLabel.font = [UIFont systemWithIphone6P:14 Iphone6:12 Iphone5:10 Iphone4:8];
+    detailLabel.font = [UIFont systemFontOfSize:12 * kScreenRatioWidth];
     [self.view addSubview:detailLabel];
     
     
     //详情
     UITextView *detailTextView = [[UITextView alloc] initWithFrame:CGRectMake(detailLabel.frame.origin.x + detailLabel.width, detailLabel.frame.origin.y - 3, KScreenWidth - 80, 70 * kScreenRatioHeight)];
-    detailTextView.font = [UIFont systemWithIphone6P:14 Iphone6:12 Iphone5:10 Iphone4:8];
+    detailTextView.font = [UIFont systemFontOfSize:12 * kScreenRatioWidth];
     detailTextView.editable = NO;
     detailTextView.text = goodDetailInfoDic[@"con"];
 //    detailTextView.backgroundColor =  [UIColor redColor];
@@ -259,20 +259,20 @@
     //合计猩币 title
     UILabel *totalCoinLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, line5.frame.origin.y + 1 + 10, 70, 20)];
     totalCoinLabel.text = @"合计猩币:";
-    totalCoinLabel.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
+    totalCoinLabel.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];
     [self.view addSubview:totalCoinLabel];
     
     //合计猩币 猩币 数
     UILabel *xingIconLabel = [[UILabel alloc] initWithFrame:CGRectMake(totalCoinLabel.frame.origin.x + totalCoinLabel.width, totalCoinLabel.frame.origin.y, 100, 20)];
     xingIconLabel.text = goodDetailInfoDic[@"exchange_coin"];
     xingIconLabel.textColor = UIColorFromRGB(244, 52, 139);;
-    xingIconLabel.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
+    xingIconLabel.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];
     [self.view addSubview:xingIconLabel];
     
     //已售 /
     UILabel *saledLabel = [[UILabel alloc] initWithFrame:CGRectMake(KScreenWidth - 190, totalCoinLabel.frame.origin.y, 90, 20)];
     saledLabel.textColor = [UIColor lightGrayColor];
-    saledLabel.font = [UIFont systemWithIphone6P:14 Iphone6:12 Iphone5:10 Iphone4:8];
+    saledLabel.font = [UIFont systemFontOfSize:12 * kScreenRatioWidth];
     saledLabel.text = [NSString stringWithFormat:@"已售%@件", goodDetailInfoDic[@"sale_num"]];
     saledLabel.textAlignment = NSTextAlignmentCenter;
     [self.view addSubview:saledLabel];
@@ -285,7 +285,7 @@
     //还剩
     UILabel *leftLabel = [[UILabel alloc] initWithFrame:CGRectMake(lineView2.frame.origin.x, totalCoinLabel.frame.origin.y, 90, 20)];
     leftLabel.textColor = [UIColor lightGrayColor];
-    leftLabel.font = [UIFont systemWithIphone6P:14 Iphone6:12 Iphone5:10 Iphone4:8];
+    leftLabel.font = [UIFont systemFontOfSize:12 * kScreenRatioWidth];
     leftLabel.textAlignment = NSTextAlignmentCenter;
     leftLabel.text = [NSString stringWithFormat:@"还剩%ld件", [goodDetailInfoDic[@"goods_num"] integerValue] - [goodDetailInfoDic[@"sale_num"] integerValue]];
     [self.view addSubview:leftLabel];
@@ -307,7 +307,7 @@
     
     //咨询
     talkButton = [UIButton createButtonWithFrame:CGRectMake(0, 2 * kScreenRatioHeight, buttonWidth, buttonHeight) backGruondImageName:nil Target:self Action:@selector(shareButtonClick) Title:@"咨询"];
-    talkButton.titleLabel.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
+    talkButton.titleLabel.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];
     [talkButton setImage:[UIImage imageNamed:@"talk_icon"] forState:UIControlStateNormal];
     [talkButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [bottomView addSubview:talkButton];
@@ -315,7 +315,7 @@
     
     //---------------------- 分享 -------------
     shareButton = [UIButton createButtonWithFrame:CGRectMake(buttonWidth, 2 * kScreenRatioHeight, buttonWidth, buttonHeight) backGruondImageName:nil Target:self Action:@selector(shareButtonClick) Title:@"分享"];
-    shareButton.titleLabel.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
+    shareButton.titleLabel.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];
     [shareButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     shareButton.backgroundColor = UIColorFromRGB(251, 188, 26);
     [bottomView addSubview:shareButton];
@@ -323,7 +323,7 @@
     
     //---------------------- 立即购买 ----------
     buyButton = [UIButton createButtonWithFrame:CGRectMake(buttonWidth * 2, 2 * kScreenRatioHeight, buttonWidth, buttonHeight) backGruondImageName:nil Target:self Action:@selector(buyButtonClick) Title:@"立即购买"];
-    buyButton.titleLabel.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
+    buyButton.titleLabel.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];
 //    buyButton.titleLabel.textColor = [UIColor whiteColor];
     [buyButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     buyButton.backgroundColor = UIColorFromRGB(244, 52, 139);

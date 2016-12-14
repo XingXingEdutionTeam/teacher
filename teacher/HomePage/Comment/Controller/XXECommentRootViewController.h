@@ -6,9 +6,10 @@
 //  Copyright © 2016年 XingXingEdu. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+//#import <UIKit/UIKit.h>
+#import "XXEBaseViewController.h"
 
-@interface XXECommentRootViewController : UIViewController
+@interface XXECommentRootViewController : XXEBaseViewController
 
 @property (nonatomic, strong) UIScrollView *myScrollView;
 
