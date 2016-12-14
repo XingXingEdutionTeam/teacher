@@ -62,14 +62,14 @@
     nameLabel.text = @"姓    名";
     nameLabel.textAlignment = NSTextAlignmentCenter;
     nameLabel.textColor = [UIColor darkGrayColor];
-    nameLabel.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:12];
+    nameLabel.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];
     [bgView1 addSubview:nameLabel];
     
     CGFloat nameLabelWidth = nameLabel.frame.size.width;
     
     nameTextfield = [UITextField createTextFieldWithFrame:CGRectMake(nameLabel.frame.origin.x + nameLabelWidth, 10 * KScreenWidth / 375, KScreenWidth - nameLabel.frame.origin.x - nameLabelWidth - 10 * KScreenWidth / 375, 30 * KScreenWidth / 375) placeholder:@"" passWord:NO leftImageView:nil rightImageView:nil Font:14];
     nameTextfield.placeholder = @"请输入该支付宝账号绑定的真实姓名";
-    nameTextfield.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:12];
+    nameTextfield.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];
     [bgView1 addSubview:nameTextfield];
     
     /**
@@ -83,7 +83,7 @@
     accountLabel.textAlignment = NSTextAlignmentCenter;
     accountLabel.textColor = [UIColor darkGrayColor];
     accountLabel.text = @"支付宝账号";
-    accountLabel.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:12];
+    accountLabel.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];
     [bgView2 addSubview:accountLabel];
     
     CGFloat LabelWidth = accountLabel.frame.size.width;
@@ -91,7 +91,7 @@
     accountTextfield = [UITextField createTextFieldWithFrame:CGRectMake(accountLabel.frame.origin.x + LabelWidth, 10 * KScreenWidth / 375, KScreenWidth - accountLabel.frame.origin.x - LabelWidth - 10 * KScreenWidth / 375, 30 * KScreenWidth / 375) placeholder:@"" passWord:NO leftImageView:nil rightImageView:nil Font:14];
     accountTextfield.placeholder = @"请输入手机号或邮箱号";
     
-    accountTextfield.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:12];
+    accountTextfield.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];
     [bgView2 addSubview:accountTextfield];
     bgViewBottom = bgView2.frame.origin.y + bgView2.frame.size.height;
     

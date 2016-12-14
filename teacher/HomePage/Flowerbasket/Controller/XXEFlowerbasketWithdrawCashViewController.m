@@ -119,13 +119,13 @@
 
 - (void)createContent{
     
-    _titleLabel1.font = [UIFont systemWithIphone6P:18 Iphone6:16 Iphone5:14 Iphone4:14];
-    _titleLabel2.font = [UIFont systemWithIphone6P:18 Iphone6:16 Iphone5:14 Iphone4:14];
-    _titleLabel3.font = [UIFont systemWithIphone6P:18 Iphone6:16 Iphone5:14 Iphone4:14];
-    _titleLabel4.font = [UIFont systemWithIphone6P:18 Iphone6:16 Iphone5:14 Iphone4:14];
-    _titleLabel5.font = [UIFont systemWithIphone6P:18 Iphone6:16 Iphone5:14 Iphone4:14];
+    _titleLabel1.font = [UIFont systemFontOfSize:16 * kScreenRatioWidth];
+    _titleLabel2.font = [UIFont systemFontOfSize:16 * kScreenRatioWidth];
+    _titleLabel3.font = [UIFont systemFontOfSize:16 * kScreenRatioWidth];
+    _titleLabel4.font = [UIFont systemFontOfSize:16 * kScreenRatioWidth];
+    _titleLabel5.font = [UIFont systemFontOfSize:16 * kScreenRatioWidth];
     
-    _moneyLabel.font = [UIFont systemWithIphone6P:18 Iphone6:16 Iphone5:14 Iphone4:14];
+    _moneyLabel.font = [UIFont systemFontOfSize:16 * kScreenRatioWidth];
     
     _numberTextField.placeholder = [NSString stringWithFormat:@"还有%@个花篮", _fbasket_able];
     _numberTextField.keyboardType = UIKeyboardTypeNumberPad;

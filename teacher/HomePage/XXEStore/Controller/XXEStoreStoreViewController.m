@@ -316,7 +316,7 @@
     //签到送猩币
 //    UIButton *checkinBtn = [UIButton createButtonWithFrame:CGRectMake(CGRectGetMaxX(countdownView.frame)+ Kmarg, CGRectGetMaxY(grayView1.frame) + Kmarg,(kWidth - CGRectGetMaxX(countdownView.frame))/3 - 10, KButtonH) backGruondImageName:nil Target:nil Action:@selector(checkInBtn) Title:@"签到送猩币"];
     UIButton *checkinBtn = [UIButton createButtonWithFrame:CGRectMake(KScreenWidth - 160 * kScreenRatioWidth, CGRectGetMaxY(grayView1.frame) + Kmarg,70 * kScreenRatioWidth, KButtonH) backGruondImageName:nil Target:nil Action:@selector(checkInBtn) Title:@"签到送猩币"];
-    checkinBtn.titleLabel.font = [UIFont systemWithIphone6P:12 Iphone6:10 Iphone5:8 Iphone4:6];
+    checkinBtn.titleLabel.font = [UIFont systemFontOfSize:10 * kScreenRatioWidth];
     [checkinBtn setTitleColor:UIColorFromRGB(0, 170, 42) forState:UIControlStateNormal];
     checkinBtn.layer.borderColor = UIColorFromRGB(0, 170, 42).CGColor;
     [checkinBtn.layer setBorderWidth:1];
@@ -325,7 +325,7 @@
     
     //猩币转增
     UIButton *xingbizzBtn = [UIButton createButtonWithFrame:CGRectMake(CGRectGetMaxX(checkinBtn.frame) + Kmarg, CGRectGetMaxY(grayView1.frame) + Kmarg , 70 * kScreenRatioWidth, KButtonH)backGruondImageName:nil Target:nil Action:@selector(moneyPresentBtn) Title:@"猩币转赠"];
-     xingbizzBtn.titleLabel.font = [UIFont systemWithIphone6P:12 Iphone6:10 Iphone5:8 Iphone4:6];
+     xingbizzBtn.titleLabel.font = [UIFont systemFontOfSize:10 * kScreenRatioWidth];
     [xingbizzBtn setTitleColor:UIColorFromRGB(0, 170, 42) forState:UIControlStateNormal];
     xingbizzBtn.layer.borderColor = UIColorFromRGB(0, 170, 42).CGColor;
     [xingbizzBtn.layer setBorderWidth:1];
@@ -354,19 +354,28 @@
 
 //立刻 签到
 - (void)checkInBtn{
-    //签到送猩币
-    XXEXingCoinViewController *xingCoinVC = [[XXEXingCoinViewController alloc] init];
-    
-    [self.navigationController pushViewController:xingCoinVC animated:YES];
-    
+    if ([XXEUserInfo user].login) {
+        //签到送猩币
+        XXEXingCoinViewController *xingCoinVC = [[XXEXingCoinViewController alloc] init];
+        
+        [self.navigationController pushViewController:xingCoinVC animated:YES];
+    }else{
+        [self showString:@"请用账号登录后查看" forSecond:1.5];
+    }
 }
 
 
 //猩币 转赠
 - (void)moneyPresentBtn{
-    XXEStoreSentIconToOtherViewController *storeSentIconToOtherVC = [[XXEStoreSentIconToOtherViewController alloc] init];
-    
-    [self.navigationController pushViewController:storeSentIconToOtherVC animated:YES];
+    if ([XXEUserInfo user].login) {
+        XXEStoreSentIconToOtherViewController *storeSentIconToOtherVC = [[XXEStoreSentIconToOtherViewController alloc] init];
+        
+        [self.navigationController pushViewController:storeSentIconToOtherVC animated:YES];
+    }else{
+        [self showString:@"请用账号登录后查看" forSecond:1.5];
+    }
+
+
 }
 
 ////花篮 专区
@@ -428,26 +437,28 @@
 }
 
 - (void)buyButtonClick:(UIButton *)button{
-    
-    XXEStoreListModel *model = _dataSourceArray[button.tag - 1000];
-    //判断 是实物还是虚拟
-    //[type] => 1			//1:实物  2:虚拟商品
-    if ([model.type integerValue] == 1) {
-        //如果 是 实物 会 跳到 完善 收货人 信息 界面
-        XXEStorePerfectConsigneeAddressViewController *perfectConsigneeAddressVC = [[XXEStorePerfectConsigneeAddressViewController alloc] init];
-        
-        perfectConsigneeAddressVC.xingIconNum = model.exchange_coin;
-        perfectConsigneeAddressVC.price = model.exchange_price;
-        perfectConsigneeAddressVC.good_id = model.good_id;
-        
-        [self.navigationController pushViewController:perfectConsigneeAddressVC animated:YES];
-    }else if ([model.type integerValue] == 2) {
-    
-        // 如果 是 虚拟 会直接到支付 界面, 先生成待支付
-        [self createNoPayOrder:model.good_id];
+    if ([XXEUserInfo user].login) {
+        XXEStoreListModel *model = _dataSourceArray[button.tag - 1000];
+        //判断 是实物还是虚拟
+        //[type] => 1			//1:实物  2:虚拟商品
+        if ([model.type integerValue] == 1) {
+            //如果 是 实物 会 跳到 完善 收货人 信息 界面
+            XXEStorePerfectConsigneeAddressViewController *perfectConsigneeAddressVC = [[XXEStorePerfectConsigneeAddressViewController alloc] init];
+            
+            perfectConsigneeAddressVC.xingIconNum = model.exchange_coin;
+            perfectConsigneeAddressVC.price = model.exchange_price;
+            perfectConsigneeAddressVC.good_id = model.good_id;
+            
+            [self.navigationController pushViewController:perfectConsigneeAddressVC animated:YES];
+        }else if ([model.type integerValue] == 2) {
+            
+            // 如果 是 虚拟 会直接到支付 界面, 先生成待支付
+            [self createNoPayOrder:model.good_id];
+        }
+ 
+    }else{
+        [self showString:@"请用账号登录后查看" forSecond:1.5];
     }
-    
-
 }
 
 #pragma mark ========虚拟 商品 产生未支付订单 ============
@@ -516,11 +527,14 @@
 
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    XXEStoreGoodDetailInfoViewController*storeGoodDetailInfoVC=  [[XXEStoreGoodDetailInfoViewController alloc]init];
-    XXEStoreListModel *model = _dataSourceArray[indexPath.row];
-    storeGoodDetailInfoVC.orderNum=model.good_id;
-    [self.navigationController pushViewController:storeGoodDetailInfoVC animated:YES];
-    
+    if ([XXEUserInfo user].login) {
+        XXEStoreGoodDetailInfoViewController*storeGoodDetailInfoVC=  [[XXEStoreGoodDetailInfoViewController alloc]init];
+        XXEStoreListModel *model = _dataSourceArray[indexPath.row];
+        storeGoodDetailInfoVC.orderNum=model.good_id;
+        [self.navigationController pushViewController:storeGoodDetailInfoVC animated:YES];
+    }else{
+        [self showString:@"请用账号登录后查看" forSecond:1.5];
+    }
 }
 
 

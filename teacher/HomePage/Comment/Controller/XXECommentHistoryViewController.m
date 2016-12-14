@@ -252,9 +252,9 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    
+    if ([XXEUserInfo user].login) {
         XXECommentHistoryDetailInfoViewController *commentHistoryDetailInfoVC = [[XXECommentHistoryDetailInfoViewController alloc] init];
-    
+        
         XXECommentRequestModel *model = _dataSourceArray[indexPath.row];
         commentHistoryDetailInfoVC.name = model.baby_tname;
         commentHistoryDetailInfoVC.ask_con = model.ask_con;
@@ -262,11 +262,15 @@
         commentHistoryDetailInfoVC.com_con = model.com_con;
         commentHistoryDetailInfoVC.picString = model.com_pic;
         commentHistoryDetailInfoVC.type = model.type;
-    
-    commentHistoryDetailInfoVC.comment_id = model.commentId;
-    commentHistoryDetailInfoVC.collect_conditStr = model.collect_condit;
-    commentHistoryDetailInfoVC.collect_id = model.commentId;
+        
+        commentHistoryDetailInfoVC.comment_id = model.commentId;
+        commentHistoryDetailInfoVC.collect_conditStr = model.collect_condit;
+        commentHistoryDetailInfoVC.collect_id = model.commentId;
         [self.navigationController pushViewController:commentHistoryDetailInfoVC animated:YES];
+    }else{
+        [self showString:@"请用账号登录后查看" forSecond:1.5];
+    }
+
     
 }
 

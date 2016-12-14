@@ -88,7 +88,7 @@
         [bgView addSubview:iconImageView];
         
         UITextField *contentTextField = [[UITextField alloc] initWithFrame:CGRectMake(40, 10, KScreenWidth - 50, 20)];
-        contentTextField.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
+        contentTextField.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];
         contentTextField.delegate = self;
         contentTextField.tag = i + 10;
         if ([_type integerValue] == 3) {
@@ -111,7 +111,7 @@
         CGFloat buttonHeight = 42 * kScreenRatioHeight;
         
         UIButton *modifyButton = [UIButton createButtonWithFrame:CGRectMake(buttonX, buttonY, buttonWidth, buttonHeight) backGruondImageName:@"login_green" Target:self Action:@selector(modifyButtonClick) Title:@"修       改"];
-        modifyButton.titleLabel.font = [UIFont systemWithIphone6P:18 Iphone6:16 Iphone5:14 Iphone4:12];
+        modifyButton.titleLabel.font = [UIFont systemFontOfSize:16 * kScreenRatioWidth];
         [modifyButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [self.view addSubview:modifyButton];
     }

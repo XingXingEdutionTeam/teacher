@@ -145,7 +145,7 @@
     
     //请填写收货地址
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 10, KScreenWidth - 20, 20)];
-    titleLabel.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
+    titleLabel.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];
     titleLabel.text = @"请选择收货地址";
     [upBgView addSubview:titleLabel];
     
@@ -161,26 +161,26 @@
     
     //姓名
     nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, KScreenWidth / 2 - 20, 20)];
-    nameLabel.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
+    nameLabel.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];
 //    nameLabel.backgroundColor = [UIColor greenColor];
     [addressBgView addSubview:nameLabel];
     
     //电话
     phoneLabel = [[UILabel alloc] initWithFrame:CGRectMake(KScreenWidth / 2, 0, KScreenWidth / 2, 20)];
-    phoneLabel.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
+    phoneLabel.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];
 //    phoneLabel.backgroundColor = [UIColor purpleColor];
     [addressBgView addSubview:phoneLabel];
     
     //地址 title
     UILabel *addressTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, nameLabel.frame.origin.y + nameLabel.height + 10 + 15 * kScreenRatioHeight, 90, 20)];
     addressTitleLabel.text = @"[收货地址]";
-    addressTitleLabel.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
+    addressTitleLabel.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];
     addressTitleLabel.textColor = [UIColor lightGrayColor];
     [addressBgView addSubview:addressTitleLabel];
     
     //地址
     addressLabel = [[UILabel alloc] initWithFrame:CGRectMake(addressTitleLabel.frame.origin.x + addressTitleLabel.width, nameLabel.frame.origin.y + nameLabel.height + 10, KScreenWidth - 100, 50)];
-    addressLabel.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
+    addressLabel.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];
     addressLabel.numberOfLines = 0;
 //    addressLabel.backgroundColor = [UIColor blueColor];
     [addressBgView addSubview:addressLabel];
@@ -194,7 +194,7 @@
     //提示
     UILabel *alertLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, upBgView.height - 20, KScreenWidth - 20, 20)];
     alertLabel.text = @"(收货不便时,可选择免费代收货服务)";
-    alertLabel.font = [UIFont systemWithIphone6P:14 Iphone6:12 Iphone5:10 Iphone4:8];
+    alertLabel.font = [UIFont systemFontOfSize:12 * kScreenRatioWidth];
     alertLabel.textColor = UIColorFromRGB(251, 188, 26);
     [upBgView addSubview:alertLabel];
     
@@ -230,13 +230,13 @@
     UILabel *freightTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 10, 40, 20)];
     freightTitleLabel.textColor = [UIColor lightGrayColor];
     freightTitleLabel.text = @"运费:";
-    freightTitleLabel.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
+    freightTitleLabel.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];
     [downBgView addSubview:freightTitleLabel];
     
     //运费
     UILabel *freightLabel = [[UILabel alloc] initWithFrame:CGRectMake(freightTitleLabel.frame.origin.x + freightTitleLabel.width, freightTitleLabel.frame.origin.y, KScreenWidth - 100, 20)];
     freightLabel.text = @"免运费";
-    freightLabel.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
+    freightLabel.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];
     freightLabel.textColor = UIColorFromRGB(244, 52, 139);
     [downBgView addSubview:freightLabel];
     
@@ -244,7 +244,7 @@
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, freightTitleLabel.frame.origin.y + freightTitleLabel.height + 10, 80, 20)];
 //    titleLabel.backgroundColor = [UIColor redColor];
     titleLabel.text = @"发票抬头:";
-    titleLabel.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
+    titleLabel.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];
     [downBgView addSubview:titleLabel];
     
     //发票抬头
@@ -257,7 +257,7 @@
     //给商家留言 title
     UILabel *messageTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, titleLabel.frame.origin.y + titleLabel.height + 10, KScreenWidth - 20, 20)];
     messageTitleLabel.text = @"给商家留言:";
-    messageTitleLabel.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
+    messageTitleLabel.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];
     [downBgView addSubview:messageTitleLabel];
     
     

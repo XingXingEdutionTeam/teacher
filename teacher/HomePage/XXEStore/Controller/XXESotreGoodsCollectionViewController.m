@@ -188,7 +188,7 @@
     
     //    NSLog(@"课程  %@", model.teach_course);
     cell.nameLabel.text = model.title;
-    cell.nameLabel.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
+    cell.nameLabel.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];
     cell.iconNumLabel.text = model.exchange_coin;
     cell.dateLabel.text = [XXETool dateStringFromNumberTimer:model.date_tm];
     

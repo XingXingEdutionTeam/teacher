@@ -244,10 +244,15 @@
 //    }
     
     menuView =[[MultilevelMenu alloc] initWithFrame:CGRectMake(0, 50, KScreenWidth, KScreenHeight-50) WithData:lis withSelectIndex:^(NSInteger left, NSInteger right,rightMeun* info) {
-        
-        XXEStoreGoodDetailInfoViewController *storeGoodDetailInfoVC = [[XXEStoreGoodDetailInfoViewController alloc] init];
-        storeGoodDetailInfoVC.orderNum = info.ID;
-        [self.navigationController pushViewController:storeGoodDetailInfoVC animated:YES];
+        if ([XXEUserInfo user].login) {
+            XXEStoreGoodDetailInfoViewController *storeGoodDetailInfoVC = [[XXEStoreGoodDetailInfoViewController alloc] init];
+            storeGoodDetailInfoVC.orderNum = info.ID;
+            [self.navigationController pushViewController:storeGoodDetailInfoVC animated:YES];
+        }else{
+            [self showString:@"请用账号登录后查看" forSecond:1.5];
+        }
+
+
     }];
     menuView.leftSelectColor=UIColorFromRGB(133, 199, 1);
     menuView.leftUnSelectBgColor=[UIColor whiteColor];

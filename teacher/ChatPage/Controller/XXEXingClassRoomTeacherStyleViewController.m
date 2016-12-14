@@ -67,7 +67,7 @@
     
     
     UITextView *lifeTextView = [[UITextView alloc] initWithFrame:CGRectMake(headImage.x, teachLbl.y + teachLbl.size.height + Kmarg, kWidth - 20, 80)];
-    lifeTextView.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
+    lifeTextView.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];
     lifeTextView.editable = NO;
     lifeTextView.textColor = UIColorFromRGB(118, 118, 118);
     lifeTextView.text = _teach_feelStr;
@@ -88,7 +88,7 @@
     [teachThinkImage addSubview:teachThinkLbl];
     
     UITextView *feelTextView = [[UITextView alloc] initWithFrame:CGRectMake(headThinkImage.x, teachThinkLbl.y +teachThinkLbl.size.height + Kmarg, kWidth - 20, 60)];
-    feelTextView.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
+    feelTextView.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];
     feelTextView.editable = NO;
     feelTextView.textColor = UIColorFromRGB(118, 118, 118);
     feelTextView.text = _teach_feelStr;

@@ -534,14 +534,18 @@
 - (void)homePageLeftButtonClick
 {
     NSLog(@"---跳转到学校的详情页----");
-    //logo
-    XXEHomeLogoRootViewController *homeLogoRootVC = [[XXEHomeLogoRootViewController alloc] init];
-    
-    homeLogoRootVC.schoolId = _schoolHomeId;
-    homeLogoRootVC.classId = _classHomeId;
-    homeLogoRootVC.position = self.userPosition;
-    
-    [self.navigationController pushViewController:homeLogoRootVC animated:NO];
+    if ([XXEUserInfo user].login) {
+        //logo
+        XXEHomeLogoRootViewController *homeLogoRootVC = [[XXEHomeLogoRootViewController alloc] init];
+        
+        homeLogoRootVC.schoolId = _schoolHomeId;
+        homeLogoRootVC.classId = _classHomeId;
+        homeLogoRootVC.position = self.userPosition;
+        
+        [self.navigationController pushViewController:homeLogoRootVC animated:NO];
+    }else{
+        [self showString:@"请用账号登录后查看" forSecond:1.5];
+    }
 }
 
 - (void)homePageRightButtonClick
@@ -604,7 +608,7 @@
     //远程推送跳转
     AppDelegate *appdelegate = (AppDelegate*)[UIApplication sharedApplication].delegate;
     
-    NSLog(@"%@%@",strngXid,homeUserId);
+//    NSLog(@"%@%@",strngXid,homeUserId);
     XXEHomePageApi *homePageApi = [[XXEHomePageApi alloc]initWithHomePageXid:strngXid UserType:@"2" UserId:homeUserId];
     [homePageApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         NSString * code = [request.responseJSONObject objectForKey:@"code"];
@@ -612,7 +616,7 @@
         if ([code intValue] == 1) {
             [self showHudWithString:@"正在请求数据..."];
             
-//            NSLog(@"%@",request.responseJSONObject  );
+//            NSLog(@"首页 数据 ==== %@",request.responseJSONObject  );
             NSDictionary *data = [request.responseJSONObject objectForKey:@"data"];
             
             XXEHomePageModel *homePageModel = [[XXEHomePageModel alloc]initWithDictionary:data error:nil];
@@ -798,41 +802,53 @@
         case 11:
         {
             NSLog(@"----签到----");
-        
-            XXESignInViewController *signInVC = [[XXESignInViewController alloc] init];
-            signInVC.schoolId = self.schoolHomeId;
-            signInVC.classId = self.classHomeId;
-            signInVC.schoolType = self.schoolType;
-            signInVC.position = self.userPosition;
-            
-            [self.navigationController pushViewController:signInVC animated:YES];
+            if ([XXEUserInfo user].login) {
+                XXESignInViewController *signInVC = [[XXESignInViewController alloc] init];
+                signInVC.schoolId = self.schoolHomeId;
+                signInVC.classId = self.classHomeId;
+                signInVC.schoolType = self.schoolType;
+                signInVC.position = self.userPosition;
+                
+                [self.navigationController pushViewController:signInVC animated:YES];
+            }else{
+                [self showString:@"请用账号登录后查看" forSecond:1.5];
+            }
+
             break;
         }
             
         case 10:
         {
             NSLog(@"---管理----");
-            
-            if ([self.userPosition isEqualToString:@"1"] || [self.userPosition isEqualToString:@"2"]) {
-//             教师
-               XXEManagerTeacherViewController *managerTeacherVC = [[XXEManagerTeacherViewController alloc] init];
-                managerTeacherVC.schoolId = self.schoolHomeId;
-                managerTeacherVC.classId = self.classHomeId;
-                managerTeacherVC.schoolType = self.schoolType;
-                managerTeacherVC.position = self.userPosition;
-                
-                [self.navigationController pushViewController:managerTeacherVC animated:YES];
+            if ([XXEUserInfo user].login) {
+                if ([self.userPosition isEqualToString:@"1"] || [self.userPosition isEqualToString:@"2"]) {
+                    //             教师
+                    XXEManagerTeacherViewController *managerTeacherVC = [[XXEManagerTeacherViewController alloc] init];
+                    managerTeacherVC.schoolId = self.schoolHomeId;
+                    managerTeacherVC.classId = self.classHomeId;
+                    managerTeacherVC.schoolType = self.schoolType;
+                    managerTeacherVC.position = self.userPosition;
+                    
+                    [self.navigationController pushViewController:managerTeacherVC animated:YES];
+                }
+            }else{
+                [self showString:@"请用账号登录后查看" forSecond:1.5];
             }
-            
+
             break;
         }
             
         case 9:
         {
-            NSLog(@"----星天地----");
-            XXEXingCommunityViewController *xingCommunityVC = [[XXEXingCommunityViewController alloc] init];
-            
-            [self.navigationController pushViewController:xingCommunityVC animated:YES];
+            NSLog(@"----猩天地----");
+            if ([XXEUserInfo user].login) {
+                XXEXingCommunityViewController *xingCommunityVC = [[XXEXingCommunityViewController alloc] init];
+                
+                [self.navigationController pushViewController:xingCommunityVC animated:YES];
+            }else{
+                [self showString:@"请用账号登录后查看" forSecond:1.5];
+            }
+
             break;
             
         }
@@ -938,52 +954,68 @@
         case 6:
         {
             NSLog(@"----签到----");
-            XXESignInViewController *signInVC = [[XXESignInViewController alloc] init];
-            signInVC.schoolId = self.schoolHomeId;
-            signInVC.classId = self.classHomeId;
-            signInVC.schoolType = self.schoolType;
-            signInVC.position = self.userPosition;
-            [self.navigationController pushViewController:signInVC animated:YES];
+            if ([XXEUserInfo user].login) {
+                XXESignInViewController *signInVC = [[XXESignInViewController alloc] init];
+                signInVC.schoolId = self.schoolHomeId;
+                signInVC.classId = self.classHomeId;
+                signInVC.schoolType = self.schoolType;
+                signInVC.position = self.userPosition;
+                [self.navigationController pushViewController:signInVC animated:YES];
+            }else{
+                [self showString:@"请用账号登录后查看" forSecond:1.5];
+            }
+
             break;
         }
             
         case 10:
         {
             NSLog(@"---管理----");
-            if ([self.userPosition isEqualToString:@"3"]) {
-                //school_type //学校类型: 幼儿园/小学/中学/机构 1/2/3/4
-                //如果 是 4 表示 私立, 其他为公立学校
-                
-                if ([_schoolType isEqualToString:@"4"]) {
-                    //管理员(私立)
-                    XXEManagerManagerPrivateViewController *managerPrivateVC = [[XXEManagerManagerPrivateViewController alloc] init];
-                    managerPrivateVC.schoolId = self.schoolHomeId;
-                    managerPrivateVC.classId = self.classHomeId;
-                    managerPrivateVC.schoolType = self.schoolType;
-                    managerPrivateVC.position = self.userPosition;
+            if ([XXEUserInfo user].login) {
+                if ([self.userPosition isEqualToString:@"3"]) {
+                    //school_type //学校类型: 幼儿园/小学/中学/机构 1/2/3/4
+                    //如果 是 4 表示 私立, 其他为公立学校
                     
-                    [self.navigationController pushViewController:managerPrivateVC animated:YES];
-                }else{
-                    //管理员(公立)
-                    XXEManagerManagerPublicViewController *managerPublicVC = [[XXEManagerManagerPublicViewController alloc] init];
-                    managerPublicVC.schoolId = self.schoolHomeId;
-                    managerPublicVC.classId = self.classHomeId;
-                    managerPublicVC.schoolType = self.schoolType;
-                    managerPublicVC.position = self.userPosition;
+                    if ([_schoolType isEqualToString:@"4"]) {
+                        //管理员(私立)
+                        XXEManagerManagerPrivateViewController *managerPrivateVC = [[XXEManagerManagerPrivateViewController alloc] init];
+                        managerPrivateVC.schoolId = self.schoolHomeId;
+                        managerPrivateVC.classId = self.classHomeId;
+                        managerPrivateVC.schoolType = self.schoolType;
+                        managerPrivateVC.position = self.userPosition;
+                        
+                        [self.navigationController pushViewController:managerPrivateVC animated:YES];
+                    }else{
+                        //管理员(公立)
+                        XXEManagerManagerPublicViewController *managerPublicVC = [[XXEManagerManagerPublicViewController alloc] init];
+                        managerPublicVC.schoolId = self.schoolHomeId;
+                        managerPublicVC.classId = self.classHomeId;
+                        managerPublicVC.schoolType = self.schoolType;
+                        managerPublicVC.position = self.userPosition;
+                        
+                        [self.navigationController pushViewController:managerPublicVC animated:YES];
+                    }
                     
-                    [self.navigationController pushViewController:managerPublicVC animated:YES];
                 }
- 
+
+            }else{
+                [self showString:@"请用账号登录后查看" forSecond:1.5];
             }
-           break;
+
+            break;
         }
             
         case 9:
         {
-            NSLog(@"----星天地----");
-            XXEXingCommunityViewController *xingCommunityVC = [[XXEXingCommunityViewController alloc] init];
-            
-            [self.navigationController pushViewController:xingCommunityVC animated:YES];
+            NSLog(@"----猩天地----");
+            if ([XXEUserInfo user].login) {
+                XXEXingCommunityViewController *xingCommunityVC = [[XXEXingCommunityViewController alloc] init];
+                
+                [self.navigationController pushViewController:xingCommunityVC animated:YES];
+            }else{
+                [self showString:@"请用账号登录后查看" forSecond:1.5];
+            }
+
             break;
             
         }
@@ -1071,12 +1103,18 @@
         case 6:
         {
             NSLog(@"----签到----");
-            XXESignInViewController *signInVC = [[XXESignInViewController alloc] init];
-            signInVC.schoolId = self.schoolHomeId;
-            signInVC.classId = self.classHomeId;
-            signInVC.schoolType = self.schoolType;
-            signInVC.position = self.userPosition;
-            [self.navigationController pushViewController:signInVC animated:YES];
+            if ([XXEUserInfo user].login) {
+                XXESignInViewController *signInVC = [[XXESignInViewController alloc] init];
+                signInVC.schoolId = self.schoolHomeId;
+                signInVC.classId = self.classHomeId;
+                signInVC.schoolType = self.schoolType;
+                signInVC.position = self.userPosition;
+                [self.navigationController pushViewController:signInVC animated:YES];
+            }else{
+                [self showString:@"请用账号登录后查看" forSecond:1.5];
+            }
+
+
             break;
         }
         case 7:
@@ -1091,42 +1129,52 @@
         case 8:
         {
             NSLog(@"---管理----");
-            //不同 身份
-            
-            if ([self.userPosition isEqualToString:@"4"]) {
-            //school_type //学校类型: 幼儿园/小学/中学/机构 1/2/3/4
-            //如果 是 4 表示 私立, 其他为公立学校
-            if ([_schoolType isEqualToString:@"4"]) {
-                //校长(私立)
-                XXEManagerHeadmasterPrivateViewController *managerHeadmasterPrivateVC = [[XXEManagerHeadmasterPrivateViewController alloc] init];
-                
-                managerHeadmasterPrivateVC.schoolId = self.schoolHomeId;
-                managerHeadmasterPrivateVC.classId = self.classHomeId;
-                managerHeadmasterPrivateVC.schoolType = self.schoolType;
-                managerHeadmasterPrivateVC.position = self.userPosition;
-                
-                [self.navigationController pushViewController:managerHeadmasterPrivateVC animated:YES];
+            if ([XXEUserInfo user].login) {
+                //不同 身份
+                if ([self.userPosition isEqualToString:@"4"]) {
+                    //school_type //学校类型: 幼儿园/小学/中学/机构 1/2/3/4
+                    //如果 是 4 表示 私立, 其他为公立学校
+                    if ([_schoolType isEqualToString:@"4"]) {
+                        //校长(私立)
+                        XXEManagerHeadmasterPrivateViewController *managerHeadmasterPrivateVC = [[XXEManagerHeadmasterPrivateViewController alloc] init];
+                        
+                        managerHeadmasterPrivateVC.schoolId = self.schoolHomeId;
+                        managerHeadmasterPrivateVC.classId = self.classHomeId;
+                        managerHeadmasterPrivateVC.schoolType = self.schoolType;
+                        managerHeadmasterPrivateVC.position = self.userPosition;
+                        
+                        [self.navigationController pushViewController:managerHeadmasterPrivateVC animated:YES];
+                    }else{
+                        // 校长(公立)
+                        XXEManagerHeadmasterPublicViewController *managerHeadmasterPublicVC = [[XXEManagerHeadmasterPublicViewController alloc] init];
+                        
+                        managerHeadmasterPublicVC.schoolId = self.schoolHomeId;
+                        managerHeadmasterPublicVC.classId = self.classHomeId;
+                        managerHeadmasterPublicVC.schoolType = self.schoolType;
+                        managerHeadmasterPublicVC.position = self.userPosition;
+                        
+                        [self.navigationController pushViewController:managerHeadmasterPublicVC animated:YES];
+                    }
+                }
             }else{
-                // 校长(公立)
-                XXEManagerHeadmasterPublicViewController *managerHeadmasterPublicVC = [[XXEManagerHeadmasterPublicViewController alloc] init];
-                
-                managerHeadmasterPublicVC.schoolId = self.schoolHomeId;
-                managerHeadmasterPublicVC.classId = self.classHomeId;
-                managerHeadmasterPublicVC.schoolType = self.schoolType;
-                managerHeadmasterPublicVC.position = self.userPosition;
-                
-                [self.navigationController pushViewController:managerHeadmasterPublicVC animated:YES];
+                [self showString:@"请用账号登录后查看" forSecond:1.5];
             }
-           }
+            
             break;
         }
             
         case 9:
         {
-            NSLog(@"----星天地----");
-            XXEXingCommunityViewController *xingCommunityVC = [[XXEXingCommunityViewController alloc] init];
-            
-            [self.navigationController pushViewController:xingCommunityVC animated:YES];
+            NSLog(@"----猩天地----");
+            if ([XXEUserInfo user].login) {
+                XXEXingCommunityViewController *xingCommunityVC = [[XXEXingCommunityViewController alloc] init];
+                
+                [self.navigationController pushViewController:xingCommunityVC animated:YES];
+            }else{
+                [self showString:@"请用账号登录后查看" forSecond:1.5];
+            }
+
+
             break;
             
         }

@@ -47,7 +47,7 @@
         UIButton *button = [UIButton createButtonWithFrame:CGRectMake(buttonX, 50 * kScreenRatioHeight + 70 * i, buttonW, buttonH) backGruondImageName:@"login_green" Target:self Action:@selector(buttonClick:) Title:titleArray[i]];
         button.tag = 100 + i;
         [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        button.titleLabel.font = [UIFont systemWithIphone6P:18 Iphone6:16 Iphone5:14 Iphone4:10];
+        button.titleLabel.font = [UIFont systemFontOfSize:16 * kScreenRatioWidth];
         [self.view addSubview:button];
     }
 
@@ -56,29 +56,34 @@
 
 
 - (void)buttonClick:(UIButton *)button{
-
-    if (button.tag == 100) {
-      //我的收藏
-        XXESotreGoodsCollectionViewController *goodsCollectionVC = [[XXESotreGoodsCollectionViewController alloc] init];
-        [self.navigationController pushViewController:goodsCollectionVC animated:YES];
-        
-    }else if (button.tag == 101){
-       //猩币记录
-        XXEXingCoinHistoryViewController *xingCoinHistoryVC = [[XXEXingCoinHistoryViewController alloc] init];
-        
-        [self.navigationController pushViewController:xingCoinHistoryVC animated:YES];
-        
-    }else if (button.tag == 102){
-        //收货地址
-        XXEStoreConsigneeAddressViewController *storeConsigneeAddressVC = [[XXEStoreConsigneeAddressViewController alloc] init];
-        
-        
-        [self.navigationController pushViewController:storeConsigneeAddressVC animated:YES];
-    }else if (button.tag == 103){
-        //商城订单
-        XXEStoreGoodsListViewController *storeGoodsListVC = [[XXEStoreGoodsListViewController alloc] init];
-//        storeGoodsListVC.firstStr = @" ";
-        [self.navigationController pushViewController:storeGoodsListVC animated:YES];
+    
+    if ([XXEUserInfo user].login) {
+        if (button.tag == 100) {
+            //我的收藏
+            XXESotreGoodsCollectionViewController *goodsCollectionVC = [[XXESotreGoodsCollectionViewController alloc] init];
+            [self.navigationController pushViewController:goodsCollectionVC animated:YES];
+            
+        }else if (button.tag == 101){
+            //猩币记录
+            XXEXingCoinHistoryViewController *xingCoinHistoryVC = [[XXEXingCoinHistoryViewController alloc] init];
+            
+            [self.navigationController pushViewController:xingCoinHistoryVC animated:YES];
+            
+        }else if (button.tag == 102){
+            //收货地址
+            XXEStoreConsigneeAddressViewController *storeConsigneeAddressVC = [[XXEStoreConsigneeAddressViewController alloc] init];
+            
+            
+            [self.navigationController pushViewController:storeConsigneeAddressVC animated:YES];
+        }else if (button.tag == 103){
+            //商城订单
+            XXEStoreGoodsListViewController *storeGoodsListVC = [[XXEStoreGoodsListViewController alloc] init];
+            //        storeGoodsListVC.firstStr = @" ";
+            [self.navigationController pushViewController:storeGoodsListVC animated:YES];
+        }
+ 
+    }else{
+        [self showString:@"请用账号登录后查看" forSecond:1.5];
     }
 
 }

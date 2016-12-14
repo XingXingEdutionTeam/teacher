@@ -247,7 +247,7 @@
     menuImgV.image = [UIImage imageNamed:@"myself_menu_icon60x60"];
     [bgview addSubview:menuImgV];
     UIButton *menuBtn =[UIButton createButtonWithFrame:CGRectMake(55 * kScreenRatioWidth, 12 * kScreenRatioHeight, 80 * kScreenRatioHeight, 20 * kScreenRatioHeight) backGruondImageName:nil Target:self Action:@selector(menuBtnClick:) Title:@"我的订单"];
-    [menuBtn.titleLabel setFont:[UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10]];
+    [menuBtn.titleLabel setFont:[UIFont systemFontOfSize:14 * kScreenRatioWidth]];
     [bgview addSubview:menuBtn];
     
     //我的钱包
@@ -255,7 +255,7 @@
     payImgV.image = [UIImage imageNamed:@"myself_wallet_icon60x60"];
     [bgview addSubview:payImgV];
     UIButton *payBtn =[UIButton createButtonWithFrame:CGRectMake(215 * kScreenRatioWidth, 12 * kScreenRatioHeight, 80 * kScreenRatioWidth, 20 * kScreenRatioHeight) backGruondImageName:nil Target:self Action:@selector(payBtnClick:) Title:@"我的钱包"];
-    [payBtn.titleLabel setFont:[UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10]];
+    [payBtn.titleLabel setFont:[UIFont systemFontOfSize:14 * kScreenRatioWidth]];
     [bgview addSubview:payBtn];
     
     }
@@ -365,17 +365,16 @@
     if ([userPosition isEqualToString:@"4"] && [schoolType isEqualToString:@"4"]) {
     
     //如果 是 校长 身份
-//    if (indexPath.row == 0) {
+    if (indexPath.row == 0) {
         //@"我的资料"
-        
         if([XXEUserInfo user].login){
             
         XXEMyselfInfoViewController *myselfInfoVC = [[XXEMyselfInfoViewController alloc] init];
         [self.navigationController pushViewController:myselfInfoVC animated:YES];
-//        }else{
-//            
-//            [self showHudWithString:@"请用账号登录" forSecond:1.5];
-//        }
+        }else{
+            
+            [self showHudWithString:@"请用账号登录" forSecond:1.5];
+        }
         
     }else if (indexPath.row == 1){
         //@"我的好友"
@@ -397,35 +396,48 @@
         WMConversationViewController *WMConversationVC = [[WMConversationViewController alloc] init];
         
         [self.navigationController pushViewController:WMConversationVC animated:NO];
-    }else{
+         }else{
         
-        [self showHudWithString:@"请用账号登录" forSecond:1.5];
-    }
+         [self showHudWithString:@"请用账号登录" forSecond:1.5];
+         }
 
     
     }else if (indexPath.row == 3){
-        //@"我的收藏"
-        XXEMyselfInfoCollectionViewController *myselfInfoCollectionVC = [[XXEMyselfInfoCollectionViewController alloc] init];
-        
-        [self.navigationController pushViewController:myselfInfoCollectionVC animated:YES];
-        
+        if ([XXEUserInfo user].login) {
+            //@"我的收藏"
+            XXEMyselfInfoCollectionViewController *myselfInfoCollectionVC = [[XXEMyselfInfoCollectionViewController alloc] init];
+            
+            [self.navigationController pushViewController:myselfInfoCollectionVC animated:YES];
+        }else{
+            [self showString:@"请用账号登录后查看" forSecond:1.5];
+        }
     }else if (indexPath.row == 4){
         //@"我的圈子"
         
     }else if (indexPath.row == 5){
-        //@"我的黑名单"
-        XXEMyselfBlackListViewController *myselfBlackListVC = [[XXEMyselfBlackListViewController alloc] init];
-        [self.navigationController pushViewController:myselfBlackListVC animated:YES];
+        if ([XXEUserInfo user].login) {
+            //@"我的黑名单"
+            XXEMyselfBlackListViewController *myselfBlackListVC = [[XXEMyselfBlackListViewController alloc] init];
+            [self.navigationController pushViewController:myselfBlackListVC animated:YES];
+        }else{
+            [self showString:@"请用账号登录后查看" forSecond:1.5];
+        }
+
     }else if (indexPath.row == 6){
         //@"系统设置"
         XXEMyselfSystemSettingViewController *myselfSystemSettingVC = [[XXEMyselfSystemSettingViewController alloc] init];
         
         [self.navigationController pushViewController:myselfSystemSettingVC animated:YES];
     }else if (indexPath.row == 7){
-        //@"隐私设置"
-        XXEMyselfPrivacySettingViewController *myselfPrivacySetting = [[XXEMyselfPrivacySettingViewController alloc] init];
-        
-        [self.navigationController pushViewController:myselfPrivacySetting animated:YES];
+        if ([XXEUserInfo user].login) {
+            //@"隐私设置"
+            XXEMyselfPrivacySettingViewController *myselfPrivacySetting = [[XXEMyselfPrivacySettingViewController alloc] init];
+            
+            [self.navigationController pushViewController:myselfPrivacySetting animated:YES];
+        }else{
+            [self showString:@"请用账号登录后查看" forSecond:1.5];
+        }
+
     }
 
     }else{
@@ -443,11 +455,15 @@
 
         
     }else if (indexPath.row == 1){
-        //@"我的订单"
-        XXECourseOrderListViewController *courseOrderListVC = [[XXECourseOrderListViewController alloc] init];
-        
-        [self.navigationController pushViewController:courseOrderListVC animated:YES];
-        
+        if ([XXEUserInfo user].login) {
+            //@"我的订单"
+            XXECourseOrderListViewController *courseOrderListVC = [[XXECourseOrderListViewController alloc] init];
+            
+            [self.navigationController pushViewController:courseOrderListVC animated:YES];
+        }else{
+            [self showString:@"请用账号登录后查看" forSecond:1.5];
+        }
+
     }else if (indexPath.row == 2){
         //@"我的好友"
         if([XXEUserInfo user].login){

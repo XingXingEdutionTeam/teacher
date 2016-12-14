@@ -27,6 +27,7 @@
 #import "WJDropdownMenu.h"
 
 
+
 @interface XXEChatPageViewController ()<UITableViewDelegate,UITableViewDataSource, WJMenuDelegate>
 {
     //三级类目
@@ -197,6 +198,7 @@
         [teacherModelArray removeAllObjects];
     }
     [self fetchTeacherInfo];
+    
     
 }
 
@@ -585,34 +587,39 @@
 #pragma mark - 搜索==============================
 - (void)searchButtonClick:(UIButton *)sender
 {
-//    NSLog(@"搜索");
-    XXEXingClassRoomSearchViewController *xingClassRoomSearchVC = [[XXEXingClassRoomSearchViewController alloc] init];
-    
-    //date_type //需要查询的数据类型,填数字 1: 老师  2:课程 3:机构
-    if (_segentControl.selectedSegmentIndex == 0) {
-        xingClassRoomSearchVC.date_type = @"1";
-    }else if (_segentControl.selectedSegmentIndex == 1) {
-        xingClassRoomSearchVC.date_type = @"2";
-    }else if (_segentControl.selectedSegmentIndex == 2) {
-        xingClassRoomSearchVC.date_type = @"3";
+    if ([XXEUserInfo user].login) {
+        //    NSLog(@"搜索");
+        XXEXingClassRoomSearchViewController *xingClassRoomSearchVC = [[XXEXingClassRoomSearchViewController alloc] init];
+        
+        //date_type //需要查询的数据类型,填数字 1: 老师  2:课程 3:机构
+        if (_segentControl.selectedSegmentIndex == 0) {
+            xingClassRoomSearchVC.date_type = @"1";
+        }else if (_segentControl.selectedSegmentIndex == 1) {
+            xingClassRoomSearchVC.date_type = @"2";
+        }else if (_segentControl.selectedSegmentIndex == 2) {
+            xingClassRoomSearchVC.date_type = @"3";
+        }
+        
+        
+        [xingClassRoomSearchVC returnArray:^(NSMutableArray *searchInfoArray) {
+            //
+            _search_words = searchInfoArray[0];
+            if ([searchInfoArray[1] integerValue] == 1) {
+                _segentControl.selectedSegmentIndex = 0;
+            }else if ([searchInfoArray[1] integerValue] == 2) {
+                _segentControl.selectedSegmentIndex = 1;
+            }else if ([searchInfoArray[1] integerValue] == 3) {
+                _segentControl.selectedSegmentIndex = 2;
+            }
+            
+            [self getSearchInfo];
+        }];
+        
+        [self.navigationController pushViewController:xingClassRoomSearchVC animated:YES];
+    }else{
+        [self showString:@"请用账号登录后查看" forSecond:1.5];
     }
 
-    
-    [xingClassRoomSearchVC returnArray:^(NSMutableArray *searchInfoArray) {
-    //
-        _search_words = searchInfoArray[0];
-        if ([searchInfoArray[1] integerValue] == 1) {
-            _segentControl.selectedSegmentIndex = 0;
-        }else if ([searchInfoArray[1] integerValue] == 2) {
-            _segentControl.selectedSegmentIndex = 1;
-        }else if ([searchInfoArray[1] integerValue] == 3) {
-            _segentControl.selectedSegmentIndex = 2;
-        }
-    
-        [self getSearchInfo];
-     }];
-    
-    [self.navigationController pushViewController:xingClassRoomSearchVC animated:YES];
 }
 
 
@@ -980,28 +987,34 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (_segentControl.selectedSegmentIndex == 0) {
-        XXEXingClassRoomTeacherDetailInfoViewController *xingClassRoomTeacherDetailInfoVC = [[XXEXingClassRoomTeacherDetailInfoViewController alloc] init];
-        XXEXingClassRoomTeacherListModel *model = teacherModelArray[indexPath.row];
-        xingClassRoomTeacherDetailInfoVC.teacher_id = model.teacher_id;
-        [self.navigationController pushViewController:xingClassRoomTeacherDetailInfoVC animated:YES];
-        
-    }else if (_segentControl.selectedSegmentIndex == 1){
-        XXEXingClassRoomCourseDetailInfoViewController *xingClassRoomCourseDetailInfoVC = [[XXEXingClassRoomCourseDetailInfoViewController alloc] init];
-        XXEXingClassRoomCourseListModel *model = courseModelArray[indexPath.row];
-        xingClassRoomCourseDetailInfoVC.course_id = model.courseId;
-        [self.navigationController pushViewController:xingClassRoomCourseDetailInfoVC animated:YES];
-        
-    }else if (_segentControl.selectedSegmentIndex == 2){
-
-        XXEHomeLogoRootViewController *homeLogoRootVC = [[XXEHomeLogoRootViewController alloc] init];
-        XXEXingClassRoomSchoolListModel *model = schoolModelArray[indexPath.row];
-        homeLogoRootVC.schoolId = model.school_id;
-        
-        [self.navigationController pushViewController:homeLogoRootVC animated:NO];
+    
+    if ([XXEUserInfo user].login) {
+        if (_segentControl.selectedSegmentIndex == 0) {
+            XXEXingClassRoomTeacherDetailInfoViewController *xingClassRoomTeacherDetailInfoVC = [[XXEXingClassRoomTeacherDetailInfoViewController alloc] init];
+            XXEXingClassRoomTeacherListModel *model = teacherModelArray[indexPath.row];
+            xingClassRoomTeacherDetailInfoVC.teacher_id = model.teacher_id;
+            [self.navigationController pushViewController:xingClassRoomTeacherDetailInfoVC animated:YES];
+            
+        }else if (_segentControl.selectedSegmentIndex == 1){
+            XXEXingClassRoomCourseDetailInfoViewController *xingClassRoomCourseDetailInfoVC = [[XXEXingClassRoomCourseDetailInfoViewController alloc] init];
+            XXEXingClassRoomCourseListModel *model = courseModelArray[indexPath.row];
+            xingClassRoomCourseDetailInfoVC.course_id = model.courseId;
+            [self.navigationController pushViewController:xingClassRoomCourseDetailInfoVC animated:YES];
+            
+        }else if (_segentControl.selectedSegmentIndex == 2){
+            
+            XXEHomeLogoRootViewController *homeLogoRootVC = [[XXEHomeLogoRootViewController alloc] init];
+            XXEXingClassRoomSchoolListModel *model = schoolModelArray[indexPath.row];
+            homeLogoRootVC.schoolId = model.school_id;
+            
+            [self.navigationController pushViewController:homeLogoRootVC animated:NO];
+        }
+    }else{
+        [self showString:@"请用账号登录后查看" forSecond:1.5];
     }
-}
 
+
+}
 
 
 - (void)didReceiveMemoryWarning {

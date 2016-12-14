@@ -15,13 +15,13 @@
 - (void)awakeFromNib {
     // Initialization code
     
-    _nameLabel.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
+    _nameLabel.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];
     
-    _phoneLabel.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
+    _phoneLabel.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];
     
-    _defaultAddressLabel.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
+    _defaultAddressLabel.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];
     
-    _addressLabel.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
+    _addressLabel.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];
     
     
     

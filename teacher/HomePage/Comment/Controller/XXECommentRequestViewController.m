@@ -104,8 +104,8 @@
     [topView addSubview:titleLabel];
     
     //右上角 主动 点评 按钮
-    UIButton *commentButton = [UIButton createButtonWithFrame:CGRectMake(KScreenWidth - 40 , 30, 22  * kScreenRatioWidth, 22 * kScreenRatioHeight) backGruondImageName:@"comment_request_icon" Target:self Action:@selector(commentButtonClick) Title:nil];
-    [topView addSubview:commentButton];
+//    UIButton *commentButton = [UIButton createButtonWithFrame:CGRectMake(KScreenWidth - 40 , 30, 22  * kScreenRatioWidth, 22 * kScreenRatioHeight) backGruondImageName:@"comment_request_icon" Target:self Action:@selector(commentButtonClick) Title:nil];
+//    [topView addSubview:commentButton];
     
 
 }
@@ -115,11 +115,11 @@
 
 }
 
-- (void)commentButtonClick{
-
-    NSLog(@"发起点评!");
-
-}
+//- (void)commentButtonClick{
+//
+//    NSLog(@"发起点评!");
+//
+//}
 
 - (void)fetchNetData{
     /*
@@ -310,23 +310,21 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    
-    XXECommentReplyViewController *commentReplyVC = [[XXECommentReplyViewController alloc] init];
-    
-    XXECommentRequestModel *model = _dataSourceArray[indexPath.row];
-    commentReplyVC.babyName = model.baby_tname;
-    commentReplyVC.askContent = model.ask_con;
-    commentReplyVC.askTime = model.ask_tm;
-    commentReplyVC.comment_id = model.commentId;
-    commentReplyVC.classId = _classId;
-    [self.navigationController pushViewController:commentReplyVC animated:YES];
-//    XXECommentReplyViewController *commentReplyVC = [[XXECommentReplyViewController alloc] init];
-//    
-//    XXECommentRequestModel *model = _dataSourceArray[indexPath.row];
-//    commentReplyVC.name = model.baby_tname;
-//    commentReplyVC.content = model.ask_con;
-//    commentReplyVC.requestTime = model.ask_tm;
-//    [self.navigationController pushViewController:commentReplyVC animated:YES];
+    if ([XXEUserInfo user].login) {
+        XXECommentReplyViewController *commentReplyVC = [[XXECommentReplyViewController alloc] init];
+        
+        XXECommentRequestModel *model = _dataSourceArray[indexPath.row];
+        commentReplyVC.babyName = model.baby_tname;
+        commentReplyVC.askContent = model.ask_con;
+        commentReplyVC.askTime = model.ask_tm;
+        commentReplyVC.comment_id = model.commentId;
+        commentReplyVC.classId = _classId;
+        [self.navigationController pushViewController:commentReplyVC animated:YES];
+    }else{
+        [self showString:@"请用账号登录后查看" forSecond:1.5];
+    }
+
+
     
 }
 

@@ -27,17 +27,17 @@
     
     _distanceLabel.textColor = [UIColor redColor];
     
-    _nameLabel.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
+    _nameLabel.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];
     
-    _studentLabel.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
+    _studentLabel.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];
     
-    _scoreLabel.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
+    _scoreLabel.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];
     
-    _teacherLabel.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
+    _teacherLabel.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];
     
-    _distanceLabel.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
+    _distanceLabel.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];
     
-    _addressLabel.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
+    _addressLabel.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];
 
 
     

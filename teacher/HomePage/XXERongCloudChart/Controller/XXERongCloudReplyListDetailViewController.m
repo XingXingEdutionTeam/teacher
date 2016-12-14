@@ -34,14 +34,14 @@
         parameterUser_Id = USER_ID;
     }
 
-    _titleLabel1.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
-    _titleLabel2.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
-    _titleLabel3.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
-    _nameLabel.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
-    _xidLabel.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
-    _positionLabel.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
-    _phoneNumLabel.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
-    _signLabel.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
+    _titleLabel1.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];
+    _titleLabel2.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];
+    _titleLabel3.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];
+    _nameLabel.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];
+    _xidLabel.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];
+    _positionLabel.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];
+    _phoneNumLabel.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];
+    _signLabel.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];
     
     [_chartButton addTarget:self action:@selector(chartButtonClick:) forControlEvents:UIControlEventTouchUpInside];
     

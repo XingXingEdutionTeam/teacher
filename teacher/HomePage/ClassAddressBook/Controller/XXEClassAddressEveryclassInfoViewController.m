@@ -300,50 +300,53 @@
 
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    
-    if (indexPath.section == 0) {
-        //点击 宝贝 cell 先进入到 宝贝家人 列表
-        XXEBabyFamilyInfoViewController *babyFamilyInfoVC = [[XXEBabyFamilyInfoViewController alloc] init];
-        XXEClassAddressStudentInfoModel *model = _dataSourceArray[indexPath.section][indexPath.row];
-//        NSLog(@"%@", model);
-        babyFamilyInfoVC.baby_id = model.baby_id;
-        babyFamilyInfoVC.familyInfoArray = model.parent_list;
-        babyFamilyInfoVC.fromFlagStr = _fromFlagStr;
-        [self.navigationController pushViewController:babyFamilyInfoVC animated:YES];
-        
-    }else if (indexPath.section == 1){
-        XXEClassAddressTeacherInfoModel *model = _dataSourceArray[indexPath.section][indexPath.row];
-        
-        if ([_fromFlagStr isEqualToString:@"fromRCIM"]) {
-            //从聊天界面 过来 添加 好友
-            //被选中 老师 的xid
-            NSString *teacherXid = model.xid;
-            [self addFriendRequestNotice:teacherXid];
-        }else{
-             //进入 老师 详情
-            XXEXingClassRoomTeacherDetailInfoViewController *xingClassRoomTeacherDetailInfoVC = [[XXEXingClassRoomTeacherDetailInfoViewController alloc] init];
-            xingClassRoomTeacherDetailInfoVC.teacher_id = model.teacher_id;
-            [self.navigationController pushViewController:xingClassRoomTeacherDetailInfoVC animated:YES];
+    if ([XXEUserInfo user].login) {
+        if (indexPath.section == 0) {
+            //点击 宝贝 cell 先进入到 宝贝家人 列表
+            XXEBabyFamilyInfoViewController *babyFamilyInfoVC = [[XXEBabyFamilyInfoViewController alloc] init];
+            XXEClassAddressStudentInfoModel *model = _dataSourceArray[indexPath.section][indexPath.row];
+            //        NSLog(@"%@", model);
+            babyFamilyInfoVC.baby_id = model.baby_id;
+            babyFamilyInfoVC.familyInfoArray = model.parent_list;
+            babyFamilyInfoVC.fromFlagStr = _fromFlagStr;
+            [self.navigationController pushViewController:babyFamilyInfoVC animated:YES];
             
+        }else if (indexPath.section == 1){
+            XXEClassAddressTeacherInfoModel *model = _dataSourceArray[indexPath.section][indexPath.row];
+            
+            if ([_fromFlagStr isEqualToString:@"fromRCIM"]) {
+                //从聊天界面 过来 添加 好友
+                //被选中 老师 的xid
+                NSString *teacherXid = model.xid;
+                [self addFriendRequestNotice:teacherXid];
+            }else{
+                //进入 老师 详情
+                XXEXingClassRoomTeacherDetailInfoViewController *xingClassRoomTeacherDetailInfoVC = [[XXEXingClassRoomTeacherDetailInfoViewController alloc] init];
+                xingClassRoomTeacherDetailInfoVC.teacher_id = model.teacher_id;
+                [self.navigationController pushViewController:xingClassRoomTeacherDetailInfoVC animated:YES];
+                
+            }
+            
+            
+        }else if (indexPath.section == 2){
+            XXEClassAddressManagerInfoModel *model = _dataSourceArray[indexPath.section][indexPath.row];
+            
+            if ([_fromFlagStr isEqualToString:@"fromRCIM"]) {
+                //从聊天界面 过来 添加 好友
+                //被选中 管理员 的xid
+                NSString *managerXid = model.xid;
+                [self addFriendRequestNotice:managerXid];
+            }else{
+                //进入 管理人员 详情
+                XXEXingClassRoomTeacherDetailInfoViewController *xingClassRoomTeacherDetailInfoVC = [[XXEXingClassRoomTeacherDetailInfoViewController alloc] init];
+                xingClassRoomTeacherDetailInfoVC.teacher_id = model.manager_id;
+                [self.navigationController pushViewController:xingClassRoomTeacherDetailInfoVC animated:YES];
+            }
         }
-        
-        
-    }else if (indexPath.section == 2){
-        XXEClassAddressManagerInfoModel *model = _dataSourceArray[indexPath.section][indexPath.row];
-        
-        if ([_fromFlagStr isEqualToString:@"fromRCIM"]) {
-            //从聊天界面 过来 添加 好友
-            //被选中 管理员 的xid
-            NSString *managerXid = model.xid;
-            [self addFriendRequestNotice:managerXid];
-        }else{
-            //进入 管理人员 详情
-            XXEXingClassRoomTeacherDetailInfoViewController *xingClassRoomTeacherDetailInfoVC = [[XXEXingClassRoomTeacherDetailInfoViewController alloc] init];
-            xingClassRoomTeacherDetailInfoVC.teacher_id = model.manager_id;
-            [self.navigationController pushViewController:xingClassRoomTeacherDetailInfoVC animated:YES];
-        }
+ 
+    }else{
+        [self showString:@"请用账号登录后查看" forSecond:1.5];
     }
-    
 }
 
 
@@ -351,14 +354,14 @@
 //NSLog(@">>>>>>>>>>>>>>tapViewTag>>>>>>>>>>%ld",tap.view.tag);
     
     XXEClassAddressStudentInfoModel *model = _dataSourceArray[0][tap.view.tag - 100];
-//    if ([XXEUserInfo user].login){
+    if ([XXEUserInfo user].login){
         XXEBabyInfoViewController *babyInfoVC =[[XXEBabyInfoViewController alloc]init];
         babyInfoVC.babyId = model.baby_id;
         babyInfoVC.babyClassName = _babyClassName;
         [self.navigationController pushViewController:babyInfoVC animated:NO];
-//    }else{
-//        [SVProgressHUD showInfoWithStatus:@"请用账号登录后查看"];
-//    }
+    }else{
+        [self showString:@"请用账号登录后查看" forSecond:1.5];
+    }
 
 }
 
@@ -415,7 +418,7 @@
     }else{
         [self.flagArray replaceObjectAtIndex:(press.view.tag - 100) withObject:[NSNumber numberWithBool:YES]];
     }
-    [_myTableView reloadData ];
+    [_myTableView reloadData];
     
     
 }

@@ -226,7 +226,7 @@
     cell.iconImageView.layer.cornerRadius = cell.iconImageView.frame.size.width / 2;
     cell.iconImageView.layer.masksToBounds = YES;
     
-    [cell.iconImageView sd_setImageWithURL:[NSURL URLWithString:model.pic] placeholderImage:[UIImage imageNamed:@"home_flowerbasket_placehoderIcon120x120"]];
+    [cell.iconImageView sd_setImageWithURL:[NSURL URLWithString:model.pic] placeholderImage:[UIImage imageNamed:@"headplaceholder"]];
 //    cell.timeLabel.text = [XXETool dateStringFromNumberTimer:model.date_tm];
     NSString *timeString =[XXETool dateStringFromNumberTimer:model.date_tm];
     NSArray *arr = [NSArray arrayWithArray:[timeString componentsSeparatedByString:@" "]];

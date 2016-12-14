@@ -220,7 +220,7 @@
         //移动 按钮
         _moveBtn = [UIButton createButtonWithFrame:CGRectMake(260 * kScreenRatioWidth, 27, 50 * kScreenRatioWidth, 25 * kScreenRatioHeight) backGruondImageName:nil Target:self Action:@selector(onClickMoveBtn:) Title:@"移动"];
         [_moveBtn setTitleColor:UIColorFromRGB(0, 170, 42) forState:UIControlStateNormal];
-        _moveBtn.titleLabel.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
+        _moveBtn.titleLabel.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];
         [_moveBtn.layer setBorderColor:UIColorFromRGB(0, 170, 42).CGColor];
         [_moveBtn.layer setBorderWidth:1];
         [_moveBtn.layer setMasksToBounds:YES];
@@ -228,7 +228,7 @@
         //删除 按钮
         _deletebtn = [UIButton createButtonWithFrame:CGRectMake(315 * kScreenRatioWidth, 27, 50 * kScreenRatioWidth, 25 * kScreenRatioHeight) backGruondImageName:nil Target:self Action:@selector(onClickDeleteBtn:) Title:@"删除"];
         [_deletebtn setTitleColor:UIColorFromRGB(0, 170, 42) forState:UIControlStateNormal];
-        _deletebtn.titleLabel.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
+        _deletebtn.titleLabel.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];
         [_deletebtn.layer setBorderColor:UIColorFromRGB(0, 170, 42).CGColor];
         [_deletebtn.layer setBorderWidth:1];
         [_deletebtn.layer setMasksToBounds:YES];

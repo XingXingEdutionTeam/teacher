@@ -111,20 +111,20 @@
     //CGRectMake(85+(90+3)*i, 150, (kWidth - 85) / 3, 28)
     UILabel *provinceLabel = [[UILabel alloc] initWithFrame:CGRectMake(_areaLabel.frame.origin.x + _areaLabel.width + 5 +labelW*0, _areaLabel.frame.origin.y, labelW, labelH)];
     provinceLabel.text = [NSString stringWithFormat:@"省:%@",_model.province];
-    provinceLabel.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
+    provinceLabel.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];
     [bgScrollView addSubview:provinceLabel];
 
     
     //市
     UILabel *cityLabel = [[UILabel alloc] initWithFrame:CGRectMake(_areaLabel.frame.origin.x + _areaLabel.width + 5 +labelW*1, _areaLabel.frame.origin.y, labelW, labelH)];
     cityLabel.text = [NSString stringWithFormat:@"市:%@",_model.city];
-    cityLabel.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
+    cityLabel.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];
     [bgScrollView addSubview:cityLabel];
 
     //区
     UILabel *areaLabel = [[UILabel alloc] initWithFrame:CGRectMake(_areaLabel.frame.origin.x + _areaLabel.width + 5+labelW*2, _areaLabel.frame.origin.y, labelW, labelH)];
     areaLabel.text = [NSString stringWithFormat:@"区:%@",_model.district];
-    areaLabel.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
+    areaLabel.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];
     [bgScrollView addSubview:areaLabel];
     
     addressText.text = _model.address;
@@ -158,11 +158,11 @@
     
     //收货人姓名
     UILabel * consignee = [UILabel createLabelWithFrame:CGRectMake(KLabelX, Kmarg, KLabelW, KLabelH) Font:14 Text:@"收货人:"];
-    consignee.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
+    consignee.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];
     [bgScrollView addSubview:consignee];
     
     nameText = [[UITextField alloc] initWithFrame:CGRectMake(CGRectGetMaxX(consignee.frame) + Kmarg, Kmarg, kWidth - CGRectGetMaxX(consignee.frame) - KLabelX *2, KLabelH)];
-    nameText.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
+    nameText.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];
     nameText.delegate = self;
     [nameText addTarget:self action:@selector(nameTextFieldTextChange:) forControlEvents:UIControlEventEditingChanged];
     
@@ -174,11 +174,11 @@
     
     //电话
     UILabel *phoneTitleLabel = [UILabel createLabelWithFrame:CGRectMake(KLabelX, CGRectGetMaxY(view1.frame) + Kmarg , KLabelW, KLabelH) Font:14 Text:@"联系电话:"];
-    phoneTitleLabel.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
+    phoneTitleLabel.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];
     [bgScrollView addSubview:phoneTitleLabel];
     
     phoneText = [[UITextField alloc] initWithFrame:CGRectMake(CGRectGetMaxX(consignee.frame) + Kmarg, CGRectGetMaxY(view1.frame) + Kmarg, kWidth - CGRectGetMaxX(consignee.frame) - KLabelX *2, KLabelH)];
-    phoneText.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
+    phoneText.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];
     phoneText.delegate = self;
     phoneText.keyboardType=UIKeyboardTypeNumberPad;
     [nameText addTarget:self action:@selector(phoneTextFieldTextChange:) forControlEvents:UIControlEventEditingChanged];
@@ -191,12 +191,12 @@
     
     //邮政编码
     UILabel *codeLabel = [UILabel createLabelWithFrame:CGRectMake(KLabelX, CGRectGetMaxY(view2.frame) + Kmarg, KLabelW, KLabelH) Font:14 Text:@"邮政编码:"];
-    codeLabel.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
+    codeLabel.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];
     [bgScrollView addSubview:codeLabel];
     
     
     mailText = [[UITextField alloc] initWithFrame:CGRectMake(CGRectGetMaxX(consignee.frame) + Kmarg, CGRectGetMaxY(view2.frame) + Kmarg, kWidth - CGRectGetMaxX(consignee.frame) - KLabelX *2, KLabelH)];
-    mailText.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
+    mailText.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];
     mailText.keyboardType=UIKeyboardTypeNumberPad;
     [bgScrollView addSubview:mailText];
     
@@ -206,7 +206,7 @@
     
     //所在地区
     _areaLabel =  [UILabel createLabelWithFrame:CGRectMake(KLabelX, CGRectGetMaxY(_view3.frame) + Kmarg, KLabelW, KLabelH) Font:14 Text:@"所在地区:"];
-    _areaLabel.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
+    _areaLabel.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];
     [bgScrollView addSubview:_areaLabel];
     
     UIView *view4 = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(_areaLabel.frame) + Kmarg, kWidth, 1)];
@@ -216,12 +216,12 @@
     
     //详细地址
     UILabel *addressLabel = [UILabel createLabelWithFrame:CGRectMake(KLabelX, CGRectGetMaxY(view4.frame) + Kmarg, KLabelW, KLabelH) Font:14 Text:@"详细地址:"];
-    addressLabel.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
+    addressLabel.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];
     [bgScrollView addSubview:addressLabel];
     
     
     addressText = [[UITextField alloc] initWithFrame:CGRectMake(CGRectGetMaxX(consignee.frame) + Kmarg, CGRectGetMaxY(view4.frame) + Kmarg, kWidth - CGRectGetMaxX(consignee.frame) - KLabelX *2, KLabelH)];
-    addressText.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
+    addressText.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];
     [bgScrollView addSubview:addressText];
     
     view5 = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(addressText.frame) + Kmarg, kWidth, kHeight - CGRectGetMaxY(addressText.frame))];

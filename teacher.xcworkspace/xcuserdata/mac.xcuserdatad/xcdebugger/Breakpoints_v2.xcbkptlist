@@ -35,22 +35,6 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "teacher/HomePage/XXENotificationCenter/Controller/XXENotificationViewController.m"
-            timestampString = "502630024.018601"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "315"
-            endingLineNumber = "315"
-            landmarkName = "-loadFooterNewData"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "teacher/HomePage/XXERongCloudChart/Controller/XXERootReplyListController.m"
             timestampString = "502702730.790862"
             startingColumnNumber = "9223372036854775807"
@@ -121,7 +105,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "41"
             endingLineNumber = "41"
-            landmarkName = "-setContent"
+            landmarkName = "-viewDidLoad"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -179,13 +163,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "teacher/ChatPage/Controller/XXEXingClassRoomCourseDetailInfoViewController.m"
-            timestampString = "503318570.530494"
+            filePath = "teacher/HomePage/XXEStore/Controller/XXEStoreGoodsOrderDetailViewController.m"
+            timestampString = "503394952.361943"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "406"
-            endingLineNumber = "406"
-            landmarkName = "-getCustomerServicesInfo"
+            startingLineNumber = "73"
+            endingLineNumber = "73"
+            landmarkName = "-fetchCourseOrderDetailInfo"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -195,13 +179,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "teacher/ChatPage/Controller/XXEXingClassRoomCourseDetailInfoViewController.m"
-            timestampString = "503318577.924197"
+            filePath = "teacher/HomePage/XXEStore/Controller/XXEStoreGoodsOrderDetailViewController.m"
+            timestampString = "503394957.001947"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "410"
-            endingLineNumber = "410"
-            landmarkName = "-getCustomerServicesInfo"
+            startingLineNumber = "83"
+            endingLineNumber = "83"
+            landmarkName = "-fetchCourseOrderDetailInfo"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

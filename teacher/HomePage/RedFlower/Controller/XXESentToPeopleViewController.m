@@ -143,7 +143,7 @@
     //输入内容 字数 限制
     numLabel = [[UILabel alloc] initWithFrame:CGRectMake(KScreenWidth - 50,  contentTextView.frame.origin.y + contentTextView.height, 50, 20)];
     numLabel.text = @"1/200";
-    numLabel.font = [UIFont systemWithIphone6P:14 Iphone6:12 Iphone5:10 Iphone4:8];
+    numLabel.font = [UIFont systemFontOfSize:12 * kScreenRatioWidth];
     [contentBgView addSubview:numLabel];
     
     
@@ -179,7 +179,7 @@
     
     UIButton *certainButton = [UIButton createButtonWithFrame:CGRectMake(buttonX, buttonY, buttonW, buttonH) backGruondImageName:@"login_green" Target:self Action:@selector(certainButtonCick:) Title:@"确认赠送"];
     [certainButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    certainButton.titleLabel.font = [UIFont systemWithIphone6P:20 Iphone6:18 Iphone5:16 Iphone4:14];
+    certainButton.titleLabel.font = [UIFont systemFontOfSize:18 * kScreenRatioWidth];
     [self.view addSubview:certainButton];
 
 }

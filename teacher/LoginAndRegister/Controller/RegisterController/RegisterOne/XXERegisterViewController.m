@@ -166,7 +166,7 @@
     [verificationButton setTitle:@"获取验证码" forState:UIControlStateNormal];
 //    verificationButton.backgroundColor = [UIColor redColor];
     _verificationButton = verificationButton;
-    verificationButton.titleLabel.font = [UIFont systemWithIphone6P:18 Iphone6:16 Iphone5:14 Iphone4:12];
+    verificationButton.titleLabel.font = [UIFont systemFontOfSize:16 * kScreenRatioWidth];
     [verificationButton setTitleColor:XXEColorFromRGB(189, 210, 38) forState:UIControlStateNormal];
     [verificationButton addTarget:self action:@selector(setupVerificationNumber:) forControlEvents:UIControlEventTouchUpInside];
 //    verificationButton.userInteractionEnabled = NO;

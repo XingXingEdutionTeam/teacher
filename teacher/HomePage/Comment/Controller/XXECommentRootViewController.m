@@ -181,13 +181,18 @@
 - (void)request:(UINavigationItem *)item{
 
 //    NSLog(@"点评 请求");
+    if ([XXEUserInfo user].login) {
+        XXECommentStudentViewController *commentStudentVC = [[XXECommentStudentViewController alloc] init];
+        
+        commentStudentVC.schoolId = _schoolId;
+        commentStudentVC.classId = _classId;
+        
+        [self.navigationController pushViewController:commentStudentVC animated:YES];
+    }else{
+        [self showString:@"请用账号登录后查看" forSecond:1.5];
+    }
+
     
-    XXECommentStudentViewController *commentStudentVC = [[XXECommentStudentViewController alloc] init];
-    
-    commentStudentVC.schoolId = _schoolId;
-    commentStudentVC.classId = _classId;
-    
-    [self.navigationController pushViewController:commentStudentVC animated:YES];
 }
 
 - (void)sent:(UIButton *)button{

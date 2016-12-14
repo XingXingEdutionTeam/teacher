@@ -120,14 +120,20 @@
     
 }
 
+
+#pragma Mark **********  右上角 按钮 **************
 - (void)rightBtnClick:(UIButton *)button{
 
-    XXEAuditAndReleaseViewController *auditAndReleaseVC = [[XXEAuditAndReleaseViewController alloc] init];
-    
-    auditAndReleaseVC.schoolId = _schoolId;
-    auditAndReleaseVC.classId = _classId;
-    
-    [self.navigationController pushViewController:auditAndReleaseVC animated:YES];
+    if ([XXEUserInfo user].login) {
+        XXEAuditAndReleaseViewController *auditAndReleaseVC = [[XXEAuditAndReleaseViewController alloc] init];
+        
+        auditAndReleaseVC.schoolId = _schoolId;
+        auditAndReleaseVC.classId = _classId;
+        
+        [self.navigationController pushViewController:auditAndReleaseVC animated:YES];
+    }else{
+        [self showString:@"请用账号登录后查看" forSecond:1.5];
+    }
     
 }
 
@@ -393,43 +399,46 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    switch ([condit integerValue]) {
-        case 0:
-        {
-            XXESchoolNotificationDetailViewController *schoolNotificationDetailVC =[[XXESchoolNotificationDetailViewController alloc]init];
-            XXESchoolNotificationModel *model = _schoolDataSourceArray[indexPath.row];
-            
-            schoolNotificationDetailVC.name = model.school_name;
-            //[type] => 2		//通知范围需要  1:班级通知, 2:学校通知
-            if ([model.type integerValue] == 1) {
-                schoolNotificationDetailVC.scope = @"班级通知";
-            }else if ([model.type integerValue] == 2){
-                schoolNotificationDetailVC.scope = @"学校通知";
+    if ([XXEUserInfo user].login) {
+        switch ([condit integerValue]) {
+            case 0:
+            {
+                XXESchoolNotificationDetailViewController *schoolNotificationDetailVC =[[XXESchoolNotificationDetailViewController alloc]init];
+                XXESchoolNotificationModel *model = _schoolDataSourceArray[indexPath.row];
+                
+                schoolNotificationDetailVC.name = model.school_name;
+                //[type] => 2		//通知范围需要  1:班级通知, 2:学校通知
+                if ([model.type integerValue] == 1) {
+                    schoolNotificationDetailVC.scope = @"班级通知";
+                }else if ([model.type integerValue] == 2){
+                    schoolNotificationDetailVC.scope = @"学校通知";
+                }
+                
+                schoolNotificationDetailVC.time =[XXETool dateStringFromNumberTimer:model.date_tm];
+                schoolNotificationDetailVC.content = model.con;
+                schoolNotificationDetailVC.titleStr = model.title;
+                [self.navigationController pushViewController:schoolNotificationDetailVC animated:YES];
             }
-            
-            schoolNotificationDetailVC.time =[XXETool dateStringFromNumberTimer:model.date_tm];
-            schoolNotificationDetailVC.content = model.con;
-            schoolNotificationDetailVC.titleStr = model.title;
-            [self.navigationController pushViewController:schoolNotificationDetailVC animated:YES];
+                break;
+            case 1:
+            {
+                XXESystemNotificationDetailViewController *systemNotificationDetailVC =[[XXESystemNotificationDetailViewController alloc]init];
+                XXESystemNotificationModel *model = _systemDataSourecArray[indexPath.row];
+                
+                systemNotificationDetailVC.name = model.school_name;
+                systemNotificationDetailVC.time =[XXETool dateStringFromNumberTimer:model.date_tm];
+                systemNotificationDetailVC.content = model.con;
+                systemNotificationDetailVC.titleStr = model.title;
+                [self.navigationController pushViewController:systemNotificationDetailVC animated:YES];
+            }
+                break;
+            default:
+                break;
         }
-            break;
-        case 1:
-        {
-            XXESystemNotificationDetailViewController *systemNotificationDetailVC =[[XXESystemNotificationDetailViewController alloc]init];
-            XXESystemNotificationModel *model = _systemDataSourecArray[indexPath.row];
-            
-            systemNotificationDetailVC.name = model.school_name;
-            systemNotificationDetailVC.time =[XXETool dateStringFromNumberTimer:model.date_tm];
-            systemNotificationDetailVC.content = model.con;
-            systemNotificationDetailVC.titleStr = model.title;
-            [self.navigationController pushViewController:systemNotificationDetailVC animated:YES];
-        }
-            break;
-        default:
-            break;
-    }
 
-    
+    }else{
+        [self showString:@"请用账号登录后查看" forSecond:1.5];
+    }
 }
 
 

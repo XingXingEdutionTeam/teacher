@@ -487,21 +487,21 @@
     UILabel *nameLabel = [[UILabel alloc]initWithFrame:CGRectMake(30 * kScreenRatioWidth, 5, 200 * kScreenRatioWidth, 30 * kScreenRatioHeight)];
     nameLabel.text = [NSString stringWithFormat:@"%@",classNameStr];
     nameLabel.textColor = [UIColor lightGrayColor];
-    nameLabel.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
+    nameLabel.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];
     [headerView addSubview:nameLabel];
     
     //已审核的家人数
     UILabel *auditedLabel = [[UILabel alloc]initWithFrame:CGRectMake(230 * kScreenRatioWidth, 5, 70 * kScreenRatioWidth, 30 * kScreenRatioHeight)];
     auditedLabel.text = [NSString stringWithFormat:@"已审核:%@",numStr];
     auditedLabel.textColor = [UIColor lightGrayColor];
-    auditedLabel.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
+    auditedLabel.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];
     [headerView addSubview:auditedLabel];
     
     //待审核的家人数
     UILabel *unauditLabel = [[UILabel alloc]initWithFrame:CGRectMake(300 * kScreenRatioWidth, 5, 70 * kScreenRatioWidth, 30 * kScreenRatioHeight)];
     unauditLabel.text = [NSString stringWithFormat:@"待审核:%@",wait_numStr];
     unauditLabel.textColor = [UIColor lightGrayColor];
-    unauditLabel.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
+    unauditLabel.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];
     [headerView addSubview:unauditLabel];
 
     

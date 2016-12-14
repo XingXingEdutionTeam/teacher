@@ -70,7 +70,7 @@
      order_id	//订单id	*/
     NSString *urlStr = @"http://www.xingxingedu.cn/Global/goods_order_detail";
     
-//    NSLog(@"订单详情 _order_id ==%@", _order_id);
+    NSLog(@"订单详情 _order_id ==%@", _order_id);
     
     NSDictionary *params = @{@"appkey":APPKEY,
                              @"backtype":BACKTYPE,
@@ -80,7 +80,7 @@
                              @"order_id":_order_id                            };
     [WZYHttpTool post:urlStr params:params success:^(id responseObj) {
         
-//        NSLog(@" ooo %@", responseObj);
+        NSLog(@" ooo %@", responseObj);
         
         if ([responseObj[@"code"] integerValue] == 1) {
             detailInfoDict = responseObj[@"data"];
@@ -127,7 +127,7 @@
         for (int h = 0; h < 2; h ++) {
             UIButton *button = [UIButton createButtonWithFrame:CGRectMake(buttonX, buttonY + 10 + (buttonH + 10) * h, buttonW, buttonH) backGruondImageName:@"login_green" Target:self Action:@selector(buttonClick:) Title:@""];
             [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-            button.titleLabel.font = [UIFont systemWithIphone6P:20 Iphone6:18 Iphone5:16 Iphone4:14];
+            button.titleLabel.font = [UIFont systemFontOfSize:18 * kScreenRatioWidth];
             
             if ([detailInfoDict[@"condit"] integerValue] == 0){
             
@@ -326,13 +326,13 @@
         //title
         UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(40, 5 + 30 * i, 70, 20)];
         titleLabel.text = titleArray[i];
-        titleLabel.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
+        titleLabel.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];
         [upBgView addSubview:titleLabel];
         
         //text
         UILabel *textLabel = [[UILabel alloc] initWithFrame:CGRectMake(120, 5 + 30 * i, KScreenWidth - 130, 20)];
         textLabel.text = textArray[i];
-        textLabel.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
+        textLabel.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];
         if (i == 2) {
             textLabel.textColor = [UIColor redColor];
         }
@@ -354,14 +354,14 @@
     //商品名称
     UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(90, coursePic.frame.origin.y, KScreenWidth - 100, 20)];
     nameLabel.text = detailInfoDict[@"title"];
-    nameLabel.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
+    nameLabel.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];
     [upBgView addSubview:nameLabel];
     
     //商品价格
     UILabel *priceLabel = [[UILabel alloc] initWithFrame:CGRectMake(90, nameLabel.frame.origin.y + nameLabel.height + 10, KScreenWidth - 100, 20)];
     priceLabel.text = [NSString stringWithFormat:@"¥:%@",detailInfoDict[@"price"]];
     priceLabel.textColor = [UIColor redColor];
-    priceLabel.font = [UIFont systemWithIphone6P:14 Iphone6:12 Iphone5:10 Iphone4:8];
+    priceLabel.font = [UIFont systemFontOfSize:12 * kScreenRatioWidth];
     [upBgView addSubview:priceLabel];
     
     //猩币
@@ -370,7 +370,7 @@
     [upBgView addSubview:coinImageView];
     UILabel *coinLabel = [[UILabel alloc] initWithFrame:CGRectMake(coinImageView.frame.origin.x + 16 + 5, coinImageView.frame.origin.y, KScreenWidth / 3 - 20, 20)];
     coinLabel.text = [NSString stringWithFormat:@"猩币:%@", detailInfoDict[@"exchange_coin"]];
-    coinLabel.font = [UIFont systemWithIphone6P:14 Iphone6:12 Iphone5:10 Iphone4:8];
+    coinLabel.font = [UIFont systemFontOfSize:12 * kScreenRatioWidth];
     [upBgView addSubview:coinLabel];
     
     
@@ -380,7 +380,7 @@
     [upBgView addSubview:saleImageView];
     UILabel *saleLabel = [[UILabel alloc] initWithFrame:CGRectMake(coinImageView.frame.origin.x + 16 + 5, saleImageView.frame.origin.y, KScreenWidth / 3 - 20, 20)];
     saleLabel.text = [NSString stringWithFormat:@"销量:%@", detailInfoDict[@"sale_num"]];
-    saleLabel.font = [UIFont systemWithIphone6P:14 Iphone6:12 Iphone5:10 Iphone4:8];
+    saleLabel.font = [UIFont systemFontOfSize:12 * kScreenRatioWidth];
     [upBgView addSubview:saleLabel];
     
     //分割线
@@ -403,7 +403,7 @@
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(j * labelW, lineView2.frame.origin.y + 10, labelW, labelH)];
         label.textAlignment = NSTextAlignmentCenter;
         label.text = priceArray[j];
-        label.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
+        label.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];
         [upBgView addSubview: label];
     }
 }
@@ -425,7 +425,7 @@
     for (int k = 0; k < 2; k ++) {
         UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(10 + k * labelW, 5 , labelW, labelH)];
         titleLabel.text = contentArray[k];
-        titleLabel.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
+        titleLabel.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];
         [middleView addSubview:titleLabel];
     }
     
@@ -443,7 +443,7 @@
     addressLabel.numberOfLines = 0;
     NSString *addressStr = [NSString stringWithFormat:@"%@%@%@%@", detailInfoDict[@"province"],detailInfoDict[@"city"],detailInfoDict[@"district"],detailInfoDict[@"address"]];
     addressLabel.text = addressStr;
-    addressLabel.font = [UIFont systemWithIphone6P:14 Iphone6:12 Iphone5:10 Iphone4:8];
+    addressLabel.font = [UIFont systemFontOfSize:12 * kScreenRatioWidth];
     [middleView addSubview:addressLabel];
     
     //分割线
@@ -456,12 +456,12 @@
     [middleView addSubview:messageImageView];
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(messageImageView.frame.origin.x + 18, messageImageView.frame.origin.y, 70, 20)];
     titleLabel.text = @"买家留言:";
-    titleLabel.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
+    titleLabel.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];
     [middleView addSubview:titleLabel];
     
     UITextView *messageTextView = [[UITextView alloc] initWithFrame:CGRectMake(titleLabel.frame.origin.x + titleLabel.width, titleLabel.frame.origin.y, KScreenWidth - 100, 40)];
     messageTextView.text = detailInfoDict[@"buyer_words"];
-    messageTextView.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
+    messageTextView.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];
     [middleView addSubview:messageTextView];
 
 }
@@ -476,7 +476,7 @@
     //发票抬头
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, KScreenWidth - 20, 20)];
     titleLabel.text = [NSString stringWithFormat:@"发票抬头:%@", detailInfoDict[@"receipt"]];
-    titleLabel.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
+    titleLabel.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];
     [downBgView addSubview:titleLabel];
 }
 

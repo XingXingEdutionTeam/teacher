@@ -77,7 +77,7 @@
     //创建上面的提示
     UILabel *label = [[UILabel alloc]init];
     label.text = @"请输入你的手机号";
-    label.font = [UIFont systemWithIphone6P:14 Iphone6:12 Iphone5:10 Iphone4:8];
+    label.font = [UIFont systemFontOfSize:12 * kScreenRatioWidth];
     label.textColor = XXEColorFromRGB(204, 204, 204);
     [self.view addSubview:label];
     
@@ -192,7 +192,7 @@
     _verificationButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [_verificationButton setTitle:@"获取验证码" forState:UIControlStateNormal];
 //    _verificationButton = verificationButton;
-    _verificationButton.titleLabel.font = [UIFont systemWithIphone6P:18 Iphone6:16 Iphone5:14 Iphone4:12];
+    _verificationButton.titleLabel.font = [UIFont systemFontOfSize:16 * kScreenRatioWidth];
     [_verificationButton setTitleColor:XXEColorFromRGB(189, 210, 38) forState:UIControlStateNormal];
     [_verificationButton addTarget:self action:@selector(setupVerificationNumber:) forControlEvents:UIControlEventTouchUpInside];
 //    _verificationButton.userInteractionEnabled = NO;

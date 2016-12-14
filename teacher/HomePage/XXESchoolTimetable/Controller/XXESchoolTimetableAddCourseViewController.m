@@ -104,7 +104,7 @@
             contentTextField.tag = i + 10;
             contentTextField.delegate = self;
             contentTextField.placeholder = placeholderArray[i];
-            contentTextField.font = [UIFont systemWithIphone6P:16 Iphone6:14 Iphone5:12 Iphone4:10];
+            contentTextField.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];
             [bgView addSubview:contentTextField];
         }else{
             copyCommbox = [[WJCommboxView alloc] initWithFrame:CGRectMake(40 * kScreenRatioWidth, i * (40 + 5) + 5, KScreenWidth - 60, 30)];

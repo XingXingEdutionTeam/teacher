@@ -9,14 +9,8 @@
 //
 
 #import "XXEImageBrowsingViewController.h"
-//#import "XXEAlbumDetailsModel.h"
-//#import "SDCycleScrollView.h"
-//#import "XXEVerticalButton.h"
-//#import "KTActionSheet.h"
 #import "ReportPicViewController.h"
 #import "XXEAllImageCollectionApi.h"
-//#import "XXEHomePageCollectionPhotoApi.h"
-//#import "AppDelegate.h"
 #import "UMSocial.h"
 
 
