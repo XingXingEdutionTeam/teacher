@@ -748,6 +748,7 @@
 		9E4813DA1D50783000C614AC /* XXEHomePageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E4813D91D50783000C614AC /* XXEHomePageViewController.m */; };
 		9E4813DD1D50784900C614AC /* XXEChatPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E4813DC1D50784900C614AC /* XXEChatPageViewController.m */; };
 		9E4813E31D50788300C614AC /* XXEMySelfPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E4813E21D50788300C614AC /* XXEMySelfPageViewController.m */; };
+		9E4CEDD41E00E71800F4525E /* GlobalVariable.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E4CEDD31E00E71800F4525E /* GlobalVariable.m */; };
 		9E4FF35E1D766F54005E3C94 /* WZYHttpTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E4FF35D1D766F54005E3C94 /* WZYHttpTool.m */; };
 		9E4FF3611D766F66005E3C94 /* HHControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E4FF3601D766F66005E3C94 /* HHControl.m */; };
 		9E50F4001D5B0E9700FA6594 /* XXEHomePageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E50F3FF1D5B0E9700FA6594 /* XXEHomePageModel.m */; };
@@ -2341,6 +2342,8 @@
 		9E4813DC1D50784900C614AC /* XXEChatPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXEChatPageViewController.m; sourceTree = "<group>"; };
 		9E4813E11D50788300C614AC /* XXEMySelfPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXEMySelfPageViewController.h; sourceTree = "<group>"; };
 		9E4813E21D50788300C614AC /* XXEMySelfPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXEMySelfPageViewController.m; sourceTree = "<group>"; };
+		9E4CEDD21E00E71800F4525E /* GlobalVariable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GlobalVariable.h; sourceTree = "<group>"; };
+		9E4CEDD31E00E71800F4525E /* GlobalVariable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GlobalVariable.m; sourceTree = "<group>"; };
 		9E4FF35C1D766F54005E3C94 /* WZYHttpTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZYHttpTool.h; sourceTree = "<group>"; };
 		9E4FF35D1D766F54005E3C94 /* WZYHttpTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WZYHttpTool.m; sourceTree = "<group>"; };
 		9E4FF35F1D766F66005E3C94 /* HHControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HHControl.h; sourceTree = "<group>"; };
@@ -5682,6 +5685,8 @@
 				9EB08BAC1DFA8A1200F9FEB7 /* SystemPopView.m */,
 				9E8EC9EB1DFEA7FC008481B3 /* EmptyView.h */,
 				9E8EC9EC1DFEA7FC008481B3 /* EmptyView.m */,
+				9E4CEDD21E00E71800F4525E /* GlobalVariable.h */,
+				9E4CEDD31E00E71800F4525E /* GlobalVariable.m */,
 			);
 			path = XXETools;
 			sourceTree = "<group>";
@@ -6791,6 +6796,7 @@
 				043C80BF1D86BC95004F1B85 /* XXEXingCommunityInstitutionsViewController.m in Sources */,
 				9E6912F81D5442AE0000E566 /* UIView+XXExtension.m in Sources */,
 				044DEBDC1D8FD2F900DE101A /* XXECourseManagerViewController.m in Sources */,
+				9E4CEDD41E00E71800F4525E /* GlobalVariable.m in Sources */,
 				9E5E23D01D90CCD8008B1AAF /* XXEInfomationViewController.m in Sources */,
 				043596901DAA458100F85DAE /* XXERootFriendListApi.m in Sources */,
 				04BB3A461D74742B00AA5C5C /* XXERecipePicDeleteApi.m in Sources */,

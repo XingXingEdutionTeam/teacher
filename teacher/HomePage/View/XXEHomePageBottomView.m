@@ -7,6 +7,7 @@
 //
 
 #import "XXEHomePageBottomView.h"
+#import <RongIMKit/RongIMKit.h>
 
 @interface XXEHomePageBottomView ()
 
@@ -76,7 +77,12 @@
                 make.width.mas_equalTo(8);
                 make.height.mas_equalTo(8);
             }];
-            self.chatBadgeView.hidden = YES;
+            
+            if ([RCIMClient sharedRCIMClient].getTotalUnreadCount == 0) {
+                self.chatBadgeView.hidden = YES;
+            }else {
+                self.chatBadgeView.hidden = NO;
+            }
         }
         
         if (num == 12) {
