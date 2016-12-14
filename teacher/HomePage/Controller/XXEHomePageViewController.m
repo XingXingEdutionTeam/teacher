@@ -58,6 +58,8 @@
 
 #import "SystemPopView.h"
 
+#import "XXRootChatETabBarController.h"
+
 @interface XXEHomePageViewController ()<XXEHomePageHeaderViewDelegate,XXEHomePageMiddleViewDelegate,XXEHomePageBottomViewDelegate>
 {
 
@@ -178,6 +180,10 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(systemMessage:) name:kSystemMessage object:nil];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(chatNotification:) name:kChatNotification object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(chatRemoteNotification:) name:kChatRemoteNotification object:nil];
+    
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(didReceiveMessageNotification:)name:RCKitDispatchMessageNotification object:nil];
     
@@ -186,8 +192,14 @@
     //新手 教程
     [self initNewCourseView];
     
+    if ([RCIMClient sharedRCIMClient].getTotalUnreadCount != 0) {
+        self.bottomView.chatBadgeView.hidden = NO;
+    }else {
+        self.bottomView.chatBadgeView.hidden = YES;
+    }
     //获取数据
     [self setupHomePageRequeue];
+    
 
 }
 
@@ -207,12 +219,21 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kSystemMessage object:nil];
 }
 
+- (void)chatNotification:(NSNotification *)notification {
+//    [self pushToChatVC];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kChatNotification object:nil];
+}
+
+- (void)chatRemoteNotification:(NSNotification *)notification {
+//    [self pushToChatVC];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kChatRemoteNotification object:nil];
+}
+
 - (void)didReceiveMessageNotification:(NSNotification *)notification {
-    
-    if (self.bottomView.chatBadgeView.hidden == YES) {
-        self.bottomView.chatBadgeView.hidden = NO;
-    }
-    
+    //获取数据
+    [self setupHomePageRequeue];
 }
 
 /** 这两个方法都可以,改变当前控制器的电池条颜色 */
@@ -598,6 +619,11 @@
     [self.navigationController pushViewController:notificationVC animated:YES];
 }
 
+- (void)pushToChatVC {
+    XXRootChatETabBarController *chatVc = [[XXRootChatETabBarController alloc] init];
+    [self.navigationController pushViewController:chatVc animated:true];
+}
+
 #pragma mark - 获取数据
 - (void)setupHomePageRequeue
 {
@@ -676,8 +702,10 @@
         [self hideHud];
         
         
-        if (appdelegate.userInfo) {
+        if ([appdelegate.userInfo[@"aps"][@"sound"] isEqualToString:@"sound"]) {
             [self pushToXXENotificationViewController];
+        }else if ([appdelegate.userInfo[@"aps"][@"sound"] isEqualToString:@"default"]){
+//            [self pushToChatVC];
         }
         appdelegate.userInfo = nil;
         
@@ -775,6 +803,7 @@
         case 4:
         {
             NSLog(@"----聊天----");
+//            [GlobalVariable shareInstance].chatBagdeType = ChatBadgeNone;
             if ([XXEUserInfo user].login) {
                 
             XXRootChatETabBarController *rootChatVC = [[XXRootChatETabBarController alloc]init];
@@ -925,7 +954,7 @@
         case 4:
         {
             NSLog(@"----聊天----");
-            
+//            [GlobalVariable shareInstance].chatBagdeType = ChatBadgeNone;
             if ([XXEUserInfo user].login) {
                 
             XXRootChatETabBarController *rootChatVC = [[XXRootChatETabBarController alloc]init];
@@ -1174,7 +1203,6 @@
     [[NSNotificationCenter defaultCenter]removeObserver:self];
     [self.homeSchoolView.textField removeObserver:self forKeyPath:@"text"];
     [self.homeClassView.textField removeObserver:self forKeyPath:@"text"];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:RCKitDispatchMessageNotification object:nil];
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
@@ -1196,6 +1224,8 @@
 //    [DEFAULTS setObject:self.schoolType forKey:@"SCHOOL_TYPE"];
     
     [DEFAULTS synchronize];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:RCKitDispatchMessageNotification object:nil];
     
     
 //   NSLog(@"viewWillDisappear:  %@ == %@", self.userPosition, self.schoolType);

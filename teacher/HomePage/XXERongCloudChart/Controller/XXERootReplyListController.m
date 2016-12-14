@@ -17,6 +17,7 @@
 #import "SVProgressHUD.h"
 #import "XXERongCloudAddFriendsListViewController.h"
 #import "KxMenu.h"
+#import "XXERootFriendListApi.h"
 
 @interface XXERootReplyListController ()<RCIMReceiveMessageDelegate,RCIMConnectionStatusDelegate,UIAlertViewDelegate,UITableViewDataSource,UITableViewDelegate>
 {
@@ -39,12 +40,26 @@
 
 @property(nonatomic ,strong) UIImageView *placeholderImageView;
 
+@property(nonatomic ,strong) EmptyView *emptyView;
+
 - (void) updateBadgeValueForTabBarItem;
 
 
 @end
 
 @implementation XXERootReplyListController
+
+-(EmptyView *)emptyView {
+    if (!_emptyView) {
+        CGRect frame = CGRectMake(0, 0, KScreenWidth, KScreenHeight - 64 - 44);
+        _emptyView = [EmptyView conveniceWithTitle:@"网络连接错误" frame:frame];
+//        [self.conversationListTableView addSubview:_emptyView];
+        self.emptyConversationView = _emptyView;
+        self.isShowNetworkIndicatorView = NO;
+    }
+    
+    return _emptyView;
+}
 
 /** 这两个方法都可以,改变当前控制器的电池条颜色 */
 -(UIStatusBarStyle)preferredStatusBarStyle
@@ -70,7 +85,7 @@
 }
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    
+    self.emptyView.hidden = YES;
     self.navigationController.navigationBarHidden = NO;
 //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(deleteFriend:) name:@"delete" object:nil];
     
@@ -157,10 +172,18 @@
                               delegate:self
                               cancelButtonTitle:@"知道了"
                               otherButtonTitles:nil, nil];
-
+        
         
         [alert show];
     }
+    
+    if (status == ConnectionStatus_NETWORK_UNAVAILABLE) {
+        
+        [self.conversationListDataSource removeAllObjects];
+        [self.conversationListTableView reloadData];
+        self.emptyView.hidden = NO;
+    }
+    
 }
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
     [self.navigationController dismissViewControllerAnimated:YES completion:^{
@@ -198,8 +221,41 @@
     self.edgesForExtendedLayout = UIRectEdgeNone;
     self.conversationListTableView.tableFooterView = [UIView new];
     
-    [self  setNavigation];
+    [self setNavigation];
+//    [self requestFriendList];
 }
+
+//- (void)requestFriendList {
+//    XXERootFriendListApi *rootFriendListApi = [[XXERootFriendListApi alloc]initWithRootFriendListUserXid:parameterXid UserId:parameterUser_Id];
+//    [rootFriendListApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
+//        //        NSLog(@"%@",request.responseJSONObject);
+//        
+//        NSString *code = [request.responseJSONObject objectForKey:@"code"];
+//        if ([code integerValue]== 1) {
+//            NSArray *data = [request.responseJSONObject objectForKey:@"data"];
+//            for (NSDictionary *dic in data) {
+//                //                0 :表示 自己 头像 ，需要添加 前缀
+//                //                1 :表示 第三方 头像 ，不需要 添加 前缀
+//                //判断是否是第三方头像
+//                NSString * head_img;
+//                if([[NSString stringWithFormat:@"%@",dic[@"head_img_type"]]isEqualToString:@"0"]){
+//                    head_img=[kXXEPicURL stringByAppendingString:dic[@"head_img"]];
+//                }else{
+//                    head_img=dic[@"head_img"];
+//                }
+//                
+//                RCUserInfo *aUserInfo =[[RCUserInfo alloc]initWithUserId:dic[@"xid"] name:dic[@"nickname"] portrait:head_img];
+//                [[AppDelegate shareAppDelegate].friendsArray addObject:aUserInfo];
+//                
+//            }
+//        }
+//        
+//        
+//        
+//    } failure:^(__kindof YTKBaseRequest *request) {
+//        
+//    }];
+//}
 
 - (void)setNavigation {
     UIButton*rightButton = [[UIButton alloc]initWithFrame:CGRectMake(0,0,22,22)];
@@ -646,6 +702,7 @@ NSLog(@"[AppDelegate shareAppDelegate].friendsArray  -----====--  %@", [AppDeleg
 #pragma &&&&&&&&&&&&&& 显示 消息 条数 &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    
     return  self.conversationListDataSource.count;
 }
 

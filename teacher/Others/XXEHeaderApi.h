@@ -16,6 +16,8 @@
 #define kRemoteNotification @"remoteNotification" //远程推送通知
 #define kSystemMessage @"systemMessage" //系统消息通知
 
+#define kChatNotification @"ChatNotification"
+#define kChatRemoteNotification @"ChatRemoteNotification"
 
 //访客登录XID不变
 #define XID  @"18886389"

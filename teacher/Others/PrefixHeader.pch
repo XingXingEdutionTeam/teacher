@@ -43,5 +43,6 @@
 #import "NSDictionary+decription.h"
 #import "NSArray+decription.h"
 #import "EmptyView.h"
+#import "GlobalVariable.h"
 
 #endif /* PrefixHeader_pch */

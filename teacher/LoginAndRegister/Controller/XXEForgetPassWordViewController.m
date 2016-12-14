@@ -393,33 +393,33 @@
     NSLog(@"电话号码%@ 验证码%@",self.registerUerTextField.text,self.registerVerificationTextField.text);
     
     
-//    [SMSSDK commitVerificationCode:self.registerVerificationTextField.text phoneNumber:self.phone zone:@"86" result:^(NSError *error) {
-//        if (error) {
-//            [self showString:@"验证码错误" forSecond:1.f];
-//        }else {
-//            //标示是不是从忘记页面跳转过去的
-//        }
-//    }];
-    NSString *forgetPass = @"忘记密码--";
-    XXERegisterSecondViewController *registerVC = [[XXERegisterSecondViewController alloc]init];
-    
-    if (self.passwordType == PayPassword) {
-        registerVC.passwordType = PayPassword;
-    }else if (self.passwordType == LoginPassword) {
-        registerVC.passwordType = LoginPassword;
-    }
-    
-    if (self.loginType == LoginSure) {
-        registerVC.loginType = LoginSure;
-        registerVC.forgetPhonrNum = [XXEUserInfo user].account;
-    }else if (self.loginType == LoginNot) {
-        registerVC.loginType = LoginNot;
-        registerVC.forgetPhonrNum = self.registerUserName;
-    }
-    
-    registerVC.forgetPassWordPage = forgetPass;
-    
-    [self.navigationController pushViewController:registerVC animated:YES];
+    [SMSSDK commitVerificationCode:self.registerVerificationTextField.text phoneNumber:self.phone zone:@"86" result:^(NSError *error) {
+        if (error) {
+            [self showString:@"验证码错误" forSecond:1.f];
+        }else {
+            //标示是不是从忘记页面跳转过去的
+            NSString *forgetPass = @"忘记密码--";
+            XXERegisterSecondViewController *registerVC = [[XXERegisterSecondViewController alloc]init];
+            
+            if (self.passwordType == PayPassword) {
+                registerVC.passwordType = PayPassword;
+            }else if (self.passwordType == LoginPassword) {
+                registerVC.passwordType = LoginPassword;
+            }
+            
+            if (self.loginType == LoginSure) {
+                registerVC.loginType = LoginSure;
+                registerVC.forgetPhonrNum = [XXEUserInfo user].account;
+            }else if (self.loginType == LoginNot) {
+                registerVC.loginType = LoginNot;
+                registerVC.forgetPhonrNum = self.registerUserName;
+            }
+            
+            registerVC.forgetPassWordPage = forgetPass;
+            
+            [self.navigationController pushViewController:registerVC animated:YES];
+        }
+    }];
 }
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event

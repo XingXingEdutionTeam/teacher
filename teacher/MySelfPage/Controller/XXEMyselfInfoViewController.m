@@ -24,6 +24,7 @@
 #import "XXEMyselfInfoGraduateInstitutionsViewController.h"
 #import "AppDelegate.h"
 #import "SystemPopView.h"
+#import "JPUSHService.h"
 
 #define ORIGINAL_MAX_WIDTH 640.0f
 
@@ -800,6 +801,7 @@
             break;
         case 1:
         {
+            [JPUSHService setAlias:@"" callbackSelector:nil object:nil];
             [[XXEUserInfo user]cleanUserInfo];
             [XXEUserInfo user].login = NO;
             XXELoginViewController *landVC =[[XXELoginViewController alloc]init];

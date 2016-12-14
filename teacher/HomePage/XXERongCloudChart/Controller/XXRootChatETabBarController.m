@@ -65,13 +65,14 @@
                 [[AppDelegate shareAppDelegate].friendsArray addObject:aUserInfo];
                 
             }
-            [self setContent];
-            [self setRongCloud];
         }
+        [self setContent];
+        [self setRongCloud];
         
         
     } failure:^(__kindof YTKBaseRequest *request) {
-        
+        [self setContent];
+        [self setRongCloud];
     }];
 }
 
