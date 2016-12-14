@@ -45,9 +45,6 @@
 #import "UpdatePopView.h"
 #import "WithoutCloseUpdatePopView.h"
 
-//MARK - appstore链接
-NSMutableString *appStoreURL;
-
 //MARK - 当前系统版本号 规定为三位数整数 如: 1.0.0 为100
 static int currentVersion = 100;
 
@@ -101,31 +98,6 @@ static int currentVersion = 100;
     
     [self showUpdatePopView];
     
-//    //获取deviceToken
-//    
-//    /*
-//    * 推送处理1
-//    */
-//    if ([application
-//         respondsToSelector:@selector(registerUserNotificationSettings:)]) {
-//        //注册推送, 用于iOS8以及iOS8之后的系统
-//        UIUserNotificationSettings *settings = [UIUserNotificationSettings
-//                                                settingsForTypes:(UIUserNotificationTypeBadge |
-//                                                                  UIUserNotificationTypeSound |
-//                                                                  UIUserNotificationTypeAlert)
-//                                                categories:nil];
-//        [application registerUserNotificationSettings:settings];
-//    }
-////    else {
-////        //注册推送，用于iOS8之前的系统
-////        UIRemoteNotificationType myTypes = UIRemoteNotificationTypeBadge |
-////        UIRemoteNotificationTypeAlert |
-////        UIRemoteNotificationTypeSound;
-////        [application registerForRemoteNotificationTypes:myTypes];
-////    }
-//    
-//    NSDictionary *remoteNotificationUserInfo = launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey];
-//    NSLog(@"%@", remoteNotificationUserInfo);
     return YES;
 }
 
@@ -135,8 +107,8 @@ static int currentVersion = 100;
     [[ServiceManager sharedInstance] requestWithURLString:CheckoutVersionURL parameters:nil type:HttpRequestTypeGet success:^(id responseObject) {
         
         if ([responseObject[@"code"] integerValue] == 1) {
-            extern NSMutableString *appStoreURL;
-            appStoreURL = responseObject[@"data"][@"url"];
+            [GlobalVariable shareInstance].appStoreURL = responseObject[@"data"][@"url"];
+            NSString *appStoreURL = responseObject[@"data"][@"url"];
             int nowVersion = [responseObject[@"data"][@"now_version"] intValue];
             int allowVersion = [responseObject[@"data"][@"allow_version"] intValue];// 支持最低版本号
             
@@ -358,8 +330,6 @@ static int currentVersion = 100;
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
-    [[NSUserDefaults standardUserDefaults] setObject:@"NO" forKey:@"isActiveStatus"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
 }
@@ -475,14 +445,34 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
     [JPUSHService handleRemoteNotification:userInfo];
     completionHandler(UIBackgroundFetchResultNewData);
     
-    if ([UIApplication sharedApplication].applicationState == UIApplicationStateActive) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:kSystemMessage object:nil userInfo:userInfo];
-        AudioServicesPlayAlertSound(1007);
-    }else if ([UIApplication sharedApplication].applicationState == UIApplicationStateBackground) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:kRemoteNotification object:nil userInfo:userInfo];
-    }else if ([UIApplication sharedApplication].applicationState == UIApplicationStateInactive) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:kRemoteNotification object:nil userInfo:userInfo];
+    if ([userInfo[@"aps"][@"sound"] isEqualToString:@"default"]) {
+        if ([UIApplication sharedApplication].applicationState == UIApplicationStateActive) {
+            [[NSNotificationCenter defaultCenter] postNotificationName:kChatNotification object:nil userInfo:userInfo];
+            AudioServicesPlayAlertSound(1007);
+        }else if ([UIApplication sharedApplication].applicationState == UIApplicationStateBackground) {
+            [[NSNotificationCenter defaultCenter] postNotificationName:kChatRemoteNotification object:nil userInfo:userInfo];
+        }else if ([UIApplication sharedApplication].applicationState == UIApplicationStateInactive) {
+            [[NSNotificationCenter defaultCenter] postNotificationName:kChatRemoteNotification object:nil userInfo:userInfo];
+        }
+    }else {
+        if ([UIApplication sharedApplication].applicationState == UIApplicationStateActive) {
+            [[NSNotificationCenter defaultCenter] postNotificationName:kSystemMessage object:nil userInfo:userInfo];
+            AudioServicesPlayAlertSound(1007);
+        }else if ([UIApplication sharedApplication].applicationState == UIApplicationStateBackground) {
+            [[NSNotificationCenter defaultCenter] postNotificationName:kRemoteNotification object:nil userInfo:userInfo];
+        }else if ([UIApplication sharedApplication].applicationState == UIApplicationStateInactive) {
+            [[NSNotificationCenter defaultCenter] postNotificationName:kRemoteNotification object:nil userInfo:userInfo];
+        }
     }
+//    
+//    if ([UIApplication sharedApplication].applicationState == UIApplicationStateActive) {
+//        [[NSNotificationCenter defaultCenter] postNotificationName:kSystemMessage object:nil userInfo:userInfo];
+//        AudioServicesPlayAlertSound(1007);
+//    }else if ([UIApplication sharedApplication].applicationState == UIApplicationStateBackground) {
+//        [[NSNotificationCenter defaultCenter] postNotificationName:kRemoteNotification object:nil userInfo:userInfo];
+//    }else if ([UIApplication sharedApplication].applicationState == UIApplicationStateInactive) {
+//        [[NSNotificationCenter defaultCenter] postNotificationName:kRemoteNotification object:nil userInfo:userInfo];
+//    }
     
     
     

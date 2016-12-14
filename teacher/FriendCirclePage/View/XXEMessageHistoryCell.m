@@ -16,8 +16,8 @@
 - (void)layoutSubviews
 {
     [super layoutSubviews];
-    self.messageImageView.layer.cornerRadius = 50/2;
-    self.messageImageView.layer.masksToBounds = YES;
+//    self.messageImageView.layer.cornerRadius = 50/2;
+//    self.messageImageView.layer.masksToBounds = YES;
 }
 
 - (void)configerGetCircleMessageHistory:(XXEMessageHistoryModel *)model
@@ -43,6 +43,7 @@
 
 - (void)awakeFromNib {
     // Initialization code
+    [super awakeFromNib];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

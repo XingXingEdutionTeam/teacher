@@ -531,13 +531,14 @@
 - (void)seeButtonClick:(UIButton *)button{
     
     NSLog(@"********查看圈子 *******");
-//    if ([XXEUserInfo user].login) {
-//    XXEFriendMyCircleViewController *friendMyCircleVC = [[XXEFriendMyCircleViewController alloc] init];
-//    friendMyCircleVC.otherXid = teacher_xid;
-//    [self.navigationController pushViewController:friendMyCircleVC animated:YES];
-//    }else{
-//        [self showHudWithString:@"请先用账号登录" forSecond:1.5];
-//    }
+    if ([XXEUserInfo user].login) {
+    XXEFriendMyCircleViewController *friendMyCircleVC = [[XXEFriendMyCircleViewController alloc] init];
+    friendMyCircleVC.otherXid = teacher_xid;
+    friendMyCircleVC.rootChat = @"猩课堂";
+    [self.navigationController pushViewController:friendMyCircleVC animated:YES];
+    }else{
+        [self showHudWithString:@"请先用账号登录" forSecond:1.5];
+    }
 
 }
 

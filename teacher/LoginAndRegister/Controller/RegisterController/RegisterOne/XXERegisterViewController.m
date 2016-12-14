@@ -333,13 +333,13 @@
             NSLog(@"%@", error);
             [self showString:@"验证码错误" forSecond:1.f];
         }else {
+            XXERegisterSecondViewController *registerSecondVC = [[XXERegisterSecondViewController alloc]init];
+            registerSecondVC.userPhoneNum = self.registerUerTextField.text;
+            registerSecondVC.login_type = @"1";
+            [self.navigationController pushViewController:registerSecondVC animated:YES];
         }
     }];
     
-    XXERegisterSecondViewController *registerSecondVC = [[XXERegisterSecondViewController alloc]init];
-    registerSecondVC.userPhoneNum = self.registerUerTextField.text;
-    registerSecondVC.login_type = @"1";
-    [self.navigationController pushViewController:registerSecondVC animated:YES];
 }
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event

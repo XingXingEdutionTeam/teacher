@@ -41,8 +41,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "634"
             endingLineNumber = "634"
-            landmarkName = "-didReceiveMessageNotification:"
-            landmarkType = "7">
+            landmarkName = "@implementation XXERootReplyListController"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -57,7 +57,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "445"
             endingLineNumber = "445"
-            landmarkName = "-rcConversationListTableView:cellForRowAtIndexPath:"
+            landmarkName = "-requestAddFriend"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -73,7 +73,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "440"
             endingLineNumber = "440"
-            landmarkName = "-rcConversationListTableView:cellForRowAtIndexPath:"
+            landmarkName = "-requestAddFriend"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

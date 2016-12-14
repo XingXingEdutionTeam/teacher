@@ -46,9 +46,34 @@
 
 @property(nonatomic ,assign) BOOL isMaxLoading;
 
+@property(nonatomic, strong)EmptyView *empty;
+
+@property(nonatomic ,strong)EmptyView *netErrorView;
+
 @end
 
 @implementation XXEFriendCirclePageViewController
+
+- (EmptyView *)empty {
+    if (!_empty) {
+        CGRect frame = CGRectMake(0, 0, KScreenWidth, KScreenHeight - 64 - 44);
+        _empty = [EmptyView conveniceWithTitle:@"您暂时无法查看圈子" frame:frame];
+        [self.tableView addSubview:_empty];
+        _empty.hidden = YES;
+    }
+    return _empty;
+}
+
+-(EmptyView *)netErrorView {
+    if (!_netErrorView) {
+        CGRect frame = CGRectMake(0, 0, KScreenWidth, KScreenHeight - 64 - 44);
+        _netErrorView = [EmptyView conveniceWithTitle:@"网络连接错误" frame:frame];
+        [self.tableView addSubview:_netErrorView];
+        _netErrorView.hidden = YES;
+    }
+    
+    return _netErrorView;
+}
 
 - (NSMutableArray *)headerDatasource
 {
@@ -147,28 +172,23 @@
     if ([pageNum isEqualToString:@"1"]) {
         [self.circleListDatasource removeAllObjects];
     }
+    self.netErrorView.hidden = YES;
     __weak __typeof(self)weakSelf = self;
     XXEFriendCircleApi *friendCircleApi = [[XXEFriendCircleApi alloc]initWithFriendCircleXid:parameterXid CircleUserId:parameterUser_Id PageNumber:pageNum];
     [friendCircleApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         
         weakSelf.tableView.hidden = NO;
-        NSString *code = [request.responseJSONObject objectForKey:@"code"];
         NSDictionary *data = [request.responseJSONObject objectForKey:@"data"];
         
-        if (data == NULL) {
-            
-            EmptyView *empty = [EmptyView conveniceWithTitle:@"您目前正在审核中,暂时无法查看圈子" frame:self.tableView.frame];
-            self.tableView.backgroundView = empty;
-        }else {
-            if (self.tableView.backgroundView) {
-                self.tableView.backgroundView = nil;
-            }
+        self.empty.hidden = YES;
+        if ([data isEqual:@""]) {
+            self.empty.hidden = NO;
         }
-        
-        
+        NSString *code = [request.responseJSONObject objectForKey:@"code"];
         if ([code intValue]==1 && [[request.responseJSONObject objectForKey:@"data"] isKindOfClass:[NSDictionary class]]) {
             NSInteger maxPage = [[[request.responseJSONObject objectForKey:@"data"] objectForKey:@"max_page"] integerValue];
             [weakSelf detelAllSource];
+            
             NSDictionary *userInfo = [data objectForKey:@"user_info"];
             XXECircleUserModel *Usermodel = [[XXECircleUserModel alloc]initWithDictionary:userInfo error:nil];
             [weakSelf.headerDatasource addObject:Usermodel];
@@ -220,6 +240,7 @@
         [RuningXX.sharedInstance dismissWithAnimation];
     } failure:^(__kindof YTKBaseRequest *request) {
          [RuningXX.sharedInstance dismissWithAnimation];
+         weakSelf.netErrorView.hidden = NO;
          [weakSelf endRefresh];
          [weakSelf hudShowText:@"网络连接错误" second:2.f];
     }];

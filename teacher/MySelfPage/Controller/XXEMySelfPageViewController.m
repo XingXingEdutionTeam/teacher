@@ -19,6 +19,7 @@
 #import "XXEMySelfInfoApi.h"
 #import "XXECourseOrderListViewController.h"
 #import "XXEFriendMyCircleViewController.h"
+#import "XXRootChatETabBarController.h"
 
 @interface XXEMySelfPageViewController ()<UITableViewDelegate, UITableViewDataSource>
 {
@@ -373,7 +374,7 @@
         [self.navigationController pushViewController:myselfInfoVC animated:YES];
         }else{
             
-            [self showHudWithString:@"请用账号登录" forSecond:1.5];
+            [self showString:@"请用账号登录后查看" forSecond:1.5];
         }
         
     }else if (indexPath.row == 1){
@@ -385,21 +386,19 @@
         [self.navigationController pushViewController:rootFriendListVC animated:NO];
     }else{
         
-        [self showHudWithString:@"请用账号登录" forSecond:1.5];
+        [self showString:@"请用账号登录后查看" forSecond:1.5];
     }
 
         
     }else if (indexPath.row == 2){
         //@"我的聊天"
         if([XXEUserInfo user].login){
-            
-        WMConversationViewController *WMConversationVC = [[WMConversationViewController alloc] init];
+            XXRootChatETabBarController *chatListVC = [[XXRootChatETabBarController alloc] init];
+        [self.navigationController pushViewController:chatListVC animated:NO];
+    }else{
         
-        [self.navigationController pushViewController:WMConversationVC animated:NO];
-         }else{
-        
-         [self showHudWithString:@"请用账号登录" forSecond:1.5];
-         }
+         [self showString:@"请用账号登录后查看" forSecond:1.5];
+    }
 
     
     }else if (indexPath.row == 3){
@@ -413,6 +412,10 @@
         }
     }else if (indexPath.row == 4){
         //@"我的圈子"
+        XXEFriendMyCircleViewController *myCircle = [[XXEFriendMyCircleViewController alloc] init];
+        myCircle.rootChat = @"my";
+        myCircle.otherXid = [XXEUserInfo user].xid;
+        [self.navigationController pushViewController:myCircle animated:YES];
         
     }else if (indexPath.row == 5){
         if ([XXEUserInfo user].login) {
@@ -450,7 +453,7 @@
         [self.navigationController pushViewController:myselfInfoVC animated:YES];
         }else{
         
-        [self showHudWithString:@"请用账号登录" forSecond:1.5];
+        [self showString:@"请用账号登录后查看" forSecond:1.5];
         }
 
         
@@ -473,25 +476,26 @@
         [self.navigationController pushViewController:rootFriendListVC animated:NO];
        }else{
         
-          [self showHudWithString:@"请用账号登录" forSecond:1.5];
+          [self showString:@"请用账号登录后查看" forSecond:1.5];
         }
     }else if (indexPath.row == 3){
         if([XXEUserInfo user].login){
-        
         //@"我的聊天"
-        WMConversationViewController *WMConversationVC = [[WMConversationViewController alloc] init];
-        
-        [self.navigationController pushViewController:WMConversationVC animated:NO];
+        XXRootChatETabBarController *chatListVC = [[XXRootChatETabBarController alloc] init];
+        [self.navigationController pushViewController:chatListVC animated:NO];
         }else{
         
-            [self showHudWithString:@"请用账号登录" forSecond:1.5];
+            [self showString:@"请用账号登录后查看" forSecond:1.5];
         }
     }else if (indexPath.row == 4){
         //@"我的收藏"
-        XXEMyselfInfoCollectionViewController *myselfInfoCollectionVC = [[XXEMyselfInfoCollectionViewController alloc] init];
-        
-        [self.navigationController pushViewController:myselfInfoCollectionVC animated:YES];
-        
+        if ([XXEUserInfo user].login) {
+            XXEMyselfInfoCollectionViewController *myselfInfoCollectionVC = [[XXEMyselfInfoCollectionViewController alloc] init];
+            
+            [self.navigationController pushViewController:myselfInfoCollectionVC animated:YES];
+        }else{
+            [self showString:@"请用账号登录后查看" forSecond:1.5];
+        }
     }else if (indexPath.row == 5){
         //@"我的圈子"
         XXEFriendMyCircleViewController *myCircle = [[XXEFriendMyCircleViewController alloc] init];
@@ -501,8 +505,13 @@
         
     }else if (indexPath.row == 6){
         //@"我的黑名单"
-        XXEMyselfBlackListViewController *myselfBlackListVC = [[XXEMyselfBlackListViewController alloc] init];
-        [self.navigationController pushViewController:myselfBlackListVC animated:YES];
+        if ([XXEUserInfo user].login) {
+            XXEMyselfBlackListViewController *myselfBlackListVC = [[XXEMyselfBlackListViewController alloc] init];
+            [self.navigationController pushViewController:myselfBlackListVC animated:YES];
+        }else{
+            [self showString:@"请用账号登录后查看" forSecond:1.5];
+        }
+
     }else if (indexPath.row == 7){
         //@"系统设置"
         XXEMyselfSystemSettingViewController *myselfSystemSettingVC = [[XXEMyselfSystemSettingViewController alloc] init];

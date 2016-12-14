@@ -175,7 +175,7 @@
     if (indexPath.row == 0 || indexPath.row == 1) {
         cell.switchButton.hidden = YES;
         
-        nameLabel = [UILabel createLabelWithFrame:CGRectMake(KScreenWidth - 100 * kScreenRatioWidth, 10, 100 * kScreenRatioWidth, 20) Font:14.0 Text:nameArray[indexPath.row]];
+        nameLabel = [UILabel createLabelWithFrame:CGRectMake(KScreenWidth - 150 * kScreenRatioWidth, 10, 100 * kScreenRatioWidth, 20) Font:14.0 Text:nameArray[indexPath.row]];
         
         [cell.contentView addSubview:nameLabel];
         
