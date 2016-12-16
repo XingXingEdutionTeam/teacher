@@ -11,6 +11,7 @@
 #import <RongIMKit/RongIMKit.h>
 #import "XXRootChatETabBarController.h"
 #import "XXERCDataManager.h"
+#import <UserNotifications/UserNotifications.h>
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 

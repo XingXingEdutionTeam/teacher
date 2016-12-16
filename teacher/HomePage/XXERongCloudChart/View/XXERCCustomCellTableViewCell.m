@@ -20,8 +20,9 @@
     if (self) {
         //头像
         self.avatarIV = [[UIImageView alloc]initWithFrame:CGRectMake(kgap, kgap, kCellHeight-2*kgap, kCellHeight-2*kgap)];
+        self.avatarIV.userInteractionEnabled = YES;
         self.avatarIV.clipsToBounds = YES;
-        self.avatarIV.layer.cornerRadius = 8;
+//        self.avatarIV.layer.cornerRadius = 8;
         [self.contentView addSubview:self.avatarIV];
         //realName
         self.nameLabel = [[UILabel alloc]initWithFrame:CGRectMake(self.avatarIV.frame.origin.x+self.avatarIV.frame.size.width+kgap, self.avatarIV.frame.origin.y+7,[UIScreen mainScreen].bounds.size.width-self.avatarIV.frame.size.width-2*kgap-80, self.avatarIV.frame.size.height/2-kgap/2)];

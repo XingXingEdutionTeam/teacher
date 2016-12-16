@@ -42,7 +42,9 @@
              @"backtype":BACKTYPE,
              @"user_id":_userId,
              @"user_type":USER_TYPE,
-             @"talk_id":_talkId};
+             @"talk_id":_talkId
+//             @"return_param_all":@"1"
+             };
 }
 
 

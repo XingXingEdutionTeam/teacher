@@ -216,19 +216,19 @@
 
 - (void)systemMessage:(NSNotification *)notification {
     self.middleView.systemNotificationBadgeView.hidden = NO;
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:kSystemMessage object:nil];
+//    [[NSNotificationCenter defaultCenter] removeObserver:self name:kSystemMessage object:nil];
 }
 
 - (void)chatNotification:(NSNotification *)notification {
 //    [self pushToChatVC];
     
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:kChatNotification object:nil];
+//    [[NSNotificationCenter defaultCenter] removeObserver:self name:kChatNotification object:nil];
 }
 
 - (void)chatRemoteNotification:(NSNotification *)notification {
-//    [self pushToChatVC];
+    [self pushToChatVC];
     
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:kChatRemoteNotification object:nil];
+//    [[NSNotificationCenter defaultCenter] removeObserver:self name:kChatRemoteNotification object:nil];
 }
 
 - (void)didReceiveMessageNotification:(NSNotification *)notification {
@@ -709,7 +709,7 @@
         if ([appdelegate.userInfo[@"aps"][@"sound"] isEqualToString:@"sound"]) {
             [self pushToXXENotificationViewController];
         }else if ([appdelegate.userInfo[@"aps"][@"sound"] isEqualToString:@"default"]){
-//            [self pushToChatVC];
+            [self pushToChatVC];
         }
         appdelegate.userInfo = nil;
         

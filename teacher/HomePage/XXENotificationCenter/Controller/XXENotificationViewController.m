@@ -136,11 +136,11 @@
 //    position = [DEFAULTS objectForKey:@"POSITION"];
     
     self.navigationController.navigationBar.backgroundColor = XXEColorFromRGB(0, 170, 42);
-    self.navigationController.navigationBarHidden = NO;    
-
-    UIButton *rightBtn =[UIButton createButtonWithFrame:CGRectMake(0, 0, 22, 22) backGruondImageName:@"home_notification_release_icon44x44" Target:self Action:@selector(rightBtnClick:) Title:@""];
-    UIBarButtonItem *sentItem =[[UIBarButtonItem alloc]initWithCustomView:rightBtn];
-        self.navigationItem.rightBarButtonItem =sentItem;
+    self.navigationController.navigationBarHidden = NO;
+    
+    if (self.schoolInfo == SchoolInfoHave) {
+        [self setRightBtn];
+    }
     
     [self createSegementControl];
     
@@ -148,8 +148,13 @@
     
 }
 
-
 #pragma Mark **********  右上角 按钮 **************
+- (void)setRightBtn {
+    UIButton *rightBtn =[UIButton createButtonWithFrame:CGRectMake(0, 0, 22, 22) backGruondImageName:@"home_notification_release_icon44x44" Target:self Action:@selector(rightBtnClick:) Title:@""];
+    UIBarButtonItem *sentItem =[[UIBarButtonItem alloc]initWithCustomView:rightBtn];
+    self.navigationItem.rightBarButtonItem =sentItem;
+}
+
 - (void)rightBtnClick:(UIButton *)button{
 
     if ([XXEUserInfo user].login) {

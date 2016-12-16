@@ -564,7 +564,7 @@ NSLog(@"[AppDelegate shareAppDelegate].friendsArray  -----====--  %@", [AppDeleg
                 cell.nameLabel.text = [NSString stringWithFormat:@"%@",userInfo.name];
                 if ([userInfo.portraitUri isEqualToString:@""]||userInfo.portraitUri==nil) {
                     cell.avatarIV.image = [UIImage imageNamed:@"headplaceholder"];
-                    [cell.contentView bringSubviewToFront:cell.avatarIV];
+//                    [cell.contentView bringSubviewToFront:cell.avatarIV];
                 }else{
                     [cell.avatarIV sd_setImageWithURL:[NSURL URLWithString:userInfo.portraitUri] placeholderImage:[UIImage imageNamed:@"headplaceholder"]];
                 }

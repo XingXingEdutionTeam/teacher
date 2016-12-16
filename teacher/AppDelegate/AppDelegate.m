@@ -45,10 +45,14 @@
 #import "UpdatePopView.h"
 #import "WithoutCloseUpdatePopView.h"
 
+// define macro
+#define SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(v)  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedAscending)
+#define SYSTEM_VERSION_LESS_THAN(v) ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] == NSOrderedAscending)
+
 //MARK - 当前系统版本号 规定为三位数整数 如: 1.0.0 为100
 static int currentVersion = 100;
 
-@interface AppDelegate ()<JPUSHRegisterDelegate>
+@interface AppDelegate ()<JPUSHRegisterDelegate,UNUserNotificationCenterDelegate>
 
 @end
 
@@ -56,7 +60,7 @@ static int currentVersion = 100;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
-    
+    [self setRCIMPush];
     
     [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
     //初始化应用,appKey appSecret 从后天获取
@@ -99,6 +103,39 @@ static int currentVersion = 100;
     [self showUpdatePopView];
     
     return YES;
+}
+
+//MARK: - 10.0推送
+- (void)setRCIMPush {
+    if( SYSTEM_VERSION_LESS_THAN( @"10.0" ) )
+    {
+        [[UIApplication sharedApplication] registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeSound |    UIUserNotificationTypeAlert | UIUserNotificationTypeBadge) categories:nil]];
+        [[UIApplication sharedApplication] registerForRemoteNotifications];
+        
+        //if( option != nil )
+        //{
+        //    NSLog( @"registerForPushWithOptions:" );
+        //}
+    }
+    else
+    {
+        UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
+        center.delegate = self;
+        [center requestAuthorizationWithOptions:(UNAuthorizationOptionSound | UNAuthorizationOptionAlert | UNAuthorizationOptionBadge) completionHandler:^(BOOL granted, NSError * _Nullable error)
+         {
+             if( !error )
+             {
+                 [[UIApplication sharedApplication] registerForRemoteNotifications];  // required to get the app to do anything at all about push notifications
+                 NSLog( @"Push registration success." );
+             }
+             else
+             {
+                 NSLog( @"Push registration FAILED" );
+                 NSLog( @"ERROR: %@ - %@", error.localizedFailureReason, error.localizedDescription );
+                 NSLog( @"SUGGESTIONS: %@ - %@", error.localizedRecoveryOptions, error.localizedRecoverySuggestion );  
+             }  
+         }];  
+    }
 }
 
 //MARK: - 版本更新提示框
@@ -247,9 +284,7 @@ static int currentVersion = 100;
     XXEStarImageViewController *starImageViewController = [[XXEStarImageViewController alloc]init];
     self.window = [[UIWindow alloc]init];
     self.window.frame = [UIScreen mainScreen].bounds;
-    
     self.window.rootViewController = starImageViewController;
-    
     [self.window makeKeyAndVisible];
 
     
@@ -439,11 +474,40 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
     completionHandler();  // 系统要求执行这个方法
 }
 
-- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
-    
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {    
     // Required, iOS 7 Support
     [JPUSHService handleRemoteNotification:userInfo];
-    completionHandler(UIBackgroundFetchResultNewData);
+    // iOS 10 will handle notifications through other methods
+    
+    if( SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO( @"10.0" ) )
+    {
+        NSLog( @"iOS version >= 10. Let NotificationCenter handle this one." );
+        // set a member variable to tell the new delegate that this is background
+        return;
+    }
+    NSLog( @"HANDLE PUSH, didReceiveRemoteNotification: %@", userInfo );
+    
+    // custom code to handle notification content
+    
+    if( [UIApplication sharedApplication].applicationState == UIApplicationStateInactive )
+    {
+        NSLog( @"INACTIVE" );
+        completionHandler( UIBackgroundFetchResultNewData );
+    }
+    else if( [UIApplication sharedApplication].applicationState == UIApplicationStateBackground )
+    {
+        NSLog( @"BACKGROUND" );
+        completionHandler( UIBackgroundFetchResultNewData );
+    }
+    else
+    {
+        NSLog( @"FOREGROUND" );
+        completionHandler( UIBackgroundFetchResultNewData );
+    }
+
+    
+    
+//    completionHandler(UIBackgroundFetchResultNewData);
     
     if ([userInfo[@"aps"][@"sound"] isEqualToString:@"default"]) {
         if ([UIApplication sharedApplication].applicationState == UIApplicationStateActive) {
@@ -452,7 +516,7 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
         }else if ([UIApplication sharedApplication].applicationState == UIApplicationStateBackground) {
             [[NSNotificationCenter defaultCenter] postNotificationName:kChatRemoteNotification object:nil userInfo:userInfo];
         }else if ([UIApplication sharedApplication].applicationState == UIApplicationStateInactive) {
-            [[NSNotificationCenter defaultCenter] postNotificationName:kChatRemoteNotification object:nil userInfo:userInfo];
+            [[NSNotificationCenter defaultCenter] postNotificationName:kChatNotification object:nil userInfo:userInfo];
         }
     }else {
         if ([UIApplication sharedApplication].applicationState == UIApplicationStateActive) {
@@ -461,7 +525,7 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
         }else if ([UIApplication sharedApplication].applicationState == UIApplicationStateBackground) {
             [[NSNotificationCenter defaultCenter] postNotificationName:kRemoteNotification object:nil userInfo:userInfo];
         }else if ([UIApplication sharedApplication].applicationState == UIApplicationStateInactive) {
-            [[NSNotificationCenter defaultCenter] postNotificationName:kRemoteNotification object:nil userInfo:userInfo];
+            [[NSNotificationCenter defaultCenter] postNotificationName:kSystemMessage object:nil userInfo:userInfo];
         }
     }
 //    
@@ -485,6 +549,26 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
 //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showNotification:) name:@"Notification" object:nil];
 }
 
+
+
+- (void)userNotificationCenter:(UNUserNotificationCenter *)center
+       willPresentNotification:(UNNotification *)notification
+         withCompletionHandler:(void (^)(UNNotificationPresentationOptions options))completionHandler
+{
+    NSLog( @"Handle push from foreground" );
+    // custom code to handle push while app is in the foreground
+    NSLog(@"%@", notification.request.content.userInfo);
+}
+
+- (void)userNotificationCenter:(UNUserNotificationCenter *)center
+didReceiveNotificationResponse:(UNNotificationResponse *)response
+         withCompletionHandler:(void (^)())completionHandler
+{
+    NSLog( @"Handle push from background or closed" );
+    // if you set a member variable in didReceiveRemoteNotification, you  will know if this is from closed or background
+    NSLog(@"%@", response.notification.request.content.userInfo);
+}
+
 - (void)saveFMDBWithUserInfo:(NSDictionary *)userInfo {
     [JPUSHService setBadge:0];
     [[FMDBManager shareDataBase] createSystemMsgListTable];
@@ -500,11 +584,12 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
     NSLog(@"%@",[[FMDBManager shareDataBase] selectedSysmodel]);
 }
 
-//- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
-//    
-//    // Required,For systems with less than or equal to iOS6
-//    [JPUSHService handleRemoteNotification:userInfo];
-//}
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
+    [self application:application didReceiveRemoteNotification:userInfo fetchCompletionHandler:^(UIBackgroundFetchResult result) {
+    }];
+    // Required,For systems with less than or equal to iOS6
+    [JPUSHService handleRemoteNotification:userInfo];
+}
 
 
 @end
