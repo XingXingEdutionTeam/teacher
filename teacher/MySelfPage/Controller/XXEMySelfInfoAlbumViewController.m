@@ -551,7 +551,7 @@
         imageBrowsingVC.imageUrlArray = picWallArray;
         imageBrowsingVC.currentIndex = indexPath.item;
         //举报 来源 6:老师点评
-//        imageBrowsingVC.origin_pageStr = @"6";
+        imageBrowsingVC.origin_pageStr = @"9";
         
         [self.navigationController pushViewController:imageBrowsingVC animated:YES];
 

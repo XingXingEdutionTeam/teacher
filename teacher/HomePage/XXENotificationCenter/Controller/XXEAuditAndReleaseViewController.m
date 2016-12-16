@@ -126,10 +126,17 @@
     condit = [NSString stringWithFormat:@"%ld", segment.selectedSegmentIndex];
     if ([condit integerValue] == 0) {
 //        a = 0;
+        if (_auditDataSourceArray.count != 0) {
+            [_auditDataSourceArray removeAllObjects];
+        }
+        
         [self fetchAuditNetData];
         
     }else if ([condit integerValue] == 1){
 //        a = 1;
+        if (_releaseDataSourecArray.count != 0) {
+            [_releaseDataSourecArray removeAllObjects];
+        }
         [self fetchReleaseNetData];
     }
 }

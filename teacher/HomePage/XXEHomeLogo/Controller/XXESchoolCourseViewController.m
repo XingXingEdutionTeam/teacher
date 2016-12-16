@@ -42,10 +42,9 @@
         parameterXid = XID;
         parameterUser_Id = USER_ID;
     }
+    [self createTableView];
     
     [self createData];
-    
-    [self createTableView];
     
 //    NSLog(@"=====  %@", _course_groupArray);
 }
@@ -59,8 +58,7 @@
         CGFloat myImageWidth = myImage.size.width;
         CGFloat myImageHeight = myImage.size.height;
         
-        UIImageView *myImageView = [[UIImageView alloc] initWithFrame:CGRectMake(KScreenWidth / 2 - myImageWidth / 2, _myTableView.frame.size.height / 2, myImageWidth, myImageHeight)];
-        myImageView.backgroundColor = [UIColor redColor];
+        UIImageView *myImageView = [[UIImageView alloc] initWithFrame:CGRectMake(KScreenWidth / 2 - myImageWidth / 2, (_myTableView.frame.size.height  - myImageHeight) / 2, myImageWidth, myImageHeight)];
         myImageView.image = myImage;
         [_myTableView addSubview:myImageView];
         

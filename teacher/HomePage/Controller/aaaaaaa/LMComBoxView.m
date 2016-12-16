@@ -39,7 +39,7 @@
     [self addSubview:btn];
     
     titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(2, 0, self.frame.size.width-imgW - 5 - 2, self.frame.size.height)];
-    titleLabel.font = [UIFont systemFontOfSize:14];
+    titleLabel.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];
     titleLabel.backgroundColor = [UIColor clearColor];
     titleLabel.textAlignment = NSTextAlignmentLeft;
     titleLabel.textColor = kTextColor;
@@ -171,7 +171,7 @@
         UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(2, 0, self.frame.size.width-4, self.frame.size.height)];
         label.backgroundColor = [UIColor clearColor];
         label.textAlignment = NSTextAlignmentLeft;
-        label.font = [UIFont systemFontOfSize:14];
+        label.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];
         label.textColor = kTextColor;
         label.tag = 1000;
         [cell addSubview:label];

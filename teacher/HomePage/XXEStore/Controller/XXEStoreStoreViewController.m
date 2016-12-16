@@ -354,26 +354,26 @@
 
 //立刻 签到
 - (void)checkInBtn{
-    if ([XXEUserInfo user].login) {
+//    if ([XXEUserInfo user].login) {
         //签到送猩币
         XXEXingCoinViewController *xingCoinVC = [[XXEXingCoinViewController alloc] init];
         
         [self.navigationController pushViewController:xingCoinVC animated:YES];
-    }else{
-        [self showString:@"请用账号登录后查看" forSecond:1.5];
-    }
+//    }else{
+//        [self showString:@"请用账号登录后查看" forSecond:1.5];
+//    }
 }
 
 
 //猩币 转赠
 - (void)moneyPresentBtn{
-    if ([XXEUserInfo user].login) {
+//    if ([XXEUserInfo user].login) {
         XXEStoreSentIconToOtherViewController *storeSentIconToOtherVC = [[XXEStoreSentIconToOtherViewController alloc] init];
         
         [self.navigationController pushViewController:storeSentIconToOtherVC animated:YES];
-    }else{
-        [self showString:@"请用账号登录后查看" forSecond:1.5];
-    }
+//    }else{
+//        [self showString:@"请用账号登录后查看" forSecond:1.5];
+//    }
 
 
 }
@@ -437,7 +437,7 @@
 }
 
 - (void)buyButtonClick:(UIButton *)button{
-    if ([XXEUserInfo user].login) {
+//    if ([XXEUserInfo user].login) {
         XXEStoreListModel *model = _dataSourceArray[button.tag - 1000];
         //判断 是实物还是虚拟
         //[type] => 1			//1:实物  2:虚拟商品
@@ -456,9 +456,9 @@
             [self createNoPayOrder:model.good_id];
         }
  
-    }else{
-        [self showString:@"请用账号登录后查看" forSecond:1.5];
-    }
+//    }else{
+//        [self showString:@"请用账号登录后查看" forSecond:1.5];
+//    }
 }
 
 #pragma mark ========虚拟 商品 产生未支付订单 ============
@@ -486,11 +486,11 @@
                              @"goods_id":good_id,
                              @"goods_type":@"2"
                              };
-    //        NSLog(@"params --- %@", params);
+//            NSLog(@"params --- %@", params);
     
     [WZYHttpTool post:urlStr params:params success:^(id responseObj) {
         //
-        //                NSLog(@"生成待支付订单 == %@", responseObj);
+//                        NSLog(@"生成待支付订单 == %@", responseObj);
         /*
          data =     {
          "order_id" = 594;
@@ -511,7 +511,7 @@
             
             
         }else if([responseObj[@"code"]  integerValue] == 7){
-            [self showString:@"您猩币不足" forSecond:1.5];
+            [self showString:@"您猩币数量不足" forSecond:1.5];
         }
         
     } failure:^(NSError *error) {
@@ -527,14 +527,14 @@
 
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    if ([XXEUserInfo user].login) {
+//    if ([XXEUserInfo user].login) {
         XXEStoreGoodDetailInfoViewController*storeGoodDetailInfoVC=  [[XXEStoreGoodDetailInfoViewController alloc]init];
         XXEStoreListModel *model = _dataSourceArray[indexPath.row];
         storeGoodDetailInfoVC.orderNum=model.good_id;
         [self.navigationController pushViewController:storeGoodDetailInfoVC animated:YES];
-    }else{
-        [self showString:@"请用账号登录后查看" forSecond:1.5];
-    }
+//    }else{
+//        [self showString:@"请用账号登录后查看" forSecond:1.5];
+//    }
 }
 
 

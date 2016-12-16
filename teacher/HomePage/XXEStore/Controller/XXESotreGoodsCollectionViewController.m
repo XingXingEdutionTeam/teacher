@@ -83,9 +83,11 @@
                              @"user_type":USER_TYPE
                              };
     
+    
+    
     [WZYHttpTool post:urlStr params:params success:^(id responseObj) {
-        //
-//                NSLog(@"hhhh %@", responseObj);
+        
+//    NSLog(@"hhhh %@", responseObj);
         
         if ([responseObj[@"code"] integerValue] == 1) {
             
@@ -190,7 +192,7 @@
     cell.nameLabel.text = model.title;
     cell.nameLabel.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];
     cell.iconNumLabel.text = model.exchange_coin;
-    cell.dateLabel.text = [XXETool dateStringFromNumberTimer:model.date_tm];
+    cell.dateLabel.text = [XXETool dateStringFromNumberTimer:model.collect_tm];
     
     return cell;
 }

@@ -13,6 +13,7 @@
 #import "XXETeacherManagerRefuseApi.h"
 #import "XXETeacherManagerAgreeApi.h"
 #import "XXETeacherManagerApi.h"
+#import "XXETeacherManagerDeleteApi.h"
 
 @interface XXETeacherManagerViewController ()<UITableViewDelegate, UITableViewDataSource>
 {
@@ -69,6 +70,10 @@
         parameterUser_Id = USER_ID;
     }
     
+    
+//    NSString *newSchoolID = [DEFAULTS objectForKey:@"SCHOOL_ID"];
+//    NSLog(@"newSchoolID == %@", newSchoolID);
+    
     [self createTableView];
 }
 
@@ -79,7 +84,7 @@
     [teacherManagerApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         classModelArray = [[NSMutableArray alloc] init];
         _flagArray = [[NSMutableArray alloc] init];
-//        NSLog(@"111   %@", request.responseJSONObject);
+        NSLog(@"111   %@", request.responseJSONObject);
         
         NSString *codeStr = [NSString stringWithFormat:@"%@", request.responseJSONObject[@"code"]];
         
@@ -394,15 +399,17 @@
     XXETeacherManagerClassInfoModel *classModel = classModelArray[path.section];
     XXETeacherManagerPersonInfoModel *stuModel = classModel.teacher_list[path.row];
     
-    //当前 所要删除 学生 的 babyid 及 所在 的classid
+    NSLog(@"%@ ==== %@ ", classModel, stuModel);
+    
+    //当前 所要删除 老师 的 teacherId 及 所在 的classid
     NSString *currentClassId = classModel.class_id;
-    NSString *currentBabyId = stuModel.examine_id;
+    NSString *currentTeacherId = stuModel.examine_id;
     
     UIAlertController *alert=[UIAlertController alertControllerWithTitle:@"确定删除？" message:nil preferredStyle:(UIAlertControllerStyleAlert)];
     UIAlertAction *cancel=[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
     UIAlertAction *ok=[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
 #pragma mark - 删除=======================================
-        [self deleteStudentInfo:currentClassId andWithBabyId:currentBabyId andIndexPath:path];
+        [self deleteStudentInfo:currentClassId andWithTeacherId:currentTeacherId andIndexPath:path];
         
     }];
     [alert addAction:ok];
@@ -411,33 +418,36 @@
 }
 
 
-- (void)deleteStudentInfo:(NSString *)currentClassId andWithBabyId:(NSString *)currentBabyId andIndexPath:(NSIndexPath *)path{
+- (void)deleteStudentInfo:(NSString *)currentClassId andWithTeacherId:(NSString *)currentTeacherId andIndexPath:(NSIndexPath *)path{
     
-    //    XXEStudentManagerDeleteApi *studentManagerDeleteApi = [[XXEStudentManagerDeleteApi alloc] initWithXid:parameterXid user_id:parameterUser_Id school_id:_schoolId class_id:currentClassId baby_id:currentBabyId];
-    //
-    //    [studentManagerDeleteApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
-    //
-    //        //              NSLog(@"2222---   %@", request.responseJSONObject);
-    //
-    //        NSString *codeStr = [NSString stringWithFormat:@"%@", request.responseJSONObject[@"code"]];
-    //
-    //        if ([codeStr isEqualToString:@"1"]) {
-    //
-    //            [self showHudWithString:@"删除成功!" forSecond:1.5];
-    //            //从 数据源中 删除
-    //            XXEClassInfoModel *classModel = classModelArray[path.section];
-    //            [classModel.baby_list removeObjectAtIndex:path.row];
-    //            //从 列表 中 删除
-    //            [_myTableView deleteRowsAtIndexPaths:@[path] withRowAnimation:UITableViewRowAnimationAutomatic];
-    //        }else{
-    //
-    //        }
-    //        [_myTableView reloadData];
-    //
-    //    } failure:^(__kindof YTKBaseRequest *request) {
-    //
-    //        [self showHudWithString:@"提交失败!" forSecond:1.5];
-    //    }];
+        XXETeacherManagerDeleteApi *teacherManagerDeleteApi = [[XXETeacherManagerDeleteApi alloc] initWithXid:parameterXid user_id:parameterUser_Id school_id:_schoolId class_id:currentClassId examine_id:currentTeacherId];
+    
+    
+    NSLog(@"%@ ==== %@ ===== %@", _schoolId, currentClassId, currentTeacherId);
+    
+    
+        [teacherManagerDeleteApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
+    
+            NSLog(@"2222---   %@", request.responseJSONObject);
+    
+            NSString *codeStr = [NSString stringWithFormat:@"%@", request.responseJSONObject[@"code"]];
+    
+            if ([codeStr isEqualToString:@"1"]) {
+    
+                [self showHudWithString:@"删除成功!" forSecond:1.5];
+                XXETeacherManagerClassInfoModel *classModel = classModelArray[path.section];
+                [classModel.teacher_list removeObjectAtIndex:path.row];
+                //从 列表 中 删除
+                [_myTableView deleteRowsAtIndexPaths:@[path] withRowAnimation:UITableViewRowAnimationAutomatic];
+            }else{
+    
+            }
+            [_myTableView reloadData];
+    
+        } failure:^(__kindof YTKBaseRequest *request) {
+    
+            [self showHudWithString:@"提交失败!" forSecond:1.5];
+        }];
 }
 
 

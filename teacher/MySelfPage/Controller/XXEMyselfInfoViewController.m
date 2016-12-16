@@ -13,7 +13,7 @@
 #import "XXERedFlowerDetialTableViewCell.h"
 #import "XXEMySelfInfoApi.h"
 #import "XXEMyselfInfoNameModifyViewController.h"
-#import "XXESchoolPhoneNumModifyViewController.h"
+#import "XXEMyselfInfoOldPhoneNumViewController.h"
 #import "XXESchoolEmailModiyfViewController.h"
 #import "XXESchoolFeatureModifyViewController.h"
 #import "VPImageCropperViewController.h"
@@ -398,15 +398,26 @@
     }
     //手机号
     if (indexPath.row == 5) {
-        XXESchoolPhoneNumModifyViewController *schoolPhoneNumModifyVC = [[XXESchoolPhoneNumModifyViewController alloc] init];
-        schoolPhoneNumModifyVC.flagStr = @"fromMyselfInfo";
-        [schoolPhoneNumModifyVC returnStr:^(NSString *str) {
-            //
-            contentArray[5] = str;
-            [_myTableView reloadData];
-        }];
         
-        [self.navigationController pushViewController:schoolPhoneNumModifyVC animated:YES];
+        NSString *phone = [NSString stringWithFormat:@"%@", contentArray[5]];
+        
+        if ([phone isEqualToString:@""]) {
+            [self showHudWithString:@"请绑定手机号" forSecond:1.5];
+        }else{
+            XXEMyselfInfoOldPhoneNumViewController *oldPhoneNumVC = [[XXEMyselfInfoOldPhoneNumViewController alloc] init];
+            oldPhoneNumVC.phoneStr = contentArray[5];
+            [self.navigationController pushViewController:oldPhoneNumVC animated:YES];
+        }
+    
+//        XXESchoolPhoneNumModifyViewController *schoolPhoneNumModifyVC = [[XXESchoolPhoneNumModifyViewController alloc] init];
+//        schoolPhoneNumModifyVC.flagStr = @"fromMyselfInfo";
+//        [schoolPhoneNumModifyVC returnStr:^(NSString *str) {
+//            //
+//            contentArray[5] = str;
+//            [_myTableView reloadData];
+//        }];
+//        
+//        [self.navigationController pushViewController:schoolPhoneNumModifyVC animated:YES];
     }
     //邮箱
     if (indexPath.row == 6) {

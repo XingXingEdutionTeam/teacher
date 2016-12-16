@@ -47,7 +47,7 @@
         UIButton *button = [UIButton createButtonWithFrame:CGRectMake(buttonX, 50 * kScreenRatioHeight + 70 * i, buttonW, buttonH) backGruondImageName:@"login_green" Target:self Action:@selector(buttonClick:) Title:titleArray[i]];
         button.tag = 100 + i;
         [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        button.titleLabel.font = [UIFont systemFontOfSize:16 * kScreenRatioWidth];
+        button.titleLabel.font = [UIFont systemFontOfSize:16];
         [self.view addSubview:button];
     }
 
@@ -57,7 +57,7 @@
 
 - (void)buttonClick:(UIButton *)button{
     
-    if ([XXEUserInfo user].login) {
+//    if ([XXEUserInfo user].login) {
         if (button.tag == 100) {
             //我的收藏
             XXESotreGoodsCollectionViewController *goodsCollectionVC = [[XXESotreGoodsCollectionViewController alloc] init];
@@ -82,9 +82,9 @@
             [self.navigationController pushViewController:storeGoodsListVC animated:YES];
         }
  
-    }else{
-        [self showString:@"请用账号登录后查看" forSecond:1.5];
-    }
+//    }else{
+//        [self showString:@"请用账号登录后查看" forSecond:1.5];
+//    }
 
 }
 

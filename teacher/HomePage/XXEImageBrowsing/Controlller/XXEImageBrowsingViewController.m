@@ -149,9 +149,9 @@
     [downloadButton setImage:[UIImage imageNamed:@"album_down_icon"] forState:UIControlStateHighlighted];
     downloadButton.titleLabel.font = [UIFont systemFontOfSize:10];
     //设置 图片 位置
-    downloadButton.imageEdgeInsets = UIEdgeInsetsMake(-10 * kScreenRatioHeight, buttonWidth / 2 - 80 * kScreenRatioWidth, 0, 0);
+    downloadButton.imageEdgeInsets = UIEdgeInsetsMake(-10 * kScreenRatioWidth,  - buttonWidth / 15, 10 * kScreenRatioWidth, buttonWidth / 15);
     //设置title在button上的位置（上top，左left，下bottom，右right）
-    downloadButton.titleEdgeInsets = UIEdgeInsetsMake(30 * kScreenRatioHeight, -downloadButton.titleLabel.bounds.size.width-60, 0, 0);
+    downloadButton.titleEdgeInsets = UIEdgeInsetsMake(15 * kScreenRatioHeight, -(buttonWidth - 20 * kScreenRatioWidth) / 3, -15 * kScreenRatioHeight, (buttonWidth - 20 * kScreenRatioWidth) / 3);
     [bottomView addSubview:downloadButton];
     
     //--------------------------------分享-------
@@ -160,9 +160,10 @@
     [shareButton setImage:[UIImage imageNamed:@"classAddress_share_seleted_icon"] forState:UIControlStateHighlighted];
     shareButton.titleLabel.font = [UIFont systemFontOfSize:10];
     //设置 图片 位置
-    shareButton.imageEdgeInsets = UIEdgeInsetsMake(-10 * kScreenRatioHeight, buttonWidth / 2 - 30 * kScreenRatioWidth, 0, 0);
+    shareButton.imageEdgeInsets = UIEdgeInsetsMake(-10 * kScreenRatioWidth, buttonWidth / 15, 10 * kScreenRatioWidth, - buttonWidth / 15);
+    //buttonWidth / 2 - 30 * kScreenRatioWidth
     //设置title在button上的位置（上top，左left，下bottom，右right）
-    shareButton.titleEdgeInsets = UIEdgeInsetsMake(30 * kScreenRatioHeight, -shareButton.titleLabel.bounds.size.width-20, 0, 0);
+    shareButton.titleEdgeInsets = UIEdgeInsetsMake(15 * kScreenRatioHeight, -(buttonWidth - 20 * kScreenRatioWidth) / 6, -15 * kScreenRatioHeight, (buttonWidth - 20 * kScreenRatioWidth) / 6);
     [bottomView addSubview:shareButton];
     
     //--------------------------------举报-------
@@ -171,9 +172,9 @@
     [reportButton setImage:[UIImage imageNamed:@"classAddress_report_seleted_icon"] forState:UIControlStateHighlighted];
     reportButton.titleLabel.font = [UIFont systemFontOfSize:10];
     //设置 图片 位置
-    reportButton.imageEdgeInsets = UIEdgeInsetsMake(-10 * kScreenRatioHeight, buttonWidth / 2 + 7 * kScreenRatioWidth, 0, 0);
+    reportButton.imageEdgeInsets = UIEdgeInsetsMake(-10 * kScreenRatioHeight, buttonWidth / 3.5, 10 * kScreenRatioWidth, -buttonWidth / 3.5);
     //设置title在button上的位置（上top，左left，下bottom，右right）
-    reportButton.titleEdgeInsets = UIEdgeInsetsMake(30 * kScreenRatioHeight, -reportButton.titleLabel.bounds.size.width + 20, 0, 0);
+    reportButton.titleEdgeInsets = UIEdgeInsetsMake(15 * kScreenRatioHeight, buttonWidth / 15, -15 * kScreenRatioHeight, -buttonWidth / 15);
     [bottomView addSubview:reportButton];
     
 }

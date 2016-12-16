@@ -19,6 +19,9 @@
 
 @interface XXESchoolPhoneNumModifyViewController ()<UITextFieldDelegate>
 {
+   //用户 手机 号
+    NSString *account;
+    
     NSString *parameterXid;
     NSString *parameterUser_Id;
     
@@ -43,13 +46,14 @@
     if ([XXEUserInfo user].login){
         parameterXid = [XXEUserInfo user].xid;
         parameterUser_Id = [XXEUserInfo user].user_id;
+        
     }else{
         parameterXid = XID;
         parameterUser_Id = USER_ID;
     }
 
     [self createContent];
-    
+
 }
 
 - (void)createContent{

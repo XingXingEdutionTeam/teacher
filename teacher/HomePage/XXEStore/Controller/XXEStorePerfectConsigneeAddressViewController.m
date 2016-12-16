@@ -381,7 +381,7 @@
             [self.navigationController pushViewController:storePayVC animated:YES];
         }else if([responseObj[@"code"]  integerValue] == 7){
             
-            [self showString:@"您猩币不足" forSecond:1.5];
+            [self showString:@"您猩币数量不足" forSecond:1.5];
         }
 
         
