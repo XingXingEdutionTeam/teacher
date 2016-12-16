@@ -64,7 +64,6 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    //    timer=[NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(showInfo:) userInfo:nil repeats:YES];
     //    [[NSRunLoop currentRunLoop]run];
     
     timer =[NSTimer timerWithTimeInterval:1.0 target:self selector:@selector(showInfo:) userInfo:nil repeats:YES];
@@ -189,25 +188,13 @@
 
 -(void)createButton
 {
-//    UIImageView *img=[UIImageView createImageViewWithFrame: ImageName:@"community4.png"];
-    UIImageView *img = [[UIImageView alloc] init];
-    img.frame = CGRectMake(0, 0, WinWidth,160 * kScreenRatioHeight);
-    img.image = [UIImage imageNamed:@"community4"];
-    
-    [self.view addSubview:img];
-    //育儿库
-    libraryButton = [UIButton createButtonWithFrame:CGRectMake(0, 88 * kScreenRatioHeight, WinWidth/2, 65 * kScreenRatioHeight) backGruondImageName:@"community10" Target:self Action:@selector(onClickbabycontentBtn:) Title:nil];
-    [self.view addSubview:libraryButton];
-    //社区
-    communityButton = [UIButton createButtonWithFrame:CGRectMake(WinWidth/2+1, 88 * kScreenRatioHeight, WinWidth/2, 65 * kScreenRatioHeight) backGruondImageName:@"community11" Target:self Action:@selector(onClickcommunityBtn:) Title:nil];
-    [self.view addSubview:communityButton];
-    
-    
     //今日话题
     topicButton = [UIButton createButtonWithFrame:CGRectMake(0, 10 * kScreenRatioHeight,WinWidth, 71 * kScreenRatioHeight) backGruondImageName:@"community9" Target:self Action:@selector(onClicktopicBtn:) Title:nil];
+    topicButton.backgroundColor = [UIColor blueColor];
     [self.view addSubview:topicButton];
     
     topicLabel=[UILabel createLabelWithFrame:CGRectMake(80 * kScreenRatioWidth, 51 * kScreenRatioHeight ,WinWidth-100 * kScreenRatioWidth, 21 * kScreenRatioHeight) Font:12 Text:@"孩子牛奶喝的多好不好,会影响什么？"];
+    topicLabel.backgroundColor = [UIColor redColor];
     [self.view addSubview:topicLabel];
     
     supportBtn=[UIButton createButtonWithFrame:CGRectMake(310 * kScreenRatioWidth , 56 * kScreenRatioHeight,13 * kScreenRatioWidth, 11 * kScreenRatioHeight) backGruondImageName:@"community13" Target:self Action:@selector(supportBtnClick:) Title:nil];
@@ -216,8 +203,15 @@
     unSupportBtn=[UIButton createButtonWithFrame:CGRectMake(340 * kScreenRatioWidth, 56 * kScreenRatioHeight,13 * kScreenRatioWidth, 11 * kScreenRatioHeight) backGruondImageName:@"community15" Target:self Action:@selector(unSupportBtnClick:) Title:nil];
     [self.view addSubview:unSupportBtn];
     
-    
+    //内容库
+    libraryButton = [UIButton createButtonWithFrame:CGRectMake(0, 88 * kScreenRatioHeight, WinWidth, 65 * kScreenRatioHeight) backGruondImageName:@"" Target:self Action:@selector(onClickbabycontentBtn:) Title:@"内容库"];
+    libraryButton.backgroundColor = [UIColor whiteColor];
+    [libraryButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [self.view addSubview:libraryButton];
+
 }
+
+
 
 -(void)supportBtnClick:(UIButton *)button{
     
@@ -238,7 +232,7 @@
     isUnsupport=! isUnsupport;
 }
 
-//婴儿内容库
+#pragma mark ********** //婴儿内容库 *************
 -(void)onClickbabycontentBtn:(UIButton*)Btn
 {
     XXEXingCommunityBabyLibraryViewController * xingCommunityBabyLibraryVC = [[XXEXingCommunityBabyLibraryViewController alloc]init ];

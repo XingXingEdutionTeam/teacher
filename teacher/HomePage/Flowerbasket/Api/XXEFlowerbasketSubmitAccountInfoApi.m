@@ -11,6 +11,8 @@
 
 @interface XXEFlowerbasketSubmitAccountInfoApi()
 
+@property (nonatomic, copy) NSString *xid;
+@property (nonatomic, copy) NSString *user_id;
 
 @end
 
@@ -26,7 +28,8 @@
 - (instancetype)initWithUrlString:(NSString *)url appkey:(NSString *)appkey backtype:(NSString *)backtype xid:(NSString *)xid  user_id:(NSString *)user_id user_type:(NSString *)user_type account_id:(NSString *)account_id num:(NSString *)num{
     
     if (self = [super init]) {
-        
+        _xid = xid;
+        _user_id = user_id;
         _account_id = account_id;
         _num = num;
     }
@@ -51,8 +54,8 @@
     return @{
              @"appkey":APPKEY,
              @"backtype":BACKTYPE,
-             @"xid":XID,
-             @"user_id":USER_ID,
+             @"xid":_xid,
+             @"user_id":_user_id,
              @"user_type":USER_TYPE,
              @"account_id":_account_id,
              @"num":_num

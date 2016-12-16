@@ -12,12 +12,9 @@
 
 /*
  【花篮->提现提交】
- 
  接口类型:2
- 
  接口:
  http://www.xingxingedu.cn/Teacher/fbasket_withdraw_action
- 
  传参:
 	account_id	//提现账号id
 	num		//需要提现的花篮数量

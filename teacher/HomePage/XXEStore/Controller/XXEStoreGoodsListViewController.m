@@ -188,7 +188,7 @@
 
 
 - (void)createTableView{
-    _myTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 50, KScreenWidth, KScreenHeight - 50) style:UITableViewStyleGrouped];
+    _myTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 50, KScreenWidth, KScreenHeight - 50 - 20) style:UITableViewStyleGrouped];
 //    _myTableView.backgroundColor = [UIColor redColor];
     _myTableView.dataSource = self;
     _myTableView.delegate = self;

@@ -572,7 +572,8 @@
         homeLogoRootVC.schoolId = _schoolHomeId;
         homeLogoRootVC.classId = _classHomeId;
         homeLogoRootVC.position = self.userPosition;
-        
+        homeLogoRootVC.school_type = _schoolType;
+    
         [self.navigationController pushViewController:homeLogoRootVC animated:NO];
     }else{
         [self showString:@"请用账号登录后查看" forSecond:1.5];
@@ -910,9 +911,14 @@
         case 7:
         {
             NSLog(@"---猩猩商城----");
+            if ([XXEUserInfo user].login) {
             XXEStoreRootViewController *storeRootVC = [[XXEStoreRootViewController alloc] init];
             
             [self.navigationController pushViewController:storeRootVC animated:YES];
+            }else{
+                
+                [self showHudWithString:@"请用账号登录" forSecond:1.5];
+            }
             break;
         }
             
@@ -1076,9 +1082,14 @@
         case 7:
         {
             NSLog(@"---猩猩商城----");
+            if ([XXEUserInfo user].login) {
             XXEStoreRootViewController *storeRootVC = [[XXEStoreRootViewController alloc] init];
             
             [self.navigationController pushViewController:storeRootVC animated:YES];
+            }else{
+                
+                [self showHudWithString:@"请用账号登录" forSecond:1.5];
+            }
             break;
         }
             
@@ -1174,9 +1185,15 @@
         case 7:
         {
             NSLog(@"---猩猩商城----");
+            if ([XXEUserInfo user].login) {
             XXEStoreRootViewController *storeRootVC = [[XXEStoreRootViewController alloc] init];
             
             [self.navigationController pushViewController:storeRootVC animated:YES];
+            }else{
+                
+                [self showHudWithString:@"请用账号登录" forSecond:1.5];
+            }
+            
             break;
         }
             
@@ -1186,7 +1203,7 @@
             if ([XXEUserInfo user].login) {
                 //不同 身份
                 if ([self.userPosition isEqualToString:@"4"]) {
-                    //school_type //学校类型: 幼儿园/小学/中学/机构 1/2/3/4
+                    //school_type //学校类型: 幼儿园/小学/初中/机构/高中 1/2/3/4
                     //如果 是 4 表示 私立, 其他为公立学校
                     if ([_schoolType isEqualToString:@"4"]) {
                         //校长(私立)

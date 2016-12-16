@@ -42,14 +42,26 @@
     
     position = [DEFAULTS objectForKey:@"POSITION"];
     
-    if ([position isEqualToString:@"1"] || [position isEqualToString:@"2"]) {
-        _submitButton.hidden = YES;
-        _featureTextView.editable = NO;
-    }else if ([position isEqualToString:@"3"] || [position isEqualToString:@"4"]) {
+    if ([_flagStr isEqualToString:@"formSchoolInfo"]) {
+        //修改 学校 特点
+        
+        if ([position isEqualToString:@"1"] || [position isEqualToString:@"2"]) {
+            _submitButton.hidden = YES;
+            _featureTextView.editable = NO;
+        }else if ([position isEqualToString:@"3"] || [position isEqualToString:@"4"]) {
+            _submitButton.hidden = NO;
+            _featureTextView.editable = YES;
+            [_submitButton addTarget:self action:@selector(submitButtonClick) forControlEvents:UIControlEventTouchUpInside];
+            //submitSchoolInfo
+        }
+    }else{
         _submitButton.hidden = NO;
         _featureTextView.editable = YES;
         [_submitButton addTarget:self action:@selector(submitButtonClick) forControlEvents:UIControlEventTouchUpInside];
+        //submitMyselfInfo
     }
+    
+
     
     _featureTextView.delegate = self;
     [self createContent];
@@ -87,32 +99,28 @@
         [self showHudWithString:@"请完善信息" forSecond:1.5];
     }else{
     
-        [self submitSchoolFeatureInfo];
+        if ([_flagStr isEqualToString:@"formSchoolInfo"]) {
+            //修改 学校 特点
+            
+            self.title = @"特   点";
+            [self modifySchoolFeatureInfo];
+        }else if ([_flagStr isEqualToString:@"fromMyselfInfoTeachingExperience"]) {
+            //修改 个人 教学经历
+            self.title = @"教学经历";
+            [self modifyMyselfTeachingExperience];
+        }else if ([_flagStr isEqualToString:@"fromMyselfInfoTeachingFeeling"]) {
+            //修改 个人 教学感悟
+            self.title = @"教学感悟";
+            [self modifyMyselfTeachingFeeling];
+        }else if ([_flagStr isEqualToString:@"fromMyselfInfoPersonalSignApi"]) {
+            //修改 个人 个性签名
+            self.title = @"个性签名";
+            [self modifyMyselfTeachingPersonalSign];
+        }
     }
     
 }
 
-- (void)submitSchoolFeatureInfo{
-    if ([_flagStr isEqualToString:@"formSchoolInfo"]) {
-        //修改 学校 特点
-        
-        self.title = @"特   点";
-        [self modifySchoolFeatureInfo];
-    }else if ([_flagStr isEqualToString:@"fromMyselfInfoTeachingExperience"]) {
-        //修改 个人 教学经历
-        self.title = @"教学经历";
-        [self modifyMyselfTeachingExperience];
-    }else if ([_flagStr isEqualToString:@"fromMyselfInfoTeachingFeeling"]) {
-        //修改 个人 教学感悟
-        self.title = @"教学感悟";
-        [self modifyMyselfTeachingFeeling];
-    }else if ([_flagStr isEqualToString:@"fromMyselfInfoPersonalSignApi"]) {
-        //修改 个人 个性签名
-        self.title = @"个性签名";
-        [self modifyMyselfTeachingPersonalSign];
-    }
-
-}
 
 //修改 学校 特点
 - (void)modifySchoolFeatureInfo{

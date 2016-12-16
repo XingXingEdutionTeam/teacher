@@ -372,7 +372,6 @@
         
     }
     
-    
     if ([self.registerVerificationTextField.text isEqualToString:@""]) {
         [self showString:@"请输入验证码" forSecond:2];
         return;

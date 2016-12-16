@@ -198,7 +198,7 @@
     XXECheckPassWordApi *checkPassWordApi = [[XXECheckPassWordApi alloc] initWithXid:parameterXid user_id:parameterUser_Id pass:surePwd];
     [checkPassWordApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         //
-        NSLog(@"%@", request.responseJSONObject);
+//        NSLog(@"%@", request.responseJSONObject);
         
         NSString *codeStr = request.responseJSONObject[@"code"];
         if ([codeStr integerValue] == 1) {
@@ -218,13 +218,13 @@
 
 
 - (void)submitAccountInfo{
-    //    NSLog(@"账号%@ ---  数量%@", _account_id, _numberTextField.text);
+//        NSLog(@"账号%@ ---  数量%@", _account_id, _numberTextField.text);
     //账号13818657742 ---  数量1
     
     XXEFlowerbasketSubmitAccountInfoApi *flowerbasketSubmitAccountInfoApi = [[XXEFlowerbasketSubmitAccountInfoApi alloc] initWithUrlString:submitUrl appkey:APPKEY backtype:BACKTYPE xid:parameterXid user_id:parameterUser_Id user_type:USER_TYPE account_id:self.account_id num:_numberTextField.text];
     [flowerbasketSubmitAccountInfoApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         
-        //            NSLog(@"hahahah %@", request.responseJSONObject);
+//        NSLog(@"hahahah %@", request.responseJSONObject);
         
         NSString *codeStr = [NSString stringWithFormat:@"%@", request.responseJSONObject[@"code"]];
         

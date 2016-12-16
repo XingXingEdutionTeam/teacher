@@ -52,15 +52,47 @@
         parameterXid = XID;
         parameterUser_Id = USER_ID;
     }
-    coinAble = _dict[@"user_coin_able"];
+    
     seleteButtonArray = [[NSMutableArray alloc] init];
     isPaySuccess = NO;
     
     //输出BOOL值的方法：
 //    NSLog(@"%@", _onlyXingCoin ?@"YES":@"NO");
-
+    //获取 用户当前 可用猩币
+    [self fetchUserCoinAble];
+    
     //创建 内容
     [self createContent];
+}
+
+#pragma mark ====== 获取 用户当前 可用猩币
+- (void)fetchUserCoinAble{
+/*
+ 【猩猩商城首页,显示猩币数量】
+ 接口类型:1
+ 接口:
+ http://www.xingxingedu.cn/Global/get_user_coin
+ */
+    NSString *urlStr = @"http://www.xingxingedu.cn/Global/get_user_coin";
+    
+    NSDictionary *params = @{@"appkey":APPKEY,
+                             @"backtype":BACKTYPE,
+                             @"xid":parameterXid,
+                             @"user_id":parameterUser_Id,
+                             @"user_type":USER_TYPE
+                             };
+    [WZYHttpTool post:urlStr params:params success:^(id responseObj) {
+//        NSLog(@"用户当前可用猩币 === %@", responseObj);
+        
+        if ([responseObj[@"code"] integerValue] == 1) {
+           coinAble = responseObj[@"data"][@"coin_able"];
+        }
+        
+    } failure:^(NSError *error) {
+        //
+        [self showHudWithString:@"获取数据失败!" forSecond:1.5];
+    }];
+
 }
 
 - (void)createContent{
@@ -237,8 +269,9 @@
 - (void)sureButtonClick:(UIButton *)button{
     if (buttonTag == 100) {
         //纯猩币 支付
+                
         if ([_pay_coin integerValue] > [coinAble integerValue]) {
-            [self showHudWithString:@"您猩币余额不足" forSecond:1.5];
+            [self showHudWithString:@"您猩币数量不足" forSecond:1.5];
         }else{
             UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"确定使用猩币支付?" message:nil preferredStyle:UIAlertControllerStyleAlert];
             UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
@@ -303,7 +336,16 @@
             [self showHudWithString:@"支付成功!" forSecond:1.5];
             
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                [self.navigationController popViewControllerAnimated:YES];
+//                [self.navigationController popViewControllerAnimated:YES];
+                
+                XXEStoreGoodsOrderDetailViewController *goodsOrderDetailVC = [[XXEStoreGoodsOrderDetailViewController alloc] init];
+                //      NSLog(@"_order_id === %@", _order_id);
+                
+                if (order_id) {
+                    goodsOrderDetailVC.order_id = order_id;
+                }
+                
+                [self.navigationController pushViewController:goodsOrderDetailVC animated:YES];
             });
 
         }else if ([codeStr integerValue] == 2){
@@ -470,30 +512,32 @@
         NSString *codeStr = responseObj[@"code"];
         
         if ([codeStr integerValue] == 1) {
-            
-            LSSAlertView *alert = [[LSSAlertView alloc] initWithTitle:resp.resultMsg message:@"支付成功!"  picImage:@"paysuccess_icon120x120"  sureBtn:@"查看订单" cancleBtn:@"现在离开"];
+            [self showString:@"支付成功!" forSecond:1.5];
+//            LSSAlertView *alert = [[LSSAlertView alloc] initWithTitle:resp.resultMsg message:@"支付成功!"  picImage:@"paysuccess_icon120x120"  sureBtn:@"查看订单" cancleBtn:@"现在离开"];
             
             isPaySuccess = YES;
-            alert.returnIndex = ^(NSInteger index){
-                if (index == 0) {
-                    
+//            alert.returnIndex = ^(NSInteger index){
+//                if (index == 0) {
+            
 //                    NSLog(@"查看订单详情");
-                    XXEStoreGoodsOrderDetailViewController *goodsOrderDetailVC = [[XXEStoreGoodsOrderDetailViewController alloc] init];
-                    NSLog(@"_order_id === %@", _order_id);
-                    
-                    if (_order_id) {
-                      goodsOrderDetailVC.order_id = _order_id;
-                    }
-
-                    [self.navigationController pushViewController:goodsOrderDetailVC animated:YES];
-                    
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                XXEStoreGoodsOrderDetailViewController *goodsOrderDetailVC = [[XXEStoreGoodsOrderDetailViewController alloc] init];
+                //                    NSLog(@"_order_id === %@", _order_id);
+                
+                if (_order_id) {
+                    goodsOrderDetailVC.order_id = _order_id;
                 }
                 
-                if (index == 1) {
-                    [self.navigationController popToRootViewControllerAnimated:YES];
-                }
-            };
-            [alert showAlertView];
+                [self.navigationController pushViewController:goodsOrderDetailVC animated:YES];
+            });
+        
+//                }
+//                
+//                if (index == 1) {
+//                    [self.navigationController popToRootViewControllerAnimated:YES];
+//                }
+//            };
+//            [alert showAlertView];
         }
 
     } failure:^(NSError *error) {

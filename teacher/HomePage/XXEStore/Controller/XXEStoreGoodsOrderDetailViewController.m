@@ -11,6 +11,9 @@
 #import "XXEStorePayViewController.h"
 //申请退货
 #import "XXEStoreReturnGoodsViewController.h"
+//商品详情
+#import "XXEStoreGoodDetailInfoViewController.h"
+
 
 
 @interface XXEStoreGoodsOrderDetailViewController ()
@@ -70,7 +73,7 @@
      order_id	//订单id	*/
     NSString *urlStr = @"http://www.xingxingedu.cn/Global/goods_order_detail";
     
-    NSLog(@"订单详情 _order_id ==%@", _order_id);
+//    NSLog(@"订单详情 _order_id ==%@", _order_id);
     
     NSDictionary *params = @{@"appkey":APPKEY,
                              @"backtype":BACKTYPE,
@@ -80,7 +83,7 @@
                              @"order_id":_order_id                            };
     [WZYHttpTool post:urlStr params:params success:^(id responseObj) {
         
-        NSLog(@" ooo %@", responseObj);
+//        NSLog(@" ooo %@", responseObj);
         
         if ([responseObj[@"code"] integerValue] == 1) {
             detailInfoDict = responseObj[@"data"];
@@ -174,6 +177,7 @@
         }else{
             vc.onlyXingCoin = NO;
         }
+        vc.dict = detailInfoDict;
         vc.pay_coin = detailInfoDict[@"pay_coin"];
         vc.pay_price = detailInfoDict[@"pay_price"];
         vc.order_index = detailInfoDict[@"order_index"];
@@ -269,7 +273,7 @@
     
     [WZYHttpTool post:urlStr params:params success:^(id responseObj) {
         //
-        NSLog(@"nnn %@", responseObj);
+//        NSLog(@"nnn %@", responseObj);
         
         if ([responseObj[@"code"] integerValue] == 1) {
             
@@ -295,7 +299,11 @@
     
     upBgView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, KScreenWidth, 210)];
     upBgView.backgroundColor = [UIColor whiteColor];
+    upBgView.userInteractionEnabled = YES;
     [self.view addSubview:upBgView];
+    
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(onClickView:)];
+    [upBgView addGestureRecognizer:tap];
     
     // [condit] => 1	//0:待付款 1:待发货 2:待收货 3:完成 10:退货中  11:退货驳回  12:退货完成
     NSString *state = @"";
@@ -359,7 +367,7 @@
     
     //商品价格
     UILabel *priceLabel = [[UILabel alloc] initWithFrame:CGRectMake(90, nameLabel.frame.origin.y + nameLabel.height + 10, KScreenWidth - 100, 20)];
-    priceLabel.text = [NSString stringWithFormat:@"¥:%@",detailInfoDict[@"price"]];
+    priceLabel.text = [NSString stringWithFormat:@"¥:%@",detailInfoDict[@"exchange_price"]];
     priceLabel.textColor = [UIColor redColor];
     priceLabel.font = [UIFont systemFontOfSize:12 * kScreenRatioWidth];
     [upBgView addSubview:priceLabel];
@@ -407,6 +415,18 @@
         [upBgView addSubview: label];
     }
 }
+
+
+- (void)onClickView:(UITapGestureRecognizer *)tap{
+    
+    //    NSLog(@"--- 点击了第%ld张图片", tap.view.tag - 20);
+    
+    XXEStoreGoodDetailInfoViewController*storeGoodDetailInfoVC=  [[XXEStoreGoodDetailInfoViewController alloc]init];
+    //goods_id
+    storeGoodDetailInfoVC.orderNum = detailInfoDict[@"goods_id"];
+    [self.navigationController pushViewController:storeGoodDetailInfoVC animated:YES];
+}
+
 
 #pragma mark ========= 创建 中间部分 内容 =======
 - (void)createMiddleContent{

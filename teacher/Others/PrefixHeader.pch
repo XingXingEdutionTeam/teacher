@@ -45,4 +45,8 @@
 #import "EmptyView.h"
 #import "GlobalVariable.h"
 
+//猩天地 webView 接口
+#import "XXEXingCommunityHeader.h"
+
+
 #endif /* PrefixHeader_pch */

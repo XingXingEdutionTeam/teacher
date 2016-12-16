@@ -15,7 +15,7 @@
 
 
 #define Kmarg 8.0f
-#define KLabelX 20.0f
+#define KLabelX 10.0f
 #define KLabelW 65.0f
 #define KLabelH 20.0f
 #define kUnderButtonH 64.0f
@@ -178,7 +178,7 @@
     [bgScrollView addSubview:phoneTitleLabel];
     
     phoneText = [[UITextField alloc] initWithFrame:CGRectMake(CGRectGetMaxX(consignee.frame) + Kmarg, CGRectGetMaxY(view1.frame) + Kmarg, kWidth - CGRectGetMaxX(consignee.frame) - KLabelX *2, KLabelH)];
-    phoneText.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];
+    phoneText.font = [UIFont systemFontOfSize:14 ];
     phoneText.delegate = self;
     phoneText.keyboardType=UIKeyboardTypeNumberPad;
     [nameText addTarget:self action:@selector(phoneTextFieldTextChange:) forControlEvents:UIControlEventEditingChanged];
@@ -196,7 +196,7 @@
     
     
     mailText = [[UITextField alloc] initWithFrame:CGRectMake(CGRectGetMaxX(consignee.frame) + Kmarg, CGRectGetMaxY(view2.frame) + Kmarg, kWidth - CGRectGetMaxX(consignee.frame) - KLabelX *2, KLabelH)];
-    mailText.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];
+    mailText.font = [UIFont systemFontOfSize:14 ];
     mailText.keyboardType=UIKeyboardTypeNumberPad;
     [bgScrollView addSubview:mailText];
     
@@ -271,7 +271,7 @@
             //不是 默认 地址
             [defaultBtn setTitle:@"设为默认" forState:UIControlStateNormal];
             defaultBtn.enabled = YES;
-            [defaultBtn addTarget:self action:@selector(F) forControlEvents:UIControlEventTouchUpInside];
+            [defaultBtn addTarget:self action:@selector(defaultBtnClick) forControlEvents:UIControlEventTouchUpInside];
         }
     }else{
         
@@ -425,11 +425,11 @@
                                  @"zip_code":mailText.text,
                                  @"selected":defaultAddress,
                                  };
-        NSLog(@"params == %@",params);
+//        NSLog(@"params == %@",params);
         
         [WZYHttpTool post:urlStr params:params success:^(id responseObj) {
             
-            NSLog(@"结果===== %@", responseObj);
+//            NSLog(@"结果===== %@", responseObj);
             
             if ([responseObj[@"code"] integerValue] == 1) {
                 
@@ -504,7 +504,7 @@
     NSArray *keys = [NSArray arrayWithObjects:@"province",@"city",@"area", nil];
     for(NSInteger i=0;i<3;i++)
     {
-        CGFloat comboxW = (KScreenWidth - 120 * kScreenRatioWidth)/3;
+        CGFloat comboxW = (KScreenWidth - 100 * kScreenRatioWidth)/3;
         CGFloat comboxH = 20;
         
         LMComBoxView *comBox = [[LMComBoxView alloc]initWithFrame:CGRectMake(_areaLabel.frame.origin.x + _areaLabel.width + 5 +comboxW*i, _areaLabel.frame.origin.y, comboxW, comboxH)];
@@ -628,6 +628,8 @@
     {
         [self showString:@"亲,请输入您正确的手机号" forSecond:1.5];
         return;
+    }else if([self isChinaMobile:phoneText.text] == NO){
+        [self showString:@"请输入正确的电话号码" forSecond:1.5];
     }
     else if (mailText.text.length !=6)
     {
@@ -639,8 +641,7 @@
         [self showString:@"亲,请输入您的详细地址" forSecond:1.5];
         return;
     }
-    
-    
+
     if (_defaultAddress == nil) {
         //新增 地址
         //新增 地址 直接 保存 ,没有设为 默认,故_defaultAddress = @"0";
@@ -663,6 +664,8 @@
     {
         [self showString:@"亲,请输入您正确的手机号" forSecond:1.5];
         return;
+    }else if([self isChinaMobile:phoneText.text] == NO){
+        [self showString:@"请输入正确的电话号码" forSecond:1.5];
     }
     else if (mailText.text.length !=6)
     {

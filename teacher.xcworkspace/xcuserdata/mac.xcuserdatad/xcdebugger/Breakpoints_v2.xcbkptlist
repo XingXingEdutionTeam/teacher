@@ -131,13 +131,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "teacher/HomePage/XXEStore/Controller/XXEStoreGoodsOrderDetailViewController.m"
-            timestampString = "503394952.361943"
+            filePath = "teacher/HomePage/XXEManager/Controller/XXETeacherManagerViewController.m"
+            timestampString = "503566152.897776"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "73"
-            endingLineNumber = "73"
-            landmarkName = "-fetchCourseOrderDetailInfo"
+            startingLineNumber = "431"
+            endingLineNumber = "431"
+            landmarkName = "-deleteStudentInfo:andWithTeacherId:andIndexPath:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -147,13 +147,45 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "teacher/HomePage/XXEStore/Controller/XXEStoreGoodsOrderDetailViewController.m"
-            timestampString = "503394957.001947"
+            filePath = "teacher/HomePage/XXEManager/Controller/XXETeacherManagerViewController.m"
+            timestampString = "503566152.897776"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "83"
-            endingLineNumber = "83"
-            landmarkName = "-fetchCourseOrderDetailInfo"
+            startingLineNumber = "426"
+            endingLineNumber = "426"
+            landmarkName = "-deleteStudentInfo:andWithTeacherId:andIndexPath:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "teacher/HomePage/XXEManager/Controller/XXETeacherManagerViewController.m"
+            timestampString = "503566152.897776"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "402"
+            endingLineNumber = "402"
+            landmarkName = "-onClickDeleteBtn:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "teacher/HomePage/XXEManager/Controller/XXETeacherManagerViewController.m"
+            timestampString = "503566893.22022"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "87"
+            endingLineNumber = "87"
+            landmarkName = "-fetchNetData"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
