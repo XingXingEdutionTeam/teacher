@@ -328,10 +328,11 @@
 #pragma mark - 分享
 - (void)shareTextPicUrl:(NSString *)picUrl
 {
-    NSString *shareText = @"来自猩猩教室:";
-    NSString *PicURL= [NSString stringWithFormat:@"%@%@",kXXEPicURL,picUrl];
+    NSInteger index = (int)((bgScrollView.contentOffset.x + KScreenWidth)/KScreenWidth) - 1;
+    NSString *shareText = @"来自猩猩教室的相册:";
+    NSString *PicURL= [NSString stringWithFormat:@"%@%@",kXXEPicURL,self.imageUrlArray[index]];
     UIImage *shareImage=[UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:PicURL]]];
-    NSLog(@"%@",shareImage);
+//    NSLog(@"%@",shareImage);
     
     //    snsNames 你要分享到的sns平台类型，该NSArray值是`UMSocialSnsPlatformManager.h`定义的平台名的字符串常量，有UMShareToSina，UMShareToTencent，UMShareToRenren，UMShareToDouban，UMShareToQzone，UMShareToEmail，UMShareToSms等
     //调用快速分享接口

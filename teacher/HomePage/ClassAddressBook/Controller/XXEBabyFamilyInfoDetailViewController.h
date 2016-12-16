@@ -19,5 +19,6 @@
 
 @property (nonatomic, copy) NSString *fromFlagStr;
 
+@property (nonatomic, copy) NSString *familyMemberName;
 
 @end

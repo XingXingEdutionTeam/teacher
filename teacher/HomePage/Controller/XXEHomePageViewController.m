@@ -228,7 +228,7 @@
 - (void)chatRemoteNotification:(NSNotification *)notification {
     [self pushToChatVC];
     
-//    [[NSNotificationCenter defaultCenter] removeObserver:self name:kChatRemoteNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kChatRemoteNotification object:nil];
 }
 
 - (void)didReceiveMessageNotification:(NSNotification *)notification {

@@ -314,7 +314,8 @@
     
 - (void)sendQQFriend{
     NSString *shareText = @"来自猩猩教室";
-    NSString *image = @"http://qzapp.qlogo.cn/qzapp/1105651422/9FFBD19645379A28C1F98EE2C2526DC4/100";
+//    NSString *image = @"http://qzapp.qlogo.cn/qzapp/1105651422/9FFBD19645379A28C1F98EE2C2526DC4/100";
+    NSString *image = [NSString stringWithFormat:@"%@%@",kXXEPicURL,_imagesArr];
     NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:image]];
     UIImage *imageA = [UIImage imageWithData:data];
     //调用快速分享接口

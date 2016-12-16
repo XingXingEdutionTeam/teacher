@@ -15,6 +15,7 @@
 #import "XXEGlobalDecollectApi.h"
 #import "XXEGlobalCollectApi.h"
 #import "UMSocial.h"
+#import "XXEFriendMyCircleViewController.h"
 
 @interface XXEBabyFamilyInfoDetailViewController ()<UITableViewDelegate, UITableViewDataSource>
 {
@@ -29,6 +30,7 @@
     NSMutableArray *contentArray;
     //宝贝 头像
     NSString *headImageStr;
+    UIImage *headImg;
     NSString *parameterXid;
     NSString *parameterUser_Id;
     //头部 视图
@@ -108,8 +110,10 @@
         
         if ([codeStr isEqualToString:@"1"]) {
             
-            NSDictionary *dict = request.responseJSONObject[@"data"];
             
+            
+            NSDictionary *dict = request.responseJSONObject[@"data"];
+            self.familyMemberName = dict[@"tname"];
             if ([_fromFlagStr isEqualToString:@"fromCollection"]) {
                 //@"昵称:",@"姓名:",@"电话号码:",@"邮箱:",@"权限设置"
                 contentArray = [[NSMutableArray alloc] initWithObjects:dict[@"nickname"], dict[@"tname"], dict[@"phone"], dict[@"email"],@"", nil];
@@ -282,6 +286,11 @@
     [headerView addSubview:headerBgImageView];
 
     iconImageView = [[UIImageView alloc] init];
+    
+    [iconImageView sd_setImageWithURL:[NSURL URLWithString:headImageStr] placeholderImage:[UIImage imageNamed:@"headplaceholder"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+        headImg = image;
+    }];
+    
     [iconImageView sd_setImageWithURL:[NSURL URLWithString:headImageStr] placeholderImage:[UIImage imageNamed:@"headplaceholder"]];
     
     CGFloat iconWidth = 86 * kScreenRatioWidth;
@@ -455,7 +464,10 @@
 
 //查看圈子
 - (void)seeButtonClick:(UIButton *)button{
-
+    XXEFriendMyCircleViewController *friendVC = [[XXEFriendMyCircleViewController alloc] init];
+    friendVC.otherXid = familyXidStr;
+    friendVC.rootChat = @"family";
+    [self.navigationController pushViewController:friendVC animated:YES];
 NSLog(@"********查看圈子 *******");
 
 }
@@ -463,12 +475,15 @@ NSLog(@"********查看圈子 *******");
 //分享
 - (void)shareButtonClick:(UIButton *)button{
 NSLog(@"********分享 *******");
-    NSString *shareText = @"来自猩猩教室:";
-    UIImage *shareImage = [UIImage imageNamed:@"xingxingjiaoshi_share_icon"];
+    NSString *shareText = [NSString stringWithFormat:@"%@%@",@"来自猩猩教室的名片:  ",self.familyMemberName];
+//    UIImage *shareImage = [UIImage imageNamed:@"xingxingjiaoshi_share_icon"];
     //    snsNames 你要分享到的sns平台类型，该NSArray值是`UMSocialSnsPlatformManager.h`定义的平台名的字符串常量，有UMShareToSina，UMShareToTencent，UMShareToRenren，UMShareToDouban，UMShareToQzone，UMShareToEmail，UMShareToSms等
     //调用快速分享接口
-    [UMSocialSnsService presentSnsIconSheetView:self appKey:UMSocialAppKey shareText:shareText shareImage:shareImage shareToSnsNames:[NSArray arrayWithObjects:UMShareToSina,UMShareToQzone,UMShareToQQ,UMShareToWechatSession,UMShareToWechatTimeline,nil] delegate:self];
+    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:headImageStr]];
+    UIImage *img = [UIImage imageWithData:data];
     
+    
+    [UMSocialSnsService presentSnsIconSheetView:self appKey:UMSocialAppKey shareText:shareText shareImage:img shareToSnsNames:[NSArray arrayWithObjects:UMShareToSina,UMShareToQzone,UMShareToQQ,UMShareToWechatSession,UMShareToWechatTimeline,nil] delegate:self];
 
 }
 

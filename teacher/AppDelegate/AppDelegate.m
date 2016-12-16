@@ -65,20 +65,7 @@ static int currentVersion = 100;
     [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
     //初始化应用,appKey appSecret 从后天获取
     [SMSSDK registerApp:FreeSMSAPPKey withSecret:FreeSMSAPPSecret];
-    //初始化友盟分享 与登录
-    [UMSocialData setAppKey:UMSocialAppKey];
-    [UMSocialData openLog:YES];
-    //微信
-    [UMSocialWechatHandler setWXAppId:WeChatAppId appSecret:WeChatAppSecret url:@"http://www.umeng.com/social"];
-    //新浪
-    [UMSocialSinaSSOHandler openNewSinaSSOWithAppKey:SinaWebAppKey secret:SinaWebAppSecret RedirectURL:@"https://api.weibo.com/oauth2/default.html"];
-    //QQ空间
-    [UMSocialQQHandler setQQWithAppId:QQAppId appKey:QQAppSecret url:@"http://www.umeng.com/social"];
-    //设置没有客户端的情况下使用SSO授权
-    [UMSocialQQHandler setSupportWebView:YES];
-    
-    //隐藏没有安装的APP图标
-    [UMSocialConfig hiddenNotInstallPlatforms:@[UMShareToQQ,UMShareToQzone,UMShareToWechatTimeline,UMShareToWechatSession]];
+
     
     //支付
     [BeeCloud initWithAppID:@"a2c64858-7c9c-4fd2-b2f8-2c58f853d47f" andAppSecret:@"fc8fe808-d180-48e7-99ba-54b42d3c725d"];
@@ -90,6 +77,7 @@ static int currentVersion = 100;
     //初始化APNs
     [self initAPNs];
     
+    [self showUpdatePopView];
     //初始化JPush
     [self initJPushWith:launchOptions];
     
@@ -100,9 +88,25 @@ static int currentVersion = 100;
     
     [self loadStarView];
     
-    [self showUpdatePopView];
     
     return YES;
+}
+
+- (void)setUM:(NSString*)appStoreURL {
+    //初始化友盟分享 与登录
+    [UMSocialData setAppKey:UMSocialAppKey];
+    [UMSocialData openLog:YES];
+    //微信
+    [UMSocialWechatHandler setWXAppId:WeChatAppId appSecret:WeChatAppSecret url:appStoreURL];
+    //新浪
+    [UMSocialSinaSSOHandler openNewSinaSSOWithAppKey:SinaWebAppKey secret:SinaWebAppSecret RedirectURL:appStoreURL];
+    //QQ空间
+    [UMSocialQQHandler setQQWithAppId:QQAppId appKey:QQAppSecret url:appStoreURL];
+    //设置没有客户端的情况下使用SSO授权
+    [UMSocialQQHandler setSupportWebView:YES];
+    
+    //隐藏没有安装的APP图标
+    [UMSocialConfig hiddenNotInstallPlatforms:@[UMShareToQQ,UMShareToQzone,UMShareToWechatTimeline,UMShareToWechatSession]];
 }
 
 //MARK: - 10.0推送
@@ -148,7 +152,8 @@ static int currentVersion = 100;
             NSString *appStoreURL = responseObject[@"data"][@"url"];
             int nowVersion = [responseObject[@"data"][@"now_version"] intValue];
             int allowVersion = [responseObject[@"data"][@"allow_version"] intValue];// 支持最低版本号
-            
+            //设置友盟
+            [self setUM:appStoreURL];
             if (currentVersion < nowVersion) {//更新
                 if (currentVersion < allowVersion) {//强制更新
                     [self mustJumpToAppStoreWithNowVerson:nowVersion appStoreURL:appStoreURL];

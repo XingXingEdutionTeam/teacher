@@ -338,7 +338,7 @@
     [underButton addSubview:talkBtn];
     
     //分享按钮
-    UIButton *shareBtn= [[UIButton alloc]initWithFrame:CGRectMake(kWidth/2, 1, kWidth/2, kUnderButtonH)];
+    UIButton *shareBtn = [[UIButton alloc]initWithFrame:CGRectMake(kWidth/2, 1, kWidth/2, kUnderButtonH)];
     [shareBtn setImage:[UIImage imageNamed:@"classAddress_share_unseleted_icon"] forState:UIControlStateNormal];
     [shareBtn setImage:[UIImage imageNamed:@"classAddress_share_seleted_icon"] forState:UIControlStateHighlighted];
     shareBtn.imageEdgeInsets = UIEdgeInsetsMake(5,(kWidth/2 - 24)/2,30,(kWidth/2 - 24)/2);
@@ -544,8 +544,17 @@
 }
 //分享功能
 - (void)clickShareBtn:(UIButton*)btn{
-    NSString *shareText = @"来自猩猩教室:";
-    UIImage *shareImage = [UIImage imageNamed:@"xingxingjiaoshi_share_icon"];
+    NSString *shareText = [NSString stringWithFormat:@"%@,%@", @"来自猩猩教室的课程分享:",course_name];
+    
+    UIImage *shareImage;
+    
+    if (picGroup.count != 0) {
+        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", kXXEPicURL,picGroup[0]]]];
+        shareImage = [UIImage imageWithData:data];
+    }else {
+        shareImage = [UIImage imageNamed:@"xingxingjiaoshi_share_icon"];
+    }
+    
     //    snsNames 你要分享到的sns平台类型，该NSArray值是`UMSocialSnsPlatformManager.h`定义的平台名的字符串常量，有UMShareToSina，UMShareToTencent，UMShareToRenren，UMShareToDouban，UMShareToQzone，UMShareToEmail，UMShareToSms等
     //调用快速分享接口
     [UMSocialSnsService presentSnsIconSheetView:self appKey:UMSocialAppKey shareText:shareText shareImage:shareImage shareToSnsNames:[NSArray arrayWithObjects:UMShareToSina,UMShareToQzone,UMShareToQQ,UMShareToWechatSession,UMShareToWechatTimeline,nil] delegate:self];

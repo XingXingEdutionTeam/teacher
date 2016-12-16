@@ -213,11 +213,11 @@
 #pragma mark - 分享
 - (void)shareButtonClick:(UIButton *)button
 {
-    CGPoint contentOffset =bgScrollView.contentOffset;
-    int d =contentOffset.x/kWidth;
+    CGPoint contentOffset = bgScrollView.contentOffset;
+    int d = (int)((contentOffset.x + KScreenWidth)/KScreenWidth) - 1 ;
     NSString *imageUrl = _imageUrlArray[d];
     
-    NSString *shareText = @"来自猩猩教室:";
+    NSString *shareText = @"来自猩猩教室的相册:";
     NSString *PicURL= [NSString stringWithFormat:@"%@%@",kXXEPicURL,imageUrl];
     UIImage *shareImage=[UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:PicURL]]];
     NSLog(@"%@",shareImage);

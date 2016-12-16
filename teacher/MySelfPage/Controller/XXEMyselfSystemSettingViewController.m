@@ -57,8 +57,8 @@
         parameterUser_Id = USER_ID;
     }
     
-    titleArray =[[NSMutableArray alloc]initWithObjects:@"消息提醒",@"消息提醒音",@"非WIFI网络播放提醒",@"关于我们", @"分享", @"去AppleStore评分", @"清除缓存", @"反馈问题送猩币", nil];
-    
+//    titleArray =[[NSMutableArray alloc]initWithObjects:@"消息提醒",@"消息提醒音",@"非WIFI网络播放提醒",@"关于我们", @"分享", @"去AppleStore评分", @"清除缓存", @"反馈问题送猩币", nil];
+    titleArray = [[NSMutableArray alloc]initWithObjects:@"关于我们", @"分享", @"去AppleStore评分", @"清除缓存", @"反馈问题送猩币", nil];
     [self createTable];
 }
 
@@ -88,19 +88,23 @@
         cell = [[[NSBundle mainBundle] loadNibNamed:@"XXEPermissionSettingTableViewCell" owner:self options:nil]lastObject];
     }
     
+//    cell.titleLabel.text =titleArray[indexPath.row];
+//    cell.switchButton.tag =indexPath.row +100;
+//    if ( [_dataSourceArray[indexPath.row] integerValue] == 1) {
+//        cell.switchButton.on = NO;
+//    }else if([_dataSourceArray[indexPath.row] integerValue] == 2){
+//        cell.switchButton.on = YES;
+//    }
+//    [cell.switchButton addTarget:self action:@selector(switchBtn:) forControlEvents:UIControlEventTouchUpInside];
+//    
+//    if (indexPath.row > 2 && indexPath.row < 8) {
+//        cell.switchButton.hidden = YES;
+//        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+//    }
     cell.titleLabel.text =titleArray[indexPath.row];
     cell.switchButton.tag =indexPath.row +100;
-    if ( [_dataSourceArray[indexPath.row] integerValue] == 1) {
-        cell.switchButton.on = NO;
-    }else if([_dataSourceArray[indexPath.row] integerValue] == 2){
-        cell.switchButton.on = YES;
-    }
-    [cell.switchButton addTarget:self action:@selector(switchBtn:) forControlEvents:UIControlEventTouchUpInside];
-    
-    if (indexPath.row > 2 && indexPath.row < 8) {
-        cell.switchButton.hidden = YES;
-        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    }
+    cell.switchButton.hidden = YES;
+    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     
     return cell;
 }
@@ -120,38 +124,63 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
 //@"消息提醒",@"消息提醒音",@"非WIFI网络播放提醒",@"关于我们", @"分享", @"去AppleStore评分", @"清除缓存", @"反馈问题送猩币",
-    if (indexPath.row == 0) {
-        //消息提醒
-        
-    }else if (indexPath.row == 1){
-        //消息提醒音
-
-    }else if (indexPath.row == 2){
-        //非WIFI网络播放提醒
+//    if (indexPath.row == 0) {
+//        //消息提醒
+//        
+//    }else if (indexPath.row == 1){
+//        //消息提醒音
+//
+//    }else if (indexPath.row == 2){
+//        //非WIFI网络播放提醒
     
-    }else if (indexPath.row == 3){
+//    }else if (indexPath.row == 3){
+//        //关于我们
+//        XXEAboutMyselfInfoViewController *aboutMyselfInfoVC = [[XXEAboutMyselfInfoViewController alloc] init];
+//        
+//        [self.navigationController pushViewController:aboutMyselfInfoVC animated:YES];
+//        
+//    }else if (indexPath.row == 4){
+//        //分享
+//    
+//    }else if (indexPath.row == 5){
+//        //去AppleStore评分
+//    
+//    }else if (indexPath.row == 6){
+//        //清除缓存
+////        [self clearCacheFlies];
+//        [self createAlertView];
+//        
+//    }else if (indexPath.row == 7){
+//        //反馈问题送猩币
+//        XXEProblemFeedbackViewController *problemFeedbackVC = [[XXEProblemFeedbackViewController alloc] init];
+//        
+//        [self.navigationController pushViewController:problemFeedbackVC animated:YES];
+//    }
+    
+    if (indexPath.row == 0){
         //关于我们
         XXEAboutMyselfInfoViewController *aboutMyselfInfoVC = [[XXEAboutMyselfInfoViewController alloc] init];
         
         [self.navigationController pushViewController:aboutMyselfInfoVC animated:YES];
         
-    }else if (indexPath.row == 4){
+    }else if (indexPath.row == 1){
         //分享
-    
-    }else if (indexPath.row == 5){
+        
+    }else if (indexPath.row == 2){
         //去AppleStore评分
-    
-    }else if (indexPath.row == 6){
+        
+    }else if (indexPath.row == 3){
         //清除缓存
-//        [self clearCacheFlies];
+        //        [self clearCacheFlies];
         [self createAlertView];
         
-    }else if (indexPath.row == 7){
+    }else if (indexPath.row == 4){
         //反馈问题送猩币
         XXEProblemFeedbackViewController *problemFeedbackVC = [[XXEProblemFeedbackViewController alloc] init];
         
         [self.navigationController pushViewController:problemFeedbackVC animated:YES];
     }
+    
 }
 
 - (void)createAlertView{

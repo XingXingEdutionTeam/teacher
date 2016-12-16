@@ -546,8 +546,9 @@
 - (void)shareButtonClick:(UIButton *)button{
 
     NSLog(@"********分享 *******");
-    NSString *shareText = @"来自猩猩教室:";
-    UIImage *shareImage = [UIImage imageNamed:@"xingxingjiaoshi_share_icon"];
+    NSString *shareText = [NSString stringWithFormat:@"%@%@",@"来自猩猩教室: ",nameStr];
+    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:headImageStr]];
+    UIImage *shareImage = [UIImage imageWithData:data];
     //    snsNames 你要分享到的sns平台类型，该NSArray值是`UMSocialSnsPlatformManager.h`定义的平台名的字符串常量，有UMShareToSina，UMShareToTencent，UMShareToRenren，UMShareToDouban，UMShareToQzone，UMShareToEmail，UMShareToSms等
     //调用快速分享接口
     [UMSocialSnsService presentSnsIconSheetView:self appKey:UMSocialAppKey shareText:shareText shareImage:shareImage shareToSnsNames:[NSArray arrayWithObjects:UMShareToSina,UMShareToQzone,UMShareToQQ,UMShareToWechatSession,UMShareToWechatTimeline,nil] delegate:self];

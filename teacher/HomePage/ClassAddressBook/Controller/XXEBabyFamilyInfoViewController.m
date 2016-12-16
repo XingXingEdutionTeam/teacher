@@ -106,6 +106,7 @@
         XXEBabyFamilyInfoDetailViewController *babyFamilyInfoDetailVC = [[XXEBabyFamilyInfoDetailViewController alloc] init];
         babyFamilyInfoDetailVC.baby_id = _baby_id;
         babyFamilyInfoDetailVC.parent_id = _familyInfoArray[indexPath.row][@"id"];
+        babyFamilyInfoDetailVC.familyMemberName = _familyInfoArray[indexPath.row][@"tname"];
         [self.navigationController pushViewController:babyFamilyInfoDetailVC animated:YES];
     }
 
