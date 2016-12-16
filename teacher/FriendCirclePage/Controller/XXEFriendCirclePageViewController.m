@@ -698,8 +698,7 @@
             XXECircleModel * model = weakSelf.circleListDatasource[(int)itemId - 1];
             
             for (XXECommentModel * commentModel in model.comment_group) {
-                
-                if ([commentModel.commentId isEqualToString:[NSString stringWithFormat:@"%lld",commentId]]) {
+                if ([[NSString stringWithFormat:@"%@",commentModel.commentId] isEqualToString:[NSString stringWithFormat:@"%lld",commentId]]) {
                     [model.comment_group removeObject:commentModel];
                     break;
                 }
@@ -795,6 +794,8 @@
         NSString *code = [request.responseJSONObject objectForKey:@"code"];
         NSDictionary *data = [request.responseJSONObject objectForKey:@"data"];
         
+        
+        
         XXEGoodUserModel * goodModel = [[XXEGoodUserModel alloc] init];
         goodModel.goodXid = [data objectForKey:@"xid"];
         goodModel.goodNickName = [data objectForKey:@"nickname"];
@@ -813,14 +814,14 @@
             
             [self addLikeItem:likeItem itemId:itemId isSelet:YES];
             [self hudShowText:@"取消成功" second:1.f];
-            dispatch_async(dispatch_get_global_queue(0, 0), ^{
-                for (XXEGoodUserModel * good in model.good_user) {
-                    if ([good.goodXid isEqualToString:[XXEUserInfo user].xid]) {
-                        [model.good_user removeObject:good];
-                        break;
-                    }
+            for (XXEGoodUserModel * good in model.good_user) {
+                if ([good.goodXid isEqualToString:[XXEUserInfo user].xid]) {
+                    [model.good_user removeObject:good];
+                    break;
                 }
-            });
+            }
+//            dispatch_async(dispatch_get_global_queue(0, 0), ^{
+//            });
         }
         weakSelf.circleListDatasource[(int)itemId - 1] = model;
     

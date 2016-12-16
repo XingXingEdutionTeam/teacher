@@ -43,7 +43,6 @@
 @property (nonatomic, assign) NSInteger indexRow;
 
 @property(nonatomic ,copy) NSString *talkId;
-
 //测试获得被评轮人的XID
 @property (nonatomic, assign)NSInteger toWhoXid;
 
