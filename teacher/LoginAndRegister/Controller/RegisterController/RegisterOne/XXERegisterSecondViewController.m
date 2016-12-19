@@ -117,7 +117,7 @@
     }];
     
     UILabel *label3 = [[UILabel alloc]init];
-    label3.text = @"输入密码";
+    label3.text = @"输入密码:";
     label3.font = [UIFont systemFontOfSize:15 * kScreenRatioWidth];
     label3.tintColor = XXEColorFromRGB(51, 51, 51);
     label3.textAlignment = NSTextAlignmentLeft;
@@ -127,11 +127,11 @@
         
         make.left.equalTo(passWordImageView.mas_left).offset(15);
         make.top.equalTo(passWordImageView.mas_top).offset(0);
-        make.size.mas_equalTo(CGSizeMake(60*kScreenRatioWidth, 41*kScreenRatioHeight));
+        make.size.mas_equalTo(CGSizeMake(70*kScreenRatioWidth, 41*kScreenRatioHeight));
     }];
     
     UILabel *label4 = [[UILabel alloc]init];
-    label4.text = @"确认密码";
+    label4.text = @"确认密码:";
     label4.font = [UIFont systemFontOfSize:15 * kScreenRatioWidth];
     label4.tintColor = XXEColorFromRGB(51, 51, 51);
     label4.textAlignment = NSTextAlignmentLeft;
@@ -139,7 +139,7 @@
     [label4 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(confirmPassWordImageView.mas_left).offset(15);
         make.top.equalTo(confirmPassWordImageView.mas_top).offset(0);
-        make.size.mas_equalTo(CGSizeMake(60*kScreenRatioWidth, 41*kScreenRatioHeight));
+        make.size.mas_equalTo(CGSizeMake(70*kScreenRatioWidth, 41*kScreenRatioHeight));
     }];
     
     [passWordImageView addSubview:self.passWordTextField];

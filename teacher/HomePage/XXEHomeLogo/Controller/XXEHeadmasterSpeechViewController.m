@@ -11,7 +11,7 @@
 
 #import "XXEHeadmasterSpeechViewController.h"
 
-@interface XXEHeadmasterSpeechViewController ()
+@interface XXEHeadmasterSpeechViewController ()<UITextViewDelegate>
 {
     //文字
     UITextView *myTextView;
@@ -67,6 +67,7 @@
     
     myTextView = [[UITextView alloc] initWithFrame:CGRectMake(0,15 + 59 +10, kWidth - 10 * 2, KScreenHeight / 3 + 70 * kScreenRatioHeight)];
     myTextView.text = _pdt_speech;
+    myTextView.delegate = self;
     //    myTextView.scrollEnabled = YES;
     myTextView.backgroundColor = [UIColor whiteColor];
     [contentView addSubview:myTextView];
@@ -164,6 +165,18 @@
     }
 }
 
+//MARK: - TextViewDelegate
+- (void)textViewDidBeginEditing:(UITextView *)textView {
+    [UIView animateWithDuration:0.4 animations:^{
+        self.view.transform = CGAffineTransformMakeTranslation(0, -212);
+    }];
+}
+
+- (void)textViewDidEndEditing:(UITextView *)textView {
+    [UIView animateWithDuration:0.4 animations:^{
+        self.view.transform = CGAffineTransformIdentity;
+    }];
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

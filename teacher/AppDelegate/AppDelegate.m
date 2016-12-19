@@ -45,6 +45,8 @@
 #import "UpdatePopView.h"
 #import "WithoutCloseUpdatePopView.h"
 
+//#import "XXERegisterSecondViewController.h"
+
 // define macro
 #define SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(v)  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedAscending)
 #define SYSTEM_VERSION_LESS_THAN(v) ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] == NSOrderedAscending)
@@ -260,6 +262,9 @@ static int currentVersion = 100;
     
     XXELoginViewController *loginVC = [[XXELoginViewController alloc]init];
     XXENavigationViewController *navi = [[XXENavigationViewController alloc] initWithRootViewController:loginVC];
+//    XXERegisterSecondViewController *vc = [[XXERegisterSecondViewController alloc] init];
+//    XXENavigationViewController *navi = [[XXENavigationViewController alloc] initWithRootViewController:vc];
+    
     
     if ([XXEUserInfo user].login){
         XXETabBarControllerConfig *tarVC = [[XXETabBarControllerConfig alloc] init];
