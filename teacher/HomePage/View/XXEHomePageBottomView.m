@@ -83,6 +83,11 @@
             }else {
                 self.chatBadgeView.hidden = NO;
             }
+            
+            if (![XXEUserInfo user].login){
+                self.chatBadgeView.hidden = YES;
+            }
+            
         }
         
         if (num == 12) {

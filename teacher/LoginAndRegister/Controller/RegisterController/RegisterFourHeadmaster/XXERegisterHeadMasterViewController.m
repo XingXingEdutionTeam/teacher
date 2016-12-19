@@ -292,6 +292,9 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
         XXETeacherTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:IdentifierCELL forIndexPath:indexPath];
         cell.teacherRegisLabel.text = [_titleArr objectAtIndex:indexPath.row];
         cell.teacherRegisTextField.placeholder = [_titleTextArr objectAtIndex:indexPath.row];
+        if (indexPath.row == 7) {
+//            cell.teacherRegisTextField.delegate = self;
+        }
         cell.teacherRegisTextField.tag = 100 + indexPath.row;
         return cell;
     }
@@ -382,6 +385,13 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
 #pragma mark  - UITextField
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
+    
+    if (textField.tag == 107) {
+        [UIView animateWithDuration:0.4 animations:^{
+            self.view.transform = CGAffineTransformIdentity;
+        }];
+    }
+    
     switch (textField.tag) {
         case 100:
             NSLog(@"%@",textField.text);
@@ -832,6 +842,16 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
     cell.teacherRegisTextField.text = message;
     return cell;
 }
+
+//MARK: - TextFieldDelegate
+- (void)textFieldDidBeginEditing:(UITextField *)textField {
+    if (textField.tag == 107) {
+        [UIView animateWithDuration:0.4 animations:^{
+            self.view.transform = CGAffineTransformMakeTranslation(0, -212);
+        }];
+    }
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
