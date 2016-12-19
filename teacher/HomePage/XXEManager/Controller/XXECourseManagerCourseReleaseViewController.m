@@ -1053,10 +1053,14 @@
     }else if ([arrangeText.text isEqualToString:@""]){
         [self showHudWithString:@"请完善课程名称" forSecond:1.5];
         
-    }else if ([teacherNameCommbox.textField.text isEqualToString:@""]){
-        [self showHudWithString:@"请完善老师名称" forSecond:1.5];
-        
     }else if ([studentCountText.text isEqualToString:@""]){
+        
+//        else if ([teacherNameCommbox.textField.text isEqualToString:@""]){
+//            [self showHudWithString:@"请完善老师名称" forSecond:1.5];
+//            
+//        }
+        
+        
         [self showHudWithString:@"请完善招生人数" forSecond:1.5];
         
     }else if ([studentAgeText1.text isEqualToString:@""]){
