@@ -78,10 +78,16 @@
                 make.height.mas_equalTo(8);
             }];
             
+            
+            
             if ([RCIMClient sharedRCIMClient].getTotalUnreadCount == 0) {
                 self.chatBadgeView.hidden = YES;
             }else {
                 self.chatBadgeView.hidden = NO;
+            }
+            
+            if (![XXEUserInfo user].login){
+                self.chatBadgeView.hidden = YES;
             }
         }
         
