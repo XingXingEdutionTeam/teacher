@@ -292,9 +292,11 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
         XXETeacherTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:IdentifierCELL forIndexPath:indexPath];
         cell.teacherRegisLabel.text = [_titleArr objectAtIndex:indexPath.row];
         cell.teacherRegisTextField.placeholder = [_titleTextArr objectAtIndex:indexPath.row];
-        if (indexPath.row == 7) {
-//            cell.teacherRegisTextField.delegate = self;
+        
+        if (indexPath.row == 6) {
+            cell.teacherRegisTextField.text = @"平台审核";
         }
+        
         cell.teacherRegisTextField.tag = 100 + indexPath.row;
         return cell;
     }
@@ -356,9 +358,9 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
             break;
         }
         case 6:{
-               self.teacherCell = [self cellAtIndexRow:6 andAtSection:0 Message:@"平台审核"];
-            self.theEndReviewerId = @"0";
-            [self tureOrFalseCellClick:NO];
+//               self.teacherCell = [self cellAtIndexRow:6 andAtSection:0 Message:@"平台审核"];
+//            self.theEndReviewerId = @"0";
+//            [self tureOrFalseCellClick:NO];
             break;
         }
         case 7:{

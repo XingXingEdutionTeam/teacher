@@ -167,15 +167,15 @@
 
 //MARK: - TextViewDelegate
 - (void)textViewDidBeginEditing:(UITextView *)textView {
-    [UIView animateWithDuration:0.4 animations:^{
-        self.view.transform = CGAffineTransformMakeTranslation(0, -212);
-    }];
+//    [UIView animateWithDuration:0.4 animations:^{
+//        self.view.transform = CGAffineTransformMakeTranslation(0, -212);
+//    }];
 }
 
 - (void)textViewDidEndEditing:(UITextView *)textView {
-    [UIView animateWithDuration:0.4 animations:^{
-        self.view.transform = CGAffineTransformIdentity;
-    }];
+//    [UIView animateWithDuration:0.4 animations:^{
+//        self.view.transform = CGAffineTransformIdentity;
+//    }];
 }
 
 - (void)didReceiveMemoryWarning {
