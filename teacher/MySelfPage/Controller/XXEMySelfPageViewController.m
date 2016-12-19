@@ -77,12 +77,6 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
 
-    userPosition = [DEFAULTS objectForKey:@"POSITION"];
-    schoolType = [DEFAULTS objectForKey:@"SCHOOL_TYPE"];
-    
-//    NSLog(@" %@ ----- %@", userPosition, schoolType);
-    
-    
 //#pragma  如果是私立校长身份 (在头视图上出现 "我的订单"  "我的钱包", 下面的列表中没有 "我的订单")
     if ([userPosition isEqualToString:@"4"] && [schoolType isEqualToString:@"4"]) {
         pictureArray = [[NSMutableArray alloc] initWithObjects:@"myself_info_icon40x40", @"myself_friend_icon40x44", @"myself_chat_icon40x40", @"myself_collection_icon40x40", @"myself_friend_circle_icon40x40", @"myself_blackorder_icon40x40", @"myself_system_setting_icon40x40", @"myself_privacy_setting_icon40x40", nil];
@@ -113,7 +107,10 @@
         parameterXid = XID;
         parameterUser_Id = USER_ID;
     }
+    userPosition = [DEFAULTS objectForKey:@"POSITION"];
+    schoolType = [DEFAULTS objectForKey:@"SCHOOL_TYPE"];
     
+//    NSLog(@" %@ ----- %@", userPosition, schoolType);
     
     [self createTableView];
 }
@@ -311,14 +308,15 @@
 
 - (void)createTableView{
     
-
     CGFloat tableViewY;
         if ([userPosition isEqualToString:@"4"] && [schoolType isEqualToString:@"4"]) {
-    tableViewY = 200 * kScreenRatioHeight;
-}else {
-    tableViewY = 150 * kScreenRatioHeight;
-}
+            tableViewY = 200 * kScreenRatioHeight;
+         }else {
+            tableViewY = 150 * kScreenRatioHeight;
+         }
 
+//    NSLog(@"tableViewY === %lf", tableViewY);
+    
     _myTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, tableViewY, KScreenWidth, KScreenHeight - 150 * kScreenRatioHeight - 49 - 64) style:UITableViewStyleGrouped];
     
     _myTableView.dataSource = self;
@@ -365,17 +363,17 @@
 
     if ([userPosition isEqualToString:@"4"] && [schoolType isEqualToString:@"4"]) {
     
-    //如果 是 校长 身份
+    //如果 是 私立 学校 校长 身份
     if (indexPath.row == 0) {
         //@"我的资料"
-        if([XXEUserInfo user].login){
-            
+//        if([XXEUserInfo user].login){
+        
         XXEMyselfInfoViewController *myselfInfoVC = [[XXEMyselfInfoViewController alloc] init];
         [self.navigationController pushViewController:myselfInfoVC animated:YES];
-        }else{
-            
-            [self showString:@"请用账号登录后查看" forSecond:1.5];
-        }
+//        }else{
+//            
+//            [self showString:@"请用账号登录后查看" forSecond:1.5];
+//        }
         
     }else if (indexPath.row == 1){
         //@"我的好友"
@@ -447,14 +445,14 @@
     //如果 不是 校长 身份
     if (indexPath.row == 0) {
         //@"我的资料"
-        if([XXEUserInfo user].login){
+//        if([XXEUserInfo user].login){
         
         XXEMyselfInfoViewController *myselfInfoVC = [[XXEMyselfInfoViewController alloc] init];
         [self.navigationController pushViewController:myselfInfoVC animated:YES];
-        }else{
-        
-        [self showString:@"请用账号登录后查看" forSecond:1.5];
-        }
+//        }else{
+//        
+//        [self showString:@"请用账号登录后查看" forSecond:1.5];
+//        }
 
         
     }else if (indexPath.row == 1){

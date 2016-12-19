@@ -79,12 +79,15 @@
 
 
 - (void)fetchNetData{
+    
+//        NSLog(@"%@ === %@ === %@ ---- %@", _schoolId, _schoolType, _classId, _position);
+    
     XXETeacherManagerApi *teacherManagerApi = [[XXETeacherManagerApi alloc] initWithXid:parameterXid user_id:parameterUser_Id school_id:_schoolId school_type:_schoolType class_id:_classId position:_position];
     
     [teacherManagerApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         classModelArray = [[NSMutableArray alloc] init];
         _flagArray = [[NSMutableArray alloc] init];
-        NSLog(@"111   %@", request.responseJSONObject);
+//        NSLog(@"111   %@", request.responseJSONObject);
         
         NSString *codeStr = [NSString stringWithFormat:@"%@", request.responseJSONObject[@"code"]];
         
@@ -197,7 +200,7 @@
     
     //        NSLog(@"%@ -- %@", _flagArray, classModelArray);
     
-    if ([self.flagArray[section] boolValue] == YES) {
+    if ([self.flagArray[section] boolValue] == YES && [classModelArray count] != 0) {
         XXETeacherManagerClassInfoModel *model = classModelArray[section];
         
         return model.teacher_list.count;
@@ -399,7 +402,7 @@
     XXETeacherManagerClassInfoModel *classModel = classModelArray[path.section];
     XXETeacherManagerPersonInfoModel *stuModel = classModel.teacher_list[path.row];
     
-    NSLog(@"%@ ==== %@ ", classModel, stuModel);
+//    NSLog(@"%@ ==== %@ ", classModel, stuModel);
     
     //当前 所要删除 老师 的 teacherId 及 所在 的classid
     NSString *currentClassId = classModel.class_id;
@@ -496,83 +499,89 @@
 
 
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
-    UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 40)];
-    view.backgroundColor = [UIColor whiteColor];
-    view.userInteractionEnabled = YES;
     
-    view.tag = 100 + section;
-    
-    UITapGestureRecognizer *viewPress = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(viewPressClick:)];
-    [view addGestureRecognizer:viewPress];
-    
-    arrowButton = [[UIButton alloc]initWithFrame:CGRectMake(10, (40-12)/2, 12, 12)];
-    NSNumber *flagN = self.flagArray[section];
-    
-    if ([flagN boolValue]) {
-        [arrowButton setBackgroundImage:[UIImage imageNamed:@"narrow_icon"] forState:UIControlStateNormal];
-        CGAffineTransform currentTransform =arrowButton.transform;
-        CGAffineTransform newTransform =CGAffineTransformRotate(currentTransform, M_PI/2);
-        arrowButton.transform =newTransform;
+    if ([_flagArray count] != 0 && [classModelArray count] != 0) {
+        UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 40)];
+        view.backgroundColor = [UIColor whiteColor];
+        view.userInteractionEnabled = YES;
         
-    }else
-    {
-        [arrowButton setBackgroundImage:[UIImage imageNamed:@"narrow_icon"] forState:UIControlStateNormal ];
+        view.tag = 100 + section;
         
-    }
-    arrowButton.tag = 300+section;
-    [view addSubview:arrowButton];
-    
-    
-    XXETeacherManagerClassInfoModel *model = classModelArray[section];
-    NSString *classNameStr ;
-    NSString *numStr;
-    NSString *wait_numStr;
-    //班级名称
-    if (model.class_name == nil) {
-        classNameStr = @"";
+        UITapGestureRecognizer *viewPress = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(viewPressClick:)];
+        [view addGestureRecognizer:viewPress];
+        
+        arrowButton = [[UIButton alloc]initWithFrame:CGRectMake(10, (40-12)/2, 12, 12)];
+        NSNumber *flagN = self.flagArray[section];
+        
+        if ([flagN boolValue]) {
+            [arrowButton setBackgroundImage:[UIImage imageNamed:@"narrow_icon"] forState:UIControlStateNormal];
+            CGAffineTransform currentTransform =arrowButton.transform;
+            CGAffineTransform newTransform =CGAffineTransformRotate(currentTransform, M_PI/2);
+            arrowButton.transform =newTransform;
+            
+        }else
+        {
+            [arrowButton setBackgroundImage:[UIImage imageNamed:@"narrow_icon"] forState:UIControlStateNormal ];
+            
+        }
+        arrowButton.tag = 300+section;
+        [view addSubview:arrowButton];
+        
+        
+        XXETeacherManagerClassInfoModel *model = classModelArray[section];
+        NSString *classNameStr ;
+        NSString *numStr;
+        NSString *wait_numStr;
+        //班级名称
+        if (model.class_name == nil) {
+            classNameStr = @"";
+        }else{
+            classNameStr = model.class_name;
+        }
+        //已审核的老师数
+        if (model.num == nil) {
+            numStr = @"";
+        }else{
+            numStr = model.num;
+        }
+        //待审核老师数
+        if (model.wait_num == nil) {
+            wait_numStr = @"";
+        }else{
+            wait_numStr = model.wait_num;
+        }
+        
+        //班级名称
+        UILabel *nameLabel = [[UILabel alloc]initWithFrame:CGRectMake(30 * kScreenRatioWidth, 5, 200 * kScreenRatioWidth, 30)];
+        nameLabel.text = [NSString stringWithFormat:@"%@",classNameStr];
+        nameLabel.textColor = [UIColor blackColor];
+        nameLabel.font = [UIFont boldSystemFontOfSize:16 * kScreenRatioWidth];
+        [view addSubview:nameLabel];
+        
+        //已审核的老师数
+        UILabel *auditedLabel = [[UILabel alloc]initWithFrame:CGRectMake(230 * kScreenRatioWidth, 5, 70 * kScreenRatioWidth, 30)];
+        auditedLabel.text = [NSString stringWithFormat:@"已审核:%@",numStr];
+        auditedLabel.textColor = [UIColor blackColor];
+        auditedLabel.font = [UIFont boldSystemFontOfSize:14 * kScreenRatioWidth];
+        [view addSubview:auditedLabel];
+        
+        //待审核的老师数
+        UILabel *unauditLabel = [[UILabel alloc]initWithFrame:CGRectMake(300 * kScreenRatioWidth, 5, 70 * kScreenRatioWidth, 30)];
+        unauditLabel.text = [NSString stringWithFormat:@"待审核:%@",wait_numStr];
+        unauditLabel.textColor = [UIColor blackColor];
+        unauditLabel.font = [UIFont boldSystemFontOfSize:14 * kScreenRatioWidth];
+        [view addSubview:unauditLabel];
+        
+        //线
+        UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, 39, KScreenWidth, 1)];
+        lineView.backgroundColor = UIColorFromRGB(229, 232, 233);
+        [view addSubview:lineView];
+        
+        return view;
     }else{
-        classNameStr = model.class_name;
-    }
-    //已审核的老师数
-    if (model.num == nil) {
-        numStr = @"";
-    }else{
-        numStr = model.num;
-    }
-    //待审核老师数
-    if (model.wait_num == nil) {
-        wait_numStr = @"";
-    }else{
-        wait_numStr = model.wait_num;
+        return nil;
     }
     
-    //班级名称
-    UILabel *nameLabel = [[UILabel alloc]initWithFrame:CGRectMake(30 * kScreenRatioWidth, 5, 200 * kScreenRatioWidth, 30)];
-    nameLabel.text = [NSString stringWithFormat:@"%@",classNameStr];
-    nameLabel.textColor = [UIColor blackColor];
-    nameLabel.font = [UIFont boldSystemFontOfSize:16 * kScreenRatioWidth];
-    [view addSubview:nameLabel];
-    
-    //已审核的老师数
-    UILabel *auditedLabel = [[UILabel alloc]initWithFrame:CGRectMake(230 * kScreenRatioWidth, 5, 70 * kScreenRatioWidth, 30)];
-    auditedLabel.text = [NSString stringWithFormat:@"已审核:%@",numStr];
-    auditedLabel.textColor = [UIColor blackColor];
-    auditedLabel.font = [UIFont boldSystemFontOfSize:14 * kScreenRatioWidth];
-    [view addSubview:auditedLabel];
-    
-    //待审核的老师数
-    UILabel *unauditLabel = [[UILabel alloc]initWithFrame:CGRectMake(300 * kScreenRatioWidth, 5, 70 * kScreenRatioWidth, 30)];
-    unauditLabel.text = [NSString stringWithFormat:@"待审核:%@",wait_numStr];
-    unauditLabel.textColor = [UIColor blackColor];
-    unauditLabel.font = [UIFont boldSystemFontOfSize:14 * kScreenRatioWidth];
-    [view addSubview:unauditLabel];
-    
-    //线
-    UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, 39, KScreenWidth, 1)];
-    lineView.backgroundColor = UIColorFromRGB(229, 232, 233);
-    [view addSubview:lineView];
-    
-    return view;
 }
 
 - (void)viewPressClick:(UITapGestureRecognizer *)press{

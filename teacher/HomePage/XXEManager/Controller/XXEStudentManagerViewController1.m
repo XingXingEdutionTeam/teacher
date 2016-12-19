@@ -74,6 +74,8 @@
 
 - (void)fetchNetData{
     
+//    NSLog(@"%@ === %@ === %@ ---- %@", _schoolId, _schoolType, _classId, _position);
+    
     XXEStudentManagerApi *studentManagerApi = [[XXEStudentManagerApi alloc] initWithXid:parameterXid user_id:parameterUser_Id school_id:_schoolId school_type:_schoolType class_id:_classId position:_position];
     
     [studentManagerApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
@@ -182,8 +184,12 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     
-    XXEClassModel *model = classModelArray[section];
-    return model.baby_list.count;
+    if (classModelArray.count != 0) {
+       XXEClassModel *model = classModelArray[section];
+        return model.baby_list.count;
+    }else{
+        return 0;
+    }
 }
 
 
@@ -339,33 +345,38 @@
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
-    XXEClassModel *classModel = classModelArray[section];
-    
-    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, KScreenWidth, 40)];
-    headerView.backgroundColor = [UIColor whiteColor];
-    
-    NSString *classNameStr ;
-    NSString *numStr;
-    if (classModel.class_name == nil) {
-        classNameStr = @"";
+    if ([classModelArray count] != 0) {
+        XXEClassModel *classModel = classModelArray[section];
+        
+        UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, KScreenWidth, 40)];
+        headerView.backgroundColor = [UIColor whiteColor];
+        
+        NSString *classNameStr ;
+        NSString *numStr;
+        if (classModel.class_name == nil) {
+            classNameStr = @"";
+        }else{
+            classNameStr = classModel.class_name;
+        }
+        if (classModel.num == nil) {
+            numStr = @"";
+        }else{
+            numStr = classModel.num;
+        }
+        
+        
+        CGFloat labelWidth = KScreenWidth ;
+        UILabel *titleLabel1 = [UILabel createLabelWithFrame:CGRectMake(0, 10, labelWidth, 20) Font:14 Text:@""];
+        
+        titleLabel1.text = [NSString stringWithFormat:@"%@(%@人)",classNameStr, numStr];
+        titleLabel1.textAlignment = NSTextAlignmentCenter;
+        [headerView addSubview:titleLabel1];
+        
+        return headerView;
     }else{
-        classNameStr = classModel.class_name;
+        return nil;
     }
-    if (classModel.num == nil) {
-        numStr = @"";
-    }else{
-        numStr = classModel.num;
-    }
-
     
-    CGFloat labelWidth = KScreenWidth ;
-    UILabel *titleLabel1 = [UILabel createLabelWithFrame:CGRectMake(0, 10, labelWidth, 20) Font:14 Text:@""];
-    
-    titleLabel1.text = [NSString stringWithFormat:@"%@(%@人)",classNameStr, numStr];
-    titleLabel1.textAlignment = NSTextAlignmentCenter;
-    [headerView addSubview:titleLabel1];
-
-    return headerView;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{

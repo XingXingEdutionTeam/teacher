@@ -359,7 +359,7 @@ static NSString *IdentifierMessPerCELL = @"TeacherMessCell";
 
 - (void)setupWarnView
 {
-    UIAlertController *alert=[UIAlertController alertControllerWithTitle:@"温馨提示" message:@"是否完善信息赚取200猩币" preferredStyle:(UIAlertControllerStyleAlert)];
+    UIAlertController *alert=[UIAlertController alertControllerWithTitle:@"温馨提示" message:@"是否完善信息赚取100猩币" preferredStyle:(UIAlertControllerStyleAlert)];
     UIAlertAction *cancel=[UIAlertAction actionWithTitle:@"完善" style:UIAlertActionStyleCancel handler:nil];
     UIAlertAction *ok=[UIAlertAction actionWithTitle:@"跳过" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         

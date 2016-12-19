@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		0421468F1D94C69200A2F7F3 /* XXESchoolAlbumShowViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0421468E1D94C69200A2F7F3 /* XXESchoolAlbumShowViewController.m */; };
 		042146921D94D3BA00A2F7F3 /* XXEShoolPicSupportApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 042146911D94D3BA00A2F7F3 /* XXEShoolPicSupportApi.m */; };
+		042E2F8F1E0789B6000CEB1E /* XXEXingCommunityClassesTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 042E2F8E1E0789B6000CEB1E /* XXEXingCommunityClassesTableViewCell.m */; };
+		042E2F921E078EB5000CEB1E /* XXEXingCommunityClassesModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 042E2F911E078EB5000CEB1E /* XXEXingCommunityClassesModel.m */; };
 		0430B1601D7D5689001F463F /* XXEMyselfInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0430B15F1D7D5689001F463F /* XXEMyselfInfoViewController.m */; };
 		0430B1641D7D79CC001F463F /* XXEMyselfInfoNameModifyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0430B1621D7D79CC001F463F /* XXEMyselfInfoNameModifyViewController.m */; };
 		0430B1651D7D79CC001F463F /* XXEMyselfInfoNameModifyViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0430B1631D7D79CC001F463F /* XXEMyselfInfoNameModifyViewController.xib */; };
@@ -1022,6 +1024,10 @@
 		0421468E1D94C69200A2F7F3 /* XXESchoolAlbumShowViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXESchoolAlbumShowViewController.m; sourceTree = "<group>"; };
 		042146901D94D3BA00A2F7F3 /* XXEShoolPicSupportApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXEShoolPicSupportApi.h; sourceTree = "<group>"; };
 		042146911D94D3BA00A2F7F3 /* XXEShoolPicSupportApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXEShoolPicSupportApi.m; sourceTree = "<group>"; };
+		042E2F8D1E0789B6000CEB1E /* XXEXingCommunityClassesTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXEXingCommunityClassesTableViewCell.h; sourceTree = "<group>"; };
+		042E2F8E1E0789B6000CEB1E /* XXEXingCommunityClassesTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXEXingCommunityClassesTableViewCell.m; sourceTree = "<group>"; };
+		042E2F901E078EB5000CEB1E /* XXEXingCommunityClassesModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXEXingCommunityClassesModel.h; sourceTree = "<group>"; };
+		042E2F911E078EB5000CEB1E /* XXEXingCommunityClassesModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXEXingCommunityClassesModel.m; sourceTree = "<group>"; };
 		0430B15E1D7D5689001F463F /* XXEMyselfInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXEMyselfInfoViewController.h; sourceTree = "<group>"; };
 		0430B15F1D7D5689001F463F /* XXEMyselfInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXEMyselfInfoViewController.m; sourceTree = "<group>"; };
 		0430B1611D7D79CC001F463F /* XXEMyselfInfoNameModifyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXEMyselfInfoNameModifyViewController.h; sourceTree = "<group>"; };
@@ -3197,6 +3203,8 @@
 		043C80AF1D869BDF004F1B85 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				042E2F901E078EB5000CEB1E /* XXEXingCommunityClassesModel.h */,
+				042E2F911E078EB5000CEB1E /* XXEXingCommunityClassesModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -3204,6 +3212,8 @@
 		043C80B01D869BDF004F1B85 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				042E2F8D1E0789B6000CEB1E /* XXEXingCommunityClassesTableViewCell.h */,
+				042E2F8E1E0789B6000CEB1E /* XXEXingCommunityClassesTableViewCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -6849,6 +6859,7 @@
 				043C80BF1D86BC95004F1B85 /* XXEXingCommunityInstitutionsViewController.m in Sources */,
 				9E6912F81D5442AE0000E566 /* UIView+XXExtension.m in Sources */,
 				044DEBDC1D8FD2F900DE101A /* XXECourseManagerViewController.m in Sources */,
+				042E2F8F1E0789B6000CEB1E /* XXEXingCommunityClassesTableViewCell.m in Sources */,
 				04945EF91E03CAE5000C1726 /* XXETeacherManagerDeleteApi.m in Sources */,
 				9E4CEDD41E00E71800F4525E /* GlobalVariable.m in Sources */,
 				9E5E23D01D90CCD8008B1AAF /* XXEInfomationViewController.m in Sources */,
@@ -7295,6 +7306,7 @@
 				9EB2E93F1D5889B9004809D3 /* UILabel+XXExtension.m in Sources */,
 				0433012B1D62BDD000722DE2 /* XXERedFlowerSentHistoryViewController.m in Sources */,
 				9E5E23D31D90CCD8008B1AAF /* XXEWhoCanLookController.m in Sources */,
+				042E2F921E078EB5000CEB1E /* XXEXingCommunityClassesModel.m in Sources */,
 				04547B281DAB35840059F3F1 /* XXERongCloudFriendRequestListModel.m in Sources */,
 				04947CBC1DC0CE3A008A351F /* BCRefundStatusResp.m in Sources */,
 				047AC9391DC732EA001891DE /* XXESchoolTimetableTraditionApi.m in Sources */,

@@ -109,36 +109,44 @@
      school_id	//学校id,教师端调用此接口时必须传参*/
     NSString *urlStr = @"http://www.xingxingedu.cn/Global/course_order_list";
     
-    NSDictionary *params = @{@"appkey":APPKEY,
-                             @"backtype":BACKTYPE,
-                             @"xid":parameterXid,
-                             @"user_id":parameterUser_Id,
-                             @"user_type":USER_TYPE,
-                             @"condit":conditStr,
-                             @"school_id":school_id
-                             };
+//    NSLog(@"conditStr:%@ ==== school_id:%@", conditStr, school_id);
     
-    [WZYHttpTool post:urlStr params:params success:^(id responseObj) {
-        _dataSourceArray = [[NSMutableArray alloc] init];
+    if (school_id == nil) {
+        [self showHudWithString:@"该用户信息正在审核中..." forSecond:1.5];
+    }else{
+        NSDictionary *params = @{@"appkey":APPKEY,
+                                 @"backtype":BACKTYPE,
+                                 @"xid":parameterXid,
+                                 @"user_id":parameterUser_Id,
+                                 @"user_type":USER_TYPE,
+                                 @"condit":conditStr,
+                                 @"school_id":school_id
+                                 };
         
-        //
-//                NSLog(@"kkkk %@", responseObj);
-        
-        if ([responseObj[@"code"] integerValue] == 1) {
+        [WZYHttpTool post:urlStr params:params success:^(id responseObj) {
+            _dataSourceArray = [[NSMutableArray alloc] init];
             
-            NSArray *modelArray = [[NSArray alloc] init];
+            //
+            //                NSLog(@"kkkk %@", responseObj);
             
-            modelArray = [XXECourseOrderListModel parseResondsData:responseObj[@"data"]];
+            if ([responseObj[@"code"] integerValue] == 1) {
+                
+                NSArray *modelArray = [[NSArray alloc] init];
+                
+                modelArray = [XXECourseOrderListModel parseResondsData:responseObj[@"data"]];
+                
+                [_dataSourceArray addObjectsFromArray:modelArray];
+                
+            }
+            [self customContent];
             
-            [_dataSourceArray addObjectsFromArray:modelArray];
-            
-        }
-        [self customContent];
-        
-    } failure:^(NSError *error) {
-        //
-        [self showString:@"获取数据失败!" forSecond:1.5];
-    }];
+        } failure:^(NSError *error) {
+            //
+            [self showString:@"获取数据失败!" forSecond:1.5];
+        }];
+
+    }
+    
     
 }
 
