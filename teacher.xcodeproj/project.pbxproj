@@ -749,6 +749,8 @@
 		9E3AB0111DEC502B00E04C6C /* XXEStoreSentFlowerbasketToOtherHistoryTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E3AAFE21DEC502B00E04C6C /* XXEStoreSentFlowerbasketToOtherHistoryTableViewCell.m */; };
 		9E3AB0121DEC502B00E04C6C /* XXEStoreSentFlowerbasketToOtherHistoryTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9E3AAFE31DEC502B00E04C6C /* XXEStoreSentFlowerbasketToOtherHistoryTableViewCell.xib */; };
 		9E3AB0131DEC502B00E04C6C /* ZQCountDownView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E3AAFE51DEC502B00E04C6C /* ZQCountDownView.m */; };
+		9E4643B31E07BED100E1EBC4 /* ServiceManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E6051501DF8EE3C00D9FC8A /* ServiceManager.m */; };
+		9E4643DD1E07C09F00E1EBC4 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E4643DC1E07C09F00E1EBC4 /* AssetsLibrary.framework */; };
 		9E4813841D504D0900C614AC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E4813831D504D0900C614AC /* main.m */; };
 		9E48138D1D504D0900C614AC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9E48138B1D504D0900C614AC /* Main.storyboard */; };
 		9E48138F1D504D0900C614AC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9E48138E1D504D0900C614AC /* Assets.xcassets */; };
@@ -839,7 +841,6 @@
 		9E5E23FD1D90E5BE008B1AAF /* dian@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9E5E23FC1D90E5BE008B1AAF /* dian@2x.png */; };
 		9E6051481DF7F0B700D9FC8A /* SchoolModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E6051471DF7F0B700D9FC8A /* SchoolModel.m */; };
 		9E60514E1DF80AD000D9FC8A /* XXESearchAccurateApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E60514D1DF80AD000D9FC8A /* XXESearchAccurateApi.m */; };
-		9E6051511DF8EE3C00D9FC8A /* ServiceManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E6051501DF8EE3C00D9FC8A /* ServiceManager.m */; };
 		9E6051541DF8EE9100D9FC8A /* UploadParam.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E6051531DF8EE9100D9FC8A /* UploadParam.m */; };
 		9E6051591DF8FB2000D9FC8A /* UpdatePopView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E6051581DF8FB2000D9FC8A /* UpdatePopView.m */; };
 		9E60515C1DF8FB4300D9FC8A /* WithoutCloseUpdatePopView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E60515B1DF8FB4300D9FC8A /* WithoutCloseUpdatePopView.m */; };
@@ -847,7 +848,6 @@
 		9E65A7401DF00101002BAE0A /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E65A73F1DF00101002BAE0A /* CoreFoundation.framework */; };
 		9E65A7421DF0015F002BAE0A /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E65A7411DF0015F002BAE0A /* UserNotifications.framework */; };
 		9E65A7441DF0017B002BAE0A /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E65A7431DF0017B002BAE0A /* libresolv.tbd */; };
-		9E65A7461DF0334D002BAE0A /* sound.caf in Sources */ = {isa = PBXBuildFile; fileRef = 9E65A7451DF03320002BAE0A /* sound.caf */; };
 		9E65A7471DF037DF002BAE0A /* sound.caf in Resources */ = {isa = PBXBuildFile; fileRef = 9E65A7451DF03320002BAE0A /* sound.caf */; };
 		9E6693DB1D6460BE00FFA0A7 /* KTActionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E6693D11D6460BE00FFA0A7 /* KTActionSheet.m */; };
 		9E6693DC1D6460BE00FFA0A7 /* KTSheetCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E6693D31D6460BE00FFA0A7 /* KTSheetCell.m */; };
@@ -2356,6 +2356,27 @@
 		9E3AAFE31DEC502B00E04C6C /* XXEStoreSentFlowerbasketToOtherHistoryTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XXEStoreSentFlowerbasketToOtherHistoryTableViewCell.xib; sourceTree = "<group>"; };
 		9E3AAFE41DEC502B00E04C6C /* ZQCountDownView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZQCountDownView.h; sourceTree = "<group>"; };
 		9E3AAFE51DEC502B00E04C6C /* ZQCountDownView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZQCountDownView.m; sourceTree = "<group>"; };
+		9E4643B41E07C07C00E1EBC4 /* libAFDownloadRequestOperation.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libAFDownloadRequestOperation.a; path = "Pods/../build/Release-iphoneos/AFDownloadRequestOperation/libAFDownloadRequestOperation.a"; sourceTree = "<group>"; };
+		9E4643B51E07C07C00E1EBC4 /* libAFNetworking.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libAFNetworking.a; path = "Pods/../build/Release-iphoneos/AFNetworking/libAFNetworking.a"; sourceTree = "<group>"; };
+		9E4643B61E07C07C00E1EBC4 /* libDFCommon.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libDFCommon.a; path = "Pods/../build/Release-iphoneos/DFCommon/libDFCommon.a"; sourceTree = "<group>"; };
+		9E4643B71E07C07C00E1EBC4 /* libFMDB.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libFMDB.a; path = "Pods/../build/Release-iphoneos/FMDB/libFMDB.a"; sourceTree = "<group>"; };
+		9E4643B81E07C07C00E1EBC4 /* libJSONModel.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libJSONModel.a; path = "Pods/../build/Release-iphoneos/JSONModel/libJSONModel.a"; sourceTree = "<group>"; };
+		9E4643B91E07C07C00E1EBC4 /* libMasonry.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libMasonry.a; path = "Pods/../build/Release-iphoneos/Masonry/libMasonry.a"; sourceTree = "<group>"; };
+		9E4643BA1E07C07C00E1EBC4 /* libMBProgressHUD.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libMBProgressHUD.a; path = "Pods/../build/Release-iphoneos/MBProgressHUD/libMBProgressHUD.a"; sourceTree = "<group>"; };
+		9E4643BB1E07C07C00E1EBC4 /* libMJPhotoBrowser.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libMJPhotoBrowser.a; path = "Pods/../build/Release-iphoneos/MJPhotoBrowser/libMJPhotoBrowser.a"; sourceTree = "<group>"; };
+		9E4643BC1E07C07C00E1EBC4 /* libMJRefresh.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libMJRefresh.a; path = "Pods/../build/Release-iphoneos/MJRefresh/libMJRefresh.a"; sourceTree = "<group>"; };
+		9E4643BD1E07C07C00E1EBC4 /* libMLLabel.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libMLLabel.a; path = "Pods/../build/Release-iphoneos/MLLabel/libMLLabel.a"; sourceTree = "<group>"; };
+		9E4643BE1E07C07C00E1EBC4 /* libMMPopupView.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libMMPopupView.a; path = "Pods/../build/Release-iphoneos/MMPopupView/libMMPopupView.a"; sourceTree = "<group>"; };
+		9E4643BF1E07C07C00E1EBC4 /* libODRefreshControl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libODRefreshControl.a; path = "Pods/../build/Release-iphoneos/ODRefreshControl/libODRefreshControl.a"; sourceTree = "<group>"; };
+		9E4643C01E07C07C00E1EBC4 /* libReactiveCocoa.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libReactiveCocoa.a; path = "Pods/../build/Debug-iphoneos/ReactiveCocoa/libReactiveCocoa.a"; sourceTree = "<group>"; };
+		9E4643C11E07C07C00E1EBC4 /* libSDWebImage.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libSDWebImage.a; path = "Pods/../build/Release-iphoneos/SDWebImage/libSDWebImage.a"; sourceTree = "<group>"; };
+		9E4643C21E07C07C00E1EBC4 /* libSVProgressHUD.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libSVProgressHUD.a; path = "Pods/../build/Release-iphoneos/SVProgressHUD/libSVProgressHUD.a"; sourceTree = "<group>"; };
+		9E4643C31E07C07C00E1EBC4 /* libTZImagePickerController.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libTZImagePickerController.a; path = "Pods/../build/Release-iphoneos/TZImagePickerController/libTZImagePickerController.a"; sourceTree = "<group>"; };
+		9E4643C41E07C07C00E1EBC4 /* libYLGIFImage.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libYLGIFImage.a; path = "Pods/../build/Release-iphoneos/YLGIFImage/libYLGIFImage.a"; sourceTree = "<group>"; };
+		9E4643C51E07C07C00E1EBC4 /* libYTKKeyValueStore.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libYTKKeyValueStore.a; path = "Pods/../build/Release-iphoneos/YTKKeyValueStore/libYTKKeyValueStore.a"; sourceTree = "<group>"; };
+		9E4643C61E07C07C00E1EBC4 /* libYTKNetwork.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libYTKNetwork.a; path = "Pods/../build/Release-iphoneos/YTKNetwork/libYTKNetwork.a"; sourceTree = "<group>"; };
+		9E4643C71E07C07C00E1EBC4 /* libZYQAssetPickerController.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libZYQAssetPickerController.a; path = "Pods/../build/Release-iphoneos/ZYQAssetPickerController/libZYQAssetPickerController.a"; sourceTree = "<group>"; };
+		9E4643DC1E07C09F00E1EBC4 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		9E48137F1D504D0900C614AC /* teacher.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = teacher.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9E4813831D504D0900C614AC /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		9E48138C1D504D0900C614AC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -2820,21 +2841,23 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				04947C241DC0BB98008A351F /* UIKit.framework in Frameworks */,
+				9E2F7F8F1D73D41800DD9CD1 /* SystemConfiguration.framework in Frameworks */,
+				9E2F7F8B1D73D3FB00DD9CD1 /* Security.framework in Frameworks */,
+				04947C201DC0BB5F008A351F /* QuartzCore.framework in Frameworks */,
+				04947C181DC0BAC2008A351F /* MobileCoreServices.framework in Frameworks */,
+				04947C1E1DC0BB38008A351F /* ImageIO.framework in Frameworks */,
+				04947C221DC0BB74008A351F /* Foundation.framework in Frameworks */,
+				9E2F7F911D73D42300DD9CD1 /* CoreGraphics.framework in Frameworks */,
+				9E4643DD1E07C09F00E1EBC4 /* AssetsLibrary.framework in Frameworks */,
 				9E30D4C31DF15C6300DF3F3E /* CoreData.framework in Frameworks */,
 				9E65A7441DF0017B002BAE0A /* libresolv.tbd in Frameworks */,
 				9E65A7421DF0015F002BAE0A /* UserNotifications.framework in Frameworks */,
-				9E2F7F911D73D42300DD9CD1 /* CoreGraphics.framework in Frameworks */,
-				9E2F7F8F1D73D41800DD9CD1 /* SystemConfiguration.framework in Frameworks */,
 				9E2F7F951D73D43B00DD9CD1 /* CoreTelephony.framework in Frameworks */,
 				9E65A7401DF00101002BAE0A /* CoreFoundation.framework in Frameworks */,
 				04947C1A1DC0BAF7008A351F /* CFNetwork.framework in Frameworks */,
 				04947C261DC0C08B008A351F /* PassKit.framework in Frameworks */,
-				04947C241DC0BB98008A351F /* UIKit.framework in Frameworks */,
-				04947C221DC0BB74008A351F /* Foundation.framework in Frameworks */,
-				04947C201DC0BB5F008A351F /* QuartzCore.framework in Frameworks */,
-				04947C1E1DC0BB38008A351F /* ImageIO.framework in Frameworks */,
 				04947C1C1DC0BB14008A351F /* CoreAudio.framework in Frameworks */,
-				04947C181DC0BAC2008A351F /* MobileCoreServices.framework in Frameworks */,
 				04947C161DC0BA8E008A351F /* AddressBook.framework in Frameworks */,
 				04947C141DC0BA73008A351F /* AddressBookUI.framework in Frameworks */,
 				04947CD21DC0CE3A008A351F /* libUPPayPlugin.a in Frameworks */,
@@ -2854,7 +2877,6 @@
 				9E2F7F971D73D44800DD9CD1 /* libstdc++.tbd in Frameworks */,
 				9E2F7F931D73D43200DD9CD1 /* libsqlite3.tbd in Frameworks */,
 				9E2F7F8D1D73D40A00DD9CD1 /* libiconv.tbd in Frameworks */,
-				9E2F7F8B1D73D3FB00DD9CD1 /* Security.framework in Frameworks */,
 				9E2F7F781D73D24B00DD9CD1 /* libSocialQQ.a in Frameworks */,
 				9E65A73E1DF000A0002BAE0A /* jpush-ios-2.2.0.a in Frameworks */,
 				9E2F7F791D73D24B00DD9CD1 /* TencentOpenAPI.framework in Frameworks */,
@@ -6407,6 +6429,27 @@
 		C5E587A04C107257AA453603 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				9E4643DC1E07C09F00E1EBC4 /* AssetsLibrary.framework */,
+				9E4643B41E07C07C00E1EBC4 /* libAFDownloadRequestOperation.a */,
+				9E4643B51E07C07C00E1EBC4 /* libAFNetworking.a */,
+				9E4643B61E07C07C00E1EBC4 /* libDFCommon.a */,
+				9E4643B71E07C07C00E1EBC4 /* libFMDB.a */,
+				9E4643B81E07C07C00E1EBC4 /* libJSONModel.a */,
+				9E4643B91E07C07C00E1EBC4 /* libMasonry.a */,
+				9E4643BA1E07C07C00E1EBC4 /* libMBProgressHUD.a */,
+				9E4643BB1E07C07C00E1EBC4 /* libMJPhotoBrowser.a */,
+				9E4643BC1E07C07C00E1EBC4 /* libMJRefresh.a */,
+				9E4643BD1E07C07C00E1EBC4 /* libMLLabel.a */,
+				9E4643BE1E07C07C00E1EBC4 /* libMMPopupView.a */,
+				9E4643BF1E07C07C00E1EBC4 /* libODRefreshControl.a */,
+				9E4643C01E07C07C00E1EBC4 /* libReactiveCocoa.a */,
+				9E4643C11E07C07C00E1EBC4 /* libSDWebImage.a */,
+				9E4643C21E07C07C00E1EBC4 /* libSVProgressHUD.a */,
+				9E4643C31E07C07C00E1EBC4 /* libTZImagePickerController.a */,
+				9E4643C41E07C07C00E1EBC4 /* libYLGIFImage.a */,
+				9E4643C51E07C07C00E1EBC4 /* libYTKKeyValueStore.a */,
+				9E4643C61E07C07C00E1EBC4 /* libYTKNetwork.a */,
+				9E4643C71E07C07C00E1EBC4 /* libZYQAssetPickerController.a */,
 				9E30D4C21DF15C6300DF3F3E /* CoreData.framework */,
 				9E65A7431DF0017B002BAE0A /* libresolv.tbd */,
 				9E65A7411DF0015F002BAE0A /* UserNotifications.framework */,
@@ -6840,7 +6883,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9E65A7461DF0334D002BAE0A /* sound.caf in Sources */,
+				9E4643B31E07BED100E1EBC4 /* ServiceManager.m in Sources */,
 				04BA0D101D9CF12400B4AAD9 /* XXEClassManagerClassSupportAndRefuseApi.m in Sources */,
 				045350621DB9C5EB00F93537 /* XXEXingClassRoomSearchViewController.m in Sources */,
 				04DE86231D9386370062BF18 /* XXECourseManagerClassModel2.m in Sources */,
@@ -7179,7 +7222,6 @@
 				9E1671EA1D93B03B00463BBD /* XXEDeleteClassPicApi.m in Sources */,
 				04BB3A191D74742B00AA5C5C /* XXEHomeLogoRootViewController.m in Sources */,
 				04F2168E1D7671BB005C2EBF /* AlertViewWithBlockOrSEL.m in Sources */,
-				9E6051511DF8EE3C00D9FC8A /* ServiceManager.m in Sources */,
 				04BB3A3F1D74742B00AA5C5C /* XXEHomeworkModel.m in Sources */,
 				04BB3AA71D74743300AA5C5C /* XXEReplyTextInfoApi.m in Sources */,
 				9EBA6F7E1D5D7A9B001B45C3 /* XXEUpdataImageViewController.m in Sources */,
@@ -7776,8 +7818,116 @@
 					"$(PROJECT_DIR)/teacher/ThirdLibrary/BeeCloud/BCPaySDK/Channel/UnionPay",
 					"$(PROJECT_DIR)/teacher/ThirdLibrary/BeeCloud/BCPaySDK/Channel/WXPay",
 					"$(PROJECT_DIR)/teacher/ThirdLibrary/JPush-iOS-SDK-2.2.0",
+					"$(PROJECT_DIR)/build/Release-iphoneos/AFDownloadRequestOperation",
+					"$(PROJECT_DIR)/build/Release-iphoneos/AFNetworking",
+					"$(PROJECT_DIR)/build/Release-iphoneos/DFCommon",
+					"$(PROJECT_DIR)/build/Release-iphoneos/FMDB",
+					"$(PROJECT_DIR)/build/Release-iphoneos/JSONModel",
+					"$(PROJECT_DIR)/build/Release-iphoneos/Masonry",
+					"$(PROJECT_DIR)/build/Release-iphoneos/MBProgressHUD",
+					"$(PROJECT_DIR)/build/Release-iphoneos/MJPhotoBrowser",
+					"$(PROJECT_DIR)/build/Release-iphoneos/MJRefresh",
+					"$(PROJECT_DIR)/build/Release-iphoneos/MLLabel",
+					"$(PROJECT_DIR)/build/Release-iphoneos/MMPopupView",
+					"$(PROJECT_DIR)/build/Release-iphoneos/ODRefreshControl",
+					"$(PROJECT_DIR)/build/Debug-iphoneos/ReactiveCocoa",
+					"$(PROJECT_DIR)/build/Release-iphoneos/SDWebImage",
+					"$(PROJECT_DIR)/build/Release-iphoneos/SVProgressHUD",
+					"$(PROJECT_DIR)/build/Release-iphoneos/TZImagePickerController",
+					"$(PROJECT_DIR)/build/Release-iphoneos/YLGIFImage",
+					"$(PROJECT_DIR)/build/Release-iphoneos/YTKKeyValueStore",
+					"$(PROJECT_DIR)/build/Release-iphoneos/YTKNetwork",
+					"$(PROJECT_DIR)/build/Release-iphoneos/ZYQAssetPickerController",
 				);
 				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-l\"AFDownloadRequestOperation\"",
+					"-l\"AFNetworking\"",
+					"-l\"DFCommon\"",
+					"-l\"FMDB\"",
+					"-l\"JSONModel\"",
+					"-l\"MBProgressHUD\"",
+					"-l\"MJPhotoBrowser\"",
+					"-l\"MJRefresh\"",
+					"-l\"MLLabel\"",
+					"-l\"MMPopupView\"",
+					"-l\"Masonry\"",
+					"-l\"ODRefreshControl\"",
+					"-l\"ReactiveCocoa\"",
+					"-l\"SDWebImage\"",
+					"-l\"SVProgressHUD\"",
+					"-l\"TZImagePickerController\"",
+					"-l\"YLGIFImage\"",
+					"-l\"YTKKeyValueStore\"",
+					"-l\"YTKNetwork\"",
+					"-l\"ZYQAssetPickerController\"",
+					"-l\"c++\"",
+					"-l\"c++abi\"",
+					"-l\"icucore\"",
+					"-l\"opencore-amrnb\"",
+					"-l\"sqlite3\"",
+					"-l\"stdc++\"",
+					"-l\"xml2\"",
+					"-l\"z\"",
+					"-framework",
+					"\"AVFoundation\"",
+					"-framework",
+					"\"AddressBook\"",
+					"-framework",
+					"\"AddressBookUI\"",
+					"-framework",
+					"\"AssetsLibrary\"",
+					"-framework",
+					"\"AudioToolbox\"",
+					"-framework",
+					"\"CFNetwork\"",
+					"-framework",
+					"\"CoreAudio\"",
+					"-framework",
+					"\"CoreGraphics\"",
+					"-framework",
+					"\"CoreLocation\"",
+					"-framework",
+					"\"CoreMedia\"",
+					"-framework",
+					"\"CoreTelephony\"",
+					"-framework",
+					"\"CoreVideo\"",
+					"-framework",
+					"\"Foundation\"",
+					"-framework",
+					"\"ImageIO\"",
+					"-framework",
+					"\"JavaScriptCore\"",
+					"-framework",
+					"\"MOBFoundation\"",
+					"-framework",
+					"\"MapKit\"",
+					"-framework",
+					"\"MessageUI\"",
+					"-framework",
+					"\"MobileCoreServices\"",
+					"-framework",
+					"\"OpenGLES\"",
+					"-framework",
+					"\"QuartzCore\"",
+					"-framework",
+					"\"RongIMKit\"",
+					"-framework",
+					"\"RongIMLib\"",
+					"-framework",
+					"\"SMS_SDK\"",
+					"-framework",
+					"\"Security\"",
+					"-framework",
+					"\"SystemConfiguration\"",
+					"-framework",
+					"\"UIKit\"",
+					"-framework",
+					"\"lame\"",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.xingxingEdu.teachercc;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -7838,8 +7988,116 @@
 					"$(PROJECT_DIR)/teacher/ThirdLibrary/BeeCloud/BCPaySDK/Channel/UnionPay",
 					"$(PROJECT_DIR)/teacher/ThirdLibrary/BeeCloud/BCPaySDK/Channel/WXPay",
 					"$(PROJECT_DIR)/teacher/ThirdLibrary/JPush-iOS-SDK-2.2.0",
+					"$(PROJECT_DIR)/build/Release-iphoneos/AFDownloadRequestOperation",
+					"$(PROJECT_DIR)/build/Release-iphoneos/AFNetworking",
+					"$(PROJECT_DIR)/build/Release-iphoneos/DFCommon",
+					"$(PROJECT_DIR)/build/Release-iphoneos/FMDB",
+					"$(PROJECT_DIR)/build/Release-iphoneos/JSONModel",
+					"$(PROJECT_DIR)/build/Release-iphoneos/Masonry",
+					"$(PROJECT_DIR)/build/Release-iphoneos/MBProgressHUD",
+					"$(PROJECT_DIR)/build/Release-iphoneos/MJPhotoBrowser",
+					"$(PROJECT_DIR)/build/Release-iphoneos/MJRefresh",
+					"$(PROJECT_DIR)/build/Release-iphoneos/MLLabel",
+					"$(PROJECT_DIR)/build/Release-iphoneos/MMPopupView",
+					"$(PROJECT_DIR)/build/Release-iphoneos/ODRefreshControl",
+					"$(PROJECT_DIR)/build/Debug-iphoneos/ReactiveCocoa",
+					"$(PROJECT_DIR)/build/Release-iphoneos/SDWebImage",
+					"$(PROJECT_DIR)/build/Release-iphoneos/SVProgressHUD",
+					"$(PROJECT_DIR)/build/Release-iphoneos/TZImagePickerController",
+					"$(PROJECT_DIR)/build/Release-iphoneos/YLGIFImage",
+					"$(PROJECT_DIR)/build/Release-iphoneos/YTKKeyValueStore",
+					"$(PROJECT_DIR)/build/Release-iphoneos/YTKNetwork",
+					"$(PROJECT_DIR)/build/Release-iphoneos/ZYQAssetPickerController",
 				);
 				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-l\"AFDownloadRequestOperation\"",
+					"-l\"AFNetworking\"",
+					"-l\"DFCommon\"",
+					"-l\"FMDB\"",
+					"-l\"JSONModel\"",
+					"-l\"MBProgressHUD\"",
+					"-l\"MJPhotoBrowser\"",
+					"-l\"MJRefresh\"",
+					"-l\"MLLabel\"",
+					"-l\"MMPopupView\"",
+					"-l\"Masonry\"",
+					"-l\"ODRefreshControl\"",
+					"-l\"ReactiveCocoa\"",
+					"-l\"SDWebImage\"",
+					"-l\"SVProgressHUD\"",
+					"-l\"TZImagePickerController\"",
+					"-l\"YLGIFImage\"",
+					"-l\"YTKKeyValueStore\"",
+					"-l\"YTKNetwork\"",
+					"-l\"ZYQAssetPickerController\"",
+					"-l\"c++\"",
+					"-l\"c++abi\"",
+					"-l\"icucore\"",
+					"-l\"opencore-amrnb\"",
+					"-l\"sqlite3\"",
+					"-l\"stdc++\"",
+					"-l\"xml2\"",
+					"-l\"z\"",
+					"-framework",
+					"\"AVFoundation\"",
+					"-framework",
+					"\"AddressBook\"",
+					"-framework",
+					"\"AddressBookUI\"",
+					"-framework",
+					"\"AssetsLibrary\"",
+					"-framework",
+					"\"AudioToolbox\"",
+					"-framework",
+					"\"CFNetwork\"",
+					"-framework",
+					"\"CoreAudio\"",
+					"-framework",
+					"\"CoreGraphics\"",
+					"-framework",
+					"\"CoreLocation\"",
+					"-framework",
+					"\"CoreMedia\"",
+					"-framework",
+					"\"CoreTelephony\"",
+					"-framework",
+					"\"CoreVideo\"",
+					"-framework",
+					"\"Foundation\"",
+					"-framework",
+					"\"ImageIO\"",
+					"-framework",
+					"\"JavaScriptCore\"",
+					"-framework",
+					"\"MOBFoundation\"",
+					"-framework",
+					"\"MapKit\"",
+					"-framework",
+					"\"MessageUI\"",
+					"-framework",
+					"\"MobileCoreServices\"",
+					"-framework",
+					"\"OpenGLES\"",
+					"-framework",
+					"\"QuartzCore\"",
+					"-framework",
+					"\"RongIMKit\"",
+					"-framework",
+					"\"RongIMLib\"",
+					"-framework",
+					"\"SMS_SDK\"",
+					"-framework",
+					"\"Security\"",
+					"-framework",
+					"\"SystemConfiguration\"",
+					"-framework",
+					"\"UIKit\"",
+					"-framework",
+					"\"lame\"",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.xingxingEdu.teachercc;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
