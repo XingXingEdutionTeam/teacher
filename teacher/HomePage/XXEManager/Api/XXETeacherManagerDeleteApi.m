@@ -68,7 +68,7 @@
              @"school_id":_school_id,
              @"class_id":_class_id,
              @"examine_id":_examine_id,
-             @"return_param_all":@"1"
+             @"return_param_all":@""
              };
     
 }

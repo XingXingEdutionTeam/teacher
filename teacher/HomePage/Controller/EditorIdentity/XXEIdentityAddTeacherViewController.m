@@ -275,9 +275,9 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
     [self commBoxInfo];
     
     
-    _titleArr = @[@"学校名称:",@"学校类型:",@"班级信息:",@"年级信息:",@"教学类型:",@"",@"审核人员:",@"邀请码"];
+    _titleArr = @[@"学校名称:",@"学校类型:",@"年级信息:",@"班级信息:",@"教学类型:",@"",@"审核人员:",@"邀请码"];
     
-    _titleTextArr = @[@"请选择学校名称",@"请选择你学校类型",@"班级信息",@"请选择年级",@"请选择职位",@"",@"请选择审核人",@"可不填"];
+    _titleTextArr = @[@"请选择学校名称",@"请选择你学校类型",@"请选择年级",@"请选择班级",@"请选择职位",@"",@"请选择审核人",@"可不填"];
     
     self.teacherTableView.delegate = self;
     self.teacherTableView.dataSource = self;
@@ -395,6 +395,8 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
                             _indexDatsource = i;
                         }
                     }
+                    
+                    NSLog(@"classNameArray === %@ +++++ %ld", _classNameDatasource, _indexDatsource);
                     XXETeacherClassModel *classModel = self.classNameDatasource[_indexDatsource];
                     self.theEndClassId = classModel.class_id;
                 }];
@@ -407,7 +409,7 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
                 [self showString:@"请搜索学校" forSecond:1.f];
             }else {
                 XXESelectMessageView *schoolName = [[XXESelectMessageView alloc]initWithTWFrame:self.view.bounds TWselectCityTitle:@"选择教学类型" MessageArray:self.teachOfTypeArray];
-                NSLog(@"%@",self.teachOfTypeArray);
+                NSLog(@"教学类型 === %@",self.teachOfTypeArray);
                 [schoolName showCityView:^(NSString *proviceStr) {
                     WeakSelf.teacherCell = [WeakSelf cellAtIndexRow:4 andAtSection:0 Message:[NSString  stringWithFormat:@"%@",proviceStr]];
                     for (int i =0; i<self.teachOfTypeArray.count; i++) {
@@ -494,7 +496,7 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
     }];
 }
 
-#pragma mark - 获取班级信息
+#pragma mark - 获取年级信息
 - (void)getoutSchoolGradeSchoolId:(NSString *)schoolId SchoolType:(NSString *)schoolType
 {
     //获取默认的信息
@@ -507,12 +509,12 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
     [schoolApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         
         if ([[request.responseJSONObject objectForKey:@"code"] intValue] == 1) {
-            NSLog(@"%@",request.responseJSONObject);
+//            NSLog(@"%@",request.responseJSONObject);
             NSArray *data = [request.responseJSONObject objectForKey:@"data"];
-            NSLog(@"获取班级信息:%@",data);
+//            NSLog(@"获取年级信息:%@",data);
             
-            NSString *name = [data[0] objectForKey:@"name"];
-            NSLog(@"%@",name);
+//            NSString *name = [data[0] objectForKey:@"name"];
+//            NSLog(@"%@",name);
             //获取数据前先清空数组
             [self.gradeNameDatasource removeAllObjects];
             [self.gradeNameArray removeAllObjects];
@@ -522,11 +524,11 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
                 [self.gradeNameDatasource addObject:model];
                 [self.gradeNameArray addObject:model.grade];
             }
-            NSLog(@"班级信息的数组%@",self.gradeNameArray);
+//            NSLog(@"班级信息的数组%@",self.gradeNameArray);
             self.teacherCell = [self cellAtIndexRow:2 andAtSection:0 Message:self.gradeNameArray[0]];
             XXETeacherGradeModel *modelDefault = self.gradeNameDatasource[0];
-            NSLog(@"获取班级信息%@",modelDefault);
-            //通过班级选择年级
+//            NSLog(@"获取班级信息%@",modelDefault);
+            //通过年级选择班级
             [self getoutClassMesage:modelDefault GradeName:self.gradeNameArray[0]];
             //默认为没有选择的时候
             //            self.theEndClassId = model.course_id;
@@ -548,7 +550,7 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
         NSLog(@"%@",request.responseJSONObject);
         if ([[request.responseJSONObject objectForKey:@"code"]intValue]== 1) {
             NSArray *data = [request.responseJSONObject objectForKey:@"data"];
-            NSLog(@"获取教学类型:%@",data);
+            NSLog(@"获取教学类型:%@  === data.count:%ld ",data, data.count);
             //获取教学类型前 先清空数组
             [self.teachOfTypeDatasource removeAllObjects];
             [self.teachOfTypeArray removeAllObjects];
@@ -558,6 +560,8 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
                 [self.teachOfTypeDatasource addObject:model];
                 [self.teachOfTypeArray addObject:model.teachTypeName];
             }
+            
+            NSLog(@"teachOfTypeDatasource == %@", self.teachOfTypeDatasource);
             //            self.teacherCell = [self cellAtIndexRow:4 andAtSection:0 Message:self.teachOfTypeArray[0]];
             //            XXETeachOfTypeModel *model = self.teachOfTypeDatasource[0];
             //            self.theEndTeachType = model.teachTypeId;
@@ -570,10 +574,10 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
     }];
 }
 
-#pragma mark - 获取年级信息
+#pragma mark - 获取班级信息
 - (void)getoutClassMesage:(XXETeacherGradeModel *)model GradeName:(NSString *)gradeName
 {
-    NSLog(@"%@%@%@",model.grade,model.school_id,model.course_id);
+//    NSLog(@"获取 班级 %@%@%@",model.grade,model.school_id,model.course_id);
     
     NSLog(@"%@",self.gradeNameDatasource);
     [self.classNameDatasource removeAllObjects];
@@ -584,17 +588,21 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
         
         NSString *code = [request.responseJSONObject objectForKey:@"code"];
         
+        
+        NSLog(@"give_grade_get_class === %@", request.responseJSONObject);
+        
         if ([code intValue]== 1) {
             NSMutableArray *data = [request.responseJSONObject objectForKey:@"data"];
             for (int i =0; i<data.count; i++) {
                 XXETeacherClassModel *classModel = [[XXETeacherClassModel alloc]initWithDictionary:data[i] error:nil];
+
                 [self.classNameDatasource addObject:classModel];
                 [self.classNameArray addObject:classModel.className];
             }
             //                NSString *calssName = self.classNameArray[0];
             //                self.teacherCell = [self cellAtIndexRow:3 andAtSection:0 Message:calssName];
-            //                XXETeacherClassModel *model = self.classNameDatasource[0];
-            //                self.theEndClassId = model.class_id;
+            //  XXETeacherClassModel *model = self.classNameDatasource[0];
+//                self.theEndClassId = model.class_id;
             
         }else {
             [self showString:@"获取班级信息失败" forSecond:1.f];
