@@ -7,12 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "WJCommboxView.h"
 @interface XXETeacherTableViewCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UILabel *teacherRegisLabel;
 @property (weak, nonatomic) IBOutlet UITextField *teacherRegisTextField;
-
-
+@property(nonatomic ,strong) WJCommboxView *commboxView;
 //@property (weak, nonatomic) IBOutlet UILabel *schoolNameLabel;
 
 @end

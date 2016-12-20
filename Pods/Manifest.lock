@@ -56,7 +56,7 @@ PODS:
   - ReactiveCocoa/no-arc (2.5)
   - ReactiveCocoa/UI (2.5):
     - ReactiveCocoa/Core
-  - RongCloudIMKit (2.4.11)
+  - RongCloudIMKit (2.7.3.1)
   - SDWebImage (3.7.5):
     - SDWebImage/Core (= 3.7.5)
   - SDWebImage/Core (3.7.5)
@@ -83,7 +83,7 @@ DEPENDENCIES:
   - MOBFoundation_IDFA
   - ODRefreshControl (~> 1.2)
   - ReactiveCocoa (~> 2.5)
-  - RongCloudIMKit (~> 2.4.0)
+  - RongCloudIMKit
   - SDWebImage (~> 3.7.2)
   - SMSSDK
   - SVProgressHUD (~> 2.0.2)
@@ -101,14 +101,14 @@ SPEC CHECKSUMS:
   JSONModel: 12523685c4b623553ccf844bbbf7007624317b2c
   Masonry: b529bb169217897b6354d4b56b1fada6d475b13d
   MBProgressHUD: 1569cf7ace17a8bac47aabfbb8580a49690386d1
-  MJPhotoBrowser: f55e8490231f44a78ca6455105a1c798a142c95f
+  MJPhotoBrowser: b98b04d0e3b6a999feb44df68adec413af446809
   MJRefresh: ca8e9589895977df32d379d46e6b8a5450b3ff44
   MLLabel: 9d4575d4bcf686462eeaf29c1990988f748f85fd
   MMPopupView: 278ea121feee5d5f54ffe1192dd1b92373472ec0
   MOBFoundation_IDFA: f5d3d1f89166f60c6985e34b7d90e6fb5d58fb61
   ODRefreshControl: 907e6149d72dde488d5917ccfabee5bd8d711a20
   ReactiveCocoa: e2db045570aa97c695e7aa97c2bcab222ae51f4a
-  RongCloudIMKit: 40fefc63541927aad728e06c731d12d34de1c5fa
+  RongCloudIMKit: bc83889f5b7fbb82c104d778ca6633b3681e81d5
   SDWebImage: 69c6303e3348fba97e03f65d65d4fbc26740f461
   SMSSDK: 642b6a8c55fd382be44487cd5e0b0710681895f9
   SVProgressHUD: e4020e23badbd7cc61bc4a80d3c1da57f166a978
@@ -118,6 +118,6 @@ SPEC CHECKSUMS:
   YTKNetwork: 988660d5fab310a55895239751ecfa74c3224a77
   ZYQAssetPickerController: e5cf51ee6c05fa06746830026c247cb9f6699e84
 
-PODFILE CHECKSUM: 3dc121696313db3b007495897e78a103c44222ff
+PODFILE CHECKSUM: da577dddfa699cb16fc5b8a4cafea8310a5a0522
 
-COCOAPODS: 1.0.1
+COCOAPODS: 1.1.1

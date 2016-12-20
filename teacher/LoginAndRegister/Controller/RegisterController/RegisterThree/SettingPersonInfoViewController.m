@@ -211,13 +211,14 @@
 //    parentsName = [UITextField createTextFieldWithIsOpen:NO textPlaceholder:@"请输入您的姓名"];
     self.parentsName = [[UITextField alloc] init];
     self.parentsName.placeholder = @"请输入您的姓名";
+    self.parentsName.clearButtonMode = UITextFieldViewModeWhileEditing;
     self.parentsName.borderStyle = UITextBorderStyleNone;
     self.parentsName.font = [UIFont systemFontOfSize:15 * kScreenRatioWidth];
     [bgImageView addSubview:self.parentsName];
     [self.parentsName mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(parentsNameLabel.mas_right).offset(2);
         make.centerY.equalTo(parentsNameLabel.mas_centerY);
-        make.right.equalTo(bgImageView.mas_right).offset(4);
+        make.right.equalTo(bgImageView.mas_right).offset(-4);
         make.height.equalTo(@(52*kScreenRatioHeight));
     }];
     
@@ -233,6 +234,7 @@
 //    parentsIDCard = [UITextField createTextFieldWithIsOpen:NO textPlaceholder:@"请输入您的身份证号或者护照"];
     self.parentsIDCard = [[UITextField alloc] init];
     self.parentsIDCard.font = [UIFont systemFontOfSize:15 * kScreenRatioWidth];
+    self.parentsIDCard.clearButtonMode = UITextFieldViewModeWhileEditing;
     self.parentsIDCard.placeholder = @"请输入您的身份证号或者护照";
     self.parentsIDCard.delegate = self;
     self.parentsIDCard.keyboardType = UITextBorderStyleNone;
@@ -240,7 +242,7 @@
     [self.parentsIDCard mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(parentsIDCardLabel.mas_right).offset(2);
         make.centerY.equalTo(parentsIDCardLabel.mas_centerY);
-        make.right.equalTo(bgImageView.mas_right).offset(4);
+        make.right.equalTo(bgImageView.mas_right).offset(-4);
         make.height.equalTo(@(52*kScreenRatioHeight));
     }];
     
@@ -396,7 +398,8 @@
             [self showString:@"身份证有误" forSecond:1.f];
             return;
         }else if (![CheckIDCard checkIDCard:self.parentsIDCard.text]) {
-            [self showString:@"您输入的家长身份证号码不存在" forSecond:1.f];
+//            [self showString:@"您输入的家长身份证号码不存在" forSecond:1.f];
+            [self showString:@"您输入的身份证号码不存在" forSecond:1.f];
             return;
         } else{
             [self getupUserIDCard:self.parentsIDCard.text];

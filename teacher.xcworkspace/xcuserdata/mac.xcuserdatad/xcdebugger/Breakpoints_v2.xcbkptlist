@@ -180,11 +180,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "teacher/HomePage/Controller/EditorIdentity/XXEIdentityAddHeadViewController.m"
-            timestampString = "503842321.088089"
+            timestampString = "503935114.012202"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "637"
-            endingLineNumber = "637"
+            startingLineNumber = "633"
+            endingLineNumber = "633"
             landmarkName = "-setupReviewerMessage:"
             landmarkType = "7">
          </BreakpointContent>
@@ -196,11 +196,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "teacher/HomePage/Controller/EditorIdentity/XXEIdentityAddHeadViewController.m"
-            timestampString = "503842321.088089"
+            timestampString = "503935114.012202"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "626"
-            endingLineNumber = "626"
+            startingLineNumber = "622"
+            endingLineNumber = "622"
             landmarkName = "-setupReviewerMessage:"
             landmarkType = "7">
          </BreakpointContent>
@@ -212,13 +212,45 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "teacher/HomePage/Controller/EditorIdentity/XXEIdentityAddHeadViewController.m"
-            timestampString = "503842240.332988"
+            timestampString = "503935114.012202"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "571"
-            endingLineNumber = "571"
+            startingLineNumber = "567"
+            endingLineNumber = "567"
             landmarkName = "-searchButtonClick:"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[XXEIdentityAddHeadViewController searchButtonClick:]"
+                  moduleName = "teacher"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/mac/Documents/teacher/teacher/HomePage/Controller/EditorIdentity/XXEIdentityAddHeadViewController.m"
+                  timestampString = "503935305.821528"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "568"
+                  endingLineNumber = "568"
+                  offsetFromSymbolStart = "145">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__54-[XXEIdentityAddHeadViewController searchButtonClick:]_block_invoke"
+                  moduleName = "teacher"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/mac/Documents/teacher/teacher/HomePage/Controller/EditorIdentity/XXEIdentityAddHeadViewController.m"
+                  timestampString = "503935305.824098"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "571"
+                  endingLineNumber = "571"
+                  offsetFromSymbolStart = "51">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -235,6 +267,38 @@
             endingLineNumber = "550"
             landmarkName = "-getoutTeachTypeSchoolType:"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[XXEIdentityAddTeacherViewController getoutTeachTypeSchoolType:]"
+                  moduleName = "teacher"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/mac/Documents/teacher/teacher/HomePage/Controller/EditorIdentity/XXEIdentityAddTeacherViewController.m"
+                  timestampString = "503935305.828803"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "551"
+                  endingLineNumber = "551"
+                  offsetFromSymbolStart = "116">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__65-[XXEIdentityAddTeacherViewController getoutTeachTypeSchoolType:]_block_invoke"
+                  moduleName = "teacher"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/mac/Documents/teacher/teacher/HomePage/Controller/EditorIdentity/XXEIdentityAddTeacherViewController.m"
+                  timestampString = "503935305.831239"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "553"
+                  endingLineNumber = "553"
+                  offsetFromSymbolStart = "47">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy

@@ -77,6 +77,8 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
 
+    userPosition = [DEFAULTS objectForKey:@"POSITION"];
+    schoolType = [DEFAULTS objectForKey:@"SCHOOL_TYPE"];
 //#pragma  如果是私立校长身份 (在头视图上出现 "我的订单"  "我的钱包", 下面的列表中没有 "我的订单")
     if ([userPosition isEqualToString:@"4"] && [schoolType isEqualToString:@"4"]) {
         pictureArray = [[NSMutableArray alloc] initWithObjects:@"myself_info_icon40x40", @"myself_friend_icon40x44", @"myself_chat_icon40x40", @"myself_collection_icon40x40", @"myself_friend_circle_icon40x40", @"myself_blackorder_icon40x40", @"myself_system_setting_icon40x40", @"myself_privacy_setting_icon40x40", nil];
@@ -107,9 +109,6 @@
         parameterXid = XID;
         parameterUser_Id = USER_ID;
     }
-    userPosition = [DEFAULTS objectForKey:@"POSITION"];
-    schoolType = [DEFAULTS objectForKey:@"SCHOOL_TYPE"];
-    
 //    NSLog(@" %@ ----- %@", userPosition, schoolType);
     
     [self createTableView];

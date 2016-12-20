@@ -14,6 +14,7 @@
 #import "XXETeacherManagerAgreeApi.h"
 #import "XXETeacherManagerApi.h"
 #import "XXETeacherManagerDeleteApi.h"
+#import "XXEXingClassRoomTeacherDetailInfoViewController.h"
 
 @interface XXETeacherManagerViewController ()<UITableViewDelegate, UITableViewDataSource>
 {
@@ -462,6 +463,15 @@
 
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+//    XXETeacherManagerClassInfoModel *model = classModelArray[indexPath.section];
+//    
+//    
+//    
+//    XXEXingClassRoomTeacherDetailInfoViewController *teacherVc = [[XXEXingClassRoomTeacherDetailInfoViewController alloc] init];
+//    XXETeacherManagerPersonInfoModel *teacherModel = model.teacher_list[indexPath.row];
+//    teacherVc.teacher_id = teacherModel.date_tm;
+//    [self.navigationController pushViewController:teacherVc animated:YES];
     
     //    if (indexPath.section == 0) {
     //        //点击 宝贝 cell 先进入到 宝贝家人 列表

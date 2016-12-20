@@ -200,7 +200,7 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
     _titleArr = @[@"学校名称:",@"学校类型:",@"学校地址:",@"详细地址:",@"联系方式:",@"",@"审核人员:",@"邀请码"];
     
     _titleTextArr = @[@"请输入或搜索学校名称",@"请选择你学校类型",@"学校地址",@"请输入详细地址",@"联系方式",@"",@"请选择审核人",@"可不填"];
-    NSArray *arr = @[@"幼儿园",@"小学",@"中学",@"培训机构"];
+    NSArray *arr = @[@"幼儿园",@"小学",@"中学",@"培训机构",@"高中"];
     _schoolTypeArr = [arr copy];
     self.teacherTableView.delegate = self;
     self.teacherTableView.dataSource = self;
@@ -292,6 +292,11 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
         XXETeacherTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:IdentifierCELL forIndexPath:indexPath];
         cell.teacherRegisLabel.text = [_titleArr objectAtIndex:indexPath.row];
         cell.teacherRegisTextField.placeholder = [_titleTextArr objectAtIndex:indexPath.row];
+        
+        if (indexPath.row == 6) {
+            cell.teacherRegisTextField.text = @"平台审核";
+        }
+        
         cell.teacherRegisTextField.tag = 100 + indexPath.row;
         return cell;
     }
@@ -353,9 +358,9 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
             break;
         }
         case 6:{
-               self.teacherCell = [self cellAtIndexRow:6 andAtSection:0 Message:@"平台审核"];
-            self.theEndReviewerId = @"0";
-            [self tureOrFalseCellClick:NO];
+//               self.teacherCell = [self cellAtIndexRow:6 andAtSection:0 Message:@"平台审核"];
+//            self.theEndReviewerId = @"0";
+//            [self tureOrFalseCellClick:NO];
             break;
         }
         case 7:{
@@ -382,6 +387,13 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
 #pragma mark  - UITextField
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
+    
+    if (textField.tag == 107) {
+        [UIView animateWithDuration:0.4 animations:^{
+            self.view.transform = CGAffineTransformIdentity;
+        }];
+    }
+    
     switch (textField.tag) {
         case 100:
             NSLog(@"%@",textField.text);
@@ -832,6 +844,16 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
     cell.teacherRegisTextField.text = message;
     return cell;
 }
+
+//MARK: - TextFieldDelegate
+- (void)textFieldDidBeginEditing:(UITextField *)textField {
+    if (textField.tag == 107) {
+        [UIView animateWithDuration:0.4 animations:^{
+            self.view.transform = CGAffineTransformMakeTranslation(0, -212);
+        }];
+    }
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

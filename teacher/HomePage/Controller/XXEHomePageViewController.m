@@ -284,6 +284,12 @@
 //    //***********************  班 级  ***************************
     NSString *string = @"编辑班级";
 //
+    
+    if (self.classAllArray.count == 0) {
+        self.homeClassView.dataArray = @[@"编辑班级"];
+        [self.homeClassView.listTableView reloadData];
+    }
+    
     if (self.classAllArray.count != 0) {
         for (int i =0; i<self.classAllArray.count; i++) {
             [self.classAllArray[i] addObject:string];
@@ -313,7 +319,7 @@
 
 - (void)commboxAction2:(NSNotification *)notif{
     
-    self.identifyCard =self.homeClassView.textField.text;
+    self.identifyCard = self.homeClassView.textField.text;
     
     if ([self.homeClassView.textField.text isEqualToString:@"编辑班级"]) {
         NSLog(@"调转页面");
@@ -671,6 +677,8 @@
             
             if (schoolArray.count == 0) {
                 self.schoolInfo = SchoolInfoNone;
+                [DEFAULTS setObject:@"1" forKey:@"POSITION"];
+                [DEFAULTS synchronize];
             }else {
                 self.schoolInfo = SchoolInfoHave;
             }
@@ -699,6 +707,11 @@
                 
                 
             }
+            
+            
+//            if (self.classAllArray.count == 0) {
+//                [self.classAllArray addObject:@"编辑班级"];
+//            }
         } else {
             [self showHudWithString:@"数据请求失败" forSecond:1.f];
         }

@@ -100,7 +100,7 @@
     
     self.automaticallyAdjustsScrollViewInsets = NO;
     QHNavSliderMenuStyleModel *model = [QHNavSliderMenuStyleModel new];
-    NSMutableArray *titles = [[NSMutableArray alloc] initWithObjects:@"幼儿园",@"小学",@"中学",@"培训机构", nil];
+    NSMutableArray *titles = [[NSMutableArray alloc] initWithObjects:@"幼儿园",@"小学",@"中学",@"培训机构",@"高中",nil];
     
     model.menuTitles = [titles copy];
     model.menuWidth=screenWidth/4;
@@ -135,10 +135,10 @@
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     
     //用scrollView的滑动大小与屏幕宽度取整数 得到滑动的页数
-    [navSliderMenu selectAtRow:(int)((scrollView.contentOffset.x+screenWidth/2.f)/screenWidth) andDelegate:NO];
-    //根据页数添加相应的视图
-    [self addListVCWithIndex:(int)(scrollView.contentOffset.x/screenWidth)];
-    [self addListVCWithIndex:(int)(scrollView.contentOffset.x/screenWidth)+1];
+//    [navSliderMenu selectAtRow:(int)((scrollView.contentOffset.x+screenWidth/2.f)/screenWidth) andDelegate:NO];
+//    //根据页数添加相应的视图
+//    [self addListVCWithIndex:(int)(scrollView.contentOffset.x/screenWidth)];
+//    [self addListVCWithIndex:(int)(scrollView.contentOffset.x/screenWidth)+1];
     
 }
 
