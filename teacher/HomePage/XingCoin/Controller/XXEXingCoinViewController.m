@@ -185,11 +185,14 @@
 
     [self.view addSubview:downBgImgView];
     
-    UITextView *checkInText = [[UITextView alloc] initWithFrame:CGRectMake(20, CGRectGetMaxY(downBgImgView.frame) + 20, KScreenWidth - 40, KScreenHeight /3)];
-    checkInText.text = @"  1.每周第一次签到获得5猩币，之后每天签到多增加5猩币,直至20猩币,如有签到中断,将会重新从5猩币开始获取.\n  2.签到签满1周额外获得10猩币,连续签满2周额外获得20猩币,连续签满3周额外获得30猩币,连续签满4周额外获得40猩币.\n";
-    checkInText.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];
+    NSString *str = @"  1.每周第一次签到获得5猩币，之后每天签到多增加5猩币,直至20猩币,如有签到中断,将会重新从5猩币开始获取.\n  2.签到签满1周额外获得10猩币,连续签满2周额外获得20猩币,连续签满3周额外获得30猩币,连续签满4周额外获得40猩币.\n";
+    CGFloat strHeight = [StringHeight contentSizeOfString:str maxWidth:KScreenWidth - 40 fontSize:16 * kScreenRatioWidth];
+    
+    UITextView *checkInText = [[UITextView alloc] initWithFrame:CGRectMake(20, CGRectGetMaxY(downBgImgView.frame) + 20, KScreenWidth - 40, strHeight)];
+    checkInText.text = str;
+//    checkInText.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];
     checkInText.layer.backgroundColor = [[UIColor clearColor] CGColor];
-    checkInText.font = [UIFont systemFontOfSize:16];
+    checkInText.font = [UIFont systemFontOfSize:16 * kScreenRatioWidth];
     checkInText.layer.borderColor = [[UIColor colorWithRed:230.0/255.0 green:230.0/255.0 blue:230.0/255.0 alpha:1.0]CGColor];
     checkInText.layer.borderWidth = 1.0;
     checkInText.layer.cornerRadius = 8.0f;
@@ -197,19 +200,35 @@
     checkInText.editable = NO;
     [checkInText.layer setMasksToBounds:YES];
     //自动适应行高
-    static CGFloat maxHeight = 150.0f;
-    CGRect frame = checkInText.frame;
-    CGSize constraintSize = CGSizeMake(frame.size.width, MAXFLOAT);
-    CGSize size = [checkInText sizeThatFits:constraintSize];
-    if (size.height >= maxHeight){
-        size.height = maxHeight;
-        checkInText.scrollEnabled = YES;   // 允许滚动
-    }
-    else{
-        checkInText.scrollEnabled = NO;    // 不允许滚动，当textview的大小足以容纳它的text的时候，需要设置scrollEnabed为NO，否则会出现光标乱滚动的情况
-    }
-    checkInText.frame = CGRectMake(frame.origin.x, frame.origin.y, frame.size.width, size.height);
+//    static CGFloat maxHeight = 150.0f;
+//    CGRect frame = checkInText.frame;
+//    CGSize constraintSize = CGSizeMake(frame.size.width, MAXFLOAT);
+//    CGSize size = [checkInText sizeThatFits:constraintSize];
+//    if (size.height >= maxHeight){
+//        size.height = maxHeight;
+//        checkInText.scrollEnabled = YES;   // 允许滚动
+//    }
+//    else{
+//        checkInText.scrollEnabled = NO;    // 不允许滚动，当textview的大小足以容纳它的text的时候，需要设置scrollEnabed为NO，否则会出现光标乱滚动的情况
+//    }
+//    checkInText.frame = CGRectMake(frame.origin.x, frame.origin.y, frame.size.width, size.height);
     [self.view addSubview:checkInText];
+    
+    if ([GlobalVariable shareInstance].appleVerify == AppleVerifyHave) {
+        UILabel *explainLbl = [[UILabel alloc] init];
+        explainLbl.font = [UIFont systemFontOfSize:16 * kScreenRatioWidth];
+        explainLbl.textColor = UIColorFromHex(0x333333);
+        explainLbl.textAlignment = NSTextAlignmentCenter;
+        explainLbl.text = @"本活动与苹果公司无关";
+        [self.view addSubview:explainLbl];
+        [explainLbl mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.centerX.mas_equalTo(self.view);
+            make.width.mas_equalTo(self.view);
+            make.top.mas_equalTo(checkInText.mas_bottom).offset(10);
+            make.height.mas_equalTo(20);
+        }];
+    }
+    
     
 }
 

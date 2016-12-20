@@ -31,6 +31,8 @@
         self.identityReviewImageView.image = [UIImage imageNamed:@"daishenghe"];
     }else if ([model.condit isEqualToString:@"1"]){
         self.identityReviewImageView.image = [UIImage imageNamed:@"yishenghe"];
+    }else if ([model.condit isEqualToString:@"2"]) {
+        self.identityReviewImageView.image = [UIImage imageNamed:@"no_pass"];
     }
 }
 

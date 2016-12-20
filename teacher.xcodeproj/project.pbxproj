@@ -3006,7 +3006,8 @@
 				043596731DAA458100F85DAE /* Resoures */,
 				043596891DAA458100F85DAE /* View */,
 			);
-			path = XXERongCloudChart;
+			name = XXERongCloudChart;
+			path = ../XXERongCloudChart;
 			sourceTree = "<group>";
 		};
 		0435965A1DAA458100F85DAE /* Api */ = {
@@ -5505,7 +5506,6 @@
 			children = (
 				9E3AAF8B1DEC502B00E04C6C /* XXEStore */,
 				047AC92C1DC7175F001891DE /* XXESchoolTimetable */,
-				043596591DAA458100F85DAE /* XXERongCloudChart */,
 				044DEBBD1D8FD13E00DE101A /* XXEManager */,
 				0480A0781D87DB1B00D7589B /* XXENotificationCenter */,
 				043C80AC1D869BDF004F1B85 /* XXEXingCommunity */,
@@ -5533,6 +5533,7 @@
 			isa = PBXGroup;
 			children = (
 				9E02B4241D78313D00BE40E3 /* XXEHomePageHeader.h */,
+				043596591DAA458100F85DAE /* XXERongCloudChart */,
 				9E02B41F1D782F4600BE40E3 /* EditorIdentity */,
 				9E4813D81D50783000C614AC /* XXEHomePageViewController.h */,
 				9E4813D91D50783000C614AC /* XXEHomePageViewController.m */,

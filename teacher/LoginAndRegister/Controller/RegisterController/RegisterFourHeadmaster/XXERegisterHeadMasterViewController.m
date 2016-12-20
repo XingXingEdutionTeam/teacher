@@ -200,7 +200,7 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
     _titleArr = @[@"学校名称:",@"学校类型:",@"学校地址:",@"详细地址:",@"联系方式:",@"",@"审核人员:",@"邀请码"];
     
     _titleTextArr = @[@"请输入或搜索学校名称",@"请选择你学校类型",@"学校地址",@"请输入详细地址",@"联系方式",@"",@"请选择审核人",@"可不填"];
-    NSArray *arr = @[@"幼儿园",@"小学",@"中学",@"培训机构"];
+    NSArray *arr = @[@"幼儿园",@"小学",@"中学",@"培训机构",@"高中"];
     _schoolTypeArr = [arr copy];
     self.teacherTableView.delegate = self;
     self.teacherTableView.dataSource = self;
@@ -531,11 +531,12 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
     NSLog(@"蛇和人的ID %@",self.theEndReviewerId);
     NSLog(@"证件%@",self.fileHeadImageArray);
     
+//    if ([self.theEndReviewerId isEqualToString:@""]) {
+//        [self showString:@"请选择审核人" forSecond:1.f];
+//        
+//    }else
     
-    if ([self.theEndReviewerId isEqualToString:@""]) {
-        [self showString:@"请选择审核人" forSecond:1.f];
-        
-    }else if ([self.schoolAddrss isEqualToString:@""] ){
+    if ([self.schoolAddrss isEqualToString:@""] ){
         [self showString:@"请填写学校详细地址" forSecond:1.f];
         
     }else if ([self.schoolTel isEqualToString:@""]){
