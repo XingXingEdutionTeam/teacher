@@ -422,10 +422,13 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
             break;
         }
         case 5:{
-            
             break;
         }
         case 6:{
+            if (self.teachOfTypeArray.count == 0) {
+                [self showString:@"请搜索学校" forSecond:1.f];
+                return;
+            }
             XXESelectMessageView *reviewerName = [[XXESelectMessageView alloc]initWithTWFrame:self.view.bounds TWselectCityTitle:@"请选择审核人" MessageArray:self.reviewerNameArray];
             [reviewerName showCityView:^(NSString *proviceStr) {
                 WeakSelf.teacherCell = [WeakSelf cellAtIndexRow:6 andAtSection:0 Message:[NSString stringWithFormat:@"%@",proviceStr]];
@@ -700,7 +703,7 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
             });
             
         }else if([code intValue]== 16){
-            [self showString:@"您要添加的身份已存在" forSecond:2.f];
+            [self showString:@"您要添加的身份正在审核中,请等待!" forSecond:2.f];
         }else{
         [self showString:@"添加身份失败" forSecond:1.f];
         }
@@ -758,6 +761,8 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
         typeName = @"中学";
     } else if ([model.type isEqualToString:@"4"]){
         typeName = @"培训机构";
+    } else if ([model.type isEqualToString:@"5"]){
+        typeName = @"高中";
     }
     self.teacherCell = [self cellAtIndexRow:1 andAtSection:0 Message:typeName];
     

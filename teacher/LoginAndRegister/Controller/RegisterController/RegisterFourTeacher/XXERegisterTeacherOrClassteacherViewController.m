@@ -124,7 +124,7 @@
     self.navigationItem.rightBarButtonItem= rightItem;
     
     _titleArr = [[NSMutableArray alloc] initWithObjects:@"学校名称:",@"学校类型:",@"年级信息:",@"班级信息:",@"教学类型:",@"",@"审核人员:",@"邀请码", nil];
-    _schoolTypeArr = [[NSMutableArray alloc]initWithObjects:@"幼儿园",@"小学",@"初中",@"培训机构",nil];
+    _schoolTypeArr = [[NSMutableArray alloc]initWithObjects:@"幼儿园",@"小学",@"初中",@"培训机构",@"高中",nil];
     
     [self headImageUpLoad];
     
@@ -200,6 +200,8 @@
         typeName = @"中学";
     } else if ([model.type isEqualToString:@"4"]){
         typeName = @"培训机构";
+    } else if ([model.type isEqualToString:@"5"]) {
+        typeName = @"高中";
     }
 
     //学校类型

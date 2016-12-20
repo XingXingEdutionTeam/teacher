@@ -467,7 +467,9 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
             break;
         }
         case 5:{
-            
+            if (self.teachOfTypeArray.count == 0) {
+                [self showString:@"请搜索学校" forSecond:1.f];
+            }
             break;
         }
         case 6:{

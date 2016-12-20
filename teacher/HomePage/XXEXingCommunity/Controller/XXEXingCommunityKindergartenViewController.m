@@ -214,6 +214,7 @@
     if (cell == nil) {
         cell = [[XXEXingCommunityClassesTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
     }
+    
     XXEXingCommunityClassesModel *model = _dataSourceArray[indexPath.row];
     
     NSString *coursePicStr = [NSString stringWithFormat:@"%@%@", kXXEPicURL, model.pic];

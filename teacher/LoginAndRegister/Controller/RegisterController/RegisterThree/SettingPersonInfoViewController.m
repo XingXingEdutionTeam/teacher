@@ -398,7 +398,8 @@
             [self showString:@"身份证有误" forSecond:1.f];
             return;
         }else if (![CheckIDCard checkIDCard:self.parentsIDCard.text]) {
-            [self showString:@"您输入的家长身份证号码不存在" forSecond:1.f];
+//            [self showString:@"您输入的家长身份证号码不存在" forSecond:1.f];
+            [self showString:@"您输入的身份证号码不存在" forSecond:1.f];
             return;
         } else{
             [self getupUserIDCard:self.parentsIDCard.text];

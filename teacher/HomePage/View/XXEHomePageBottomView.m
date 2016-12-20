@@ -44,9 +44,19 @@
 
 - (void)setupButtonNum:(int )num
 {
+    int buttonCount;
+    switch ([GlobalVariable shareInstance].appleVerify) {
+        case AppleVerifyHave:
+            buttonCount = num - 1;
+            break;
+        default:
+            buttonCount = num ;
+            break;
+    }
+
     //创建 十二宫格  三行、四列
     int totalLine = 4;
-    int buttonCount = num ;
+    
     int margin = 1;
     
     CGFloat buttonWidth = (KScreenWidth - 3 * margin) / 4;
@@ -60,7 +70,21 @@
         CGFloat buttonY = (buttonHeight + margin) * buttonRow;
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
         self.button = button;
-        button.tag = i;
+        
+        switch ([GlobalVariable shareInstance].appleVerify) {
+            case AppleVerifyHave:
+                if (i < 7) {
+                    button.tag = i;
+                }else {
+                    button.tag = i+1;
+                }
+                break;
+            default:
+                button.tag = i;
+                break;
+        }
+        
+        
         button.backgroundColor = [UIColor whiteColor];
         button.frame = CGRectMake(buttonX, buttonY, buttonWidth, buttonHeight);
         NSString *string;
@@ -90,13 +114,43 @@
             
         }
         
-        if (num == 12) {
-            string = [NSString stringWithFormat:@"home_%d_click",i+1];
-        }else if (num == 11){
-            string = [NSString stringWithFormat:@"home_1_%d_click",i+1];
-        }else{
-            string = [NSString stringWithFormat:@"home_2_%d_click",i+1];
+        switch ([GlobalVariable shareInstance].appleVerify) {
+            case AppleVerifyHave:
+                if (num == 12) {
+                    
+                    if (i<7) {
+                        string = [NSString stringWithFormat:@"home_%d_click",i+1];
+                    }else {
+                        string = [NSString stringWithFormat:@"home_%d_click",i+2];
+                    }
+                    
+                }else if (num == 11){
+                    if (i<7) {
+                        string = [NSString stringWithFormat:@"home_%d_click",i+1];
+                    }else {
+                        string = [NSString stringWithFormat:@"home_%d_click",i+2];
+                    }
+                }else{
+                    if (i<7) {
+                        string = [NSString stringWithFormat:@"home_%d_click",i+1];
+                    }else {
+                        string = [NSString stringWithFormat:@"home_%d_click",i+2];
+                    }
+                }
+                
+                break;
+            default:
+                if (num == 12) {
+                    string = [NSString stringWithFormat:@"home_%d_click",i+1];
+                }else if (num == 11){
+                    string = [NSString stringWithFormat:@"home_1_%d_click",i+1];
+                }else{
+                    string = [NSString stringWithFormat:@"home_2_%d_click",i+1];
+                }
+                break;
         }
+        
+        
         [button setImage:[UIImage imageNamed:string] forState:UIControlStateNormal];
         [button addTarget:self action:@selector(homeClassButtonClick:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:button];

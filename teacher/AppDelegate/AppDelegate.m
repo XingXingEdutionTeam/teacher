@@ -148,7 +148,7 @@ static int currentVersion = 100;
 - (void)showUpdatePopView {
     
     [[ServiceManager sharedInstance] requestWithURLString:CheckoutVersionURL parameters:nil type:HttpRequestTypeGet success:^(id responseObject) {
-        
+        [GlobalVariable shareInstance].appleVerify = AppleVerifyNo;
         if ([responseObject[@"code"] integerValue] == 1) {
             [GlobalVariable shareInstance].appStoreURL = responseObject[@"data"][@"url"];
             NSString *appStoreURL = responseObject[@"data"][@"url"];
@@ -163,12 +163,12 @@ static int currentVersion = 100;
                 }
                 [self jumpToAppStoreWithNowVerson:nowVersion appStoreURL:appStoreURL];
             }else if (currentVersion > nowVersion){ //苹果审核中
+                [GlobalVariable shareInstance].appleVerify = AppleVerifyHave;
                 //code...
             }
         }
-        
     } failure:^(NSError *error) {
-        
+        [GlobalVariable shareInstance].appleVerify = AppleVerifyNo;
     }];
 }
 
