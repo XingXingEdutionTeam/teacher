@@ -111,13 +111,19 @@
 
 - (void)addBtnClick:(UIButton *)button{
     
-    XXERecipeAddViewController *recipeAddVC = [[XXERecipeAddViewController alloc] init];
+    if ([XXEUserInfo user].login) {
+        XXERecipeAddViewController *recipeAddVC = [[XXERecipeAddViewController alloc] init];
+        
+        recipeAddVC.schoolId = _schoolId;
+        recipeAddVC.position = _position;
+        //    sentToPeopleVC.basketNumStr = _flower_able;
+        
+        [self.navigationController pushViewController:recipeAddVC animated:YES];
+
+    }else{
+        [self showString:@"请用账号登录后查看" forSecond:1.5];
+    }
     
-    recipeAddVC.schoolId = _schoolId;
-    recipeAddVC.position = _position;
-//    sentToPeopleVC.basketNumStr = _flower_able;
-    
-    [self.navigationController pushViewController:recipeAddVC animated:YES];
     
 }
 

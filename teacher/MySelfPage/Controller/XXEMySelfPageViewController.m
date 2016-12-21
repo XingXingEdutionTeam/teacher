@@ -79,6 +79,7 @@
 
     userPosition = [DEFAULTS objectForKey:@"POSITION"];
     schoolType = [DEFAULTS objectForKey:@"SCHOOL_TYPE"];
+//        NSLog(@" %@ ----- %@", userPosition, schoolType);
 //#pragma  如果是私立校长身份 (在头视图上出现 "我的订单"  "我的钱包", 下面的列表中没有 "我的订单")
     if ([userPosition isEqualToString:@"4"] && [schoolType isEqualToString:@"4"]) {
         pictureArray = [[NSMutableArray alloc] initWithObjects:@"myself_info_icon40x40", @"myself_friend_icon40x44", @"myself_chat_icon40x40", @"myself_collection_icon40x40", @"myself_friend_circle_icon40x40", @"myself_blackorder_icon40x40", @"myself_system_setting_icon40x40", @"myself_privacy_setting_icon40x40", nil];
@@ -87,6 +88,21 @@
         pictureArray = [[NSMutableArray alloc] initWithObjects:@"myself_info_icon40x40", @"myself_order_icon40x48", @"myself_friend_icon40x44", @"myself_chat_icon40x40", @"myself_collection_icon40x40", @"myself_friend_circle_icon40x40", @"myself_blackorder_icon40x40", @"myself_system_setting_icon40x40", @"myself_privacy_setting_icon40x40", nil];
         titleArray = [[NSMutableArray alloc] initWithObjects:@"我的资料",@"我的订单",@"我的好友",@"我的聊天",@"我的收藏" , @"我的圈子", @"我的黑名单", @"系统设置", @"隐私设置", nil];
     }
+    
+    //设置tableview 的frame
+    CGFloat tableViewY;
+    
+//    NSLog(@"userPosition == %@", userPosition);
+    if ([userPosition isEqualToString:@"4"] && [schoolType isEqualToString:@"4"]) {
+        tableViewY = 200 * kScreenRatioHeight;
+    }else {
+        tableViewY = 150 * kScreenRatioHeight;
+    }
+
+    CGPoint point1 = _myTableView.origin;
+    point1.y = tableViewY;
+    _myTableView.origin = point1;
+    [_myTableView reloadData];
     
     if (headerView) {
         [headerView removeFromSuperview];
@@ -109,7 +125,8 @@
         parameterXid = XID;
         parameterUser_Id = USER_ID;
     }
-//    NSLog(@" %@ ----- %@", userPosition, schoolType);
+
+
     
     [self createTableView];
 }
@@ -307,16 +324,10 @@
 
 - (void)createTableView{
     
-    CGFloat tableViewY;
-        if ([userPosition isEqualToString:@"4"] && [schoolType isEqualToString:@"4"]) {
-            tableViewY = 200 * kScreenRatioHeight;
-         }else {
-            tableViewY = 150 * kScreenRatioHeight;
-         }
 
 //    NSLog(@"tableViewY === %lf", tableViewY);
     
-    _myTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, tableViewY, KScreenWidth, KScreenHeight - 150 * kScreenRatioHeight - 49 - 64) style:UITableViewStyleGrouped];
+    _myTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 150 * kScreenRatioHeight, KScreenWidth, KScreenHeight - 150 * kScreenRatioHeight - 49 - 64) style:UITableViewStyleGrouped];
     
     _myTableView.dataSource = self;
     _myTableView.delegate = self;

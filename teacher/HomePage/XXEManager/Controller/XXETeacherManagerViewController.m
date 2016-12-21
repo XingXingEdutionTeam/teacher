@@ -271,16 +271,23 @@
         _agreeBtn.tag=100;
         _refuseBtn.tag=101;
     }else if ([studentModel.condit isEqualToString:@"1"]){
-        _deletebtn = [UIButton createButtonWithFrame:CGRectMake(300 * kScreenRatioWidth, 27, 50 * kScreenRatioWidth, 25 * kScreenRatioHeight) backGruondImageName:nil Target:self Action:@selector(onClickDeleteBtn:) Title:@"删除"];
-        [_deletebtn setTitleColor:UIColorFromRGB(0, 170, 42) forState:UIControlStateNormal];
-        _deletebtn.titleLabel.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];
-        [_deletebtn.layer setBorderColor:UIColorFromRGB(0, 170, 42).CGColor];
-        [_deletebtn.layer setBorderWidth:1];
-        [_deletebtn.layer setMasksToBounds:YES];
         
-        [cell.contentView addSubview:_deletebtn];
+        if ([studentModel.user_id isEqualToString:parameterUser_Id]) {
+            //是自己 没有删除 按钮
+        }else{
+            _deletebtn = [UIButton createButtonWithFrame:CGRectMake(300 * kScreenRatioWidth, 27, 50 * kScreenRatioWidth, 25 * kScreenRatioHeight) backGruondImageName:nil Target:self Action:@selector(onClickDeleteBtn:) Title:@"删除"];
+            [_deletebtn setTitleColor:UIColorFromRGB(0, 170, 42) forState:UIControlStateNormal];
+            _deletebtn.titleLabel.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];
+            [_deletebtn.layer setBorderColor:UIColorFromRGB(0, 170, 42).CGColor];
+            [_deletebtn.layer setBorderWidth:1];
+            [_deletebtn.layer setMasksToBounds:YES];
+            
+            [cell.contentView addSubview:_deletebtn];
+            
+            _deletebtn.tag=102;
+
+        }
         
-        _deletebtn.tag=102;
     }
     
     return cell;

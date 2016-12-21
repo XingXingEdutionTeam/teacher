@@ -124,7 +124,7 @@
         
         
         for (int i =0; i < self.photoDatasource.count; i++) {
-            XXEMyselfAblumUpDataApi *updataApi = [[XXEMyselfAblumUpDataApi alloc]initWithAblumSchoolId:self.myAlbumUpSchoolId ClassId:self.myAlbumUpClassId AblumId:self.albumID ImageArray:self.photoDatasource[i] UserXid:strngXid UserId:albumUserId];
+            XXEMyselfAblumUpDataApi *updataApi = [[XXEMyselfAblumUpDataApi alloc]initWithAblumSchoolId:self.myAlbumUpSchoolId ClassId:self.myAlbumUpClassId AblumId:self.albumID ImageArray:self.photoDatasource[i] UserXid:strngXid UserId:albumUserId position:_userIdentifier];
             [arr addObject:updataApi];
         }
         

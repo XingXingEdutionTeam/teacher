@@ -346,24 +346,24 @@
         self.userPosition = @"2";
         [self bottomViewShowPosition:self.userPosition];
     }else{
-//        NSLog(@"text === %@", text);
-
-//        NSLog(@"self.classDatasource === %@", self.classDatasource);
-        
+        self.userPosition = @"1";
+        [self bottomViewShowPosition:self.userPosition];
+    }
+    
+//    NSLog(@"self.classDatasource === %@", self.classDatasource);
+    
+    if ([self.classDatasource count] != 0) {
         for (XXEHomePageClassModel *classModel in self.classDatasource) {
             if ([classModel.class_name isEqualToString:text]) {
                 self.classHomeId = classModel.class_id;
             }
         }
-        
-//        NSLog(@"self.classHomeId == %@", self.classHomeId);
-        
-        [DEFAULTS setObject:self.classHomeId forKey:@"CLASS_ID"];
-        [DEFAULTS synchronize];
-        
-        self.userPosition = @"1";
-        [self bottomViewShowPosition:self.userPosition];
     }
+
+    
+    
+    [DEFAULTS setObject:self.classHomeId forKey:@"CLASS_ID"];
+    [DEFAULTS synchronize];
     
 //    NSLog(@"----- *** ----- %@", self.userPosition);
     [DEFAULTS setObject:self.userPosition forKey:@"POSITION"];
@@ -784,6 +784,7 @@
                 XXEClassAlbumViewController *classAlbumVC = [[XXEClassAlbumViewController alloc]init];
                 classAlbumVC.schoolID = self.schoolHomeId;
                 classAlbumVC.classID = self.classHomeId;
+            classAlbumVC.userIdentifier = _userPosition;
 //                NSLog(@"%@ == %@",self.schoolHomeId,self.classHomeId);
                 [self.navigationController pushViewController:classAlbumVC animated:YES];
             break;
@@ -959,7 +960,8 @@
             XXEClassAlbumViewController *classAlbumVC = [[XXEClassAlbumViewController alloc]init];
             classAlbumVC.schoolID = self.schoolHomeId;
             classAlbumVC.classID = self.classHomeId;
-            NSLog(@"%@ == %@",self.schoolHomeId,self.classHomeId);
+            classAlbumVC.userIdentifier = _userPosition;
+//            NSLog(@"%@ == %@",self.schoolHomeId,self.classHomeId);
             [self.navigationController pushViewController:classAlbumVC animated:YES];
             break;
         }
@@ -1044,7 +1046,7 @@
         case 10:
         {
             NSLog(@"---管理----");
-            if ([XXEUserInfo user].login) {
+//            if ([XXEUserInfo user].login) {
                 if ([self.userPosition isEqualToString:@"3"]) {
                     //school_type //学校类型: 幼儿园/小学/中学/机构 1/2/3/4
                     //如果 是 4 表示 私立, 其他为公立学校
@@ -1071,9 +1073,9 @@
                     
                 }
 
-            }else{
-                [self showString:@"请用账号登录后查看" forSecond:1.5];
-            }
+//            }else{
+//                [self showString:@"请用账号登录后查看" forSecond:1.5];
+//            }
 
             break;
         }
@@ -1123,12 +1125,13 @@
         }
         case 1:
         {
-             NSLog(@"%@",self.userPosition);
+//             NSLog(@"%@",self.userPosition);
             NSLog(@"---相册----");
             XXEClassAlbumViewController *classAlbumVC = [[XXEClassAlbumViewController alloc]init];
             classAlbumVC.schoolID = self.schoolHomeId;
             classAlbumVC.classID = self.classHomeId;
-            NSLog(@"%@ == %@",self.schoolHomeId,self.classHomeId);
+            classAlbumVC.userIdentifier = _userPosition;
+//            NSLog(@"%@ == %@",self.schoolHomeId,self.classHomeId);
             [self.navigationController pushViewController:classAlbumVC animated:YES];
             break;
         }
@@ -1213,7 +1216,7 @@
         case 8:
         {
             NSLog(@"---管理----");
-            if ([XXEUserInfo user].login) {
+//            if ([XXEUserInfo user].login) {
                 //不同 身份
                 if ([self.userPosition isEqualToString:@"4"]) {
                     //school_type //学校类型: 幼儿园/小学/初中/机构/高中 1/2/3/4
@@ -1240,9 +1243,9 @@
                         [self.navigationController pushViewController:managerHeadmasterPublicVC animated:YES];
                     }
                 }
-            }else{
-                [self showString:@"请用账号登录后查看" forSecond:1.5];
-            }
+//            }else{
+//                [self showString:@"请用账号登录后查看" forSecond:1.5];
+//            }
             
             break;
         }

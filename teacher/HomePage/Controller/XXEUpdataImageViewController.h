@@ -16,4 +16,8 @@
 /** 班级id */
 @property (nonatomic, copy)NSString *myAlbumUpClassId;
 
+/** 身份 */
+@property (nonatomic, copy)NSString *userIdentifier;
+
+
 @end

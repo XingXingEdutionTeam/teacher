@@ -301,6 +301,7 @@ static NSString *headerCell = @"HEADERCELL";
     updataVC.datasource = self.datasource ;
     updataVC.myAlbumUpSchoolId = self.myAlbumUpSchoolId;
     updataVC.myAlbumUpClassId = self.myAlbumUpClassId;
+    updataVC.userIdentifier= _userIdentifier;
     [self.navigationController pushViewController:updataVC animated:YES];
 
 }
