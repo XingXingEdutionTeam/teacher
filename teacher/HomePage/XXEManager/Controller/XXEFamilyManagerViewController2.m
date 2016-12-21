@@ -254,9 +254,9 @@
     
     //点击 头像 进入 宝贝详情 界面
     cell.iconImageView.userInteractionEnabled = YES;
-    UITapGestureRecognizer *iconTap =[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(iconTap:)];
-    cell.iconImageView.tag =100+indexPath.row;
-    [cell.iconImageView addGestureRecognizer:iconTap];
+//    UITapGestureRecognizer *iconTap =[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(iconTap:)];
+//    cell.iconImageView.tag =100+indexPath.row;
+//    [cell.iconImageView addGestureRecognizer:iconTap];
     
     /*
      16.家长管理,删除按钮的权限,授课老师看不见这个按钮,其他3个身份才可以操作删除
@@ -476,40 +476,33 @@
 
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    
-    //    if (indexPath.section == 0) {
-    //        //点击 宝贝 cell 先进入到 宝贝家人 列表
-    //        XXEBabyFamilyInfoViewController *babyFamilyInfoVC = [[XXEBabyFamilyInfoViewController alloc] init];
-    //        XXEClassAddressStudentInfoModel *model = _dataSourceArray[indexPath.section][indexPath.row];
-    //        //        NSLog(@"%@", model);
-    //        babyFamilyInfoVC.baby_id = model.baby_id;
-    //        babyFamilyInfoVC.familyInfoArray = model.parent_list;
-    //        [self.navigationController pushViewController:babyFamilyInfoVC animated:YES];
-    //
-    //    }else if (indexPath.section == 1){
-    //
-    //    }else if (indexPath.section == 2){
-    //
-    //    }
+
+    XXEFamilyManagerClassInfoModel *classModel = classModelArray[indexPath.section];
+    XXEFamilyManagerPersonInfoModel *stuModel = classModel.parent_list[indexPath.section];
+    //    if ([XXEUserInfo user].login){
+    XXEBabyFamilyInfoDetailViewController *babyFamilyInfoDetailVC = [[XXEBabyFamilyInfoDetailViewController alloc] init];
+    babyFamilyInfoDetailVC.baby_id = stuModel.baby_id;
+    babyFamilyInfoDetailVC.parent_id = stuModel.parent_id;
+    [self.navigationController pushViewController:babyFamilyInfoDetailVC animated:YES];
     
 }
 
 
-- (void)iconTap:(UITapGestureRecognizer*)tap{
-    XXERedFlowerSentHistoryTableViewCell *cell = (XXERedFlowerSentHistoryTableViewCell *)[[tap.view superview] superview];
-    NSIndexPath *path = [_myTableView indexPathForCell:cell];
-    XXEFamilyManagerClassInfoModel *classModel = classModelArray[path.section];
-    XXEFamilyManagerPersonInfoModel *stuModel = classModel.parent_list[tap.view.tag - 100];
-    //    if ([XXEUserInfo user].login){
-    XXEBabyFamilyInfoDetailViewController *babyFamilyInfoDetailVC = [[XXEBabyFamilyInfoDetailViewController alloc] init];
-    babyFamilyInfoDetailVC.baby_id = stuModel.baby_id;
-    babyFamilyInfoDetailVC.parent_id = stuModel.examine_id;
-    [self.navigationController pushViewController:babyFamilyInfoDetailVC animated:YES];
+//- (void)iconTap:(UITapGestureRecognizer*)tap{
+//    XXERedFlowerSentHistoryTableViewCell *cell = (XXERedFlowerSentHistoryTableViewCell *)[[tap.view superview] superview];
+//    NSIndexPath *path = [_myTableView indexPathForCell:cell];
+//    XXEFamilyManagerClassInfoModel *classModel = classModelArray[path.section];
+//    XXEFamilyManagerPersonInfoModel *stuModel = classModel.parent_list[tap.view.tag - 100];
+//    //    if ([XXEUserInfo user].login){
+//    XXEBabyFamilyInfoDetailViewController *babyFamilyInfoDetailVC = [[XXEBabyFamilyInfoDetailViewController alloc] init];
+//    babyFamilyInfoDetailVC.baby_id = stuModel.baby_id;
+//    babyFamilyInfoDetailVC.parent_id = stuModel.examine_id;
+//    [self.navigationController pushViewController:babyFamilyInfoDetailVC animated:YES];
     //    }else{
     //        [SVProgressHUD showInfoWithStatus:@"请用账号登录后查看"];
     //    }
     
-}
+//}
 
 
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{

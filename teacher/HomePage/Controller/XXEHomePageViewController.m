@@ -319,6 +319,8 @@
 
 - (void)commboxAction2:(NSNotification *)notif{
     
+//    NSLog(@"**** commboxAction2 *****");
+    
     self.identifyCard = self.homeClassView.textField.text;
     
     if ([self.homeClassView.textField.text isEqualToString:@"编辑班级"]) {
@@ -373,7 +375,8 @@
 #pragma mark - 通知选择的学校
 
 - (void)commboxAction:(NSNotification *)notif{
-//    NSLog(@"%@",notif.object);
+//    NSLog(@" ===== commboxAction: ======");
+    NSLog(@"%@",notif.object);
 //    NSLog(@"文字是什么%@",self.homeClassView.textField.text);
     switch ([notif.object integerValue]) {
         case 102:
@@ -571,7 +574,7 @@
     }
     
     NSLog(@"---跳转到学校的详情页----");
-    if ([XXEUserInfo user].login) {
+//    if ([XXEUserInfo user].login) {
         //logo
         XXEHomeLogoRootViewController *homeLogoRootVC = [[XXEHomeLogoRootViewController alloc] init];
         
@@ -581,9 +584,9 @@
         homeLogoRootVC.school_type = _schoolType;
     
         [self.navigationController pushViewController:homeLogoRootVC animated:NO];
-    }else{
-        [self showString:@"请用账号登录后查看" forSecond:1.5];
-    }
+//    }else{
+//        [self showString:@"请用账号登录后查看" forSecond:1.5];
+//    }
 }
 
 - (void)homePageRightButtonClick

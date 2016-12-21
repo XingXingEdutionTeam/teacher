@@ -352,6 +352,7 @@
          code:5	//不是好友,不能发起聊天,是否要添加好友?(触发添加好友请求接口)
          code:6	//对方设置了不接受您的消息!无法发起聊天!
          code:7	//你不在对方的好友名单中,是否要添加好友?
+         code:8	//你在对方的黑名单中,无法发起聊天!
          */
         if ([codeStr isEqualToString:@"1"]) {
             
@@ -359,7 +360,7 @@
         }else if ([codeStr isEqualToString:@"5"]) {
             [SVProgressHUD showInfoWithStatus:@"不是好友,不能发起聊天!"];
             
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 [self addFriendRequest];
             });
             
@@ -368,9 +369,12 @@
             
         }else if ([codeStr isEqualToString:@"7"]) {
             [SVProgressHUD showInfoWithStatus:@"你不在对方的好友名单中,不能发起聊天!"];
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 [self addFriendRequest];
             });
+        }else if ([codeStr isEqualToString:@"8"]) {
+            [SVProgressHUD showInfoWithStatus:@"你在对方的黑名单中,无法发起聊天!"];
+            
         }
         
     } failure:^(__kindof YTKBaseRequest *request) {
@@ -434,7 +438,7 @@
     XXERongCloudAddFriendRequestApi *rongCloudAddFriendRequestApi = [[XXERongCloudAddFriendRequestApi alloc] initWithXid:parameterXid user_id:parameterUser_Id other_xid:otherXid];
     [rongCloudAddFriendRequestApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         
-        //      NSLog(@"2222---   %@", request.responseJSONObject);
+              NSLog(@"2222---   %@", request.responseJSONObject);
         
         NSString *codeStr = [NSString stringWithFormat:@"%@", request.responseJSONObject[@"code"]];
         /*

@@ -48,14 +48,13 @@
         parameterUser_Id = USER_ID;
     }
     page = 0;
-    longitudeString = @"";
-    latitudeString = @"";
+//    longitudeString = @"";
+//    latitudeString = @"";
     /*
      [DEFAULTS setObject:self.longitudeString forKey:@"Longitude"];
      [DEFAULTS setObject:self.latitudeString forKey:@"LatitudeString"];
      */
-    longitudeString = [DEFAULTS objectForKey:@"Longitude"];
-    latitudeString = [DEFAULTS objectForKey:@"LatitudeString"];
+
     
 //    NSLog(@"经度:%@ ===== 纬度:%@", longitudeString, latitudeString);
 }
@@ -84,32 +83,40 @@
 
 - (void)fetchNetData{
     
-    NSString *pageStr = [NSString stringWithFormat:@"%ld", page];
+    longitudeString = [DEFAULTS objectForKey:@"Longitude"];
+    latitudeString = [DEFAULTS objectForKey:@"LatitudeString"];
     
-    XXERongCloudSeeNearUserListApi *rongCloudSeeNearUserListApi = [[XXERongCloudSeeNearUserListApi alloc] initWithXid:parameterXid user_id:parameterUser_Id page:pageStr lng:longitudeString lat:latitudeString];
-    [rongCloudSeeNearUserListApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
+    if (longitudeString == nil) {
+        [self showHudWithString:@"请前往设置中允许该应用获取您的位置信息" forSecond:1.5];
+    }else{
+        NSString *pageStr = [NSString stringWithFormat:@"%ld", page];
         
-//                NSLog(@"2222---   %@", request.responseJSONObject);
-        
-        NSString *codeStr = [NSString stringWithFormat:@"%@", request.responseJSONObject[@"code"]];
-        
-        if ([codeStr isEqualToString:@"1"]) {
+        XXERongCloudSeeNearUserListApi *rongCloudSeeNearUserListApi = [[XXERongCloudSeeNearUserListApi alloc] initWithXid:parameterXid user_id:parameterUser_Id page:pageStr lng:longitudeString lat:latitudeString];
+        [rongCloudSeeNearUserListApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
             
-            NSDictionary *dict = request.responseJSONObject[@"data"];
+            //                NSLog(@"2222---   %@", request.responseJSONObject);
+            
+            NSString *codeStr = [NSString stringWithFormat:@"%@", request.responseJSONObject[@"code"]];
+            
+            if ([codeStr isEqualToString:@"1"]) {
+                
+                NSDictionary *dict = request.responseJSONObject[@"data"];
+                
+                NSArray *modelArray = [XXERongCloudSeeNearUserListModel parseResondsData:dict];
+                
+                [_dataSourceArray addObjectsFromArray:modelArray];
+            }else{
+                //            [self showHudWithString:@"" forSecond:1.5];
+            }
+            
+            [self customContent];
+            
+        } failure:^(__kindof YTKBaseRequest *request) {
+            
+            [self showString:@"数据请求失败" forSecond:1.f];
+        }];
 
-            NSArray *modelArray = [XXERongCloudSeeNearUserListModel parseResondsData:dict];
-            
-            [_dataSourceArray addObjectsFromArray:modelArray];
-        }else{
-//            [self showHudWithString:@"" forSecond:1.5];
-        }
-        
-        [self customContent];
-        
-    } failure:^(__kindof YTKBaseRequest *request) {
-        
-        [self showString:@"数据请求失败" forSecond:1.f];
-    }];
+    }
     
 }
 
@@ -260,7 +267,7 @@
     XXERongCloudAddFriendRequestApi *rongCloudAddFriendRequestApi = [[XXERongCloudAddFriendRequestApi alloc] initWithXid:parameterXid user_id:parameterUser_Id other_xid:otherXid];
     [rongCloudAddFriendRequestApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         
-//      NSLog(@"2222---   %@", request.responseJSONObject);
+      NSLog(@"2222---   %@", request.responseJSONObject);
         
         NSString *codeStr = [NSString stringWithFormat:@"%@", request.responseJSONObject[@"code"]];
         /*

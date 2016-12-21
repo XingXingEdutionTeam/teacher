@@ -246,7 +246,7 @@
         //宝贝 信息
         XXEClassAddressStudentInfoModel *model = _dataSourceArray[indexPath.section][indexPath.row];
         //宝贝 头像 全部 是拼接 的
-        [cell.iconImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", kXXEPicURL, model.head_img]] placeholderImage:[UIImage imageNamed:@"home_flowerbasket_placehoderIcon120x120"]];
+        [cell.iconImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", kXXEPicURL, model.head_img]] placeholderImage:[UIImage imageNamed:@"headplaceholder"]];
         cell.nameLabel.text = model.tname;
         cell.detailLabel.text = [NSString stringWithFormat:@"%@岁", model.age];
         

@@ -14,6 +14,13 @@
 #import "XXEOtherTeacherAlbumViewController.h"
 
 @interface XXEClassAlbumViewController ()<UITableViewDelegate,UITableViewDataSource>
+{
+
+    NSString *strngXid;
+    NSString *albumUserId;
+
+
+}
 @property (nonatomic, strong)UITableView *classAlbumTableView;
 /** 头不文字显示数组 */
 @property (nonatomic, strong)NSMutableArray *headDatasource;
@@ -78,6 +85,14 @@ static NSString *const IdentifierCell = @"classAlbunCell";
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.title = @"相册";
+    if ([XXEUserInfo user].login) {
+        strngXid = [XXEUserInfo user].xid;
+        albumUserId = [XXEUserInfo user].user_id;
+    }else {
+        strngXid = XID;
+        albumUserId = USER_ID;
+    }
+
     [self.classAlbumTableView registerClass:[XXEClassAlbumTableViewCell class] forCellReuseIdentifier:IdentifierCell];
      _classAlbumTableView.delegate = self;
     _classAlbumTableView.dataSource = self;
@@ -87,15 +102,6 @@ static NSString *const IdentifierCell = @"classAlbunCell";
 #pragma mark - 获取数据
 - (void)loadClassAlbumMessage
 {
-    NSString *strngXid;
-    NSString *albumUserId;
-    if ([XXEUserInfo user].login) {
-        strngXid = [XXEUserInfo user].xid;
-        albumUserId = [XXEUserInfo user].user_id;
-    }else {
-        strngXid = XID;
-        albumUserId = USER_ID;
-    }
     
 //    NSLog(@"%@=== %@ ===== %@ ==== %@ === %@", _schoolID, _classID, strngXid, albumUserId, _userIdentifier);
     //427397=== 0 ===== 42233235 ==== 101 === 3
@@ -114,6 +120,10 @@ static NSString *const IdentifierCell = @"classAlbunCell";
                 [self.imageViewDatasource addObject:@"album_icon"];
                 
             }else{
+                if (self.imageViewDatasource.count != 0) {
+                    [self.imageViewDatasource removeAllObjects];
+                }
+                
                 NSArray *data = [request.responseJSONObject objectForKey:@"data"];
                 for (int i =0 ; i < data.count; i++) {
                     XXEClassAlbumModel *model = [[XXEClassAlbumModel alloc]initWithDictionary:data[i] error:nil];
@@ -133,9 +143,8 @@ static NSString *const IdentifierCell = @"classAlbunCell";
                     [self.teacherDatasource addObject:model.teacher_id];
                 }
 //                NSLog(@"数组%@",self.imageViewDatasource);
-                [self.classAlbumTableView reloadData];
-                
             }
+            [self.classAlbumTableView reloadData];
         }else{
             [self showHudWithString:@"数据请求失败" forSecond:1.f];
         }
@@ -179,12 +188,12 @@ static NSString *const IdentifierCell = @"classAlbunCell";
     if (self.imageViewDatasource.count ==0) {
     
     }else{
-    NSArray *model = self.imageViewDatasource[indexPath.section];
 //    NSLog(@"---------%@",self.imageViewDatasource);
+    NSArray *model = self.imageViewDatasource[indexPath.section];
+
 //        NSLog(@"model ==== %@", model);
         [cell getTheImageViewData:model];
     }
-    
     
     return cell;
 }
@@ -222,6 +231,7 @@ static NSString *const IdentifierCell = @"classAlbunCell";
                 otherVC.otherClassId=self.classID;
                 otherVC.otherSchoolId=self.schoolID;
                 otherVC.otherTeacherId = self.teacherDatasource[indexPath.section];
+                otherVC.userIdentifier = _userIdentifier;
                 //        NSLog(@"%@ %@ %@",otherVC.otherSchoolId,otherVC.otherClassId,otherVC.otherTeacherId);
                 [self.navigationController pushViewController:otherVC animated:YES];
             }

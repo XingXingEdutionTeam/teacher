@@ -268,7 +268,7 @@
     
     XXEFlowerbasketModel *model = _dataSourceArray[indexPath.row];
     if (![model.con isEqualToString:@""]) {
-        CGFloat height = [StringHeight contentSizeOfString:model.con maxWidth:KScreenWidth - 70 fontSize:14];
+        CGFloat height = [StringHeight contentSizeOfString:model.con maxWidth:KScreenWidth - 100 * kScreenRatioWidth fontSize:14];
         
         return 70 + height;
     }else{

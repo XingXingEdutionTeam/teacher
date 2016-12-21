@@ -23,6 +23,9 @@ typedef void(^ReturnStrBlock) (NSString *str);
 @property (weak, nonatomic) IBOutlet UITextView *introductionDetailTextView;
 
 @property (weak, nonatomic) IBOutlet UIButton *submitButton;
+@property (weak, nonatomic) IBOutlet UILabel *numLabel;
+
+
 
 - (void)returnStr:(ReturnStrBlock)block;
 
