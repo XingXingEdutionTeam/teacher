@@ -80,6 +80,7 @@
     NSString *schoolUrl = [NSString stringWithFormat:@"%@%@",kXXEPicURL,schoolLogo];
     NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:schoolUrl]];
     [self.homePageLeftButton setImage:[UIImage imageWithData:data] forState:UIControlStateNormal];
+    
 }
 
 
@@ -88,7 +89,7 @@
     [super layoutSubviews];
     self.backgroundColor = XXEGreenColor;
     
-    self.homePageLeftButton = [UIButton creatSchoolIconImage:@"home_logo" target:self action:@selector(homePageLeftButtonClick:) floats:36*kScreenRatioWidth];
+    self.homePageLeftButton = [UIButton creatSchoolIconImage:@"schoollogo(1)172x172" target:self action:@selector(homePageLeftButtonClick:) floats:36*kScreenRatioWidth];
     [self addSubview:self.homePageLeftButton];
     __weak typeof(self)weakSelf = self;
     [self.homePageLeftButton mas_makeConstraints:^(MASConstraintMaker *make) {

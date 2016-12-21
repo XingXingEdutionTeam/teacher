@@ -15,9 +15,10 @@
     UIImage *_imageArray;
     NSString *_userXid;
     NSString *_userId;
+    NSString *_position;
 }
 
-- (id)initWithAblumSchoolId:(NSString *)schoolId ClassId:(NSString *)classId AblumId:(NSString *)ablumId ImageArray:(UIImage *)imageArray UserXid:(NSString *)userXid UserId:(NSString *)userId
+- (id)initWithAblumSchoolId:(NSString *)schoolId ClassId:(NSString *)classId AblumId:(NSString *)ablumId ImageArray:(UIImage *)imageArray UserXid:(NSString *)userXid UserId:(NSString *)userId position:(NSString *)position
 {
     self = [super init];
     if (self) {
@@ -27,6 +28,7 @@
         _imageArray = imageArray;
         _userXid = userXid;
         _userId = userId;
+        _position = position;
     }
     return self;
 }
@@ -63,7 +65,8 @@
              @"backtype":BACKTYPE,
              @"user_id":_userId,
              @"user_type":USER_TYPE,
-             @"xid":_userXid
+             @"xid":_userXid,
+             @"position":_position
              };
 }
 

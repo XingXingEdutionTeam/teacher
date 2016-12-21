@@ -8,6 +8,8 @@
 
 #import "XXEBaseViewController.h"
 
+typedef void(^ReturnStrBlock) (NSString *str);
+
 @interface XXEClassManagerSettingClassTimeViewController : XXEBaseViewController
 
 @property (nonatomic, strong) NSString *schoolId;
@@ -17,6 +19,8 @@
 @property (nonatomic, copy) NSString *schoolType;
 
 @property (nonatomic, copy) NSString *position;
+
+@property (nonatomic, copy) ReturnStrBlock returnStrBlock;
 
 
 @property (weak, nonatomic) IBOutlet UITextField *startMonthTextField1;
@@ -29,5 +33,7 @@
 
 
 - (IBAction)submitButton:(UIButton *)sender;
+
+- (void)returnStr:(ReturnStrBlock)block;
 
 @end

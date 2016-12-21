@@ -33,7 +33,6 @@
 {
     if (!_identityTableView) {
         _identityTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, KScreenWidth, KScreenHeight - 64) style:UITableViewStyleGrouped];
-        _identityTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         _identityTableView.delegate = self;
         _identityTableView.dataSource = self;
     }
@@ -83,10 +82,10 @@
     [self.idenDatasouces removeAllObjects];
     XXEHomeIdentityApi *identityApi = [[XXEHomeIdentityApi alloc]initWithHomeIdentityUserXid:strngXid UserId:homeUserId];
     [identityApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
-        NSLog(@"%@",request.responseJSONObject);
-        NSLog(@"%@",[request.responseJSONObject objectForKey:@"msg"]);
+//        NSLog(@"%@",request.responseJSONObject);
+//        NSLog(@"%@",[request.responseJSONObject objectForKey:@"msg"]);
         NSString *code = [request.responseJSONObject objectForKey:@"code"];
-        NSLog(@"%@",code);
+//        NSLog(@"%@",code);
         if ([[request.responseJSONObject objectForKey:@"data"] isKindOfClass:[NSString class]]) {
             [self showString:@"没有数据" forSecond:1.f];
             return ;
@@ -95,10 +94,10 @@
              NSMutableArray *messageArray = [request.responseJSONObject objectForKey:@"data"];
             for (int i =0; i<messageArray.count; i++) {
                 XXEIdentityListModel *identityModel = [[XXEIdentityListModel alloc]initWithDictionary:messageArray[i] error:nil];
-                NSLog(@"model的值:%@",identityModel);
+//                NSLog(@"model的值:%@",identityModel);
                 [self.idenDatasouces addObject:identityModel];
             }
-            NSLog(@"编辑学校详情%@",self.idenDatasouces);
+//            NSLog(@"编辑学校详情%@",self.idenDatasouces);
             [self.identityTableView reloadData];
         }
         

@@ -10,6 +10,6 @@
 
 @interface XXEMyselfAblumUpDataApi : YTKRequest
 
-- (id)initWithAblumSchoolId:(NSString *)schoolId ClassId:(NSString *)classId AblumId:(NSString *)ablumId ImageArray:(UIImage *)imageArray UserXid:(NSString *)userXid UserId:(NSString *)userId;
+- (id)initWithAblumSchoolId:(NSString *)schoolId ClassId:(NSString *)classId AblumId:(NSString *)ablumId ImageArray:(UIImage *)imageArray UserXid:(NSString *)userXid UserId:(NSString *)userId position:(NSString *)position;
 
 @end

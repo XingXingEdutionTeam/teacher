@@ -19,6 +19,14 @@
 static NSString * IdentifierCELL = @"IdentifierCELL";
 
 @interface XXEMyClassAlbumViewController ()<UITableViewDelegate,UITableViewDataSource>
+{
+    
+    UIImageView *placeholderImageView;
+    
+    NSString *strngXid;
+    NSString *albumUserId;
+}
+
 @property (nonatomic, strong)UITableView *myClassAlumTableView;
 /** 创建相册 */
 @property (nonatomic, strong)NSString * myNewAlbumName;
@@ -64,7 +72,13 @@ static NSString * IdentifierCELL = @"IdentifierCELL";
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.navigationItem.title = @"我的相册";
-    
+    if ([XXEUserInfo user].login) {
+        strngXid = [XXEUserInfo user].xid;
+        albumUserId = [XXEUserInfo user].user_id;
+    }else {
+        strngXid = XID;
+        albumUserId = USER_ID;
+    }
      self.myClassAlumTableView.delegate = self;
     self.myClassAlumTableView.dataSource = self;
     [self.myClassAlumTableView registerNib:[UINib nibWithNibName:@"XXEMyClassAlbumTableViewCell" bundle:nil] forCellReuseIdentifier:IdentifierCELL];
@@ -78,44 +92,83 @@ static NSString * IdentifierCELL = @"IdentifierCELL";
 
 - (void)setupMyselfAlbumMessage
 {
-    [self showHudWithString:@"正在请求数据..."];
-    NSString *strngXid;
-    NSString *albumUserId;
-    if ([XXEUserInfo user].login) {
-        strngXid = [XXEUserInfo user].xid;
-        albumUserId = [XXEUserInfo user].user_id;
-    }else {
-        strngXid = XID;
-        albumUserId = USER_ID;
-    }
-    
     //真实环境
-    XXEMyselfAblumApi *myselfAblum = [[XXEMyselfAblumApi alloc]initWithMyselfAblumSchoolId:self.myAlbumSchoolId ClassId:self.myAlbumClassId TeacherId:self.myAlbumTeacherId AlbumXid:strngXid AlbumUserId:albumUserId];
-    NSLog(@"学校%@ 班级%@ 教师%@ XID%@ USerID%@",self.myAlbumSchoolId,self.myAlbumClassId,self.myAlbumTeacherId,strngXid,albumUserId);
+    XXEMyselfAblumApi *myselfAblum = [[XXEMyselfAblumApi alloc]initWithMyselfAblumSchoolId:self.myAlbumSchoolId ClassId:self.myAlbumClassId TeacherId:self.myAlbumTeacherId AlbumXid:strngXid AlbumUserId:albumUserId position:_userIdentifier];
+//    NSLog(@"学校%@ 班级%@ 教师%@ XID%@ USerID%@ 身份:%@",self.myAlbumSchoolId,self.myAlbumClassId,self.myAlbumTeacherId,strngXid,albumUserId, _userIdentifier);
 
     [myselfAblum startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
 
-        NSArray *data = [request.responseJSONObject objectForKey:@"data"];
-        NSLog(@"--=-=-%@",data);
-        if ([[request.responseJSONObject objectForKey:@"data"] isKindOfClass:[NSString class]]) {
-            NSLog(@"shizifuchuan");
-            
-        }else{
-            //取出之前的数据
-            [self.datasource removeAllObjects];
-            for (int i =0; i < data.count; i++) {
-                XXEMySelfAlbumModel *model = [[XXEMySelfAlbumModel alloc]initWithDictionary:data[i] error:nil];
-                [self.datasource addObject:model];
+//        NSArray *data = [request.responseJSONObject objectForKey:@"data"];
+//        NSLog(@"我的相册 结果 --=-=-%@",request.responseJSONObject);
+        //取出之前的数据
+        if (self.datasource.count != 0) {
+           [self.datasource removeAllObjects];
+        }
+        
+        if ([request.responseJSONObject[@"code"] integerValue] == 1) {
+
+            NSArray *arr = [NSArray array];
+            arr = request.responseJSONObject[@"data"];
+            for (int i =0; i < arr.count; i++) {
+                    XXEMySelfAlbumModel *model = [[XXEMySelfAlbumModel alloc]initWithDictionary:arr[i] error:nil];
+                    [self.datasource addObject:model];
             }
         }
-        NSLog(@"%@",self.datasource);
-        [self.myClassAlumTableView reloadData];
+        
+//        if ([[request.responseJSONObject objectForKey:@"data"] isKindOfClass:[NSString class]]) {
+//            NSLog(@"shizifuchuan");
+//            
+//        }else{
+
+//        }
+//        NSLog(@"%@",self.datasource);
+//        [self.myClassAlumTableView reloadData];
+        [self customContent];
         [self hideHud];
     } failure:^(__kindof YTKBaseRequest *request) {
         [self hideHud];
         [self showHudWithString:@"请求失败" forSecond:1.f];
     }];
 }
+
+// 有数据 和 无数据 进行判断
+- (void)customContent{
+    // 如果 有占位图 先 移除
+    [self removePlaceholderImageView];
+    
+    if (self.datasource.count == 0) {
+        self.myClassAlumTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+        // 1、无数据的时候
+        [self createPlaceholderView];
+        
+    }else{
+        //2、有数据的时候
+    }
+    
+    [self.myClassAlumTableView reloadData];
+    
+}
+
+
+//没有 数据 时,创建 占位图
+- (void)createPlaceholderView{
+    // 1、无数据的时候
+    UIImage *myImage = [UIImage imageNamed:@"all_placeholder"];
+    CGFloat myImageWidth = myImage.size.width;
+    CGFloat myImageHeight = myImage.size.height;
+    
+    placeholderImageView = [[UIImageView alloc] initWithFrame:CGRectMake(kWidth / 2 - myImageWidth / 2, (kHeight - 64 - 49) / 2 - myImageHeight / 2, myImageWidth, myImageHeight)];
+    placeholderImageView.image = myImage;
+    [self.view addSubview:placeholderImageView];
+}
+
+//去除 占位图
+- (void)removePlaceholderImageView{
+    if (placeholderImageView != nil) {
+        [placeholderImageView removeFromSuperview];
+    }
+}
+
 
 #pragma mark - 单元格的代理方法
 
@@ -148,6 +201,7 @@ static NSString * IdentifierCELL = @"IdentifierCELL";
     contentVC.myAlbumUpClassId = self.myAlbumClassId;
     contentVC.fromFlagStr = @"fromMyselfAlbum";
     contentVC.datasource = self.datasource;
+    contentVC.userIdentifier = _userIdentifier;
     NSLog(@"%@",contentVC.contentModel);
     [self.navigationController pushViewController:contentVC animated:YES];
 }
@@ -159,15 +213,6 @@ static NSString * IdentifierCELL = @"IdentifierCELL";
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(nonnull NSIndexPath *)indexPath
 {
-    NSString *strngXid;
-    NSString *albumUserId;
-    if ([XXEUserInfo user].login) {
-        strngXid = [XXEUserInfo user].xid;
-        albumUserId = [XXEUserInfo user].user_id;
-    }else {
-        strngXid = XID;
-        albumUserId = USER_ID;
-    }
     
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         XXEMySelfAlbumModel *model = self.datasource[indexPath.row];
@@ -192,11 +237,18 @@ static NSString * IdentifierCELL = @"IdentifierCELL";
 
 - (void)updataButtonClick
 {
-    XXEUpdataImageViewController *updataVC = [[XXEUpdataImageViewController alloc]init];
-    updataVC.datasource = self.datasource ;
-    updataVC.myAlbumUpSchoolId = self.myAlbumSchoolId;
-    updataVC.myAlbumUpClassId = self.myAlbumClassId;
-    [self.navigationController pushViewController:updataVC animated:YES];
+    if (self.datasource.count != 0) {
+        XXEUpdataImageViewController *updataVC = [[XXEUpdataImageViewController alloc]init];
+        updataVC.datasource = self.datasource ;
+        updataVC.myAlbumUpSchoolId = self.myAlbumSchoolId;
+        updataVC.myAlbumUpClassId = self.myAlbumClassId;
+        updataVC.userIdentifier = _userIdentifier;
+        [self.navigationController pushViewController:updataVC animated:YES];
+
+    }else{
+        [self showString:@"请先创建相册" forSecond:1.5];
+    }
+    
 }
 
 //创建相册
@@ -237,22 +289,14 @@ static NSString * IdentifierCELL = @"IdentifierCELL";
 #pragma mark - 添加相册
 - (void)myClassAlbumAdd:(NSString *)string
 {
-    NSString *strngXid;
-    NSString *albumUserId;
-    if ([XXEUserInfo user].login) {
-        strngXid = [XXEUserInfo user].xid;
-        albumUserId = [XXEUserInfo user].user_id;
-    }else {
-        strngXid = XID;
-        albumUserId = USER_ID;
-    }
+
     //正式
-    XXEMyselfAblumAddApi *addMySelfAblum = [[XXEMyselfAblumAddApi alloc]initWithAddMyselfAblumSchoolId:self.myAlbumSchoolId ClassId:self.myAlbumClassId AlbumName:string AlbumXid:strngXid AlbumUserId:albumUserId];
-    NSLog(@"=== %@ %@ %@ %@ %@",self.myAlbumSchoolId,self.myAlbumClassId,string,strngXid,albumUserId);
+    XXEMyselfAblumAddApi *addMySelfAblum = [[XXEMyselfAblumAddApi alloc]initWithAddMyselfAblumSchoolId:self.myAlbumSchoolId ClassId:self.myAlbumClassId AlbumName:string AlbumXid:strngXid AlbumUserId:albumUserId position:_userIdentifier];
+//    NSLog(@"创建相册=== %@ %@ %@ %@ %@",self.myAlbumSchoolId,self.myAlbumClassId,string,strngXid,albumUserId);
     
     [addMySelfAblum startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         NSString *code = [request.responseJSONObject objectForKey:@"code"];
-        NSLog(@"==============  %@",request.responseJSONObject);
+//        NSLog(@"快快快==========  %@",request.responseJSONObject);
         
         if ([code intValue] == 1) {
             [self showString:@"创建成功" forSecond:1.f];

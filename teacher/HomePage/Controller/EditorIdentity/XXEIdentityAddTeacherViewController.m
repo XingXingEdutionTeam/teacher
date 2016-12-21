@@ -592,7 +592,7 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
         NSString *code = [request.responseJSONObject objectForKey:@"code"];
         
         
-        NSLog(@"give_grade_get_class === %@", request.responseJSONObject);
+//        NSLog(@"give_grade_get_class === %@", request.responseJSONObject);
         
         if ([code intValue]== 1) {
             NSMutableArray *data = [request.responseJSONObject objectForKey:@"data"];
@@ -645,7 +645,7 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
 #pragma mark - 点击确定提交注册
 - (void)sureButtonClick:(UIButton *)sender
 {
-    NSLog(@"%@%@%@",self.theEndClassId,self.theEndTeachType,self.theEndReviewerId);
+//    NSLog(@"%@%@%@",self.theEndClassId,self.theEndTeachType,self.theEndReviewerId);
     
     if ([self.theEndClassId isEqualToString:@""]) {
         [self showString:@"请选择年级" forSecond:1.f];

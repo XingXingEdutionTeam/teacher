@@ -28,6 +28,9 @@
 
 @property (nonatomic,strong)NSMutableArray *datasource;
 
+/** 身份 */
+@property (nonatomic, copy)NSString *userIdentifier;
+
 @property (nonatomic, strong) NSSet *selectedContactIds;
 @property (nonatomic, strong) NSSet *disabledContactIds;
 @property (nonatomic, strong) id<XXEAlbumContentViewControllerDelegate>delegate;

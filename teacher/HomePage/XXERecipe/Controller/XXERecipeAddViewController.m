@@ -140,6 +140,8 @@
 - (void)textFieldDidBeginEditing:(UITextField *)textField{
     
     if (textField == _timeTextField) {
+        
+        [textField resignFirstResponder];
         [self setupDateView:DateTypeOfStart];
     }
     
@@ -166,7 +168,8 @@
     switch (type) {
         case DateTypeOfStart:
         {
-//            NSLog(@"时间  %@", date);2016-08-23 18:16:14
+//            NSLog(@"时间  %@", date);
+            //2016-08-23 18:16:14
           NSArray *array = [date componentsSeparatedByString:@" "];
           self.timeTextField.text = array[0];
             break;

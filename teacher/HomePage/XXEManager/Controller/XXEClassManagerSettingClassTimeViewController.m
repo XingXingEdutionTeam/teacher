@@ -122,47 +122,47 @@
     }
     
    
-    NSArray *startArray1 = [_startMonthTextField1.text componentsSeparatedByString:@"-"];
-    NSString *startMonthStr1 = startArray1[0];
-    NSString *startDayStr1 = startArray1[1];
+//    NSArray *startArray1 = [_startMonthTextField1.text componentsSeparatedByString:@"-"];
+//    NSString *startMonthStr1 = startArray1[0];
+//    NSString *startDayStr1 = startArray1[1];
+//    
+//    NSArray *endArray1 = [_endMonthTextField1.text componentsSeparatedByString:@"-"];
+//    NSString *endMonthStr1 = endArray1[0];
+//    NSString *endDayStr1 = endArray1[1];
+//    
+//    NSArray *startArray2 = [_startMonthTextField2.text componentsSeparatedByString:@"-"];
+//    NSString *startMonthStr2 = startArray2[0];
+//    NSString *startDayStr2 = startArray2[1];
+//    
+//    NSArray *endArray2 = [_endMonthTextField2.text componentsSeparatedByString:@"-"];
+//    NSString *endMonthStr2 = endArray2[0];
+//    NSString *endDayStr2 = endArray2[1];
     
-    NSArray *endArray1 = [_endMonthTextField1.text componentsSeparatedByString:@"-"];
-    NSString *endMonthStr1 = endArray1[0];
-    NSString *endDayStr1 = endArray1[1];
+//    flagStr = @"1";
     
-    NSArray *startArray2 = [_startMonthTextField2.text componentsSeparatedByString:@"-"];
-    NSString *startMonthStr2 = startArray2[0];
-    NSString *startDayStr2 = startArray2[1];
+//    if ([startMonthStr1 integerValue] > [endMonthStr1 integerValue]) {
+//        flagStr = @"0";
+//        [self showHudWithString:@"结束时间不能小于开始时间" forSecond:1.5];
+//    }else if ([startMonthStr1 integerValue] == [endMonthStr1 integerValue]){
+//        if ([startDayStr1 integerValue] >= [endDayStr1 integerValue]) {
+//            flagStr = @"0";
+//            [self showHudWithString:@"结束时间不能小于开始时间" forSecond:1.5];
+//        }
+//    
+//    }else if ([startMonthStr2 integerValue] > [endMonthStr2 integerValue]) {
+//        flagStr = @"0";
+//        [self showHudWithString:@"结束时间不能小于开始时间" forSecond:1.5];
+//    }else if ([startMonthStr2 integerValue] == [endMonthStr2 integerValue]){
+//        if ([startDayStr2 integerValue] >= [endDayStr2 integerValue]) {
+//            flagStr = @"0";
+//            [self showHudWithString:@"结束时间不能小于开始时间" forSecond:1.5];
+//        }
+//        
+//    }
     
-    NSArray *endArray2 = [_endMonthTextField2.text componentsSeparatedByString:@"-"];
-    NSString *endMonthStr2 = endArray2[0];
-    NSString *endDayStr2 = endArray2[1];
-    
-    flagStr = @"1";
-    
-    if ([startMonthStr1 integerValue] > [endMonthStr1 integerValue]) {
-        flagStr = @"0";
-        [self showHudWithString:@"结束时间不能小于开始时间" forSecond:1.5];
-    }else if ([startMonthStr1 integerValue] == [endMonthStr1 integerValue]){
-        if ([startDayStr1 integerValue] >= [endDayStr1 integerValue]) {
-            flagStr = @"0";
-            [self showHudWithString:@"结束时间不能小于开始时间" forSecond:1.5];
-        }
-    
-    }else if ([startMonthStr2 integerValue] > [endMonthStr2 integerValue]) {
-        flagStr = @"0";
-        [self showHudWithString:@"结束时间不能小于开始时间" forSecond:1.5];
-    }else if ([startMonthStr2 integerValue] == [endMonthStr2 integerValue]){
-        if ([startDayStr2 integerValue] >= [endDayStr2 integerValue]) {
-            flagStr = @"0";
-            [self showHudWithString:@"结束时间不能小于开始时间" forSecond:1.5];
-        }
-        
-    }
-    
-    if ([flagStr isEqualToString:@"1"]) {
+//    if ([flagStr isEqualToString:@"1"]) {
         [self releaseClassTimeInfo];
-    }
+//    }
 
 }
 
@@ -244,8 +244,10 @@
         
         if ([codeStr isEqualToString:@"1"]) {
             
-            [self showHudWithString:@"发布成功!" forSecond:1.5];
+            [self showHudWithString:@"设置时间成功!" forSecond:1.5];
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1*NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                
+                self.returnStrBlock(@"设置时间成功");
                 [self.navigationController popViewControllerAnimated:YES];
             });
             
@@ -257,6 +259,11 @@
         
         [self showHudWithString:@"发布失败!" forSecond:1.5];
     }];
+}
+
+
+- (void)returnStr:(ReturnStrBlock)block{
+    self.returnStrBlock = block;
 }
 
 

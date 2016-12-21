@@ -16,4 +16,7 @@
 /** 老师Id */
 @property (nonatomic, copy)NSString *otherTeacherId;
 
+/** 身份 */
+@property (nonatomic, copy)NSString *userIdentifier;
+
 @end

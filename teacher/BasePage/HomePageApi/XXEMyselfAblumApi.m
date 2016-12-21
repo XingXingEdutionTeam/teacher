@@ -14,9 +14,10 @@
     NSString *_teacher_id;
     NSString *_albumXid;
     NSString *_albumUserId;
+    NSString *_position;
 }
 
-- (id)initWithMyselfAblumSchoolId:(NSString *)schollId ClassId:(NSString *)classId TeacherId:(NSString *)teacherId AlbumXid:(NSString *)albumXid AlbumUserId:(NSString *)albumUserId
+- (id)initWithMyselfAblumSchoolId:(NSString *)schollId ClassId:(NSString *)classId TeacherId:(NSString *)teacherId AlbumXid:(NSString *)albumXid AlbumUserId:(NSString *)albumUserId position:(NSString *)position;
 {
     self = [super init];
     if (self) {
@@ -25,6 +26,7 @@
         _teacher_id = teacherId;
         _albumXid = albumXid;
         _albumUserId = albumUserId;
+        _position = position;
     }
     return self;
 }
@@ -48,7 +50,8 @@
              @"backtype":BACKTYPE,
              @"user_id":_albumUserId,
              @"user_type":USER_TYPE,
-             @"xid":_albumXid
+             @"xid":_albumXid,
+             @"position":_position
              };
 }
 

@@ -77,7 +77,7 @@ static NSString * OTherCELL = @"OTHERCELL";
 //    NSLog(@"老师ID%@ 学校%@ 班级%@",self.otherTeacherId,self.otherSchoolId,self.otherClassId);
     
     //真实环境
-        XXEMyselfAblumApi *myselfAblum = [[XXEMyselfAblumApi alloc]initWithMyselfAblumSchoolId:self.otherSchoolId ClassId:self.otherClassId TeacherId:self.otherTeacherId AlbumXid:strngXid AlbumUserId:albumUserId];
+        XXEMyselfAblumApi *myselfAblum = [[XXEMyselfAblumApi alloc]initWithMyselfAblumSchoolId:self.otherSchoolId ClassId:self.otherClassId TeacherId:self.otherTeacherId AlbumXid:strngXid AlbumUserId:albumUserId position:_userIdentifier];
     [myselfAblum startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         
 //        NSLog(@" hhhh === %@", request.responseJSONObject);
@@ -130,6 +130,7 @@ static NSString * OTherCELL = @"OTHERCELL";
     contentVC.contentModel = self.datasource[indexPath.row];
     contentVC.albumTeacherXID  = self.otherTeacherId;
     contentVC.fromFlagStr = @"fromOtherAlbum";
+    contentVC.userIdentifier = _userIdentifier;
     NSLog(@"%@",contentVC.contentModel);
     [self.navigationController pushViewController:contentVC animated:YES];
 }

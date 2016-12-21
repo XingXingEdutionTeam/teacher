@@ -24,16 +24,18 @@
  [head_img_type] => 0
  [teach_course] => 英语
  [condit] => 0		//0:待审核 1:审核通过
+ user_id
  )
  */
 
-@property (nonatomic, copy) NSString *examine_id;
-@property (nonatomic, copy) NSString *date_tm;
-@property (nonatomic, copy) NSString *head_img;
-@property (nonatomic, copy) NSString *head_img_type;
-@property (nonatomic, copy) NSString *teach_course;
-@property (nonatomic, copy) NSString *condit;
-@property (nonatomic, copy) NSString *tname;
+@property (nonatomic, copy) NSString<Optional> *examine_id;
+@property (nonatomic, copy) NSString<Optional> *date_tm;
+@property (nonatomic, copy) NSString<Optional> *head_img;
+@property (nonatomic, copy) NSString<Optional> *head_img_type;
+@property (nonatomic, copy) NSString<Optional> *teach_course;
+@property (nonatomic, copy) NSString<Optional> *condit;
+@property (nonatomic, copy) NSString<Optional> *tname;
+@property (nonatomic, copy) NSString<Optional> *user_id;
 
 + (NSArray*)parseResondsData:(id)respondObject;
 
