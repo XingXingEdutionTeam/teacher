@@ -531,11 +531,12 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
     NSLog(@"蛇和人的ID %@",self.theEndReviewerId);
     NSLog(@"证件%@",self.fileHeadImageArray);
     
+//    if ([self.theEndReviewerId isEqualToString:@""]) {
+//        [self showString:@"请选择审核人" forSecond:1.f];
+//        
+//    }else
     
-    if ([self.theEndReviewerId isEqualToString:@""]) {
-        [self showString:@"请选择审核人" forSecond:1.f];
-        
-    }else if ([self.schoolAddrss isEqualToString:@""] ){
+    if ([self.schoolAddrss isEqualToString:@""] ){
         [self showString:@"请填写学校详细地址" forSecond:1.f];
         
     }else if ([self.schoolTel isEqualToString:@""]){
