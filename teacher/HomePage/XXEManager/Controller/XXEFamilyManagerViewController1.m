@@ -81,7 +81,7 @@
     
     [familyManagerApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         classModelArray = [[NSMutableArray alloc] init];
-//                NSLog(@"111   %@", request.responseJSONObject);
+//        NSLog(@"111   %@", request.responseJSONObject);
         
         NSString *codeStr = [NSString stringWithFormat:@"%@", request.responseJSONObject[@"code"]];
         
