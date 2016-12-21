@@ -13,6 +13,11 @@
 
 static NSString * OTherCELL = @"OTHERCELL";
 @interface XXEOtherTeacherAlbumViewController ()<UITableViewDelegate,UITableViewDataSource,MKMapViewDelegate>
+{
+
+    UIImageView *placeholderImageView;
+}
+
 /** 单元格 */
 @property (nonatomic, strong)UITableView *otherTeacherTableView;
 /** 数据源 */
@@ -77,12 +82,15 @@ static NSString * OTherCELL = @"OTHERCELL";
 //    NSLog(@"老师ID%@ 学校%@ 班级%@",self.otherTeacherId,self.otherSchoolId,self.otherClassId);
     
     //真实环境
-        XXEMyselfAblumApi *myselfAblum = [[XXEMyselfAblumApi alloc]initWithMyselfAblumSchoolId:self.otherSchoolId ClassId:self.otherClassId TeacherId:self.otherTeacherId AlbumXid:strngXid AlbumUserId:albumUserId position:_userIdentifier];
+        XXEMyselfAblumApi *myselfAblum = [[XXEMyselfAblumApi alloc]initWithMyselfAblumSchoolId:self.otherSchoolId ClassId:self.otherClassId TeacherId:self.otherTeacherId AlbumXid:strngXid AlbumUserId:albumUserId position:@""];
     [myselfAblum startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         
 //        NSLog(@" hhhh === %@", request.responseJSONObject);
         
         if ([request.responseJSONObject[@"code"] integerValue] == 1) {
+            if ([self.datasource count] != 0) {
+                [self.datasource removeAllObjects];
+            }
             
             NSArray *picArray = [NSArray arrayWithArray:request.responseJSONObject[@"data"]];
             if (picArray.count != 0) {
@@ -94,13 +102,50 @@ static NSString * OTherCELL = @"OTHERCELL";
             
         }
 
-        [self.otherTeacherTableView reloadData];
-        
+//        [self.otherTeacherTableView reloadData];
+        [self customContent];
     } failure:^(__kindof YTKBaseRequest *request) {
-        
+        [self showString:@"获取数据失败!" forSecond:1.5];
     }];
 }
 
+// 有数据 和 无数据 进行判断
+- (void)customContent{
+    // 如果 有占位图 先 移除
+    [self removePlaceholderImageView];
+    
+    if (_datasource.count == 0) {
+        _otherTeacherTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+        // 1、无数据的时候
+        [self createPlaceholderView];
+        
+    }else{
+        //2、有数据的时候
+    }
+    
+    [_otherTeacherTableView reloadData];
+    
+}
+
+
+//没有 数据 时,创建 占位图
+- (void)createPlaceholderView{
+    // 1、无数据的时候
+    UIImage *myImage = [UIImage imageNamed:@"all_placeholder"];
+    CGFloat myImageWidth = myImage.size.width;
+    CGFloat myImageHeight = myImage.size.height;
+    
+    placeholderImageView = [[UIImageView alloc] initWithFrame:CGRectMake(kWidth / 2 - myImageWidth / 2, (kHeight - 64 - 49) / 2 - myImageHeight / 2, myImageWidth, myImageHeight)];
+    placeholderImageView.image = myImage;
+    [self.view addSubview:placeholderImageView];
+}
+
+//去除 占位图
+- (void)removePlaceholderImageView{
+    if (placeholderImageView != nil) {
+        [placeholderImageView removeFromSuperview];
+    }
+}
 
 #pragma mark - 设置单元格的代理方法
 
@@ -142,14 +187,6 @@ static NSString * OTherCELL = @"OTHERCELL";
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

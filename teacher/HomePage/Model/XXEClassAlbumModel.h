@@ -15,4 +15,9 @@
 @property (nonatomic, copy)NSString <Optional>*tname;
 /** 图片 */
 @property (nonatomic, copy)NSArray *pic_arr;
+
+//该相册主人的身份
+@property (nonatomic, copy)NSString <Optional>*otherTeacherPosition;
+
+
 @end

@@ -574,7 +574,7 @@
     }
     
     NSLog(@"---跳转到学校的详情页----");
-//    if ([XXEUserInfo user].login) {
+    if ([XXEUserInfo user].login) {
         //logo
         XXEHomeLogoRootViewController *homeLogoRootVC = [[XXEHomeLogoRootViewController alloc] init];
         
@@ -584,9 +584,9 @@
         homeLogoRootVC.school_type = _schoolType;
     
         [self.navigationController pushViewController:homeLogoRootVC animated:NO];
-//    }else{
-//        [self showString:@"请用账号登录后查看" forSecond:1.5];
-//    }
+    }else{
+        [self showString:@"请用账号登录后查看" forSecond:1.5];
+    }
 }
 
 - (void)homePageRightButtonClick

@@ -36,7 +36,7 @@
         
         //右边 三条分割线
         //发布人 title
-        _titleLabel1 = [[UILabel alloc] initWithFrame:CGRectMake(95 * kScreenRatioWidth, 10, 60 * kScreenRatioWidth, 20 )];
+        _titleLabel1 = [[UILabel alloc] initWithFrame:CGRectMake(100 * kScreenRatioWidth, 10, 60 * kScreenRatioWidth, 20 )];
         _titleLabel1.text = @"发布人:";
         
         [self.contentView addSubview:_titleLabel1];
@@ -53,14 +53,14 @@
         [self.contentView addSubview:_courseLabel];
         
         //作业主题 title
-        _titleLabel3 = [[UILabel alloc] initWithFrame:CGRectMake(95 * kScreenRatioWidth, _titleLabel1.frame.origin.y + _titleLabel1.size.height + 5, 70 * kScreenRatioWidth, 20)];
+        _titleLabel3 = [[UILabel alloc] initWithFrame:CGRectMake(100 * kScreenRatioWidth, _titleLabel1.frame.origin.y + _titleLabel1.size.height + 5, 70 * kScreenRatioWidth, 20)];
         _titleLabel3.text = @"作业主题:";
         [self.contentView addSubview:_titleLabel3];
         //作业主题 name
         _subjectLabel = [[UILabel alloc] initWithFrame:CGRectMake(_titleLabel3.frame.origin.x + _titleLabel3.width + 5, _titleLabel3.frame.origin.y, 200 * kScreenRatioWidth, 20)];
         [self.contentView addSubview:_subjectLabel];
         
-        _timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(95 * kScreenRatioWidth, _titleLabel3.frame.origin.y + _titleLabel3.size.height + 5, KScreenWidth - 100, 20)];
+        _timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(100 * kScreenRatioWidth, _titleLabel3.frame.origin.y + _titleLabel3.size.height + 5, KScreenWidth - 100, 20)];
         [self.contentView addSubview:_timeLabel];
         
         

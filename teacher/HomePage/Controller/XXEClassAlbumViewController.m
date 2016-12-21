@@ -16,10 +16,11 @@
 @interface XXEClassAlbumViewController ()<UITableViewDelegate,UITableViewDataSource>
 {
 
+    //数据model
+    NSMutableArray *modelArray;
+    
     NSString *strngXid;
     NSString *albumUserId;
-
-
 }
 @property (nonatomic, strong)UITableView *classAlbumTableView;
 /** 头不文字显示数组 */
@@ -34,6 +35,15 @@
 static NSString *const IdentifierCell = @"classAlbunCell";
 
 @implementation XXEClassAlbumViewController
+
+- (NSMutableArray *)modelArray{
+
+    if (!modelArray) {
+        modelArray = [NSMutableArray array];
+    }
+    return modelArray;
+}
+
 
 -(NSMutableArray *)headDatasource
 {
@@ -109,7 +119,7 @@ static NSString *const IdentifierCell = @"classAlbunCell";
     [self.headDatasource removeAllObjects];
     XXEClassAlbumApi *classApi = [[XXEClassAlbumApi alloc]initWithClassAlbumSchoolID:self.schoolID classID:self.classID UserXId:strngXid UserID:albumUserId position:_userIdentifier];
     [classApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
-//        NSLog(@"bbbb 相册 ****** %@",request.responseJSONObject);
+        NSLog(@"bbbb 相册 ****** %@",request.responseJSONObject);
         
         NSString *code = [request.responseJSONObject objectForKey:@"code"];
         if ([code intValue]==1) {
@@ -122,6 +132,14 @@ static NSString *const IdentifierCell = @"classAlbunCell";
             }else{
                 if (self.imageViewDatasource.count != 0) {
                     [self.imageViewDatasource removeAllObjects];
+                }
+                
+                if (self.teacherDatasource.count != 0) {
+                    [self.teacherDatasource removeAllObjects];
+                }
+                
+                if (modelArray.count != 0) {
+                    [modelArray removeAllObjects];
                 }
                 
                 NSArray *data = [request.responseJSONObject objectForKey:@"data"];
@@ -141,6 +159,7 @@ static NSString *const IdentifierCell = @"classAlbunCell";
                     [self.headDatasource addObject:stringName];
                     [self.imageViewDatasource addObject:model.pic_arr];
                     [self.teacherDatasource addObject:model.teacher_id];
+                    [modelArray addObject:model];
                 }
 //                NSLog(@"数组%@",self.imageViewDatasource);
             }
@@ -227,11 +246,13 @@ static NSString *const IdentifierCell = @"classAlbunCell";
                 
             }
             else{
+                XXEClassAlbumModel *model = modelArray[indexPath.row];
+            
                 XXEOtherTeacherAlbumViewController *otherVC = [[XXEOtherTeacherAlbumViewController alloc]init];
                 otherVC.otherClassId=self.classID;
                 otherVC.otherSchoolId=self.schoolID;
                 otherVC.otherTeacherId = self.teacherDatasource[indexPath.section];
-                otherVC.userIdentifier = _userIdentifier;
+//                otherVC.userIdentifier = model.otherTeacherPosition;
                 //        NSLog(@"%@ %@ %@",otherVC.otherSchoolId,otherVC.otherClassId,otherVC.otherTeacherId);
                 [self.navigationController pushViewController:otherVC animated:YES];
             }

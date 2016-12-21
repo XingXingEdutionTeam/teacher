@@ -196,7 +196,7 @@
                   moduleName = "teacher"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/mac/Documents/teacher/teacher/HomePage/Controller/EditorIdentity/XXEIdentityAddHeadViewController.m"
-                  timestampString = "504012749.65933"
+                  timestampString = "504020236.954148"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "568"
@@ -211,7 +211,7 @@
                   moduleName = "teacher"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/mac/Documents/teacher/teacher/HomePage/Controller/EditorIdentity/XXEIdentityAddHeadViewController.m"
-                  timestampString = "504012749.661853"
+                  timestampString = "504020236.956758"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "571"
@@ -314,6 +314,38 @@
             startingLineNumber = "203"
             endingLineNumber = "203"
             landmarkName = "-requestAddFriend"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "teacher/HomePage/Controller/XXEClassAlbumViewController.m"
+            timestampString = "504014620.381352"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "112"
+            endingLineNumber = "112"
+            landmarkName = "-loadClassAlbumMessage"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "teacher/HomePage/Controller/XXEClassAlbumViewController.m"
+            timestampString = "504014666.319928"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "229"
+            endingLineNumber = "229"
+            landmarkName = "-tableView:didSelectRowAtIndexPath:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

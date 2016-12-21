@@ -513,16 +513,18 @@
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     formatter.dateFormat = @"yyyy-MM-dd HH:mm:ss";
     //字符串 @"yyyy-MM-dd HH:mm:ss" -> 转化为 NSDate yyyy-MM-dd HH:mm:ss
-    NSDate *mondayDate = [formatter dateFromString:dayArray[page]];
-
-    for (int i = 0; i < 7; i++) {
-        NSTimeInterval  interval = 24 * 60 * 60 * i ;
-        NSDate *newDate = [[NSDate alloc] initWithTimeInterval:interval sinceDate:mondayDate];
-        //NSDate yyyy-MM-dd HH:mm:ss -> 转化为 字符串 @"yyyy-MM-dd HH:mm:ss"
-        NSString *str = [formatter stringFromDate:newDate];
-        NSRange range = NSMakeRange(5, 5);
-        NSString *newString = [str substringWithRange:range];
-        [dayArr addObject:newString];
+    if ([dayArray count] != 0) {
+        NSDate *mondayDate = [formatter dateFromString:dayArray[page]];
+        
+        for (int i = 0; i < 7; i++) {
+            NSTimeInterval  interval = 24 * 60 * 60 * i ;
+            NSDate *newDate = [[NSDate alloc] initWithTimeInterval:interval sinceDate:mondayDate];
+            //NSDate yyyy-MM-dd HH:mm:ss -> 转化为 字符串 @"yyyy-MM-dd HH:mm:ss"
+            NSString *str = [formatter stringFromDate:newDate];
+            NSRange range = NSMakeRange(5, 5);
+            NSString *newString = [str substringWithRange:range];
+            [dayArr addObject:newString];
+        }
     }
     
 //    NSLog(@"dayArr === %@", dayArr);
