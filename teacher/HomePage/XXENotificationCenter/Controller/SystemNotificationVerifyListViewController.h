@@ -9,5 +9,9 @@
 #import "XXEBaseViewController.h"
 
 @interface SystemNotificationVerifyListViewController : XXEBaseViewController
+@property (nonatomic, copy) NSString *schoolId;
 
+@property (nonatomic, copy) NSString *classId;
+
+@property (nonatomic, copy) NSString *position;
 @end

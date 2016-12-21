@@ -218,7 +218,7 @@
     XXESchoolNotificationModel * model = _schoolDataSourceArray[indexPath.row];
     cell.iconImageView.layer.cornerRadius =cell.iconImageView.bounds.size.width/2;
     cell.iconImageView.layer.masksToBounds =YES;
-    [cell.iconImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",kXXEPicURL,model.school_logo]] placeholderImage:[UIImage imageNamed:@""]];
+    [cell.iconImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",kXXEPicURL,model.school_logo]] placeholderImage:[UIImage imageNamed:@"school_logo"]];
     cell.titleLabel.text = model.school_name;
     cell.contentLabel.text = model.title;
     cell.timeLabel.text = [XXETool dateStringFromNumberTimer:model.date_tm];

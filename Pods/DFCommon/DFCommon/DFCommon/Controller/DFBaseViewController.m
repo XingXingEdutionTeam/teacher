@@ -107,8 +107,9 @@
 
 -(void) hudShowText:(NSString *)text second:(NSInteger)second
 {
+    UIWindow *window = [UIApplication sharedApplication].windows[1];
     
-    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view.window animated:YES];
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:window animated:YES];
     hud.mode = MBProgressHUDModeText;
     hud.animationType = MBProgressHUDAnimationFade;
     hud.removeFromSuperViewOnHide = YES;

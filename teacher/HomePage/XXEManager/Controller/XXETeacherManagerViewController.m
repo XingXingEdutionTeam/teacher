@@ -427,12 +427,12 @@
         XXETeacherManagerDeleteApi *teacherManagerDeleteApi = [[XXETeacherManagerDeleteApi alloc] initWithXid:parameterXid user_id:parameterUser_Id school_id:_schoolId class_id:currentClassId examine_id:currentTeacherId];
     
     
-    NSLog(@"%@ ==== %@ ===== %@", _schoolId, currentClassId, currentTeacherId);
+//    NSLog(@"%@ ==== %@ ===== %@", _schoolId, currentClassId, currentTeacherId);
     
     
         [teacherManagerDeleteApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
     
-            NSLog(@"2222---   %@", request.responseJSONObject);
+//            NSLog(@"2222---   %@", request.responseJSONObject);
     
             NSString *codeStr = [NSString stringWithFormat:@"%@", request.responseJSONObject[@"code"]];
     

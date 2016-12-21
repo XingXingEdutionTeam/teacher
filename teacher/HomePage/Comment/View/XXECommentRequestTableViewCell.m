@@ -16,6 +16,7 @@
 @implementation XXECommentRequestTableViewCell
 
 - (void)awakeFromNib {
+    
     // Initialization code
 }
 

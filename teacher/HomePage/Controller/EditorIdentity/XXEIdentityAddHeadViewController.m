@@ -178,7 +178,7 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
     _titleArr = @[@"学校名称:",@"学校类型:",@"学校地址:",@"详细地址:",@"联系方式:",@"",@"审核人员:",@"邀请码"];
     
     _titleTextArr = @[@"请输入或搜索学校名称",@"请选择你学校类型",@"学校地址",@"请输入详细地址",@"联系方式",@"",@"请选择审核人",@"可不填"];
-    NSArray *arr = @[@"幼儿园",@"小学",@"中学",@"培训机构",@"高中"];
+    NSArray *arr = @[@"幼儿园",@"小学",@"初中",@"培训机构",@"高中"];
     _schoolTypeArr = [arr copy];
     self.teacherTableView.delegate = self;
     self.teacherTableView.dataSource = self;
@@ -567,6 +567,8 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
     
     [searchVC returnModel:^(XXETeacherModel *teacherModel) {
         //
+        
+        NSLog(@"jjj  %@", teacherModel);
                 if (teacherModel != nil) {
                     self.isHave = YES;
                 }else {
@@ -600,9 +602,11 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
         typeName = @"小学";
         
     } else if ([model.type isEqualToString:@"3"]){
-        typeName = @"中学";
+        typeName = @"初中";
     } else if ([model.type isEqualToString:@"4"]){
         typeName = @"培训机构";
+    }else if ([model.type isEqualToString:@"5"]){
+        typeName = @"高中";
     }
     self.teacherCell = [self cellAtIndexRow:1 andAtSection:0 Message:typeName];
     NSString *addressSchool = [NSString stringWithFormat:@"%@-%@-%@",model.province,model.city,model.district];
@@ -630,6 +634,8 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
             [self.reviewerNameArray addObject:model.reviewerName];
         }
         self.teacherCell = [self cellAtIndexRow:6 andAtSection:0 Message:self.reviewerNameArray[0]];
+        NSLog(@"self.reviewerDatasource -- %@", self.reviewerDatasource);
+        
         XXEReviewerModel *model = self.reviewerDatasource[0];
         self.theEndReviewerId = model.reviewerId;
         

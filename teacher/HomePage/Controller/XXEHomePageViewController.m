@@ -1158,7 +1158,7 @@
         {
             NSLog(@"----聊天----");
             if ([XXEUserInfo user].login) {
-                
+            
             XXRootChatETabBarController *rootChatVC = [[XXRootChatETabBarController alloc]init];
             rootChatVC.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:rootChatVC animated:NO];

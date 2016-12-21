@@ -18,10 +18,10 @@
 
 - (void)identityListMessage:(XXEIdentityListModel *)model
 {
+    
+    
     NSString *schoolPic = [NSString stringWithFormat:@"%@%@",kXXEPicURL,model.school_logo];
-//<<<<<<< HEAD
-//    [self.identitySchoolImageView sd_setImageWithURL:[NSURL URLWithString:schoolPic] placeholderImage:[UIImage imageNamed:@"class-icon"]];
-//=======
+
     [self.identitySchoolImageView sd_setImageWithURL:[NSURL URLWithString:schoolPic] placeholderImage:[UIImage imageNamed:@"school_logo"]];
     
     self.identitySchoolNameLabel.text = model.school_name;

@@ -133,7 +133,7 @@
 //    a = 0;
     condit = @"0";
     
-//    position = [DEFAULTS objectForKey:@"POSITION"];
+    position = [DEFAULTS objectForKey:@"POSITION"];
     
     self.navigationController.navigationBar.backgroundColor = XXEColorFromRGB(0, 170, 42);
     self.navigationController.navigationBarHidden = NO;

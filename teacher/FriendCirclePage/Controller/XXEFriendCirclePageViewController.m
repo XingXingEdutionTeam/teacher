@@ -227,7 +227,7 @@
             
             if (weakSelf.page == maxPage) {
                 weakSelf.isMaxLoading = YES;
-                [weakSelf hudShowText:@"已经是最后一条了" second:2.f];
+//                [weakSelf hudShowText:@"已经是最后一条了" second:2.f];
                 [weakSelf endRefresh];
                 [weakSelf endLoadMore];
             }
