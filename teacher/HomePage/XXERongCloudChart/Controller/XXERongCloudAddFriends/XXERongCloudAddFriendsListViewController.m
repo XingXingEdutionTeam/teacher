@@ -79,7 +79,7 @@
 
 
 - (void)createTableView{
-    _myTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, _LookNearUserBtn.frame.origin.y + _LookNearUserBtn.height, KScreenWidth, KScreenHeight - 49 - 64 -  _LookNearUserBtn.frame.origin.y + _LookNearUserBtn.height) style:UITableViewStyleGrouped];
+    _myTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, _LookNearUserBtn.frame.origin.y + 20 + _LookNearUserBtn.height, KScreenWidth, KScreenHeight - 49 - 64 - 20 -  _LookNearUserBtn.frame.origin.y - _LookNearUserBtn.height) style:UITableViewStyleGrouped];
     
     _myTableView.dataSource = self;
     _myTableView.delegate = self;

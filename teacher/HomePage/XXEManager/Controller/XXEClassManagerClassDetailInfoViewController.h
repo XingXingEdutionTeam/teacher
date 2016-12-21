@@ -40,10 +40,6 @@
 
 
 
-- (IBAction)supportButton:(UIButton *)sender;
-
-- (IBAction)refuseButton:(UIButton *)sender;
-
 
 
 @end

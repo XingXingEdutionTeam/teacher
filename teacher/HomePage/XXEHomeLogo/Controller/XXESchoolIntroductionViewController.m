@@ -8,7 +8,7 @@
 //
 
 #import "XXESchoolIntroductionViewController.h"
-#import "XXERedFlowerDetialTableViewCell.h"
+#import "XXERedFlowerDetialInfoTableViewCell.h"
 #import "XXESchoolNameModifyViewController.h"
 #import "XXESchoolAddressModifyViewController.h"
 #import "XXESchoolRegisterTeacherInfoViewController.h"
@@ -48,7 +48,7 @@
 }
 
 - (void)createTableView{
-    _myTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, KScreenWidth, KScreenHeight - 120 - 64) style:UITableViewStyleGrouped];
+    _myTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, KScreenWidth, KScreenHeight - 120 - 64 - 20) style:UITableViewStyleGrouped];
     
     _myTableView.dataSource = self;
     _myTableView.delegate = self;
@@ -71,13 +71,20 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
+    //XXERedFlowerDetialInfoTableViewCell
     static NSString *identifier = @"cell";
-    XXERedFlowerDetialTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+    XXERedFlowerDetialInfoTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
     
     if (cell == nil) {
-        cell = [[[NSBundle mainBundle] loadNibNamed:@"XXERedFlowerDetialTableViewCell" owner:self options:nil]lastObject];
+        cell = [[XXERedFlowerDetialInfoTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
     }
-    
+
+//    static NSString *identifier = @"cell";
+//    XXERedFlowerDetialTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+//    
+//    if (cell == nil) {
+//        cell = [[[NSBundle mainBundle] loadNibNamed:@"XXERedFlowerDetialTableViewCell" owner:self options:nil]lastObject];
+//    }
     if ([self.position isEqualToString:@"3"] || [self.position isEqualToString:@"4"]) {
         if (indexPath.row != 2) {
            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator; 
@@ -92,12 +99,33 @@
     cell.iconImageView.image = [UIImage imageNamed:_pictureArray[indexPath.row]];
     cell.titleLabel.text = _titleArray[indexPath.row];
     cell.contentLabel.text = _contentArray[indexPath.row];
+    cell.contentLabel.numberOfLines = 0;
+    
+    if (indexPath.row == 1) {
+        
+        //学校 地址  换行
+        CGFloat height = [StringHeight contentSizeOfString:_contentArray[indexPath.row] maxWidth:KScreenWidth - 200 * kScreenRatioWidth fontSize:14];
+        
+        CGSize size = cell.contentLabel.size;
+        size.height = height;
+        cell.contentLabel.size = size;
+    }
+    
         return cell;
 }
 
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 44;
+    
+    if (indexPath.row == 1) {
+        CGFloat height = [StringHeight contentSizeOfString:_contentArray[indexPath.row] maxWidth:KScreenWidth - 200 * kScreenRatioWidth fontSize:14];
+        
+        return 10 + height;
+    }else{
+        return 44;
+
+    }
+    
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
@@ -114,6 +142,7 @@
             schoolNameModifyVC.schoolNameStr = _contentArray[0];
             schoolNameModifyVC.schoolId = _schoolId;
             
+            schoolNameModifyVC.position = _position;
             [schoolNameModifyVC returnStr:^(NSString *str) {
                 //
                 _contentArray[0] = str;
@@ -128,6 +157,7 @@
             XXESchoolAddressModifyViewController *schoolAddressModifyVC = [[XXESchoolAddressModifyViewController alloc] init];
             schoolAddressModifyVC.schoolAddressStr = _contentArray[1];
             schoolAddressModifyVC.schoolId = _schoolId;
+            schoolAddressModifyVC.position = _position;
             [schoolAddressModifyVC returnStr:^(NSString *str) {
                 //
                 _contentArray[1] = str;
@@ -158,6 +188,7 @@
         if (indexPath.row == 4){
             XXESchoolPhoneNumModifyViewController *schoolPhoneNumModifyVC = [[XXESchoolPhoneNumModifyViewController alloc] init];
             schoolPhoneNumModifyVC.schoolId = _schoolId;
+            schoolPhoneNumModifyVC.position = _position;
             schoolPhoneNumModifyVC.flagStr = @"fromSchoolInfo";
             [self.navigationController pushViewController:schoolPhoneNumModifyVC animated:YES];
             
@@ -166,6 +197,7 @@
             XXESchoolQQModifyViewController *schoolQQModifyVC = [[XXESchoolQQModifyViewController alloc] init];
             schoolQQModifyVC.qqStr = _contentArray[5];
             schoolQQModifyVC.schoolId = _schoolId;
+            schoolQQModifyVC.position = _position;
             [schoolQQModifyVC returnStr:^(NSString *str) {
                 //
                 _contentArray[5] = str;
@@ -179,6 +211,7 @@
             
             schoolEmailModiyfVC.emailStr = _contentArray[6];
             schoolEmailModiyfVC.schoolId = _schoolId;
+            schoolEmailModiyfVC.position = _position;
             schoolEmailModiyfVC.flagStr = @"formSchoolInfo";
             [schoolEmailModiyfVC returnStr:^(NSString *str) {
                 //
@@ -211,8 +244,10 @@
      if (indexPath.row == 8) {
         XXESchoolFeatureModifyViewController *schoolFeatureModifyVC =[[XXESchoolFeatureModifyViewController alloc]init];
         schoolFeatureModifyVC.schoolId = _schoolId;
+        
         schoolFeatureModifyVC.schoolfeatureStr = _contentArray[8];
         schoolFeatureModifyVC.flagStr = @"formSchoolInfo";
+         schoolFeatureModifyVC.position = _position;
         [schoolFeatureModifyVC returnStr:^(NSString *str) {
             //
             _contentArray[8] = str;

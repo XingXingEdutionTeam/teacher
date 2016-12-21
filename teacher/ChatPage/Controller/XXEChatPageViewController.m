@@ -1006,7 +1006,6 @@
             XXEHomeLogoRootViewController *homeLogoRootVC = [[XXEHomeLogoRootViewController alloc] init];
             XXEXingClassRoomSchoolListModel *model = schoolModelArray[indexPath.row];
             homeLogoRootVC.schoolId = model.school_id;
-            
             [self.navigationController pushViewController:homeLogoRootVC animated:NO];
         }
     }else{

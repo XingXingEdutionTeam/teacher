@@ -88,7 +88,7 @@
     [teacherManagerApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         classModelArray = [[NSMutableArray alloc] init];
         _flagArray = [[NSMutableArray alloc] init];
-//        NSLog(@"111   %@", request.responseJSONObject);
+//        NSLog(@"老师 或 管理员===   %@", request.responseJSONObject);
         
         NSString *codeStr = [NSString stringWithFormat:@"%@", request.responseJSONObject[@"code"]];
         
@@ -470,13 +470,16 @@
 
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+
+    XXEXingClassRoomTeacherDetailInfoViewController *xingClassRoomTeacherDetailInfoVC = [[XXEXingClassRoomTeacherDetailInfoViewController alloc] init];
+    XXETeacherManagerClassInfoModel *classModel = classModelArray[indexPath.section];
+    XXETeacherManagerPersonInfoModel *studentModel = classModel.teacher_list[indexPath.row];
+    xingClassRoomTeacherDetailInfoVC.teacher_id = studentModel.user_id;
+    [self.navigationController pushViewController:xingClassRoomTeacherDetailInfoVC animated:YES];
     
-//    XXETeacherManagerClassInfoModel *model = classModelArray[indexPath.section];
-//    
-//    
-//    
+  
 //    XXEXingClassRoomTeacherDetailInfoViewController *teacherVc = [[XXEXingClassRoomTeacherDetailInfoViewController alloc] init];
-//    XXETeacherManagerPersonInfoModel *teacherModel = model.teacher_list[indexPath.row];
+
 //    teacherVc.teacher_id = teacherModel.date_tm;
 //    [self.navigationController pushViewController:teacherVc animated:YES];
     

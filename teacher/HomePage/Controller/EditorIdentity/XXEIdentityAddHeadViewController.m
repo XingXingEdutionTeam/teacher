@@ -526,7 +526,7 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
         
         if ([[responseObject objectForKey:@"code"] intValue]==1) {
             
-            [self showString:@"你已添加成功成功" forSecond:3.f];
+            [self showString:@"你已提交成功" forSecond:3.f];
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1*NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 //
                 XXEAddIdentityViewController *addIdentityVC = self.navigationController.viewControllers[1];
@@ -537,11 +537,11 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
         } else if([[responseObject objectForKey:@"code"] intValue]==16){
             [self showString:@"你要添加的身份已存在" forSecond:2.f];
         }else{
-            [self showString:@"添加身份失败" forSecond:1.f];
+            [self showString:@"提交身份失败" forSecond:1.f];
         }
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        [self showString:@"添加学校失败" forSecond:1.f];
+        [self showString:@"获取数据失败" forSecond:1.f];
         NSLog(@"%@",error);
         
     }];

@@ -1,9 +1,13 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11542" systemVersion="16B2657" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="XXEClassManagerSettingClassTimeViewController">
@@ -30,7 +34,7 @@
                                 <constraint firstAttribute="height" constant="21" id="MGu-d0-5CZ"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="3SN-gq-a6G">
@@ -49,7 +53,7 @@
                                 <constraint firstAttribute="height" constant="20" id="PcA-ZJ-b0b"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="结束时间:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dCg-ah-IP1">
@@ -59,7 +63,7 @@
                                 <constraint firstAttribute="height" constant="20" id="mh3-zS-wHx"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="2Jg-gA-4F7">
@@ -72,7 +76,7 @@
                             <textInputTraits key="textInputTraits"/>
                         </textField>
                     </subviews>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstItem="2Jg-gA-4F7" firstAttribute="leading" secondItem="dCg-ah-IP1" secondAttribute="trailing" constant="15" id="5hc-KS-Wal"/>
                         <constraint firstAttribute="width" secondItem="LMA-ff-XuB" secondAttribute="height" multiplier="25:8" id="Dxt-4j-VRR"/>
@@ -100,7 +104,7 @@
                                 <constraint firstAttribute="height" constant="21" id="k1A-N8-Bnj"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="开始时间:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gwl-72-LQd">
@@ -110,7 +114,7 @@
                                 <constraint firstAttribute="width" constant="65" id="zL6-yI-pGX"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="结束时间:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fly-Hw-L07">
@@ -120,7 +124,7 @@
                                 <constraint firstAttribute="width" constant="65" id="tpP-tT-rDB"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="IiU-Hg-RbC">
@@ -142,7 +146,7 @@
                             <textInputTraits key="textInputTraits"/>
                         </textField>
                     </subviews>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstItem="fly-Hw-L07" firstAttribute="leading" secondItem="vDJ-w1-dOp" secondAttribute="leading" constant="10" id="2ek-aW-F4c"/>
                         <constraint firstItem="IiU-Hg-RbC" firstAttribute="leading" secondItem="Gwl-72-LQd" secondAttribute="trailing" constant="15" id="79e-nA-HcX"/>
@@ -168,14 +172,14 @@
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="18"/>
                     <state key="normal" title="确       定" backgroundImage="login_green">
-                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </state>
                     <connections>
                         <action selector="submitButton:" destination="-1" eventType="touchUpInside" id="cj8-Tb-s3m"/>
                     </connections>
                 </button>
             </subviews>
-            <color key="backgroundColor" red="0.89699835526315785" green="0.90843441611842102" blue="0.91329152960526316" alpha="1" colorSpace="calibratedRGB"/>
+            <color key="backgroundColor" red="0.89699835526315785" green="0.90843441611842102" blue="0.91329152960526316" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="3j5-A2-72i" firstAttribute="top" secondItem="vDJ-w1-dOp" secondAttribute="bottom" constant="28" id="2x0-yd-2MG"/>
                 <constraint firstItem="vDJ-w1-dOp" firstAttribute="top" secondItem="LMA-ff-XuB" secondAttribute="bottom" constant="10" id="6PV-6A-ouW"/>

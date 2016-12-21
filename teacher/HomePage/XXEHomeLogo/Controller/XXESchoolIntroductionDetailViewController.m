@@ -12,7 +12,7 @@
 #import "XXEIntroductionDetailApi.h"
 
 
-@interface XXESchoolIntroductionDetailViewController ()
+@interface XXESchoolIntroductionDetailViewController ()<UITextViewDelegate>
 {
     NSString *parameterXid;
     NSString *parameterUser_Id;
@@ -33,6 +33,8 @@
         parameterXid = XID;
         parameterUser_Id = USER_ID;
     }
+    
+    _introductionDetailTextView.delegate = self;
     
     if ([self.position isEqualToString:@"1"] || [self.position isEqualToString:@"2"]) {
         _submitButton.hidden = YES;
@@ -59,6 +61,20 @@
         [self submitSchoolFeatureInfo];
     }
 }
+
+- (void)textViewDidChange:(UITextView *)textView{
+    if (textView == _introductionDetailTextView) {
+        
+        if (_introductionDetailTextView.text.length <= 200) {
+            _numLabel.text=[NSString stringWithFormat:@"%lu/200",(unsigned long)textView.text.length];
+        }else{
+            [self showHudWithString:@"最多可输入200个字符"];
+            _introductionDetailTextView.text = [_introductionDetailTextView.text substringToIndex:200];
+        }
+//        _schoolfeatureStr = _featureTextView.text;
+    }
+}
+
 
 - (void)submitSchoolFeatureInfo{
     
@@ -89,6 +105,9 @@
     }];
     
 }
+
+
+
 
 - (void)returnStr:(ReturnStrBlock)block{
     self.returnStrBlock = block;

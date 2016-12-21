@@ -18,7 +18,6 @@
 @interface XXESchoolFeatureModifyViewController ()<UITextViewDelegate>
 {
     
-    NSString *position;
     
     NSString *parameterXid;
     NSString *parameterUser_Id;
@@ -30,7 +29,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    self.view.backgroundColor = XXEBackgroundColor;
     
     if ([XXEUserInfo user].login){
         parameterXid = [XXEUserInfo user].xid;
@@ -40,15 +39,15 @@
         parameterUser_Id = USER_ID;
     }
     
-    position = [DEFAULTS objectForKey:@"POSITION"];
+//    position = [DEFAULTS objectForKey:@"POSITION"];
     
     if ([_flagStr isEqualToString:@"formSchoolInfo"]) {
         //修改 学校 特点
         
-        if ([position isEqualToString:@"1"] || [position isEqualToString:@"2"]) {
+        if ([_position isEqualToString:@"1"] || [_position isEqualToString:@"2"]) {
             _submitButton.hidden = YES;
             _featureTextView.editable = NO;
-        }else if ([position isEqualToString:@"3"] || [position isEqualToString:@"4"]) {
+        }else if ([_position isEqualToString:@"3"] || [_position isEqualToString:@"4"]) {
             _submitButton.hidden = NO;
             _featureTextView.editable = YES;
             [_submitButton addTarget:self action:@selector(submitButtonClick) forControlEvents:UIControlEventTouchUpInside];
@@ -125,10 +124,10 @@
 //修改 学校 特点
 - (void)modifySchoolFeatureInfo{
 
-    XXEModifyCharacterApi *modifySchoolCharacterApi = [[XXEModifyCharacterApi alloc] initWithXid:parameterXid user_id:parameterUser_Id user_type:USER_TYPE school_id:_schoolId position:position charact:_featureTextView.text];
+    XXEModifyCharacterApi *modifySchoolCharacterApi = [[XXEModifyCharacterApi alloc] initWithXid:parameterXid user_id:parameterUser_Id user_type:USER_TYPE school_id:_schoolId position:_position charact:_featureTextView.text];
     
     [modifySchoolCharacterApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
-        //        NSLog(@"%@", request.responseJSONObject);
+//                NSLog(@"%@", request.responseJSONObject);
         NSString *codeStr = [NSString stringWithFormat:@"%@", request.responseJSONObject[@"code"]];
         
         if ([codeStr isEqualToString:@"1"]) {

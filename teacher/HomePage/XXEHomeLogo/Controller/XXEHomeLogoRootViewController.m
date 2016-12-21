@@ -142,6 +142,8 @@
     _schoolCourseVC = [[XXESchoolCourseViewController alloc] init];
     _headmasterSpeechVC = [[XXEHeadmasterSpeechViewController alloc] init];
     
+//    NSLog(@"xx   %@ ==== %@", _classId, _position);
+    
     self.schoolIntroductionVC.classId = _classId;
     self.schoolCourseVC.classId = _classId;
     self.headmasterSpeechVC.classId = _classId;

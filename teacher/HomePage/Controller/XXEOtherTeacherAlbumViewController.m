@@ -126,6 +126,8 @@ static NSString * OTherCELL = @"OTHERCELL";
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
 //    NSLog(@"===相册的详情=====");
+//    NSLog(@"%@", _userIdentifier);
+    
     XXEAlbumContentViewController *contentVC = [[XXEAlbumContentViewController alloc]init];
     contentVC.contentModel = self.datasource[indexPath.row];
     contentVC.albumTeacherXID  = self.otherTeacherId;

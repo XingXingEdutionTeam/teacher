@@ -69,11 +69,24 @@
         if ([codeStr isEqualToString:@"1"]) {
             
             NSString *schoolName = [DEFAULTS objectForKey:@"SCHOOL_NAME"];
-            NSString *className = [DEFAULTS objectForKey:@"CLASS_NAME"];
+//             = [DEFAULTS objectForKey:@"CLASS_NAME"];
             
             NSDictionary *dict = request.responseJSONObject[@"data"];
             //@"昵称:",@"姓名:",@"年龄:", @"关系:", @"生日:", @"学校:", @"班级:", @"个性签名:", @"个人描述:"
-            contentArray = [[NSMutableArray alloc] initWithObjects:dict[@"nickname"], dict[@"tname"],  dict[@"age"], dict[@"birthday"], schoolName, className, dict[@"personal_sign"], dict[@"pdescribe"], nil];
+            
+            NSString *ageStr = [NSString stringWithFormat:@"%@", dict[@"age"]];
+            
+            if ( [ageStr integerValue] == 0) {
+                ageStr = @"";
+            }
+            //dict[@"birthday"]
+            NSString *birthdayStr = [NSString stringWithFormat:@"%@", dict[@"birthday"]];
+            
+            if ( [birthdayStr integerValue] == 0) {
+                birthdayStr = @"";
+            }
+            
+            contentArray = [[NSMutableArray alloc] initWithObjects:dict[@"nickname"], dict[@"tname"], ageStr, birthdayStr, schoolName, _babyClassName, dict[@"personal_sign"], dict[@"pdescribe"], nil];
             headImageStr = dict[@"head_img"];
         }else{
             

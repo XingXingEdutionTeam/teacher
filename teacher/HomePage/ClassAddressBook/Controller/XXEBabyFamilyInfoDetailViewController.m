@@ -118,7 +118,7 @@
                 //@"昵称:",@"姓名:",@"电话号码:",@"邮箱:",@"权限设置"
                 contentArray = [[NSMutableArray alloc] initWithObjects:dict[@"nickname"], dict[@"tname"], dict[@"phone"], dict[@"email"],@"", nil];
             }else{
-                //@"昵称:",@"姓名:",@"电话号码:",@"邮箱:",@"权限设置"
+                //@"昵称:",@"姓名:",@"关系",@"电话号码:",@"邮箱:",@"权限设置"
                 contentArray = [[NSMutableArray alloc] initWithObjects:dict[@"nickname"], dict[@"tname"], dict[@"relation"], dict[@"phone"], dict[@"email"],@"", nil];
             }
             
@@ -168,6 +168,8 @@
             
         }
         
+        
+        [_myTableView reloadData];
     } failure:^(__kindof YTKBaseRequest *request) {
         
         [self showString:@"数据请求失败" forSecond:1.f];

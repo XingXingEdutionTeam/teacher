@@ -36,11 +36,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "teacher/HomePage/XXERongCloudChart/Controller/XXERootReplyListController.m"
-            timestampString = "502702730.790862"
+            timestampString = "504008096.508957"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "634"
-            endingLineNumber = "634"
+            startingLineNumber = "638"
+            endingLineNumber = "638"
             landmarkName = "@implementation XXERootReplyListController"
             landmarkType = "3">
          </BreakpointContent>
@@ -52,43 +52,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "teacher/HomePage/XXERongCloudChart/Controller/XXERootReplyListController.m"
-            timestampString = "502701328.418902"
+            timestampString = "504008096.508957"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "445"
-            endingLineNumber = "445"
-            landmarkName = "-requestAddFriend"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "teacher/HomePage/XXERongCloudChart/Controller/XXERootReplyListController.m"
-            timestampString = "502701352.867354"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "440"
-            endingLineNumber = "440"
-            landmarkName = "-requestAddFriend"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "teacher/HomePage/XXERongCloudChart/Controller/XXERootReplyListController.m"
-            timestampString = "502701492.778706"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "434"
-            endingLineNumber = "434"
+            startingLineNumber = "438"
+            endingLineNumber = "438"
             landmarkName = "-requestAddFriend"
             landmarkType = "7">
          </BreakpointContent>
@@ -228,7 +196,7 @@
                   moduleName = "teacher"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/mac/Documents/teacher/teacher/HomePage/Controller/EditorIdentity/XXEIdentityAddHeadViewController.m"
-                  timestampString = "503992258.33028"
+                  timestampString = "504012749.65933"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "568"
@@ -243,7 +211,7 @@
                   moduleName = "teacher"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/mac/Documents/teacher/teacher/HomePage/Controller/EditorIdentity/XXEIdentityAddHeadViewController.m"
-                  timestampString = "503992258.332912"
+                  timestampString = "504012749.661853"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "571"
@@ -298,6 +266,54 @@
             startingLineNumber = "412"
             endingLineNumber = "412"
             landmarkName = "-tableView:didSelectRowAtIndexPath:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "teacher/HomePage/XXERongCloudChart/Controller/XXERongCloudAddFriends/XXERongCloudSeeNearUsers/XXERongCloudSeeNearUserListViewController.m"
+            timestampString = "503997044.024958"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "270"
+            endingLineNumber = "270"
+            landmarkName = "-requestAddFriend:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "teacher/HomePage/XXERongCloudChart/Controller/XXERootReplyListController.m"
+            timestampString = "504008096.508957"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "441"
+            endingLineNumber = "441"
+            landmarkName = "-requestAddFriend"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "teacher/HomePage/XXERongCloudChart/Controller/PersonCenterViewController.m"
+            timestampString = "504008096.508957"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "203"
+            endingLineNumber = "203"
+            landmarkName = "-requestAddFriend"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
