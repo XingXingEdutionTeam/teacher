@@ -39,6 +39,8 @@
     NSArray *_titleArr;
     NSArray *_titleTextArr;
     NSMutableArray *_schoolTypeArr;
+    //审核人员
+    NSString *verfiyPerson;
 }
 
 @property (nonatomic, strong)FSImagePickerView *picker;
@@ -161,6 +163,13 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
     self.navigationItem.rightBarButtonItem= rightItem;
     
 }
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    verfiyPerson = @"平台审核";
+    [self.teacherTableView reloadData];
+}
+
 /** 这个方法都可以,改变当前控制器的电池条颜色 */
 -(UIStatusBarStyle)preferredStatusBarStyle
 {
@@ -170,6 +179,8 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    
+    verfiyPerson = @"平台审核";
     [self LnitializeTheParameter];
     [self commBoxInfo];
     
@@ -237,7 +248,13 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
     } else {
         XXETeacherTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:IdentifierCELL forIndexPath:indexPath];
         cell.teacherRegisLabel.text = [_titleArr objectAtIndex:indexPath.row];
-        cell.teacherRegisTextField.placeholder = [_titleTextArr objectAtIndex:indexPath.row];
+        
+        if (indexPath.row == 6) {
+            cell.teacherRegisTextField.text = verfiyPerson;
+        }else {
+            cell.teacherRegisTextField.placeholder = [_titleTextArr objectAtIndex:indexPath.row];
+        }
+        
         return cell;
     }
 }
@@ -290,8 +307,8 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
         }
         case 6:{
             
-                self.teacherCell = [self cellAtIndexRow:6 andAtSection:0 Message:@"平台审核"];
-            [self tureOrFalseCellClick:NO Tag:106];
+//                self.teacherCell = [self cellAtIndexRow:6 andAtSection:0 Message:@"平台审核"];
+//            [self tureOrFalseCellClick:NO Tag:106];
             break;
         }
         case 7:{
@@ -621,7 +638,7 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
 
 - (void)setupReviewerMessage:(NSString *)schoolID
 {
-    XXEReviewerApi *reviewerApi = [[XXEReviewerApi alloc]initReviwerNameSchoolId:schoolID PositionID:@"4"];
+    XXEReviewerApi *reviewerApi = [[XXEReviewerApi alloc]initReviwerNameSchoolId:schoolID PositionID:self.headPosition];
     [reviewerApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         NSLog(@"审核人信息:======%@",request.responseJSONObject);
         NSLog(@"%@",[request.responseJSONObject objectForKey:@"msg"]);
@@ -635,6 +652,8 @@ static NSString *IdentifierMessCELL = @"TeacherMessCell";
         }
         self.teacherCell = [self cellAtIndexRow:6 andAtSection:0 Message:self.reviewerNameArray[0]];
         NSLog(@"self.reviewerDatasource -- %@", self.reviewerDatasource);
+        
+        verfiyPerson = self.reviewerNameArray[0];
         
         XXEReviewerModel *model = self.reviewerDatasource[0];
         self.theEndReviewerId = model.reviewerId;
