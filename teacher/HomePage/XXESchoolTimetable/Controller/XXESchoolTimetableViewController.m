@@ -201,7 +201,7 @@
     XXESchoolTimetableTraditionApi *schoolTimetableTraditionApi = [[XXESchoolTimetableTraditionApi alloc] initWithXid:parameterXid user_id:parameterUser_Id week_date:timeString];
     [schoolTimetableTraditionApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         //
-//        NSLog(@"kk %@", request.responseJSONObject);
+//        NSLog(@"kk课程表==  %@", request.responseJSONObject);
         
         NSString *codeStr = request.responseJSONObject[@"code"];
         
@@ -356,7 +356,6 @@
 - (void)createRightButton{
 
     //切换模式(传统模式/时间轴)
-//    rightButton =[UIButton createButtonWithFrame:CGRectMake(KScreenWidth - 44, 34, 25, 25) backGruondImageName:@"schooltimetable_exchange_icon" Target:self Action:@selector(exchangeBtn:) Title:@""];
     rightButton = [UIButton buttonWithType:UIButtonTypeCustom];
     rightButton.frame = CGRectMake(KScreenWidth - 50, 20, 50, 44);
     [rightButton setImage:[UIImage imageNamed:@"change_icon"] forState:UIControlStateNormal];
@@ -528,6 +527,9 @@
     }
     
 //    NSLog(@"dayArr === %@", dayArr);
+    if ([dayArr count] == 0) {
+        return;
+    }
     
     NSArray *weekArr = [[NSArray alloc] initWithObjects:@"周一", @"周二", @"周三", @"周四", @"周五", @"周六", @"周日", nil];
     
@@ -857,6 +859,8 @@
         
         if (rightButton.selected == NO) {
             //传统 模式
+            NSLog(@"courseTraditionArray === %@", courseTraditionArray);
+            
             schoolTimetableCourseVC.courseDataArray = courseTraditionArray[buttonRow][buttonLine];
         }else if (rightButton.selected == YES){
             //时间轴 模式

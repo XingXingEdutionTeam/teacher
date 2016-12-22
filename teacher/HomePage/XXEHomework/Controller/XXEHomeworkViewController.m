@@ -248,7 +248,7 @@
 
 
 - (void)createTableView{
-    _myTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, KScreenWidth, KScreenHeight) style:UITableViewStylePlain];
+    _myTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, KScreenWidth, KScreenHeight) style:UITableViewStyleGrouped];
     
     _myTableView.dataSource = self;
     _myTableView.delegate = self;
@@ -304,17 +304,10 @@
     static NSString *identifier = @"cell";
     XXEHomeworkTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
     
-//    if (cell == nil) {
-//        cell = [[[NSBundle mainBundle] loadNibNamed:@"XXEHomeworkTableViewCell" owner:self options:nil]lastObject];
-//    }
     if (cell == nil) {
         cell = [[XXEHomeworkTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
     }
 
-    
-//    cell.iconImageView.frame.size.width = 75;
-//    cell.iconImageView.frame.size.height = 75;
-    
     XXEHomeworkModel *model = _dataSourceArray[indexPath.row];
     /*
      0 :表示 自己 头像 ，需要添加 前缀
@@ -344,6 +337,14 @@
     
     return 95;
     
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
+
+    return 0.000001;
+}
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    return 0.000001;
 }
 
 - (void)createHeaderView{
@@ -435,11 +436,6 @@
     
 }
 
-
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-//    return 34;
-    return 0.0001;
-}
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if ([XXEUserInfo user].login) {

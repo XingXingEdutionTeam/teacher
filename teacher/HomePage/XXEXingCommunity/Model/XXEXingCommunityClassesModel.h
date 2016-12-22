@@ -19,9 +19,10 @@
  [summary] => 测试简介测试简介测试简介测试简介测试简介试简介测试简介测试简介测试简介
  [pic] => app_upload/xtd_article/2016/12/15/20161215152257_4809.jpg	//如果要用缩略图, 拼接-110
  )
- */
+ 
+*/
 
-@property (nonatomic, copy) NSString *xingCommunity_id;
+@property (nonatomic, copy) NSString *articleId;
 @property (nonatomic, copy) NSString *date_tm;
 @property (nonatomic, copy) NSString *xingCommunity_class;
 @property (nonatomic, copy) NSString *title;

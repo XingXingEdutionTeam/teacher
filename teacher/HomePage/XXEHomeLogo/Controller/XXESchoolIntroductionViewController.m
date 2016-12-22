@@ -25,6 +25,7 @@
 
 @interface XXESchoolIntroductionViewController ()<UITableViewDataSource, UITableViewDelegate>
 
+
 @property (nonatomic, strong) NSMutableArray *pictureArray;
 @property (nonatomic, strong) NSMutableArray *titleArray;
 @property (nonatomic, strong) UITableView *myTableView;
@@ -38,6 +39,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.view.backgroundColor = XXEBackgroundColor;
 
     self.pictureArray =[[NSMutableArray alloc]initWithObjects:@"home_logo_schoolname_icon", @"home_logo_address_icon", @"home_logo_register_icon40x40", @"home_logo_teacher_icon40x40", @"home_logo_phone_icon40x40", @"home_logo_qq_icon40x40", @"home_logo_email_icon40x40", @"home_logo_certificate_icon40x40", @"home_logo_feature_icon40x40",  @"home_logo_introduction_icon40x44", @"home_redflower_picIcon", @"home_logo_video_icon40x40", nil];
     self.titleArray =[[NSMutableArray alloc]initWithObjects:@"学校名称:", @"学校地址:", @"注册学生:", @"注册教师:", @"联系方式:", @"联系QQ:", @"邮箱:", @"资质:",@"特点:",@"简介:", @"相册:", @"视频:",  nil];
@@ -79,12 +81,6 @@
         cell = [[XXERedFlowerDetialInfoTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
     }
 
-//    static NSString *identifier = @"cell";
-//    XXERedFlowerDetialTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
-//    
-//    if (cell == nil) {
-//        cell = [[[NSBundle mainBundle] loadNibNamed:@"XXERedFlowerDetialTableViewCell" owner:self options:nil]lastObject];
-//    }
     if ([self.position isEqualToString:@"3"] || [self.position isEqualToString:@"4"]) {
         if (indexPath.row != 2) {
            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator; 

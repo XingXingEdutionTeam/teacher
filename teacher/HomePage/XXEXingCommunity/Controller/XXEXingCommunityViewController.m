@@ -51,6 +51,9 @@
     self.navigationController.navigationBarHidden = NO;
     self.view.backgroundColor = XXEBackgroundColor;
     self.title = @"猩天地";
+    UIButton *backBtn = [UIButton createButtonWithFrame:CGRectMake(0, 0, 45, 19) backGruondImageName:@"comment_back_icon" Target:self Action:@selector(doback:) Title:nil];
+    UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithCustomView:backBtn];
+    self.navigationItem.leftBarButtonItem = backItem;
     
     menuCount = 4;
     
@@ -86,10 +89,16 @@
     if (isExit) {
         [t invalidate];//停止定时器
         timer = nil;
-        NSLog(@"一共运行了%i秒",count);
+//        NSLog(@"一共运行了%i秒",count);
         
-        [self showHudWithString:[NSString stringWithFormat:@"已用时间%i秒，获得猩币%i个", count,count/2] forSecond:1.5];
-        [self.navigationController popViewControllerAnimated:YES];
+        NSString *timeStr = [NSString stringWithFormat:@"已用时间%i秒，获得猩币%i个", count,count/2];
+        
+        [self showHudWithString:timeStr];
+//        [self showHudWithString:timeStr forSecond:1.5];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [self.navigationController popViewControllerAnimated:YES];
+        });
+
         
         //        count=0;
     }
@@ -100,7 +109,7 @@
     
     self.automaticallyAdjustsScrollViewInsets = NO;
     QHNavSliderMenuStyleModel *model = [QHNavSliderMenuStyleModel new];
-    NSMutableArray *titles = [[NSMutableArray alloc] initWithObjects:@"幼儿园",@"小学",@"中学",@"培训机构",@"高中",nil];
+    NSMutableArray *titles = [[NSMutableArray alloc] initWithObjects:@"幼儿园",@"小学",@"中学",@"培训机构",nil];
     
     model.menuTitles = [titles copy];
     model.menuWidth=screenWidth/4;
@@ -129,17 +138,20 @@
 - (void)navSliderMenuDidSelectAtRow:(NSInteger)row {
     //让scrollview滚到相应的位置
     [contentScrollView setContentOffset:CGPointMake(row*screenWidth, contentScrollView.contentOffset.y)  animated:NO];
-}
-
-#pragma mark scrollViewDelegate
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     
     //用scrollView的滑动大小与屏幕宽度取整数 得到滑动的页数
-//    [navSliderMenu selectAtRow:(int)((scrollView.contentOffset.x+screenWidth/2.f)/screenWidth) andDelegate:NO];
-//    //根据页数添加相应的视图
-//    [self addListVCWithIndex:(int)(scrollView.contentOffset.x/screenWidth)];
-//    [self addListVCWithIndex:(int)(scrollView.contentOffset.x/screenWidth)+1];
-    
+    [navSliderMenu selectAtRow:(int)((contentScrollView.contentOffset.x+screenWidth/2.f)/screenWidth) andDelegate:NO];
+    //根据页数添加相应的视图
+    [self addListVCWithIndex:(int)(contentScrollView.contentOffset.x/screenWidth)];
+}
+
+
+#pragma mark scrollViewDelegate
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
+    //用scrollView的滑动大小与屏幕宽度取整数 得到滑动的页数
+    [navSliderMenu selectAtRow:(int)((scrollView.contentOffset.x+screenWidth/2.f)/screenWidth) andDelegate:NO];
+    //根据页数添加相应的视图
+    [self addListVCWithIndex:(int)(scrollView.contentOffset.x/screenWidth)];
 }
 
 #pragma mark -addVC
@@ -167,8 +179,8 @@
     xingCommunityPrimaryVC.view.top=0;
     [contentScrollView addSubview:xingCommunityPrimaryVC.view];
     [listVCQueue setObject:xingCommunityPrimaryVC forKey:@(1)];
-    
-    //中学
+
+    //中学包含 初中 和 高中
     XXEXingCommunityHighSchoolViewController *xingCommunityHighSchoolVC =[[XXEXingCommunityHighSchoolViewController alloc]init];
     [self addChildViewController:xingCommunityHighSchoolVC];
     xingCommunityHighSchoolVC.view.left =2*screenWidth;
@@ -190,11 +202,11 @@
 {
     //今日话题
     topicButton = [UIButton createButtonWithFrame:CGRectMake(0, 10 * kScreenRatioHeight,WinWidth, 71 * kScreenRatioHeight) backGruondImageName:@"community9" Target:self Action:@selector(onClicktopicBtn:) Title:nil];
-    topicButton.backgroundColor = [UIColor blueColor];
+    topicButton.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:topicButton];
     
     topicLabel=[UILabel createLabelWithFrame:CGRectMake(80 * kScreenRatioWidth, 51 * kScreenRatioHeight ,WinWidth-100 * kScreenRatioWidth, 21 * kScreenRatioHeight) Font:12 Text:@"孩子牛奶喝的多好不好,会影响什么？"];
-    topicLabel.backgroundColor = [UIColor redColor];
+    topicLabel.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:topicLabel];
     
     supportBtn=[UIButton createButtonWithFrame:CGRectMake(310 * kScreenRatioWidth , 56 * kScreenRatioHeight,13 * kScreenRatioWidth, 11 * kScreenRatioHeight) backGruondImageName:@"community13" Target:self Action:@selector(supportBtnClick:) Title:nil];
@@ -232,7 +244,7 @@
     isUnsupport=! isUnsupport;
 }
 
-#pragma mark ********** //婴儿内容库 *************
+#pragma mark ********** //内容库 *************
 -(void)onClickbabycontentBtn:(UIButton*)Btn
 {
     XXEXingCommunityBabyLibraryViewController * xingCommunityBabyLibraryVC = [[XXEXingCommunityBabyLibraryViewController alloc]init ];

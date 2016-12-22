@@ -10,4 +10,5 @@
 
 @interface XXEXingCommunityChildrenSongViewController : XXEBaseViewController
 
+
 @end
