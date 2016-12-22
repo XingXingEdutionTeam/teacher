@@ -761,7 +761,6 @@
 		9E4813A81D504D0900C614AC /* teacherUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E4813A71D504D0900C614AC /* teacherUITests.m */; };
 		9E4813D01D506BDE00C614AC /* XXEBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E4813CF1D506BDE00C614AC /* XXEBaseViewController.m */; };
 		9E4813D71D50722400C614AC /* XXETabBarControllerConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E4813D61D50722400C614AC /* XXETabBarControllerConfig.m */; };
-		9E4813DA1D50783000C614AC /* XXEHomePageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E4813D91D50783000C614AC /* XXEHomePageViewController.m */; };
 		9E4813DD1D50784900C614AC /* XXEChatPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E4813DC1D50784900C614AC /* XXEChatPageViewController.m */; };
 		9E4813E31D50788300C614AC /* XXEMySelfPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E4813E21D50788300C614AC /* XXEMySelfPageViewController.m */; };
 		9E4CEDD41E00E71800F4525E /* GlobalVariable.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E4CEDD31E00E71800F4525E /* GlobalVariable.m */; };
@@ -983,6 +982,7 @@
 		9ED9AB1A1D7EC0B100B63B53 /* XXEFriendCircleCommentApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 9ED9AB191D7EC0B100B63B53 /* XXEFriendCircleCommentApi.m */; };
 		9EDA725E1D8E9841006E5FB8 /* XXEDeleteCommentApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EDA725D1D8E9841006E5FB8 /* XXEDeleteCommentApi.m */; };
 		9EDCF4FD1E0A6B98003CC33A /* SchoolInfoManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EDCF4FC1E0A6B98003CC33A /* SchoolInfoManager.m */; };
+		9EDCF4FF1E0B6768003CC33A /* XXEHomePageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EDCF4FE1E0B6768003CC33A /* XXEHomePageViewController.m */; };
 		9EE3BA8D1D94FC2F00D420A7 /* KxMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EE3BA8C1D94FC2F00D420A7 /* KxMenu.m */; };
 		9EE3BA9A1D95106C00D420A7 /* UIColor+RCColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EE3BA971D95106C00D420A7 /* UIColor+RCColor.m */; };
 		9EE3BA9B1D95106C00D420A7 /* UIImage+RCImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EE3BA991D95106C00D420A7 /* UIImage+RCImage.m */; };
@@ -2402,7 +2402,6 @@
 		9E4813D51D50722400C614AC /* XXETabBarControllerConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXETabBarControllerConfig.h; sourceTree = "<group>"; };
 		9E4813D61D50722400C614AC /* XXETabBarControllerConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXETabBarControllerConfig.m; sourceTree = "<group>"; };
 		9E4813D81D50783000C614AC /* XXEHomePageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXEHomePageViewController.h; sourceTree = "<group>"; };
-		9E4813D91D50783000C614AC /* XXEHomePageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXEHomePageViewController.m; sourceTree = "<group>"; };
 		9E4813DB1D50784900C614AC /* XXEChatPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXEChatPageViewController.h; sourceTree = "<group>"; };
 		9E4813DC1D50784900C614AC /* XXEChatPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXEChatPageViewController.m; sourceTree = "<group>"; };
 		9E4813E11D50788300C614AC /* XXEMySelfPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXEMySelfPageViewController.h; sourceTree = "<group>"; };
@@ -2803,6 +2802,7 @@
 		9EDA725D1D8E9841006E5FB8 /* XXEDeleteCommentApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXEDeleteCommentApi.m; sourceTree = "<group>"; };
 		9EDCF4FB1E0A6B98003CC33A /* SchoolInfoManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SchoolInfoManager.h; sourceTree = "<group>"; };
 		9EDCF4FC1E0A6B98003CC33A /* SchoolInfoManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SchoolInfoManager.m; sourceTree = "<group>"; };
+		9EDCF4FE1E0B6768003CC33A /* XXEHomePageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXEHomePageViewController.m; sourceTree = "<group>"; };
 		9EE3BA8B1D94FC2F00D420A7 /* KxMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KxMenu.h; sourceTree = "<group>"; };
 		9EE3BA8C1D94FC2F00D420A7 /* KxMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KxMenu.m; sourceTree = "<group>"; };
 		9EE3BA961D95106C00D420A7 /* UIColor+RCColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+RCColor.h"; sourceTree = "<group>"; };
@@ -5549,7 +5549,7 @@
 				043596591DAA458100F85DAE /* XXERongCloudChart */,
 				9E02B41F1D782F4600BE40E3 /* EditorIdentity */,
 				9E4813D81D50783000C614AC /* XXEHomePageViewController.h */,
-				9E4813D91D50783000C614AC /* XXEHomePageViewController.m */,
+				9EDCF4FE1E0B6768003CC33A /* XXEHomePageViewController.m */,
 				9EBA6F1B1D5CACBC001B45C3 /* XXEClassAlbumViewController.h */,
 				9EBA6F1C1D5CACBC001B45C3 /* XXEClassAlbumViewController.m */,
 				9EBA6F6A1D5D65A3001B45C3 /* XXEMyClassAlbumViewController.h */,
@@ -7360,7 +7360,6 @@
 				04F2168F1D7671BB005C2EBF /* NSObject+DataSecurity.m in Sources */,
 				043C80C51D86BFCC004F1B85 /* XXEXingCommunityBabyCommunityViewController.m in Sources */,
 				044DEBB91D8F95F700DE101A /* XXEMyselfInfoGetSchoolProviceApi.m in Sources */,
-				9E4813DA1D50783000C614AC /* XXEHomePageViewController.m in Sources */,
 				9EB2E93F1D5889B9004809D3 /* UILabel+XXExtension.m in Sources */,
 				0433012B1D62BDD000722DE2 /* XXERedFlowerSentHistoryViewController.m in Sources */,
 				9E5E23D31D90CCD8008B1AAF /* XXEWhoCanLookController.m in Sources */,
@@ -7540,6 +7539,7 @@
 				04BB3A9C1D74743300AA5C5C /* XXEClassAddressHeadermasterAndManagerViewController.m in Sources */,
 				044DEC171D9111C600DE101A /* XXEFamilyManagerClassInfoModel.m in Sources */,
 				04947CAF1DC0CE3A008A351F /* BCQueryBillByIdReq.m in Sources */,
+				9EDCF4FF1E0B6768003CC33A /* XXEHomePageViewController.m in Sources */,
 				04E8062F1E0295A000808792 /* XXEXingCommunityChildrenSongViewController.m in Sources */,
 				04947CD61DC0CE3A008A351F /* README.md in Sources */,
 				0480A08B1D87DC5800D7589B /* XXESystemNotificationApi.m in Sources */,

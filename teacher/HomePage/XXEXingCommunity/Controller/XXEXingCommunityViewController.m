@@ -190,11 +190,11 @@
 {
     //今日话题
     topicButton = [UIButton createButtonWithFrame:CGRectMake(0, 10 * kScreenRatioHeight,WinWidth, 71 * kScreenRatioHeight) backGruondImageName:@"community9" Target:self Action:@selector(onClicktopicBtn:) Title:nil];
-    topicButton.backgroundColor = [UIColor blueColor];
+//    topicButton.backgroundColor = [UIColor blueColor];
     [self.view addSubview:topicButton];
     
     topicLabel=[UILabel createLabelWithFrame:CGRectMake(80 * kScreenRatioWidth, 51 * kScreenRatioHeight ,WinWidth-100 * kScreenRatioWidth, 21 * kScreenRatioHeight) Font:12 Text:@"孩子牛奶喝的多好不好,会影响什么？"];
-    topicLabel.backgroundColor = [UIColor redColor];
+//    topicLabel.backgroundColor = [UIColor redColor];
     [self.view addSubview:topicLabel];
     
     supportBtn=[UIButton createButtonWithFrame:CGRectMake(310 * kScreenRatioWidth , 56 * kScreenRatioHeight,13 * kScreenRatioWidth, 11 * kScreenRatioHeight) backGruondImageName:@"community13" Target:self Action:@selector(supportBtnClick:) Title:nil];

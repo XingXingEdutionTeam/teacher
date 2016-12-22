@@ -327,18 +327,18 @@
 #pragma mark - 验证验证码对不对
 -(void)verifyNumberISRight
 {
-//    NSLog(@"电话号码%@ 验证码%@",self.registerUerTextField.text,self.registerVerificationTextField.text);
-//    [SMSSDK commitVerificationCode:self.registerVerificationTextField.text phoneNumber:self.registerUerTextField.text zone:@"86" result:^(NSError *error) {
-//        if (error) {
-//            NSLog(@"%@", error);
-//            [self showString:@"验证码错误" forSecond:1.f];
-//        }else {
-//        }
-//    }];
-    XXERegisterSecondViewController *registerSecondVC = [[XXERegisterSecondViewController alloc]init];
-    registerSecondVC.userPhoneNum = self.registerUerTextField.text;
-    registerSecondVC.login_type = @"1";
-    [self.navigationController pushViewController:registerSecondVC animated:YES];
+    NSLog(@"电话号码%@ 验证码%@",self.registerUerTextField.text,self.registerVerificationTextField.text);
+    [SMSSDK commitVerificationCode:self.registerVerificationTextField.text phoneNumber:self.registerUerTextField.text zone:@"86" result:^(NSError *error) {
+        if (error) {
+            NSLog(@"%@", error);
+            [self showString:@"验证码错误" forSecond:1.f];
+        }else {
+            XXERegisterSecondViewController *registerSecondVC = [[XXERegisterSecondViewController alloc]init];
+            registerSecondVC.userPhoneNum = self.registerUerTextField.text;
+            registerSecondVC.login_type = @"1";
+            [self.navigationController pushViewController:registerSecondVC animated:YES];
+        }
+    }];
     
 }
 
