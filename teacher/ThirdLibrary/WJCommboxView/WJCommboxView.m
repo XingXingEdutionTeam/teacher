@@ -155,6 +155,8 @@
     frame.size.height = 0;
     self.listTableView.frame = frame;
     
+    [self.delegate WJCommboxViewReturn:indexPath.row WJCommboxView:self];
+    
 }
 
 

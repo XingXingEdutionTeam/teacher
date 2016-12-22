@@ -60,7 +60,7 @@
 
 #import "XXRootChatETabBarController.h"
 
-@interface XXEHomePageViewController ()<XXEHomePageHeaderViewDelegate,XXEHomePageMiddleViewDelegate,XXEHomePageBottomViewDelegate>
+@interface XXEHomePageViewController ()<XXEHomePageHeaderViewDelegate,XXEHomePageMiddleViewDelegate,XXEHomePageBottomViewDelegate,WJCommboxViewDelegate>
 {
 
     //左边 选中 学校 的是第几行
@@ -83,11 +83,13 @@
 
 /** 下拉框 学校 */
 @property (nonatomic, strong)WJCommboxView *homeSchoolView;
+@property(nonatomic , copy)NSString *schoolName;
 //学校 下拉框 背景
 @property (nonatomic, strong) UIView *schoolBgView;
 
 /** 下拉框 班级 */
 @property (nonatomic, strong)WJCommboxView *homeClassView;
+@property(nonatomic , copy)NSString *className;
 //班级 下拉框 背景
 @property (nonatomic, strong) UIView *classBgView;
 
@@ -116,9 +118,19 @@
 /** 判断身份 */
 @property (nonatomic, copy)NSString *identifyCard;
 
+@property (nonatomic, copy)NSString *school_logoUrl;
+
 @property(nonatomic , assign) int unreadMessageCount;
 
 @property(nonatomic , assign)SchoolInfo schoolInfo;
+
+@property(nonatomic)NSInteger schoolArr_lenght;
+
+@property(nonatomic)NSInteger schoolArr_index;
+
+@property(nonatomic)NSInteger classArr_length;
+
+@property(nonatomic)NSInteger classArr_index;
 
 @end
 
@@ -169,6 +181,11 @@
         _classDatasource = [NSMutableArray array];
     }
     return _classDatasource;
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    [kSchoolManagerInstance configureWithSchoolId:self.schoolHomeId classId:self.classHomeId schoolArr_length:self.schoolArr_lenght schoolArr_index:self.schoolArr_index classArr_length:self.classArr_length classArr_index:self.classArr_index];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -261,14 +278,54 @@
 #pragma mark - 下拉选择框
 - (void)setUpDropDownSelection
 {
-    XXEHomePageSchoolModel *model3 = [self.schoolDatasource firstObject];
-    XXEHomePageClassModel *model1 = [model3.class_info firstObject];
+    //判断是否和之前的学校数组相等
+    BOOL isArrayEqualPre = NO;
+    
+    if (kSchoolManagerInstance.schoolArr_length == self.schoolDatasource.count) {
+        
+        for (XXEHomePageSchoolModel *schoolModel in self.schoolDatasource) {
+            
+            if ([schoolModel.school_id isEqualToString:kSchoolManagerInstance.school_id]) {
+                
+                if (schoolModel.class_info.count == self.classArr_length) {
+                    for (XXEHomePageClassModel *classModel  in schoolModel.class_info) {
+                        if ([classModel.class_id isEqualToString:kSchoolManagerInstance.class_id]) {
+                            isArrayEqualPre = YES;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    if (isArrayEqualPre) {
+        
+    }else {
+        kSchoolManagerInstance.schoolArr_index = 0;
+        kSchoolManagerInstance.schoolArr_length = self.schoolDatasource.count;
+        kSchoolManagerInstance.classArr_index = 0;
+        XXEHomePageSchoolModel *tempSchoolModel = self.schoolDatasource[0];
+        kSchoolManagerInstance.classArr_length = tempSchoolModel.class_info.count;
+        
+    }
+    
+    
+
+    XXEHomePageSchoolModel *model3 = self.schoolDatasource[kSchoolManagerInstance.schoolArr_index];
+    XXEHomePageClassModel *model1 = model3.class_info[kSchoolManagerInstance.classArr_index] ;
     //    NSLog(@"model1:%@ --- model3:%@", model1, model3);
     
     self.schoolHomeId = model3.school_id;
     self.schoolType = model3.school_type;
     self.classHomeId = model1.class_id;
     self.userPosition = model1.position;
+    self.schoolName = model3.school_name;
+    self.className = model1.class_name;
+    self.school_logoUrl = model3.school_logo;
+    
+    
+    
 //    NSLog(@"学校类型:%@",self.schoolType);
     
 //    //*******************  学 校  *************************
@@ -279,7 +336,7 @@
         [self.homeSchoolView.listTableView reloadData];
     }
 
-    self.homeSchoolView.textField.text = model3.school_name;
+    self.homeSchoolView.textField.text = self.schoolName;
 
 //    //***********************  班 级  ***************************
     NSString *string = @"编辑班级";
@@ -294,18 +351,23 @@
         for (int i =0; i<self.classAllArray.count; i++) {
             [self.classAllArray[i] addObject:string];
         }
-        self.homeClassView.dataArray = self.classAllArray[0];
+        
+        NSMutableArray *tempClassArr = [NSMutableArray array];
+        for (XXEHomePageClassModel *classModel in model3.class_info) {
+            [tempClassArr addObject:classModel.class_name];
+        }
+        self.homeClassView.dataArray = tempClassArr;
         [self.homeClassView.listTableView reloadData];
     }
 
-    self.homeClassView.textField.text = model1.class_name;
-    self.userPosition = model1.position;
+    XXEHomePageClassModel *tempClassModel = model3.class_info[kSchoolManagerInstance.classArr_index];
+    self.homeClassView.textField.text = tempClassModel.class_name;
 
     //获取下部试图
     [self bottomViewShowPosition:self.userPosition];
     
     //显示 学校 logo 头像
-    [_headView changeSchoolLogo:model3.school_logo];
+    [_headView changeSchoolLogo:self.school_logoUrl];
 }
 
 - (void)bottomViewShowPosition:(NSString *)position
@@ -319,15 +381,33 @@
 
 - (void)commboxAction2:(NSNotification *)notif{
     
+    self.schoolName = self.homeSchoolView.textField.text;
+//    switch ([notif.object integerValue]) {
+//        case 102:
+//        {
+//        }
+//            break;
+//        case 103:
+//        {
+//            
+//        }
+//            break;
+//        default:
+//            break;
+//    }
     self.identifyCard = self.homeClassView.textField.text;
-    
     if ([self.homeClassView.textField.text isEqualToString:@"编辑班级"]) {
+        
         NSLog(@"调转页面");
         XXEAddIdentityViewController *addIdenVC = [[XXEAddIdentityViewController alloc]init];
         [self.navigationController pushViewController:addIdenVC animated:YES];
     }else{
         [self homePageBottomViewText:self.homeClassView.textField.text];
+        self.className = self.homeClassView.textField.text;
     }
+    
+    
+    
 }
 
 #pragma mark - 获取身份 -----------------------
@@ -380,8 +460,7 @@
         {
 //            NSLog(@"%@",notif.object);
 //            NSLog(@"文字是什么%@",self.homeClassView.textField.text);
-            [self.homeSchoolView removeFromSuperview];
-            
+                        
             [self.view addSubview:self.schoolBgView];
             [self.view addSubview:self.homeSchoolView];
             
@@ -515,7 +594,8 @@
 
     //*******************  学 校  *************************
     self.homeSchoolView = [[WJCommboxView alloc] initWithFrame:CGRectMake(65 * kScreenRatioWidth, 41 * kScreenRatioHeight, 120 * kScreenRatioWidth, 36 * kScreenRatioHeight)];
-    
+    self.homeSchoolView.tag = 1000;
+    self.homeSchoolView.delegate = self;
     [self.view addSubview:self.homeSchoolView];
     
     self.homeSchoolView.textField.placeholder = @"学校";
@@ -536,7 +616,8 @@
     
     //***********************  班 级  ***************************
     self.homeClassView = [[WJCommboxView alloc] initWithFrame:CGRectMake(65 * kScreenRatioWidth+120 * kScreenRatioWidth+5, 41*kScreenRatioHeight, 120 * kScreenRatioWidth, 36 * kScreenRatioHeight)];
-    
+    self.homeClassView.tag = 1001;
+    self.homeClassView.delegate = self;
     [self.view addSubview:self.homeClassView];
     
     self.homeClassView.textField.placeholder = @"班级";
@@ -671,7 +752,10 @@
             [self.schoolDatasource removeAllObjects];
             [self.classDatasource removeAllObjects];
             [self.arrayClass removeAllObjects];
-            [self.classAllArray removeAllObjects];
+            
+            if (self.classAllArray.count != 0) {
+                [self.classAllArray removeAllObjects];
+            }
             
             NSArray *schoolArray = [data objectForKey:@"school_info"];
             
@@ -1339,8 +1423,18 @@
     }];
 }
 
-
-
+//MARK: -WJCommboxViewDelegate
+- (void)WJCommboxViewReturn:(NSInteger)index WJCommboxView:(WJCommboxView *)wJCommboxView{
+    switch (wJCommboxView.tag) {
+        case 1000:
+            self.schoolArr_index = index;
+            break;
+            
+        default:
+            self.classArr_index = index;
+            break;
+    }
+}
 
 /*
  #pragma mark - Navigation

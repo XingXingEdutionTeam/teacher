@@ -7,7 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+@class WJCommboxView;
 
+@protocol WJCommboxViewDelegate <NSObject>
+@optional
+//这个方法是可选的
+- (void)WJCommboxViewReturn:(NSInteger)index WJCommboxView:(WJCommboxView*)wJCommboxView;
+@end
 
 @interface WJCommboxView : UIView<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate >
 
@@ -17,5 +23,6 @@
 @property (nonatomic,assign) BOOL showList;//是否弹出下拉列表
 @property (nonatomic,assign) CGFloat tableHeight;//table下拉列表的高度
 @property (nonatomic,assign)  CGFloat frameHeight;//frame的高度
+@property (nonatomic,assign) id<WJCommboxViewDelegate> delegate;
 
 @end

@@ -982,6 +982,7 @@
 		9ED9AB171D7EC0A200B63B53 /* XXEFriendCirclegoodApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 9ED9AB161D7EC0A200B63B53 /* XXEFriendCirclegoodApi.m */; };
 		9ED9AB1A1D7EC0B100B63B53 /* XXEFriendCircleCommentApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 9ED9AB191D7EC0B100B63B53 /* XXEFriendCircleCommentApi.m */; };
 		9EDA725E1D8E9841006E5FB8 /* XXEDeleteCommentApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EDA725D1D8E9841006E5FB8 /* XXEDeleteCommentApi.m */; };
+		9EDCF4FD1E0A6B98003CC33A /* SchoolInfoManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EDCF4FC1E0A6B98003CC33A /* SchoolInfoManager.m */; };
 		9EE3BA8D1D94FC2F00D420A7 /* KxMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EE3BA8C1D94FC2F00D420A7 /* KxMenu.m */; };
 		9EE3BA9A1D95106C00D420A7 /* UIColor+RCColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EE3BA971D95106C00D420A7 /* UIColor+RCColor.m */; };
 		9EE3BA9B1D95106C00D420A7 /* UIImage+RCImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EE3BA991D95106C00D420A7 /* UIImage+RCImage.m */; };
@@ -2800,6 +2801,8 @@
 		9ED9AB191D7EC0B100B63B53 /* XXEFriendCircleCommentApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXEFriendCircleCommentApi.m; sourceTree = "<group>"; };
 		9EDA725C1D8E9841006E5FB8 /* XXEDeleteCommentApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXEDeleteCommentApi.h; sourceTree = "<group>"; };
 		9EDA725D1D8E9841006E5FB8 /* XXEDeleteCommentApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXEDeleteCommentApi.m; sourceTree = "<group>"; };
+		9EDCF4FB1E0A6B98003CC33A /* SchoolInfoManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SchoolInfoManager.h; sourceTree = "<group>"; };
+		9EDCF4FC1E0A6B98003CC33A /* SchoolInfoManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SchoolInfoManager.m; sourceTree = "<group>"; };
 		9EE3BA8B1D94FC2F00D420A7 /* KxMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KxMenu.h; sourceTree = "<group>"; };
 		9EE3BA8C1D94FC2F00D420A7 /* KxMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KxMenu.m; sourceTree = "<group>"; };
 		9EE3BA961D95106C00D420A7 /* UIColor+RCColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+RCColor.h"; sourceTree = "<group>"; };
@@ -5587,6 +5590,8 @@
 				9E2F7F191D70298000DD9CD1 /* XXEReportModel.m */,
 				9E02B42D1D7846DD00BE40E3 /* XXEIdentityListModel.h */,
 				9E02B42E1D7846DD00BE40E3 /* XXEIdentityListModel.m */,
+				9EDCF4FB1E0A6B98003CC33A /* SchoolInfoManager.h */,
+				9EDCF4FC1E0A6B98003CC33A /* SchoolInfoManager.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -7467,6 +7472,7 @@
 				0485FD2D1D82C4690077E10B /* XXEMyselfBlackListModel.m in Sources */,
 				043C80911D864872004F1B85 /* XXEProblemFeedbackViewController.m in Sources */,
 				044DEC421D923B5300DE101A /* XXECourseManagerModel.m in Sources */,
+				9EDCF4FD1E0A6B98003CC33A /* SchoolInfoManager.m in Sources */,
 				9E3AAFEB1DEC502B00E04C6C /* XXEStoreCategoryViewController.m in Sources */,
 				04E8063B1E0295D400808792 /* XXEXingCommunityConsultViewController.m in Sources */,
 				04BB3A4B1D74742B00AA5C5C /* XXERecipeModifyViewController.m in Sources */,

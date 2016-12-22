@@ -48,5 +48,6 @@
 //猩天地 webView 接口
 #import "XXEXingCommunityHeader.h"
 
+#import "SchoolInfoManager.h"
 
 #endif /* PrefixHeader_pch */
