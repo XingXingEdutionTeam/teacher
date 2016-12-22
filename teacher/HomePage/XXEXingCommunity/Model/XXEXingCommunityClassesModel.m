@@ -24,7 +24,7 @@
 +(JSONKeyMapper*)keyMapper
 {
     return [[JSONKeyMapper alloc] initWithDictionary:@{
-                                                       @"id": @"xingCommunity_id",
+                                                       @"id": @"articleId",
                                                        @"class":@"xingCommunity_class"
                                                        }];
 }

@@ -97,7 +97,7 @@
     XXESchoolTimetableCourseApi *schoolTimetableCourseApi = [[XXESchoolTimetableCourseApi alloc] initWithXid:parameterXid user_id:parameterUser_Id week_date:_week_date parame_data:parame_data];
     [schoolTimetableCourseApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         //
-//        NSLog(@"结果 === %@", request.responseJSONObject);
+        NSLog(@"结果 === %@", request.responseJSONObject);
         
         
         NSString *codeStr = request.responseJSONObject[@"code"];
@@ -295,7 +295,6 @@
 //                             }
 //                             )
 
-        
         [self fetchNetData];
     }];
 

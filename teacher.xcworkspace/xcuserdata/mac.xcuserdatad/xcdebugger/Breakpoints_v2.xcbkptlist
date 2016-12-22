@@ -99,54 +99,6 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "teacher/HomePage/XXEXingCommunity/Controller/XXEXingCommunityKindergartenViewController.m"
-            timestampString = "503812982.840469"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "103"
-            endingLineNumber = "103"
-            landmarkName = "-fetchNetData"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "teacher/HomePage/XXEXingCommunity/Controller/XXEXingCommunityKindergartenViewController.m"
-            timestampString = "503812982.840469"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "91"
-            endingLineNumber = "91"
-            landmarkName = "-fetchNetData"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "teacher/HomePage/XXEXingCommunity/Controller/XXEXingCommunityKindergartenViewController.m"
-            timestampString = "503813257.014246"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "204"
-            endingLineNumber = "204"
-            landmarkName = "-tableView:numberOfRowsInSection:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "teacher/HomePage/Controller/EditorIdentity/XXEIdentityAddHeadViewController.m"
             timestampString = "503935114.012202"
             startingColumnNumber = "9223372036854775807"
@@ -196,12 +148,12 @@
                   moduleName = "teacher"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/mac/Documents/teacher/teacher/HomePage/Controller/EditorIdentity/XXEIdentityAddHeadViewController.m"
-                  timestampString = "504020236.954148"
+                  timestampString = "504101453.262975"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "568"
                   endingLineNumber = "568"
-                  offsetFromSymbolStart = "168">
+                  offsetFromSymbolStart = "145">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
@@ -211,12 +163,12 @@
                   moduleName = "teacher"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/mac/Documents/teacher/teacher/HomePage/Controller/EditorIdentity/XXEIdentityAddHeadViewController.m"
-                  timestampString = "504020236.956758"
+                  timestampString = "504101453.30477"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "571"
                   endingLineNumber = "571"
-                  offsetFromSymbolStart = "48">
+                  offsetFromSymbolStart = "51">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -346,6 +298,38 @@
             startingLineNumber = "229"
             endingLineNumber = "229"
             landmarkName = "-tableView:didSelectRowAtIndexPath:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "teacher/HomePage/XXESchoolTimetable/Controller/XXESchoolTimetableViewController.m"
+            timestampString = "504095872.968174"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "862"
+            endingLineNumber = "862"
+            landmarkName = "-buttonClick:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "teacher/HomePage/XXESchoolTimetable/Controller/XXESchoolTimetableCourseViewController.m"
+            timestampString = "504096529.547673"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "100"
+            endingLineNumber = "100"
+            landmarkName = "-fetchNetData"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

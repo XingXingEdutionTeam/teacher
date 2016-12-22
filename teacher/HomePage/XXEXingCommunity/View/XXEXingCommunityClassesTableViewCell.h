@@ -14,6 +14,8 @@
 @property (nonatomic, strong) UIImageView *iconImageView;
 //标题
 @property (nonatomic, strong) UILabel *titleLabel;
+//简介
+@property (nonatomic, strong) UILabel *summaryLabel;
 //时间
 @property (nonatomic, strong) UILabel *timeLabel;
 
