@@ -36,6 +36,8 @@ typedef NS_ENUM(NSUInteger,PasswordType) {
     PayPassword
 };
 
+
+//- (void)showLoadWithString:(NSString *)string;
 /** 只提示文字 */
 - (void)showHudWithString:(NSString *)text;
 /** 提示文字多久之后消失 */
