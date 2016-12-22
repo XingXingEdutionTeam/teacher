@@ -31,6 +31,20 @@
     [self.hud hide:YES];
 }
 
+//MARK: - 网络请求loading图
+//- (void)showLoadWithString:(NSString *)string {
+//    
+//    UIWindow *window = [UIApplication sharedApplication].windows[1];
+//    
+//    if (self.hud) {
+//        self.hud.labelText = string;
+//        [self.hud show:YES];
+//    }else {
+//        self.hud = [[MBProgressHUD alloc] initWithWindow:window];
+//        self.hud.labelText = string;
+//        [self.hud show:YES];
+//    }
+//}
 
 /** 只提示文字 */
 - (void)showHudWithString:(NSString *)text

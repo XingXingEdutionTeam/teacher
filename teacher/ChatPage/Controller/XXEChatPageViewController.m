@@ -25,6 +25,7 @@
 #import "XXEXingClassRoomCourseDetailInfoViewController.h"
 #import "XXEHomeLogoRootViewController.h"
 #import "WJDropdownMenu.h"
+#import "MBProgressHUD.h"
 
 
 
@@ -93,11 +94,32 @@
 
 
 @property (nonatomic, strong)UISegmentedControl *segentControl;
-
+@property(nonatomic)NSInteger segentNumber;
+//@property(nonatomic,strong)EmptyView *noDataEmpty;
+@property(nonatomic ,strong)UIWindow *window;
 
 @end
 
 @implementation XXEChatPageViewController
+
+-(UIWindow *)window {
+    if (!_window) {
+        _window = [UIApplication sharedApplication].windows[1];
+    }
+    
+    return _window;
+}
+
+//-(EmptyView *)noDataEmpty {
+//    if (!_noDataEmpty) {
+//        CGRect frame = CGRectMake(0, 64, KScreenWidth, KScreenHeight - 64 - 44);
+//        _noDataEmpty = [EmptyView conveniceWithTitle:@"暂时没数据" frame:frame];
+//        [myTableView addSubview:_noDataEmpty];
+//        _noDataEmpty.hidden = YES;
+//    }
+//    
+//    return _noDataEmpty;
+//}
 
 - (void)viewWillAppear:(BOOL)animated
 {
@@ -129,13 +151,13 @@
         _segentControl.selectedSegmentIndex = 0;
         _segentControl.tintColor = [UIColor whiteColor];
         [_segentControl addTarget:self action:@selector(segentControlClick:) forControlEvents:UIControlEventValueChanged];
+        self.segentNumber = 0;
     }
     return _segentControl;
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationItem.titleView = self.segentControl;
-    
     self.view.backgroundColor = XXEBackgroundColor;
     
     if ([XXEUserInfo user].login){
@@ -246,21 +268,21 @@
 }
 
 -(void)loadNewData{
-    if (_segentControl.selectedSegmentIndex == 0) {
+    if (self.segentNumber == 0) {
         //老师
-        _teacherPage ++;
+        _teacherPage = 1;
         [self fetchTeacherInfo];
         [myTableView.header endRefreshing];
         
-    }else if (_segentControl.selectedSegmentIndex == 1) {
+    }else if (self.segentNumber == 1) {
         //课程
-        _coursePage ++;
+        _coursePage = 1;
         [self fetchCourseInfo];
         [myTableView.header endRefreshing];
         
-    }else if (_segentControl.selectedSegmentIndex == 2) {
+    }else if (self.segentNumber == 2) {
         //机构
-        _schoolPage ++;
+        _schoolPage = 1;
         [self fetchSchoolInfo];
         [myTableView.header endRefreshing];
         
@@ -300,8 +322,12 @@
 #pragma mark - UISegmentedControl 代理方法=====================
 - (void)segentControlClick:(UISegmentedControl *)segment
 {
-    
+    [teacherModelArray removeAllObjects];
+    [courseModelArray removeAllObjects];
+    [schoolModelArray removeAllObjects];
+    [myTableView reloadData];
     if (segment.selectedSegmentIndex == 0) {
+        self.segentNumber = 0;
         _search_words = @"";
         _class_str = @"";
         _appoint_order = 0;
@@ -321,6 +347,7 @@
         [self fetchTeacherInfo];
         
     }else if (segment.selectedSegmentIndex == 1){
+        self.segentNumber = 1;
         _class_str = @"";
         _search_words = @"";
         _appoint_order = 0;
@@ -343,6 +370,7 @@
         [self fetchCourseInfo];
         
     }else if (segment.selectedSegmentIndex == 2){
+        self.segentNumber = 2;
         _class_str = @"";
         _appoint_order = 0;
         _filter_distance = @"";
@@ -453,10 +481,16 @@
     if ([_filter_distance isEqualToString:@"附近"]) {
         _filter_distance = @"";
     }
+    
+    if (_teacherPage == 1) {
+        [MBProgressHUD showHUDAddedTo:self.window animated:true];
+    }
+    
+    
     XXEXingClassRoomTeacherListApi *xingClassRoomTeacherListApi = [[XXEXingClassRoomTeacherListApi alloc] initWithXid:parameterXid user_id:parameterUser_Id page:_teacherPage user_lng:_longitudeString user_lat:_latitudeString filter_distance:_filter_distance appoint_order:_appoint_order class_str:_class_str search_words:_search_words];
     
     [xingClassRoomTeacherListApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
-        
+        [MBProgressHUD hideHUDForView:self.window animated:true];
 //        NSLog(@"老师   %@", request.responseJSONObject);
         
 //        NSLog(@"个数  %ld", [request.responseJSONObject[@"data"] count]);
@@ -473,7 +507,7 @@
         }
         [self customContent:teacherModelArray];
     } failure:^(__kindof YTKBaseRequest *request) {
-        
+        [MBProgressHUD hideHUDForView:self.window animated:true];
         [self showString:@"数据请求失败" forSecond:1.f];
     }];
 
@@ -485,10 +519,14 @@
     if ([_filter_distance isEqualToString:@"附近"]) {
         _filter_distance = @"";
     }
+    
+    if (_coursePage == 1) {
+        [MBProgressHUD showHUDAddedTo:self.window animated:true];
+    }
     XXEXingClassRoomCourseListApi *xingClassRoomCourseListApi = [[XXEXingClassRoomCourseListApi alloc] initWithXid:parameterXid user_id:parameterUser_Id page:_coursePage user_lng:_longitudeString user_lat:_latitudeString filter_distance:_filter_distance appoint_order:_appoint_order class_str:_class_str search_words:_search_words];
     
     [xingClassRoomCourseListApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
-
+        [MBProgressHUD hideHUDForView:self.window animated:true];
 //                NSLog(@"课程   %@", request.responseJSONObject);
         
         NSString *codeStr = [NSString stringWithFormat:@"%@", request.responseJSONObject[@"code"]];
@@ -503,7 +541,7 @@
         }
         [self customContent:courseModelArray];
     } failure:^(__kindof YTKBaseRequest *request) {
-        
+        [MBProgressHUD hideHUDForView:self.window animated:true];
         [self showString:@"数据请求失败" forSecond:1.f];
     }];
 }
@@ -515,11 +553,13 @@
     if ([_filter_distance isEqualToString:@"附近"]) {
         _filter_distance = @"";
     }
-    
+    if (_schoolPage == 1) {
+        [MBProgressHUD showHUDAddedTo:self.window animated:true];
+    }
     XXEXingClassRoomSchoolListApi *xingClassRoomSchoolListApi = [[XXEXingClassRoomSchoolListApi alloc] initWithXid:parameterXid user_id:parameterUser_Id page:_schoolPage user_lng:_longitudeString user_lat:_latitudeString filter_distance:_filter_distance appoint_order:_appoint_order class_str:_class_str search_words:_search_words];
     
     [xingClassRoomSchoolListApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
-
+        [MBProgressHUD hideHUDForView:self.window animated:true];
 //                NSLog(@"学校   %@", request.responseJSONObject);
         
         NSString *codeStr = [NSString stringWithFormat:@"%@", request.responseJSONObject[@"code"]];
@@ -535,7 +575,7 @@
         }
         [self customContent:schoolModelArray];
     } failure:^(__kindof YTKBaseRequest *request) {
-        
+        [MBProgressHUD hideHUDForView:self.window animated:true];
         [self showString:@"数据请求失败" forSecond:1.f];
     }];
 
@@ -833,11 +873,11 @@
 
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    if (_segentControl.selectedSegmentIndex == 0) {
+    if (self.segentNumber == 0) {
         return teacherModelArray.count;
-    }else if (_segentControl.selectedSegmentIndex == 1){
+    }else if (self.segentNumber == 1){
         return courseModelArray.count;
-    }else if (_segentControl.selectedSegmentIndex == 2){
+    }else if (self.segentNumber == 2){
         return schoolModelArray.count;
     }
     return 0;
@@ -848,7 +888,7 @@
     
         static NSString *identifier = @"cell";
     
-    if (_segentControl.selectedSegmentIndex == 0) {
+    if (self.segentNumber == 0) {
             XXEXingClassRoomTeacherListTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
         
             if (cell == nil) {
@@ -883,7 +923,7 @@
 
         
             return cell;
-    }else if (_segentControl.selectedSegmentIndex == 1) {
+    }else if (self.segentNumber == 1) {
         XXEXingClassRoomCourseListTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
         
         if (cell == nil) {
@@ -936,7 +976,7 @@
         }
         
         return cell;
-    }else if (_segentControl.selectedSegmentIndex == 2) {
+    }else if (self.segentNumber == 2) {
         XXEXingClassRoomSchoolListTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
         
         if (cell == nil) {
@@ -970,11 +1010,11 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
 
-    if (_segentControl.selectedSegmentIndex == 0) {
+    if (self.segentNumber == 0) {
         return 95;
-    }else if (_segentControl.selectedSegmentIndex == 1) {
+    }else if (self.segentNumber == 1) {
         return 115;
-    } else if (_segentControl.selectedSegmentIndex == 2) {
+    } else if (self.segentNumber == 2) {
         return 95;
     }
     return 0;
@@ -986,22 +1026,26 @@
     
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
+    return 0.000001;
+}
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
     if ([XXEUserInfo user].login) {
-        if (_segentControl.selectedSegmentIndex == 0) {
+        if (self.segentNumber == 0) {
             XXEXingClassRoomTeacherDetailInfoViewController *xingClassRoomTeacherDetailInfoVC = [[XXEXingClassRoomTeacherDetailInfoViewController alloc] init];
             XXEXingClassRoomTeacherListModel *model = teacherModelArray[indexPath.row];
             xingClassRoomTeacherDetailInfoVC.teacher_id = model.teacher_id;
             [self.navigationController pushViewController:xingClassRoomTeacherDetailInfoVC animated:YES];
             
-        }else if (_segentControl.selectedSegmentIndex == 1){
+        }else if (self.segentNumber == 1){
             XXEXingClassRoomCourseDetailInfoViewController *xingClassRoomCourseDetailInfoVC = [[XXEXingClassRoomCourseDetailInfoViewController alloc] init];
             XXEXingClassRoomCourseListModel *model = courseModelArray[indexPath.row];
             xingClassRoomCourseDetailInfoVC.course_id = model.courseId;
             [self.navigationController pushViewController:xingClassRoomCourseDetailInfoVC animated:YES];
             
-        }else if (_segentControl.selectedSegmentIndex == 2){
+        }else if (self.segentNumber == 2){
             
             XXEHomeLogoRootViewController *homeLogoRootVC = [[XXEHomeLogoRootViewController alloc] init];
             XXEXingClassRoomSchoolListModel *model = schoolModelArray[indexPath.row];

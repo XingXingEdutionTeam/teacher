@@ -527,6 +527,9 @@
         }
     }
     
+    if (dayArr.count == 0) {
+        return;
+    }
 //    NSLog(@"dayArr === %@", dayArr);
     
     NSArray *weekArr = [[NSArray alloc] initWithObjects:@"周一", @"周二", @"周三", @"周四", @"周五", @"周六", @"周日", nil];

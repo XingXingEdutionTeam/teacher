@@ -95,7 +95,7 @@
 
 //极光
 #define kIsProduction NO //0 (默认值)表示采用的是开发证书，1 表示采用生产证书发布应用
-
+//#define kIsProduction YES
 //融云SDk
 #define MyRongCloudAppKey @"25wehl3uw26yw"
 //生产环境
