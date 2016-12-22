@@ -51,7 +51,7 @@
 #define SYSTEM_VERSION_LESS_THAN(v) ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] == NSOrderedAscending)
 
 //MARK - 当前系统版本号 规定为三位数整数 如: 1.0.0 为100
-static int currentVersion = 100;
+static int currentVersion = 99;
 
 @interface AppDelegate ()<JPUSHRegisterDelegate,UNUserNotificationCenterDelegate>
 

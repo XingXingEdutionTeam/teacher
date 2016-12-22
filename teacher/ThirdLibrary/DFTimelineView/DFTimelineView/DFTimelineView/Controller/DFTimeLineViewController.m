@@ -23,6 +23,7 @@
 #import "DFImagesSendViewController.h"
 #import "DFVideoCaptureController.h"
 #import "XXEUserInfo.h"
+#import "SystemPopView.h"
 
 @interface DFTimeLineViewController ()<DFLineCellDelegate, CommentInputViewDelegate, TZImagePickerControllerDelegate, UIImagePickerControllerDelegate,UINavigationControllerDelegate, DFImagesSendViewControllerDelegate,DFVideoCaptureControllerDelegate>
 
@@ -46,10 +47,19 @@
 //测试获得被评轮人的XID
 @property (nonatomic, assign)NSInteger toWhoXid;
 
+@property(nonatomic ,strong)UIWindow *window;
+
 @end
 
 @implementation DFTimeLineViewController
 
+-(UIWindow *)window {
+    if (!_window) {
+        _window = [UIApplication sharedApplication].windows[1];
+    }
+    
+    return _window;
+}
 
 #pragma mark - Lifecycle
 
@@ -132,6 +142,12 @@
 
 -(void) onLongPressCamera:(UIGestureRecognizer *) gesture
 {
+    if (![XXEUserInfo user].login){
+        [SystemPopView showSystemPopViewWithTitle:@"请先登录" vc:self];
+        return;
+    }
+    
+    
     DFImagesSendViewController *controller = [[DFImagesSendViewController alloc] initWithImages:nil];
     controller.delegate = self;
     UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:controller];
@@ -142,6 +158,13 @@
 
 -(void) onClickCamera:(id) sender
 {
+    
+    if (![XXEUserInfo user].login){
+        [SystemPopView showSystemPopViewWithTitle:@"请先登录" vc:self];
+        return;
+    }
+    
+    [SystemPopView showSystemPopViewWithTitle:@"请先登录" vc:self];
     MMPopupItemHandler block = ^(NSInteger index){
         switch (index) {
             case 0:
