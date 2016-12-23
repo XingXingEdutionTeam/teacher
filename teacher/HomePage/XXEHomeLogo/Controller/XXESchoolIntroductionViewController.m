@@ -100,7 +100,7 @@
     if (indexPath.row == 1) {
         
         //学校 地址  换行
-        CGFloat height = [StringHeight contentSizeOfString:_contentArray[indexPath.row] maxWidth:KScreenWidth - 200 * kScreenRatioWidth fontSize:14];
+        CGFloat height = [StringHeight contentSizeOfString:_contentArray[indexPath.row] maxWidth:KScreenWidth - 200 * kScreenRatioWidth fontSize:14 * kScreenRatioWidth];
         
         CGSize size = cell.contentLabel.size;
         size.height = height;
@@ -114,7 +114,7 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     
     if (indexPath.row == 1) {
-        CGFloat height = [StringHeight contentSizeOfString:_contentArray[indexPath.row] maxWidth:KScreenWidth - 200 * kScreenRatioWidth fontSize:14];
+        CGFloat height = [StringHeight contentSizeOfString:_contentArray[indexPath.row] maxWidth:KScreenWidth - 200 * kScreenRatioWidth fontSize:14 * kScreenRatioWidth];
         
         return 10 + height;
     }else{

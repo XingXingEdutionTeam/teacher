@@ -36,15 +36,6 @@ static NSString *const IdentifierCell = @"classAlbunCell";
 
 @implementation XXEClassAlbumViewController
 
-- (NSMutableArray *)modelArray{
-
-    if (!modelArray) {
-        modelArray = [NSMutableArray array];
-    }
-    return modelArray;
-}
-
-
 -(NSMutableArray *)headDatasource
 {
     if (!_headDatasource) {
@@ -72,7 +63,7 @@ static NSString *const IdentifierCell = @"classAlbunCell";
 - (UITableView *)classAlbumTableView
 {
     if (!_classAlbumTableView) {
-        _classAlbumTableView = [[UITableView alloc]initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
+        _classAlbumTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, KScreenWidth, KScreenHeight - 49) style:UITableViewStyleGrouped];
     }
     return _classAlbumTableView;
 }
@@ -102,6 +93,7 @@ static NSString *const IdentifierCell = @"classAlbunCell";
         strngXid = XID;
         albumUserId = USER_ID;
     }
+    modelArray = [[NSMutableArray alloc] init];
 
     [self.classAlbumTableView registerClass:[XXEClassAlbumTableViewCell class] forCellReuseIdentifier:IdentifierCell];
      _classAlbumTableView.delegate = self;
@@ -116,10 +108,14 @@ static NSString *const IdentifierCell = @"classAlbunCell";
 //    NSLog(@"%@=== %@ ===== %@ ==== %@ === %@", _schoolID, _classID, strngXid, albumUserId, _userIdentifier);
     //427397=== 0 ===== 42233235 ==== 101 === 3
     
-    [self.headDatasource removeAllObjects];
+    if ([_headDatasource count] != 0) {
+        [self.headDatasource removeAllObjects];
+    }
+    
+    
     XXEClassAlbumApi *classApi = [[XXEClassAlbumApi alloc]initWithClassAlbumSchoolID:self.schoolID classID:self.classID UserXId:strngXid UserID:albumUserId position:_userIdentifier];
     [classApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
-        NSLog(@"bbbb 相册 ****** %@",request.responseJSONObject);
+//        NSLog(@"bbbb 相册 ****** %@",request.responseJSONObject);
         
         NSString *code = [request.responseJSONObject objectForKey:@"code"];
         if ([code intValue]==1) {
@@ -153,7 +149,7 @@ static NSString *const IdentifierCell = @"classAlbunCell";
                       if (i==0) {
                         stringName = @"我的相册";
                       }else{
-                        stringName = [NSString stringWithFormat:@"%@老师的相册",model.tname];
+                        stringName = [NSString stringWithFormat:@"%@%@的相册",model.tname, model.position_name];
                       }
 //                    }
                     [self.headDatasource addObject:stringName];
@@ -163,10 +159,11 @@ static NSString *const IdentifierCell = @"classAlbunCell";
                 }
 //                NSLog(@"数组%@",self.imageViewDatasource);
             }
-            [self.classAlbumTableView reloadData];
-        }else{
-            [self showHudWithString:@"数据请求失败" forSecond:1.f];
+            
         }
+//        NSLog(@"jjjjj %@", modelArray);
+        
+       [self.classAlbumTableView reloadData];
     } failure:^(__kindof YTKBaseRequest *request) {
         [self showHudWithString:@"数据请求失败" forSecond:1.f];
     }];
@@ -181,7 +178,7 @@ static NSString *const IdentifierCell = @"classAlbunCell";
     return 10;
 }
 
-
+//返回几组
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     NSLog(@"%lu",(unsigned long)self.headDatasource.count);
@@ -194,7 +191,7 @@ static NSString *const IdentifierCell = @"classAlbunCell";
 {
     return 110;
 }
-
+//每组返回几个
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return 1;
@@ -223,33 +220,25 @@ static NSString *const IdentifierCell = @"classAlbunCell";
     if ([XXEUserInfo user].login) {
         XXEClassAlbumTableViewCell * cell = [tableView cellForRowAtIndexPath:indexPath];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        
-//        if (self.userIdentifier != nil) {
-//            XXEOtherTeacherAlbumViewController *otherVC = [[XXEOtherTeacherAlbumViewController alloc]init];
-//            otherVC.otherClassId=self.classID;
-//            otherVC.otherSchoolId=self.schoolID;
-//            otherVC.otherTeacherId = self.teacherDatasource[indexPath.section];
-//            NSLog(@"%@ %@ %@",otherVC.otherSchoolId,otherVC.otherClassId,otherVC.otherTeacherId);
-//            [self.navigationController pushViewController:otherVC animated:YES];
-//        }else{
+
+        XXEClassAlbumModel *model = modelArray[indexPath.section];
+//        NSLog(@"model == %@", model);
         
             if (indexPath.row ==0 && indexPath.section==0) {
                 
                 XXEMyClassAlbumViewController *myClassVC = [[XXEMyClassAlbumViewController alloc]init];
-                myClassVC.myAlbumClassId=self.classID;
+                myClassVC.myAlbumClassId = model.class_id;
                 myClassVC.myAlbumSchoolId=self.schoolID;
                 
                 myClassVC.myAlbumTeacherId = self.teacherDatasource[indexPath.section];
                 myClassVC.userIdentifier = _userIdentifier;
-//                NSLog(@"rrr = %@ %@ %@",myClassVC.myAlbumSchoolId,myClassVC.myAlbumClassId,myClassVC.myAlbumTeacherId);
+                
                 [self.navigationController pushViewController:myClassVC animated:YES];
                 
             }
             else{
-                XXEClassAlbumModel *model = modelArray[indexPath.row];
-            
                 XXEOtherTeacherAlbumViewController *otherVC = [[XXEOtherTeacherAlbumViewController alloc]init];
-                otherVC.otherClassId=self.classID;
+                otherVC.otherClassId=model.class_id;
                 otherVC.otherSchoolId=self.schoolID;
                 otherVC.otherTeacherId = self.teacherDatasource[indexPath.section];
 //                otherVC.userIdentifier = model.otherTeacherPosition;

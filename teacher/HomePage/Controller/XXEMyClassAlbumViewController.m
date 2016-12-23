@@ -49,7 +49,7 @@ static NSString * IdentifierCELL = @"IdentifierCELL";
 - (UITableView *)myClassAlumTableView
 {
     if (!_myClassAlumTableView) {
-        _myClassAlumTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, -30*kScreenRatioHeight, KScreenWidth, KScreenHeight) style:UITableViewStyleGrouped];
+        _myClassAlumTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, KScreenWidth, KScreenHeight - 49) style:UITableViewStyleGrouped];
         _myClassAlumTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     }
     return _myClassAlumTableView;
@@ -93,7 +93,7 @@ static NSString * IdentifierCELL = @"IdentifierCELL";
 - (void)setupMyselfAlbumMessage
 {
     //真实环境
-    XXEMyselfAblumApi *myselfAblum = [[XXEMyselfAblumApi alloc]initWithMyselfAblumSchoolId:self.myAlbumSchoolId ClassId:self.myAlbumClassId TeacherId:self.myAlbumTeacherId AlbumXid:strngXid AlbumUserId:albumUserId position:_userIdentifier];
+    XXEMyselfAblumApi *myselfAblum = [[XXEMyselfAblumApi alloc]initWithMyselfAblumSchoolId:self.myAlbumSchoolId ClassId:self.myAlbumClassId TeacherId:self.myAlbumTeacherId AlbumXid:strngXid AlbumUserId:albumUserId];
 //    NSLog(@"学校%@ 班级%@ 教师%@ XID%@ USerID%@ 身份:%@",self.myAlbumSchoolId,self.myAlbumClassId,self.myAlbumTeacherId,strngXid,albumUserId, _userIdentifier);
 
     [myselfAblum startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
@@ -291,12 +291,13 @@ static NSString * IdentifierCELL = @"IdentifierCELL";
 {
 
     //正式
+   NSLog(@"创建相册=== %@ ** %@ **  %@ ** %@ ** %@",self.myAlbumSchoolId,self.myAlbumClassId,string,strngXid,albumUserId);
     XXEMyselfAblumAddApi *addMySelfAblum = [[XXEMyselfAblumAddApi alloc]initWithAddMyselfAblumSchoolId:self.myAlbumSchoolId ClassId:self.myAlbumClassId AlbumName:string AlbumXid:strngXid AlbumUserId:albumUserId position:_userIdentifier];
-//    NSLog(@"创建相册=== %@ %@ %@ %@ %@",self.myAlbumSchoolId,self.myAlbumClassId,string,strngXid,albumUserId);
+
     
     [addMySelfAblum startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         NSString *code = [request.responseJSONObject objectForKey:@"code"];
-//        NSLog(@"快快快==========  %@",request.responseJSONObject);
+        NSLog(@"快快快==========  %@",request.responseJSONObject);
         
         if ([code intValue] == 1) {
             [self showString:@"创建成功" forSecond:1.f];
@@ -311,6 +312,10 @@ static NSString * IdentifierCELL = @"IdentifierCELL";
     }];
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    return 0.00001;
+
+}
 
 #pragma mark - 设置导航栏右边的样式
 - (void)rightNavigationButton

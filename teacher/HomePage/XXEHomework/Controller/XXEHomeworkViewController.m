@@ -86,10 +86,6 @@
     [_myTableView.header beginRefreshing];
 }
 
-- (void)viewDidDisappear:(BOOL)animated{
-    [super viewDidDisappear:animated];
-    
-}
 
 
 - (void)dealloc{
@@ -315,7 +311,7 @@
      //判断是否是第三方头像
      */
     NSString *head_img = [kXXEPicURL stringByAppendingString:model.head_img];
-    cell.iconImageView.layer.cornerRadius = cell.iconImageView.frame.size.width / 2;
+    cell.iconImageView.layer.cornerRadius = 5;
     cell.iconImageView.layer.masksToBounds = YES;
     
     [cell.iconImageView sd_setImageWithURL:[NSURL URLWithString:head_img] placeholderImage:[UIImage imageNamed:@"headplaceholder"]];

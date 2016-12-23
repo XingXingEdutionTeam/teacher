@@ -438,7 +438,7 @@
     XXERongCloudAddFriendRequestApi *rongCloudAddFriendRequestApi = [[XXERongCloudAddFriendRequestApi alloc] initWithXid:parameterXid user_id:parameterUser_Id other_xid:otherXid];
     [rongCloudAddFriendRequestApi startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         
-              NSLog(@"2222---   %@", request.responseJSONObject);
+//              NSLog(@"2222---   %@", request.responseJSONObject);
         
         NSString *codeStr = [NSString stringWithFormat:@"%@", request.responseJSONObject[@"code"]];
         /*

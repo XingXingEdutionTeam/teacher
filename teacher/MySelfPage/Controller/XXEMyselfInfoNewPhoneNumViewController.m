@@ -71,13 +71,14 @@
     phoneTextField.keyboardType = UIKeyboardTypeNumberPad;
     phoneTextField.clearButtonMode = UITextFieldViewModeAlways;
     phoneTextField.backgroundColor = [UIColor whiteColor];
-    phoneTextField.font = [UIFont systemFontOfSize:14 ];
+    phoneTextField.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];
     [bgImageView1 addSubview:phoneTextField];
     
     
     //获取验证码
     UILabel *titleLabel2 = [[UILabel alloc] initWithFrame:CGRectMake(10, bgImageView1.frame.origin.y + bgImageView1.height + 10, KScreenWidth - 20, 20)];
     titleLabel2.text = @"验证码";
+    titleLabel2.font = [UIFont systemFontOfSize:14 * kScreenRatioWidth];
     [self.view addSubview:titleLabel2];
     
     
@@ -211,19 +212,19 @@
         NSDictionary *dic = request.responseJSONObject;
         NSString *string = [dic objectForKey:@"code"];
         if ([string intValue] == 1) {
-            [self showString:@"此号码没有注册过" forSecond:1.f];
-//            self.verificationButton.userInteractionEnabled = NO;
-//            self.registerVerificationTextField.enabled = NO;
+            [self showString:@"此号码可注册" forSecond:1.f];
+            getCodeButton.userInteractionEnabled = NO;
+            codeTextField.enabled = NO;
             [getCodeButton startWithTime:60 title:@"获取验证码" countDownTile:@"s后重新获取" mColor:XXEColorFromRGB(189, 210, 38) countColor:XXEColorFromRGB(204, 204, 204)];
             
             [self getVerificationNumberWithPhone:phone];
             
             
         } else if ([string intValue] == 3) {
-            [self showString:@"可以更改密码" forSecond:3.f];
+            [self showString:@"手机已存在,如果您已经在APP上注册过,想要创建多个身份,请在APP首页下拉框编辑身份" forSecond:3.f];
             
-//            self.registerVerificationTextField.enabled = YES;
-//            self.verificationButton.userInteractionEnabled = YES;
+            codeTextField.enabled = YES;
+            getCodeButton.userInteractionEnabled = YES;
         } else{
             [self showString:@"请重新输入" forSecond:1.f];
         }
@@ -346,8 +347,9 @@
 //更新 存储 数据
 - (void)updateSaveData{
     
-    NSDictionary *oldDic = [[NSDictionary alloc] init];
+//    NSDictionary *oldDic = [[NSDictionary alloc] init];
 //    NSString *login_times = []
+    [[XXEUserInfo user] cleanUserInfo];
     
     NSDictionary *userInfo = @{
                                //             @"account":
@@ -357,7 +359,7 @@
                                @"token":[XXEUserInfo user].token,
                                @"qqNumberToken":[XXEUserInfo user].qqNumberToken,
                                @"weixinToken":[XXEUserInfo user].weixinToken,
-                               @"sinaNumberToken":[XXEUserInfo user].weixinToken,
+                               @"sinaNumberToken":[XXEUserInfo user].sinaNumberToken,
                                @"zhifubaoToken":[XXEUserInfo user].zhifubaoToken,
                                @"login_type":[XXEUserInfo user].login_type,
                                @"user_head_img":[XXEUserInfo user].user_head_img,
@@ -366,7 +368,7 @@
                                @"xid":[XXEUserInfo user].xid,
                                @"loginStatus":[NSNumber numberWithBool:[XXEUserInfo user].login]
                                };
-    NSLog(@"%@",userInfo);
+//    NSLog(@"%@",userInfo);
     [[XXEUserInfo user] setupUserInfoWithUserInfo:userInfo];
 
 }

@@ -208,7 +208,8 @@
     if (textField == _submitTextField) {
         
         [self setupDateView:DateTypeOfStart];
-                
+        
+        [self.view endEditing:YES];
     }
 
 }

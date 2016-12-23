@@ -10,6 +10,6 @@
 
 @interface XXEMyselfAblumApi : YTKRequest
 
-- (id)initWithMyselfAblumSchoolId:(NSString *)schollId ClassId:(NSString *)classId TeacherId:(NSString *)teacherId AlbumXid:(NSString *)albumXid AlbumUserId:(NSString *)albumUserId position:(NSString *)position;;
+- (id)initWithMyselfAblumSchoolId:(NSString *)schollId ClassId:(NSString *)classId TeacherId:(NSString *)teacherId AlbumXid:(NSString *)albumXid AlbumUserId:(NSString *)albumUserId;
 
 @end

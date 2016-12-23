@@ -120,7 +120,7 @@
 
 
 - (void)createTableView{
-    _myTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, KScreenWidth, KScreenHeight - 44) style:UITableViewStyleGrouped];
+    _myTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, KScreenWidth, KScreenHeight - 49) style:UITableViewStyleGrouped];
     
     _myTableView.dataSource = self;
     _myTableView.delegate = self;

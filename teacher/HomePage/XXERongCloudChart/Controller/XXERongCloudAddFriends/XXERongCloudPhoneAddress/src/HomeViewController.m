@@ -352,57 +352,58 @@ XXERongCloudPhoneNumListModel *model = modelArray[button.tag - 100];
          code:7	//您已经在对方黑名单中,无法发起请求!
          code:8	//不能重复对同一个人发起请求!
          code:9	//对方已同意,可以直接聊天了 (对方设置了任何人请求直接通过)
+         code:10//添加成功 (单方面删除好友,又添加好友)
          */
         if ([codeStr isEqualToString:@"1"]) {
-            [self showHudWithString:@"请求发送成功!" forSecond:1.5];
+            [self showString:@"请求发送成功!" forSecond:1.5];
             
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 [self.navigationController popViewControllerAnimated:YES];
             });
         }else if ([codeStr isEqualToString:@"4"]) {
-            [self showHudWithString:@"不能请求自己!" forSecond:1.5];
             
+            [self showString:@"不能请求自己!" forSecond:1.5];
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 [self.navigationController popViewControllerAnimated:YES];
             });
         }else if ([codeStr isEqualToString:@"5"]) {
-            [self showHudWithString:@"对方已经是您的好友!" forSecond:1.5];
+            [self showString:@"对方已经是您的好友!" forSecond:1.5];
             
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 [self.navigationController popViewControllerAnimated:YES];
             });
         }else if ([codeStr isEqualToString:@"6"]) {
-            [self showHudWithString:@"对方在我的黑名单中,无法发起请求!" forSecond:1.5];
+            [self showString:@"对方在我的黑名单中,无法发起请求!" forSecond:1.5];
             
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 [self.navigationController popViewControllerAnimated:YES];
             });
         }else if ([codeStr isEqualToString:@"7"]) {
-            [self showHudWithString:@"您已经在对方黑名单中,无法发起请求!" forSecond:1.5];
+            [self showString:@"您已经在对方黑名单中,无法发起请求!" forSecond:1.5];
             
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 [self.navigationController popViewControllerAnimated:YES];
             });
         }else if ([codeStr isEqualToString:@"8"]) {
-            [self showHudWithString:@"不能重复对同一个人发起请求!" forSecond:1.5];
+            [self showString:@"不能重复对同一个人发起请求!" forSecond:1.5];
             
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 [self.navigationController popViewControllerAnimated:YES];
             });
         }else if ([codeStr isEqualToString:@"9"]) {
-            [self showHudWithString:@"对方已同意,可以直接聊天了!" forSecond:1.5];
+            [self showString:@"对方已同意,可以直接聊天了(对方设置了任何人请求直接通过)" forSecond:1.5];
             
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 [self.navigationController popViewControllerAnimated:YES];
             });
         }else if ([codeStr isEqualToString:@"10"]) {
-            [self showHudWithString:@"添加成功!" forSecond:1.5];
+            [self showString:@"添加成功!" forSecond:1.5];
             
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 [self.navigationController popViewControllerAnimated:YES];
             });
         }else{
-            [self showHudWithString:@"请求发送失败!" forSecond:1.5];
+            [self showString:@"请求发送失败!" forSecond:1.5];
         }
         
     } failure:^(__kindof YTKBaseRequest *request) {

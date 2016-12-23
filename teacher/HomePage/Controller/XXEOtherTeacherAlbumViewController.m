@@ -82,7 +82,7 @@ static NSString * OTherCELL = @"OTHERCELL";
 //    NSLog(@"老师ID%@ 学校%@ 班级%@",self.otherTeacherId,self.otherSchoolId,self.otherClassId);
     
     //真实环境
-        XXEMyselfAblumApi *myselfAblum = [[XXEMyselfAblumApi alloc]initWithMyselfAblumSchoolId:self.otherSchoolId ClassId:self.otherClassId TeacherId:self.otherTeacherId AlbumXid:strngXid AlbumUserId:albumUserId position:@""];
+    XXEMyselfAblumApi *myselfAblum = [[XXEMyselfAblumApi alloc]initWithMyselfAblumSchoolId:self.otherSchoolId ClassId:self.otherClassId TeacherId:self.otherTeacherId AlbumXid:strngXid AlbumUserId:albumUserId];
     [myselfAblum startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest *request) {
         
 //        NSLog(@" hhhh === %@", request.responseJSONObject);
