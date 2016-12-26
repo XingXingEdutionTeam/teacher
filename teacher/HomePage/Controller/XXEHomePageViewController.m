@@ -120,8 +120,6 @@
 
 @property(nonatomic , assign)SchoolInfo schoolInfo;
 
-@property(nonatomic ,strong)XXRootChatETabBarController *rootChatVC;
-
 @end
 
 @implementation XXEHomePageViewController
@@ -191,13 +189,6 @@
     
     self.view.backgroundColor = XXEBackgroundColor;
     self.navigationController.navigationBarHidden = YES;
-    
-    if (self.rootChatVC != nil) {
-        self.rootChatVC = nil;
-    }
-    
-    self.rootChatVC = [[XXRootChatETabBarController alloc] init];
-    
     //新手 教程
     [self initNewCourseView];
     
@@ -836,11 +827,10 @@
             NSLog(@"----聊天----");
 //            [GlobalVariable shareInstance].chatBagdeType = ChatBadgeNone;
             if ([XXEUserInfo user].login) {
-                if (self.rootChatVC == nil) {
-                self.rootChatVC = [[XXRootChatETabBarController alloc]init];
-                }
-            self.rootChatVC.hidesBottomBarWhenPushed = YES;
-            [self.navigationController pushViewController:self.rootChatVC animated:NO];
+                
+            XXRootChatETabBarController *rootChatVC = [[XXRootChatETabBarController alloc]init];
+            rootChatVC.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:rootChatVC animated:NO];
         }else{
             
             [self showHudWithString:@"请用账号登录" forSecond:1.5];

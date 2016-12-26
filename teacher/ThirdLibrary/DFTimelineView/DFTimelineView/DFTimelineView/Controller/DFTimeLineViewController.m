@@ -164,6 +164,7 @@
         return;
     }
     
+    [SystemPopView showSystemPopViewWithTitle:@"请先登录" vc:self];
     MMPopupItemHandler block = ^(NSInteger index){
         switch (index) {
             case 0:

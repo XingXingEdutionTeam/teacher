@@ -97,10 +97,6 @@
             NSArray *modelArray = [NSArray array];
             modelArray = [XXEXingCommunityClassesModel parseResondsData:responseObj[@"data"]];
             
-            if (page == 1) {
-                [_dataSourceArray removeAllObjects];
-            }
-            
             [_dataSourceArray addObjectsFromArray:modelArray];
         }
         [self customContent];
@@ -166,7 +162,7 @@
 }
 
 -(void)loadNewData{
-    page = 1;
+    page ++;
     
     [self fetchNetData];
     [ _myTableView.header endRefreshing];

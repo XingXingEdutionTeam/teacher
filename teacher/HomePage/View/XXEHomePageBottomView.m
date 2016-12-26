@@ -28,9 +28,10 @@
 
 - (void)configBottomViewButton:(NSString *)position
 {
-    if ([position isEqualToString:@"1"]||[position isEqualToString:@"2"])
-    {
+    if ([position isEqualToString:@"1"]||[position isEqualToString:@"2"]) {
+        
         [self setupButtonNum:12];
+        
     }else if ([position isEqualToString:@"3"]){
         [self setupButtonNum:11];
     }else if ([position isEqualToString:@"4"]){
