@@ -994,13 +994,12 @@
         case 4:
         {
             NSLog(@"----聊天----");
-//            [GlobalVariable shareInstance].chatBagdeType = ChatBadgeNone;
             if ([XXEUserInfo user].login) {
-                
-            XXRootChatETabBarController *rootChatVC = [[XXRootChatETabBarController alloc]init];
-            rootChatVC.hidesBottomBarWhenPushed = YES;
-            
-            [self.navigationController pushViewController:rootChatVC animated:NO];
+                if (self.rootChatVC == nil) {
+                    self.rootChatVC = [[XXRootChatETabBarController alloc]init];
+                }
+                self.rootChatVC.hidesBottomBarWhenPushed = YES;
+                [self.navigationController pushViewController:self.rootChatVC animated:NO];
         }else{
             
             [self showString:@"请用账号登录后查看" forSecond:1.5];
