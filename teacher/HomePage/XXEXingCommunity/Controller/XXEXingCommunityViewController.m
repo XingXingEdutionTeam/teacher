@@ -93,9 +93,9 @@
         
         NSString *timeStr = [NSString stringWithFormat:@"已用时间%i秒，获得猩币%i个", count,count/2];
         
-//        [self showHudWithString:timeStr];
-        [self showHudWithString:timeStr forSecond:2];
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self showHudWithString:timeStr];
+//        [self showHudWithString:timeStr forSecond:1.5];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             [self.navigationController popViewControllerAnimated:YES];
         });
 
@@ -142,7 +142,7 @@
     //用scrollView的滑动大小与屏幕宽度取整数 得到滑动的页数
     [navSliderMenu selectAtRow:(int)((contentScrollView.contentOffset.x+screenWidth/2.f)/screenWidth) andDelegate:NO];
     //根据页数添加相应的视图
-//    [self addListVCWithIndex:(int)(contentScrollView.contentOffset.x/screenWidth)];
+    [self addListVCWithIndex:(int)(contentScrollView.contentOffset.x/screenWidth)];
 }
 
 

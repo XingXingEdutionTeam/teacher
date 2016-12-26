@@ -830,6 +830,7 @@
         case 4:
         {
             NSLog(@"----聊天----");
+//            [GlobalVariable shareInstance].chatBagdeType = ChatBadgeNone;
             if ([XXEUserInfo user].login) {
                 if (self.rootChatVC == nil) {
                     self.rootChatVC = [[XXRootChatETabBarController alloc]init];
@@ -1151,9 +1152,8 @@
                 [self.navigationController pushViewController:schoolTimetableVC animated:YES];
                 
                 break;
-            }
-        case 3:
-            {
+            }        case 3:
+        {
             //通讯录
 //           if([self.userPosition isEqualToString:@"3"] || [self.userPosition isEqualToString:@"4"]){
                 XXEClassAddressHeadermasterAndManagerViewController *classAddressHeadermasterAndManagerVC = [[XXEClassAddressHeadermasterAndManagerViewController alloc] init];

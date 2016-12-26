@@ -25,6 +25,15 @@
 
 @implementation XXRootChatETabBarController
 
+//- (instancetype)init
+//{
+//    self = [super init];
+//    if (self) {
+//        [self rootFriendListServerDataPageNumber];
+//    }
+//    return self;
+//}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     if ([XXEUserInfo user].login){
