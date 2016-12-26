@@ -1147,8 +1147,9 @@
                 [self.navigationController pushViewController:schoolTimetableVC animated:YES];
                 
                 break;
-            }        case 3:
-        {
+            }
+        case 3:
+            {
             //通讯录
 //           if([self.userPosition isEqualToString:@"3"] || [self.userPosition isEqualToString:@"4"]){
                 XXEClassAddressHeadermasterAndManagerViewController *classAddressHeadermasterAndManagerVC = [[XXEClassAddressHeadermasterAndManagerViewController alloc] init];
