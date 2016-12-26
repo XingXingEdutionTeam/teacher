@@ -194,7 +194,6 @@
     if (self.rootChatVC == nil) {
         self.rootChatVC = [[XXRootChatETabBarController alloc] init];
     }
-    
     //新手 教程
     [self initNewCourseView];
     
@@ -833,7 +832,6 @@
             NSLog(@"----聊天----");
 //            [GlobalVariable shareInstance].chatBagdeType = ChatBadgeNone;
             if ([XXEUserInfo user].login) {
-                
                 if (self.rootChatVC == nil) {
                     self.rootChatVC = [[XXRootChatETabBarController alloc]init];
                 }
