@@ -78,6 +78,9 @@
 	page	//分页,不传默认1
  */
     //幼儿园
+    
+    
+    
     NSString *urlStr = @"http://www.xingxingedu.cn/Global/xtd_article_list";
     NSString *pageStr = [NSString stringWithFormat:@"%ld", page];
     
@@ -98,6 +101,10 @@
         if ([responseObj[@"code"] integerValue] == 1) {
             NSArray *modelArray = [NSArray array];
            modelArray = [XXEXingCommunityClassesModel parseResondsData:responseObj[@"data"]];
+            
+            if (page == 1) {
+                [_dataSourceArray removeAllObjects];
+            }
             
             [_dataSourceArray addObjectsFromArray:modelArray];
         }
@@ -164,7 +171,7 @@
 }
 
 -(void)loadNewData{
-    page ++;
+    page = 1;
     
     [self fetchNetData];
     [ _myTableView.header endRefreshing];
