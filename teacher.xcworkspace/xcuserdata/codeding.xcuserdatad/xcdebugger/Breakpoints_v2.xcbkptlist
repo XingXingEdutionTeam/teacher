@@ -41,13 +41,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "teacher/HomePage/XXERongCloudChart/Controller/XXRootChatETabBarController.m"
-            timestampString = "504440682.985018"
+            filePath = "teacher/HomePage/Controller/XXEHomePageViewController.m"
+            timestampString = "504455737.952167"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "78"
-            endingLineNumber = "78"
-            landmarkName = "-rootFriendListServerDataPageNumber"
+            startingLineNumber = "1154"
+            endingLineNumber = "1154"
+            landmarkName = "-xxe_homePageHeaderIdentifierNum:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
